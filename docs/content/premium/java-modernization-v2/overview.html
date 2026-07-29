@@ -1,0 +1,567 @@
+<div class="content-panel lab-template">
+
+  <!-- ── Banner ── -->
+  <div class="lab-banner">
+    <div class="lab-banner__tags">
+      <span class="cds--tag cds--tag--green">IA Generativa</span>
+      <span class="cds--tag cds--tag--cool-gray">~90 min</span>
+      <span class="cds--tag cds--tag--teal">Bob Premium</span>
+      <span class="cds--tag cds--tag--magenta">Avanzado</span>
+    </div>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Modernización Java — De Legacy a Cloud-Native con IBM Bob</h1>
+    <p class="cds--body-02 lab-banner__summary">
+      Las aplicaciones Java empresariales acumulan años de deuda técnica: versiones obsoletas,
+      vulnerabilidades CVE, frontends JSP sin mantenimiento y ausencia de tests.
+      Este workshop muestra cómo IBM Bob conduce el ciclo completo de modernización —
+      análisis, migración, generación de tests y remediación de seguridad — en horas, no en semanas.
+    </p>
+  </div>
+
+  <!-- ── 1. El Problema ── -->
+  <section class="lab-section" aria-labelledby="ov-problema">
+    <h2 class="cds--productive-heading-03" id="ov-problema">
+      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="vertical-align:-3px;margin-right:8px"><path d="M16 2C8.3 2 2 8.3 2 16s6.3 14 14 14 14-6.3 14-14S23.7 2 16 2zm-1.1 6h2.2v11h-2.2V8zM16 25c-.8 0-1.5-.7-1.5-1.5S15.2 22 16 22s1.5.7 1.5 1.5S16.8 25 16 25z"/></svg>
+      El problema: Java legacy en producción
+    </h2>
+
+    <div class="overview-impact">
+      <div class="overview-impact__cell">
+        <p class="overview-impact__label">
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2C8.3 2 2 8.3 2 16s6.3 14 14 14 14-6.3 14-14S23.7 2 16 2zm-1.1 6h2.2v11h-2.2V8zM16 25c-.8 0-1.5-.7-1.5-1.5S15.2 22 16 22s1.5.7 1.5 1.5S16.8 25 16 25z"/></svg>
+          Sin IBM Bob
+        </p>
+        <p class="overview-impact__value">2 meses</p>
+        <p class="overview-impact__desc">
+          Tiempo promedio para modernizar una aplicación Java empresarial de forma manual:
+          mapeo de dependencias, migración de namespaces, compatibilidad de APIs, cobertura de tests y auditoría de seguridad.
+        </p>
+      </div>
+      <div class="overview-impact__cell overview-impact__cell--highlight">
+        <p class="overview-impact__label">
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 32 32" fill="currentColor"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
+          Con IBM Bob Premium
+        </p>
+        <p class="overview-impact__value">2 días</p>
+        <p class="overview-impact__desc">
+          Caso real (Novacomp): un arquitecto senior completó la modernización completa de una API REST empresarial
+          usando este workflow. Bob analiza, propone, aplica y valida — el arquitecto aprueba.
+        </p>
+      </div>
+      <div class="overview-impact__cell">
+        <p class="overview-impact__label">
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 32 32" fill="currentColor"><path d="M18 28H8a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12l6 6v6h-2v-5h-5V4H8v20h10v2zm2-24v4h4zm-1 15 5 5-5 5-1.4-1.4 3.6-3.6-3.6-3.6L19 19zm-4 3.6 3.6 3.6-3.6 3.6L14 25l3.6-3.6L14 18l1.4-1.4z"/></svg>
+          Deuda técnica típica
+        </p>
+        <p class="overview-impact__value">5–8 años</p>
+        <p class="overview-impact__desc">
+          Antigüedad promedio de las aplicaciones Java legacy en empresas: Java 8, WebSphere TWas,
+          Struts 2.x, JSPs sin tests, y múltiples CVEs críticos sin resolver.
+        </p>
+      </div>
+      <div class="overview-impact__cell overview-impact__cell--highlight">
+        <p class="overview-impact__label">
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 32 32" fill="currentColor"><path d="M18 2h-8a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8zm-8 2h7l5 5v15H10zm7 12v2h-4v-2zm4-4v2H10v-2zm0-4v2H10v-2z"/></svg>
+          CVEs en dependencias
+        </p>
+        <p class="overview-impact__value">60–70 %</p>
+        <p class="overview-impact__desc">
+          Del tiempo de modernización manual se gasta mapeando el estado actual del proyecto
+          antes de tocar una sola línea de código. Bob lo hace en minutos.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 2. Qué vamos a hacer ── -->
+  <section class="lab-section" aria-labelledby="ov-que">
+    <h2 class="cds--productive-heading-03" id="ov-que">
+      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="vertical-align:-3px;margin-right:8px"><path d="M11 8l16 8-16 8z"/></svg>
+      Qué vamos a modernizar
+    </h2>
+
+    <p class="cds--body-01" style="max-width:72ch;margin-bottom:var(--cds-spacing-06,1.5rem)">
+      El proyecto que modernizaremos es <strong>Simple Pharmacy</strong> — una aplicación Java empresarial real
+      con todos los síntomas del software legacy: desplegada en Traditional WebSphere, Java 8,
+      frontend Struts/JSP, sin tests, y con vulnerabilidades CVE críticas en sus dependencias.
+    </p>
+
+    <div class="stack-compare">
+      <div class="stack-compare__col">
+        <p class="stack-compare__heading">Estado inicial (legacy)</p>
+        <div class="stack-compare__item">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-text-helper,#6f6f6f)"><path d="M24 9.4 22.6 8 16 14.6 9.4 8 8 9.4l6.6 6.6L8 22.6 9.4 24l6.6-6.6 6.6 6.6 1.4-1.4-6.6-6.6z"/></svg>
+          Java 8, Traditional WebSphere (TWas)
+        </div>
+        <div class="stack-compare__item">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-text-helper,#6f6f6f)"><path d="M24 9.4 22.6 8 16 14.6 9.4 8 8 9.4l6.6 6.6L8 22.6 9.4 24l6.6-6.6 6.6 6.6 1.4-1.4-6.6-6.6z"/></svg>
+          Struts 2.5.30, namespaces <code>javax.*</code>
+        </div>
+        <div class="stack-compare__item">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-text-helper,#6f6f6f)"><path d="M24 9.4 22.6 8 16 14.6 9.4 8 8 9.4l6.6 6.6L8 22.6 9.4 24l6.6-6.6 6.6 6.6 1.4-1.4-6.6-6.6z"/></svg>
+          Frontend JSP, sin API REST
+        </div>
+        <div class="stack-compare__item">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-text-helper,#6f6f6f)"><path d="M24 9.4 22.6 8 16 14.6 9.4 8 8 9.4l6.6 6.6L8 22.6 9.4 24l6.6-6.6 6.6 6.6 1.4-1.4-6.6-6.6z"/></svg>
+          0 tests unitarios
+        </div>
+        <div class="stack-compare__item">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-error,#da1e28)"><path d="M24 9.4 22.6 8 16 14.6 9.4 8 8 9.4l6.6 6.6L8 22.6 9.4 24l6.6-6.6 6.6 6.6 1.4-1.4-6.6-6.6z"/></svg>
+          3 CVEs críticos: Text4Shell, SnakeYAML, commons-lang3
+        </div>
+      </div>
+
+      <div class="stack-compare__arrow" aria-hidden="true">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor"><path d="M18 6l-1.43 1.393L24.15 15H4v2h20.15l-7.58 7.573L18 26l10-10z"/></svg>
+      </div>
+
+      <div class="stack-compare__col stack-compare__col--after">
+        <p class="stack-compare__heading">Estado objetivo (modernizado)</p>
+        <div class="stack-compare__item stack-compare__item--new">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-success,#24a148)"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/></svg>
+          Java 21 LTS, Open Liberty
+        </div>
+        <div class="stack-compare__item stack-compare__item--new">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-success,#24a148)"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/></svg>
+          Struts 6.4.0, namespaces <code>jakarta.*</code>, Jakarta EE 10
+        </div>
+        <div class="stack-compare__item stack-compare__item--new">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-success,#24a148)"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/></svg>
+          JAX-RS REST API + React + TypeScript + Vite
+        </div>
+        <div class="stack-compare__item stack-compare__item--new">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-success,#24a148)"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/></svg>
+          Suite de tests JUnit 5 + Mockito 5 + AssertJ 3
+        </div>
+        <div class="stack-compare__item stack-compare__item--new">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-success,#24a148)"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/></svg>
+          0 CVEs — 3 dependencias actualizadas a versiones seguras
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 3. El Viaje — Journey Map ── -->
+  <section class="lab-section" aria-labelledby="ov-journey">
+    <h2 class="cds--productive-heading-03" id="ov-journey">
+      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="vertical-align:-3px;margin-right:8px"><path d="M28 6H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2zm0 18H4V8h24z"/><path d="M8 18h2v2H8zm0-4h2v2H8zm0-4h2v2H8zm5 0h11v2H13zm0 4h7v2h-7z"/></svg>
+      El recorrido del workshop
+    </h2>
+
+    <p class="cds--body-01" style="max-width:72ch;margin-bottom:var(--cds-spacing-05,1rem)">
+      El workshop está dividido en 6 labs independientes y secuenciales. Cada lab parte del estado
+      que dejó el anterior. Haz clic en cualquier tarjeta para ir directamente a esa sección.
+    </p>
+
+    <div class="overview-journey" role="list">
+
+      <!-- Lab 1 -->
+      <button class="journey-card" role="listitem"
+              onclick="window.location.hash='#/lab/java-modernization-v2/lab1'"
+              aria-label="Ir a Lab 1 — Replatforming TWas a Liberty">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="journey-card__num">1</span>
+          <div class="journey-card__tags">
+            <span class="cds--tag cds--tag--teal" style="font-size:0.6875rem">Liberty</span>
+            <span class="cds--tag cds--tag--cool-gray" style="font-size:0.6875rem">~20 min</span>
+          </div>
+        </div>
+        <p class="journey-card__title">Replatforming TWas → Liberty</p>
+        <p class="journey-card__desc">
+          Migra la aplicación de Traditional WebSphere a Open Liberty añadiendo
+          el <code>liberty-maven-plugin</code>, corrigiendo dependencias y creando el
+          <code>server.xml</code>. Java 8 y el código no cambian.
+        </p>
+        <span class="journey-card__result">
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 32 32" fill="currentColor"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
+          mvn clean compile → BUILD SUCCESS
+        </span>
+      </button>
+
+      <!-- Lab 2 -->
+      <button class="journey-card" role="listitem"
+              onclick="window.location.hash='#/lab/java-modernization-v2/lab2'"
+              aria-label="Ir a Lab 2 — Java 8 a Java 21">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="journey-card__num">2</span>
+          <div class="journey-card__tags">
+            <span class="cds--tag cds--tag--blue" style="font-size:0.6875rem">Java 21</span>
+            <span class="cds--tag cds--tag--cool-gray" style="font-size:0.6875rem">~25 min</span>
+          </div>
+        </div>
+        <p class="journey-card__title">Java 8 → Java 21 Upgrade</p>
+        <p class="journey-card__desc">
+          Actualiza el compilador a Java 21, migra todos los namespaces
+          <code>javax.*</code> → <code>jakarta.*</code>, actualiza Struts a 6.4.0
+          y activa Jakarta EE 10 con <code>webProfile-10.0</code>.
+        </p>
+        <span class="journey-card__result">
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 32 32" fill="currentColor"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
+          BUILD SUCCESS con Java 21
+        </span>
+      </button>
+
+      <!-- Lab 3 -->
+      <button class="journey-card" role="listitem"
+              onclick="window.location.hash='#/lab/java-modernization-v2/lab3'"
+              aria-label="Ir a Lab 3 — UI Modernization Struts a React">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="journey-card__num">3</span>
+          <div class="journey-card__tags">
+            <span class="cds--tag cds--tag--purple" style="font-size:0.6875rem">React</span>
+            <span class="cds--tag cds--tag--cool-gray" style="font-size:0.6875rem">~40 min</span>
+          </div>
+        </div>
+        <p class="journey-card__title">UI: Struts/JSP → React + JAX-RS</p>
+        <p class="journey-card__desc">
+          Reemplaza el frontend Struts/JSP por una SPA React + TypeScript + Vite,
+          con un backend JAX-RS REST en Liberty. Bob genera el mapa de conversión
+          completo y crea los 6 recursos y 7 componentes.
+        </p>
+        <span class="journey-card__result">
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 32 32" fill="currentColor"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
+          Backend Java + frontend React funcionando
+        </span>
+      </button>
+
+      <!-- Lab 4 -->
+      <button class="journey-card" role="listitem"
+              onclick="window.location.hash='#/lab/java-modernization-v2/lab4'"
+              aria-label="Ir a Lab 4 — Unit Test Generation">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="journey-card__num">4</span>
+          <div class="journey-card__tags">
+            <span class="cds--tag cds--tag--green" style="font-size:0.6875rem">JUnit 5</span>
+            <span class="cds--tag cds--tag--cool-gray" style="font-size:0.6875rem">~30 min</span>
+          </div>
+        </div>
+        <p class="journey-card__title">Generación de Unit Tests</p>
+        <p class="journey-card__desc">
+          Bob genera una suite completa de tests con JUnit 5, Mockito 5 y AssertJ 3:
+          tests de modelos, repositorios y resources JAX-RS con mocks.
+          El código de producción no se toca.
+        </p>
+        <span class="journey-card__result">
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 32 32" fill="currentColor"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
+          mvn test → 0 failures, 0 errors
+        </span>
+      </button>
+
+      <!-- Lab Alt-4 -->
+      <button class="journey-card" role="listitem"
+              onclick="window.location.hash='#/lab/java-modernization-v2/lab-alt4'"
+              aria-label="Ir a Alt-Lab 4 — Test-Driven Development TDD">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="journey-card__num journey-card__num--alt">4b</span>
+          <div class="journey-card__tags">
+            <span class="cds--tag cds--tag--purple" style="font-size:0.6875rem">TDD</span>
+            <span class="cds--tag cds--tag--cool-gray" style="font-size:0.6875rem">~30 min</span>
+          </div>
+        </div>
+        <p class="journey-card__title">Alternativa: TDD Red→Green→Refactor</p>
+        <p class="journey-card__desc">
+          Variante del Lab 4. Los tests ya están escritos —
+          Bob implementa <code>PrescriptionResource.java</code> desde cero para hacerlos pasar,
+          siguiendo el ciclo clásico de TDD.
+        </p>
+        <span class="journey-card__result">
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 32 32" fill="currentColor"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
+          RED confirmado → GREEN alcanzado
+        </span>
+      </button>
+
+      <!-- Lab 5 -->
+      <button class="journey-card" role="listitem"
+              onclick="window.location.hash='#/lab/java-modernization-v2/lab5'"
+              aria-label="Ir a Lab 5 — Security Vulnerability Remediation">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="journey-card__num journey-card__num--security">5</span>
+          <div class="journey-card__tags">
+            <span class="cds--tag cds--tag--red" style="font-size:0.6875rem">Seguridad</span>
+            <span class="cds--tag cds--tag--cool-gray" style="font-size:0.6875rem">~20 min</span>
+          </div>
+        </div>
+        <p class="journey-card__title">Remediación de Vulnerabilidades CVE</p>
+        <p class="journey-card__desc">
+          Bob detecta y remedia 3 CVEs críticos: Text4Shell (commons-text),
+          SnakeYAML y commons-lang3. Solo se modifican 3 versiones en
+          <code>pom.xml</code> — el código fuente no se toca.
+        </p>
+        <span class="journey-card__result">
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 32 32" fill="currentColor"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
+          3 CVEs resueltos — BUILD SUCCESS
+        </span>
+      </button>
+
+    </div>
+  </section>
+
+  <!-- ── 4. Cómo trabaja Bob ── -->
+  <section class="lab-section" aria-labelledby="ov-como">
+    <h2 class="cds--productive-heading-03" id="ov-como">
+      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="vertical-align:-3px;margin-right:8px"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
+      Cómo trabaja Bob en cada lab
+    </h2>
+
+    <p class="cds--body-01" style="max-width:72ch;margin-bottom:var(--cds-spacing-05,1rem)">
+      Cada lab sigue el mismo ciclo de tres fases. Bob nunca modifica código sin tu aprobación
+      — siempre muestra el cambio primero y espera tu confirmación.
+    </p>
+
+    <div class="prereq-grid">
+      <div class="prereq-item">
+        <div class="prereq-item__icon">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 32 32" fill="currentColor"><path d="M17 22h-2v-2h2zm0-4h-2v-8h2z"/><path d="M16 2C8.3 2 2 8.3 2 16s6.3 14 14 14 14-6.3 14-14S23.7 2 16 2zm0 26C9.4 28 4 22.6 4 16S9.4 4 16 4s12 5.4 12 12-5.4 12-12 12z"/></svg>
+        </div>
+        <div class="prereq-item__body">
+          <p class="prereq-item__title">Fase 1 — Análisis</p>
+          <p class="prereq-item__desc">
+            Bob lee todos los archivos relevantes, identifica el estado actual,
+            detecta problemas y construye un inventario. No toca ningún archivo todavía.
+            Tú revisas el análisis y dices <strong>"adelante"</strong>.
+          </p>
+        </div>
+      </div>
+      <div class="prereq-item">
+        <div class="prereq-item__icon">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 32 32" fill="currentColor"><path d="M18 28H8a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12l6 6v6h-2v-5h-5V4H8v20h10v2zm2-24v4h4zm-1 15 5 5-5 5-1.4-1.4 3.6-3.6-3.6-3.6L19 19zm-4 3.6 3.6 3.6-3.6 3.6L14 25l3.6-3.6L14 18l1.4-1.4z"/></svg>
+        </div>
+        <div class="prereq-item__body">
+          <p class="prereq-item__title">Fase 2 — Cambios</p>
+          <p class="prereq-item__desc">
+            Bob propone cada cambio de forma individual: muestra el diff exacto,
+            explica la razón y espera tu aprobación (<strong>"ok"</strong>) antes de aplicarlo.
+            Un cambio a la vez — nunca en batch sin aviso.
+          </p>
+        </div>
+      </div>
+      <div class="prereq-item">
+        <div class="prereq-item__icon">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 32 32" fill="currentColor"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
+        </div>
+        <div class="prereq-item__body">
+          <p class="prereq-item__title">Fase 3 — Validación</p>
+          <p class="prereq-item__desc">
+            Bob ejecuta el comando de validación (<code>mvn compile</code>, <code>mvn test</code>),
+            lee el resultado y — si hay errores — muestra el stack trace completo antes de
+            proponer cualquier fix. No arregla problemas a ciegas.
+          </p>
+        </div>
+      </div>
+      <div class="prereq-item">
+        <div class="prereq-item__icon">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2C8.3 2 2 8.3 2 16s6.3 14 14 14 14-6.3 14-14S23.7 2 16 2zm-1.1 6h2.2v11h-2.2V8zM16 25c-.8 0-1.5-.7-1.5-1.5S15.2 22 16 22s1.5.7 1.5 1.5S16.8 25 16 25z"/></svg>
+        </div>
+        <div class="prereq-item__body">
+          <p class="prereq-item__title">Principio fundamental</p>
+          <p class="prereq-item__desc">
+            Bob aplica únicamente los <strong>cambios mínimos necesarios</strong> para el objetivo del lab.
+            No refactoriza, no añade funcionalidades extras, no limpia código no relacionado.
+            El control siempre es tuyo.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 5. Prerequisitos ── -->
+  <section class="lab-section" aria-labelledby="ov-prereqs">
+    <h2 class="cds--productive-heading-03" id="ov-prereqs">
+      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="vertical-align:-3px;margin-right:8px"><path d="M16 4a5 5 0 1 1-5 5 5 5 0 0 1 5-5m0-2a7 7 0 1 0 7 7 7 7 0 0 0-7-7ZM26 30h-2v-5a5 5 0 0 0-5-5h-6a5 5 0 0 0-5 5v5H6v-5a7 7 0 0 1 7-7h6a7 7 0 0 1 7 7Z"/></svg>
+      Prerequisitos
+    </h2>
+
+    <div class="callout" data-tone="warning" style="max-width:72ch">
+      <p class="callout__title">Instala todo antes de empezar el Lab 1</p>
+      <p>Los prerequisitos de software deben estar instalados antes de iniciar. Usa el checklist de cada lab para verificar que tu entorno está listo.</p>
+    </div>
+
+    <div class="prereq-grid" style="margin-top:var(--cds-spacing-06,1.5rem)">
+
+      <div class="prereq-item">
+        <div class="prereq-item__icon">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
+        </div>
+        <div class="prereq-item__body">
+          <p class="prereq-item__title">IBM Bob IDE con modo Agent</p>
+          <p class="prereq-item__desc">
+            Bob en modo <strong>Agent</strong> (no Ask). El workshop no requiere Bob Premium —
+            todos los labs son 100% realizables con el modo Agent estándar usando los prompts incluidos.
+          </p>
+        </div>
+      </div>
+
+      <div class="prereq-item">
+        <div class="prereq-item__icon">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 32 32" fill="currentColor"><path d="M16 30a14 14 0 1 1 14-14 14 14 0 0 1-14 14zm0-26a12 12 0 1 0 12 12A12 12 0 0 0 16 4zm2 18h-4v-7H8l8-9 8 9h-6z"/></svg>
+        </div>
+        <div class="prereq-item__body">
+          <p class="prereq-item__title">Java 8 (Labs 1 y 2)</p>
+          <p class="prereq-item__desc">
+            <code>brew install --cask zulu@8</code><br/>
+            Verificar: <code>java -version</code> debe decir <code>1.8.0_...</code>
+          </p>
+        </div>
+      </div>
+
+      <div class="prereq-item">
+        <div class="prereq-item__icon">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 32 32" fill="currentColor"><path d="M16 30a14 14 0 1 1 14-14 14 14 0 0 1-14 14zm0-26a12 12 0 1 0 12 12A12 12 0 0 0 16 4zm2 18h-4v-7H8l8-9 8 9h-6z"/></svg>
+        </div>
+        <div class="prereq-item__body">
+          <p class="prereq-item__title">Java 21 (Labs 3, 4, Alt-4, 5)</p>
+          <p class="prereq-item__desc">
+            <code>brew install --cask zulu@21</code><br/>
+            Verificar: <code>java -version</code> debe decir <code>21...</code>
+          </p>
+        </div>
+      </div>
+
+      <div class="prereq-item">
+        <div class="prereq-item__icon">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 32 32" fill="currentColor"><path d="M28 6H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2zm0 18H4V8h24z"/><path d="M8 14h2v2H8zm0 4h2v2H8zm5-4h11v2H13zm0 4h7v2h-7z"/></svg>
+        </div>
+        <div class="prereq-item__body">
+          <p class="prereq-item__title">Maven 3.8+</p>
+          <p class="prereq-item__desc">
+            <code>brew install maven</code><br/>
+            Verificar: <code>mvn --version</code> — asegúrate de que apunte a la versión de Java correcta.
+          </p>
+        </div>
+      </div>
+
+      <div class="prereq-item">
+        <div class="prereq-item__icon">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/></svg>
+        </div>
+        <div class="prereq-item__body">
+          <p class="prereq-item__title">Node.js (solo Lab 3)</p>
+          <p class="prereq-item__desc">
+            <code>brew install node</code><br/>
+            Solo necesario para el Lab 3 (frontend React). Verificar: <code>node --version</code>
+          </p>
+        </div>
+      </div>
+
+      <div class="prereq-item">
+        <div class="prereq-item__icon">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 32 32" fill="currentColor"><path d="M18 28H8a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12l6 6v14a2 2 0 0 1-2 2zm-10-2h10V14h-5V6H8v20zm12-14v-2l-4-4v4h4z"/></svg>
+        </div>
+        <div class="prereq-item__body">
+          <p class="prereq-item__title">Proyecto Simple Pharmacy</p>
+          <p class="prereq-item__desc">
+            El repositorio del workshop con las carpetas <code>snapA</code> a <code>snapE</code>
+            y <code>snapTDD</code>. Cada snap es el punto de inicio de su lab.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── 6. Recomendaciones ── -->
+  <section class="lab-section" aria-labelledby="ov-recs">
+    <h2 class="cds--productive-heading-03" id="ov-recs">
+      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="vertical-align:-3px;margin-right:8px"><path d="M11 28H8l-1-1v-3l7-8-1-2H7l-1-1v-2l1-1h10l1 1 1 3-7 8 1 2h5l1 1v2l-1 1H12zM11 8V5l1-1h2l1 1v3l-1 1h-2zm6-3h2l1 1v3l-1 1h-2l-1-1V6z"/></svg>
+      Recomendaciones antes de empezar
+    </h2>
+
+    <div class="callout" data-tone="note" style="max-width:72ch">
+      <p class="callout__title">Regla crítica — carpeta raíz</p>
+      <p>Abre <strong>siempre</strong> la carpeta <code>snap*</code> específica del lab como raíz en Bob,
+         nunca la carpeta padre. Si abres el directorio incorrecto, Bob analizará los archivos equivocados.</p>
+      <div class="code-block" style="margin-top:12px">
+        <button class="copy-button" type="button">Copiar</button>
+        <pre><code>labs/lab1-java-liberty-replatforming/snapA-java-liberty-replatforming/  ← correcto
+labs/lab1-java-liberty-replatforming/                                    ← incorrecto</code></pre>
+      </div>
+    </div>
+
+    <div class="callout" data-tone="warning" style="max-width:72ch;margin-top:var(--cds-spacing-05,1rem)">
+      <p class="callout__title">Cambia JAVA_HOME antes del Lab 2</p>
+      <p>Los Labs 1 y 2 usan Java 8. A partir del Lab 3 debes cambiar a Java 21.
+         Verifica siempre con <code>java -version</code> y <code>mvn --version</code> antes de ejecutar cualquier lab.</p>
+    </div>
+
+    <div class="callout" data-tone="tip" style="max-width:72ch;margin-top:var(--cds-spacing-05,1rem)">
+      <p class="callout__title">Prompt General de Rol</p>
+      <p>Cada lab incluye un prompt que establece el rol de Bob como experto en modernización Java.
+         Pégalo al inicio de cada sesión antes del prompt del lab para obtener los mejores resultados.</p>
+    </div>
+
+  </section>
+
+  <!-- ── 7. Resumen de labs ── -->
+  <section class="lab-section" aria-labelledby="ov-resumen">
+    <h2 class="cds--productive-heading-03" id="ov-resumen">
+      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="vertical-align:-3px;margin-right:8px"><path d="M8 18h2v2H8zm0-4h2v2H8zm0-4h2v2H8zm5 0h11v2H13zm0 4h7v2h-7zm0 4h11v2H13z"/><path d="M28 6H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2zm0 18H4V8h24z"/></svg>
+      Resumen de los labs
+    </h2>
+
+    <div class="lab-comparison-table">
+      <table class="lab-table">
+        <thead>
+          <tr>
+            <th>Lab</th>
+            <th>Java</th>
+            <th>Qué cambia</th>
+            <th>Criterio de éxito</th>
+            <th>Tiempo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Lab 1</strong> — Replatforming</td>
+            <td>8</td>
+            <td>Runtime TWas → Liberty, <code>liberty-maven-plugin</code>, <code>server.xml</code></td>
+            <td><code>mvn clean compile</code> BUILD SUCCESS</td>
+            <td>~20 min</td>
+          </tr>
+          <tr>
+            <td><strong>Lab 2</strong> — Java 21 Upgrade</td>
+            <td>8 → 21</td>
+            <td>Compilador, <code>javax</code>→<code>jakarta</code>, Struts 6.4.0, Jakarta EE 10</td>
+            <td><code>mvn clean compile</code> con Java 21</td>
+            <td>~25 min</td>
+          </tr>
+          <tr>
+            <td><strong>Lab 3</strong> — UI Modernization</td>
+            <td>21</td>
+            <td>Struts/JSP → JAX-RS REST + React + TypeScript + Vite</td>
+            <td>Backend compila + frontend en <code>localhost:5173</code></td>
+            <td>~40 min</td>
+          </tr>
+          <tr>
+            <td><strong>Lab 4</strong> — Unit Tests</td>
+            <td>21</td>
+            <td>Suite JUnit 5 + Mockito 5 + AssertJ 3 (src/main no se toca)</td>
+            <td><code>mvn test</code> 0 failures, 0 errors</td>
+            <td>~30 min</td>
+          </tr>
+          <tr>
+            <td><strong>Alt-Lab 4</strong> — TDD</td>
+            <td>21</td>
+            <td>Implementar código para pasar tests ya escritos (Red→Green→Refactor)</td>
+            <td>Todos los tests pasan (GREEN)</td>
+            <td>~30 min</td>
+          </tr>
+          <tr>
+            <td><strong>Lab 5</strong> — Seguridad</td>
+            <td>21</td>
+            <td>3 versiones en <code>pom.xml</code> (Text4Shell, SnakeYAML, commons-lang3)</td>
+            <td><code>mvn clean compile</code> + 3 CVEs resueltos</td>
+            <td>~20 min</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:var(--cds-spacing-07,2rem);display:flex;gap:var(--cds-spacing-05,1rem);flex-wrap:wrap">
+      <button class="cds--btn cds--btn--primary"
+              onclick="window.location.hash='#/lab/java-modernization-v2/lab1'">
+        Comenzar con el Lab 1
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="margin-left:8px"><path d="M18 6l-1.43 1.393L24.15 15H4v2h20.15l-7.58 7.573L18 26l10-10z"/></svg>
+      </button>
+    </div>
+  </section>
+
+</div>

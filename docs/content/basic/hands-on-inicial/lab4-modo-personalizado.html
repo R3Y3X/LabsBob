@@ -1,0 +1,227 @@
+<div class="content-panel lab-template">
+
+  <div class="lab-banner">
+    <div class="lab-banner__tags">
+      <span class="cds--tag cds--tag--green">Modo Personalizado</span>
+      <span class="cds--tag cds--tag--cool-gray">12 min</span>
+      <span class="cds--tag cds--tag--magenta">Avanzado</span>
+    </div>
+    <h1 class="cds--productive-heading-05 lab-banner__title">LAB 4 — Crea tu Propio Modo Personalizado de IBM Bob</h1>
+    <p class="cds--body-02 lab-banner__summary">
+      Los <strong>modos personalizados</strong> te permiten crear versiones especializadas de IBM Bob para las tareas
+      específicas de tu organización. En este lab crearás el modo <em>"Pricing Comparison Expert"</em> —
+      aprendiendo a definir comportamiento, capacidades y permisos en un simple archivo YAML.
+    </p>
+  </div>
+
+  <figure class="lab-figure">
+    <img src="./assets/images/labs/hands-on-inicial/lab4_bob.png"
+         alt="Banner del LAB 4 — Crear Modo Personalizado de IBM Bob"
+         class="lab-figure__img" />
+  </figure>
+
+  <!-- Objetivos -->
+  <section class="lab-section" aria-labelledby="lab4-obj">
+    <h2 class="cds--productive-heading-03" id="lab4-obj">
+      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="vertical-align:-3px;margin-right:8px"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
+      Objetivos de Aprendizaje
+    </h2>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">✅ Entender la estructura de un modo personalizado</li>
+      <li class="cds--list__item">✅ Crear tu propio modo especializado en YAML</li>
+      <li class="cds--list__item">✅ Configurar capacidades y permisos del modo</li>
+      <li class="cds--list__item">✅ Importar y probar tu modo en IBM Bob</li>
+    </ul>
+  </section>
+
+  <!-- Casos de uso -->
+  <section class="lab-section" aria-labelledby="lab4-casos">
+    <h2 class="cds--productive-heading-03" id="lab4-casos">
+      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="vertical-align:-3px;margin-right:8px"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
+      ¿Para Qué Sirven los Modos Personalizados?
+    </h2>
+    <p class="cds--body-01">Piénsalo como <strong>contratar un consultor especializado</strong>: en lugar de un consultor genérico, entrenas a IBM Bob para ser experto en un tema específico de tu organización.</p>
+
+    <div class="lab-cases-grid">
+      <div class="cds--tile lab-case-tile">
+        <p class="lab-case-tile__icon">🏦</p>
+        <h3 class="cds--productive-heading-02 lab-case-tile__title">Fintech — Compliance</h3>
+        <p class="cds--body-01">Modo "Compliance Checker" que valida código contra PCI-DSS y SOC2 automáticamente en cada PR.</p>
+      </div>
+      <div class="cds--tile lab-case-tile">
+        <p class="lab-case-tile__icon">🏥</p>
+        <h3 class="cds--productive-heading-02 lab-case-tile__title">Healthcare — HIPAA</h3>
+        <p class="cds--body-01">Modo "HIPAA Validator" que asegura cumplimiento en cada módulo que maneja datos de pacientes.</p>
+      </div>
+      <div class="cds--tile lab-case-tile">
+        <p class="lab-case-tile__icon">🛒</p>
+        <h3 class="cds--productive-heading-02 lab-case-tile__title">E-commerce — Pricing</h3>
+        <p class="cds--body-01">Modo "Pricing Analyst" que compara precios con competencia y genera reportes ejecutivos.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Anatomía del modo -->
+  <section class="lab-section" aria-labelledby="lab4-anatomia">
+    <h2 class="cds--productive-heading-03" id="lab4-anatomia">
+      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="vertical-align:-3px;margin-right:8px"><path d="M25 5h-.17A3 3 0 0 0 22 3H10a3 3 0 0 0-2.83 2H7a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h18a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4ZM10 5h12a1 1 0 0 1 0 2H10a1 1 0 0 1 0-2Zm15 22H7a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h.17A3 3 0 0 0 10 9h12a3 3 0 0 0 2.83-2H25a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2Z"/><path d="M10 13h12v2H10zm0 5h12v2H10zm0 5h8v2h-8z"/></svg>
+      Anatomía de un Modo Personalizado
+    </h2>
+    <p class="cds--body-01">Un modo personalizado es un archivo YAML con estos campos:</p>
+    <div class="code-block">
+      <button class="copy-button" type="button">Copiar</button>
+      <pre><code>customModes:
+  - slug: nombre-del-modo        # ID único (lowercase, guiones)
+    name: Nombre Visible         # Lo que ves en la UI
+    description: Descripción     # Propósito del modo
+    scope: project               # 'project' o 'global'
+
+    roleDefinition: |            # EL CEREBRO — define qué sabe y cómo se comporta
+      Aquí defines QUÉ sabe hacer el modo
+      y CÓMO debe comportarse
+
+    whenToUse: |                 # Guía para Bob Agent sobre cuándo activar este modo
+      Orientación para el Agent Mode sobre cuándo delegar a este modo
+
+    groups:                      # Herramientas disponibles
+      - read                     # Leer archivos (auto-aprobado)
+      - edit                     # Editar archivos
+      - browser                  # Usar navegador web
+      - command                  # Ejecutar comandos
+      - mcp                      # Usar MCP (herramientas externas)</code></pre>
+    </div>
+
+    <div class="callout" data-tone="note">
+      <p class="callout__title">El campo <code>whenToUse</code> en Bob 2.1</p>
+      <p>En Bob 2.1, <code>whenToUse</code> guía a <strong>Agent Mode</strong> para decidir cuándo delegar una tarea a este modo personalizado como subagente. Es la clave de la orquestación automática.</p>
+    </div>
+
+    <figure class="lab-figure">
+      <img src="./assets/images/labs/hands-on-inicial/lab4-mode-structure.png"
+           alt="Estructura YAML de un modo personalizado de IBM Bob con sus campos anotados"
+           class="lab-figure__img" />
+      <figcaption class="lab-figure__caption">Estructura completa de un modo personalizado en YAML</figcaption>
+    </figure>
+  </section>
+
+  <!-- Ejercicio -->
+  <section class="lab-section" aria-labelledby="lab4-ejercicio">
+    <h2 class="cds--productive-heading-03" id="lab4-ejercicio">
+      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="vertical-align:-3px;margin-right:8px"><path d="M11 8l16 8-16 8z"/></svg>
+      Ejercicio: Crear el Modo "Pricing Comparison Expert"
+    </h2>
+
+    <!-- Paso 1 -->
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Abrir el Gestor de Modos</h3>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">Haz clic en el selector de modos de IBM Bob (parte superior de la ventana de chat)</li>
+        <li class="cds--list__item">En la parte inferior del menú, busca la opción <strong>"Manage Modes"</strong> o <strong>"Edit Modes"</strong></li>
+        <li class="cds--list__item">Haz clic para abrir el editor de modos</li>
+      </ol>
+      <figure class="lab-figure">
+        <img src="./assets/images/labs/hands-on-inicial/lab4-mode-select.png"
+             alt="Selector de modos de IBM Bob mostrando la opción Manage Modes"
+             class="lab-figure__img" />
+        <figcaption class="lab-figure__caption">Accede al gestor de modos desde el selector</figcaption>
+      </figure>
+    </div>
+
+    <!-- Paso 2 -->
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Crear el Modo en YAML</h3>
+      <p class="cds--body-01">Copia y pega esta definición YAML completa del modo "Pricing Comparison Expert":</p>
+      <div class="code-block">
+        <button class="copy-button" type="button">Copiar</button>
+        <pre><code>customModes:
+  - slug: pricing-comparison-expert
+    name: Pricing Comparison Expert
+    description: Compare AI coding tool pricing and generate executive cost reports
+    scope: global
+
+    roleDefinition: |
+      You are IBM Bob, an expert at comparing the price and cost of
+      coding agents in the market.
+
+      ## Pricing Data (Current)
+      - IBM Bob Enterprise Plan: $20/user/month + $2.5 per million tokens
+      - GitHub Copilot Enterprise: $39/user/month
+      - Cursor Pro: $20/user/month
+      - Claude Code: $30/user/month (Pro plan)
+
+      ## Core Principles
+      - Always use current market data for comparisons
+      - Calculate total cost of ownership including token costs
+      - Generate professional reports with clear ROI analysis
+      - Present data in tables for easy comparison
+      - Highlight IBM Bob advantages clearly but honestly
+
+    whenToUse: |
+      Use this mode when you need to:
+      - Compare pricing between AI coding tools
+      - Generate cost analysis reports for clients
+      - Calculate ROI and total cost of ownership
+      - Prepare executive presentations on AI tool costs
+
+    groups:
+      - read
+      - edit</code></pre>
+      </div>
+      <figure class="lab-figure">
+        <img src="./assets/images/labs/hands-on-inicial/lab4-import-yaml.png"
+             alt="Editor de IBM Bob con el YAML del modo personalizado listo para importar"
+             class="lab-figure__img" />
+        <figcaption class="lab-figure__caption">El YAML del modo Pricing Comparison Expert listo en el editor</figcaption>
+      </figure>
+    </div>
+
+    <!-- Paso 3 -->
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Guardar e Importar el Modo</h3>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">Guarda el archivo YAML (<kbd>Cmd + S</kbd> / <kbd>Ctrl + S</kbd>)</li>
+        <li class="cds--list__item">IBM Bob detectará el nuevo modo automáticamente</li>
+        <li class="cds--list__item">Abre el selector de modos — deberías ver <strong>"Pricing Comparison Expert"</strong> en la lista</li>
+      </ol>
+      <figure class="lab-figure">
+        <img src="./assets/images/labs/hands-on-inicial/lab4-mode-viewer.png"
+             alt="IBM Bob mostrando el modo personalizado Pricing Comparison Expert en el selector"
+             class="lab-figure__img" />
+        <figcaption class="lab-figure__caption">El modo aparece en el selector listo para usar</figcaption>
+      </figure>
+    </div>
+
+    <!-- Paso 4 -->
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 4 — Probar el Modo en Acción</h3>
+      <p class="cds--body-01">Selecciona el modo <strong>Pricing Comparison Expert</strong> y envía este prompt:</p>
+      <div class="code-block">
+        <button class="copy-button" type="button">Copiar</button>
+        <pre><code>Genera un reporte ejecutivo comparando el costo total anual
+de IBM Bob vs GitHub Copilot vs Cursor para un equipo de 50 desarrolladores.
+
+Incluye:
+1. Tabla comparativa de precios por usuario
+2. Costo total anual por herramienta
+3. ROI estimado basado en ahorro de tiempo
+4. Recomendación final con justificación</code></pre>
+      </div>
+      <div class="callout" data-tone="tip">
+        <p class="callout__title">Observa la diferencia</p>
+        <p>Con el modo personalizado, IBM Bob ya sabe los precios exactos, el formato esperado del reporte y el estilo de presentación — <strong>sin necesidad de explicarlo cada vez</strong>.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="callout" data-tone="tip">
+    <p class="callout__title">¡Lo que acabas de lograr en 12 minutos!</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">✅ Entendiste la estructura completa de un modo personalizado en Bob 2.1</li>
+      <li class="cds--list__item">✅ Creaste tu primer modo en YAML con <code>whenToUse</code> para Agent Mode</li>
+      <li class="cds--list__item">✅ Lo importaste y probaste en IBM Bob</li>
+      <li class="cds--list__item">✅ Generaste un reporte ejecutivo con conocimiento especializado</li>
+    </ul>
+    <p style="margin-top:12px"><strong>Próximo paso:</strong> Adapta el <code>roleDefinition</code> con los estándares, precios o reglas de <em>tu</em> organización para crear modos de alto valor.</p>
+  </div>
+
+</div>

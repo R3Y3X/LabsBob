@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" aria-hidden="true" focusable="false">
+  <!-- IBM 8-bar logo mark -->
+  <rect x="0"  y="0"  width="32" height="4" fill="currentColor"/>
+  <rect x="6"  y="7"  width="20" height="4" fill="currentColor"/>
+  <rect x="8"  y="14" width="16" height="4" fill="currentColor"/>
+  <rect x="6"  y="21" width="20" height="4" fill="currentColor"/>
+  <rect x="0"  y="28" width="32" height="4" fill="currentColor"/>
+  <rect x="0"  y="14" width="4"  height="4" fill="currentColor"/>
+  <rect x="28" y="14" width="4"  height="4" fill="currentColor"/>
+</svg>

@@ -1,0 +1,183 @@
+<div class="content-panel lab-template">
+
+  <div class="lab-banner">
+    <div class="lab-banner__tags">
+      <span class="cds--tag cds--tag--red">Seguridad</span>
+      <span class="cds--tag cds--tag--cool-gray">10 min</span>
+      <span class="cds--tag cds--tag--purple">Intermedio</span>
+    </div>
+    <h1 class="cds--productive-heading-05 lab-banner__title">LAB 3 — IBM Bob el Guardián: Seguridad</h1>
+    <p class="cds--body-02 lab-banner__summary">
+      IBM Bob tiene capacidades integradas de <strong>análisis de seguridad</strong> que detectan vulnerabilidades
+      automáticamente mientras escribes código. Es como tener un experto en seguridad revisando tu código
+      en tiempo real — <strong>sin instalar plugins ni herramientas adicionales</strong>.
+    </p>
+  </div>
+
+  <figure class="lab-figure">
+    <img src="./assets/images/labs/hands-on-inicial/lab3_bob.png"
+         alt="Banner del LAB 3 — IBM Bob el Guardián de Seguridad"
+         class="lab-figure__img" />
+  </figure>
+
+  <!-- Objetivos -->
+  <section class="lab-section" aria-labelledby="lab3-obj">
+    <h2 class="cds--productive-heading-03" id="lab3-obj">
+      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="vertical-align:-3px;margin-right:8px"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
+      Objetivos de Aprendizaje
+    </h2>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">✅ Usar IBM Bob para detectar vulnerabilidades automáticamente</li>
+      <li class="cds--list__item">✅ Entender los iconos de seguridad que IBM Bob muestra en el código</li>
+      <li class="cds--list__item">✅ Obtener sugerencias de remediación con código corregido</li>
+      <li class="cds--list__item">✅ Generar un reporte de seguridad profesional</li>
+    </ul>
+  </section>
+
+  <!-- Iconos -->
+  <section class="lab-section" aria-labelledby="lab3-iconos">
+    <h2 class="cds--productive-heading-03" id="lab3-iconos">
+      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="vertical-align:-3px;margin-right:8px"><path d="M16 2C8.2 2 2 8.2 2 16s6.2 14 14 14 14-6.2 14-14S23.8 2 16 2zm-1.1 6h2.2v2.2h-2.2V8zm0 4.4h2.2V24h-2.2z"/><path d="M29 16c0 7.2-5.8 13-13 13S3 23.2 3 16 8.8 3 16 3s13 5.8 13 13z" fill="none" stroke="currentColor" stroke-width="0"/></svg>
+      Los Iconos de IBM Bob
+    </h2>
+    <p class="cds--body-01">IBM Bob muestra <strong>2 tipos de iconos</strong> a la izquierda del código:</p>
+
+    <figure class="lab-figure">
+      <img src="./assets/images/labs/hands-on-inicial/iconos_bob.png"
+           alt="Los dos iconos de IBM Bob: casco (sugerencia de código) y escudo (vulnerabilidad de seguridad)"
+           class="lab-figure__img" />
+      <figcaption class="lab-figure__caption">Los iconos de IBM Bob en el editor — casco y escudo</figcaption>
+    </figure>
+
+    <div class="lab-modes-grid" style="margin-top:16px">
+      <div class="lab-mode-card" style="border-left-color:var(--cds-support-info,#0043ce)">
+        <div class="lab-mode-card__icon">
+          <svg aria-hidden="true" width="28" height="28" viewBox="0 0 32 32" fill="currentColor"><path d="M26 4H6a2 2 0 0 0-2 2v8c0 9.63 7.88 13.74 11.29 15.1a2.27 2.27 0 0 0 1.42 0C20.12 27.74 28 23.63 28 14V6a2 2 0 0 0-2-2Zm0 10c0 8.23-6.86 11.89-10 13.22C12.86 25.89 6 22.23 6 14V6h20Z"/></svg>
+        </div>
+        <div class="lab-mode-card__body">
+          <h3 class="cds--productive-heading-02">Casco de IBM Bob</h3>
+          <p class="cds--body-01"><strong>Sugerencia o acción de IBM Bob</strong> — aparece en code review, bugs detectados y mejoras de código</p>
+        </div>
+      </div>
+      <div class="lab-mode-card" style="border-left-color:var(--cds-support-error,#da1e28)">
+        <div class="lab-mode-card__icon">
+          <svg aria-hidden="true" width="28" height="28" viewBox="0 0 32 32" fill="currentColor"><path d="M26 4H6a2 2 0 0 0-2 2v8c0 9.63 7.88 13.74 11.29 15.1a2.27 2.27 0 0 0 1.42 0C20.12 27.74 28 23.63 28 14V6a2 2 0 0 0-2-2Zm0 10c0 8.23-6.86 11.89-10 13.22C12.86 25.89 6 22.23 6 14V6h20Z"/><path d="M15 10h2v8h-2zm0 10h2v2h-2z"/></svg>
+        </div>
+        <div class="lab-mode-card__body">
+          <h3 class="cds--productive-heading-02">Escudo de Seguridad</h3>
+          <p class="cds--body-01"><strong>Vulnerabilidad de seguridad detectada</strong> — aparece en security scan y problemas de seguridad</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout" data-tone="note">
+      <p class="callout__title">¿Qué Detecta IBM Bob Automáticamente?</p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">🔴 <strong>Vulnerabilidades críticas:</strong> Hardcoded secrets, SQL injection, code injection</li>
+        <li class="cds--list__item">🟡 <strong>Problemas de seguridad:</strong> Falta de validación, exposición de datos sensibles</li>
+        <li class="cds--list__item">🟠 <strong>Malas prácticas:</strong> Passwords sin hash, tokens sin expiración</li>
+        <li class="cds--list__item">🔵 <strong>Mejoras recomendadas:</strong> Soft deletes, rate limiting, logging seguro</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Ejercicio -->
+  <section class="lab-section" aria-labelledby="lab3-ejercicio">
+    <h2 class="cds--productive-heading-03" id="lab3-ejercicio">
+      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="vertical-align:-3px;margin-right:8px"><path d="M11 8l16 8-16 8z"/></svg>
+      Ejercicio: Auditoría de Seguridad
+    </h2>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Activar Ask Mode</h3>
+      <p class="cds--body-01">Haz clic en el selector de modos → selecciona <strong>Ask Mode</strong>. Verifica en la barra de estado: <code>Ask</code> activo.</p>
+      <div class="callout" data-tone="note">
+        <p class="callout__title">¿Por qué Ask Mode para el análisis?</p>
+        <p>Ask Mode lee el código sin modificarlo y tiene <strong>270k tokens de contexto</strong> — ideal para un análisis exhaustivo de todo el archivo vulnerable de una sola vez.</p>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Analizar Código Vulnerable</h3>
+      <p class="cds--body-01">Abre el archivo <code>lab-3-seguridad/codigo-vulnerable/authController-vulnerable.js</code> y observa los comentarios <code>VULNERABILIDAD #X</code> que marcan los problemas. Luego envía este prompt a IBM Bob:</p>
+      <div class="code-block">
+        <button class="copy-button" type="button">Copiar</button>
+        <pre><code>Analiza el archivo lab-3-seguridad/codigo-vulnerable/authController-vulnerable.js
+
+Identifica todas las vulnerabilidades de seguridad y proporciona:
+1. Nombre y número de cada vulnerabilidad
+2. Nivel de severidad (CRÍTICA, ALTA, MEDIA, BAJA)
+3. Descripción del problema
+4. Impacto potencial
+5. Código corregido
+
+Organiza por severidad.</code></pre>
+      </div>
+      <div class="callout" data-tone="tip">
+        <p class="callout__title">✅ Salida Esperada</p>
+        <p>IBM Bob identificará las 15+ vulnerabilidades organizadas por severidad crítica → alta → media → baja, con código corregido para cada una. El proceso completo toma menos de 60 segundos.</p>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Aplicar Correcciones con Agent Mode</h3>
+      <p class="cds--body-01">Con el análisis completo, cambia a <strong>Agent Mode</strong> para aplicar las correcciones:</p>
+      <div class="code-block">
+        <button class="copy-button" type="button">Copiar</button>
+        <pre><code>Basándote en el análisis anterior, aplica todas las correcciones
+de seguridad en authController-vulnerable.js.
+
+Prioriza las vulnerabilidades CRÍTICAS y ALTAS primero.
+Muéstrame cada cambio antes de aplicarlo.</code></pre>
+      </div>
+      <div class="callout" data-tone="warning">
+        <p class="callout__title">⚠️ Agent Mode requiere aprobación para escrituras</p>
+        <p>Cada modificación al archivo requerirá tu confirmación — esto es el comportamiento correcto y seguro de IBM Bob 2.1.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mejores prácticas -->
+  <section class="lab-section" aria-labelledby="lab3-practicas">
+    <h2 class="cds--productive-heading-03" id="lab3-practicas">
+      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="vertical-align:-3px;margin-right:8px"><path d="M26 4H6a2 2 0 0 0-2 2v8c0 9.63 7.88 13.74 11.29 15.1a2.27 2.27 0 0 0 1.42 0C20.12 27.74 28 23.63 28 14V6a2 2 0 0 0-2-2Zm0 10c0 8.23-6.86 11.89-10 13.22C12.86 25.89 6 22.23 6 14V6h20Z"/></svg>
+      Mejores Prácticas de Seguridad
+    </h2>
+    <div class="lab-compare">
+      <div class="lab-compare__col lab-compare__col--good">
+        <h3 class="cds--productive-heading-01">✅ SÍ hacer</h3>
+        <ul class="cds--list--unordered">
+          <li class="cds--list__item">Analiza con IBM Bob <strong>antes de cada commit</strong></li>
+          <li class="cds--list__item">Valida TODOS los inputs del usuario</li>
+          <li class="cds--list__item">Usa <strong>variables de entorno</strong> para secrets</li>
+          <li class="cds--list__item">Implementa rate limiting</li>
+          <li class="cds--list__item">Hash passwords con <strong>bcrypt</strong></li>
+          <li class="cds--list__item">Usa JWT con expiración</li>
+        </ul>
+      </div>
+      <div class="lab-compare__col lab-compare__col--bad">
+        <h3 class="cds--productive-heading-01">❌ NO hacer</h3>
+        <ul class="cds--list--unordered">
+          <li class="cds--list__item">Hardcodear secrets en el código</li>
+          <li class="cds--list__item">Exponer errores internos al cliente</li>
+          <li class="cds--list__item">Confiar en datos del cliente sin validar</li>
+          <li class="cds--list__item">Ignorar los iconos de escudo de IBM Bob</li>
+          <li class="cds--list__item">Almacenar passwords en texto plano</li>
+          <li class="cds--list__item">Loguear datos sensibles (passwords, tokens)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="callout" data-tone="tip">
+    <p class="callout__title">¡Lo que acabas de lograr en 10 minutos!</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">✅ Detectaste vulnerabilidades y problemas de código automáticamente con Ask Mode</li>
+      <li class="cds--list__item">✅ Entendiste los iconos de seguridad y calidad de IBM Bob</li>
+      <li class="cds--list__item">✅ Aplicaste correcciones con Agent Mode con revisión paso a paso</li>
+      <li class="cds--list__item">✅ Generaste un reporte de seguridad profesional</li>
+    </ul>
+    <p style="margin-top:12px"><strong>Sin IBM Bob:</strong> 2–3 horas de auditoría manual &nbsp;|&nbsp; <strong>Con IBM Bob:</strong> 10 minutos &nbsp;|&nbsp; <strong>Ahorro: ~90%</strong></p>
+  </div>
+
+</div>

@@ -1,0 +1,21 @@
+# Local planning and working notes — do not commit
+ibm-workshop-hub-plan.md
+carbon-migration-plan.md
+DESIGN.md
+promt1.md
+
+# Environment / secrets
+.env
+.env.*
+*.pem
+*.key
+id_rsa
+id_rsa.pub
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Editor
+.vscode/settings.json
+.idea/

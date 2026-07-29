@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" aria-hidden="true" focusable="false">
+  <!-- IBM-style isometric cloud / 3D platform illustration -->
+  <!-- Base platform -->
+  <polygon points="240,220 400,140 240,60 80,140" fill="#d0e2ff" opacity="0.6"/>
+  <polygon points="240,220 400,140 400,180 240,260" fill="#4589ff" opacity="0.7"/>
+  <polygon points="240,220 80,140 80,180 240,260" fill="#0f62fe" opacity="0.8"/>
+
+  <!-- Middle cube layer -->
+  <polygon points="240,160 340,110 240,60 140,110" fill="#a6c8ff" opacity="0.8"/>
+  <polygon points="240,160 340,110 340,150 240,200" fill="#4589ff" opacity="0.9"/>
+  <polygon points="240,160 140,110 140,150 240,200" fill="#0f62fe"/>
+
+  <!-- Top cube -->
+  <polygon points="240,110 300,80 240,50 180,80" fill="#edf5ff"/>
+  <polygon points="240,110 300,80 300,110 240,140" fill="#a6c8ff"/>
+  <polygon points="240,110 180,80 180,110 240,140" fill="#4589ff"/>
+
+  <!-- Floating data nodes -->
+  <circle cx="380" cy="95" r="8" fill="#78a9ff" opacity="0.9"/>
+  <circle cx="390" cy="80" r="5" fill="#a6c8ff" opacity="0.7"/>
+  <line x1="380" y1="95" x2="340" y2="110" stroke="#78a9ff" stroke-width="1.5" opacity="0.6"/>
+
+  <circle cx="100" cy="90" r="7" fill="#78a9ff" opacity="0.9"/>
+  <circle cx="88" cy="75" r="4" fill="#a6c8ff" opacity="0.7"/>
+  <line x1="100" y1="90" x2="140" y2="110" stroke="#78a9ff" stroke-width="1.5" opacity="0.6"/>
+
+  <!-- Connection lines on base -->
+  <line x1="240" y1="220" x2="240" y2="260" stroke="#0f62fe" stroke-width="2" opacity="0.4"/>
+  <line x1="320" y1="180" x2="320" y2="220" stroke="#4589ff" stroke-width="1.5" opacity="0.3"/>
+  <line x1="160" y1="180" x2="160" y2="220" stroke="#0f62fe" stroke-width="1.5" opacity="0.3"/>
+
+  <!-- Small accent dots -->
+  <circle cx="240" cy="260" r="4" fill="#0f62fe"/>
+  <circle cx="320" cy="220" r="3" fill="#4589ff"/>
+  <circle cx="160" cy="220" r="3" fill="#4589ff"/>
+</svg>

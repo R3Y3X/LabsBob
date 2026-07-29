@@ -1,0 +1,174 @@
+<div class="content-panel lab-template">
+
+  <div class="lab-banner">
+    <div class="lab-banner__tags">
+      <span class="cds--tag cds--tag--teal">Bob Premium · Java</span>
+      <span class="cds--tag cds--tag--cool-gray">~25 min</span>
+      <span class="cds--tag cds--tag--magenta">Avanzado</span>
+    </div>
+    <h1 class="cds--productive-heading-05 lab-banner__title">LAB 2 — Java 8 → Java 21 Upgrade</h1>
+    <p class="cds--body-02 lab-banner__summary">
+      Actualiza Simple Pharmacy de Java 8 a Java 21 LTS: versión del compilador, namespace
+      <code>javax → jakarta</code>, Struts 2.5.30 → 6.4.0, Jakarta EE 10 y server.xml.
+      Criterio de éxito: <code>mvn clean compile</code> → <strong>BUILD SUCCESS con Java 21</strong>.
+    </p>
+  </div>
+
+  <figure class="lab-figure">
+    <img src="./assets/images/labs/java-modernization-v2/lab2-banner.png"
+         alt="Banner del LAB 2 — Java 8 → Java 21 Upgrade"
+         class="lab-figure__img" />
+  </figure>
+
+  <!-- Contexto -->
+  <section class="lab-section" aria-labelledby="lab2-contexto">
+    <h2 class="cds--productive-heading-03" id="lab2-contexto">📋 Contexto del Lab</h2>
+    <div class="callout" data-tone="note">
+      <p class="callout__title">Estado actual → Estado objetivo</p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item"><strong>Java:</strong> 8 → <strong>21 LTS</strong></li>
+        <li class="cds--list__item"><strong>Struts:</strong> 2.5.30 → <strong>6.4.0</strong></li>
+        <li class="cds--list__item"><strong>Namespace:</strong> <code>javax.*</code> → <code>jakarta.*</code></li>
+        <li class="cds--list__item"><strong>Liberty features:</strong> servlet-3.1, jsp-2.3 → <code>webProfile-10.0</code></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Checklist -->
+  <section class="lab-section" aria-labelledby="lab2-check">
+    <h2 class="cds--productive-heading-03" id="lab2-check">✅ Checklist antes de empezar</h2>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">Carpeta <code>snapB-java-upgrade/</code> abierta como raíz en Bob</li>
+      <li class="cds--list__item"><code>java -version</code> dice <code>21</code></li>
+      <li class="cds--list__item"><code>mvn --version</code> dice <code>Java version: 21</code></li>
+    </ul>
+    <div class="callout" data-tone="note">
+      <p class="callout__title">💡 Instalar Java 21 si no lo tienes</p>
+      <div class="code-block">
+        <button class="copy-button" type="button">Copiar</button>
+        <pre><code>brew install --cask zulu@21
+export JAVA_HOME=$(/usr/libexec/java_home -v 21)
+export PATH="$JAVA_HOME/bin:$PATH"</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fase 1 -->
+  <section class="lab-section" aria-labelledby="lab2-fase1">
+    <h2 class="cds--productive-heading-03" id="lab2-fase1">FASE 1 — Análisis</h2>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Pega el prompt del lab</h3>
+      <div class="code-block">
+        <button class="copy-button" type="button">Copiar</button>
+        <pre><code>Lab 2: actualizar Simple Pharmacy de Java 8 a Java 21.
+Carpeta raíz del proyecto: la que está abierta (snapB — Liberty, Java 8, javax.*).
+
+Estado actual: Liberty, Java 8, Struts 2.5.30, namespace javax.*, servlet-3.1
+Estado objetivo: Liberty, Java 21, Struts 6.4.0, namespace jakarta.*, webProfile-10.0
+
+---
+
+FASE 1 — ANÁLISIS (no toques ningún archivo todavía)
+
+1. Lee pom.xml y lista: versión del compilador, versión de Struts,
+   namespaces de dependencias (javax vs jakarta), plugins presentes
+2. Lee src/main/liberty/config/server.xml y lista sus features
+3. Lee todos los .java y lista qué imports usan javax.servlet.*
+4. Lee todos los .jsp y lista qué taglib URIs usan
+
+Preséntame el análisis. Cuando yo diga "adelante", pasamos a Fase 2.</code></pre>
+      </div>
+      <figure class="lab-figure">
+        <img src="./assets/images/labs/java-modernization-v2/lab2-phase1-analysis.png"
+             alt="Bob listando los imports javax.* y taglib URIs encontrados en el proyecto snapB"
+             class="lab-figure__img" />
+        <figcaption class="lab-figure__caption">Bob identifica todos los imports <code>javax.*</code> y taglib URIs que deben migrarse</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Fase 2 -->
+  <section class="lab-section" aria-labelledby="lab2-fase2">
+    <h2 class="cds--productive-heading-03" id="lab2-fase2">FASE 2 — Cambios</h2>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Aplicar los 6 cambios de migración</h3>
+      <div class="code-block">
+        <button class="copy-button" type="button">Copiar</button>
+        <pre><code>FASE 2 — CAMBIOS (uno a la vez — explica, espera "ok", luego aplica)
+
+Cambio 1 — Compilador Java 21 en pom.xml (APROBAR)
+  maven.compiler.source/target: 1.8 → 21, añadir release=21
+  maven-compiler-plugin → 3.15.0, maven-war-plugin → 3.5.1
+
+Cambio 2 — Struts 6.4.0 en pom.xml (APROBAR)
+  struts2.version: 2.5.30 → 6.4.0
+  Añadir exclusiones de javassist y dependencyManagement forzando javassist 3.29.2-GA
+
+Cambio 3 — Dependencias javax → jakarta en pom.xml (APROBAR)
+  javax.servlet-api → jakarta.servlet-api:6.0.0
+  javax.servlet.jsp-api → jakarta.servlet.jsp-api:3.0.0
+  javax.servlet:jstl → org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1
+
+Cambio 4 — server.xml: features Jakarta EE 10 (APROBAR)
+  Reemplazar servlet-3.1, jsp-2.3, jdbc-4.1 con webProfile-10.0 y mpMetrics-5.1
+  ⚠️ Usar webProfile-10.0, NO jakartaee-10.0 completo.
+
+Cambio 5 — imports javax → jakarta en código Java (APROBAR)
+  javax.servlet.* → jakarta.servlet.*
+  javax.servlet.jsp.* → jakarta.servlet.jsp.*
+
+Cambio 6 — taglib URIs en JSPs (APROBAR)
+  http://java.sun.com/jsp/jstl/core → https://jakarta.ee/xml/ns/jakartaee</code></pre>
+      </div>
+      <figure class="lab-figure">
+        <img src="./assets/images/labs/java-modernization-v2/lab2-phase2-javax-jakarta.png"
+             alt="Bob mostrando el diff de la migración javax a jakarta en los archivos Java y JSP"
+             class="lab-figure__img" />
+        <figcaption class="lab-figure__caption">Bob muestra el diff de cada archivo migrado de <code>javax.*</code> a <code>jakarta.*</code></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Fase 3 -->
+  <section class="lab-section" aria-labelledby="lab2-fase3">
+    <h2 class="cds--productive-heading-03" id="lab2-fase3">FASE 3 — Validación</h2>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Compilar con Java 21</h3>
+      <div class="code-block">
+        <button class="copy-button" type="button">Copiar</button>
+        <pre><code>FASE 3 — VALIDACIÓN
+
+Ejecuta: mvn clean compile
+
+Resultado esperado: BUILD SUCCESS con Java 21.
+Errores comunes:
+  "invalid target release: 21" → JAVA_HOME no apunta a Java 21
+  "cannot find symbol" en jakarta.* → algún import no se migró
+Si falla, muéstrame el error completo antes de proponer ningún fix.</code></pre>
+      </div>
+      <figure class="lab-figure">
+        <img src="./assets/images/labs/java-modernization-v2/lab2-phase3-build-success.png"
+             alt="Terminal mostrando BUILD SUCCESS de Maven con Java 21 en el Lab 2 de Java Upgrade"
+             class="lab-figure__img" />
+        <figcaption class="lab-figure__caption">Terminal: <code>mvn clean compile</code> → BUILD SUCCESS con Java 21</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Criterios de éxito -->
+  <div class="callout" data-tone="tip">
+    <p class="callout__title">🎉 Criterios de Éxito — Lab 2</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">✅ pom.xml: maven.compiler.release=21, struts2.version=6.4.0</li>
+      <li class="cds--list__item">✅ pom.xml: todas las dependencias de API usan namespace jakarta.*</li>
+      <li class="cds--list__item">✅ pom.xml: javassist 3.29.2-GA con exclusiones y dependencyManagement</li>
+      <li class="cds--list__item">✅ server.xml: feature webProfile-10.0 (no jakartaee-10.0 completo)</li>
+      <li class="cds--list__item">✅ Código Java: todos los imports son jakarta.servlet.* (no javax.*)</li>
+      <li class="cds--list__item">✅ mvn clean compile → BUILD SUCCESS con Java 21</li>
+    </ul>
+  </div>
+
+</div>

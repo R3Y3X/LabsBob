@@ -1,0 +1,147 @@
+<div class="content-panel lab-template">
+
+  <div class="lab-banner">
+    <div class="lab-banner__tags">
+      <span class="cds--tag cds--tag--green">Generative AI</span>
+      <span class="cds--tag cds--tag--cool-gray">Delivery</span>
+      <span class="cds--tag cds--tag--teal">Bob Premium · IBM i</span>
+      <span class="cds--tag cds--tag--cyan">Partner Only</span>
+    </div>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Delivery — Connect, Explain, Convert, Validate</h1>
+    <p class="cds--body-02 lab-banner__summary">
+      Four steps: Bob connects to IBM i, explains the legacy RPG program in plain English,
+      converts Fixed-Format to Free-Format RPGLE with annotated modernizations, then compiles
+      and validates directly on the IBM i system.
+    </p>
+  </div>
+
+  <section class="lab-section" aria-labelledby="steps-heading">
+    <h2 class="cds--productive-heading-03" id="steps-heading">Step-by-Step Guide</h2>
+
+    <!-- Step 1 -->
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Step 1 — Connect Bob to IBM i and Load the RPG Source</h3>
+      <p class="cds--body-01">
+        Bob uses its native IBM i connection to access your system directly. It reads source members
+        from your IBM i library list, removing the need to copy files to a local machine.
+      </p>
+      <div class="callout" data-tone="note">
+        <p class="callout__title">Bob Prompt — Agent Mode</p>
+        <div class="code-block">
+          <button class="copy-button" type="button">Copy</button>
+          <pre><code>Connect to my IBM i system and open the source member MYPGM in library MYLIB.
+Show me the source code in the editor.</code></pre>
+        </div>
+      </div>
+      <div class="callout" data-tone="tip">
+        <p class="callout__title">Expected Output</p>
+        <p>Bob establishes the IBM i connection via SSH, navigates to <code>MYLIB/QRPGSRC/MYPGM</code>, and displays the Fixed-Format RPG source in the Bob editor. The file appears in the left-hand file explorer under your IBM i library structure.</p>
+      </div>
+      <blockquote class="image-placeholder">
+        🖼️ <strong>[PLACEHOLDER DE IMAGEN]</strong><br/>
+        <strong>Ruta sugerida:</strong> <code>/assets/images/labs/ibm-i-rpg-development/step-1-ibm-i-connect.png</code><br/>
+        <strong>Descripción:</strong> IBM Bob IDE mostrando la conexión nativa a IBM i activa (indicador verde en la barra de estado), el source member MYPGM abierto en el editor con el código RPG Fixed-Format, y la estructura de la librería MYLIB en el explorador de archivos izquierdo.
+      </blockquote>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Step 2 — Bob Explains the Legacy RPG Program</h3>
+      <p class="cds--body-01">
+        Before modernizing, ask Bob to explain what the legacy program does in plain English.
+        This is essential for knowledge preservation — especially when the original developers are no longer available.
+        Bob identifies subroutines, business logic, and key data structures.
+      </p>
+      <div class="callout" data-tone="note">
+        <p class="callout__title">Bob Prompt — Ask Mode</p>
+        <div class="code-block">
+          <button class="copy-button" type="button">Copy</button>
+          <pre><code>Explain what this RPG program does in plain English.
+Identify the key subroutines, what business logic each one implements,
+and describe the data structures used (F-specs, D-specs, data areas).</code></pre>
+        </div>
+      </div>
+      <div class="callout" data-tone="tip">
+        <p class="callout__title">Expected Output</p>
+        <p>Bob returns a structured business logic explanation: program purpose, input/output files (from F-specs), parameter interface (from C ENTRY PLIST), each subroutine's function, and the data structures used. This can be saved as technical documentation directly.</p>
+      </div>
+      <div class="callout" data-tone="tip">
+        <p class="callout__title">💡 Knowledge Preservation Use Case</p>
+        <p>IBM i shops often have programs written by developers who have since retired or left. Bob's explanation capability — grounded in real IBM i platform knowledge — is one of the most immediate productivity wins for teams inheriting legacy RPG systems.</p>
+      </div>
+      <blockquote class="image-placeholder">
+        🖼️ <strong>[PLACEHOLDER DE IMAGEN]</strong><br/>
+        <strong>Ruta sugerida:</strong> <code>/assets/images/labs/ibm-i-rpg-development/step-2-explain.png</code><br/>
+        <strong>Descripción:</strong> Bob en Ask mode mostrando la explicación en inglés plano del programa RPG: propósito del programa, descripción de cada subrutina con su lógica de negocio, y las estructuras de datos identificadas.
+      </blockquote>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Step 3 — Convert Fixed-Format to Free-Format RPGLE</h3>
+      <p class="cds--body-01">
+        Ask Bob to perform the modernization. Bob converts every legacy construct to its modern Free-Format
+        equivalent and annotates every change — so you know exactly what changed and why.
+      </p>
+      <div class="callout" data-tone="note">
+        <p class="callout__title">Bob Prompt — Agent Mode</p>
+        <div class="code-block">
+          <button class="copy-button" type="button">Copy</button>
+          <pre><code>Convert this Fixed-Format RPG program to modern Free-Format RPGLE.
+Apply all modernization best practices:
+- Use DCL-F instead of F-specs for file declarations
+- Use DCL-PI for ENTRY PLIST (procedure interface)
+- Use DCL-DS with qualified fields instead of flat D-specs
+- Replace GOTO/TAG loops with structured DOW/FOR loops
+- Convert BEGSR subroutines to DCL-PROC subprocedures with return values
+- Use %EOF(), %FOUND(), and other built-in functions
+Annotate every change with a comment explaining the modernization made.</code></pre>
+        </div>
+      </div>
+      <div class="callout" data-tone="tip">
+        <p class="callout__title">Expected Output</p>
+        <p>Bob presents the complete modernized Free-Format RPGLE source as a diff. Each converted construct has an inline comment: e.g., <code>// MODERNIZATION #3: Converted ENTRY PLIST to DCL-PI procedure interface</code>. The modernized source uses <code>CTL-OPT</code>, <code>DCL-F</code>, <code>DCL-PI</code>, <code>DCL-DS QUALIFIED</code>, and subprocedures throughout.</p>
+      </div>
+      <blockquote class="image-placeholder">
+        🖼️ <strong>[PLACEHOLDER DE IMAGEN]</strong><br/>
+        <strong>Ruta sugerida:</strong> <code>/assets/images/labs/ibm-i-rpg-development/step-3-convert.png</code><br/>
+        <strong>Descripción:</strong> Diff del código RPG mostrando el código Fixed-Format original en rojo a la izquierda y el código Free-Format RPGLE modernizado en verde a la derecha, con los comentarios de anotación de modernización visibles (// MODERNIZATION #N: ...) en cada bloque de cambio.
+      </blockquote>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Step 4 — Compile and Validate on IBM i</h3>
+      <p class="cds--body-01">
+        Bob writes the modernized source back to IBM i, compiles it using the native IBM i compiler,
+        and validates the output. If compilation errors occur, Bob reads the joblog, identifies the cause,
+        and fixes the code automatically.
+      </p>
+      <div class="callout" data-tone="note">
+        <p class="callout__title">Bob Prompt — Agent Mode</p>
+        <div class="code-block">
+          <button class="copy-button" type="button">Copy</button>
+          <pre><code>Save the modernized source back to IBM i and compile the program.
+Fix any compilation errors automatically by reading the joblog.
+Re-compile until the program compiles successfully.
+Then run the program with test parameters and confirm it produces the expected output.</code></pre>
+        </div>
+      </div>
+      <div class="callout" data-tone="tip">
+        <p class="callout__title">Expected Output</p>
+        <p>Bob writes the modernized <code>.RPGLE</code> source to IBM i, runs <code>CRTBNDRPG</code> via SSH, and confirms <em>"Program MYPGM created successfully in MYLIB."</em> If compilation errors occur, Bob reads the IBM i joblog, identifies the error (e.g., <em>"Procedure interface not compatible"</em>), applies the fix, and recompiles. Final validation: the program runs and produces the same output as the original.</p>
+      </div>
+      <div class="callout" data-tone="note">
+        <p class="callout__title">🎉 Lab Complete</p>
+        <p>You have modernized a legacy Fixed-Format RPG program to Free-Format RPGLE using Bob Premium's native IBM i capabilities. The same workflow applies to RPG II/III → ILE RPG conversion, DDS → DDL migration, and monolithic → modular refactoring. Bob's knowledge of IBM i platform characteristics — Db2 for i, QSYS, CL — ensures modernization output is grounded in real IBM i development practices.</p>
+      </div>
+      <blockquote class="image-placeholder">
+        🖼️ <strong>[PLACEHOLDER DE IMAGEN]</strong><br/>
+        <strong>Ruta sugerida:</strong> <code>/assets/images/labs/ibm-i-rpg-development/step-4-compile.png</code><br/>
+        <strong>Descripción:</strong> Terminal de Bob mostrando el resultado de CRTBNDRPG con "Program MYPGM created in MYLIB" confirmado, y el output de la ejecución de prueba del programa mostrando el resultado esperado.
+      </blockquote>
+    </div>
+
+  </section>
+
+</div>

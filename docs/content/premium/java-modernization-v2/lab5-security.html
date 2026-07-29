@@ -1,0 +1,182 @@
+<div class="content-panel lab-template">
+
+  <div class="lab-banner">
+    <div class="lab-banner__tags">
+      <span class="cds--tag cds--tag--teal">Bob Premium · Java</span>
+      <span class="cds--tag cds--tag--cool-gray">~20 min</span>
+      <span class="cds--tag cds--tag--red">Security</span>
+      <span class="cds--tag cds--tag--magenta">Avanzado</span>
+    </div>
+    <h1 class="cds--productive-heading-05 lab-banner__title">LAB 5 — Security Vulnerability Remediation</h1>
+    <p class="cds--body-02 lab-banner__summary">
+      Detecta y remedia 3 vulnerabilidades CVE críticas en las dependencias de Simple Pharmacy.
+      Solo se modifican 3 versiones en <code>pom.xml</code>. El código de producción no se toca.
+      Criterio de éxito: <code>mvn clean compile</code> → BUILD SUCCESS.
+    </p>
+  </div>
+
+  <figure class="lab-figure">
+    <img src="./assets/images/labs/java-modernization-v2/lab5-banner.png"
+         alt="Banner del LAB 5 — Security Vulnerability Remediation con CVE Text4Shell y SnakeYAML"
+         class="lab-figure__img" />
+  </figure>
+
+  <!-- Contexto -->
+  <section class="lab-section" aria-labelledby="lab5-contexto">
+    <h2 class="cds--productive-heading-03" id="lab5-contexto">📋 Las 3 Vulnerabilidades</h2>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">⚠️ CVEs detectados en este lab</p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item"><strong>CVE-2022-42889 "Text4Shell"</strong> — commons-text 1.9 → Critical (RCE)</li>
+        <li class="cds--list__item"><strong>GHSA-mjmj-j48q-9wg2</strong> — snakeyaml 1.30 → High (RCE deserialización)</li>
+        <li class="cds--list__item"><strong>GHSA-j288-q9x7-2f5v</strong> — commons-lang3 3.11 → High (Recursión no controlada)</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Checklist -->
+  <section class="lab-section" aria-labelledby="lab5-check">
+    <h2 class="cds--productive-heading-03" id="lab5-check">✅ Checklist antes de empezar</h2>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">Carpeta <code>snapE-security-vulnerabilities/</code> abierta como raíz en Bob</li>
+      <li class="cds--list__item"><code>java -version</code> dice <code>21</code></li>
+    </ul>
+  </section>
+
+  <!-- Fase 1 -->
+  <section class="lab-section" aria-labelledby="lab5-fase1">
+    <h2 class="cds--productive-heading-03" id="lab5-fase1">FASE 1 — Análisis de Vulnerabilidades</h2>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Generar el informe de vulnerabilidades</h3>
+      <div class="code-block">
+        <button class="copy-button" type="button">Copiar</button>
+        <pre><code>Lab 5: detectar y remediar vulnerabilidades de seguridad en las dependencias.
+
+Carpeta raíz: la que está abierta (snapE — Java 21, Jakarta EE 10, JAX-RS).
+El código de producción en src/main/ NO se toca.
+
+---
+
+FASE 1 — ANÁLISIS (no toques nada todavía)
+
+1. Lee el pom.xml y lista TODAS las dependencias con sus versiones exactas
+
+2. Para cada dependencia, investiga si tiene CVEs en esa versión.
+   Las 3 vulnerabilidades de este lab:
+   a) commons-text 1.9   → CVE-2022-42889 "Text4Shell" (Critical, RCE)
+   b) snakeyaml 1.30     → GHSA-mjmj-j48q-9wg2 (High, RCE deserialización)
+   c) commons-lang3 3.11 → GHSA-j288-q9x7-2f5v (High, Recursión no controlada)
+
+3. Para cada CVE: en qué consiste el riesgo, si es directa o transitiva, versión con el fix
+
+4. Genera el informe en formato tabla:
+   | CVE/GHSA | Biblioteca | Versión vulnerable | Versión segura | Severidad | Tipo |
+
+Preséntame el informe. Cuando yo diga "adelante", pasamos a Fase 2.</code></pre>
+      </div>
+      <figure class="lab-figure">
+        <img src="./assets/images/labs/java-modernization-v2/lab5-phase1-cve-report.png"
+             alt="Bob generando el informe de vulnerabilidades CVE con tabla de severidad, versión vulnerable y versión segura"
+             class="lab-figure__img" />
+        <figcaption class="lab-figure__caption">Bob genera el informe CVE con severidad, versión vulnerable y versión segura para cada dependencia</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Fase 2 -->
+  <section class="lab-section" aria-labelledby="lab5-fase2">
+    <h2 class="cds--productive-heading-03" id="lab5-fase2">FASE 2 — Remediación</h2>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Aplicar las 3 correcciones de versión</h3>
+      <div class="code-block">
+        <button class="copy-button" type="button">Copiar</button>
+        <pre><code>FASE 2 — REMEDIACIÓN (una a la vez — explica la línea exacta, espera "ok", luego aplica)
+
+Vulnerabilidad 1 — commons-text 1.9 → 1.10.0 (APROBAR)
+  CVE-2022-42889: interpolación de strings no controlada → RCE.
+  Muéstrame la línea exacta antes de cambiarla.
+
+Vulnerabilidad 2 — snakeyaml 1.30 → 2.0 (APROBAR)
+  GHSA-mjmj-j48q-9wg2: deserialización YAML no controlada → RCE.
+  Muéstrame la línea exacta antes de cambiarla.
+
+Vulnerabilidad 3 — commons-lang3 3.11 → 3.18.0 (APROBAR)
+  GHSA-j288-q9x7-2f5v: recursión no controlada en operaciones de String.
+  Muéstrame la línea exacta antes de cambiarla.</code></pre>
+      </div>
+      <figure class="lab-figure">
+        <img src="./assets/images/labs/java-modernization-v2/lab5-phase2-pom-fixes.png"
+             alt="Bob mostrando el diff del pom.xml con las 3 versiones de dependencias vulnerables actualizadas a versiones seguras"
+             class="lab-figure__img" />
+        <figcaption class="lab-figure__caption">Bob muestra el diff exacto de cada cambio de versión en el <code>pom.xml</code></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Fase 3 -->
+  <section class="lab-section" aria-labelledby="lab5-fase3">
+    <h2 class="cds--productive-heading-03" id="lab5-fase3">FASE 3 — Validación</h2>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Compilar y confirmar</h3>
+      <div class="code-block">
+        <button class="copy-button" type="button">Copiar</button>
+        <pre><code>FASE 3 — VALIDACIÓN
+
+Ejecuta: mvn clean compile
+
+Resultado esperado: BUILD SUCCESS.
+Si falla por incompatibilidad de API, muéstrame el error completo antes de proponer fix.</code></pre>
+      </div>
+      <figure class="lab-figure">
+        <img src="./assets/images/labs/java-modernization-v2/lab5-phase3-build-success.png"
+             alt="Terminal mostrando BUILD SUCCESS de Maven tras corregir las 3 vulnerabilidades CVE en el pom.xml"
+             class="lab-figure__img" />
+        <figcaption class="lab-figure__caption">Terminal: <code>mvn clean compile</code> → BUILD SUCCESS con las 3 vulnerabilidades resueltas</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Fase 4 — Informe final -->
+  <section class="lab-section" aria-labelledby="lab5-fase4">
+    <h2 class="cds--productive-heading-03" id="lab5-fase4">FASE 4 — Informe de Remediación</h2>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 4 — Generar el informe final</h3>
+      <div class="code-block">
+        <button class="copy-button" type="button">Copiar</button>
+        <pre><code>FASE 4 — RESUMEN FINAL
+
+Genera el informe de remediación:
+
+| CVE/GHSA | Biblioteca | Antes | Después | Severidad | Estado |
+|----------|------------|-------|---------|-----------|--------|
+| CVE-2022-42889 | commons-text | 1.9 | 1.10.0 | Critical | ✅ Resuelto |
+| GHSA-mjmj-j48q-9wg2 | snakeyaml | 1.30 | 2.0 | High | ✅ Resuelto |
+| GHSA-j288-q9x7-2f5v | commons-lang3 | 3.11 | 3.18.0 | High | ✅ Resuelto |</code></pre>
+      </div>
+      <figure class="lab-figure">
+        <img src="./assets/images/labs/java-modernization-v2/lab5-phase4-remediation-report.png"
+             alt="Bob generando el informe final de remediación con tabla de los 3 CVEs resueltos y sus versiones corregidas"
+             class="lab-figure__img" />
+        <figcaption class="lab-figure__caption">Bob genera el informe de remediación final con los 3 CVEs marcados como ✅ Resuelto</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Criterios de éxito -->
+  <div class="callout" data-tone="tip">
+    <p class="callout__title">🎉 Criterios de Éxito — Lab 5</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">✅ commons-text actualizado de 1.9 a 1.10.0</li>
+      <li class="cds--list__item">✅ snakeyaml actualizado de 1.30 a 2.0</li>
+      <li class="cds--list__item">✅ commons-lang3 actualizado de 3.11 a 3.18.0</li>
+      <li class="cds--list__item">✅ mvn clean compile → BUILD SUCCESS</li>
+      <li class="cds--list__item">✅ src/main/ no fue modificado</li>
+      <li class="cds--list__item">✅ Tabla de remediación generada con las 3 vulnerabilidades</li>
+    </ul>
+  </div>
+
+</div>

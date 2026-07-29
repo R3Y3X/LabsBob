@@ -1,0 +1,208 @@
+<div class="content-panel lab-template">
+
+  <div class="lab-banner">
+    <div class="lab-banner__tags">
+      <span class="cds--tag cds--tag--teal">Bob Premium · Java</span>
+      <span class="cds--tag cds--tag--cool-gray">~30 min</span>
+      <span class="cds--tag cds--tag--magenta">Avanzado</span>
+    </div>
+    <h1 class="cds--productive-heading-05 lab-banner__title">LAB 4 — Unit Test Generation</h1>
+    <p class="cds--body-02 lab-banner__summary">
+      Genera una suite completa de tests con JUnit 5, Mockito 5 y AssertJ 3.
+      El código de producción en <code>src/main/</code> no se toca.
+      Criterio de éxito: <code>mvn test</code> → todos los tests pasan.
+    </p>
+  </div>
+
+  <figure class="lab-figure">
+    <img src="./assets/images/labs/java-modernization-v2/lab4-banner.png"
+         alt="Banner del LAB 4 — Unit Test Generation con JUnit 5 y Mockito"
+         class="lab-figure__img" />
+  </figure>
+
+  <!-- Contexto -->
+  <section class="lab-section" aria-labelledby="lab4-contexto">
+    <h2 class="cds--productive-heading-03" id="lab4-contexto">📋 Contexto del Lab</h2>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">⚠️ Regla fundamental</p>
+      <p>El código de producción en <code>src/main/</code> <strong>NO se modifica bajo ninguna circunstancia</strong>.
+         Si un test falla, se ajusta el test — nunca el código fuente.</p>
+    </div>
+  </section>
+
+  <!-- Checklist -->
+  <section class="lab-section" aria-labelledby="lab4-check">
+    <h2 class="cds--productive-heading-03" id="lab4-check">✅ Checklist antes de empezar</h2>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">Carpeta <code>snapD-unit-test-gen/</code> abierta como raíz en Bob</li>
+      <li class="cds--list__item"><code>java -version</code> dice <code>21</code></li>
+    </ul>
+  </section>
+
+  <!-- Fase 1 -->
+  <section class="lab-section" aria-labelledby="lab4-fase1">
+    <h2 class="cds--productive-heading-03" id="lab4-fase1">FASE 1 — Análisis e Inventario</h2>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Inventariar modelos, repositorios y resources</h3>
+      <div class="code-block">
+        <button class="copy-button" type="button">Copiar</button>
+        <pre><code>Lab 4: generar una suite completa de unit tests para Simple Pharmacy.
+Carpeta raíz: la que está abierta (snapD — Java 21, Jakarta EE 10, JAX-RS REST).
+
+Stack de testing: JUnit 5 (Jupiter), Mockito 5, AssertJ 3.
+El código de producción en src/main/ NO se modifica.
+
+---
+
+FASE 1 — ANÁLISIS (no toques nada todavía)
+
+1. Lee todos los archivos bajo src/main/java/ y crea un inventario:
+   - Modelos: campos, constructores, getters/setters
+   - Repositorios: patrón singleton, métodos públicos, datos de muestra
+   - Resources JAX-RS: cada método con su @Path y qué devuelve
+
+2. Confirma que el pom.xml no tiene dependencias de test
+
+3. Propón la estrategia: tipo de test por capa, versiones de dependencias,
+   nombres de archivos de test a crear
+
+Preséntame la estrategia. Cuando yo diga "adelante", pasamos a Fase 2.</code></pre>
+      </div>
+      <figure class="lab-figure">
+        <img src="./assets/images/labs/java-modernization-v2/lab4-phase1-inventory.png"
+             alt="Bob mostrando el inventario completo de clases de Simple Pharmacy con la estrategia de testing propuesta"
+             class="lab-figure__img" />
+        <figcaption class="lab-figure__caption">Bob genera el inventario de clases y propone la estrategia de testing por capa</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Fase 2 -->
+  <section class="lab-section" aria-labelledby="lab4-fase2">
+    <h2 class="cds--productive-heading-03" id="lab4-fase2">FASE 2 — Dependencias de Test</h2>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Añadir JUnit 5, Mockito y AssertJ al pom.xml</h3>
+      <div class="code-block">
+        <button class="copy-button" type="button">Copiar</button>
+        <pre><code>FASE 2 — DEPENDENCIAS DE TEST (APROBAR antes de tocar pom.xml)
+
+Muéstrame el bloque XML completo con todo lo que vas a añadir al pom.xml:
+
+Dependencias (scope test):
+  - org.junit.jupiter:junit-jupiter:5.10.1
+  - org.mockito:mockito-core:5.8.0
+  - org.mockito:mockito-junit-jupiter:5.8.0
+  - org.assertj:assertj-core:3.24.2
+
+Plugin en &lt;build&gt;&lt;plugins&gt;:
+  - maven-surefire-plugin:3.2.3 configurado para ejecutar **/*Test.java</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fase 3 -->
+  <section class="lab-section" aria-labelledby="lab4-fase3">
+    <h2 class="cds--productive-heading-03" id="lab4-fase3">FASE 3 — Generación de Tests (3 Batches)</h2>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Batch 1: Tests de Modelos</h3>
+      <div class="code-block">
+        <button class="copy-button" type="button">Copiar</button>
+        <pre><code>FASE 3 — GENERACIÓN DE TESTS (un batch a la vez — muéstrame antes de crear)
+
+BATCH 1 — Tests de modelos
+  src/test/java/com/pharmacy/model/MedicineTest.java
+  src/test/java/com/pharmacy/model/OrderTest.java
+  src/test/java/com/pharmacy/model/PrescriptionTest.java
+
+  Para cada modelo:
+  - ConstructorTests: constructor vacío y constructor completo
+  - GetterSetterTests: un test por campo
+  - EdgeCaseTests: null values, strings vacíos, números negativos</code></pre>
+      </div>
+      <figure class="lab-figure">
+        <img src="./assets/images/labs/java-modernization-v2/lab4-batch1-model-tests.png"
+             alt="Bob generando los tests de modelos con grupos @Nested para constructores, getters y edge cases"
+             class="lab-figure__img" />
+        <figcaption class="lab-figure__caption">Bob genera los tests de modelos con grupos <code>@Nested</code></figcaption>
+      </figure>
+    </div>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 4 — Batch 2: Tests de Repositorios</h3>
+      <div class="code-block">
+        <button class="copy-button" type="button">Copiar</button>
+        <pre><code>BATCH 2 — Tests de repositorios
+  src/test/java/com/pharmacy/repository/MedicineRepositoryTest.java
+  src/test/java/com/pharmacy/repository/PrescriptionRepositoryTest.java
+
+  Para cada repo:
+  - SingletonTests: getInstance() siempre devuelve la misma instancia
+  - FindOperationsTests: findAll(), findById (existe/no existe/null), búsqueda por nombre
+  - AddUpdateDeleteTests: add/update/delete con cleanup en @AfterEach</code></pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 5 — Batch 3: Tests de Resources JAX-RS con Mockito</h3>
+      <div class="code-block">
+        <button class="copy-button" type="button">Copiar</button>
+        <pre><code>BATCH 3 — Tests de resources JAX-RS (usando @Mock de Mockito)
+  src/test/java/com/pharmacy/api/MedicineResourceTest.java
+  src/test/java/com/pharmacy/api/PrescriptionResourceTest.java
+
+  Para cada resource: mockear el repositorio con @Mock y @ExtendWith(MockitoExtension.class)
+  - GET all: 200 con lista, 200 con lista vacía
+  - GET by id: 200 si existe, 404 si no existe
+  - POST: 201 datos válidos, 400 medicine inexistente
+  - PUT validate: 200 PENDING→VALIDATED, 400 ya VALIDATED, 404 no existe</code></pre>
+      </div>
+      <figure class="lab-figure">
+        <img src="./assets/images/labs/java-modernization-v2/lab4-batch3-mockito-tests.png"
+             alt="Bob generando los tests de resources JAX-RS con Mockito mostrando los mocks del repositorio"
+             class="lab-figure__img" />
+        <figcaption class="lab-figure__caption">Bob genera tests de resources JAX-RS con Mockito — repositorios mockeados con <code>@Mock</code></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Fase 4 -->
+  <section class="lab-section" aria-labelledby="lab4-fase4">
+    <h2 class="cds--productive-heading-03" id="lab4-fase4">FASE 4 — Validación</h2>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 6 — Ejecutar la suite completa</h3>
+      <div class="code-block">
+        <button class="copy-button" type="button">Copiar</button>
+        <pre><code>FASE 4 — VALIDACIÓN
+
+Ejecuta: mvn test
+
+Resultado esperado: BUILD SUCCESS con 0 failures y 0 errors.
+Si un test falla, muéstrame el stack trace completo antes de proponer el fix.
+⚠️ No modifiques src/main/ para hacer pasar un test. Ajusta el test.</code></pre>
+      </div>
+      <figure class="lab-figure">
+        <img src="./assets/images/labs/java-modernization-v2/lab4-phase4-mvn-test.png"
+             alt="Terminal mostrando mvn test con BUILD SUCCESS, 0 failures, 0 errors y todos los tests pasando"
+             class="lab-figure__img" />
+        <figcaption class="lab-figure__caption">Terminal: <code>mvn test</code> → BUILD SUCCESS, 0 failures, 0 errors</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Criterios de éxito -->
+  <div class="callout" data-tone="tip">
+    <p class="callout__title">🎉 Criterios de Éxito — Lab 4</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">✅ pom.xml: JUnit 5.10.1, Mockito 5.8.0, AssertJ 3.24.2 como dependencias test</li>
+      <li class="cds--list__item">✅ pom.xml: maven-surefire-plugin 3.2.3</li>
+      <li class="cds--list__item">✅ Al menos 30 tests entre los 3 batches</li>
+      <li class="cds--list__item">✅ mvn test → BUILD SUCCESS, 0 failures, 0 errors</li>
+      <li class="cds--list__item">✅ src/main/ no fue modificado</li>
+    </ul>
+  </div>
+
+</div>

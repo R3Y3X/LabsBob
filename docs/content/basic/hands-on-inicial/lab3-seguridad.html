@@ -95,11 +95,17 @@
         <p class="callout__title">¿Por qué Ask Mode para el análisis?</p>
         <p>Ask Mode lee el código sin modificarlo y tiene <strong>270k tokens de contexto</strong> — ideal para un análisis exhaustivo de todo el archivo vulnerable de una sola vez.</p>
       </div>
+      <figure class="lab-figure">
+        <img src="./assets/images/labs/hands-on-inicial/lab3_bob.png"
+             alt="Banner del LAB 3 — Seguridad con IBM Bob"
+             class="lab-figure__img" />
+        <figcaption class="lab-figure__caption">Referencia visual del lab de seguridad</figcaption>
+      </figure>
     </div>
 
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Analizar Código Vulnerable</h3>
-      <p class="cds--body-01">Abre el archivo <code>lab-3-seguridad/codigo-vulnerable/authController-vulnerable.js</code> y observa los comentarios <code>VULNERABILIDAD #X</code> que marcan los problemas. Luego envía este prompt a IBM Bob:</p>
+      <p class="cds--body-01"><strong>Instrucción:</strong> Abre <code>lab-3-seguridad/codigo-vulnerable/authController-vulnerable.js</code>, localiza los comentarios <code>VULNERABILIDAD #X</code> y envía el prompt. <strong>Qué verificar:</strong> informe por severidad con código corregido sugerido.</p>
       <div class="code-block">
         <button class="copy-button" type="button">Copiar</button>
         <pre><code>Analiza el archivo lab-3-seguridad/codigo-vulnerable/authController-vulnerable.js
@@ -114,14 +120,14 @@ Identifica todas las vulnerabilidades de seguridad y proporciona:
 Organiza por severidad.</code></pre>
       </div>
       <div class="callout" data-tone="tip">
-        <p class="callout__title">✅ Salida Esperada</p>
-        <p>IBM Bob identificará las 15+ vulnerabilidades organizadas por severidad crítica → alta → media → baja, con código corregido para cada una. El proceso completo toma menos de 60 segundos.</p>
+        <p class="callout__title">Salida esperada</p>
+        <p>15+ hallazgos organizados crítica → baja, con fix sugerido. Menos de ~60 s.</p>
       </div>
     </div>
 
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Aplicar Correcciones con Agent Mode</h3>
-      <p class="cds--body-01">Con el análisis completo, cambia a <strong>Agent Mode</strong> para aplicar las correcciones:</p>
+      <p class="cds--body-01"><strong>Instrucción:</strong> Cambia a Agent Mode y aplica solo lo del análisis. <strong>Qué verificar:</strong> cada diff pide aprobación; prioriza CRÍTICAS y ALTAS.</p>
       <div class="code-block">
         <button class="copy-button" type="button">Copiar</button>
         <pre><code>Basándote en el análisis anterior, aplica todas las correcciones
@@ -131,8 +137,8 @@ Prioriza las vulnerabilidades CRÍTICAS y ALTAS primero.
 Muéstrame cada cambio antes de aplicarlo.</code></pre>
       </div>
       <div class="callout" data-tone="warning">
-        <p class="callout__title">⚠️ Agent Mode requiere aprobación para escrituras</p>
-        <p>Cada modificación al archivo requerirá tu confirmación — esto es el comportamiento correcto y seguro de IBM Bob 2.1.</p>
+        <p class="callout__title">Agent Mode requiere aprobación para escrituras</p>
+        <p>Cada modificación al archivo requerirá tu confirmación — comportamiento correcto de Bob 2.1.</p>
       </div>
     </div>
   </section>

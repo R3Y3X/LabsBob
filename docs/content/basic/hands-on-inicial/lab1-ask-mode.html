@@ -105,48 +105,56 @@ ls -la</code></pre>
     </div>
 
     <!-- Paso 2 -->
-    <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Activar Ask Mode</h3>
-      <ol class="cds--list--ordered">
-        <li class="cds--list__item">Haz clic en el <strong>selector de modos</strong> de IBM Bob (parte superior de la ventana de chat)</li>
-        <li class="cds--list__item">Selecciona <strong>Ask</strong></li>
-        <li class="cds--list__item">Verifica en la barra de estado inferior: deberías ver <code>Ask</code> activo</li>
-      </ol>
-      <figure class="lab-figure">
-        <img src="./assets/images/labs/hands-on-inicial/lab1-activate-ask.png"
-             alt="Selector de modos de IBM Bob mostrando Ask Mode seleccionado"
-             class="lab-figure__img" />
-        <figcaption class="lab-figure__caption">Selector de modos — selecciona Ask Mode</figcaption>
-      </figure>
+    <div class="lab-step lab-step--split">
+      <div class="lab-step__body">
+        <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Activar Ask Mode</h3>
+        <p class="cds--body-01">Cambia el modo de Bob a Ask antes de analizar el proyecto.</p>
+        <ol class="cds--list--ordered">
+          <li class="cds--list__item">Haz clic en el <strong>selector de modos</strong> (parte superior del chat)</li>
+          <li class="cds--list__item">Selecciona <strong>Ask</strong></li>
+          <li class="cds--list__item">Verifica en la barra de estado: debe aparecer <code>Ask</code> activo</li>
+        </ol>
+      </div>
+      <div class="lab-step__media">
+        <figure class="lab-figure">
+          <img src="./assets/images/labs/hands-on-inicial/lab1-activate-ask.png"
+               alt="Selector de modos de IBM Bob mostrando Ask Mode seleccionado"
+               class="lab-figure__img" />
+          <figcaption class="lab-figure__caption">Verifica: el selector muestra Ask Mode seleccionado</figcaption>
+        </figure>
+      </div>
     </div>
 
     <!-- Paso 3 -->
-    <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Primera Pregunta: Análisis de Arquitectura</h3>
-      <p class="cds--body-01">Abre el chat de IBM Bob (<kbd>Cmd + Shift + I</kbd> en Mac o <kbd>Ctrl + Shift + I</kbd> en Windows/Linux) y escribe:</p>
-      <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
-        <pre><code>Analiza la arquitectura de este proyecto de e-commerce.
+    <div class="lab-step lab-step--split">
+      <div class="lab-step__body">
+        <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Análisis de Arquitectura</h3>
+        <p class="cds--body-01">Abre el chat (<kbd>Cmd/Ctrl + Shift + I</kbd>) y pega este prompt:</p>
+        <div class="code-block">
+          <button class="copy-button" type="button">Copiar</button>
+          <pre><code>Analiza la arquitectura de este proyecto de e-commerce.
 Explícame:
 1. ¿Qué patrón arquitectónico se está usando?
 2. ¿Cuáles son los componentes principales?
 3. ¿Cómo fluyen los datos entre capas?</code></pre>
+        </div>
+        <div class="callout" data-tone="tip">
+          <p class="callout__title">Qué debes ver</p>
+          <ul class="cds--list--unordered">
+            <li class="cds--list__item">Lecturas auto-aprobadas de archivos</li>
+            <li class="cds--list__item">Identificación del patrón MVC</li>
+            <li class="cds--list__item">Relaciones entre capas y sugerencias</li>
+          </ul>
+        </div>
       </div>
-      <div class="callout" data-tone="tip">
-        <p class="callout__title">Observa cómo IBM Bob...</p>
-        <ul class="cds--list--unordered">
-          <li class="cds--list__item">Lee automáticamente los archivos relevantes <strong>sin pedir aprobación</strong> (lectura auto-aprobada)</li>
-          <li class="cds--list__item">Identifica el patrón MVC (Model-View-Controller)</li>
-          <li class="cds--list__item">Explica las relaciones entre componentes</li>
-          <li class="cds--list__item">Sugiere mejoras potenciales</li>
-        </ul>
+      <div class="lab-step__media">
+        <figure class="lab-figure">
+          <img src="./assets/images/labs/hands-on-inicial/lab1-architecture-analysis.png"
+               alt="IBM Bob analizando la arquitectura del proyecto y mostrando el diagrama MVC"
+               class="lab-figure__img" />
+          <figcaption class="lab-figure__caption">Referencia: Bob explica MVC y el flujo entre componentes</figcaption>
+        </figure>
       </div>
-      <figure class="lab-figure">
-        <img src="./assets/images/labs/hands-on-inicial/lab1-architecture-analysis.png"
-             alt="IBM Bob analizando la arquitectura del proyecto y mostrando el diagrama MVC"
-             class="lab-figure__img" />
-        <figcaption class="lab-figure__caption">IBM Bob identificando el patrón MVC y explicando las relaciones entre componentes</figcaption>
-      </figure>
     </div>
 
     <!-- Paso 4 -->
@@ -167,24 +175,28 @@ Explícame:
     </div>
 
     <!-- Paso 5 -->
-    <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 5 — Generar Documentación Automática</h3>
-      <p class="cds--body-01">Una de las capacidades más poderosas de Ask Mode es generar documentación profesional:</p>
-      <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
-        <pre><code>Genera un README.md completo para este proyecto que incluya:
+    <div class="lab-step lab-step--split">
+      <div class="lab-step__body">
+        <h3 class="cds--productive-heading-02 lab-step__title">Paso 5 — Generar Documentación Automática</h3>
+        <p class="cds--body-01">Pide un README profesional. Ask Mode no escribe archivos hasta que lo apruebes (o puedes copiar el resultado).</p>
+        <div class="code-block">
+          <button class="copy-button" type="button">Copiar</button>
+          <pre><code>Genera un README.md completo para este proyecto que incluya:
 1. Descripción del proyecto
 2. Arquitectura y componentes
 3. Instrucciones de instalación
 4. Endpoints de la API con ejemplos
 5. Diagrama de flujo de autenticación</code></pre>
+        </div>
       </div>
-      <figure class="lab-figure">
-        <img src="./assets/images/labs/hands-on-inicial/lab1-documentation.png"
-             alt="IBM Bob generando documentación estructurada con diagramas Mermaid automáticamente"
-             class="lab-figure__img" />
-        <figcaption class="lab-figure__caption">IBM Bob generando README completo con diagramas Mermaid incluidos</figcaption>
-      </figure>
+      <div class="lab-step__media">
+        <figure class="lab-figure">
+          <img src="./assets/images/labs/hands-on-inicial/lab1-documentation.png"
+               alt="IBM Bob generando documentación estructurada con diagramas Mermaid automáticamente"
+               class="lab-figure__img" />
+          <figcaption class="lab-figure__caption">Verifica: README con secciones claras y diagrama Mermaid</figcaption>
+        </figure>
+      </div>
     </div>
 
     <!-- Paso 6 -->

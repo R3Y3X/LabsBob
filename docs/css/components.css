@@ -4,22 +4,23 @@
  */
 
 /* ════════════════════════════════════════════════════════════════
- * HEADER
+ * HEADER — always inverse (independent of body theme)
  * ════════════════════════════════════════════════════════════════ */
 
-/* Reset Carbon's default header padding so we control it */
+.cds--header.hub-header,
 .cds--header {
   display: flex;
   align-items: center;
   height: 48px;
-  padding: 0;          /* we use internal spacing on children */
-  background-color: var(--cds-background-inverse, #161616);
-  border-bottom: 1px solid var(--cds-border-inverse, #393939);
+  padding: 0;
+  background-color: #161616 !important;
+  border-bottom: 1px solid #393939 !important;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 9100;
+  color: #f4f4f4;
 }
 
 /* IBM logo + product name */
@@ -28,7 +29,8 @@
   align-items: center;
   height: 48px;
   padding: 0 var(--cds-spacing-05, 1rem);
-  color: var(--cds-text-inverse, #ffffff);
+  color: #ffffff !important;
+  background: transparent !important;
   font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
   font-size: 0.875rem;
   font-weight: 400;
@@ -39,7 +41,8 @@
 }
 
 .cds--header__name:hover {
-  background-color: var(--cds-background-inverse-hover, #2d2d2d);
+  background-color: #2d2d2d !important;
+  color: #ffffff !important;
 }
 
 .cds--header__name--prefix {
@@ -49,15 +52,18 @@
 .cds--header__logo {
   margin-right: 10px;
   flex-shrink: 0;
+  color: #ffffff;
 }
 
-/* Desktop nav bar — sits flush left, after the logo, no flex-grow */
+/* Desktop nav — never grow; never inherit light-theme bg from Carbon CDN */
 .cds--header__nav {
   display: flex;
   align-items: center;
   height: 100%;
-  flex: 0 0 auto;      /* do NOT grow — let the spacer push global bar right */
-  overflow: hidden;
+  flex: 0 0 auto !important;
+  overflow: visible;
+  background: transparent !important;
+  border: none !important;
 }
 
 .cds--header__menu-bar {
@@ -66,7 +72,8 @@
   height: 100%;
   list-style: none;
   margin: 0;
-  padding: 0 var(--cds-spacing-03, 0.5rem); /* small breathing room from logo */
+  padding: 0 var(--cds-spacing-03, 0.5rem);
+  background: transparent !important;
 }
 
 .cds--header__menu-item {
@@ -74,7 +81,8 @@
   align-items: center;
   height: 48px;
   padding: 0 var(--cds-spacing-05, 1rem);
-  color: var(--cds-text-inverse, #f4f4f4);
+  color: #f4f4f4 !important;
+  background: transparent !important;
   font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
   font-size: 0.875rem;
   font-weight: 400;
@@ -85,33 +93,35 @@
 }
 
 .cds--header__menu-item:hover {
-  background-color: var(--cds-background-inverse-hover, #2d2d2d);
-  color: var(--cds-text-inverse, #ffffff);
+  background-color: #2d2d2d !important;
+  color: #ffffff !important;
 }
 
 .cds--header__menu-item[aria-current="page"] {
-  border-bottom-color: var(--cds-border-interactive, #4589ff);
-  color: var(--cds-text-inverse, #ffffff);
+  border-bottom-color: #4589ff;
+  color: #ffffff !important;
   font-weight: 600;
+  background: transparent !important;
 }
 
-/* Spacer grows to push global actions (search + icons) to the far right */
 .hub-header__spacer {
   flex: 1 1 auto;
   min-width: var(--cds-spacing-05, 1rem);
 }
 
-/* Global actions container — search + theme + github + hamburger */
+/* Override Carbon CDN flex:1 1 on global actions */
 .cds--header__global {
   display: flex;
   align-items: center;
   height: 100%;
   gap: 0;
+  flex: 0 0 auto !important;
   flex-shrink: 0;
-  padding-right: var(--cds-spacing-03, 0.5rem); /* breathing room on far right */
+  padding-right: var(--cds-spacing-03, 0.5rem);
+  background: transparent !important;
+  min-width: 0;
 }
 
-/* Each action button / link in the global bar */
 .cds--header__action {
   display: inline-flex;
   align-items: center;
@@ -119,8 +129,8 @@
   width: 48px;
   height: 48px;
   border: none;
-  background: transparent;
-  color: var(--cds-icon-inverse, #f4f4f4);
+  background: transparent !important;
+  color: #f4f4f4 !important;
   cursor: pointer;
   text-decoration: none;
   transition: background-color 0.1s;
@@ -128,60 +138,71 @@
 }
 
 .cds--header__action:hover {
-  background-color: var(--cds-background-inverse-hover, #2d2d2d);
+  background-color: #2d2d2d !important;
+  color: #ffffff !important;
 }
 
 .cds--header__action:focus {
-  outline: 2px solid var(--cds-focus-inverse, #ffffff);
+  outline: 2px solid #ffffff;
   outline-offset: -2px;
 }
 
-/* ── Search field in header ─────────────────────────────────────── */
+/* ── Search: icon LEFT, no overlap with theme toggle ────────────── */
 .hub-header__search-wrap {
   position: relative;
   display: flex;
   align-items: center;
   height: 48px;
-  margin-right: 4px;
+  margin-right: var(--cds-spacing-03, 0.5rem);
+  flex-shrink: 0;
+}
+
+.hub-header__search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: rgba(255, 255, 255, 0.55);
+  z-index: 1;
 }
 
 .hub-header__search-input {
   width: 200px;
   height: 32px;
-  padding: 0 36px 0 12px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 2px;
-  color: var(--cds-text-inverse, #f4f4f4);
+  padding: 0 12px 0 36px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 0;
+  color: #f4f4f4;
   font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
   font-size: 0.875rem;
   outline: none;
   transition: background 0.15s, border-color 0.15s;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.hub-header__search-input::-webkit-search-cancel-button {
+  margin-right: 2px;
 }
 
 .hub-header__search-input::placeholder {
-  color: rgba(255,255,255,0.45);
+  color: rgba(255, 255, 255, 0.45);
 }
 
 .hub-header__search-input:focus {
-  background: rgba(255,255,255,0.14);
-  border-color: var(--cds-focus-inverse, #ffffff);
-  outline: 2px solid var(--cds-focus-inverse, #ffffff);
+  background: rgba(255, 255, 255, 0.14);
+  border-color: #ffffff;
+  outline: 2px solid #ffffff;
   outline-offset: -2px;
 }
 
-.hub-header__search-icon {
-  position: absolute;
-  right: 10px;
-  pointer-events: none;
-  color: rgba(255,255,255,0.5);
-}
-
-/* Light theme: search field adjusts */
-body:not(.cds--g100) .hub-header__search-input {
-  background: rgba(0,0,0,0.06);
-  border-color: rgba(0,0,0,0.18);
-  color: var(--cds-text-inverse, #f4f4f4);  /* header is always dark */
+/* Hide hamburger on desktop when primary nav is visible */
+@media (min-width: 1056px) {
+  .cds--header__menu-toggle {
+    display: none !important;
+  }
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -319,6 +340,22 @@ body:not(.cds--g100) .hub-header__search-input {
   overflow-x: auto;
 }
 
+/* HTML [hidden] must win over Carbon .cds--tabs display rules */
+.hub-subnav[hidden],
+nav.hub-subnav[hidden],
+.cds--tabs.hub-subnav[hidden] {
+  display: none !important;
+}
+
+/* Only show lab subnav when a lab route is active */
+body.hub-view--home .hub-subnav {
+  display: none !important;
+}
+
+body.hub-view--lab .hub-subnav:not([hidden]) {
+  display: block;
+}
+
 .hub-subnav .cds--tabs__nav {
   display: flex;
   flex-wrap: nowrap;
@@ -385,6 +422,35 @@ body:not(.cds--g100) .hub-header__search-input {
 
 .code-block {
   position: relative;
+}
+
+/* Prompt / terminal blocks: always light text on dark bg (any theme) */
+.code-block pre,
+.prose pre,
+.prose .code-block pre,
+.callout .code-block pre {
+  overflow-x: auto;
+  padding: 24px;
+  background: #161616 !important;
+  color: #f4f4f4 !important;
+  position: relative;
+}
+
+.code-block pre code,
+.prose pre code,
+.prose .code-block pre code,
+.callout .code-block pre code {
+  padding: 0;
+  background: transparent !important;
+  color: #f4f4f4 !important;
+}
+
+.cds--g100 .code-block pre,
+.cds--g100 .prose pre,
+.cds--g100 .code-block pre code,
+.cds--g100 .prose pre code {
+  background: #161616 !important;
+  color: #f4f4f4 !important;
 }
 
 .copy-button {

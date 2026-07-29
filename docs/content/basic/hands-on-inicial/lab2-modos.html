@@ -81,16 +81,17 @@
     <p class="cds--body-01">Vamos a implementar un carrito de compras usando <strong>3 modos diferentes</strong> para cada fase del desarrollo.</p>
 
     <!-- Paso 1: Plan Mode -->
-    <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Plan Mode: Diseñar la Solución</h3>
-      <p class="cds--body-01">Primero usa <strong>Plan Mode</strong> para diseñar la arquitectura.</p>
-      <ol class="cds--list--ordered">
-        <li class="cds--list__item">Haz clic en el selector de modos → selecciona <strong>Plan</strong></li>
-        <li class="cds--list__item">Abre el chat de IBM Bob y envía este prompt:</li>
-      </ol>
-      <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
-        <pre><code>Necesito diseñar un sistema de carrito de compras para nuestra API de e-commerce.
+    <div class="lab-step lab-step--split">
+      <div class="lab-step__body">
+        <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Plan Mode: Diseñar la Solución</h3>
+        <p class="cds--body-01">Primero usa <strong>Plan Mode</strong> para diseñar la arquitectura — sin escribir código.</p>
+        <ol class="cds--list--ordered">
+          <li class="cds--list__item">Selector de modos → <strong>Plan</strong></li>
+          <li class="cds--list__item">Envía el prompt de diseño del carrito</li>
+        </ol>
+        <div class="code-block">
+          <button class="copy-button" type="button">Copiar</button>
+          <pre><code>Necesito diseñar un sistema de carrito de compras para nuestra API de e-commerce.
 
 Requisitos:
 - Los usuarios deben poder agregar/eliminar productos
@@ -104,22 +105,23 @@ Por favor, diseña:
 3. El flujo de datos
 4. Consideraciones de seguridad
 5. Un diagrama de arquitectura</code></pre>
+        </div>
+        <div class="callout" data-tone="tip">
+          <p class="callout__title">Qué debes ver</p>
+          <ul class="cds--list--unordered">
+            <li class="cds--list__item">Diseño sin archivos creados aún</li>
+            <li class="cds--list__item">Diagramas Mermaid y alternativas</li>
+          </ul>
+        </div>
       </div>
-      <div class="callout" data-tone="tip">
-        <p class="callout__title">Observa cómo Plan Mode...</p>
-        <ul class="cds--list--unordered">
-          <li class="cds--list__item"><strong>No escribe código todavía</strong> — se enfoca en diseño</li>
-          <li class="cds--list__item">Genera diagramas y flujos en Mermaid</li>
-          <li class="cds--list__item">Considera edge cases y seguridad</li>
-          <li class="cds--list__item">Propone múltiples alternativas</li>
-        </ul>
+      <div class="lab-step__media">
+        <figure class="lab-figure">
+          <img src="./assets/images/labs/hands-on-inicial/lab2-plan-output.png"
+               alt="Plan Mode generando el diseño arquitectónico del carrito de compras con diagrama Mermaid"
+               class="lab-figure__img" />
+          <figcaption class="lab-figure__caption">Referencia: plan completo antes de tocar código</figcaption>
+        </figure>
       </div>
-      <figure class="lab-figure">
-        <img src="./assets/images/labs/hands-on-inicial/lab2-plan-output.png"
-             alt="Plan Mode generando el diseño arquitectónico del carrito de compras con diagrama Mermaid"
-             class="lab-figure__img" />
-        <figcaption class="lab-figure__caption">Plan Mode genera el diseño completo antes de tocar código</figcaption>
-      </figure>
     </div>
 
     <!-- Paso 2: Agent Mode -->

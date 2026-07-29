@@ -1,9 +1,9 @@
 export const siteData = {
   topNav: [
     { label: 'Inicio', href: '#/' },
-    { label: 'Capacidades', href: '#available-workshops' },
+    { label: 'Capacidades', href: '#capacidades' },
     { label: 'Laboratorios', href: '#available-workshops' },
-    { label: 'Acerca de', href: '#available-workshops' }
+    { label: 'Acerca de', href: '#acerca-de' }
   ],
   hero: {
     eyebrow: 'IBM BOB · HABILITACIÓN PRÁCTICA',
@@ -46,13 +46,18 @@ export const siteData = {
         {
           slug: 'software-development-lifecycle',
           title: 'Ciclo de Vida del Software',
-          description: 'Bob dirige el ciclo SDLC completo — planea, implementa, prueba, corrige automáticamente y documenta un proyecto funcional con mínimo esfuerzo manual.',
+          description: 'Bob dirige el ciclo SDLC completo — planifica, diseña con draw.io, implementa, prueba, despliega y mantiene un proyecto funcional con mínimo esfuerzo manual.',
           supporting: 'Lab 2',
           level: 'Básico',
           audience: ['client', 'partner'],
           steps: [
-            { slug: 'overview', label: 'Inicio', file: './content/basic/software-development-lifecycle/overview.html' },
-            { slug: 'walkthrough', label: 'Recorrido', file: './content/basic/software-development-lifecycle/walkthrough.html' }
+            { slug: 'overview',  label: 'Inicio',   file: './content/basic/software-development-lifecycle/overview.html' },
+            { slug: 'plan',      label: 'Plan',     file: './content/basic/software-development-lifecycle/plan.html' },
+            { slug: 'design',    label: 'Diseño',   file: './content/basic/software-development-lifecycle/design.html' },
+            { slug: 'code',      label: 'Código',   file: './content/basic/software-development-lifecycle/code.html' },
+            { slug: 'test',      label: 'Test',     file: './content/basic/software-development-lifecycle/test.html' },
+            { slug: 'deploy',    label: 'Deploy',   file: './content/basic/software-development-lifecycle/deploy.html' },
+            { slug: 'maintain',  label: 'Mantener', file: './content/basic/software-development-lifecycle/maintain.html' }
           ]
         }
       ]

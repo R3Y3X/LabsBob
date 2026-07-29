@@ -6,6 +6,8 @@ import { initializeTheme, toggleTheme } from './theme.js';
 // Global audience mode state: 'client' | 'partner'
 let currentMode = 'client';
 
+const HOME_SECTION_IDS = new Set(['capacidades', 'available-workshops', 'acerca-de']);
+
 const homeView   = document.querySelector('#home-view');
 const labView    = document.querySelector('#lab-view');
 const labShell   = document.querySelector('#lab-shell');
@@ -18,6 +20,50 @@ const hamburgerBtn = document.querySelector('#hamburger-btn');
 const sideNav      = document.querySelector('#side-nav');
 const sideNavOverlay    = document.querySelector('#side-nav-overlay');
 const sideNavItemsMobile = document.querySelector('#side-nav-items-mobile');
+
+function getHashTarget() {
+  const raw = window.location.hash.replace(/^#/, '');
+  if (!raw || raw === '/') return null;
+  if (raw.startsWith('/lab/') || raw.startsWith('lab/')) return null;
+  // Support both #capacidades and #/capacidades
+  const id = raw.replace(/^\//, '').split('/')[0];
+  return HOME_SECTION_IDS.has(id) ? id : null;
+}
+
+function scrollToHomeSection(sectionId) {
+  if (!sectionId) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return;
+  }
+  requestAnimationFrame(() => {
+    const el = document.getElementById(sectionId);
+    if (!el) return;
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+}
+
+function updateNavCurrent() {
+  const hash = window.location.hash || '#/';
+  const target = getHashTarget();
+  const route = parseRoute(hash);
+
+  siteNavItems.querySelectorAll('.cds--header__menu-item').forEach((link) => {
+    const href = link.getAttribute('href') || '';
+    let isCurrent = false;
+    if (route.view === 'home') {
+      if (target) {
+        isCurrent = href === `#${target}`;
+      } else {
+        isCurrent = href === '#/' || href === '#';
+      }
+    }
+    if (isCurrent) {
+      link.setAttribute('aria-current', 'page');
+    } else {
+      link.removeAttribute('aria-current');
+    }
+  });
+}
 
 // ── SideNav open / close ─────────────────────────────────────────
 function openSideNav() {
@@ -42,26 +88,18 @@ function closeSideNav() {
 
 // ── Top nav + SideNav items ──────────────────────────────────────
 function renderPlatformNav() {
-  // Desktop top nav <li> items directly in the <ul>
   siteNavItems.innerHTML = siteData.topNav
-    .map((item, index) => {
-      const current = index === 0 ? ' aria-current="page"' : '';
-      return `<li role="none"><a class="cds--header__menu-item" role="menuitem"${current} href="${item.href}">${item.label}</a></li>`;
-    })
+    .map((item) => `<li role="none"><a class="cds--header__menu-item" role="menuitem" href="${item.href}">${item.label}</a></li>`)
     .join('');
 
-  // Mobile SideNav: main links + all labs grouped by section
   const navLinks = siteData.topNav
-    .map((item, index) => {
-      const current = index === 0 ? ' aria-current="page"' : '';
-      return `<li><a class="cds--side-nav__link"${current} href="${item.href}">${item.label}</a></li>`;
-    })
+    .map((item) => `<li><a class="cds--side-nav__link" href="${item.href}">${item.label}</a></li>`)
     .join('');
 
   const labLinks = siteData.sections
-    .map(section => {
+    .map((section) => {
       const labItems = section.labs
-        .map(lab => `<li><a class="cds--side-nav__link cds--side-nav__link--sub" href="${getLabRoute(lab.slug)}">${lab.title}</a></li>`)
+        .map((lab) => `<li><a class="cds--side-nav__link cds--side-nav__link--sub" href="${getLabRoute(lab.slug)}">${lab.title}</a></li>`)
         .join('');
       return `
         <li class="hub-side-nav__section-label">${section.title}</li>
@@ -71,6 +109,7 @@ function renderPlatformNav() {
     .join('');
 
   sideNavItemsMobile.innerHTML = navLinks + labLinks;
+  updateNavCurrent();
 }
 
 // ── Section tag config ───────────────────────────────────────────
@@ -101,6 +140,21 @@ function buildLabCard(lab, section) {
   `;
 }
 
+const BOB_PROFILES = [
+  { role: 'Product Manager', tool: 'Jira', tasks: 'Estimaciones, planificación e identificación de riesgos' },
+  { role: 'Diseñador', tool: 'Figma', tasks: 'UX/UI y prototipos a código' },
+  { role: 'Arquitecto', tool: 'Instana', tasks: 'Comprensión y visualización de sistemas' },
+  { role: 'Desarrollador', tool: 'GitHub', tasks: 'Generación, refactor y modernización' },
+  { role: 'DevOps', tool: 'Terraform', tasks: 'Gobernanza de PR y pipelines' },
+  { role: 'Seguridad', tool: 'Vault', tasks: 'Vulnerabilidades y detección de secretos' }
+];
+
+const BOB_MODES = [
+  { name: 'Ask Mode', tag: 'Consultor', desc: 'Analiza y explica código sin modificar archivos. Ideal para onboarding y documentación.' },
+  { name: 'Plan Mode', tag: 'Arquitecto', desc: 'Diseña la arquitectura y la lista de tareas antes de escribir una línea de código.' },
+  { name: 'Agent Mode', tag: 'Implementador', desc: 'Ejecuta el plan: crea archivos, corre tests, corrige y despliega con tu aprobación.' }
+];
+
 // ── Home page renderer ───────────────────────────────────────────
 function renderHome(searchTerm = '', mode = currentMode) {
   const normalizedTerm = searchTerm.trim().toLowerCase();
@@ -126,24 +180,22 @@ function renderHome(searchTerm = '', mode = currentMode) {
           : 'cds--tag--blue';
 
       return `
-        <div class="hub-workshop-section">
+        <div class="hub-workshop-section" id="section-${section.id}">
           <div class="cds--tile hub-level-banner" role="region" aria-label="${section.title}">
             <div class="hub-level-banner__badges">
               <span class="cds--tag ${tag.cls}">${section.eyebrow}</span>
               <span class="cds--tag ${levelTagCls}">${section.level}</span>
-              <span class="cds--tag cds--tag--teal">🤖 ${section.bobMode}</span>
+              <span class="cds--tag cds--tag--teal">${section.bobMode}</span>
             </div>
             <h2 class="cds--productive-heading-04 hub-level-banner__title">${section.title}</h2>
             <p class="cds--body-01 hub-level-banner__desc">${section.description}</p>
           </div>
           <div class="hub-cards-grid">${cardsMarkup}</div>
-          <a class="cds--btn cds--btn--ghost hub-section-cta" href="#available-workshops">${section.actionLabel} →</a>
         </div>
       `;
     })
     .join('');
 
-  // Mode selector tabs
   const modeSelector = `
     <div class="cds--tabs cds--tabs--contained hub-mode-tabs" role="tablist" aria-label="Modo de audiencia">
       <button class="cds--tabs__nav-item${mode === 'client' ? ' cds--tabs__nav-item--selected' : ''}"
@@ -157,8 +209,23 @@ function renderHome(searchTerm = '', mode = currentMode) {
     </div>
   `;
 
+  const modesMarkup = BOB_MODES.map((m) => `
+    <article class="cds--tile hub-cap-card">
+      <span class="cds--tag cds--tag--blue">${m.tag}</span>
+      <h3 class="cds--productive-heading-02 hub-cap-card__title">${m.name}</h3>
+      <p class="cds--body-01">${m.desc}</p>
+    </article>
+  `).join('');
+
+  const profilesMarkup = BOB_PROFILES.map((p) => `
+    <article class="cds--tile hub-profile-card">
+      <h3 class="cds--productive-heading-02">${p.role}</h3>
+      <p class="cds--label-01 hub-profile-card__tool">${p.tool}</p>
+      <p class="cds--body-01">${p.tasks}</p>
+    </article>
+  `).join('');
+
   homeView.innerHTML = `
-    <!-- ── Hero ── -->
     <section class="hub-hero">
       <div class="hub-hero__inner">
         <div class="hub-hero__content">
@@ -167,6 +234,7 @@ function renderHome(searchTerm = '', mode = currentMode) {
           <p class="cds--body-02 hub-hero__copy">${siteData.hero.description}</p>
           <div class="hub-hero__actions">
             <a class="cds--btn cds--btn--primary" href="#available-workshops">${siteData.hero.ctaLabel}</a>
+            <a class="cds--btn cds--btn--tertiary" href="#capacidades">Ver capacidades</a>
           </div>
         </div>
         <div class="hub-hero__visual" aria-hidden="true">
@@ -175,7 +243,6 @@ function renderHome(searchTerm = '', mode = currentMode) {
       </div>
     </section>
 
-    <!-- ── Metrics strip ── -->
     <div class="hub-metrics">
       ${siteData.highlights.map((item) => `
         <div class="hub-metric-tile">
@@ -185,25 +252,54 @@ function renderHome(searchTerm = '', mode = currentMode) {
       `).join('')}
     </div>
 
-    <!-- ── Audience mode selector ── -->
+    <section id="capacidades" class="hub-capacidades">
+      <div class="hub-capacidades__inner">
+        <p class="cds--label-01 hub-section-eyebrow">Capacidades</p>
+        <h2 class="cds--productive-heading-04">Bob en cada modo y perfil</h2>
+        <p class="cds--body-01 hub-section-lead">Tres modos de trabajo y seis perfiles de equipo — Bob se adapta al rol y a la fase del ciclo de vida.</p>
+        <div class="hub-cap-grid">${modesMarkup}</div>
+        <h3 class="cds--productive-heading-03 hub-capacidades__subtitle">Bob es el compañero perfecto para cualquier perfil</h3>
+        <div class="hub-profile-grid">${profilesMarkup}</div>
+      </div>
+    </section>
+
     ${modeSelector}
 
-    <!-- ── Available workshops ── -->
     <section id="available-workshops" class="hub-workshops">
       <div class="hub-workshops__header">
+        <p class="cds--label-01 hub-section-eyebrow">Laboratorios</p>
         <h2 class="cds--productive-heading-04 hub-workshops__heading">Workshops disponibles</h2>
       </div>
       <div class="hub-sections-stack">${sectionsMarkup}</div>
+    </section>
+
+    <section id="acerca-de" class="hub-about">
+      <div class="hub-about__inner">
+        <p class="cds--label-01 hub-section-eyebrow">Acerca de</p>
+        <h2 class="cds--productive-heading-04">IBM Workshop Hub</h2>
+        <p class="cds--body-01">
+          Este hub reúne workshops prácticos de IBM Bob para equipos Cliente y Partner.
+          Cada laboratorio sigue el diseño IBM Carbon y te guía de la idea a un resultado ejecutable —
+          con prompts listos, capturas de referencia y criterios de éxito claros.
+        </p>
+        <ul class="cds--list--unordered hub-about__list">
+          <li class="cds--list__item"><strong>Audiencia Cliente:</strong> rutas de habilitación core y modernización.</li>
+          <li class="cds--list__item"><strong>Audiencia Partner:</strong> incluye laboratorios premium adicionales (p. ej. RPG en IBM i).</li>
+          <li class="cds--list__item"><strong>Diseño:</strong> tipografía IBM Plex, tokens Carbon y UI Shell estándar.</li>
+        </ul>
+      </div>
     </section>
   `;
 
   homeView.querySelector('#tab-client')?.addEventListener('click', () => {
     currentMode = 'client';
     renderHome(siteSearch.value, 'client');
+    scrollToHomeSection(getHashTarget());
   });
   homeView.querySelector('#tab-partner')?.addEventListener('click', () => {
     currentMode = 'partner';
     renderHome(siteSearch.value, 'partner');
+    scrollToHomeSection(getHashTarget());
   });
 }
 
@@ -247,35 +343,43 @@ async function renderLab(route) {
   );
 
   const isOverview = activeStep.slug === 'overview';
-  // For overview tabs the content panel already has a full lab-banner — hide the
-  // shell header so the title is not duplicated.
   labShell.innerHTML = `
     <header class="lab-shell__header${isOverview ? ' lab-shell__header--hidden' : ''}">
       <p class="cds--label-01 lab-shell__meta">${section.title} · ${lab.level}</p>
       <h1 class="cds--productive-heading-05 lab-shell__title">${lab.title}</h1>
       <p class="cds--body-02 lab-shell__description">${lab.description}</p>
     </header>
-    <div class="prose${isOverview ? ' prose--full' : ''}">${content}</div>
+    <div class="prose prose--full">${content}</div>
   `;
 }
 
 // ── Route dispatcher ─────────────────────────────────────────────
 async function renderRoute() {
   const route = parseRoute(window.location.hash);
+  const sectionId = getHashTarget();
 
   if (route.view === 'home') {
     homeView.hidden = false;
     labView.hidden   = true;
-    subnavEl.hidden  = true;   // hide subnav on home
+    subnavEl.hidden  = true;
+    subnavItems.innerHTML = '';
+    document.body.classList.add('hub-view--home');
+    document.body.classList.remove('hub-view--lab');
     renderHome(siteSearch.value);
+    updateNavCurrent();
+    // Allow layout to settle, then scroll past fixed header
+    setTimeout(() => scrollToHomeSection(sectionId), 50);
     return;
   }
 
-  homeView.hidden  = false; // keep in DOM for layout
   homeView.hidden  = true;
   labView.hidden   = false;
-  subnavEl.hidden  = false;  // show subnav on lab pages
+  subnavEl.hidden  = false;
+  document.body.classList.add('hub-view--lab');
+  document.body.classList.remove('hub-view--home');
+  updateNavCurrent();
   await renderLab(route);
+  window.scrollTo({ top: 0 });
 }
 
 // ── Event bindings ───────────────────────────────────────────────
@@ -310,7 +414,6 @@ function bindEvents() {
     }
   });
 
-  // Copy-to-clipboard for code blocks
   document.addEventListener('click', async (event) => {
     const copyButton = event.target.closest('.copy-button');
     if (!copyButton) return;

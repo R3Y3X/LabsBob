@@ -125,9 +125,19 @@
   }
 }
 
-/* ── Ocultar nav de escritorio en tamaños pequeños ──────────────── */
+/* ── Ocultar nav de escritorio en tamaños pequeños; show hamburger ─ */
 @media (max-width: 1055px) {
   .cds--header__nav {
     display: none;
+  }
+
+  .cds--header__menu-toggle {
+    display: inline-flex !important;
+  }
+}
+
+@media (min-width: 1056px) {
+  .cds--header__menu-toggle {
+    display: none !important;
   }
 }

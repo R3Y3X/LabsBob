@@ -112,28 +112,33 @@
     </h2>
 
     <!-- Paso 1 -->
-    <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Abrir el Gestor de Modos</h3>
-      <ol class="cds--list--ordered">
-        <li class="cds--list__item">Haz clic en el selector de modos de IBM Bob (parte superior de la ventana de chat)</li>
-        <li class="cds--list__item">En la parte inferior del menú, busca la opción <strong>"Manage Modes"</strong> o <strong>"Edit Modes"</strong></li>
-        <li class="cds--list__item">Haz clic para abrir el editor de modos</li>
-      </ol>
-      <figure class="lab-figure">
-        <img src="./assets/images/labs/hands-on-inicial/lab4-mode-select.png"
-             alt="Selector de modos de IBM Bob mostrando la opción Manage Modes"
-             class="lab-figure__img" />
-        <figcaption class="lab-figure__caption">Accede al gestor de modos desde el selector</figcaption>
-      </figure>
+    <div class="lab-step lab-step--split">
+      <div class="lab-step__body">
+        <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Abrir el Gestor de Modos</h3>
+        <ol class="cds--list--ordered">
+          <li class="cds--list__item">Abre el selector de modos del chat</li>
+          <li class="cds--list__item">Elige <strong>Manage Modes</strong> / <strong>Edit Modes</strong></li>
+          <li class="cds--list__item">Abre el editor de modos</li>
+        </ol>
+      </div>
+      <div class="lab-step__media">
+        <figure class="lab-figure">
+          <img src="./assets/images/labs/hands-on-inicial/lab4-mode-select.png"
+               alt="Selector de modos de IBM Bob mostrando la opción Manage Modes"
+               class="lab-figure__img" />
+          <figcaption class="lab-figure__caption">Verifica: acceso a Manage Modes desde el selector</figcaption>
+        </figure>
+      </div>
     </div>
 
     <!-- Paso 2 -->
-    <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Crear el Modo en YAML</h3>
-      <p class="cds--body-01">Copia y pega esta definición YAML completa del modo "Pricing Comparison Expert":</p>
-      <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
-        <pre><code>customModes:
+    <div class="lab-step lab-step--split">
+      <div class="lab-step__body">
+        <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Crear el Modo en YAML</h3>
+        <p class="cds--body-01">Pega esta definición del modo <strong>Pricing Comparison Expert</strong>:</p>
+        <div class="code-block">
+          <button class="copy-button" type="button">Copiar</button>
+          <pre><code>customModes:
   - slug: pricing-comparison-expert
     name: Pricing Comparison Expert
     description: Compare AI coding tool pricing and generate executive cost reports
@@ -166,29 +171,36 @@
     groups:
       - read
       - edit</code></pre>
+        </div>
       </div>
-      <figure class="lab-figure">
-        <img src="./assets/images/labs/hands-on-inicial/lab4-import-yaml.png"
-             alt="Editor de IBM Bob con el YAML del modo personalizado listo para importar"
-             class="lab-figure__img" />
-        <figcaption class="lab-figure__caption">El YAML del modo Pricing Comparison Expert listo en el editor</figcaption>
-      </figure>
+      <div class="lab-step__media">
+        <figure class="lab-figure">
+          <img src="./assets/images/labs/hands-on-inicial/lab4-import-yaml.png"
+               alt="Editor de IBM Bob con el YAML del modo personalizado listo para importar"
+               class="lab-figure__img" />
+          <figcaption class="lab-figure__caption">Verifica: YAML del modo listo en el editor</figcaption>
+        </figure>
+      </div>
     </div>
 
     <!-- Paso 3 -->
-    <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Guardar e Importar el Modo</h3>
-      <ol class="cds--list--ordered">
-        <li class="cds--list__item">Guarda el archivo YAML (<kbd>Cmd + S</kbd> / <kbd>Ctrl + S</kbd>)</li>
-        <li class="cds--list__item">IBM Bob detectará el nuevo modo automáticamente</li>
-        <li class="cds--list__item">Abre el selector de modos — deberías ver <strong>"Pricing Comparison Expert"</strong> en la lista</li>
-      </ol>
-      <figure class="lab-figure">
-        <img src="./assets/images/labs/hands-on-inicial/lab4-mode-viewer.png"
-             alt="IBM Bob mostrando el modo personalizado Pricing Comparison Expert en el selector"
-             class="lab-figure__img" />
-        <figcaption class="lab-figure__caption">El modo aparece en el selector listo para usar</figcaption>
-      </figure>
+    <div class="lab-step lab-step--split">
+      <div class="lab-step__body">
+        <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Guardar e Importar el Modo</h3>
+        <ol class="cds--list--ordered">
+          <li class="cds--list__item">Guarda el YAML (<kbd>Cmd/Ctrl + S</kbd>)</li>
+          <li class="cds--list__item">Bob detecta el nuevo modo</li>
+          <li class="cds--list__item">En el selector debe aparecer <strong>Pricing Comparison Expert</strong></li>
+        </ol>
+      </div>
+      <div class="lab-step__media">
+        <figure class="lab-figure">
+          <img src="./assets/images/labs/hands-on-inicial/lab4-mode-viewer.png"
+               alt="IBM Bob mostrando el modo personalizado Pricing Comparison Expert en el selector"
+               class="lab-figure__img" />
+          <figcaption class="lab-figure__caption">Verifica: el modo aparece en el selector</figcaption>
+        </figure>
+      </div>
     </div>
 
     <!-- Paso 4 -->

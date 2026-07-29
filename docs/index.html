@@ -19,9 +19,9 @@
     <link rel="stylesheet" href="./css/components.css" />
     <link rel="stylesheet" href="./css/responsive.css" />
   </head>
-  <body>
+  <body class="hub-view--home">
     <!-- ── Carbon UI Shell ───────────────────────────────────────── -->
-    <header class="cds--header" role="banner">
+    <header class="cds--header hub-header" role="banner">
 
       <!-- IBM 8-bar logo + product name (LEFT anchor) -->
       <a class="cds--header__name" href="#/" aria-label="IBM Workshop Hub – inicio">
@@ -45,12 +45,15 @@
       <!-- Spacer pushes global actions to the right -->
       <div class="hub-header__spacer" aria-hidden="true"></div>
 
-      <!-- Global actions: search, theme, GitHub -->
+      <!-- Global actions: search + theme + hamburger (mobile) -->
       <div class="cds--header__global">
 
-        <!-- Inline search field -->
+        <!-- Inline search field — icon on the LEFT -->
         <div class="hub-header__search-wrap">
           <label class="visually-hidden" for="site-search">Buscar workshops</label>
+          <svg class="hub-header__search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
+            <path fill="currentColor" d="M15,14.3L10.7,10c1.9-2.3,1.6-5.8-0.7-7.7S4.2,0.7,2.3,3S0.7,8.8,3,10.7c2,1.7,5,1.7,7,0l4.3,4.3L15,14.3z M2,6.5C2,4,4,2,6.5,2S11,4,11,6.5S9,11,6.5,11S2,9,2,6.5z"/>
+          </svg>
           <input
             id="site-search"
             class="hub-header__search-input"
@@ -58,9 +61,6 @@
             placeholder="Buscar…"
             autocomplete="off"
           />
-          <svg class="hub-header__search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" aria-hidden="true" focusable="false">
-            <path fill="currentColor" d="M29 27.586l-7.552-7.552A11 11 0 1 0 20 21.414zM13 22a9 9 0 1 1 9-9 9.01 9.01 0 0 1-9 9z"/>
-          </svg>
         </div>
 
         <!-- Theme toggle -->
@@ -70,14 +70,7 @@
           </svg>
         </button>
 
-        <!-- GitHub repository link -->
-        <a class="cds--header__action" href="https://github.com/IBM/bob-workshop-hub" target="_blank" rel="noreferrer" aria-label="Repositorio GitHub">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" aria-hidden="true" focusable="false">
-            <path fill="currentColor" d="M16 .396c-8.839 0-16 7.167-16 16 0 7.073 4.584 13.068 10.937 15.183.803.151 1.093-.344 1.093-.772 0-.38-.009-1.385-.015-2.719-4.453.964-5.391-2.151-5.391-2.151-.728-1.844-1.776-2.339-1.776-2.339-1.452-.993.11-.973.11-.973 1.605.113 2.449 1.648 2.449 1.648 1.427 2.448 3.743 1.74 4.656 1.328.143-1.031.558-1.74 1.017-2.14-3.552-.404-7.286-1.776-7.286-7.906 0-1.747.625-3.174 1.649-4.295-.166-.403-.714-2.031.155-4.234 0 0 1.344-.43 4.401 1.64a15.32 15.32 0 0 1 4.005-.539 15.36 15.36 0 0 1 4.005.539c3.054-2.07 4.396-1.64 4.396-1.64.871 2.203.323 3.831.157 4.234 1.026 1.121 1.647 2.548 1.647 4.295 0 6.145-3.743 7.498-7.306 7.893.574.497 1.085 1.47 1.085 2.963 0 2.141-.02 3.864-.02 4.391 0 .426.288.925 1.099.769C27.421 29.458 32 23.468 32 16.396c0-8.833-7.164-16-16-16z"/>
-          </svg>
-        </a>
-
-        <!-- Hamburger — RIGHT side, opens SideNav with full labs list -->
+        <!-- Hamburger — mobile / tablet only (hidden on desktop via CSS) -->
         <button
           id="hamburger-btn"
           class="cds--header__action cds--header__menu-toggle"

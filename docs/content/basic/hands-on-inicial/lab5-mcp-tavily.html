@@ -94,48 +94,44 @@
     </h2>
 
     <!-- Paso 1: API Key -->
-    <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Obtener tu API Key de Tavily (gratis)</h3>
-      <ol class="cds--list--ordered">
-        <li class="cds--list__item">Visita <a class="cds--link" href="https://www.tavily.com" target="_blank" rel="noreferrer">tavily.com</a></li>
-        <li class="cds--list__item">Haz clic en <strong>"Sign Up"</strong> y crea una cuenta gratuita con tu email</li>
-        <li class="cds--list__item">Verifica tu email</li>
-        <li class="cds--list__item">Ve al Dashboard y copia tu <strong>API Key</strong></li>
-      </ol>
-      <div class="callout" data-tone="note">
-        <p class="callout__title">Plan Gratuito de Tavily</p>
-        <p>El tier gratuito incluye <strong>1,000 búsquedas/mes</strong> — más que suficiente para este lab y para experimentar.</p>
+    <div class="lab-step lab-step--split">
+      <div class="lab-step__body">
+        <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Obtener tu API Key de Tavily (gratis)</h3>
+        <ol class="cds--list--ordered">
+          <li class="cds--list__item">Visita <a class="cds--link" href="https://www.tavily.com" target="_blank" rel="noreferrer">tavily.com</a></li>
+          <li class="cds--list__item">Crea una cuenta gratuita y verifica el email</li>
+          <li class="cds--list__item">En el Dashboard, copia tu <strong>API Key</strong></li>
+        </ol>
+        <div class="callout" data-tone="note">
+          <p class="callout__title">Plan gratuito</p>
+          <p><strong>1,000 búsquedas/mes</strong> — suficiente para el lab y experimentos.</p>
+        </div>
       </div>
-      <figure class="lab-figure">
-        <img src="./assets/images/labs/hands-on-inicial/lab5-tavily-signup.png"
-             alt="Página de registro de Tavily para crear una cuenta gratuita"
-             class="lab-figure__img lab-figure__img--half" />
-        <img src="./assets/images/labs/hands-on-inicial/lab5-tavily-apikey.png"
-             alt="Dashboard de Tavily mostrando la API Key para copiar"
-             class="lab-figure__img lab-figure__img--half" />
-        <figcaption class="lab-figure__caption">Registro en Tavily (izquierda) y obtención de la API Key (derecha)</figcaption>
-      </figure>
+      <div class="lab-step__media">
+        <figure class="lab-figure lab-figure--row">
+          <img src="./assets/images/labs/hands-on-inicial/lab5-tavily-signup.png"
+               alt="Página de registro de Tavily para crear una cuenta gratuita"
+               class="lab-figure__img lab-figure__img--half" />
+          <img src="./assets/images/labs/hands-on-inicial/lab5-tavily-apikey.png"
+               alt="Dashboard de Tavily mostrando la API Key para copiar"
+               class="lab-figure__img lab-figure__img--half" />
+          <figcaption class="lab-figure__caption">Registro (izq.) y API Key en el dashboard (der.)</figcaption>
+        </figure>
+      </div>
     </div>
 
     <!-- Paso 2: Configurar MCP -->
-    <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Configurar MCP en IBM Bob 2.1</h3>
-      <p class="cds--body-01">En Bob 2.1, la configuración MCP tiene una <strong>pestaña dedicada en Ajustes</strong> — ya no es necesario editar JSON a mano (aunque sigue siendo posible):</p>
-      <ol class="cds--list--ordered">
-        <li class="cds--list__item">Abre IBM Bob</li>
-        <li class="cds--list__item">Ve a <strong>Ajustes (Settings)</strong> → pestaña <strong>"MCP Servers"</strong></li>
-        <li class="cds--list__item">Haz clic en <strong>"Add Server"</strong> o usa la opción de edición directa del JSON</li>
-      </ol>
-      <figure class="lab-figure">
-        <img src="./assets/images/labs/hands-on-inicial/MCP_Ajustes.png"
-             alt="Pestaña MCP Servers en la configuración de IBM Bob 2.1"
-             class="lab-figure__img" />
-        <figcaption class="lab-figure__caption">Pestaña MCP Servers en la configuración de IBM Bob 2.1</figcaption>
-      </figure>
-      <p class="cds--body-01" style="margin-top:16px"><strong>Opción A — JSON directo</strong> (si prefieres editar el archivo de configuración):</p>
-      <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
-        <pre><code>{
+    <div class="lab-step lab-step--split">
+      <div class="lab-step__body">
+        <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Configurar MCP en IBM Bob 2.1</h3>
+        <ol class="cds--list--ordered">
+          <li class="cds--list__item">Ajustes → pestaña <strong>MCP Servers</strong></li>
+          <li class="cds--list__item"><strong>Add Server</strong> o edición directa del JSON</li>
+        </ol>
+        <p class="cds--body-01"><strong>JSON de ejemplo:</strong></p>
+        <div class="code-block">
+          <button class="copy-button" type="button">Copiar</button>
+          <pre><code>{
   "mcpServers": {
     "tavily": {
       "command": "npx",
@@ -146,33 +142,46 @@
     }
   }
 }</code></pre>
+        </div>
+        <div class="callout" data-tone="warning">
+          <p class="callout__title">No subas la API key a Git</p>
+          <p>Reemplaza el placeholder por tu key real. Nunca hagas commit del secreto.</p>
+        </div>
       </div>
-      <div class="callout" data-tone="warning">
-        <p class="callout__title">⚠️ Reemplaza el placeholder con tu API Key real</p>
-        <p>Cambia <code>PEGA_TU_API_KEY_DE_TAVILY_AQUI</code> por la API key que copiaste de Tavily. <strong>NUNCA hagas commit de tu API key a Git.</strong></p>
+      <div class="lab-step__media">
+        <figure class="lab-figure">
+          <img src="./assets/images/labs/hands-on-inicial/MCP_Ajustes.png"
+               alt="Pestaña MCP Servers en la configuración de IBM Bob 2.1"
+               class="lab-figure__img" />
+          <figcaption class="lab-figure__caption">Pestaña MCP Servers en Ajustes</figcaption>
+        </figure>
+        <figure class="lab-figure">
+          <img src="./assets/images/labs/hands-on-inicial/Codigo_Tavily.png"
+               alt="Archivo de configuración MCP de IBM Bob con el JSON de Tavily configurado"
+               class="lab-figure__img" />
+          <figcaption class="lab-figure__caption">JSON de Tavily configurado</figcaption>
+        </figure>
       </div>
-      <figure class="lab-figure">
-        <img src="./assets/images/labs/hands-on-inicial/Codigo_Tavily.png"
-             alt="Archivo de configuración MCP de IBM Bob con el JSON de Tavily configurado"
-             class="lab-figure__img" />
-        <figcaption class="lab-figure__caption">Configuración MCP de Tavily en IBM Bob</figcaption>
-      </figure>
     </div>
 
     <!-- Paso 3: Activar -->
-    <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Guardar y Recargar</h3>
-      <ol class="cds--list--ordered">
-        <li class="cds--list__item">Guarda la configuración</li>
-        <li class="cds--list__item">Haz clic en el <strong>botón de recargar</strong> (⟳) en la pestaña MCP Servers</li>
-        <li class="cds--list__item">Deberías ver <strong>Tavily</strong> apareciendo como herramienta disponible con estado activo</li>
-      </ol>
-      <figure class="lab-figure">
-        <img src="./assets/images/labs/hands-on-inicial/Tavily_Activado.png"
-             alt="IBM Bob mostrando Tavily activado y disponible como herramienta MCP"
-             class="lab-figure__img" />
-        <figcaption class="lab-figure__caption">✅ Tavily aparece activo en las herramientas MCP de IBM Bob</figcaption>
-      </figure>
+    <div class="lab-step lab-step--split">
+      <div class="lab-step__body">
+        <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Guardar y Recargar</h3>
+        <ol class="cds--list--ordered">
+          <li class="cds--list__item">Guarda la configuración</li>
+          <li class="cds--list__item">Pulsa recargar (⟳) en MCP Servers</li>
+          <li class="cds--list__item">Confirma que <strong>Tavily</strong> aparece activo</li>
+        </ol>
+      </div>
+      <div class="lab-step__media">
+        <figure class="lab-figure">
+          <img src="./assets/images/labs/hands-on-inicial/Tavily_Activado.png"
+               alt="IBM Bob mostrando Tavily activado y disponible como herramienta MCP"
+               class="lab-figure__img" />
+          <figcaption class="lab-figure__caption">Verifica: Tavily activo en herramientas MCP</figcaption>
+        </figure>
+      </div>
     </div>
 
     <!-- Paso 4: Probar -->

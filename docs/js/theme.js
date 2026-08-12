@@ -1,11 +1,21 @@
 export function setTheme(theme) {
-  if (theme === 'dark') {
+  const nextTheme = theme === 'dark' ? 'dark' : 'light';
+  if (nextTheme === 'dark') {
     document.body.classList.add('cds--g100');
     document.body.classList.remove('cds--white');
   } else {
     document.body.classList.remove('cds--g100');
   }
-  window.localStorage.setItem('theme', theme);
+  document.body.dataset.theme = nextTheme;
+  window.localStorage.setItem('theme', nextTheme);
+
+  const toggle = document.querySelector('#theme-toggle');
+  if (toggle) {
+    const darkMode = nextTheme === 'dark';
+    toggle.setAttribute('aria-pressed', String(darkMode));
+    toggle.setAttribute('aria-label', darkMode ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro');
+    toggle.title = darkMode ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro';
+  }
 }
 
 export function initializeTheme() {

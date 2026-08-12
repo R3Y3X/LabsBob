@@ -3,90 +3,312 @@
   <div class="lab-banner">
     <div class="lab-banner__tags">
       <span class="cds--tag cds--tag--blue">Habilitación Core</span>
-      <span class="cds--tag cds--tag--cool-gray">~120 min</span>
+      <span class="cds--tag cds--tag--cool-gray">~90 min</span>
       <span class="cds--tag cds--tag--teal">Plan · Agent · Ask</span>
-      <span class="cds--tag cds--tag--green">Principiante</span>
     </div>
-    <h1 class="cds--productive-heading-05 lab-banner__title">Ciclo de Vida del Software con IBM Bob</h1>
-    <p class="cds--body-02 lab-banner__summary">
-      Recorre las <strong>6 fases del SDLC</strong> con Bob como partner: planifica requisitos, diseña con
-      <strong>draw.io</strong>, implementa, prueba con auto-fix, despliega y mantén — siempre con
-      aprobación humana en cada compuerta para obtener un output de calidad.
-    </p>
+    <h1 class="cds--productive-heading-05 lab-banner__title">SaaS Payment API: de deuda técnica a producción</h1>
+
+    <!-- ── Hero image ──────────────────────────────────────────────── -->
+    <div class="lab-hero-image">
+      <img src="./assets/images/labs/software-development-lifecycle/banner_bob.png"
+           alt="Banner del Ciclo de Vida del Software con IBM Bob"
+           class="lab-hero-image__img" />
+    </div>
+
+    <div class="lab-banner__metrics">
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">6</span>
+        <span class="lab-banner__metric-label">fases SDLC</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">~90</span>
+        <span class="lab-banner__metric-label">minutos</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">30–50</span>
+        <span class="lab-banner__metric-label">BobCoins estimados</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">3</span>
+        <span class="lab-banner__metric-label">vulnerabilidades a corregir</span>
+      </div>
+    </div>
   </div>
+
+  <section class="lab-section">
+    <h2 class="cds--productive-heading-03">Descarga el proyecto primero</h2>
+    <p class="cds--body-01">Descarga el proyecto base del workshop y descomprímelo — se crea la carpeta <code>sdlc-lab-payment-api/</code>. Todas las fases del laboratorio trabajan sobre este proyecto Node.js con deuda técnica intencional que deberás detectar y corregir.</p>
+
+    <a class="cds--btn cds--btn--primary" style="margin-top: 1rem; margin-bottom: 2rem;" download="sdlc-lab-payment-api.zip" href="./downloads/sdlc-lab-payment-api.zip">
+      Descargar proyecto del workshop (14 KB)
+    </a>
+
+    <a class="cds--btn cds--btn--tertiary" style="margin-top: 1rem; margin-bottom: 2rem; margin-left: 0.75rem;" download="bobs-beans-starter.zip" href="./downloads/bobs-beans-starter.zip">
+      Descargar el starter de Bob's Beans (2.3 MB)
+    </a>
+
+    <div class="callout" data-tone="info">
+      <p class="callout__title">Antes de comenzar</p>
+      <p>Descomprime el zip, abre la carpeta <code>sdlc-lab-payment-api/</code> en IBM Bob IDE y ejecuta <code>npm install</code>. Desde ahí seguirás las 6 fases del ciclo de vida. Necesitarás Node.js 18+, npm y Git instalados.</p>
+    </div>
+  </section>
 
   <div class="bob-value-strip">
     <div class="bob-value-tile bob-value-tile--govern">
-      <p class="bob-value-tile__value">Plan → Diseño</p>
-      <p class="bob-value-tile__label">Contrato antes de código</p>
-      <p class="bob-value-tile__desc">Plan Mode + diagrama draw.io definen el alcance. Agent Mode solo implementa lo aprobado.</p>
+      <p class="bob-value-tile__value">Seguridad</p>
+      <p class="bob-value-tile__label">Detecta y corrige</p>
+      <p class="bob-value-tile__desc">Secreto hardcoded e inyección SQL en <code>payment.js</code> — Bob te guía para reemplazarlos con variables de entorno y queries parametrizadas.</p>
     </div>
     <div class="bob-value-tile bob-value-tile--persona">
-      <p class="bob-value-tile__value">Test → Deploy</p>
-      <p class="bob-value-tile__label">Calidad a producción</p>
-      <p class="bob-value-tile__desc">Bucle build-test-fix, luego contenedor/CI con gobernanza de PR.</p>
+      <p class="bob-value-tile__value">Feature real</p>
+      <p class="bob-value-tile__label">Implementa desde cero</p>
+      <p class="bob-value-tile__desc">El endpoint <code>POST /coupons/apply</code> está en skeleton — Bob te acompaña en Plan Mode para diseñarlo y en Agent Mode para construirlo.</p>
     </div>
     <div class="bob-value-tile bob-value-tile--speed">
-      <p class="bob-value-tile__value">6 perfiles</p>
-      <p class="bob-value-tile__label">Bob en cada rol</p>
-      <p class="bob-value-tile__desc">PM, Diseñador, Arquitecto, Developer, DevOps y Seguridad — un flujo continuo.</p>
+      <p class="bob-value-tile__value">CI/CD completo</p>
+      <p class="bob-value-tile__label">De código a producción</p>
+      <p class="bob-value-tile__desc">Dockerfile, GitHub Actions pipeline y alertas de monitoreo con Sentry y Datadog — todo como parte del flujo real.</p>
     </div>
   </div>
 
   <section class="lab-section" aria-labelledby="sdlc-visual">
     <h2 class="cds--productive-heading-03" id="sdlc-visual">El ciclo y las herramientas</h2>
     <p class="cds--body-01">Usa estas referencias visuales mientras avanzas por las pestañas del laboratorio.</p>
-    <figure class="lab-figure">
-      <img src="./assets/images/labs/software-development-lifecycle/ciclo-software.png"
-           alt="Ciclo de desarrollo de software: Planning, Analysis, Design, Implementation, Testing, Maintenance"
-           class="lab-figure__img" />
-      <figcaption class="lab-figure__caption">Ciclo iterativo del software — cada fase alimenta la siguiente</figcaption>
-    </figure>
-    <figure class="lab-figure">
-      <img src="./assets/images/labs/software-development-lifecycle/herramientas-por-fase.png"
-           alt="Herramientas populares por fase: Plan, Design, Code, Test, Deploy, Maintain"
-           class="lab-figure__img" />
-      <figcaption class="lab-figure__caption">Herramientas típicas por fase — en Diseño usaremos draw.io</figcaption>
-    </figure>
-    <figure class="lab-figure">
-      <img src="./assets/images/labs/software-development-lifecycle/bob-perfiles.png"
-           alt="Bob como compañero para PM, Diseñador, Arquitecto, Desarrollador, DevOps y Seguridad"
-           class="lab-figure__img" />
-      <figcaption class="lab-figure__caption">Bob se adapta a cada perfil del equipo</figcaption>
-    </figure>
+    <div class="sdlc-custom-section">
+      <h3 class="cds--productive-heading-02" style="text-align: center; margin-bottom: 0.5rem;">The Software Development Cycle</h3>
+      <div class="sdlc-cycle-flow">
+        <div class="sdlc-cycle-node sdlc-cycle-node--1">
+          <div class="sdlc-cycle-node__num">1</div>
+          <div class="sdlc-cycle-node__label">Planning</div>
+        </div>
+        <div class="sdlc-cycle-node sdlc-cycle-node--2">
+          <div class="sdlc-cycle-node__num">2</div>
+          <div class="sdlc-cycle-node__label">Analysis</div>
+        </div>
+        <div class="sdlc-cycle-node sdlc-cycle-node--3">
+          <div class="sdlc-cycle-node__num">3</div>
+          <div class="sdlc-cycle-node__label">Design</div>
+        </div>
+        <div class="sdlc-cycle-node sdlc-cycle-node--4">
+          <div class="sdlc-cycle-node__num">4</div>
+          <div class="sdlc-cycle-node__label">Implementation</div>
+        </div>
+        <div class="sdlc-cycle-node sdlc-cycle-node--5">
+          <div class="sdlc-cycle-node__num">5</div>
+          <div class="sdlc-cycle-node__label">Testing & QA</div>
+        </div>
+        <div class="sdlc-cycle-node sdlc-cycle-node--6">
+          <div class="sdlc-cycle-node__num">6</div>
+          <div class="sdlc-cycle-node__label">Maintenance</div>
+        </div>
+      </div>
+      <p class="cds--body-01" style="text-align: center; color: var(--cds-text-secondary, #525252);">Ciclo iterativo del software — cada fase alimenta la siguiente</p>
+    </div>
+
+    <div class="sdlc-custom-section">
+      <h3 class="cds--productive-heading-02" style="text-align: center; margin-bottom: 0.5rem; text-transform: uppercase;">Herramientas para cada una de las fases</h3>
+      <div class="sdlc-tooling-board">
+        <div class="sdlc-tool-col sdlc-tool-col--1">
+          <div class="sdlc-tool-header"><span>1</span> Plan</div>
+          <div class="sdlc-tool-item">Jira</div>
+          <div class="sdlc-tool-item">Linear</div>
+          <div class="sdlc-tool-item">Notion</div>
+          <div class="sdlc-tool-item">Confluence</div>
+          <div class="sdlc-tool-item">Trello</div>
+        </div>
+        <div class="sdlc-tool-col sdlc-tool-col--2">
+          <div class="sdlc-tool-header"><span>2</span> Design</div>
+          <div class="sdlc-tool-item">Swagger</div>
+          <div class="sdlc-tool-item">draw.io</div>
+          <div class="sdlc-tool-item">Figma</div>
+          <div class="sdlc-tool-item">Lucidchart</div>
+          <div class="sdlc-tool-item">Miro</div>
+        </div>
+        <div class="sdlc-tool-col sdlc-tool-col--3">
+          <div class="sdlc-tool-header"><span>3</span> Code</div>
+          <div class="sdlc-tool-item">Git</div>
+          <div class="sdlc-tool-item">GitHub</div>
+          <div class="sdlc-tool-item">Node.js</div>
+          <div class="sdlc-tool-item">Express</div>
+          <div class="sdlc-tool-item">SQLite</div>
+        </div>
+        <div class="sdlc-tool-col sdlc-tool-col--4">
+          <div class="sdlc-tool-header"><span>4</span> Test & QA</div>
+          <div class="sdlc-tool-item">Jest</div>
+          <div class="sdlc-tool-item">Supertest</div>
+          <div class="sdlc-tool-item">SonarQube</div>
+          <div class="sdlc-tool-item">OWASP</div>
+          <div class="sdlc-tool-item">Postman</div>
+        </div>
+        <div class="sdlc-tool-col sdlc-tool-col--5">
+          <div class="sdlc-tool-header"><span>5</span> Deploy</div>
+          <div class="sdlc-tool-item">GH Actions</div>
+          <div class="sdlc-tool-item">Docker</div>
+          <div class="sdlc-tool-item">node:18-alpine</div>
+          <div class="sdlc-tool-item">Terraform</div>
+          <div class="sdlc-tool-item">Railway</div>
+        </div>
+        <div class="sdlc-tool-col sdlc-tool-col--6">
+          <div class="sdlc-tool-header"><span>6</span> Maintain</div>
+          <div class="sdlc-tool-item">Sentry</div>
+          <div class="sdlc-tool-item">Datadog</div>
+          <div class="sdlc-tool-item">PagerDuty</div>
+          <div class="sdlc-tool-item">Grafana</div>
+          <div class="sdlc-tool-item">Rollbar</div>
+        </div>
+      </div>
+      <p class="cds--body-01" style="text-align: center; color: var(--cds-text-secondary, #525252);">Herramientas usadas en este lab — en Diseño modelaremos el contrato con <code>openapi.yaml</code> y draw.io</p>
+    </div>
+    <div class="hub-profiles" aria-label="Bob para cualquier perfil" style="margin-top: 2rem;">
+      <div class="hub-profiles__inner">
+        <h2 class="hub-profiles__heading">
+          Bob es el <span class="hub-profiles__highlight">compañero perfecto</span> para <span class="hub-profiles__highlight">cualquier perfil</span>
+        </h2>
+        <div class="hub-profiles__track">
+
+          <div class="hub-profile-card hub-profile-card--blue">
+            <div class="hub-profile-card__arrow" aria-hidden="true"></div>
+            <div class="hub-profile-card__content">
+              <p class="hub-profile-card__role">Product Manager</p>
+              <div class="hub-profile-card__icon-wrap" aria-hidden="true">
+                <img src="./assets/images/modosbob/bob_productor.png" alt="Product Manager" style="width:96px;height:96px;object-fit:contain;" />
+              </div>
+              <div class="hub-profile-card__tool">
+                <img src="./assets/images/logos/logo_jira.png" alt="Jira" style="width:18px;height:18px;object-fit:contain;" aria-hidden="true" />
+                <span><em class="hub-profile-card__ej">ej:</em> Jira</span>
+              </div>
+              <ul class="hub-profile-card__tasks">
+                <li>Estimaciones y planificación</li>
+                <li>Identificación de riesgos</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="hub-profile-card hub-profile-card--blue-mid">
+            <div class="hub-profile-card__arrow" aria-hidden="true"></div>
+            <div class="hub-profile-card__content">
+              <p class="hub-profile-card__role">Diseñador</p>
+              <div class="hub-profile-card__icon-wrap" aria-hidden="true">
+                <img src="./assets/images/modosbob/bob_diseñador.png" alt="Diseñador" style="width:96px;height:96px;object-fit:contain;" />
+              </div>
+              <div class="hub-profile-card__tool">
+                <img src="./assets/images/logos/logo_figma.png" alt="Figma" style="width:18px;height:18px;object-fit:contain;" aria-hidden="true" />
+                <span><em class="hub-profile-card__ej">ej:</em> Figma</span>
+              </div>
+              <ul class="hub-profile-card__tasks">
+                <li>Diseño de UX y UI</li>
+                <li>Prototipos a código</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="hub-profile-card hub-profile-card--periwinkle">
+            <div class="hub-profile-card__arrow" aria-hidden="true"></div>
+            <div class="hub-profile-card__content">
+              <p class="hub-profile-card__role">Arquitecto</p>
+              <div class="hub-profile-card__icon-wrap" aria-hidden="true">
+                <img src="./assets/images/modosbob/bob_analista.png" alt="Arquitecto / Analista" style="width:96px;height:96px;object-fit:contain;" />
+              </div>
+              <div class="hub-profile-card__tool">
+                <img src="./assets/images/logos/logo_instana.png" alt="Instana" style="width:18px;height:18px;object-fit:contain;" aria-hidden="true" />
+                <span><em class="hub-profile-card__ej">ej:</em> Instana</span>
+              </div>
+              <ul class="hub-profile-card__tasks">
+                <li>Comprensión de sistemas</li>
+                <li>Visualización de sistemas</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="hub-profile-card hub-profile-card--lavender">
+            <div class="hub-profile-card__arrow" aria-hidden="true"></div>
+            <div class="hub-profile-card__content">
+              <p class="hub-profile-card__role">Desarrollador</p>
+              <div class="hub-profile-card__icon-wrap" aria-hidden="true">
+                <img src="./assets/images/modosbob/bob_desarrollador.png" alt="Desarrollador" style="width:96px;height:96px;object-fit:contain;" />
+              </div>
+              <div class="hub-profile-card__tool">
+                <img src="./assets/images/logos/logo_github.png" alt="GitHub" style="width:18px;height:18px;object-fit:contain;" aria-hidden="true" />
+                <span><em class="hub-profile-card__ej">ej:</em> GitHub</span>
+              </div>
+              <ul class="hub-profile-card__tasks">
+                <li>Generación y refactor</li>
+                <li>Modernización coordinada</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="hub-profile-card hub-profile-card--violet">
+            <div class="hub-profile-card__arrow" aria-hidden="true"></div>
+            <div class="hub-profile-card__content">
+              <p class="hub-profile-card__role">DevOps</p>
+              <div class="hub-profile-card__icon-wrap" aria-hidden="true">
+                <img src="./assets/images/modosbob/bob_devops.png" alt="DevOps" style="width:96px;height:96px;object-fit:contain;" />
+              </div>
+              <div class="hub-profile-card__tool">
+                <img src="./assets/images/logos/logo_terraform.png" alt="Terraform" style="width:18px;height:18px;object-fit:contain;" aria-hidden="true" />
+                <span><em class="hub-profile-card__ej">ej:</em> Terraform</span>
+              </div>
+              <ul class="hub-profile-card__tasks">
+                <li>Gobernanza de PR</li>
+                <li>Pipeline de despliegue</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="hub-profile-card hub-profile-card--purple">
+            <div class="hub-profile-card__content">
+              <p class="hub-profile-card__role">Seguridad</p>
+              <div class="hub-profile-card__icon-wrap" aria-hidden="true">
+                <img src="./assets/images/modosbob/bob_seguridad.png" alt="Seguridad" style="width:96px;height:96px;object-fit:contain;" />
+              </div>
+              <div class="hub-profile-card__tool">
+                <img src="./assets/images/logos/logo_vault.png" alt="Vault" style="width:18px;height:18px;object-fit:contain;" aria-hidden="true" />
+                <span><em class="hub-profile-card__ej">ej:</em> Vault</span>
+              </div>
+              <ul class="hub-profile-card__tasks">
+                <li>Detección de vulnerabilidades</li>
+                <li>Detección de secretos</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
   </section>
 
   <section class="lab-section" aria-labelledby="sdlc-flujo">
-    <h2 class="cds--productive-heading-03" id="sdlc-flujo">Flujo del laboratorio (para un buen output)</h2>
+    <h2 class="cds--productive-heading-03" id="sdlc-flujo">Flujo del laboratorio</h2>
     <div class="lab-timeline">
       <div class="lab-timeline__item lab-timeline__item--active">
         <span class="lab-timeline__time">1 · Plan</span>
-        <span class="lab-timeline__label"><strong>Plan Mode · PM</strong> — requisitos, backlog y criterios de aceptación. Aprueba el plan.</span>
+        <span class="lab-timeline__label"><strong>Plan Mode · PM</strong> — analizar el backlog de la Payment API, clasificar deuda técnica, vulnerabilidades y la nueva feature.</span>
       </div>
       <div class="lab-timeline__item">
         <span class="lab-timeline__time">2 · Diseño</span>
-        <span class="lab-timeline__label"><strong>Diseñador / Arquitecto</strong> — diagrama C4 o flujo en <strong>draw.io</strong> como contrato visual.</span>
+        <span class="lab-timeline__label"><strong>Ask Mode · Arquitecto</strong> — revisar <code>openapi.yaml</code>, modelar el flujo de secuencia de <code>POST /coupons/apply</code> en draw.io.</span>
       </div>
       <div class="lab-timeline__item">
         <span class="lab-timeline__time">3 · Código</span>
-        <span class="lab-timeline__label"><strong>Agent Mode · Developer</strong> — implementa solo lo del plan + diagrama.</span>
+        <span class="lab-timeline__label"><strong>Agent Mode · Developer</strong> — corregir secreto hardcoded, inyección SQL, e implementar el endpoint de cupones.</span>
       </div>
       <div class="lab-timeline__item">
         <span class="lab-timeline__time">4 · Test</span>
-        <span class="lab-timeline__label"><strong>Agent Mode</strong> — pytest + bucle auto-fix hasta verde.</span>
+        <span class="lab-timeline__label"><strong>Agent Mode · QA</strong> — simular reporte SAST de SonarQube, ejecutar <code>npm test</code> hasta ver todos los tests en verde.</span>
       </div>
       <div class="lab-timeline__item">
         <span class="lab-timeline__time">5 · Deploy</span>
-        <span class="lab-timeline__label"><strong>DevOps</strong> — Dockerfile / CI y checklist de PR.</span>
+        <span class="lab-timeline__label"><strong>Agent Mode · DevOps</strong> — optimizar <code>Dockerfile</code> a <code>node:18-alpine</code>, revisar y documentar el pipeline de GitHub Actions.</span>
       </div>
       <div class="lab-timeline__item">
         <span class="lab-timeline__time">6 · Mantener</span>
-        <span class="lab-timeline__label"><strong>Seguridad + Ops</strong> — secretos, vulns, monitoreo y changelog.</span>
+        <span class="lab-timeline__label"><strong>Ask Mode · Seguridad</strong> — interpretar logs de Sentry/Datadog, configurar alerta PagerDuty y cerrar el ciclo con checklist de calidad.</span>
       </div>
     </div>
     <div class="callout" data-tone="warning">
       <p class="callout__title">Regla de oro</p>
-      <p>No pases a la siguiente fase sin un artefacto aprobado: plan escrito → diagrama draw.io → diffs revisados → tests verdes → deploy documentado.</p>
+      <p>No pases a la siguiente fase sin un artefacto aprobado: plan con ítems clasificados → diagrama draw.io → tests en verde → imagen Docker construida → alertas configuradas.</p>
     </div>
   </section>
 
@@ -96,32 +318,32 @@
       <a class="cds--tile cds--tile--clickable hub-lab-card" href="#/lab/software-development-lifecycle/plan">
         <p class="cds--label-01">Fase 1</p>
         <h3 class="cds--productive-heading-02">Plan</h3>
-        <p class="cds--body-01">Requisitos y arquitectura con Plan Mode</p>
+        <p class="cds--body-01">Backlog y clasificación de deuda técnica</p>
       </a>
       <a class="cds--tile cds--tile--clickable hub-lab-card" href="#/lab/software-development-lifecycle/design">
         <p class="cds--label-01">Fase 2</p>
         <h3 class="cds--productive-heading-02">Diseño</h3>
-        <p class="cds--body-01">Diagramación con draw.io</p>
+        <p class="cds--body-01">Contrato OpenAPI y diagrama de secuencia</p>
       </a>
       <a class="cds--tile cds--tile--clickable hub-lab-card" href="#/lab/software-development-lifecycle/code">
         <p class="cds--label-01">Fase 3</p>
         <h3 class="cds--productive-heading-02">Código</h3>
-        <p class="cds--body-01">Implementación en Agent Mode</p>
+        <p class="cds--body-01">Corregir vulnerabilidades e implementar feature</p>
       </a>
       <a class="cds--tile cds--tile--clickable hub-lab-card" href="#/lab/software-development-lifecycle/test">
         <p class="cds--label-01">Fase 4</p>
         <h3 class="cds--productive-heading-02">Test</h3>
-        <p class="cds--body-01">Build-test-fix loop</p>
+        <p class="cds--body-01">SAST con SonarQube y suite Jest</p>
       </a>
       <a class="cds--tile cds--tile--clickable hub-lab-card" href="#/lab/software-development-lifecycle/deploy">
         <p class="cds--label-01">Fase 5</p>
         <h3 class="cds--productive-heading-02">Deploy</h3>
-        <p class="cds--body-01">Contenedor y pipeline</p>
+        <p class="cds--body-01">Dockerfile optimizado y CI/CD pipeline</p>
       </a>
       <a class="cds--tile cds--tile--clickable hub-lab-card" href="#/lab/software-development-lifecycle/maintain">
         <p class="cds--label-01">Fase 6</p>
         <h3 class="cds--productive-heading-02">Mantener</h3>
-        <p class="cds--body-01">Seguridad y operaciones</p>
+        <p class="cds--body-01">Logs, alertas y cierre del ciclo</p>
       </a>
     </div>
   </section>
@@ -130,9 +352,9 @@
     <h2 class="cds--productive-heading-03" id="sdlc-prereq">Prerrequisitos</h2>
     <ul class="cds--list--unordered">
       <li class="cds--list__item">IBM Bob IDE instalado (Ask / Plan / Agent disponibles)</li>
-      <li class="cds--list__item">Python 3.10+, pip y Git</li>
+      <li class="cds--list__item">Node.js 18+, npm y Git instalados</li>
       <li class="cds--list__item">Cuenta en <a class="cds--link" href="https://app.diagrams.net" target="_blank" rel="noreferrer">diagrams.net (draw.io)</a> o app de escritorio</li>
-      <li class="cds--list__item">Auto-approve de escrituras <strong>OFF</strong> — revisa cada diff</li>
+      <li class="cds--list__item">Auto-approve de escrituras <strong>OFF</strong> — revisa cada diff antes de aceptarlo</li>
     </ul>
   </section>
 

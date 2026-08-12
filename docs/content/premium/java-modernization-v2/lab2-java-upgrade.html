@@ -2,54 +2,105 @@
 
   <div class="lab-banner">
     <div class="lab-banner__tags">
-      <span class="cds--tag cds--tag--teal">Bob Premium · Java</span>
-      <span class="cds--tag cds--tag--cool-gray">~25 min</span>
-      <span class="cds--tag cds--tag--magenta">Avanzado</span>
+      <span class="cds--tag cds--tag--purple">Agent Mode</span>
+      <span class="cds--tag cds--tag--cool-gray">~15 min</span>
     </div>
-    <h1 class="cds--productive-heading-05 lab-banner__title">LAB 2 — Java 8 → Java 21 Upgrade</h1>
-    <p class="cds--body-02 lab-banner__summary">
-      Actualiza Simple Pharmacy de Java 8 a Java 21 LTS: versión del compilador, namespace
-      <code>javax → jakarta</code>, Struts 2.5.30 → 6.4.0, Jakarta EE 10 y server.xml.
-      Criterio de éxito: <code>mvn clean compile</code> → <strong>BUILD SUCCESS con Java 21</strong>.
+    <h1 class="cds--productive-heading-05 lab-banner__title">LAB 2 — Actualización de Java 8 a Java 21</h1>
+    <p class="cds--body-02 lab-banner__summary" style="max-width:72ch;margin-top:var(--cds-spacing-04,0.75rem)">
+      Actualiza Simple Pharmacy de Java 8 a Java 21 y Jakarta EE 10: migración <code>javax.*</code> → <code>jakarta.*</code>,
+      salto de Struts 2.5 a 7.x y remediación de CVEs — el lab más exigente del grupo.
     </p>
+
+    <div class="lab-banner__metrics">
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">5–8</span>
+        <span class="lab-banner__metric-label">BobCoins estimados</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">~15</span>
+        <span class="lab-banner__metric-label">minutos</span>
+      </div>
+    </div>
   </div>
 
-  <figure class="lab-figure">
-    <img src="./assets/images/labs/java-modernization-v2/lab2-banner.png"
-         alt="Banner del LAB 2 — Java 8 → Java 21 Upgrade"
-         class="lab-figure__img" />
-  </figure>
+  <!-- Prerrequisitos -->
+  <div class="callout" data-tone="note">
+    <p class="callout__title">Antes de empezar — configura el entorno</p>
+    <p>Este lab parte de <strong>Java 8</strong> en el snapshot <code>snapB</code> (salida del Lab 1). No necesitas instalar Java 21 de antemano — Bob te guiará a instalarlo durante la migración. Sigue la guía de setup del overview si aún no lo has hecho.</p>
+    <a class="cds--link" href="#/lab/java-modernization-v2/overview">Ver guía de setup en el overview →</a>
+  </div>
 
-  <!-- Contexto -->
-  <section class="lab-section" aria-labelledby="lab2-contexto">
-    <h2 class="cds--productive-heading-03" id="lab2-contexto">📋 Contexto del Lab</h2>
-    <div class="callout" data-tone="note">
-      <p class="callout__title">Estado actual → Estado objetivo</p>
-      <ul class="cds--list--unordered">
-        <li class="cds--list__item"><strong>Java:</strong> 8 → <strong>21 LTS</strong></li>
-        <li class="cds--list__item"><strong>Struts:</strong> 2.5.30 → <strong>6.4.0</strong></li>
-        <li class="cds--list__item"><strong>Namespace:</strong> <code>javax.*</code> → <code>jakarta.*</code></li>
-        <li class="cds--list__item"><strong>Liberty features:</strong> servlet-3.1, jsp-2.3 → <code>webProfile-10.0</code></li>
+  <section class="lab-workspace-setup" aria-labelledby="lab2-workspace">
+    <div class="lab-workspace-setup__box">
+      <span class="lab-workspace-setup__badge">Paso obligatorio — antes de cualquier prompt</span>
+      <h2 class="lab-workspace-setup__title" id="lab2-workspace">Abre esta carpeta como raíz en Bob</h2>
+      <p class="lab-workspace-setup__lead">Cambia de carpeta respecto al Lab 1. Abre la subcarpeta <code>snapB</code> — no su padre. Al cambiar de carpeta, Bob inicia un chat nuevo; pega el prompt de Fase 1 de abajo.</p>
+      <div class="lab-workspace-setup__path">
+        <p class="lab-workspace-setup__path-label">File → Open Folder</p>
+        <code class="lab-workspace-setup__path-value">.../simple-pharmacy-workshop-v2/labs/lab2-java-upgrade/snapB-java-upgrade/</code>
+      </div>
+      <ul class="lab-workspace-setup__checks">
+        <li>En el explorador de Bob debe verse <code>pom.xml</code> en la raíz</li>
+        <li><strong>No</strong> abras <code>simple-pharmacy-workshop-v2/</code>, <code>labs/</code> ni <code>lab2-java-upgrade/</code></li>
+        <li>Este snapshot ya está en Liberty (salida del Lab 1) — puedes hacer este lab sin haber hecho el Lab 1</li>
+        <li>Confirma que el indicador de modo en la parte inferior dice <strong>Agent</strong></li>
       </ul>
+      <p class="lab-workspace-setup__note"><strong>Lab 3:</strong> al terminar, cambia a <code>.../labs/lab3-ui-modernization/snapC-ui-mod/</code>.</p>
     </div>
   </section>
 
-  <!-- Checklist -->
-  <section class="lab-section" aria-labelledby="lab2-check">
-    <h2 class="cds--productive-heading-03" id="lab2-check">✅ Checklist antes de empezar</h2>
-    <ul class="cds--list--unordered">
-      <li class="cds--list__item">Carpeta <code>snapB-java-upgrade/</code> abierta como raíz en Bob</li>
-      <li class="cds--list__item"><code>java -version</code> dice <code>21</code></li>
-      <li class="cds--list__item"><code>mvn --version</code> dice <code>Java version: 21</code></li>
-    </ul>
-    <div class="callout" data-tone="note">
-      <p class="callout__title">💡 Instalar Java 21 si no lo tienes</p>
-      <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
-        <pre><code>brew install --cask zulu@21
-export JAVA_HOME=$(/usr/libexec/java_home -v 21)
-export PATH="$JAVA_HOME/bin:$PATH"</code></pre>
-      </div>
+  <!-- Qué cambia en este lab -->
+  <div class="lab-delta">
+    <span class="lab-delta__item lab-delta__item--changed">Java 8 <span class="lab-delta__arrow">→</span> Java 21 (Semeru)</span>
+    <span class="lab-delta__item lab-delta__item--changed">Struts 2.5.x <span class="lab-delta__arrow">→</span> Struts 7.x</span>
+    <span class="lab-delta__item lab-delta__item--changed">javax.* <span class="lab-delta__arrow">→</span> jakarta.*</span>
+    <span class="lab-delta__item lab-delta__item--changed">servlet-3.1 <span class="lab-delta__arrow">→</span> webProfile-10.0</span>
+  </div>
+
+  <!-- Parámetros de migración -->
+  <section class="lab-section" aria-labelledby="lab2-contexto">
+    <h2 class="cds--productive-heading-03" id="lab2-contexto">Parámetros de migración</h2>
+    <p class="cds--body-01" style="max-width:72ch;margin-bottom:var(--cds-spacing-04,0.75rem)">
+      Tres cosas cambian a la vez — JDK, namespace Jakarta y versión mayor de Struts — y la app no arrancará hasta que las tres estén alineadas,
+      más la configuración de Liberty que a veces hay que corregir a mano.
+    </p>
+
+    <div class="callout" data-tone="warning" style="margin-top:var(--cds-spacing-04,0.75rem)">
+      <p class="callout__title">El lab más largo y propenso a fallos del grupo</p>
+      <p>Es el lab con más cambios técnicos (JDK + Jakarta + Struts + CVE). En sesiones reales con Agent Mode suele completarse en <strong>~10–12 min</strong> de chat activo; el tiempo orientativo del workshop (<strong>~15 min</strong>) incluye lectura del análisis, revisión de diffs y aprobaciones.</p>
+    </div>
+
+    <div class="lab-table-wrap" style="margin-top:var(--cds-spacing-05,1rem)">
+      <table class="lab-table">
+        <thead>
+          <tr>
+            <th>Parámetro de migración</th>
+            <th>Valor objetivo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Distribución Java</td>
+            <td>Semeru (IBM) o Zulu 21</td>
+          </tr>
+          <tr>
+            <td>Versión Java</td>
+            <td><strong>21</strong> (LTS)</td>
+          </tr>
+          <tr>
+            <td>Jakarta EE</td>
+            <td><strong>10</strong> — no elijas 11; el workshop usa <code>webProfile-10.0</code></td>
+          </tr>
+          <tr>
+            <td>Struts</td>
+            <td>7.x (forzado por remediación de CVEs)</td>
+          </tr>
+          <tr>
+            <td>ActionSupport</td>
+            <td><code>com.opensymphony.xwork2</code> → <code>org.apache.struts2</code></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </section>
 
@@ -59,31 +110,42 @@ export PATH="$JAVA_HOME/bin:$PATH"</code></pre>
 
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Pega el prompt del lab</h3>
+      <p class="cds--body-01">Al cambiar de carpeta, Bob abre un chat nuevo en <strong>Agent Mode</strong>. Copia y pega <strong>todo</strong> el bloque — incluye las reglas de trabajo.</p>
       <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
-        <pre><code>Lab 2: actualizar Simple Pharmacy de Java 8 a Java 21.
-Carpeta raíz del proyecto: la que está abierta (snapB — Liberty, Java 8, javax.*).
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>Reglas de trabajo:
+- Fases: (1) Análisis — no modifiques archivos hasta mi "adelante"; (2) Cambios — un diff a la vez, espera mi "ok"; (3) Validación — mvn compile con output completo.
+- Solo la carpeta raíz abierta en Bob. No explores otras carpetas snap*.
+- Cambios mínimos para el objetivo del lab. Sin refactors ni funcionalidades extra.
+- PROTOCOLO Fase 2: un "Cambio N" por mensaje — diff unified completo, pregunta "¿Aplico el Cambio N?", PARA hasta mi "ok". Prohibido batch, saltar a validación o ejecutar mvn/git sin permiso.
 
-Estado actual: Liberty, Java 8, Struts 2.5.30, namespace javax.*, servlet-3.1
-Estado objetivo: Liberty, Java 21, Struts 6.4.0, namespace jakarta.*, webProfile-10.0
+Lab 2: actualizar Simple Pharmacy de Java 8 a Java 21.
+Carpeta raíz del proyecto: la que está abierta (snapB — Liberty, Java 8, javax.*, Struts 2.5.x).
+
+Estado actual: Liberty, Java 8, Struts 2.5.x, namespace javax.*, servlet-3.1
+Estado objetivo: Liberty, Java 21, Struts 7.x, namespace jakarta.*, webProfile-10.0
 
 ---
 
 FASE 1 — ANÁLISIS (no toques ningún archivo todavía)
 
 1. Lee pom.xml y lista: versión del compilador, versión de Struts,
-   namespaces de dependencias (javax vs jakarta), plugins presentes
-2. Lee src/main/liberty/config/server.xml y lista sus features
-3. Lee todos los .java y lista qué imports usan javax.servlet.*
+   namespaces de dependencias (javax vs jakarta), plugins presentes,
+   y cualquier dependencia con CVE conocido (struts2-core, commons-io, etc.)
+2. Lee src/main/liberty/config/server.xml y lista sus features actuales
+3. Lee todos los .java bajo src/main/java/ y lista:
+   - imports javax.* que deben migrarse a jakarta.*
+   - imports com.opensymphony.xwork2.ActionSupport (cambiarán a org.apache.struts2)
 4. Lee todos los .jsp y lista qué taglib URIs usan
+5. Estima la complejidad: triple cambio (JDK + Jakarta + Struts mayor)
 
-Preséntame el análisis. Cuando yo diga "adelante", pasamos a Fase 2.</code></pre>
+Preséntame el análisis completo. Cuando yo diga "adelante", pasamos a Fase 2.</code></pre>
       </div>
       <figure class="lab-figure">
         <img src="./assets/images/labs/java-modernization-v2/lab2-phase1-analysis.png"
              alt="Bob listando los imports javax.* y taglib URIs encontrados en el proyecto snapB"
              class="lab-figure__img" />
-        <figcaption class="lab-figure__caption">Bob identifica todos los imports <code>javax.*</code> y taglib URIs que deben migrarse</figcaption>
+        <figcaption class="lab-figure__caption">Bob identifica todos los imports <code>javax.*</code>, las clases Struts y los taglib URIs que deben migrarse</figcaption>
       </figure>
     </div>
   </section>
@@ -93,18 +155,36 @@ Preséntame el análisis. Cuando yo diga "adelante", pasamos a Fase 2.</code></p
     <h2 class="cds--productive-heading-03" id="lab2-fase2">FASE 2 — Cambios</h2>
 
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Aplicar los 6 cambios de migración</h3>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Aplicar la migración (un cambio a la vez)</h3>
+      <p class="cds--body-01">Di <strong>"adelante"</strong> en el chat de <strong>Agent Mode</strong> y luego pega <strong>solo</strong> el prompt de Fase 2 (mensaje aparte). Bob debe presentar <strong>un cambio con diff</strong> y parar hasta tu <strong>"ok"</strong> — no encadena cambios ni salta a validación:</p>
       <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
+        <button type="button" class="copy-button">Copiar</button>
         <pre><code>FASE 2 — CAMBIOS (uno a la vez — explica, espera "ok", luego aplica)
 
-Cambio 1 — Compilador Java 21 en pom.xml (APROBAR)
-  maven.compiler.source/target: 1.8 → 21, añadir release=21
-  maven-compiler-plugin → 3.15.0, maven-war-plugin → 3.5.1
+PROTOCOLO OBLIGATORIO (no negociable):
+1. UN solo "Cambio N" por mensaje. No prepares el siguiente hasta mi "ok" literal.
+2. Para cada cambio, en ESTE orden:
+   a) Encabezado: "Cambio N — [título]"
+   b) Explicación breve (archivo(s) y por qué)
+   c) Diff unified COMPLETO en el chat (líneas - y + visibles). Archivo nuevo = contenido completo.
+   d) Pregunta: "¿Aplico el Cambio N?"
+   e) PARA. No edites archivos. No ejecutes mvn/git. No avances.
+3. PROHIBIDO: aplicar varios cambios seguidos; decir "todos aplicados" o "todo en una pasada";
+   ejecutar mvn compile/test; pasar a Fase 3 sin que yo pegue ese prompt.
+4. Empieza SOLO con el Cambio 1. Los Cambios 2–8 son referencia — no los ejecutes aún.
+5. Si ya aplicaste algo sin "ok", DETENTE y pregúntame antes de continuar.
 
-Cambio 2 — Struts 6.4.0 en pom.xml (APROBAR)
-  struts2.version: 2.5.30 → 6.4.0
+---
+Cambio 1 — Compilador Java 21 en pom.xml (APROBAR)
+  maven.compiler.source/target: 1.8 → 21
+  Añadir maven.compiler.release=21
+  Actualizar maven-compiler-plugin → 3.15.0, maven-war-plugin → 3.5.1
+  Si Java 21 no está instalado: sdk install java 21.0.7-zulu &amp;&amp; sdk use java 21.0.7-zulu
+
+Cambio 2 — Struts con soporte Jakarta en pom.xml (APROBAR)
+  struts2.version: 2.5.x → 6.4.0 (paso intermedio con soporte Jakarta)
   Añadir exclusiones de javassist y dependencyManagement forzando javassist 3.29.2-GA
+  ⚠️ El pin va en &lt;dependencyManagement&gt;, no como dependencia directa.
 
 Cambio 3 — Dependencias javax → jakarta en pom.xml (APROBAR)
   javax.servlet-api → jakarta.servlet-api:6.0.0
@@ -112,22 +192,47 @@ Cambio 3 — Dependencias javax → jakarta en pom.xml (APROBAR)
   javax.servlet:jstl → org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1
 
 Cambio 4 — server.xml: features Jakarta EE 10 (APROBAR)
-  Reemplazar servlet-3.1, jsp-2.3, jdbc-4.1 con webProfile-10.0 y mpMetrics-5.1
+  Reemplazar servlet-3.1, jsp-2.3, jdbc-4.1 con webProfile-10.0
   ⚠️ Usar webProfile-10.0, NO jakartaee-10.0 completo.
+  Eliminar mpMetrics-1.1 si está presente (conflicta con servlet-6.0).
 
 Cambio 5 — imports javax → jakarta en código Java (APROBAR)
   javax.servlet.* → jakarta.servlet.*
   javax.servlet.jsp.* → jakarta.servlet.jsp.*
 
-Cambio 6 — taglib URIs en JSPs (APROBAR)
-  http://java.sun.com/jsp/jstl/core → https://jakarta.ee/xml/ns/jakartaee</code></pre>
+Cambio 6 — imports ActionSupport Struts 7 (APROBAR)
+  com.opensymphony.xwork2.ActionSupport → org.apache.struts2.ActionSupport
+  en todas las clases bajo src/main/java/com/pharmacy/action/
+
+Cambio 7 — taglib URIs en JSPs (APROBAR)
+  http://java.sun.com/jsp/jstl/core → https://jakarta.ee/xml/ns/jakartaee
+
+Cambio 8 — SUBTAREA: escaneo y remediación de CVEs (APROBAR)
+  1. Escanea todas las dependencias contra la base OSV
+  2. Actualiza struts2-core de 6.4.x → 7.x
+  3. Actualiza struts2-convention-plugin a 7.x
+  4. Añade overrides de commons-io y commons-lang3
+  5. Reescribe imports ActionSupport si el salto a 7.x los rompe
+  La seguridad fuerza Struts 7 — los rewrites de imports son la consecuencia.
+
+Cuando termines el Cambio 8 con mi "ok", DETENTE. No ejecutes mvn ni pases a validación hasta que yo pegue el prompt de Fase 3.</code></pre>
       </div>
       <figure class="lab-figure">
         <img src="./assets/images/labs/java-modernization-v2/lab2-phase2-javax-jakarta.png"
              alt="Bob mostrando el diff de la migración javax a jakarta en los archivos Java y JSP"
              class="lab-figure__img" />
-        <figcaption class="lab-figure__caption">Bob muestra el diff de cada archivo migrado de <code>javax.*</code> a <code>jakarta.*</code></figcaption>
+        <figcaption class="lab-figure__caption">Bob muestra el diff de cada archivo migrado de <code>javax.*</code> a <code>jakarta.*</code> y el salto de Struts a 7.x</figcaption>
       </figure>
+
+      <div class="callout" data-tone="warning" style="margin-top:var(--cds-spacing-05,1rem)">
+        <p class="callout__title">Bob encadenó todos los cambios o saltó a validación</p>
+        <p>Si ves "todos aplicados" o un botón de <code>mvn compile</code> sin haber aprobado cada diff, interrumpe con el prompt de recuperación del <a href="overview.html#ov-como">overview</a>. Para la captura <code>lab2-phase2-javax-jakarta.png</code>, sube al chat hasta el <strong>Cambio 3</strong> (javax → jakarta en <code>pom.xml</code>) o pide: <em>"Muéstrame el diff del Cambio 3 sin aplicar nada más"</em>.</p>
+      </div>
+
+      <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
+        <p class="callout__title">Por qué el pin de javassist va en dependencyManagement</p>
+        <p>Una dependencia directa fuerza la versión, pero Maven ya habrá parseado el POM roto 3.20.0-GA. <code>&lt;dependencyManagement&gt;</code> se aplica durante la recolección de dependencias, antes de leer ese POM — misma classpath, sin el warning.</p>
+      </div>
     </div>
   </section>
 
@@ -138,15 +243,22 @@ Cambio 6 — taglib URIs en JSPs (APROBAR)
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Compilar con Java 21</h3>
       <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
+        <button type="button" class="copy-button">Copiar</button>
         <pre><code>FASE 3 — VALIDACIÓN
 
-Ejecuta: mvn clean compile
+1. Confirma que Java 21 está activo:
+   java -version
+   mvn --version   # debe reportar Java 21
+
+2. Ejecuta: mvn clean compile
 
 Resultado esperado: BUILD SUCCESS con Java 21.
 Errores comunes:
-  "invalid target release: 21" → JAVA_HOME no apunta a Java 21
-  "cannot find symbol" en jakarta.* → algún import no se migró
+  "invalid target release: 21" → JAVA_HOME no apunta a Java 21 (sdk use java 21.0.7-zulu)
+  "cannot find symbol" en jakarta.* → algún import javax.* no se migró
+  "cannot find symbol" ActionSupport → import com.opensymphony.xwork2 sin reescribir
+  "Unsupported class file major version" → Maven compila con el JDK equivocado
+
 Si falla, muéstrame el error completo antes de proponer ningún fix.</code></pre>
       </div>
       <figure class="lab-figure">
@@ -156,19 +268,116 @@ Si falla, muéstrame el error completo antes de proponer ningún fix.</code></pr
         <figcaption class="lab-figure__caption">Terminal: <code>mvn clean compile</code> → BUILD SUCCESS con Java 21</figcaption>
       </figure>
     </div>
+
+    <div class="callout" data-tone="note" style="margin-top:var(--cds-spacing-05,1rem)">
+      <p class="callout__title">Checkpoint — cómo se ve una actualización terminada</p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item"><code>pom.xml</code> muestra <code>21</code> en cada marcador de versión Java</li>
+        <li class="cds--list__item">El código importa <code>jakarta.*</code>, no <code>javax.*</code></li>
+        <li class="cds--list__item"><code>struts2-core</code> está en 7.x y las action classes importan <code>org.apache.struts2.ActionSupport</code></li>
+        <li class="cds--list__item"><code>mvn clean compile</code> → <code>BUILD SUCCESS</code>, sin <code>Unsupported class file major version</code></li>
+      </ul>
+    </div>
+
+    <div class="lab-step" style="margin-top:var(--cds-spacing-06,1.5rem)">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 4 — Inspecciona el diff (opcional: ejecutar en Liberty)</h3>
+      <p class="cds--body-01">Abre archivos bajo <code>src/main/java/com/pharmacy/action/</code> y confirma los cambios de namespace. El objetivo del lab es un <strong>compile limpio</strong>; ejecutar la app es opcional.</p>
+      <div class="code-block">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code># Opcional — solo si quieres ver la app corriendo:
+mvn liberty:run
+
+# Si falla al arrancar, pega el error en el chat de Bob.
+# Un compile verde no garantiza que Liberty sirva la app — server.xml y struts.xml
+# son capas separadas. Ver Solución de problemas.</code></pre>
+      </div>
+      <div class="callout" data-tone="warning">
+        <p class="callout__title">Un compile verde no es toda la historia</p>
+        <p><code>mvn clean compile</code> confirma que la actualización Java y el rename de namespace son internamente consistentes. La configuración de runtime de Liberty (<code>server.xml</code>, context root, DTD de Struts) es una capa aparte que solo aparece si arrancas el servidor.</p>
+      </div>
+    </div>
   </section>
 
-  <!-- Criterios de éxito -->
-  <div class="callout" data-tone="tip">
-    <p class="callout__title">🎉 Criterios de Éxito — Lab 2</p>
+  <!-- Solución de problemas + Ayuda (colapsado) -->
+  <details class="lab-troubleshooting-full">
+    <summary>Solución de problemas y ayuda</summary>
+  <section class="lab-section" aria-labelledby="lab2-troubleshooting">
+    <h2 class="cds--productive-heading-03" id="lab2-troubleshooting">Solución de problemas</h2>
+    <p class="cds--body-01" style="max-width:72ch;margin-bottom:var(--cds-spacing-04,0.75rem)">
+      Trabaja estos puntos <strong>en orden</strong> — se apilan y cada uno puede enmascarar los de abajo:
+    </p>
+    <ol class="cds--list--ordered">
+      <li class="cds--list__item">Un Liberty obsoleto ocupa el puerto → cada fix parece no hacer nada</li>
+      <li class="cds--list__item">Liberty arrancó con cero features (<code>CWWKF0001E</code>) → nada escucha en el puerto</li>
+      <li class="cds--list__item"><code>server.xml</code> aún tiene features Java EE → Context Root Not Found</li>
+      <li class="cds--list__item"><code>struts.xml</code> apunta a un DTD inexistente → el filtro Struts falla al cargar</li>
+    </ol>
+
+    <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)"><code>CWWKF0001E</code> — feature definition not found for servlet-6.0</h3>
+    <p class="cds--body-01">El servidor "arranca" pero la lista de features está vacía. El Liberty descargado es un kernel sin <code>servlet-6.0</code>/<code>pages-3.1</code>.</p>
+    <p class="cds--body-01">El <code>pom.xml</code> enviado fija un runtime completo bajo <code>liberty-maven-plugin</code> (<code>openliberty-runtime:26.0.0.5</code>). Si Bob reescribió el bloque del plugin, restáuralo o ejecuta:</p>
+    <div class="code-block">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>mvn liberty:install-feature
+mvn liberty:run</code></pre>
+    </div>
+
+    <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">Context Root Not Found en el navegador</h3>
+    <p class="cds--body-01"><strong>1. URL incorrecta.</strong> Bob suele fijar <code>context-root="/simple-pharmacy"</code>; la URL del Lab 1 (<code>/simple-pharmacy.war/dashboard</code>) ya no funciona. Toma la URL del log de arranque:</p>
+    <div class="code-block">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>grep CWWKT0016I target/liberty/wlp/usr/servers/defaultServer/logs/messages.log</code></pre>
+    </div>
+    <p class="cds--body-01" style="margin-top:0.75rem"><strong>2. Servidor obsoleto.</strong> Si ves <code>CWWKO0221E</code> (puerto 9081 en uso), mata el proceso anterior:</p>
+    <div class="code-block">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>lsof -ti:9081,9443 | xargs kill -9</code></pre>
+    </div>
+    <p class="cds--body-01" style="margin-top:0.75rem"><strong>3. La app no arrancó.</strong> Busca <code>CWWKZ0002E</code> — ver entrada siguiente.</p>
+
+    <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)"><code>CWWKC2263E</code> — Servlet 6.0 vs 3.1 (el fallo más común)</h3>
+    <p class="cds--body-01">Bob migró la app a Jakarta EE 10 pero dejó <code>server.xml</code> en el feature set Java EE antiguo. <code>web.xml</code> declara Servlet 6.0; <code>server.xml</code> aún provisiona Servlet 3.1.</p>
+    <p class="cds--body-01">Pega la línea <code>CWWKC2263E</code> en el chat de Bob, o reemplaza el bloque <code>&lt;featureManager&gt;</code> manualmente:</p>
+    <div class="code-block">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>&lt;featureManager&gt;
+    &lt;feature&gt;webProfile-10.0&lt;/feature&gt;
+&lt;/featureManager&gt;</code></pre>
+    </div>
+    <p class="cds--body-01" style="margin-top:0.75rem">Elimina <code>mpMetrics-1.1</code> si está — depende de <code>servlet-3.1</code> y bloquea <code>servlet-6.0</code>. <code>jdbc-4.1</code> también puede ir; la app usa repositorios en memoria.</p>
+
+    <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">Filtro Struts: <code>FileNotFoundException: struts-7.0.dtd</code></h3>
+    <p class="cds--body-01">Bob apuntó <code>struts.xml</code> a un DTD que no existe. Apache nunca publicó <code>struts-7.0.dtd</code>; <code>struts2-core</code> solo incluye DTDs hasta 6.5.</p>
+    <p class="cds--body-01">Abre <code>src/main/resources/struts.xml</code> y fija el DOCTYPE a una versión que exista:</p>
+    <div class="code-block">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>&lt;!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd"&gt;</code></pre>
+    </div>
+    <p class="cds--body-01" style="margin-top:0.75rem">Struts 7 lo lee sin problema. Un compile verde no detecta esto — solo aparece al arrancar el servidor.</p>
+
+    <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">Otros problemas frecuentes</h3>
     <ul class="cds--list--unordered">
-      <li class="cds--list__item">✅ pom.xml: maven.compiler.release=21, struts2.version=6.4.0</li>
-      <li class="cds--list__item">✅ pom.xml: todas las dependencias de API usan namespace jakarta.*</li>
-      <li class="cds--list__item">✅ pom.xml: javassist 3.29.2-GA con exclusiones y dependencyManagement</li>
-      <li class="cds--list__item">✅ server.xml: feature webProfile-10.0 (no jakartaee-10.0 completo)</li>
-      <li class="cds--list__item">✅ Código Java: todos los imports son jakarta.servlet.* (no javax.*)</li>
-      <li class="cds--list__item">✅ mvn clean compile → BUILD SUCCESS con Java 21</li>
+      <li class="cds--list__item"><strong><code>JSPG0303W</code> / JSTL javax:</strong> warnings inofensivos — ningún JSP usa JSTL. Elimina <code>javax.servlet:jstl</code> del pom o ignóralo.</li>
+      <li class="cds--list__item"><strong>Terminal de Bob sigue en Java 8:</strong> abre terminal nueva o <code>sdk use java 21.0.7-zulu</code>.</li>
+      <li class="cds--list__item"><strong>Bob no lee archivos:</strong> verifica que abriste <code>snapB-java-upgrade/</code> como raíz, no la carpeta padre.</li>
+      <li class="cds--list__item"><strong><code>cannot find symbol</code> ActionSupport:</strong> pide a Bob: <em>«Busca imports restantes de com.opensymphony.xwork2 y actualízalos a org.apache.struts2.»</em></li>
+      <li class="cds--list__item"><strong>Referencias <code>javax.servlet.*</code> en runtime:</strong> pide a Bob: <em>«Audita todos los imports javax.* que deban ser jakarta.*.»</em></li>
+      <li class="cds--list__item"><strong>Errores tras las recetas:</strong> esperados — pega el output completo y pide a Bob que investigue.</li>
     </ul>
-  </div>
+  </section>
+
+  <!-- Ayuda -->
+  <section class="lab-section" aria-labelledby="lab2-ayuda">
+    <h2 class="cds--productive-heading-03" id="lab2-ayuda">Obtener ayuda durante el lab</h2>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">Consulta la sección de solución de problemas — cubre los casos más comunes</li>
+      <li class="cds--list__item">Pregunta a Bob — puede explicar errores y sugerir fixes</li>
+      <li class="cds--list__item">Pregunta al instructor — no dudes en levantar la mano</li>
+      <li class="cds--list__item">Colabora — discute con compañeros</li>
+    </ul>
+  </section>
+  </details>
 
 </div>

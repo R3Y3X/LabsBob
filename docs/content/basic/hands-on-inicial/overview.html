@@ -3,146 +3,122 @@
   <!-- ── Banner ─────────────────────────────────────────────────── -->
   <div class="lab-banner">
     <div class="lab-banner__tags">
-      <span class="cds--tag cds--tag--blue">Core Enablement</span>
-      <span class="cds--tag cds--tag--cool-gray">~60 min</span>
+      <span class="cds--tag cds--tag--blue">Habilitación Core</span>
+      <span class="cds--tag cds--tag--cool-gray">~90 min</span>
       <span class="cds--tag cds--tag--teal">Ask · Plan · Agent</span>
-      <span class="cds--tag cds--tag--green">Principiante</span>
     </div>
-    <h1 class="cds--productive-heading-05 lab-banner__title">Hands-on Inicial — IBM Bob 2.1</h1>
-    <p class="cds--body-02 lab-banner__summary">
-      Tu copiloto de desarrollo gobernado, personalizable y veloz. En <strong>60 minutos</strong> experimentarás
-      cómo IBM Bob transforma cada etapa del ciclo de vida del software — desde el diseño hasta la corrección
-      de vulnerabilidades — con controles de aprobación, modos especializados y ejecución paralela.
-    </p>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Hands-on Inicial — IBM Bob</h1>
+
+    <!-- ── Hero image ──────────────────────────────────────────────── -->
+    <div class="lab-hero-image">
+      <img src="./assets/images/labs/hands-on-inicial/banner_bob.png" alt="IBM Bob Hands-On Lab — banner principal"
+        class="lab-hero-image__img" />
+    </div>
+
+    <div class="lab-banner__metrics">
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">5</span>
+        <span class="lab-banner__metric-label">laboratorios</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">90 min</span>
+        <span class="lab-banner__metric-label">duración total</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">14–29</span>
+        <span class="lab-banner__metric-label">BobCoins estimados</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">~85%</span>
+        <span class="lab-banner__metric-label">ahorro de tiempo</span>
+      </div>
+    </div>
   </div>
 
-  <!-- ── Hero image ──────────────────────────────────────────────── -->
-  <div class="lab-hero-image">
-    <img src="./assets/images/labs/hands-on-inicial/banner_bob.png"
-         alt="IBM Bob Hands-On Lab — banner principal"
-         class="lab-hero-image__img" />
-  </div>
+  <!-- ── Descarga del workshop ────────────────────────────────────── -->
+  <section class="lab-section">
+    <h2 class="cds--productive-heading-03">Descarga los materiales del workshop</h2>
+    <p class="cds--body-01">Descarga el bundle completo del workshop y descomprímelo en tu equipo. Encontrarás todas las carpetas necesarias para los 5 laboratorios: código de ejemplo, archivos de configuración, modos personalizados y assets de referencia.</p>
+
+    <a class="cds--btn cds--btn--primary" style="margin-top: 1rem; margin-bottom: 2rem;" download="LabHandsOnBob.zip" href="./downloads/LabHandsOnBob.zip">
+      Descargar materiales del workshop (26 MB)
+    </a>
+
+    <div class="callout" data-tone="info">
+      <p class="callout__title">Antes de comenzar</p>
+      <p>Descomprime el zip y abre la carpeta <code>LabHandsOnBob/</code> en IBM Bob IDE. Para el Lab 1 ejecuta <code>cd lab-1-ask-mode && npm install</code>. Para el Lab 3 abre <code>lab-3-seguridad/galaxium-travels</code> como workspace. Necesitarás Node.js 18+ instalado.</p>
+    </div>
+  </section>
 
   <!-- ── 3 propuestas de valor clave ─────────────────────────────── -->
   <div class="bob-value-strip">
 
     <div class="bob-value-tile bob-value-tile--govern">
       <div class="bob-value-tile__icon">
-        <svg aria-hidden="true" width="28" height="28" viewBox="0 0 32 32" fill="currentColor"><path d="M26 4H6a2 2 0 0 0-2 2v8c0 9.63 7.88 13.74 11.29 15.1a2.27 2.27 0 0 0 1.42 0C20.12 27.74 28 23.63 28 14V6a2 2 0 0 0-2-2Zm0 10c0 8.23-6.86 11.89-10 13.22C12.86 25.89 6 22.23 6 14V6h20Z"/></svg>
+        <!-- Carbon: Locked (padlock) — governance/approval -->
+        <svg aria-hidden="true" width="28" height="28" viewBox="0 0 32 32" fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M24 14h-2v-4a6 6 0 0 0-12 0v4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V16a2 2 0 0 0-2-2ZM12 10a4 4 0 0 1 8 0v4h-8Zm12 20H8V16h16Z" />
+          <path d="M16 18a2 2 0 1 0 2 2 2 2 0 0 0-2-2Z" />
+        </svg>
       </div>
       <p class="bob-value-tile__value">Gobernado</p>
       <p class="bob-value-tile__label">Desarrollo seguro por diseño</p>
-      <p class="bob-value-tile__desc">Toda acción sobre archivos, comandos y herramientas externas requiere aprobación explícita. Bob documenta cada cambio y ofrece rollback granular por tarea, turno o llamada.</p>
+      <p class="bob-value-tile__desc">Toda acción sobre archivos, comandos y herramientas externas requiere aprobación
+        explícita. Bob documenta cada cambio y ofrece rollback granular por tarea, turno o llamada.</p>
     </div>
 
     <div class="bob-value-tile bob-value-tile--persona">
       <div class="bob-value-tile__icon">
-        <svg aria-hidden="true" width="28" height="28" viewBox="0 0 32 32" fill="currentColor"><path d="M27 16.76V16h-2v.76a11 11 0 0 1-9.24 9.24H15v2h.76a13 13 0 0 0 11.24-11.24ZM16 5a11 11 0 0 1 9.25 9.25V15h2v-.76A13 13 0 0 0 16 3v2ZM5 16a11 11 0 0 1 9.25-9.25V5A13 13 0 0 0 3 16.25V17h2v-.76ZM14.75 27A11 11 0 0 1 5 17.75V17H3v.76A13 13 0 0 0 14.75 29V27Z"/><circle cx="16" cy="16" r="3"/></svg>
+        <!-- Carbon: Settings (gear) — customizable modes -->
+        <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 16 16" fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M13.5 8.4v-.8l1-.8c.4-.3.4-.9.2-1.3l-1.2-2c-.2-.3-.5-.5-.9-.5-.1 0-.2 0-.3.1l-1.2.4c-.2-.1-.4-.3-.7-.4l-.3-1.3C10.1 1.3 9.7 1 9.2 1H6.8c-.5 0-.9.3-1 .8L5.6 3.1c-.3.1-.5.2-.7.3L3.7 3c-.1 0-.2-.1-.3-.1-.4 0-.7.2-.9.5l-1.2 2c-.2.4-.1.9.3 1.3l.9.9v.8l-.9.8c-.4.3-.5.9-.2 1.3l1.2 2c.2.3.5.5.9.5.1 0 .2 0 .3-.1l1.2-.4c.2.1.4.3.7.4l.3 1.3c.1.5.5.8 1 .8h2.4c.5 0 .9-.3 1-.8l.3-1.3c.2-.1.4-.2.7-.4l1.2.4c.1 0 .2.1.3.1.4 0 .7-.2.9-.5l1.1-2c.2-.4.2-.9-.2-1.3l-1.4-1.2ZM12.6 12l-1.7-.6c-.4.3-.9.6-1.4.8L9.2 14H6.8l-.4-1.8c-.5-.2-.9-.5-1.4-.8L3.4 12l-1.2-2 1.4-1.2c-.1-.5-.1-1.1 0-1.6L2.2 6l1.2-2 1.7.6c.4-.3.9-.6 1.4-.8L6.8 2h2.4l.4 1.8c.5.2.9.5 1.4.8l1.7-.6 1.2 2-1.4 1.2c.1.5.1 1.1 0 1.6l1.4 1.2-1.3 2Z" />
+          <path
+            d="M8 11C6.3 11 5 9.7 5 8s1.3-3 3-3 3 1.3 3 3-1.3 3-3 3Zm0-5C6.9 6 6 6.9 6 8s.9 2 2 2 2-.9 2-2-.9-2-2-2Z" />
+        </svg>
       </div>
       <p class="bob-value-tile__value">Personalizable</p>
       <p class="bob-value-tile__label">Especializado para tu organización</p>
-      <p class="bob-value-tile__desc">Skills, MCP servers y modos personalizados en YAML configuran a Bob como experto en tus estándares: PCI-DSS, HIPAA, arquitecturas de IBM Cloud o cualquier dominio propio.</p>
+      <p class="bob-value-tile__desc">Skills, MCP servers y modos personalizados en YAML configuran a Bob como experto
+        en tus estándares: PCI-DSS, HIPAA, arquitecturas de IBM Cloud o cualquier dominio propio.</p>
     </div>
 
     <div class="bob-value-tile bob-value-tile--speed">
       <div class="bob-value-tile__icon">
-        <svg aria-hidden="true" width="28" height="28" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="m12.83 20 1.17-8-4 3.2L8.58 14 14 10l-1.17 8 4-3.2 1.42 1.2L13 20h-.17zm6.17 0 1.17-8-4 3.2-1.42-1.2 5.42-4-1.17 8 4-3.2 1.42 1.2-5.42 4H19z"/></svg>
+        <!-- Carbon: Dashboard (speedometer) — 3x faster -->
+        <svg aria-hidden="true" width="28" height="28" viewBox="0 0 32 32" fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z" />
+          <path
+            d="M9.17 23.17a1 1 0 0 1-.71-.29 1 1 0 0 1 0-1.41l5.64-5.64a3 3 0 1 1 1.41 1.41l-5.63 5.64a1 1 0 0 1-.71.29ZM16 15a1 1 0 1 0 1 1 1 1 0 0 0-1-1Z" />
+          <rect x="15" y="5" width="2" height="3" />
+          <rect x="22.58" y="8.11" width="3" height="2" transform="rotate(-45 24.08 9.11)" />
+          <rect x="25" y="15" width="3" height="2" />
+        </svg>
       </div>
       <p class="bob-value-tile__value">3× más rápido</p>
       <p class="bob-value-tile__label">Ejecución paralela de herramientas</p>
-      <p class="bob-value-tile__desc">Múltiples herramientas corren simultáneamente. Tareas que tomaban 30 segundos ahora duran menos de 10. Subagentes con contexto aislado procesan subtareas sin inflar el agente principal.</p>
+      <p class="bob-value-tile__desc">Múltiples herramientas corren simultáneamente. Tareas que tomaban 30 segundos
+        ahora duran menos de 10. Subagentes con contexto aislado procesan subtareas sin inflar el agente principal.</p>
     </div>
 
   </div>
 
-  <!-- ── Los 6 pilares de IBM Bob ──────────────────────────────────── -->
-  <section class="lab-section" aria-labelledby="pilares-heading">
-    <h2 class="cds--productive-heading-03" id="pilares-heading">
-      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="vertical-align:-3px;margin-right:8px"><path d="M26 4H6a2 2 0 0 0-2 2v8c0 9.63 7.88 13.74 11.29 15.1a2.27 2.27 0 0 0 1.42 0C20.12 27.74 28 23.63 28 14V6a2 2 0 0 0-2-2Zm0 10c0 8.23-6.86 11.89-10 13.22C12.86 25.89 6 22.23 6 14V6h20Z"/></svg>
-      Las 6 Capacidades Clave de IBM Bob
-    </h2>
-
-    <div class="bob-pillars">
-
-      <div class="bob-pillar bob-pillar--accent-blue">
-        <div class="bob-pillar__icon bob-pillar__icon--blue" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M26 4H6a2 2 0 0 0-2 2v8c0 9.63 7.88 13.74 11.29 15.1a2.27 2.27 0 0 0 1.42 0C20.12 27.74 28 23.63 28 14V6a2 2 0 0 0-2-2Zm0 10c0 8.23-6.86 11.89-10 13.22C12.86 25.89 6 22.23 6 14V6h20Z"/></svg>
-        </div>
-        <p class="bob-pillar__title">Gobernanza y Control</p>
-        <p class="bob-pillar__desc">Lectura auto-aprobada. Escritura, comandos y MCP siempre requieren confirmación explícita. Rollback por tarea, turno o llamada a herramienta. Bobalytics para monitoreo de uso y costo.</p>
-        <div class="bob-pillar__tags">
-          <span class="cds--tag cds--tag--blue">Aprobación granular</span>
-          <span class="cds--tag cds--tag--blue">Rollback</span>
-        </div>
-      </div>
-
-      <div class="bob-pillar bob-pillar--accent-purple">
-        <div class="bob-pillar__icon bob-pillar__icon--purple" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M27 16.76V16h-2v.76a11 11 0 0 1-9.24 9.24H15v2h.76a13 13 0 0 0 11.24-11.24ZM16 5a11 11 0 0 1 9.25 9.25V15h2v-.76A13 13 0 0 0 16 3v2ZM5 16a11 11 0 0 1 9.25-9.25V5A13 13 0 0 0 3 16.25V17h2v-.76ZM14.75 27A11 11 0 0 1 5 17.75V17H3v.76A13 13 0 0 0 14.75 29V27Z"/><circle cx="16" cy="16" r="3"/></svg>
-        </div>
-        <p class="bob-pillar__title">Modos Especializados + Personalizados</p>
-        <p class="bob-pillar__desc">3 modos nativos (Ask, Plan, Agent) y modos personalizados en YAML que convierten a Bob en experto de tu dominio: cumplimiento normativo, estándares de arquitectura, templates de tu empresa.</p>
-        <div class="bob-pillar__tags">
-          <span class="cds--tag cds--tag--purple">Ask · Plan · Agent</span>
-          <span class="cds--tag cds--tag--purple">YAML custom</span>
-        </div>
-      </div>
-
-      <div class="bob-pillar bob-pillar--accent-teal">
-        <div class="bob-pillar__icon bob-pillar__icon--teal" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="m12.83 20 1.17-8-4 3.2L8.58 14 14 10l-1.17 8 4-3.2 1.42 1.2L13 20h-.17zm6.17 0 1.17-8-4 3.2-1.42-1.2 5.42-4-1.17 8 4-3.2 1.42 1.2-5.42 4H19z"/></svg>
-        </div>
-        <p class="bob-pillar__title">Ejecución Paralela y Subagentes</p>
-        <p class="bob-pillar__desc">Múltiples herramientas se ejecutan simultáneamente. Subagentes reciben tareas con su propio contexto aislado — solo el resumen vuelve al agente principal. Tareas en segundo plano con su propio hilo.</p>
-        <div class="bob-pillar__tags">
-          <span class="cds--tag cds--tag--teal">Paralelo nativo</span>
-          <span class="cds--tag cds--tag--teal">Subagentes</span>
-        </div>
-      </div>
-
-      <div class="bob-pillar bob-pillar--accent-cyan">
-        <div class="bob-pillar__icon bob-pillar__icon--cyan" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M22 20H12v-2a6 6 0 1 0-6-6H4a8 8 0 1 1 15.465 2.857L22 18v2zm0 4H8v-2h14v2zm-4 4H8v-2h10v2z"/></svg>
-        </div>
-        <p class="bob-pillar__title">MCP — Ecosistema de Herramientas</p>
-        <p class="bob-pillar__desc">Desde Agent Mode, Bob accede nativamente a MCP servers: GitHub, Jira, Confluence, bases de datos, APIs REST, watsonx Orchestrate ADK y cualquier herramienta con adaptador MCP estándar.</p>
-        <div class="bob-pillar__tags">
-          <span class="cds--tag cds--tag--cyan">MCP nativo</span>
-          <span class="cds--tag cds--tag--cyan">Agent Mode</span>
-        </div>
-      </div>
-
-      <div class="bob-pillar bob-pillar--accent-red">
-        <div class="bob-pillar__icon bob-pillar__icon--red" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M26 4H6a2 2 0 0 0-2 2v8c0 9.63 7.88 13.74 11.29 15.1a2.27 2.27 0 0 0 1.42 0C20.12 27.74 28 23.63 28 14V6a2 2 0 0 0-2-2Zm0 10c0 8.23-6.86 11.89-10 13.22C12.86 25.89 6 22.23 6 14V6h20Z"/><path d="M15 10h2v6h-2zm0 8h2v2h-2z"/></svg>
-        </div>
-        <p class="bob-pillar__title">Seguridad Integrada</p>
-        <p class="bob-pillar__desc">Iconos de escudo detectan vulnerabilidades en tiempo real: SQL injection, hardcoded secrets, ausencia de validación. Sin plugins adicionales. Análisis completo en segundos con Ask Mode + 270k tokens.</p>
-        <div class="bob-pillar__tags">
-          <span class="cds--tag cds--tag--red">OWASP</span>
-          <span class="cds--tag cds--tag--red">Tiempo real</span>
-        </div>
-      </div>
-
-      <div class="bob-pillar bob-pillar--accent-green">
-        <div class="bob-pillar__icon bob-pillar__icon--green" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M25 5h-.17A3 3 0 0 0 22 3H10a3 3 0 0 0-2.83 2H7a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h18a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4ZM10 5h12a1 1 0 0 1 0 2H10a1 1 0 0 1 0-2Zm15 22H7a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h.17A3 3 0 0 0 10 9h12a3 3 0 0 0 2.83-2H25a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2Z"/><path d="M10 13h12v2H10zm0 5h12v2H10zm0 5h8v2h-8z"/></svg>
-        </div>
-        <p class="bob-pillar__title">Contexto de 270 000 Tokens</p>
-        <p class="bob-pillar__desc">Lee nativamente .docx, .pdf y .xlsx sin copiar/pegar. Analiza codebases completos, arquitecturas distribuidas y documentación técnica extensa en una sola conversación sin perder el hilo.</p>
-        <div class="bob-pillar__tags">
-          <span class="cds--tag cds--tag--green">270k tokens</span>
-          <span class="cds--tag cds--tag--green">PDF · DOCX · XLSX</span>
-        </div>
-      </div>
-
-    </div>
-  </section>
+  
 
   <!-- ── Los 3 modos ───────────────────────────────────────────────── -->
   <section class="lab-section lab-section--band" aria-labelledby="modos-heading">
     <h2 class="cds--productive-heading-03" id="modos-heading">
-      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="vertical-align:-3px;margin-right:8px"><path d="M31 16l-7 7-1.41-1.41L28.17 16l-5.58-5.59L24 9l7 7zM1 16l7-7 1.41 1.41L3.83 16l5.58 5.59L8 23l-7-7zm11.42 9.484-1.932-.517 8.099-30.252 1.932.517z"/></svg>
+      <!-- Carbon: Code -->
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32"
+        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="31 16 24 23 22.59 21.59 28.17 16 22.59 10.41 24 9 31 16" />
+        <polygon points="1 16 8 9 9.41 10.41 3.83 16 9.41 21.59 8 23 1 16" />
+        <rect x="5.91" y="15" width="20.17" height="2" transform="translate(-3.6 27.31) rotate(-75)" />
+      </svg>
       Los 3 Modos Especializados
     </h2>
 
@@ -150,22 +126,38 @@
 
       <div class="bob-mode bob-mode--ask">
         <div class="bob-mode__icon" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
+          <!-- Carbon: Information -->
+          <svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 32 32" fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg">
+            <path d="M17 22h-2V13h2zm0-11h-2V9h2z" />
+            <path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z" />
+          </svg>
         </div>
         <p class="bob-mode__name">Ask Mode</p>
         <p class="bob-mode__role">El Consultor — Solo lectura</p>
-        <p class="bob-mode__desc">Analiza código, explica arquitecturas, genera documentación y detecta problemas sin modificar ningún archivo. Lectura auto-aprobada con 270k tokens de contexto.</p>
+        <p class="bob-mode__desc">Analiza código, explica arquitecturas, genera documentación y detecta problemas sin
+          modificar ningún archivo. Lectura auto-aprobada con 270k tokens de contexto.</p>
         <ul class="bob-mode__capabilities">
           <li class="bob-mode__cap-item">
-            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 32 32" fill="#24a148"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
+            <!-- Carbon: Checkmark -->
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg">
+              <polygon points="13 24 4 15 5.414 13.586 13 21.171 26.586 7.586 28 9 13 24" />
+            </svg>
             Arquitectura y diagramas Mermaid
           </li>
           <li class="bob-mode__cap-item">
-            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 32 32" fill="#24a148"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg">
+              <polygon points="13 24 4 15 5.414 13.586 13 21.171 26.586 7.586 28 9 13 24" />
+            </svg>
             Auditoría de seguridad (read-only)
           </li>
           <li class="bob-mode__cap-item">
-            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 32 32" fill="#24a148"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg">
+              <polygon points="13 24 4 15 5.414 13.586 13 21.171 26.586 7.586 28 9 13 24" />
+            </svg>
             README y documentación técnica
           </li>
         </ul>
@@ -173,22 +165,39 @@
 
       <div class="bob-mode bob-mode--plan">
         <div class="bob-mode__icon" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 32 32" fill="currentColor"><path d="M25 5h-.17A3 3 0 0 0 22 3H10a3 3 0 0 0-2.83 2H7a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h18a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4ZM10 5h12a1 1 0 0 1 0 2H10a1 1 0 0 1 0-2Zm15 22H7a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h.17A3 3 0 0 0 10 9h12a3 3 0 0 0 2.83-2H25a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2Z"/><path d="M10 13h12v2H10zm0 5h12v2H10zm0 5h8v2h-8z"/></svg>
+          <!-- Carbon: Task (clipboard) -->
+          <svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 32 32" fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M25 5h-.17A3 3 0 0 0 22 3H10a3 3 0 0 0-2.83 2H7a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h18a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4ZM10 5h12a1 1 0 0 1 0 2H10a1 1 0 0 1 0-2Zm15 22H7a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h.17A3 3 0 0 0 10 9h12a3 3 0 0 0 2.83-2H25a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2Z" />
+            <path d="M10 13h12v2H10zm0 5h12v2H10zm0 5h8v2h-8z" />
+          </svg>
         </div>
         <p class="bob-mode__name">Plan Mode</p>
         <p class="bob-mode__role">El Arquitecto — Diseño primero</p>
-        <p class="bob-mode__desc">Propone arquitecturas, evalúa alternativas, genera diagramas Mermaid y valida requisitos antes de escribir una sola línea de código. Seguridad y escalabilidad en el diseño, no al final.</p>
+        <p class="bob-mode__desc">Propone arquitecturas, evalúa alternativas, genera diagramas Mermaid y valida
+          requisitos antes de escribir una sola línea de código. Seguridad y escalabilidad en el diseño, no al final.
+        </p>
         <ul class="bob-mode__capabilities">
           <li class="bob-mode__cap-item">
-            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 32 32" fill="#24a148"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg">
+              <polygon points="13 24 4 15 5.414 13.586 13 21.171 26.586 7.586 28 9 13 24" />
+            </svg>
             Diseño arquitectónico guiado
           </li>
           <li class="bob-mode__cap-item">
-            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 32 32" fill="#24a148"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg">
+              <polygon points="13 24 4 15 5.414 13.586 13 21.171 26.586 7.586 28 9 13 24" />
+            </svg>
             Análisis de edge cases y riesgos
           </li>
           <li class="bob-mode__cap-item">
-            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 32 32" fill="#24a148"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg">
+              <polygon points="13 24 4 15 5.414 13.586 13 21.171 26.586 7.586 28 9 13 24" />
+            </svg>
             Sin edición de archivos
           </li>
         </ul>
@@ -196,22 +205,38 @@
 
       <div class="bob-mode bob-mode--agent">
         <div class="bob-mode__icon" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 32 32" fill="currentColor"><path d="M31 16l-7 7-1.41-1.41L28.17 16l-5.58-5.59L24 9l7 7zM1 16l7-7 1.41 1.41L3.83 16l5.58 5.59L8 23l-7-7zm11.42 9.484-1.932-.517 8.099-30.252 1.932.517z"/></svg>
+          <!-- Carbon: Code -->
+          <svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 32 32" fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg">
+            <polygon points="31 16 24 23 22.59 21.59 28.17 16 22.59 10.41 24 9 31 16" />
+            <polygon points="1 16 8 9 9.41 10.41 3.83 16 9.41 21.59 8 23 1 16" />
+            <rect x="5.91" y="15" width="20.17" height="2" transform="translate(-3.6 27.31) rotate(-75)" />
+          </svg>
         </div>
         <p class="bob-mode__name">Agent Mode</p>
         <p class="bob-mode__role">El Implementador — Acción completa</p>
-        <p class="bob-mode__desc">Escribe, refactoriza y ejecuta código. Accede a MCP, browser y skills. Delega a subagentes, corre tareas en paralelo y en segundo plano. Edición de comandos antes de ejecutar.</p>
+        <p class="bob-mode__desc">Escribe, refactoriza y ejecuta código. Accede a MCP, browser y skills. Delega a
+          subagentes, corre tareas en paralelo y en segundo plano. Edición de comandos antes de ejecutar.</p>
         <ul class="bob-mode__capabilities">
           <li class="bob-mode__cap-item">
-            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 32 32" fill="#24a148"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg">
+              <polygon points="13 24 4 15 5.414 13.586 13 21.171 26.586 7.586 28 9 13 24" />
+            </svg>
             MCP + Browser + Skills nativo
           </li>
           <li class="bob-mode__cap-item">
-            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 32 32" fill="#24a148"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg">
+              <polygon points="13 24 4 15 5.414 13.586 13 21.171 26.586 7.586 28 9 13 24" />
+            </svg>
             Subagentes + tareas paralelas
           </li>
           <li class="bob-mode__cap-item">
-            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 32 32" fill="#24a148"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg">
+              <polygon points="13 24 4 15 5.414 13.586 13 21.171 26.586 7.586 28 9 13 24" />
+            </svg>
             Aprobación requerida para escrituras
           </li>
         </ul>
@@ -221,12 +246,17 @@
   </section>
 
   <!-- ── Casos de uso reales IBM ────────────────────────────────────── -->
-  <section class="lab-section" aria-labelledby="casos-heading">
+  <!-- <section class="lab-section" aria-labelledby="casos-heading">
     <h2 class="cds--productive-heading-03" id="casos-heading">
-      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="vertical-align:-3px;margin-right:8px"><path d="M26 12h-6V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h6v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V14a2 2 0 0 0-2-2ZM4 22V6h14l.001 6H12a2 2 0 0 0-2 2v8Zm22 6H12V14h14Z"/></svg>
+       Carbon: Portfolio (briefcase/use cases) 
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32"
+        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M26 12h-6V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h6v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V14a2 2 0 0 0-2-2ZM4 22V6h14l.001 6H12a2 2 0 0 0-2 2v8Zm22 6H12V14h14Z" />
+      </svg>
       Casos de Uso de Alto Impacto
     </h2>
-    <p class="cds--body-01" style="margin-bottom:var(--cds-spacing-05,1rem);color:var(--cds-text-secondary,#525252)">
+    <p class="cds--body-01 bob-usecases__intro">
       Escenarios reales donde IBM Bob demuestra su valor diferencial frente a herramientas genéricas.
     </p>
 
@@ -234,12 +264,19 @@
 
       <div class="bob-usecase">
         <div class="bob-usecase__accent bob-usecase__accent--blue" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2C8.3 2 2 8.3 2 16s6.3 14 14 14 14-6.3 14-14S23.7 2 16 2zm0 4c2.7 0 5.2.9 7.2 2.5L6.5 23.2C4.9 21.2 4 18.7 4 16 4 9.4 9.4 4 16 4zm0 24c-2.7 0-5.2-.9-7.2-2.5l16.7-16.7C27.1 10.8 28 13.3 28 16c0 6.6-5.4 12-12 12z"/></svg>
+           Carbon: Cloud (verified from carbon/v11.111.0/packages/icons/src/svg/32/cloud.svg) 
+          <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M16,7h0a7.66,7.66,0,0,1,1.51.15,8,8,0,0,1,6.35,6.34l.26,1.35,1.35.24a5.5,5.5,0,0,1-1,10.92H7.5a5.5,5.5,0,0,1-1-10.92l1.34-.24.26-1.35A8,8,0,0,1,16,7m0-2a10,10,0,0,0-9.83,8.12A7.5,7.5,0,0,0,7.49,28h17a7.5,7.5,0,0,0,1.32-14.88,10,10,0,0,0-7.94-7.94A10.27,10.27,0,0,0,16,5Z" />
+          </svg>
         </div>
         <div class="bob-usecase__body">
-          <p class="bob-usecase__industry">Modernización de Aplicaciones — IBM Consulting</p>
+          <p class="bob-usecase__industry">Modernización de Aplicaciones · IBM Consulting</p>
           <p class="bob-usecase__title">Java Legacy a Cloud-Native en IBM Cloud</p>
-          <p class="bob-usecase__desc">Bob analiza aplicaciones Java EE con Ask Mode (270k tokens), genera el plan de migración a microservicios Spring Boot con Plan Mode, y con Agent Mode refactoriza módulo a módulo con rollback por cada cambio — preservando la lógica de negocio y los contratos de API.</p>
+          <p class="bob-usecase__desc">Bob analiza aplicaciones Java EE con Ask Mode (270k tokens), genera el plan de
+            migración a microservicios Spring Boot con Plan Mode, y con Agent Mode refactoriza módulo a módulo con
+            rollback por cada cambio.</p>
         </div>
         <div class="bob-usecase__result">
           <p class="bob-usecase__result-value">–60%</p>
@@ -249,12 +286,19 @@
 
       <div class="bob-usecase">
         <div class="bob-usecase__accent bob-usecase__accent--purple" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 32 32" fill="currentColor"><path d="M22 20H12v-2a6 6 0 1 0-6-6H4a8 8 0 1 1 15.465 2.857L22 18v2zm0 4H8v-2h14v2zm-4 4H8v-2h10v2z"/></svg>
+          Carbon: API (4 circles connected = ecosystem/integration, verified carbon/v11.111.0/.../api.svg)
+          <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M26,22a3.86,3.86,0,0,0-2,.57l-3.09-3.1a6,6,0,0,0,0-6.94L24,9.43A3.86,3.86,0,0,0,26,10a4,4,0,1,0-4-4,3.86,3.86,0,0,0,.57,2l-3.1,3.09a6,6,0,0,0-6.94,0L9.43,8A3.86,3.86,0,0,0,10,6a4,4,0,1,0-4,4,3.86,3.86,0,0,0,2-.57l3.09,3.1a6,6,0,0,0,0,6.94L8,22.57A3.86,3.86,0,0,0,6,22a4,4,0,1,0,4,4,3.86,3.86,0,0,0-.57-2l3.1-3.09a6,6,0,0,0,6.94,0L22.57,24A3.86,3.86,0,0,0,22,26a4,4,0,1,0,4-4ZM26,4a2,2,0,1,1-2,2A2,2,0,0,1,26,4ZM4,6A2,2,0,1,1,6,8,2,2,0,0,1,4,6ZM6,28a2,2,0,1,1,2-2A2,2,0,0,1,6,28Zm10-8a4,4,0,1,1,4-4A4,4,0,0,1,16,20Zm10,8a2,2,0,1,1,2-2A2,2,0,0,1,26,28Z" />
+          </svg>
         </div>
         <div class="bob-usecase__body">
           <p class="bob-usecase__industry">Integración con Ecosistema IBM</p>
           <p class="bob-usecase__title">Agentes con watsonx Orchestrate + ADK MCP</p>
-          <p class="bob-usecase__desc">Con el ADK MCP de watsonx Orchestrate, Bob crea, importa y gestiona agentes y herramientas directamente desde el IDE. El ciclo completo de diseño, implementación y despliegue de un agente ocurre sin salir del contexto de desarrollo.</p>
+          <p class="bob-usecase__desc">Con el ADK MCP de watsonx Orchestrate, Bob crea, importa y gestiona agentes y
+            herramientas directamente desde el IDE. El ciclo completo de diseño, implementación y despliegue de un
+            agente ocurre sin salir del contexto de desarrollo.</p>
         </div>
         <div class="bob-usecase__result">
           <p class="bob-usecase__result-value">1 IDE</p>
@@ -264,12 +308,23 @@
 
       <div class="bob-usecase">
         <div class="bob-usecase__accent bob-usecase__accent--green" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 32 32" fill="currentColor"><path d="M26 4H6a2 2 0 0 0-2 2v8c0 9.63 7.88 13.74 11.29 15.1a2.27 2.27 0 0 0 1.42 0C20.12 27.74 28 23.63 28 14V6a2 2 0 0 0-2-2Zm0 10c0 8.23-6.86 11.89-10 13.22C12.86 25.89 6 22.23 6 14V6h20Z"/></svg>
+           Carbon: Certificate (document with star = compliance, verified carbon/v11.111.0/.../certificate.svg)
+          <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg">
+            <polygon
+              points="24 17 25.912 20.703 30 21.297 27 24 27.771 28 24 25.75 20.229 28 21 24 18 21.297 22.2 20.703 24 17" />
+            <rect x="6" y="16" width="6" height="2" />
+            <rect x="6" y="12" width="10" height="2" />
+            <rect x="6" y="8" width="10" height="2" />
+            <path d="M16,26H4V6H28V16h2V6a2,2,0,0,0-2-2H4A2,2,0,0,0,2,6V26a2,2,0,0,0,2,2H16Z" />
+          </svg>
         </div>
         <div class="bob-usecase__body">
-          <p class="bob-usecase__industry">Gobierno y Cumplimiento — Banca y Finanzas</p>
+          <p class="bob-usecase__industry">Gobierno y Cumplimiento · Banca y Finanzas</p>
           <p class="bob-usecase__title">Modo Personalizado para Estándares PCI-DSS / SOC2</p>
-          <p class="bob-usecase__desc">Un modo YAML personalizado convierte a Bob en validador de cumplimiento: revisa cada PR contra las reglas de la organización, bloquea patrones prohibidos (datos en claro, conexiones sin TLS) y genera reporte de compliance automáticamente.</p>
+          <p class="bob-usecase__desc">Un modo YAML personalizado convierte a Bob en validador de cumplimiento: revisa
+            cada PR contra las reglas de la organización, bloquea patrones prohibidos (datos en claro, conexiones sin
+            TLS) y genera reporte de compliance automáticamente.</p>
         </div>
         <div class="bob-usecase__result">
           <p class="bob-usecase__result-value">0</p>
@@ -279,12 +334,21 @@
 
       <div class="bob-usecase">
         <div class="bob-usecase__accent bob-usecase__accent--cyan" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 32 32" fill="currentColor"><path d="M25 5h-.17A3 3 0 0 0 22 3H10a3 3 0 0 0-2.83 2H7a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h18a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4ZM10 5h12a1 1 0 0 1 0 2H10a1 1 0 0 1 0-2Zm15 22H7a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h.17A3 3 0 0 0 10 9h12a3 3 0 0 0 2.83-2H25a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2Z"/><path d="M10 13h12v2H10zm0 5h12v2H10zm0 5h8v2h-8z"/></svg>
+           Carbon: Document (page with text lines, verified carbon/v11.111.0/.../document.svg) 
+          <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M25.7,9.3l-7-7C18.5,2.1,18.3,2,18,2H8C6.9,2,6,2.9,6,4v24c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V10C26,9.7,25.9,9.5,25.7,9.3z M18,4.4l5.6,5.6H18V4.4z M24,28H8V4h8v6c0,1.1,0.9,2,2,2h6V28z" />
+            <rect x="10" y="22" width="12" height="2" />
+            <rect x="10" y="16" width="12" height="2" />
+          </svg>
         </div>
         <div class="bob-usecase__body">
           <p class="bob-usecase__industry">Onboarding y Transferencia de Conocimiento</p>
           <p class="bob-usecase__title">Análisis Masivo de Codebase Legacy</p>
-          <p class="bob-usecase__desc">Bob lee miles de líneas de código legacy (COBOL, Java EE, PHP) con su ventana de 270k tokens, genera documentación completa, diagramas de dependencias y explica la lógica de negocio a desarrolladores nuevos — en minutos, no semanas.</p>
+          <p class="bob-usecase__desc">Bob lee miles de líneas de código legacy (COBOL, Java EE, PHP) con su ventana de
+            270k tokens, genera documentación completa, diagramas de dependencias y explica la lógica de negocio a
+            desarrolladores nuevos — en minutos, no semanas.</p>
         </div>
         <div class="bob-usecase__result">
           <p class="bob-usecase__result-value">–85%</p>
@@ -295,40 +359,46 @@
     </div>
   </section>
 
-  <!-- ── Cronograma ──────────────────────────────────────────────── -->
+  ── Cronograma ──────────────────────────────────────────────── -->
   <section class="lab-section lab-section--band" aria-labelledby="cronograma-heading">
     <h2 class="cds--productive-heading-03" id="cronograma-heading">
-      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="vertical-align:-3px;margin-right:8px"><path d="M16 30a14 14 0 1 1 14-14 14 14 0 0 1-14 14Zm0-26a12 12 0 1 0 12 12A12 12 0 0 0 16 4Z"/><path d="M20.59 22 15 16.41V7h2v8.58l5 5.01z"/></svg>
-      Agenda del Hands-On (60 min)
+      <!-- Carbon: Time (clock) -->
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32"
+        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16 30a14 14 0 1 1 14-14 14 14 0 0 1-14 14Zm0-26a12 12 0 1 0 12 12A12 12 0 0 0 16 4Z" />
+        <path d="M20.59 22 15 16.41V7h2v8.58l5 5.01z" />
+      </svg>
+      Agenda del Hands-On (90 min)
     </h2>
     <div class="lab-timeline">
-      <div class="lab-timeline__item">
-        <span class="lab-timeline__time">00–10 min</span>
-        <span class="lab-timeline__label">Setup — IDE de IBM Bob 2.1 y configuración del workspace</span>
-      </div>
       <div class="lab-timeline__item lab-timeline__item--active">
-        <span class="lab-timeline__time">10–18 min</span>
+        <span class="lab-timeline__time">00–10 min</span>
+        <span class="lab-timeline__label">Setup — IDE de IBM Bob y configuración del workspace</span>
+      </div>
+      <div class="lab-timeline__item">
+        <span class="lab-timeline__time">10–20 min</span>
         <span class="lab-timeline__label">LAB 1 — Ask Mode: análisis de arquitectura y documentación automática</span>
       </div>
       <div class="lab-timeline__item">
-        <span class="lab-timeline__time">18–30 min</span>
+        <span class="lab-timeline__time">20–32 min</span>
         <span class="lab-timeline__label">LAB 2 — Los 3 Modos: Plan → Agent → Ask en un sistema completo</span>
       </div>
       <div class="lab-timeline__item">
-        <span class="lab-timeline__time">30–40 min</span>
-        <span class="lab-timeline__label">LAB 3 — Seguridad: auditoría con Ask Mode + corrección con Agent Mode</span>
+        <span class="lab-timeline__time">32–57 min</span>
+        <span class="lab-timeline__label">LAB 3 — Seguridad: auditoría ASVS con skill, reportes SARIF y OSCAL POA&amp;M</span>
       </div>
       <div class="lab-timeline__item">
-        <span class="lab-timeline__time">40–52 min</span>
+        <span class="lab-timeline__time">57–72 min</span>
         <span class="lab-timeline__label">LAB 4 — Modo Personalizado: crea tu propio experto en YAML</span>
       </div>
       <div class="lab-timeline__item">
-        <span class="lab-timeline__time">52–60 min</span>
+        <span class="lab-timeline__time">72–87 min</span>
         <span class="lab-timeline__label">LAB 5 — MCP con Tavily: búsqueda web en tiempo real desde Agent Mode</span>
       </div>
       <div class="lab-timeline__item">
-        <span class="lab-timeline__time">60–65 min</span>
-        <span class="lab-timeline__label">Q&amp;A — Próximos pasos: Integración, Modernización Java, Orchestrate</span>
+        <span class="lab-timeline__time">87+ min</span>
+        <span class="lab-timeline__label">Q&amp;A opcional — Próximos pasos: Integración, Modernización Java,
+          Orchestrate</span>
       </div>
     </div>
   </section>
@@ -336,22 +406,39 @@
   <!-- ── Requisitos Previos ──────────────────────────────────────── -->
   <section class="lab-section" aria-labelledby="prereqs-heading">
     <h2 class="cds--productive-heading-03" id="prereqs-heading">
-      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="vertical-align:-3px;margin-right:8px"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
+      <!-- Carbon: Checkmark (circle) -->
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32"
+        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="13 24 4 15 5.414 13.586 13 21.171 26.586 7.586 28 9 13 24" />
+        <path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z" />
+      </svg>
       Requisitos Previos
     </h2>
     <div class="prereq-grid">
       <div class="prereq-item">
         <div class="prereq-item__icon">
-          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Zm-2-4v-9l7 4.5z"/></svg>
+          <!-- Carbon: Application (app window) -->
+          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 6h2v2h-2zm4 0h2v2h-2zm4 0h2v2h-2z" />
+            <path d="M28 4H4a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 22H4V10h24Z" />
+          </svg>
         </div>
         <div class="prereq-item__body">
-          <p class="prereq-item__title">IDE de IBM Bob 2.1</p>
-          <p class="prereq-item__desc">Acceso al IDE de IBM Bob. <a class="cds--link" href="https://bob.ibm.com/trial/" target="_blank" rel="noreferrer">Solicitar acceso →</a></p>
+          <p class="prereq-item__title">IDE de IBM Bob</p>
+          <p class="prereq-item__desc">Acceso al IDE de IBM Bob. <a class="cds--link" href="https://bob.ibm.com/trial/"
+              target="_blank" rel="noreferrer">Solicitar acceso →</a></p>
         </div>
       </div>
       <div class="prereq-item">
         <div class="prereq-item__icon">
-          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M31 16l-7 7-1.41-1.41L28.17 16l-5.58-5.59L24 9l7 7zM1 16l7-7 1.41 1.41L3.83 16l5.58 5.59L8 23l-7-7zm11.42 9.484-1.932-.517 8.099-30.252 1.932.517z"/></svg>
+          <!-- Carbon: Code -->
+          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg">
+            <polygon points="31 16 24 23 22.59 21.59 28.17 16 22.59 10.41 24 9 31 16" />
+            <polygon points="1 16 8 9 9.41 10.41 3.83 16 9.41 21.59 8 23 1 16" />
+            <rect x="5.91" y="15" width="20.17" height="2" transform="translate(-3.6 27.31) rotate(-75)" />
+          </svg>
         </div>
         <div class="prereq-item__body">
           <p class="prereq-item__title">Node.js 18+</p>
@@ -360,20 +447,16 @@
       </div>
       <div class="prereq-item">
         <div class="prereq-item__icon">
-          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M26 4H6a2 2 0 0 0-2 2v8c0 9.63 7.88 13.74 11.29 15.1a2.27 2.27 0 0 0 1.42 0C20.12 27.74 28 23.63 28 14V6a2 2 0 0 0-2-2Zm0 10c0 8.23-6.86 11.89-10 13.22C12.86 25.89 6 22.23 6 14V6h20Z"/></svg>
-        </div>
-        <div class="prereq-item__body">
-          <p class="prereq-item__title">Python 3.8+</p>
-          <p class="prereq-item__desc">Para el código vulnerable del LAB 3 (análisis de seguridad).</p>
-        </div>
-      </div>
-      <div class="prereq-item">
-        <div class="prereq-item__icon">
-          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M22 20H12v-2a6 6 0 1 0-6-6H4a8 8 0 1 1 15.465 2.857L22 18v2zm0 4H8v-2h14v2zm-4 4H8v-2h10v2z"/></svg>
+          <!-- Carbon: Integration (plug) -->
+          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg">
+            <path d="M22 20H12v-2a6 6 0 1 0-6-6H4a8 8 0 1 1 15.465 2.857L22 18v2zm0 4H8v-2h14v2zm-4 4H8v-2h10v2z" />
+          </svg>
         </div>
         <div class="prereq-item__body">
           <p class="prereq-item__title">API Key de Tavily (gratis)</p>
-          <p class="prereq-item__desc">Para el LAB 5. Registro en <a class="cds--link" href="https://tavily.com" target="_blank" rel="noreferrer">tavily.com</a> — 1 000 búsquedas/mes gratuitas.</p>
+          <p class="prereq-item__desc">Para el LAB 5. Registro en <a class="cds--link" href="https://tavily.com"
+              target="_blank" rel="noreferrer">tavily.com</a> — 1 000 búsquedas/mes gratuitas.</p>
         </div>
       </div>
     </div>
@@ -382,13 +465,21 @@
   <!-- ── Soporte ─────────────────────────────────────────────────── -->
   <section class="lab-section" aria-labelledby="soporte-heading">
     <h2 class="cds--productive-heading-03" id="soporte-heading">
-      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="vertical-align:-3px;margin-right:8px"><path d="M28 2H4a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h7v4l6-4h11a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2Zm0 22H16.33L11 27.2V24H4V4h24Z"/><path d="M15 20h2v2h-2zm0-12h2v10h-2z"/></svg>
+      <!-- Carbon: Chat (speech bubble) -->
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32"
+        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M28 2H4a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h7v4l6-4h11a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2Zm0 22H16.33L11 27.2V24H4V4h24Z" />
+        <path d="M15 20h2v2h-2zm0-12h2v10h-2z" />
+      </svg>
       Soporte y Contacto
     </h2>
-    <p class="cds--body-01">¿Necesitas ayuda durante los laboratorios? Contacta al equipo IBM facilitador del workshop.</p>
-    <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-06,1.5rem)">
+    <p class="cds--body-01">¿Necesitas ayuda durante los laboratorios? Contacta al equipo IBM facilitador del workshop.
+    </p>
+    <div class="callout callout--support" data-tone="tip">
       <p class="callout__title">Feedback de la Sesión</p>
-      <p>Tu opinión mejora estos laboratorios. Al finalizar, pide el enlace de la encuesta al facilitador de tu sesión.</p>
+      <p>Tu opinión mejora estos laboratorios. Al finalizar, pide el enlace de la encuesta al facilitador de tu sesión.
+      </p>
     </div>
   </section>
 

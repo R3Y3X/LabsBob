@@ -2,37 +2,37 @@
 
   <div class="lab-banner">
     <div class="lab-banner__tags">
-      <span class="cds--tag cds--tag--blue">Develop</span>
-      <span class="cds--tag cds--tag--cool-gray">Part 1</span>
+      <span class="cds--tag cds--tag--blue">Desarrollo</span>
+      <span class="cds--tag cds--tag--cool-gray">Parte 1</span>
       <span class="cds--tag cds--tag--teal">Bob CLI · Plan + Agent</span>
     </div>
-    <h1 class="cds--productive-heading-05 lab-banner__title">Part 1 — Your First Agentic Task with Bob</h1>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Parte 1 — Tu primera tarea agéntica con Bob</h1>
     <p class="cds--body-02 lab-banner__summary">
-      Bob demonstrates the three-mode workflow — Plan → Agent → Ask — by creating a hello-world Python script,
-      running it, and documenting it. You approve each action; Bob handles the rest.
+      Bob demuestra el flujo de tres modos — Plan → Agent → Ask — creando un script Python de hello world,
+      ejecutándolo y documentándolo. Tú apruebas cada acción; Bob se encarga del resto.
     </p>
   </div>
 
   <section class="lab-section" aria-labelledby="steps-heading">
-    <h2 class="cds--productive-heading-03" id="steps-heading">Step-by-Step Guide</h2>
+    <h2 class="cds--productive-heading-03" id="steps-heading">Guía paso a paso</h2>
 
     <!-- Step 1 -->
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Step 1 — Explore Bob's Modes (Ask Mode)</h3>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Explora los modos de Bob (Ask Mode)</h3>
       <p class="cds--body-01">
         Start in <strong>Ask mode</strong> to learn about Bob's capabilities before giving it work.
         Ask mode does not execute anything — it only answers questions using its knowledge base and any connected MCP servers.
       </p>
       <div class="callout" data-tone="note">
-        <p class="callout__title">Bob Prompt — Ask Mode</p>
+        <p class="callout__title">Prompt de Bob — Ask Mode</p>
         <div class="code-block">
-          <button class="copy-button" type="button">Copy</button>
+          <button type="button" class="copy-button">Copy</button>
           <pre><code>Explain what IBM Bob is and describe all available modes:
 Plan mode, Agent mode, and Ask mode. What is each one used for?</code></pre>
         </div>
       </div>
       <div class="callout" data-tone="tip">
-        <p class="callout__title">Expected Output</p>
+        <p class="callout__title">Resultado esperado</p>
         <p>Bob returns a structured explanation: <strong>Plan mode</strong> creates task lists and architecture designs without executing. <strong>Agent mode</strong> (also called Code mode) implements and runs code with your approval. <strong>Ask mode</strong> answers questions using documentation and context. No files are modified.</p>
       </div>
       <blockquote class="image-placeholder">
@@ -44,21 +44,21 @@ Plan mode, Agent mode, and Ask mode. What is each one used for?</code></pre>
 
     <!-- Step 2 -->
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Step 2 — Create a File with Bob (Agent Mode)</h3>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Crea un archivo con Bob (Agent Mode)</h3>
       <p class="cds--body-01">
         Switch to <strong>Agent mode</strong>. Bob will create a Python file and run it.
         Watch the approval gate — Bob will show you exactly what it plans to write before touching the filesystem.
       </p>
       <div class="callout" data-tone="note">
-        <p class="callout__title">Bob Prompt — Agent Mode</p>
+        <p class="callout__title">Prompt de Bob — Agent Mode</p>
         <div class="code-block">
-          <button class="copy-button" type="button">Copy</button>
+          <button type="button" class="copy-button">Copy</button>
           <pre><code>Create a file called hello-bob.py in the workshop-hub directory
 that prints "Hello from Bob!" and today's date. Then run it.</code></pre>
         </div>
       </div>
       <div class="callout" data-tone="tip">
-        <p class="callout__title">Expected Output</p>
+        <p class="callout__title">Resultado esperado</p>
         <p>Bob presents the file content for approval: a Python script importing <code>datetime</code> and printing the greeting + date. After you click <strong>Save</strong>, Bob runs the script in the terminal. You see <code>Hello from Bob!</code> followed by today's date in the output.</p>
       </div>
       <blockquote class="image-placeholder">
@@ -70,21 +70,21 @@ that prints "Hello from Bob!" and today's date. Then run it.</code></pre>
 
     <!-- Step 3 -->
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Step 3 — Verify Bob's Summary</h3>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Verifica el resumen de Bob</h3>
       <p class="cds--body-01">
         After completing a task, Bob always provides a summary of what it did. Use Ask mode to confirm
         the work and see how Bob tracks its own actions.
       </p>
       <div class="callout" data-tone="note">
-        <p class="callout__title">Bob Prompt — Ask Mode</p>
+        <p class="callout__title">Prompt de Bob — Ask Mode</p>
         <div class="code-block">
-          <button class="copy-button" type="button">Copy</button>
+          <button type="button" class="copy-button">Copy</button>
           <pre><code>Summarize everything you did in this session.
 List each file created, each command run, and the outcome.</code></pre>
         </div>
       </div>
       <div class="callout" data-tone="tip">
-        <p class="callout__title">Expected Output</p>
+        <p class="callout__title">Resultado esperado</p>
         <p>Bob returns a structured task completion summary listing: directory created, virtual environment activated, <code>hello-bob.py</code> written and executed successfully. This is the same pattern used in all Bob tutorials — Bob always closes with a summary.</p>
       </div>
       <div class="callout" data-tone="note">

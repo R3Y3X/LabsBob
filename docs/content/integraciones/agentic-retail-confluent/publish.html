@@ -1,0 +1,70 @@
+<div class="content-panel lab-template prose--full">
+  <div class="lab-banner">
+    <div class="lab-banner__tags">
+      <span class="cds--tag cds--tag--purple">Mensajes de Ejemplo</span>
+      <span class="cds--tag cds--tag--cool-gray">~15 min</span>
+      <span class="cds--tag cds--tag--teal">Publicación</span>
+    </div>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Mensajes de Ejemplo — Publicación y Automatización</h1>
+    <p class="cds--body-02 lab-banner__summary">Publica eventos de prueba manualmente o mediante automatización con IBM Bob para alimentar el stream de inventario.</p>
+  </div>
+
+  <section class="lab-section">
+    <h2 class="cds--productive-heading-04">Step 3. Publicar mensajes de ejemplo al tópico</h2>
+    <p class="cds--body-01">En este punto ya tenemos creados dos tópicos:</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item"><strong>inventory.transactions</strong>: Incluye todas las transacciones (positivo significa stock adicional, y negativo significa transacción de venta).</li>
+      <li class="cds--list__item"><strong>inventory.availability</strong>: Este es un tópico derivado que creamos en el paso anterior para calcular la disponibilidad automáticamente.</li>
+    </ul>
+    <p class="cds--body-01" style="margin-top: 1rem;">El tópico <code>inventory.transactions</code> existe pero no tiene mensajes. Tenemos que publicar mensajes en el tópico.</p>
+  </section>
+
+  <section class="lab-section" style="margin-top: 3rem;">
+    <h3 class="cds--productive-heading-03">Publicar mensajes de manera manual</h3>
+    <p class="cds--body-01">Para crear cada mensaje manualmente sería de esta manera:</p>
+    <ol class="cds--list--ordered">
+      <li class="cds--list__item">Acceder al tópico <code>inventory.transactions</code> desde el menú de la izquierda.</li>
+      <li class="cds--list__item">Hacer click en <strong>Messages</strong>.</li>
+      <li class="cds--list__item">Hacer click en <strong>Produce new message</strong>.</li>
+    </ol>
+
+<pre><code class="language-json"> {
+  "sku": "LAPTOP-DELL-XPS-15",
+  "branch": "Dot Shopping",
+  "quantity": 50,
+  "transaction_type": "ADDITION",
+  "timestamp": "2025-12-29T08:00:00Z",
+  "source": "inventory_manager",
+  "reference": "PO-2025-001"
+}</code></pre>
+  </section>
+
+  <section class="lab-section" style="margin-top: 3rem;">
+    <h3 class="cds--productive-heading-03">Automatizar con IBM Bob</h3>
+    <p class="cds--body-01">Pero como queremos crear 20 mensajes de ejemplo, vamos a utilizar un script de Python ejecutado en la terminal.</p>
+    <ol class="cds--list--ordered">
+      <li class="cds--list__item">Abre una terminal integrada en tu IDE (si estás en Windows, asegúrate de que sea <strong>Git Bash</strong> y no PowerShell).</li>
+      <li class="cds--list__item">Navega a la carpeta de este laboratorio:</li>
+    </ol>
+<pre><code class="language-bash">cd Labs-tech-summit/Lab1/inventory-pipeline</code></pre>
+
+    <ol class="cds--list--ordered" start="3">
+      <li class="cds--list__item">Ejecuta el script de configuración para inyectar los datos:</li>
+    </ol>
+<pre><code class="language-bash">./setup.sh -s 3</code></pre>
+
+    <ol class="cds--list--ordered" start="4">
+      <li class="cds--list__item">Verifica la creación desde la UI de Confluent: Accede al tópico <code>inventory.transactions</code> y haz click en <strong>Messages</strong>.</li>
+    </ol>
+
+    <div class="callout" data-tone="success" style="margin-top: 2rem;">
+      <p class="callout__title">Criterios de Éxito</p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">El tópico <code>inventory.transactions</code> existe con <strong>Partitions = 1</strong> y <strong>Retention Time = infinite</strong>.</li>
+        <li class="cds--list__item">El stream <code>inventory_transactions</code> y la tabla <code>inventory_availability</code> están creados y corriendo en ksqlDB.</li>
+        <li class="cds--list__item">El tópico derivado <code>inventory.availability</code> se llena automáticamente al llegar transacciones.</li>
+        <li class="cds--list__item">Hay 20 mensajes de ejemplo publicados en <code>inventory.transactions</code> (visibles desde Messages en la UI).</li>
+      </ul>
+    </div>
+  </section>
+</div>

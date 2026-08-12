@@ -1,0 +1,250 @@
+openapi: "3.0.3"
+info:
+  title: SaaS Payment & Billing API
+  description: |
+    API REST para gestión de pagos y cupones de descuento.
+    Este contrato es la fuente de verdad para el desarrollo en las fases de Diseño y Código del laboratorio SDLC.
+  version: "1.0.0"
+  contact:
+    name: Equipo de Pagos
+
+servers:
+  - url: http://localhost:3000/api/v1
+    description: Servidor local de desarrollo
+
+tags:
+  - name: Payments
+    description: Operaciones de consulta de pagos
+  - name: Coupons
+    description: Operaciones de cupones de descuento
+
+paths:
+  /payments/{userId}:
+    get:
+      tags: [Payments]
+      summary: Obtener pagos de un usuario
+      description: Retorna todos los pagos asociados a un usuario específico.
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+          example: "user_123"
+      responses:
+        "200":
+          description: Lista de pagos del usuario
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Payment"
+                  count:
+                    type: integer
+              example:
+                data:
+                  - id: "pay_001"
+                    user_id: "user_123"
+                    amount: 99.99
+                    currency: "USD"
+                    status: "completed"
+                    description: "Suscripción mensual Pro"
+                    created_at: "2024-01-15 10:30:00"
+                count: 1
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /payments/detail/{id}:
+    get:
+      tags: [Payments]
+      summary: Obtener detalle de un pago
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          example: "pay_001"
+      responses:
+        "200":
+          description: Detalle del pago
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Payment"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /coupons/apply:
+    post:
+      tags: [Coupons]
+      summary: Aplicar un cupón de descuento
+      description: |
+        Valida un cupón y calcula el monto final con el descuento aplicado.
+        Este endpoint debe ser implementado por el estudiante durante la fase de Código.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - code
+                - originalAmount
+              properties:
+                code:
+                  type: string
+                  description: Código del cupón a aplicar
+                  example: "IBMBOB20"
+                originalAmount:
+                  type: number
+                  description: Monto original antes del descuento (en USD)
+                  example: 249.00
+      responses:
+        "200":
+          description: Cupón aplicado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CouponApplyResult"
+              example:
+                coupon:
+                  code: "IBMBOB20"
+                  discount_percent: 20
+                originalAmount: 249.00
+                finalAmount: 199.20
+                savings: 49.80
+        "400":
+          description: Cupón inválido o inactivo
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              examples:
+                couponNotFound:
+                  summary: Cupón no encontrado
+                  value:
+                    error: "Bad Request"
+                    message: "El cupón 'INVALID' no existe"
+                couponInactive:
+                  summary: Cupón inactivo
+                  value:
+                    error: "Bad Request"
+                    message: "El cupón 'EXPIRED10' no está activo"
+                missingFields:
+                  summary: Campos requeridos faltantes
+                  value:
+                    error: "Bad Request"
+                    message: "Los campos 'code' y 'originalAmount' son requeridos"
+
+  /coupons:
+    get:
+      tags: [Coupons]
+      summary: Listar cupones disponibles
+      responses:
+        "200":
+          description: Lista de cupones
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Coupon"
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+
+  schemas:
+    Payment:
+      type: object
+      properties:
+        id:
+          type: string
+        user_id:
+          type: string
+        amount:
+          type: number
+        currency:
+          type: string
+        status:
+          type: string
+          enum: [pending, completed, failed]
+        description:
+          type: string
+        created_at:
+          type: string
+
+    Coupon:
+      type: object
+      properties:
+        id:
+          type: string
+        code:
+          type: string
+        discount_percent:
+          type: number
+        active:
+          type: integer
+          enum: [0, 1]
+
+    CouponApplyResult:
+      type: object
+      properties:
+        coupon:
+          type: object
+          properties:
+            code:
+              type: string
+            discount_percent:
+              type: number
+        originalAmount:
+          type: number
+        finalAmount:
+          type: number
+        savings:
+          type: number
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+
+  responses:
+    Unauthorized:
+      description: API Key inválida o ausente
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            error: "Unauthorized"
+            message: "Invalid API Key"
+    NotFound:
+      description: Recurso no encontrado
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"

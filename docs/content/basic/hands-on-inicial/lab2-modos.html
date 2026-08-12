@@ -4,21 +4,35 @@
     <div class="lab-banner__tags">
       <span class="cds--tag cds--tag--blue">Ask · Plan · Agent</span>
       <span class="cds--tag cds--tag--cool-gray">12 min</span>
-      <span class="cds--tag cds--tag--purple">Intermedio</span>
     </div>
-    <h1 class="cds--productive-heading-05 lab-banner__title">LAB 2 — Los 3 Modos de IBM Bob 2.1</h1>
-    <p class="cds--body-02 lab-banner__summary">
-      IBM Bob 2.1 tiene <strong>3 modos especializados</strong>, cada uno optimizado para un tipo de tarea. En este lab usarás
-      <strong>Plan Mode</strong>, <strong>Agent Mode</strong> y <strong>Ask Mode</strong> para construir un sistema completo de carrito de compras,
-      entendiendo cuándo y por qué cambiar de modo.
-    </p>
-  </div>
+    <h1 class="cds--productive-heading-05 lab-banner__title">LAB 2 — Los 3 Modos de IBM Bob</h1>
 
-  <figure class="lab-figure">
-    <img src="./assets/images/labs/hands-on-inicial/lab2_bob.png"
-         alt="Banner del LAB 2 — Los 3 Modos de IBM Bob 2.1"
-         class="lab-figure__img" />
-  </figure>
+    <!-- ── Hero image ──────────────────────────────────────────────── -->
+    <div class="lab-hero-image">
+      <img src="./assets/images/labs/hands-on-inicial/lab2_bob.png"
+           alt="Banner del LAB 2 — Los 3 Modos de IBM Bob"
+           class="lab-hero-image__img" />
+    </div>
+
+    <div class="lab-banner__metrics">
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">3</span>
+        <span class="lab-banner__metric-label">modos especializados</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">1</span>
+        <span class="lab-banner__metric-label">sistema completo</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">4–8</span>
+        <span class="lab-banner__metric-label">BobCoins estimados</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">3</span>
+        <span class="lab-banner__metric-label">pasos</span>
+      </div>
+    </div>
+  </div>
 
   <!-- Los 3 modos -->
   <section class="lab-section" aria-labelledby="lab2-modos">
@@ -66,10 +80,6 @@
       <p>Cambia de modo según lo que necesites hacer. <strong>No uses un solo modo para todo.</strong> Puedes cambiar de modo en cualquier momento, incluso a mitad de una tarea.</p>
     </div>
 
-    <div class="callout" data-tone="note">
-      <p class="callout__title">¿Qué pasó con los modos anteriores?</p>
-      <p>En Bob 2.1, <strong>Code Mode, Advanced Mode y Orchestrator Mode</strong> se consolidaron en un único <strong>Agent Mode</strong>. Agent Mode escribe código, usa MCP y Browser (antes Advanced), y delega subtareas a subagentes (antes Orchestrator) — todo desde un solo modo.</p>
-    </div>
   </section>
 
   <!-- Ejercicio Práctico -->
@@ -81,17 +91,27 @@
     <p class="cds--body-01">Vamos a implementar un carrito de compras usando <strong>3 modos diferentes</strong> para cada fase del desarrollo.</p>
 
     <!-- Paso 1: Plan Mode -->
-    <div class="lab-step lab-step--split">
-      <div class="lab-step__body">
-        <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Plan Mode: Diseñar la Solución</h3>
-        <p class="cds--body-01">Primero usa <strong>Plan Mode</strong> para diseñar la arquitectura — sin escribir código.</p>
-        <ol class="cds--list--ordered">
-          <li class="cds--list__item">Selector de modos → <strong>Plan</strong></li>
-          <li class="cds--list__item">Envía el prompt de diseño del carrito</li>
-        </ol>
-        <div class="code-block">
-          <button class="copy-button" type="button">Copiar</button>
-          <pre><code>Necesito diseñar un sistema de carrito de compras para nuestra API de e-commerce.
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Plan Mode: Diseñar la Solución</h3>
+      <p class="cds--body-01">Primero usa <strong>Plan Mode</strong> para diseñar la arquitectura — sin escribir código.</p>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">Abre el selector de modos → elige <strong>Plan</strong></li>
+        <li class="cds--list__item">Envía el prompt de diseño del carrito</li>
+      </ol>
+
+      <!-- 1a. Selector de modo -->
+      <figure class="lab-figure" style="margin-top:16px;">
+        <img src="./assets/images/labs/hands-on-inicial/lab2-plan-mode.png"
+             alt="Selector de modos de IBM Bob con Plan Mode seleccionado"
+             class="lab-figure__img" />
+        <figcaption class="lab-figure__caption">Selecciona Plan Mode en el selector de modos</figcaption>
+      </figure>
+
+      <!-- 1b. Prompt -->
+      <p class="cds--body-01" style="margin-top:16px;">Una vez en Plan Mode, envía este prompt:</p>
+      <div class="code-block">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>Necesito diseñar un sistema de carrito de compras para nuestra API de e-commerce.
 
 Requisitos:
 - Los usuarios deben poder agregar/eliminar productos
@@ -105,78 +125,88 @@ Por favor, diseña:
 3. El flujo de datos
 4. Consideraciones de seguridad
 5. Un diagrama de arquitectura</code></pre>
-        </div>
-        <div class="callout" data-tone="tip">
-          <p class="callout__title">Qué debes ver</p>
-          <ul class="cds--list--unordered">
-            <li class="cds--list__item">Diseño sin archivos creados aún</li>
-            <li class="cds--list__item">Diagramas Mermaid y alternativas</li>
-          </ul>
-        </div>
       </div>
-      <div class="lab-step__media">
-        <figure class="lab-figure">
-          <img src="./assets/images/labs/hands-on-inicial/lab2-plan-output.png"
-               alt="Plan Mode generando el diseño arquitectónico del carrito de compras con diagrama Mermaid"
-               class="lab-figure__img" />
-          <figcaption class="lab-figure__caption">Referencia: plan completo antes de tocar código</figcaption>
-        </figure>
+
+      <!-- 1c. Output esperado -->
+      <figure class="lab-figure" style="margin-top:16px;">
+        <img src="./assets/images/labs/hands-on-inicial/lab2-plan-output.png"
+             alt="Plan Mode generando el diseño arquitectónico del carrito de compras con diagrama Mermaid"
+             class="lab-figure__img" />
+        <figcaption class="lab-figure__caption">Output esperado: diseño completo con diagrama Mermaid, sin ningún archivo creado</figcaption>
+      </figure>
+      <div class="callout" data-tone="tip">
+        <p class="callout__title">Qué debes ver</p>
+        <ul class="cds--list--unordered">
+          <li class="cds--list__item">Diseño sin archivos creados aún</li>
+          <li class="cds--list__item">Diagramas Mermaid y alternativas</li>
+        </ul>
       </div>
     </div>
 
     <!-- Paso 2: Agent Mode -->
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Agent Mode: Implementar la Solución</h3>
-      <p class="cds--body-01">Con el plan listo, cambia a <strong>Agent Mode</strong> para implementar.</p>
-      <p class="cds--body-01" style="margin-top:8px"><strong>Implementa el modelo:</strong></p>
+      <p class="cds--body-01">Con el plan listo, cambia al selector de modos → elige <strong>Agent</strong>.</p>
+
+      <!-- 2a. Selector de modo -->
+      <figure class="lab-figure" style="margin-top:16px;">
+        <img src="./assets/images/labs/hands-on-inicial/lab2-ask-mode.png"
+             alt="Selector de modos de IBM Bob mostrando el cambio a Agent Mode"
+             class="lab-figure__img" />
+        <figcaption class="lab-figure__caption">Cambia al selector de modos → Agent Mode</figcaption>
+      </figure>
+
+      <!-- 2b. Prompt único de implementación completa -->
+      <p class="cds--body-01" style="margin-top:16px;">Envía <strong>un solo prompt</strong> — Bob decide qué construir en paralelo y en qué orden:</p>
       <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
-        <pre><code>Basándote en el plan anterior, crea el modelo Cart en
-src/models/Cart.js con las siguientes características:
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>Basándote en el plan del carrito de compras que acabamos de diseñar, implementa el sistema completo:
 
-- Referencia al usuario
-- Array de items (producto, cantidad, precio al momento de agregar)
-- Métodos para calcular el total
-- Validación de stock
-- Timestamps</code></pre>
+1. Modelo Cart en src/models/Cart.js
+   - Referencia al usuario
+   - Array de items (producto, cantidad, precio al momento de agregar)
+   - Métodos para calcular el total
+   - Validación de stock
+   - Timestamps
+
+2. Controlador CartController en src/controllers/cartController.js
+   - addToCart: Agregar producto al carrito
+   - removeFromCart: Eliminar producto del carrito
+   - getCart: Obtener carrito del usuario
+   - clearCart: Vaciar el carrito
+   - updateQuantity: Actualizar cantidad de un producto
+
+3. Rutas en src/routes/api.js
+   POST   /api/cart/add
+   DELETE /api/cart/remove/:productId
+   GET    /api/cart
+   DELETE /api/cart/clear
+   PUT    /api/cart/update/:productId
+   Todas las rutas deben requerir autenticación.</code></pre>
       </div>
-      <p class="cds--body-01" style="margin-top:16px"><strong>Implementa el controlador:</strong></p>
-      <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
-        <pre><code>Crea el controlador CartController en src/controllers/cartController.js
-con los siguientes métodos:
-
-- addToCart: Agregar producto al carrito
-- removeFromCart: Eliminar producto del carrito
-- getCart: Obtener carrito del usuario
-- clearCart: Vaciar el carrito
-- updateQuantity: Actualizar cantidad de un producto</code></pre>
-      </div>
-      <p class="cds--body-01" style="margin-top:16px"><strong>Agrega las rutas:</strong></p>
-      <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
-        <pre><code>Agrega las rutas del carrito en src/routes/api.js:
-
-POST /api/cart/add
-DELETE /api/cart/remove/:productId
-GET /api/cart
-DELETE /api/cart/clear
-PUT /api/cart/update/:productId
-
-Todas las rutas deben requerir autenticación.</code></pre>
-      </div>
-      <div class="callout" data-tone="warning">
-        <p class="callout__title">⚠️ Importante: Agent Mode aplica cambios paso a paso</p>
-        <p>Revisa cada <em>diff</em> que Bob te muestra <strong>antes de confirmar</strong>. Las operaciones de escritura siempre requieren aprobación explícita. En Bob 2.1 también puedes <strong>editar el comando</strong> antes de ejecutarlo.</p>
+      <div class="callout" data-tone="tip">
+        <p class="callout__title">Aquí se ve el poder de Agent Mode</p>
+        <p>Bob analiza las dependencias entre archivos, decide qué puede crear en paralelo y qué debe ir en orden, y ejecuta todo de forma asíncrona. Revisa cada <em>diff</em> antes de confirmar — las escrituras siempre requieren aprobación explícita.</p>
       </div>
     </div>
 
     <!-- Paso 3: Ask Mode -->
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Ask Mode: Entender y Mejorar el Código</h3>
-      <p class="cds--body-01">Cambia a <strong>Ask Mode</strong> para analizar el código recién implementado:</p>
+      <p class="cds--body-01">Con el código implementado, cambia al selector de modos → elige <strong>Ask</strong> para analizar sin modificar nada.</p>
+
+      <!-- 3a. Selector de modo -->
+      <figure class="lab-figure" style="margin-top:16px;">
+        <img src="./assets/images/labs/hands-on-inicial/lab2-ask-mode.png"
+             alt="Selector de modos de IBM Bob mostrando el cambio a Ask Mode"
+             class="lab-figure__img" />
+        <figcaption class="lab-figure__caption">Cambia al selector de modos → Ask Mode</figcaption>
+      </figure>
+
+      <!-- 3b. Prompt de análisis -->
+      <p class="cds--body-01" style="margin-top:16px;">Envía este prompt para analizar el código recién implementado:</p>
       <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
+        <button type="button" class="copy-button">Copiar</button>
         <pre><code>Explícame cómo funciona el método calculateTotal() en el modelo Cart.
 
 ¿Qué validaciones de seguridad tiene el controlador addToCart?
@@ -184,24 +214,33 @@ Todas las rutas deben requerir autenticación.</code></pre>
 ¿Cómo se maneja la concurrencia cuando dos usuarios intentan
 comprar el último producto en stock?</code></pre>
       </div>
-      <div class="callout" data-tone="tip">
-        <p class="callout__title">✅ Respuesta Esperada de IBM Bob</p>
-        <pre style="background:var(--cds-layer-01);padding:12px;font-size:0.8rem">El método calculateTotal() funciona así:
-1. Itera sobre cada item en el carrito
-2. Multiplica quantity × price para cada item
-3. Aplica descuentos si existen
-4. Suma todo para obtener el total final
 
-Validaciones de seguridad en addToCart:
-✅ Verifica que el usuario esté autenticado
-✅ Valida que el productId sea válido
-✅ Comprueba stock disponible
-⚠️ FALTA: Validar que el producto existe
-⚠️ FALTA: Limitar cantidad máxima por producto</pre>
+      <!-- 3c. Output esperado -->
+      <div class="callout" data-tone="tip">
+        <p class="callout__title">Respuesta esperada de IBM Bob</p>
+        <div class="lab-response">
+          <p><strong>El método <code>calculateTotal()</code> debería:</strong></p>
+          <ol class="lab-response__list">
+            <li>Iterar sobre cada ítem del carrito.</li>
+            <li>Multiplicar cantidad por precio.</li>
+            <li>Aplicar descuentos cuando corresponda.</li>
+            <li>Sumar el total final.</li>
+          </ol>
+          <p><strong>En <code>addToCart</code>, verifica:</strong></p>
+          <ul class="lab-response__list">
+            <li>La autenticación del usuario.</li>
+            <li>La validez del <code>productId</code>.</li>
+            <li>La disponibilidad de stock.</li>
+            <li>Que el producto exista.</li>
+            <li>Un límite de cantidad por producto.</li>
+          </ul>
+        </div>
       </div>
-      <p class="cds--body-01" style="margin-top:12px">Vuelve a Agent Mode y aplica las mejoras sugeridas:</p>
+
+      <!-- 3d. Volver a Agent para aplicar mejoras -->
+      <p class="cds--body-01" style="margin-top:16px;">Vuelve a <strong>Agent Mode</strong> y aplica las mejoras sugeridas:</p>
       <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
+        <button type="button" class="copy-button">Copiar</button>
         <pre><code>Basándote en el análisis de Ask Mode, agrega las validaciones
 faltantes en el controlador addToCart:
 - Validar que el producto existe
@@ -211,22 +250,7 @@ faltantes en el controlador addToCart:
   </section>
 
   <!-- Resumen del poder -->
-  <section class="lab-section" aria-labelledby="lab2-resumen">
-    <h2 class="cds--productive-heading-03" id="lab2-resumen">
-      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="vertical-align:-3px;margin-right:8px"><path d="M20 2H4a2 2 0 0 0-2 2v26l6-4h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2Zm0 22H8.33L4 26.8V4h16Zm10-16h-4v2h4v14H20v-2h-2v2a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2Z"/></svg>
-      El Flujo con IBM Bob vs. Sin IBM Bob
-    </h2>
-    <div class="lab-compare">
-      <div class="lab-compare__col lab-compare__col--bad">
-        <h3 class="cds--productive-heading-01">❌ Flujo tradicional</h3>
-        <p class="cds--body-01">Tú piensas → Escribes código → Revisas manualmente → Corriges</p>
-      </div>
-      <div class="lab-compare__col lab-compare__col--good">
-        <h3 class="cds--productive-heading-01">✅ Flujo con IBM Bob 2.1</h3>
-        <p class="cds--body-01">Plan Mode diseña → Agent Mode implementa (paralelo) → Ask Mode analiza → Agent Mode mejora → Listo</p>
-      </div>
-    </div>
-  </section>
+  
 
   <div class="callout" data-tone="tip">
     <p class="callout__title">¡Lo que acabas de lograr en 12 minutos!</p>
@@ -234,7 +258,7 @@ faltantes en el controlador addToCart:
       <li class="cds--list__item">✅ Diseñaste una solución con Plan Mode antes de tocar código</li>
       <li class="cds--list__item">✅ Implementaste un sistema completo con Agent Mode</li>
       <li class="cds--list__item">✅ Detectaste y corregiste problemas con Ask Mode</li>
-      <li class="cds--list__item">✅ Entendiste el flujo de los 3 modos especializados de Bob 2.1 trabajando en conjunto</li>
+      <li class="cds--list__item">✅ Entendiste el flujo de los 3 modos especializados de IBM Bob trabajando en conjunto</li>
     </ul>
   </div>
 

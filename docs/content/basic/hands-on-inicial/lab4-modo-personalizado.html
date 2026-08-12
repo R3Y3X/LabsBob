@@ -4,21 +4,35 @@
     <div class="lab-banner__tags">
       <span class="cds--tag cds--tag--green">Modo Personalizado</span>
       <span class="cds--tag cds--tag--cool-gray">12 min</span>
-      <span class="cds--tag cds--tag--magenta">Avanzado</span>
     </div>
     <h1 class="cds--productive-heading-05 lab-banner__title">LAB 4 — Crea tu Propio Modo Personalizado de IBM Bob</h1>
-    <p class="cds--body-02 lab-banner__summary">
-      Los <strong>modos personalizados</strong> te permiten crear versiones especializadas de IBM Bob para las tareas
-      específicas de tu organización. En este lab crearás el modo <em>"Pricing Comparison Expert"</em> —
-      aprendiendo a definir comportamiento, capacidades y permisos en un simple archivo YAML.
-    </p>
-  </div>
 
-  <figure class="lab-figure">
-    <img src="./assets/images/labs/hands-on-inicial/lab4_bob.png"
-         alt="Banner del LAB 4 — Crear Modo Personalizado de IBM Bob"
-         class="lab-figure__img" />
-  </figure>
+    <!-- ── Hero image ──────────────────────────────────────────────── -->
+    <div class="lab-hero-image">
+      <img src="./assets/images/labs/hands-on-inicial/lab4_bob.png"
+           alt="Banner del LAB 4 — Crear Modo Personalizado de IBM Bob"
+           class="lab-hero-image__img" />
+    </div>
+
+    <div class="lab-banner__metrics">
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">1</span>
+        <span class="lab-banner__metric-label">modo creado en YAML</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">0</span>
+        <span class="lab-banner__metric-label">código a escribir</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">2–5</span>
+        <span class="lab-banner__metric-label">BobCoins estimados</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">4</span>
+        <span class="lab-banner__metric-label">pasos</span>
+      </div>
+    </div>
+  </div>
 
   <!-- Objetivos -->
   <section class="lab-section" aria-labelledby="lab4-obj">
@@ -44,17 +58,14 @@
 
     <div class="lab-cases-grid">
       <div class="cds--tile lab-case-tile">
-        <p class="lab-case-tile__icon">🏦</p>
         <h3 class="cds--productive-heading-02 lab-case-tile__title">Fintech — Compliance</h3>
         <p class="cds--body-01">Modo "Compliance Checker" que valida código contra PCI-DSS y SOC2 automáticamente en cada PR.</p>
       </div>
       <div class="cds--tile lab-case-tile">
-        <p class="lab-case-tile__icon">🏥</p>
         <h3 class="cds--productive-heading-02 lab-case-tile__title">Healthcare — HIPAA</h3>
         <p class="cds--body-01">Modo "HIPAA Validator" que asegura cumplimiento en cada módulo que maneja datos de pacientes.</p>
       </div>
       <div class="cds--tile lab-case-tile">
-        <p class="lab-case-tile__icon">🛒</p>
         <h3 class="cds--productive-heading-02 lab-case-tile__title">E-commerce — Pricing</h3>
         <p class="cds--body-01">Modo "Pricing Analyst" que compara precios con competencia y genera reportes ejecutivos.</p>
       </div>
@@ -69,7 +80,7 @@
     </h2>
     <p class="cds--body-01">Un modo personalizado es un archivo YAML con estos campos:</p>
     <div class="code-block">
-      <button class="copy-button" type="button">Copiar</button>
+      <button type="button" class="copy-button">Copiar</button>
       <pre><code>customModes:
   - slug: nombre-del-modo        # ID único (lowercase, guiones)
     name: Nombre Visible         # Lo que ves en la UI
@@ -92,8 +103,8 @@
     </div>
 
     <div class="callout" data-tone="note">
-      <p class="callout__title">El campo <code>whenToUse</code> en Bob 2.1</p>
-      <p>En Bob 2.1, <code>whenToUse</code> guía a <strong>Agent Mode</strong> para decidir cuándo delegar una tarea a este modo personalizado como subagente. Es la clave de la orquestación automática.</p>
+      <p class="callout__title">El campo <code>whenToUse</code></p>
+      <p><code>whenToUse</code> guía a <strong>Agent Mode</strong> para decidir cuándo delegar una tarea a este modo personalizado como subagente. Es la clave de la orquestación automática.</p>
     </div>
 
     <figure class="lab-figure">
@@ -137,7 +148,7 @@
         <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Crear el Modo en YAML</h3>
         <p class="cds--body-01">Pega esta definición del modo <strong>Pricing Comparison Expert</strong>:</p>
         <div class="code-block">
-          <button class="copy-button" type="button">Copiar</button>
+          <button type="button" class="copy-button">Copiar</button>
           <pre><code>customModes:
   - slug: pricing-comparison-expert
     name: Pricing Comparison Expert
@@ -208,7 +219,7 @@
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 4 — Probar el Modo en Acción</h3>
       <p class="cds--body-01">Selecciona el modo <strong>Pricing Comparison Expert</strong> y envía este prompt:</p>
       <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
+        <button type="button" class="copy-button">Copiar</button>
         <pre><code>Genera un reporte ejecutivo comparando el costo total anual
 de IBM Bob vs GitHub Copilot vs Cursor para un equipo de 50 desarrolladores.
 
@@ -228,7 +239,7 @@ Incluye:
   <div class="callout" data-tone="tip">
     <p class="callout__title">¡Lo que acabas de lograr en 12 minutos!</p>
     <ul class="cds--list--unordered">
-      <li class="cds--list__item">✅ Entendiste la estructura completa de un modo personalizado en Bob 2.1</li>
+      <li class="cds--list__item">✅ Entendiste la estructura completa de un modo personalizado en IBM Bob</li>
       <li class="cds--list__item">✅ Creaste tu primer modo en YAML con <code>whenToUse</code> para Agent Mode</li>
       <li class="cds--list__item">✅ Lo importaste y probaste en IBM Bob</li>
       <li class="cds--list__item">✅ Generaste un reporte ejecutivo con conocimiento especializado</li>

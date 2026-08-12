@@ -2,30 +2,30 @@
 
   <div class="lab-banner">
     <div class="lab-banner__tags">
-      <span class="cds--tag cds--tag--blue">Develop</span>
-      <span class="cds--tag cds--tag--cool-gray">Setup</span>
+      <span class="cds--tag cds--tag--blue">Desarrollo</span>
+      <span class="cds--tag cds--tag--cool-gray">Configuración</span>
       <span class="cds--tag cds--tag--teal">Bob CLI</span>
     </div>
-    <h1 class="cds--productive-heading-05 lab-banner__title">Setup — Prepare Your Bob Workspace</h1>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Configuración — Prepara tu workspace de Bob</h1>
     <p class="cds--body-02 lab-banner__summary">
-      Bob creates your project directory, activates the Python virtual environment, and confirms
-      the environment is ready — you provide the path and approve each action.
+      Bob crea el directorio del proyecto, activa el entorno virtual de Python y confirma
+      que el entorno está listo. Tú proporcionas la ruta y apruebas cada acción.
     </p>
   </div>
 
   <section class="lab-section" aria-labelledby="steps-heading">
-    <h2 class="cds--productive-heading-03" id="steps-heading">Step-by-Step Guide</h2>
+    <h2 class="cds--productive-heading-03" id="steps-heading">Guía paso a paso</h2>
 
     <!-- Step 1 -->
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Step 1 — Open the IBM Bob IDE</h3>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Abre el IDE de IBM Bob</h3>
       <p class="cds--body-01">
         Launch the Bob IDE from your applications folder or via the command line.
         Bob opens to the main workspace showing the chat panel on the right and the file explorer on the left.
         You will interact with Bob exclusively through natural-language prompts in the chat panel.
       </p>
       <div class="callout" data-tone="tip">
-        <p class="callout__title">Expected Output</p>
+        <p class="callout__title">Resultado esperado</p>
         <p>The Bob IDE loads with an empty chat panel, a mode selector (Plan / Agent / Ask), and an MCP server status indicator in the lower-left corner. All three modes should be available.</p>
       </div>
       <blockquote class="image-placeholder">
@@ -37,22 +37,22 @@
 
     <!-- Step 2 -->
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Step 2 — Create the Project Directory</h3>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Crea el directorio del proyecto</h3>
       <p class="cds--body-01">
         Tell Bob where to work. Bob will create the directory structure and a Python virtual environment.
         Make sure you are in <strong>Agent mode</strong> before sending this prompt.
       </p>
       <div class="callout" data-tone="note">
-        <p class="callout__title">Bob Prompt</p>
+        <p class="callout__title">Prompt de Bob</p>
         <div class="code-block">
-          <button class="copy-button" type="button">Copy</button>
+          <button type="button" class="copy-button">Copy</button>
           <pre><code>Hi Bob! For this project, create a directory ~/Documents/bob/workshop-hub
 and use my Python virtual environment ~/.env/workshop-env.
 If the virtual environment does not exist, create it for me.</code></pre>
         </div>
       </div>
       <div class="callout" data-tone="tip">
-        <p class="callout__title">Expected Output</p>
+        <p class="callout__title">Resultado esperado</p>
         <p>Bob presents a task plan: (1) create directory, (2) create or locate venv, (3) create README. Click <strong>Approve</strong>. Bob then executes each action and shows a terminal confirmation for the directory creation.</p>
       </div>
       <blockquote class="image-placeholder">
@@ -64,20 +64,20 @@ If the virtual environment does not exist, create it for me.</code></pre>
 
     <!-- Step 3 -->
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Step 3 — Validate the Environment</h3>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Valida el entorno</h3>
       <p class="cds--body-01">
         Ask Bob to activate the virtual environment and confirm everything is ready before moving to the first exercise.
       </p>
       <div class="callout" data-tone="note">
-        <p class="callout__title">Bob Prompt</p>
+        <p class="callout__title">Prompt de Bob</p>
         <div class="code-block">
-          <button class="copy-button" type="button">Copy</button>
+          <button type="button" class="copy-button">Copy</button>
           <pre><code>Activate the Python virtual environment and confirm the environment
 is ready with the correct Python version and pip available.</code></pre>
         </div>
       </div>
       <div class="callout" data-tone="tip">
-        <p class="callout__title">Expected Output</p>
+        <p class="callout__title">Resultado esperado</p>
         <p>Bob runs the activation command in the integrated terminal and reports back: <code>Python 3.x.x · pip x.x · venv active at ~/.env/workshop-env</code>. The task is marked complete.</p>
       </div>
       <blockquote class="image-placeholder">

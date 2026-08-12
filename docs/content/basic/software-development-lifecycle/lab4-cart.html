@@ -1,0 +1,154 @@
+<div class="content-panel lab-template prose--full">
+
+  <div class="lab-banner">
+    <div class="lab-banner__tags">
+      <span class="cds--tag cds--tag--green">Lab 04</span>
+      <span class="cds--tag cds--tag--cool-gray">~25 min</span>
+      <span class="cds--tag cds--tag--teal">Agent Mode</span>
+    </div>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Lab 04 — Construir el carrito y el checkout</h1>
+
+    <div class="lab-banner__metrics">
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">6–12</span>
+        <span class="lab-banner__metric-label">BobCoins</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">~25</span>
+        <span class="lab-banner__metric-label">minutos</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="cds--body-01">La última pantalla. En este lab vas a implementar el carrito para que coincida con <code>mockups/cart.png</code>, mostrar un resumen del pedido y conectar el botón Place order a la API para que devuelva una confirmación.</p>
+
+  <div class="callout" data-tone="info">
+    <p class="callout__title">Lo que vas a construir</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item"><code>src/pages/Cart.jsx</code> — ítems del pedido con selectores de cantidad, un resumen de la orden y un botón de checkout que llama a <code>createOrder()</code> y muestra una confirmación.</li>
+      <li class="cds--list__item">El estado de carrito vacío.</li>
+    </ul>
+  </div>
+
+  <div class="callout" data-tone="note">
+    <p class="callout__title">Antes de empezar</p>
+    <p>Labs 02–03 completos: puedes agregar productos al carrito desde la grilla y desde la página de producto. Agrega un par de ítems al carrito primero, así tienes datos con los que trabajar. Quédate en Agent Mode.</p>
+  </div>
+
+  <section class="lab-section" aria-labelledby="lab4-objetivo">
+    <h2 class="cds--productive-heading-03" id="lab4-objetivo">El objetivo</h2>
+    <figure class="lab-figure">
+      <img src="./assets/images/labs/software-development-lifecycle/cart.png" alt="Mockup del carrito y checkout" class="lab-figure__img" />
+      <figcaption class="lab-figure__caption"><code>mockups/cart.png</code></figcaption>
+    </figure>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">Adjunta el mockup al chat de Bob</p>
+      <p>Antes de los prompts de abajo, adjunta <code>mockups/cart.png</code> al chat de Bob para que construya a partir de la captura real.</p>
+    </div>
+  </section>
+
+  <section class="lab-section lab-step" aria-labelledby="lab4-step1">
+    <h2 class="cds--productive-heading-03" id="lab4-step1">Paso 1 — Construye el carrito y el resumen</h2>
+    <div class="code-block">
+      <button class="copy-button" type="button" aria-label="Copiar prompt">Copiar</button>
+      <pre><code>Implementá src/pages/Cart.jsx para que coincida con mockups/cart.png. Reemplazá el
+marcador de posición.
+
+Leé el carrito desde useCart(): { items, subtotal, setQty, removeItem, clear }.
+
+Layout: un título de página "Your cart", después dos columnas en desktop (ítems a la
+izquierda, resumen del pedido a la derecha), apilado en mobile.
+
+Ítems (izquierda): para cada uno mostrá una imagen chica (imageUrl(item.image)), la
+categoría, el nombre, el precio unitario, un selector de cantidad que llame a
+setQty(item.id, newQty), el total de la línea (precio × cantidad) y un link "Remove" que
+llame a removeItem(item.id).
+
+Resumen del pedido (derecha, en una tarjeta): Subtotal (= subtotal de useCart), Shipping
+mostrado como un "Free" en verde, un impuesto estimado del 8% del subtotal (redondeado) y
+un Total = subtotal + impuesto. Después un botón de ancho completo "Place order" y la
+línea "No account needed · orders confirm instantly".
+
+Estado vacío: cuando items está vacío, mostrá un mensaje amable y un botón que enlace de
+vuelta a "/".
+
+Usá los tokens de Tailwind de café. Importá imageUrl de ../api/client y useCart de
+../cart/CartContext.
+
+Escribí el código y todos los textos visibles de la UI en inglés, exactamente como
+aparecen en el mockup. No traduzcas la interfaz.
+
+No modifiques src/api/client.js. No agregues dependencias.</code></pre>
+    </div>
+  </section>
+
+  <section class="lab-section lab-step" aria-labelledby="lab4-step2">
+    <h2 class="cds--productive-heading-03" id="lab4-step2">Paso 2 — Conecta el checkout</h2>
+    <div class="code-block">
+      <button class="copy-button" type="button" aria-label="Copiar prompt">Copiar</button>
+      <pre><code>Hacé que el botón "Place order" complete la compra:
+- Al hacer clic, llamá a
+  createOrder({ items: items.map(i => ({ id: i.id, quantity: i.quantity })) })
+  de ../api/client.
+- Mientras el request está en vuelo, deshabilitá el botón y mostrá "Placing order…".
+- Si tiene éxito, mostrá un estado de confirmación que reemplace al carrito: un ícono de
+  check, "Order confirmed!", el orderId devuelto, el total y el estimatedDelivery, más un
+  botón "Continue shopping" que enlace a "/". Después llamá a clear() para vaciar el
+  carrito.
+- Si falla, mostrá un mensaje de error chico y volvé a habilitar el botón.
+
+La API siempre tiene éxito, así que el camino feliz es el que importa — pero manejá el
+caso de error con elegancia igual.
+
+Escribí el código y todos los textos visibles de la UI en inglés, exactamente como
+aparecen en el mockup. No traduzcas la interfaz.</code></pre>
+    </div>
+  </section>
+
+  <section class="lab-section lab-step" aria-labelledby="lab4-step3">
+    <h2 class="cds--productive-heading-03" id="lab4-step3">Paso 3 — Ejecuta y verifica</h2>
+    <ol class="cds--list--ordered">
+      <li class="cds--list__item">Agrega ítems desde la tienda y desde la página de producto.</li>
+      <li class="cds--list__item">Abre el carrito (el ícono de carrito en el header).</li>
+      <li class="cds--list__item">Cambia cantidades: se actualizan los totales de línea, el subtotal, el impuesto y el total. Quitar el último ejemplar de un ítem elimina la línea.</li>
+      <li class="cds--list__item">Con 1 × Ethiopia Yirgacheffe y 2 × Daybreak Blend, el resumen debería mostrar Subtotal $49 · Tax $4 · Total $53 — igual que el mockup.</li>
+      <li class="cds--list__item">Haz clic en Place order → obtienes una confirmación con un <code>orderId</code> (por ejemplo <code>BB-7QF2K9</code>) y el carrito se vacía (el badge del header vuelve a 0).</li>
+      <li class="cds--list__item">Vacía el carrito y confirma que se muestre el estado vacío.</li>
+    </ol>
+    <div class="callout" data-tone="tip">
+      <p class="callout__title">Checkpoint</p>
+      <p>Puedes armar un carrito, ver los totales correctos, hacer un pedido y recibir una confirmación: el flujo completo de la tienda funciona de punta a punta.</p>
+    </div>
+  </section>
+
+  <section class="lab-section" aria-labelledby="lab4-trouble">
+    <h2 class="cds--productive-heading-03" id="lab4-trouble">Solución de problemas</h2>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">Los totales no se actualizan cuando cambio la cantidad</p>
+      <p>El selector tiene que llamar a <code>setQty(item.id, newQty)</code> de <code>useCart()</code> (no a un estado local). El subtotal de <code>useCart()</code> se recalcula automáticamente cuando cambia el carrito.</p>
+    </div>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">El pedido falla / no pasa nada al hacer clic en Place order</p>
+      <p>Abre la consola. Confirma que la URL de la API esté configurada y que <code>&lt;API_URL&gt;/api/orders</code> sea alcanzable. El cuerpo del request debería ser <code>{ items: [{ id, quantity }] }</code>. Recuerda que Vite lee <code>.env</code> solo al arrancar: reinicia <code>npm run dev</code> después de cambiarlo.</p>
+    </div>
+    <div class="callout" data-tone="info">
+      <p class="callout__title">El carrito se vacía pero la confirmación desaparece al refrescar</p>
+      <p>Es lo esperable: la confirmación es estado de pantalla. Habría que impedir volver a ejecutar el checkout desde un carrito vacío (deshabilita Place order cuando no hay ítems).</p>
+    </div>
+  </section>
+
+  <section class="lab-section lab-step" aria-labelledby="lab4-gate">
+    <h2 class="cds--productive-heading-03" id="lab4-gate">Criterios de éxito</h2>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item"><code>Cart.jsx</code> lista los ítems con selectores de cantidad y opción de quitar funcionando.</li>
+      <li class="cds--list__item">El resumen del pedido muestra subtotal, envío gratis, 8% de impuesto y total.</li>
+      <li class="cds--list__item">Place order llama a <code>createOrder()</code> y muestra una confirmación con el <code>orderId</code>.</li>
+      <li class="cds--list__item">El carrito se vacía después de un pedido exitoso; el estado vacío se renderiza.</li>
+      <li class="cds--list__item">La página se parece a <code>cart.png</code>.</li>
+    </ul>
+    <a class="cds--btn cds--btn--primary" style="margin-top:1rem" href="#/lab/software-development-lifecycle/animations">
+      Siguiente: Lab 05 — Animaciones →
+    </a>
+  </section>
+
+</div>

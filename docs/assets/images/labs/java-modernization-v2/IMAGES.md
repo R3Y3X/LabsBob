@@ -1,111 +1,128 @@
-# Imágenes requeridas — Java Modernization v2
+# Imágenes — Java Modernization v2 (Agent Mode)
 
 Carpeta: `docs/assets/images/labs/java-modernization-v2/`
 
-Coloca cada imagen en esta carpeta con **exactamente** el nombre indicado.
-Formato recomendado: PNG, ancho mínimo 1200 px.
+Las capturas deben mostrar:
+
+- Chat de Bob en **Agent Mode** con el prompt pegado / respuesta de análisis
+- Diffs o archivos propuestos **antes** de aprobar con `"ok"` (Bob debe parar en cada cambio)
+- Terminal con `mvn clean compile` / `mvn test`
+
+**No** captures paneles de workflows automáticos (`▶ Workflows`, `Java Modernization`, `Analyze Java Project`, ni selectores de sub-tipo Liberty/Upgrade/UI).
+
+Si Bob aplica varios cambios de golpe, usa el prompt de recuperación del overview y reinicia Fase 2 con chat nuevo (o `git checkout .` en la carpeta snap*).
+
+## ⚠️ Cómo subir capturas (importante — calidad)
+
+**No pegues screenshots en el chat de Cursor.** El chat las comprime a ~1024 px en JPEG (~65 KB) y el texto del IDE se ve borroso o pixelado en el portal.
+
+**Sí: guarda el archivo directamente en esta carpeta** (Finder → arrastrar, o terminal):
+
+```bash
+# Desde macOS — captura la ventana de Bob (Retina 2x, PNG sin compresión):
+#   Cmd+Shift+4 → barra espaciadora → clic en la ventana de IBM Bob
+# Luego copia al nombre exacto del lab:
+cp ~/Desktop/Captura\ de\ pantalla*.png docs/assets/images/labs/java-modernization-v2/lab1-phase1-analysis.png
+
+# O usa el script de importación (valida ancho mínimo):
+./docs/assets/images/labs/java-modernization-v2/import-screenshot.sh lab1-phase1-analysis.png ~/Desktop/mi-captura.png
+```
+
+| Requisito | Valor |
+|---|---|
+| Formato | **PNG** (sin pasar por chat ni WhatsApp) |
+| Ancho mínimo | **1400 px** (ideal **1920–2560 px** en pantallas Retina) |
+| Nombres | Exactamente como en la tabla de abajo |
+
+Formato: PNG, ancho mínimo **1400 px** (ideal 1920+ en Retina).
+Nombres: **exactamente** como abajo (coinciden con el HTML).
 
 ---
 
-## LAB 1 — Java Liberty Replatforming
+## Overview (ya existen)
 
-| Nombre de archivo | Dónde aparece | Descripción sugerida |
-|---|---|---|
-| `lab1-banner.png` | Encabezado del lab | Banner o captura del lab 1 en Bob con el proyecto snapA abierto |
-| `lab1-phase1-analysis.png` | Fase 1 — Análisis | Bob leyendo el pom.xml y el ZIP del migration plan; lista de findings Critical/Warning |
-| `lab1-phase2-changes.png` | Fase 2 — Cambios | Diff del pom.xml con el `liberty-maven-plugin` y las dependencias añadidas |
-| `lab1-phase3-build-success.png` | Fase 3 — Validación | Terminal con `mvn clean compile` → `BUILD SUCCESS` con Java 1.8 |
+| Archivo | Uso |
+|---|---|
+| `hero_bob.png` | Hero del overview |
+| `banner_bob.png` | Card del home (opcional actualizar con el mismo arte del hero) |
 
 ---
 
-## LAB 2 — Java 8 → Java 21 Upgrade
+## Regla: 1 captura por fase clave
 
-| Nombre de archivo | Dónde aparece | Descripción sugerida |
+Patrón por lab: **Análisis → Cambio → Validación** (+ 1 extra solo si hay UI o resultado distinto).
+
+| Lab | # | Archivos |
 |---|---|---|
-| `lab2-banner.png` | Encabezado del lab | Banner del lab 2 en Bob con el proyecto snapB |
-| `lab2-phase1-analysis.png` | Fase 1 — Análisis | Bob listando los imports `javax.*` y taglib URIs del proyecto |
-| `lab2-phase2-javax-jakarta.png` | Fase 2 — Cambios | Diff de la migración `javax.*` → `jakarta.*` en archivos Java y JSP |
-| `lab2-phase3-build-success.png` | Fase 3 — Validación | Terminal con `mvn clean compile` → `BUILD SUCCESS` con Java 21 |
+| Lab 1 — Liberty | **3** | analysis, changes, build-success |
+| Lab 2 — Java 21 | **3** | analysis, javax-jakarta, build-success |
+| Lab 3 — React UI | **4** | mapping, jaxrs, react-app, integration |
+| Lab 4 — Unit tests | **3** | inventory, mockito-tests, mvn-test |
+| Lab Alt-4 — TDD | **3** | red, implementation, green |
+| Lab 5 — Security | **3** | cve-report, pom-fixes, build-success |
+| **Total sublabs** | **19** | |
+
+Quitamos respecto al listado viejo (27):
+
+- 6× `lab*-banner.png` (el overview ya tiene hero; los sublabs no muestran banner)
+- 1× `lab4-batch1-model-tests.png` (redundant con mockito; basta inventario + un batch + terminal)
+- 1× `lab5-phase4-remediation-report.png` (el informe CVE + BUILD SUCCESS bastan)
 
 ---
 
-## LAB 3 — UI Modernization (Struts → React)
+## LAB 1 — Liberty Replatforming (3)
 
-| Nombre de archivo | Dónde aparece | Descripción sugerida |
-|---|---|---|
-| `lab3-banner.png` | Encabezado del lab | Banner del lab 3 mostrando la arquitectura Struts → React |
-| `lab3-phase1-mapping.png` | Fase 1 — Mapa de conversión | Bob mostrando la tabla Struts Action → REST endpoint → componente React |
-| `lab3-phase2-jaxrs.png` | Fase 2 — Backend JAX-RS | Bob creando los recursos JAX-RS + terminal con `BUILD SUCCESS` |
-| `lab3-phase3-react-app.png` | Fase 3 — Frontend React | Frontend React corriendo en `localhost:5173` con datos del backend |
-| `lab3-phase4-integration.png` | Fase 4 — Validación | Liberty en 9081 y React en 5173 respondiendo `curl` y mostrando datos |
+| Archivo | Qué capturar |
+|---|---|
+| `lab1-phase1-analysis.png` | Chat Agent: Bob lista findings Critical/Warning del migration plan ZIP |
+| `lab1-phase2-changes.png` | Diff del `pom.xml` (liberty-maven-plugin / deps) antes del `"ok"` |
+| `lab1-phase3-build-success.png` | Terminal: `mvn clean compile` → BUILD SUCCESS (Java 1.8) |
+
+## LAB 2 — Java 8 → 21 (3)
+
+| Archivo | Qué capturar |
+|---|---|
+| `lab2-phase1-analysis.png` | Chat: lista de `javax.*` / taglibs a migrar |
+| `lab2-phase2-javax-jakarta.png` | Diff `javax.*` → `jakarta.*` en un archivo |
+| `lab2-phase3-build-success.png` | Terminal: BUILD SUCCESS con Java 21 |
+
+## LAB 3 — Struts → React (4)
+
+| Archivo | Qué capturar |
+|---|---|
+| `lab3-phase1-mapping.png` | Chat: tabla Action → REST → componente React |
+| `lab3-phase2-jaxrs.png` | Recursos JAX-RS creados + compile OK |
+| `lab3-phase3-react-app.png` | Browser `localhost:5173` con la UI |
+| `lab3-phase4-integration.png` | Liberty `:9081` + React `:5173` juntos |
+
+## LAB 4 — Unit tests (3)
+
+| Archivo | Qué capturar |
+|---|---|
+| `lab4-phase1-inventory.png` | Chat: inventario de clases + estrategia por capa |
+| `lab4-batch3-mockito-tests.png` | Tests JAX-RS con `@Mock` (el batch más representativo) |
+| `lab4-phase4-mvn-test.png` | Terminal: `mvn test` → 0 failures |
+
+## LAB Alt-4 — TDD (3)
+
+| Archivo | Qué capturar |
+|---|---|
+| `lab-alt4-phase1-red.png` | Terminal: `mvn test` fallando (RED) |
+| `lab-alt4-phase2-implementation.png` | Chat/diff: Bob implementando `PrescriptionResource` |
+| `lab-alt4-phase3-green.png` | Terminal: tests en verde (GREEN) |
+
+## LAB 5 — Security (3)
+
+| Archivo | Qué capturar |
+|---|---|
+| `lab5-phase1-cve-report.png` | Chat: tabla CVE (severidad + versión segura) |
+| `lab5-phase2-pom-fixes.png` | Diff del `pom.xml` con bumps de versión |
+| `lab5-phase3-build-success.png` | Terminal: BUILD SUCCESS post-remediación |
 
 ---
 
-## LAB 4 — Unit Test Generation
+## Cómo obtenerlas
 
-| Nombre de archivo | Dónde aparece | Descripción sugerida |
-|---|---|---|
-| `lab4-banner.png` | Encabezado del lab | Banner del lab 4 con JUnit/Mockito |
-| `lab4-phase1-inventory.png` | Fase 1 — Inventario | Bob mostrando el inventario de clases y la estrategia de testing propuesta |
-| `lab4-batch1-model-tests.png` | Batch 1 — Tests de modelos | Código de los tests de modelos con grupos `@Nested` |
-| `lab4-batch3-mockito-tests.png` | Batch 3 — Tests JAX-RS | Tests de resources JAX-RS con mocks de Mockito |
-| `lab4-phase4-mvn-test.png` | Fase 4 — Validación | Terminal con `mvn test` → `BUILD SUCCESS, 0 failures, 0 errors` |
-
----
-
-## LAB 5 — Security Vulnerability Remediation
-
-| Nombre de archivo | Dónde aparece | Descripción sugerida |
-|---|---|---|
-| `lab5-banner.png` | Encabezado del lab | Banner del lab 5 con iconos de seguridad/CVE |
-| `lab5-phase1-cve-report.png` | Fase 1 — Informe CVE | Bob generando la tabla de vulnerabilidades con severidad y versiones seguras |
-| `lab5-phase2-pom-fixes.png` | Fase 2 — Remediación | Diff del `pom.xml` con las 3 versiones corregidas |
-| `lab5-phase3-build-success.png` | Fase 3 — Validación | Terminal con `mvn clean compile` → `BUILD SUCCESS` post-remediación |
-| `lab5-phase4-remediation-report.png` | Fase 4 — Informe final | Bob mostrando la tabla de remediación con los 3 CVEs marcados como ✅ Resuelto |
-
----
-
-## LAB Alt-4 — Test-Driven Development (TDD)
-
-| Nombre de archivo | Dónde aparece | Descripción sugerida |
-|---|---|---|
-| `lab-alt4-banner.png` | Encabezado del lab | Banner TDD con ciclo Red → Green → Refactor |
-| `lab-alt4-phase1-red.png` | Fase 1 — RED | Terminal con `mvn test` fallando — estado RED confirmado |
-| `lab-alt4-phase2-implementation.png` | Fase 2 — GREEN | Bob implementando `PrescriptionResource.java` con los 4 endpoints |
-| `lab-alt4-phase3-green.png` | Fase 3 — GREEN verificación | Terminal con `mvn test` → todos los tests pasando — estado GREEN |
-
----
-
-## Resumen de todos los archivos
-
-| # | Nombre de archivo | Lab |
-|---|---|---|
-| 1 | `lab1-banner.png` | Lab 1 |
-| 2 | `lab1-phase1-analysis.png` | Lab 1 |
-| 3 | `lab1-phase2-changes.png` | Lab 1 |
-| 4 | `lab1-phase3-build-success.png` | Lab 1 |
-| 5 | `lab2-banner.png` | Lab 2 |
-| 6 | `lab2-phase1-analysis.png` | Lab 2 |
-| 7 | `lab2-phase2-javax-jakarta.png` | Lab 2 |
-| 8 | `lab2-phase3-build-success.png` | Lab 2 |
-| 9 | `lab3-banner.png` | Lab 3 |
-| 10 | `lab3-phase1-mapping.png` | Lab 3 |
-| 11 | `lab3-phase2-jaxrs.png` | Lab 3 |
-| 12 | `lab3-phase3-react-app.png` | Lab 3 |
-| 13 | `lab3-phase4-integration.png` | Lab 3 |
-| 14 | `lab4-banner.png` | Lab 4 |
-| 15 | `lab4-phase1-inventory.png` | Lab 4 |
-| 16 | `lab4-batch1-model-tests.png` | Lab 4 |
-| 17 | `lab4-batch3-mockito-tests.png` | Lab 4 |
-| 18 | `lab4-phase4-mvn-test.png` | Lab 4 |
-| 19 | `lab5-banner.png` | Lab 5 |
-| 20 | `lab5-phase1-cve-report.png` | Lab 5 |
-| 21 | `lab5-phase2-pom-fixes.png` | Lab 5 |
-| 22 | `lab5-phase3-build-success.png` | Lab 5 |
-| 23 | `lab5-phase4-remediation-report.png` | Lab 5 |
-| 24 | `lab-alt4-banner.png` | Alt-Lab 4 |
-| 25 | `lab-alt4-phase1-red.png` | Alt-Lab 4 |
-| 26 | `lab-alt4-phase2-implementation.png` | Alt-Lab 4 |
-| 27 | `lab-alt4-phase3-green.png` | Alt-Lab 4 |
-
-**Total: 27 imágenes**
+1. Corre cada lab con **Agent Mode** y los prompts del portal.
+2. Screenshot en el momento del `figcaption` del HTML.
+3. Guarda con el nombre exacto en esta carpeta.

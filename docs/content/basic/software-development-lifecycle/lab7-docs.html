@@ -1,0 +1,242 @@
+<div class="content-panel lab-template prose--full">
+
+  <div class="lab-banner">
+    <div class="lab-banner__tags">
+      <span class="cds--tag cds--tag--purple">Lab 07</span>
+      <span class="cds--tag cds--tag--cool-gray">~25 min</span>
+      <span class="cds--tag cds--tag--teal">Modo Docs · MkDocs</span>
+    </div>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Lab 07 — Documentar la aplicación</h1>
+
+    <div class="lab-banner__metrics">
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">4–8</span>
+        <span class="lab-banner__metric-label">BobCoins</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">~25</span>
+        <span class="lab-banner__metric-label">minutos</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="cds--body-01">El cierre del workshop. El software no está terminado cuando funciona: está terminado cuando la próxima persona lo puede entender. En este lab vas a crear un Modo Docs reutilizable para Bob y después usarlo para generar una carpeta <code>docs/</code> completa para Bob's Beans y convertirla en un sitio de documentación con MkDocs — con la temática de la tostaduría, corriendo localmente.</p>
+
+  <div class="callout" data-tone="info">
+    <p class="callout__title">Lo que vas a construir</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">Un Modo Docs personalizado en Bob, preparado para escribir documentación MkDocs.</li>
+      <li class="cds--list__item">Una carpeta <code>docs/</code> en Markdown que documenta las pantallas, los datos y el sistema de diseño.</li>
+      <li class="cds--list__item">Un <code>mkdocs.yml</code> (tema Material en colores de café) y un <code>requirements.txt</code>.</li>
+      <li class="cds--list__item">Un sitio de documentación navegable en <code>http://localhost:8000</code>, con las capturas de los mockups embebidas.</li>
+    </ul>
+  </div>
+
+  <div class="callout" data-tone="note">
+    <p class="callout__title">Antes de empezar</p>
+    <p>Lab 06 completo: la aplicación está construida, animada y revisada. Python 3 instalado (<code>python3 --version</code>). MkDocs es una herramienta de Python.</p>
+  </div>
+
+  <div class="callout" data-tone="info">
+    <p class="callout__title">La documentación sí va en español</p>
+    <p>A diferencia de la interfaz de la aplicación, la documentación que genera Bob en este lab va en español. Los nombres de archivo, las rutas, las funciones y los fragmentos de configuración se mantienen en inglés, tal como están en el código.</p>
+  </div>
+
+  <section class="lab-section lab-step" aria-labelledby="lab7-step1">
+    <h2 class="cds--productive-heading-03" id="lab7-step1">Paso 1 — Crea un Modo Docs para Bob</h2>
+    <p class="cds--body-01">Vas a configurar un Modo Docs personalizado — una persona reutilizable de Bob preparada para escribir documentación — desde la configuración de Bob.</p>
+    <p class="cds--body-01">Abre Settings (el ícono de engranaje en el panel de Bob), ve a la pestaña Modes y haz clic en el botón + para crear un modo nuevo. Completa los campos en este orden:</p>
+    <div class="lab-table-wrap">
+      <table class="lab-table">
+        <thead>
+          <tr><th>Campo</th><th>Qué ingresar</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Slug</td><td><code>docs</code> (solo letras minúsculas, números y guiones)</td></tr>
+          <tr><td>Name</td><td><code>📝 Docs</code></td></tr>
+          <tr><td>Description</td><td><code>Escribe y mantiene la documentación MkDocs del proyecto.</code></td></tr>
+          <tr><td>Scope</td><td>Name of Project (se guarda en <code>.bob/custom_modes.yaml</code>; los modos de proyecto tienen prioridad sobre los globales)</td></tr>
+          <tr><td>Role definition</td><td>el texto de Role definition que está más abajo</td></tr>
+          <tr><td>When to use (opcional)</td><td><code>Usar este modo para crear o actualizar la documentación del proyecto como sitio MkDocs.</code></td></tr>
+          <tr><td>Mode-specific Custom Instructions (opcional)</td><td>el texto de Custom instructions que está más abajo</td></tr>
+          <tr><td>Available Tools</td><td>activa Read, Edit y Execute Commands</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="cds--body-01">Después haz clic en Save. Elige 📝 Docs en el selector de modos (o escribe <code>/mode docs</code>) y úsalo para el resto del lab.</p>
+    <div class="callout" data-tone="note">
+      <p class="callout__title">Los nombres de los campos quedan en inglés</p>
+      <p>La interfaz de Bob está en inglés, así que los campos del formulario (<code>Slug</code>, <code>Name</code>, <code>Scope</code>, <code>Available Tools</code>, …) aparecen tal cual en la pantalla. Lo que escribes adentro sí va en español.</p>
+    </div>
+    <p class="cds--body-01"><strong>Role definition</strong> (pégalo en el campo Role definition):</p>
+    <div class="code-block">
+      <button class="copy-button" type="button" aria-label="Copiar role definition">Copiar</button>
+      <pre><code>Sos un especialista en documentación para el proyecto Bob's Beans. Producís documentación
+técnica clara y precisa en español, en formato Markdown, para un sitio MkDocs con el tema
+Material.</code></pre>
+    </div>
+    <p class="cds--body-01"><strong>Custom instructions</strong> (pégalo en el campo Mode-specific Custom Instructions):</p>
+    <div class="code-block">
+      <button class="copy-button" type="button" aria-label="Copiar custom instructions">Copiar</button>
+      <pre><code>- Un tema por página; una introducción corta y después secciones con prosa concisa.
+- Usá admonitions (!!! note / tip / warning) para los destacados.
+- Usá bloques de código con lenguaje declarado para cualquier código o comando.
+- Leé siempre el código y referenciá archivos y funciones reales; nunca inventes APIs.
+- Referenciá los archivos fuente como código en línea (por ejemplo `src/api/client.js`),
+  nunca como links de Markdown.
+- Mantené una navegación clara en mkdocs.yml y respetá la identidad visual de café del
+  producto.
+- Escribí la prosa en español. Los nombres de archivo, funciones, rutas, tokens y textos de
+  la interfaz de la aplicación se mantienen en inglés, tal como están en el código.</code></pre>
+    </div>
+    <div class="callout" data-tone="info">
+      <p class="callout__title">Scope: proyecto o global</p>
+      <p>Project deja el modo dentro de este repositorio (en <code>.bob/</code>). Elige Global si quieres tener el Modo Docs disponible en todos tus proyectos futuros de Bob.</p>
+    </div>
+  </section>
+
+  <section class="lab-section lab-step" aria-labelledby="lab7-step2">
+    <h2 class="cds--productive-heading-03" id="lab7-step2">Paso 2 — Genera la documentación</h2>
+    <p class="cds--body-01">En el 📝 Modo Docs, dale a Bob este prompt:</p>
+    <div class="code-block">
+      <button class="copy-button" type="button" aria-label="Copiar prompt">Copiar</button>
+      <pre><code>Documentá este proyecto para una persona desarrolladora que recién se suma, como un sitio
+MkDocs. Leé src/ y documentá lo que realmente está ahí — no inventes APIs. Referenciá los
+archivos fuente como código en línea (por ejemplo `src/api/client.js`), nunca como links de
+Markdown y nunca enlazando a números de línea.
+
+Creá, en la raíz del proyecto:
+- requirements.txt          : con "mkdocs-material"
+- mkdocs.yml                : tema Material, adaptado a la estética de la tostaduría
+                              (configuración más abajo)
+- docs/index.md             : qué es Bob's Beans; un recorrido corto por sus funcionalidades
+- docs/getting-started.md   : requisitos previos, instalación, la configuración de
+                              .env / VITE_API_BASE_URL, npm run dev
+- docs/architecture.md      : SPA de React + Vite, las rutas, el límite del cliente de API
+                              (src/api/client.js), el carrito global (CartContext) y el toast
+                              (ToastContext), y cómo fluyen los datos desde la API hasta las
+                              pantallas
+- docs/screens/storefront.md, product.md, cart.md : una por pantalla — propósito, qué función
+                              de la API la alimenta, los componentes y las interacciones clave
+- docs/data-and-state.md    : las funciones del cliente
+                              (getProducts/getProduct/createOrder/imageUrl), los endpoints de
+                              la API y los hooks de carrito y toast
+- docs/design-system.md     : los tokens de Tailwind de café (coffee, espresso, cream, latte,
+                              caramel, ink, muted, line, success) y las convenciones de
+                              componentes
+
+Copiá las tres capturas de los mockups desde mockups/ hacia docs/images/, y embebé la
+captura correspondiente al principio de cada página de pantalla:
+storefront -&gt; home.png, product -&gt; product.png, cart -&gt; cart.png.
+
+Usá este tema en mkdocs.yml para que la documentación acompañe la estética de la tostaduría:
+  theme:
+    name: material
+    icon: { logo: material/coffee }
+    palette:
+      - scheme: default
+        primary: brown
+        accent: deep orange
+    features: [navigation.sections, navigation.top, content.code.copy, search.suggest]
+  markdown_extensions: [admonition, pymdownx.superfences, pymdownx.highlight]
+Agrupá las páginas de pantallas bajo una sección "Screens" en la navegación.
+
+Escribí toda la prosa en español. Los nombres de archivo, las rutas, las funciones, los
+tokens y los textos de la interfaz de la aplicación se mantienen en inglés.</code></pre>
+    </div>
+    <p class="cds--body-01">Tu <code>requirements.txt</code> generado debería contener:</p>
+    <div class="code-block">
+      <button class="copy-button" type="button" aria-label="Copiar requirements">Copiar</button>
+      <pre><code>mkdocs-material</code></pre>
+    </div>
+  </section>
+
+  <section class="lab-section lab-step" aria-labelledby="lab7-step3">
+    <h2 class="cds--productive-heading-03" id="lab7-step3">Paso 3 — Prepara el entorno de la documentación</h2>
+    <p class="cds--body-01">Abre una terminal nueva en la raíz del proyecto, y deja <code>npm run dev</code> corriendo en la otra.</p>
+    <p class="cds--body-01"><strong>macOS / Linux</strong></p>
+    <div class="code-block">
+      <button class="copy-button" type="button" aria-label="Copiar comandos macOS">Copiar</button>
+      <pre><code>python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt</code></pre>
+    </div>
+    <p class="cds--body-01"><strong>Windows (PowerShell)</strong></p>
+    <div class="code-block">
+      <button class="copy-button" type="button" aria-label="Copiar comandos Windows">Copiar</button>
+      <pre><code>python -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install -r requirements.txt</code></pre>
+    </div>
+  </section>
+
+  <section class="lab-section lab-step" aria-labelledby="lab7-step4">
+    <h2 class="cds--productive-heading-03" id="lab7-step4">Paso 4 — Ejecuta el sitio de documentación</h2>
+    <div class="code-block">
+      <button class="copy-button" type="button" aria-label="Copiar comando">Copiar</button>
+      <pre><code>mkdocs serve</code></pre>
+    </div>
+    <p class="cds--body-01">Abre <code>http://localhost:8000</code>. Deberías ver un sitio de documentación navegable, con búsqueda y temática de café, sobre la aplicación que construiste, con las capturas de los mockups en las páginas de pantallas.</p>
+    <div class="callout" data-tone="tip">
+      <p class="callout__title">Checkpoint</p>
+      <p>El sitio de documentación corre localmente sin advertencias, la navegación agrupa las páginas de pantallas, cada página muestra su mockup y el contenido refleja el código real (nombres de archivo y funciones del cliente correctos). El tema se lee como "café".</p>
+    </div>
+  </section>
+
+  <section class="lab-section lab-step" aria-labelledby="lab7-step5">
+    <h2 class="cds--productive-heading-03" id="lab7-step5">Paso 5 — Pulido</h2>
+    <p class="cds--body-01">En el 📝 Modo Docs, pídele a Bob que lo ajuste:</p>
+    <div class="code-block">
+      <button class="copy-button" type="button" aria-label="Copiar prompt">Copiar</button>
+      <pre><code>Revisá la documentación generada contra el código real. Corregí cualquier imprecisión,
+agregá una descripción corta del "flujo de datos" a architecture.md y asegurate de que cada
+página tenga una introducción de una línea.
+
+Mantené la prosa en español y las referencias al código en inglés.</code></pre>
+    </div>
+    <div class="callout" data-tone="note">
+      <p class="callout__title">Solo local</p>
+      <p>Este sitio de documentación es para correr localmente (<code>mkdocs serve</code>) — no lo vamos a desplegar en ningún lado.</p>
+    </div>
+  </section>
+
+  <section class="lab-section" aria-labelledby="lab7-trouble">
+    <h2 class="cds--productive-heading-03" id="lab7-trouble">Solución de problemas</h2>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title"><code>mkdocs: command not found</code></p>
+      <p>Verifica que el entorno virtual esté activado (deberías ver <code>(.venv)</code> en tu prompt) y después ejecuta <code>pip install -r requirements.txt</code> de nuevo. Como alternativa, ejecuta <code>python -m mkdocs serve</code>.</p>
+    </div>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">PowerShell no ejecuta <code>Activate.ps1</code></p>
+      <p>Windows puede bloquear el script. En la misma ventana de PowerShell ejecuta <code>Set-ExecutionPolicy -Scope Process -Bypass</code> y vuelve a activar, o usa <code>.venv\Scripts\activate.bat</code> desde <code>cmd</code>.</p>
+    </div>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title"><code>mkdocs serve</code> imprime advertencias 'link ... not found'</p>
+      <p>Bob convirtió referencias a archivos en links de Markdown hacia los archivos fuente. Pídele: "En la documentación, referenciá los archivos fuente como código en línea, no como links de Markdown — quitá los links a archivos y a números de línea." Vuelve a ejecutar <code>mkdocs serve</code>; debería quedar sin advertencias.</p>
+    </div>
+    <div class="callout" data-tone="info">
+      <p class="callout__title">La documentación referencia archivos o funciones que no existen</p>
+      <p>Bob documentó de memoria en lugar de leer el código. Pídele que vuelva a verificar contra <code>src/</code> y corrija los nombres.</p>
+    </div>
+  </section>
+
+  <section class="lab-section lab-step" aria-labelledby="lab7-gate">
+    <h2 class="cds--productive-heading-03" id="lab7-gate">Criterios de éxito</h2>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">Un 📝 Modo Docs creado en Bob.</li>
+      <li class="cds--list__item">Una carpeta <code>docs/</code> con las páginas planificadas, generada a partir del código real.</li>
+      <li class="cds--list__item"><code>mkdocs.yml</code> usa el tema Material en colores de café; <code>requirements.txt</code> lista <code>mkdocs-material</code>.</li>
+      <li class="cds--list__item">Cada página de pantalla embebe su captura del mockup.</li>
+      <li class="cds--list__item">Un entorno virtual creado y las dependencias instaladas desde <code>requirements.txt</code>.</li>
+      <li class="cds--list__item"><code>mkdocs serve</code> corre sin advertencias y el sitio se puede navegar en <code>http://localhost:8000</code>.</li>
+    </ul>
+    <div class="callout" data-tone="tip">
+      <p class="callout__title">Ciclo completo</p>
+      <p>Llevaste Bob's Beans por todo el ciclo de vida: planificar → construir (pantalla por pantalla) → animar → revisar → documentar, con cada paso conducido por IBM Bob. Ahora tienes una tienda funcionando y pulida y un sitio de documentación viva que la acompaña.</p>
+    </div>
+    <a class="cds--btn cds--btn--secondary" style="margin-top:1rem" href="#/lab/software-development-lifecycle/overview">
+      ← Volver al inicio del lab
+    </a>
+  </section>
+
+</div>

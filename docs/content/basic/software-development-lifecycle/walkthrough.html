@@ -1,139 +1,172 @@
-<div class="content-panel lab-template">
+<div class="content-panel lab-template prose--full">
 
   <div class="lab-banner">
     <div class="lab-banner__tags">
-      <span class="cds--tag cds--tag--blue">Develop</span>
-      <span class="cds--tag cds--tag--cool-gray">Walkthrough</span>
-      <span class="cds--tag cds--tag--teal">Bob CLI · Plan + Agent</span>
+      <span class="cds--tag cds--tag--blue">Recorrido rápido</span>
+      <span class="cds--tag cds--tag--cool-gray">~60 min</span>
+      <span class="cds--tag cds--tag--green">Plan · Ask · Agent</span>
     </div>
-    <h1 class="cds--productive-heading-05 lab-banner__title">SDLC Walkthrough — Plan, Code, Test, Document</h1>
-    <p class="cds--body-02 lab-banner__summary">
-      Four steps covering the complete Software Development Lifecycle with Bob as your AI partner.
-      Bob plans, implements, tests with automatic fixes, and generates a README and architecture diagram.
-    </p>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Walkthrough: Payment API de principio a fin en una sesión</h1>
+
+    <div class="lab-banner__metrics">
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">~60</span>
+        <span class="lab-banner__metric-label">minutos</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">6</span>
+        <span class="lab-banner__metric-label">fases condensadas</span>
+      </div>
+    </div>
   </div>
 
-  <section class="lab-section" aria-labelledby="steps-heading">
-    <h2 class="cds--productive-heading-03" id="steps-heading">Step-by-Step Guide</h2>
-
-    <!-- Step 1 -->
-    <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Step 1 — Plan: Create the Architecture and Task List</h3>
-      <p class="cds--body-01">
-        Use <strong>Plan mode</strong> to give Bob your requirements. Bob will create a task list, file structure,
-        and architecture design — without writing a single line of code yet. Review the plan carefully before approving.
-      </p>
-      <div class="callout" data-tone="note">
-        <p class="callout__title">Bob Prompt — Plan Mode</p>
-        <div class="code-block">
-          <button class="copy-button" type="button">Copy</button>
-          <pre><code>Create a project plan for a Python REST API that manages a todo list.
-Include: architecture overview, file structure, implementation tasks,
-and a list of dependencies. Use FastAPI and pytest.</code></pre>
-        </div>
-      </div>
-      <div class="callout" data-tone="tip">
-        <p class="callout__title">Expected Output</p>
-        <p>Bob returns a structured plan: project directory tree (<code>main.py</code>, <code>models.py</code>, <code>tests/</code>), architecture description, and an ordered task list. No files are created yet. Review the plan and click <strong>Approve</strong> to proceed.</p>
-      </div>
-      <blockquote class="image-placeholder">
-        🖼️ <strong>[PLACEHOLDER DE IMAGEN]</strong><br/>
-        <strong>Ruta sugerida:</strong> <code>/assets/images/labs/software-development-lifecycle/step-1-plan.png</code><br/>
-        <strong>Descripción:</strong> Bob en Plan mode mostrando el plan de proyecto con el árbol de directorios, descripción de la arquitectura y la lista de tareas ordenadas, con el botón "Approve" visible.
-      </blockquote>
+  <section class="lab-section" aria-labelledby="walkthrough-intro">
+    <h2 class="cds--productive-heading-03" id="walkthrough-intro">¿Cuándo usar este recorrido?</h2>
+    <p class="cds--body-01">Si ya conoces el flujo del lab o quieres completarlo en una sola sesión intensiva, este walkthrough te da los 6 prompts clave — uno por fase — para recorrer el ciclo completo de la Payment API sin detenerte en cada paso de verificación.</p>
+    <div class="callout" data-tone="info">
+      <p class="callout__title">Requisito previo</p>
+      <p>Ten el proyecto descargado y con <code>npm install</code> completado. El servidor puede arrancar con <code>npm start</code>. Necesitas <code>.env</code> con <code>API_SECRET_KEY</code> definida.</p>
     </div>
+  </section>
 
-    <!-- Step 2 -->
-    <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Step 2 — Code: Implement the Approved Plan</h3>
-      <p class="cds--body-01">
-        Switch to <strong>Agent mode</strong>. Bob will create the full project structure, install dependencies,
-        and write all source files following best practices. Approve each file as Bob presents it.
-      </p>
-      <div class="callout" data-tone="note">
-        <p class="callout__title">Bob Prompt — Agent Mode</p>
-        <div class="code-block">
-          <button class="copy-button" type="button">Copy</button>
-          <pre><code>Implement the approved plan. Create the project directory structure
-and all required Python files following best practices.
-Install the required dependencies with pip.</code></pre>
-        </div>
-      </div>
-      <div class="callout" data-tone="tip">
-        <p class="callout__title">Expected Output</p>
-        <p>Bob creates the project files one by one, showing each diff for approval: <code>main.py</code> (FastAPI app), <code>models.py</code> (Pydantic models), <code>requirements.txt</code>. Bob installs dependencies and confirms the API starts without errors.</p>
-      </div>
-      <blockquote class="image-placeholder">
-        🖼️ <strong>[PLACEHOLDER DE IMAGEN]</strong><br/>
-        <strong>Ruta sugerida:</strong> <code>/assets/images/labs/software-development-lifecycle/step-2-code.png</code><br/>
-        <strong>Descripción:</strong> Bob en Agent mode mostrando la creación del archivo main.py con el diff completo, la terminal mostrando la instalación de dependencias con pip, y el mensaje de confirmación de que la API inicia correctamente.
-      </blockquote>
+  <!-- Paso 1: Plan -->
+  <section class="lab-section lab-step" aria-labelledby="wt-step1">
+    <h2 class="cds--productive-heading-03" id="wt-step1">Paso 1 — Plan: backlog del sprint</h2>
+    <p class="cds--body-01"><span class="cds--tag cds--tag--purple" style="margin-right:0.5rem;">Plan Mode</span> Activa Plan Mode y envía este prompt:</p>
+    <div class="code-block">
+      <button class="copy-button" aria-label="Copiar prompt">Copiar</button>
+      <pre><code>Soy PM de una SaaS Payment API (Node.js + Express + SQLite). Tenemos estos problemas:
+- Secreto hardcoded en src/routes/payment.js
+- Inyección SQL en consultas de pagos
+- Endpoint POST /coupons/apply sin implementar (solo skeleton)
+- Cobertura de Jest bajo el 60%
+
+Crea un backlog de sprint clasificando cada ítem como Critical Bug (P0), New Feature (P1) o Technical Debt (P2), con criterio de aceptación y estimación en puntos.</code></pre>
     </div>
-
-    <!-- Step 3 -->
-    <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Step 3 — Test: Write, Run, and Auto-Fix</h3>
-      <p class="cds--body-01">
-        Ask Bob to generate unit tests, run them, and automatically fix any failures. This is the
-        <strong>build-test-diagnose-fix loop</strong> that makes Bob's SDLC integration so powerful —
-        it iterates until all tests pass without requiring manual intervention.
-      </p>
-      <div class="callout" data-tone="note">
-        <p class="callout__title">Bob Prompt — Agent Mode</p>
-        <div class="code-block">
-          <button class="copy-button" type="button">Copy</button>
-          <pre><code>Create unit tests for all API endpoints using pytest.
-Run the tests, fix any failures automatically, and re-run
-until all tests pass. Generate a test summary report.</code></pre>
-        </div>
-      </div>
-      <div class="callout" data-tone="tip">
-        <p class="callout__title">Expected Output</p>
-        <p>Bob creates <code>tests/test_main.py</code> with tests for each endpoint (GET, POST, DELETE). If any test fails, Bob reads the error, patches the code, and re-runs automatically. Final output: <code>X passed, 0 failed</code> in the pytest summary.</p>
-      </div>
-      <div class="callout" data-tone="tip">
-        <p class="callout__title">💡 Bob's Auto-Fix Pattern</p>
-        <p>If Bob finds an error, it reads the stack trace, identifies the root cause, proposes a fix, and re-runs the tests. This loop is the same pattern used in enterprise Java modernization and watsonx Orchestrate agent generation.</p>
-      </div>
-      <blockquote class="image-placeholder">
-        🖼️ <strong>[PLACEHOLDER DE IMAGEN]</strong><br/>
-        <strong>Ruta sugerida:</strong> <code>/assets/images/labs/software-development-lifecycle/step-3-tests.png</code><br/>
-        <strong>Descripción:</strong> Terminal mostrando la ejecución de pytest con Bob, un fallo inicial, el parche automático aplicado por Bob, y finalmente el resultado "5 passed, 0 failed" con el resumen de cobertura.
-      </blockquote>
+    <div class="callout" data-tone="tip">
+      <p class="callout__title">Resultado esperado</p>
+      <p>Backlog con 4 ítems: 2× Critical Bug/P0, 1× New Feature/P1, 1× Technical Debt/P2. Anota los criterios de aceptación — los usarás en los tests.</p>
     </div>
+  </section>
 
-    <!-- Step 4 -->
-    <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Step 4 — Document: README and Architecture Diagram</h3>
-      <p class="cds--body-01">
-        Ask Bob to generate project documentation including a README and a Mermaid architecture diagram.
-        Bob generates documentation that accurately reflects what it actually built — not a generic template.
-      </p>
-      <div class="callout" data-tone="note">
-        <p class="callout__title">Bob Prompt — Agent Mode</p>
-        <div class="code-block">
-          <button class="copy-button" type="button">Copy</button>
-          <pre><code>Generate complete project documentation:
-1. A README.md with project overview, setup instructions, and API endpoints.
-2. A Mermaid architecture diagram showing the API structure and data flow.
-3. A CHANGELOG.md listing all changes made in this session.</code></pre>
-        </div>
-      </div>
-      <div class="callout" data-tone="tip">
-        <p class="callout__title">Expected Output</p>
-        <p>Bob creates <code>README.md</code> with setup steps and endpoint table, a Mermaid diagram embedded in the README showing FastAPI → Router → Models → DB flow, and a <code>CHANGELOG.md</code>. Install the Mermaid extension in Bob to view the diagram rendered inline.</p>
-      </div>
-      <div class="callout" data-tone="note">
-        <p class="callout__title">🎉 SDLC Lab Complete</p>
-        <p>You have completed the full Software Development Lifecycle with Bob as your partner — from plan to production-ready code, tests, and documentation. The same workflow scales to enterprise Java modernization and multi-agent systems in the Integration and Premium labs.</p>
-      </div>
-      <blockquote class="image-placeholder">
-        🖼️ <strong>[PLACEHOLDER DE IMAGEN]</strong><br/>
-        <strong>Ruta sugerida:</strong> <code>/assets/images/labs/software-development-lifecycle/step-4-docs.png</code><br/>
-        <strong>Descripción:</strong> Bob mostrando el README.md generado con el diagrama de arquitectura Mermaid renderizado, la tabla de endpoints de la API, y el CHANGELOG.md en el explorador de archivos a la izquierda.
-      </blockquote>
+  <!-- Paso 2: Diseño -->
+  <section class="lab-section lab-step" aria-labelledby="wt-step2">
+    <h2 class="cds--productive-heading-03" id="wt-step2">Paso 2 — Diseño: contrato del endpoint</h2>
+    <p class="cds--body-01"><span class="cds--tag cds--tag--cyan" style="margin-right:0.5rem;">Ask Mode</span> Cambia a Ask Mode con el archivo <code>openapi.yaml</code> abierto:</p>
+    <div class="code-block">
+      <button class="copy-button" aria-label="Copiar prompt">Copiar</button>
+      <pre><code>Analiza el openapi.yaml de este proyecto y para el endpoint POST /api/v1/coupons/apply indica:
+1. Campos requeridos en el body y sus tipos
+2. Estructura exacta de la respuesta 200
+3. Código HTTP para cupón inválido o inactivo
+4. Flujo de secuencia: Cliente → Router → SQLite (los 3 casos: feliz, no encontrado, inactivo)
+
+Con ese flujo genera la especificación para un diagrama de secuencia en draw.io.</code></pre>
     </div>
+    <div class="callout" data-tone="tip">
+      <p class="callout__title">Resultado esperado</p>
+      <p>Especificación clara: body = <code>{ code, originalAmount }</code>, respuesta 200 con <code>finalAmount</code> y <code>savings</code>, error 400 para cupón inactivo. Diagrama con 3 flujos listos para dibujar.</p>
+    </div>
+  </section>
 
+  <!-- Paso 3: Código — Vulnerabilidades -->
+  <section class="lab-section lab-step" aria-labelledby="wt-step3">
+    <h2 class="cds--productive-heading-03" id="wt-step3">Paso 3 — Código: corrige las vulnerabilidades</h2>
+    <p class="cds--body-01"><span class="cds--tag cds--tag--green" style="margin-right:0.5rem;">Agent Mode</span> Activa Agent Mode con auto-approve OFF:</p>
+    <div class="code-block">
+      <button class="copy-button" aria-label="Copiar prompt">Copiar</button>
+      <pre><code>En src/routes/payment.js hay dos vulnerabilidades críticas:
+1. API Key hardcoded: reemplaza `"SECRET_API_KEY_12345"` por `process.env.API_SECRET_KEY` y agrega un guard si la variable no está definida.
+2. Inyección SQL: parametriza las dos consultas que concatenan userId e id directamente en el string SQL.
+
+Muéstrame cada diff por separado antes de aplicar. No modifiques otros archivos.</code></pre>
+    </div>
+    <div class="callout" data-tone="tip">
+      <p class="callout__title">Resultado esperado</p>
+      <p>Dos diffs separados: el primero elimina el string hardcoded, el segundo reemplaza interpolaciones por <code>?</code>. Ningún secreto ni variable de usuario dentro del string SQL.</p>
+    </div>
+  </section>
+
+  <!-- Paso 4: Código — Feature -->
+  <section class="lab-section lab-step" aria-labelledby="wt-step4">
+    <h2 class="cds--productive-heading-03" id="wt-step4">Paso 4 — Código: implementa el endpoint de cupones</h2>
+    <p class="cds--body-01"><span class="cds--tag cds--tag--green" style="margin-right:0.5rem;">Agent Mode</span> Continuando en Agent Mode:</p>
+    <div class="code-block">
+      <button class="copy-button" aria-label="Copiar prompt">Copiar</button>
+      <pre><code>Implementa el endpoint POST /apply en src/routes/coupon.js reemplazando el skeleton de TODOs.
+
+Lógica requerida:
+- Validar que `code` y `originalAmount` existen en el body (400 si falta alguno)
+- Buscar cupón por code con consulta parametrizada
+- 400 si no existe, 400 si active !== 1
+- finalAmount = originalAmount * (1 - discount_percent / 100), redondeado a 2 decimales
+- savings = originalAmount - finalAmount, redondeado a 2 decimales
+- Responder 200 con { coupon: { code, discount_percent }, originalAmount, finalAmount, savings }
+
+Muéstrame el diff completo antes de aplicar.</code></pre>
+    </div>
+    <div class="callout" data-tone="tip">
+      <p class="callout__title">Resultado esperado</p>
+      <p>El bloque <code>res.status(501)</code> desaparece. Prueba rápida: <code>curl -X POST localhost:3000/api/v1/coupons/apply -H "Content-Type: application/json" -d '&#123;"code":"IBMBOB20","originalAmount":100&#125;'</code> debe devolver <code>finalAmount: 80</code>.</p>
+    </div>
+  </section>
+
+  <!-- Paso 5: Test + Deploy -->
+  <section class="lab-section lab-step" aria-labelledby="wt-step5">
+    <h2 class="cds--productive-heading-03" id="wt-step5">Paso 5 — Test y Deploy: verde y contenedor</h2>
+    <p class="cds--body-01"><span class="cds--tag cds--tag--green" style="margin-right:0.5rem;">Agent Mode</span> Ejecuta los tests y optimiza el Dockerfile en el mismo contexto:</p>
+    <div class="code-block">
+      <button class="copy-button" aria-label="Copiar comandos">Copiar</button>
+      <pre><code># Ejecutar la suite completa
+npm test
+
+# Si todos pasan, optimizar el Dockerfile
+# Envía este prompt a Bob en Agent Mode:
+# "Optimiza el Dockerfile: cambia node:18 por node:18-alpine,
+#  agrega usuario no-root appuser y una instrucción HEALTHCHECK a /health"</code></pre>
+    </div>
+    <div class="callout" data-tone="tip">
+      <p class="callout__title">Resultado esperado</p>
+      <p>Todos los tests en verde (incluyendo el test de SQL injection y los de cupones). Dockerfile con <code>node:18-alpine</code> y usuario no-root. Imagen construida en menos de 60 segundos.</p>
+    </div>
+  </section>
+
+  <!-- Paso 6: Mantener -->
+  <section class="lab-section lab-step" aria-labelledby="wt-step6">
+    <h2 class="cds--productive-heading-03" id="wt-step6">Paso 6 — Mantener: logs y cierre del ciclo</h2>
+    <p class="cds--body-01"><span class="cds--tag cds--tag--cyan" style="margin-right:0.5rem;">Ask Mode</span> Cambia a Ask Mode para la revisión final:</p>
+    <div class="code-block">
+      <button class="copy-button" aria-label="Copiar prompt">Copiar</button>
+      <pre><code>Analiza estos dos eventos de producción de la Payment API:
+
+1. SQLITE_BUSY: database is locked — 47 errores en 5 minutos, 12 usuarios afectados
+2. 401 Unauthorized desde IP 192.168.1.50 — 340 requests en 60 segundos (brute force)
+
+Para cada uno: causa raíz, impacto en usuarios, solución inmediata y medida preventiva.
+
+Luego genera el CHANGELOG.md versión 1.1.0 con secciones: Fixed (2 bugs de seguridad), Added (endpoint /coupons/apply), Changed (Dockerfile optimizado a alpine).</code></pre>
+    </div>
+    <div class="callout" data-tone="tip">
+      <p class="callout__title">Resultado esperado</p>
+      <p>Análisis de ambos eventos con soluciones concretas (WAL mode + rate limiting). CHANGELOG.md generado y listo para hacer commit. Ciclo cerrado.</p>
+    </div>
+  </section>
+
+  <!-- Checklist de cierre rápido -->
+  <section class="lab-section" aria-labelledby="wt-checklist">
+    <h2 class="cds--productive-heading-03" id="wt-checklist">✅ Checklist de cierre rápido</h2>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">Backlog con 4 ítems clasificados correctamente</li>
+      <li class="cds--list__item">Sin secretos hardcoded ni interpolaciones SQL en el código</li>
+      <li class="cds--list__item">Endpoint <code>POST /coupons/apply</code> funcional (200 y 400)</li>
+      <li class="cds--list__item">100% tests en verde con cobertura ≥ 80%</li>
+      <li class="cds--list__item">Dockerfile con <code>node:18-alpine</code> y usuario no-root</li>
+      <li class="cds--list__item">CHANGELOG.md con los cambios del sprint</li>
+    </ul>
+    <div class="callout" data-tone="info">
+      <p class="callout__title">¿Quieres profundizar?</p>
+      <p>Cada fase tiene su propia pestaña con prompts adicionales, respuestas esperadas detalladas y gates de aprobación. Usa las pestañas Plan, Diseño, Código, Test, Deploy y Mantener para el recorrido completo.</p>
+    </div>
   </section>
 
 </div>

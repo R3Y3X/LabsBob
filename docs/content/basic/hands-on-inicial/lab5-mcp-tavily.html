@@ -4,22 +4,36 @@
     <div class="lab-banner__tags">
       <span class="cds--tag cds--tag--teal">MCP</span>
       <span class="cds--tag cds--tag--cool-gray">10 min</span>
-      <span class="cds--tag cds--tag--magenta">Avanzado</span>
       <span class="cds--tag cds--tag--blue">Agent Mode</span>
     </div>
     <h1 class="cds--productive-heading-05 lab-banner__title">LAB 5 — Conecta IBM Bob al Mundo: MCP con Tavily</h1>
-    <p class="cds--body-02 lab-banner__summary">
-      <strong>MCP (Model Context Protocol)</strong> es el sistema que permite a IBM Bob conectarse con herramientas externas.
-      En este lab configurarás <strong>Tavily Search</strong> — una API de búsqueda optimizada para IA — para que IBM Bob
-      pueda buscar información actualizada en internet en tiempo real desde <strong>Agent Mode</strong>.
-    </p>
-  </div>
 
-  <figure class="lab-figure">
-    <img src="./assets/images/labs/hands-on-inicial/lab5_bob.png"
-         alt="Banner del LAB 5 — MCP con Tavily en IBM Bob"
-         class="lab-figure__img" />
-  </figure>
+    <!-- ── Hero image ──────────────────────────────────────────────── -->
+    <div class="lab-hero-image">
+      <img src="./assets/images/labs/hands-on-inicial/lab5_bob.png"
+           alt="Banner del LAB 5 — MCP con Tavily en IBM Bob"
+           class="lab-hero-image__img" />
+    </div>
+
+    <div class="lab-banner__metrics">
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">1000</span>
+        <span class="lab-banner__metric-label">búsquedas/mes gratis</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">∞</span>
+        <span class="lab-banner__metric-label">integraciones posibles</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">3–6</span>
+        <span class="lab-banner__metric-label">BobCoins estimados</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">4</span>
+        <span class="lab-banner__metric-label">pasos</span>
+      </div>
+    </div>
+  </div>
 
   <!-- Objetivos -->
   <section class="lab-section" aria-labelledby="lab5-obj">
@@ -58,28 +72,24 @@
     </ul>
 
     <div class="callout" data-tone="note">
-      <p class="callout__title">MCP en Bob 2.1: Agent Mode lo hace todo</p>
-      <p>En Bob 2.1, <strong>Agent Mode</strong> tiene acceso nativo a MCP. Ya no es necesario un modo especial separado (como el anterior Advanced Mode). Simplemente activa Agent Mode y los servidores MCP configurados estarán disponibles.</p>
+      <p class="callout__title">MCP en IBM Bob: Agent Mode lo hace todo</p>
+      <p><strong>Agent Mode</strong> tiene acceso nativo a MCP. Ya no es necesario un modo especial separado (como el anterior Advanced Mode). Simplemente activa Agent Mode y los servidores MCP configurados estarán disponibles.</p>
     </div>
 
     <div class="lab-modes-grid" style="margin-top:16px">
       <div class="cds--tile lab-case-tile">
-        <p class="lab-case-tile__icon">🔍</p>
         <h3 class="cds--productive-heading-02 lab-case-tile__title">Búsqueda Web</h3>
         <p class="cds--body-01">Tavily, Google — información actualizada en tiempo real</p>
       </div>
       <div class="cds--tile lab-case-tile">
-        <p class="lab-case-tile__icon">💬</p>
         <h3 class="cds--productive-heading-02 lab-case-tile__title">Comunicación</h3>
         <p class="cds--body-01">Slack, Teams — enviar mensajes y notificaciones</p>
       </div>
       <div class="cds--tile lab-case-tile">
-        <p class="lab-case-tile__icon">📊</p>
         <h3 class="cds--productive-heading-02 lab-case-tile__title">Bases de Datos</h3>
         <p class="cds--body-01">PostgreSQL, MongoDB — consultas directas</p>
       </div>
       <div class="cds--tile lab-case-tile">
-        <p class="lab-case-tile__icon">🔧</p>
         <h3 class="cds--productive-heading-02 lab-case-tile__title">APIs y Herramientas</h3>
         <p class="cds--body-01">GitHub, Jira, cualquier API REST o servicio externo</p>
       </div>
@@ -123,14 +133,14 @@
     <!-- Paso 2: Configurar MCP -->
     <div class="lab-step lab-step--split">
       <div class="lab-step__body">
-        <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Configurar MCP en IBM Bob 2.1</h3>
+        <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Configurar MCP en IBM Bob</h3>
         <ol class="cds--list--ordered">
           <li class="cds--list__item">Ajustes → pestaña <strong>MCP Servers</strong></li>
           <li class="cds--list__item"><strong>Add Server</strong> o edición directa del JSON</li>
         </ol>
         <p class="cds--body-01"><strong>JSON de ejemplo:</strong></p>
         <div class="code-block">
-          <button class="copy-button" type="button">Copiar</button>
+          <button type="button" class="copy-button">Copiar</button>
           <pre><code>{
   "mcpServers": {
     "tavily": {
@@ -151,7 +161,7 @@
       <div class="lab-step__media">
         <figure class="lab-figure">
           <img src="./assets/images/labs/hands-on-inicial/MCP_Ajustes.png"
-               alt="Pestaña MCP Servers en la configuración de IBM Bob 2.1"
+               alt="Pestaña MCP Servers en la configuración de IBM Bob"
                class="lab-figure__img" />
           <figcaption class="lab-figure__caption">Pestaña MCP Servers en Ajustes</figcaption>
         </figure>
@@ -190,10 +200,10 @@
       <p class="cds--body-01">Cambia a <strong>Agent Mode</strong> y prueba la búsqueda web:</p>
       <div class="callout" data-tone="note">
         <p class="callout__title">Agent Mode es el modo correcto para MCP</p>
-        <p>En Bob 2.1, <strong>Agent Mode</strong> tiene acceso nativo a todas las herramientas MCP. A diferencia de las versiones anteriores donde se requería Advanced Mode, ahora Agent Mode unifica todo.</p>
+        <p><strong>Agent Mode</strong> tiene acceso nativo a todas las herramientas MCP. A diferencia de las versiones anteriores donde se requería Advanced Mode, ahora Agent Mode unifica todo.</p>
       </div>
       <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
+        <button type="button" class="copy-button">Copiar</button>
         <pre><code>Busca en la web la información más reciente sobre
 los precios de GitHub Copilot Enterprise.
 
@@ -204,7 +214,7 @@ Necesito:
 4. Fecha de la información</code></pre>
       </div>
       <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
+        <button type="button" class="copy-button">Copiar</button>
         <pre><code>¿Cuáles son las últimas vulnerabilidades de seguridad
 en Node.js 20.x?</code></pre>
       </div>
@@ -217,11 +227,11 @@ en Node.js 20.x?</code></pre>
 
   <!-- Logro final -->
   <div class="callout" data-tone="tip">
-    <p class="callout__title">¡Has completado el Hands-On de IBM Bob 2.1!</p>
+    <p class="callout__title">¡Has completado el Hands-On de IBM Bob!</p>
     <ul class="cds--list--unordered">
       <li class="cds--list__item">✅ <strong>LAB 1:</strong> Ask Mode — analizar y documentar código automáticamente (270k contexto)</li>
-      <li class="cds--list__item">✅ <strong>LAB 2:</strong> Los 3 modos de Bob 2.1 — Plan, Agent y Ask trabajando en conjunto</li>
-      <li class="cds--list__item">✅ <strong>LAB 3:</strong> Seguridad — detectar con Ask, corregir con Agent</li>
+      <li class="cds--list__item">✅ <strong>LAB 2:</strong> Los 3 modos de Bob — Plan, Agent y Ask trabajando en conjunto</li>
+      <li class="cds--list__item">✅ <strong>LAB 3:</strong> Seguridad — auditoría ASVS con skill, reportes SARIF y OSCAL POA&amp;M</li>
       <li class="cds--list__item">✅ <strong>LAB 4:</strong> Modo Personalizado — crear un consultor especializado en YAML</li>
       <li class="cds--list__item">✅ <strong>LAB 5:</strong> MCP con Tavily en Agent Mode — conectar IBM Bob al mundo exterior</li>
     </ul>

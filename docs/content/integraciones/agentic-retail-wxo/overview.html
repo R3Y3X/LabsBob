@@ -1,0 +1,61 @@
+<div class="content-panel lab-template prose--full">
+  <div class="lab-banner">
+    <div class="lab-banner__tags">
+      <span class="cds--tag cds--tag--blue">Integración</span>
+      <span class="cds--tag cds--tag--cool-gray">~60 min</span>
+      <span class="cds--tag cds--tag--teal">Bob + watsonx Orchestrate</span>
+    </div>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Agentes Inteligentes para la Gestión de Inventario</h1>
+
+    <div class="lab-hero-image">
+      <img src="./assets/images/solutions/ibm-bob-agentic-retail-lab2-agents.png"
+           alt="IBM Bob coordinating watsonx Orchestrate-style agent cards"
+           class="lab-hero-image__img" />
+    </div>
+
+    <div class="lab-banner__metrics">
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">4</span>
+        <span class="lab-banner__metric-label">agentes</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">~60</span>
+        <span class="lab-banner__metric-label">minutos</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">15–20</span>
+        <span class="lab-banner__metric-label">BobCoins estimados</span>
+      </div>
+    </div>
+  </div>
+
+  <section class="lab-section">
+    <h2 class="cds--productive-heading-03">Sistema Multiagente para Retail</h2>
+    <p class="cds--body-01">En este laboratorio vas a construir un sistema multiagente para asistir a una tienda retail. El sistema combina eventos de inventario en tiempo real, provistos por Confluent Cloud, con agentes de IA creados en IBM watsonx Orchestrate.</p>
+    <p class="cds--body-01">El objetivo es que los agentes puedan responder preguntas de disponibilidad, sugerir sustitutos cuando un producto no tiene stock y, finalmente, asistir a un cliente final desde una experiencia conversacional.</p>
+    
+    <div class="callout" data-tone="info">
+      <p class="callout__title">Qué vas a construir</p>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item"><strong>SKU Availability Agent</strong>: consulta stock en tiempo real usando una herramienta MCP conectada a Kafka y ksqlDB.</li>
+        <li class="cds--list__item"><strong>Substitute Finder Agent</strong>: usa RAG agéntico sobre un catálogo de productos para recomendar sustitutos.</li>
+        <li class="cds--list__item"><strong>Store Associate Agent</strong>: actúa como supervisor para un asociado de tienda y coordina los dos agentes anteriores.</li>
+        <li class="cds--list__item"><strong>Customer Shopping Assistant</strong>: asiste al cliente final, recomienda productos según su necesidad y verifica disponibilidad.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="lab-section">
+    <h2 class="cds--productive-heading-03">Prerrequisitos de Configuración</h2>
+    <p class="cds--body-01">Para este laboratorio es necesario contar con el <strong>Agent Development Kit (ADK)</strong> de watsonx Orchestrate y una <strong>IBM Cloud API Key</strong>. Todos los scripts necesarios se encuentran en el bundle descargable en <code>Labs-tech-summit/Lab2/confluent_agents/</code>.</p>
+    
+    <a class="cds--btn cds--btn--primary" style="margin-top: 1rem; margin-bottom: 2rem;" download="agentic-retail-workshop.zip" href="./downloads/agentic-retail-workshop.zip">
+      Descargar bundle del workshop (4.9 MB)
+    </a>
+
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">Mantené tu entorno activo</p>
+      <p>Asegurate de haber configurado tu API Key y el ambiente de <code>orchestrate env</code> según los requisitos previos. Si tu token expira durante la ejecución, deberás correr <code>orchestrate env activate &lt;nombre&gt;</code> para recuperarlo.</p>
+    </div>
+  </section>
+</div>

@@ -3,43 +3,39 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IBM Workshop Hub</title>
+    <meta name="description" content="Workshops prácticos de IBM Bob para pasar de la idea a un resultado ejecutable." />
+    <title>IBM Workshop Hub · IBM Bob</title>
 
-    <!-- IBM Plex fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet" />
+    <!-- IBM Plex fonts — served from IBM CDN -->
+    <link rel="stylesheet" href="https://1.www.s81c.com/common/fonts/ibm-plex.css" />
 
-    <!-- Carbon Design System v11 -->
+    <!-- Carbon Design System v11 — served from IBM CDN -->
+    <link rel="stylesheet" href="https://1.www.s81c.com/common/carbon/web-components/version/v2.26.0/themes.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/@carbon/styles@1/css/styles.min.css" />
 
     <!-- Project overrides (applied on top of Carbon) -->
-    <link rel="stylesheet" href="./css/shim.css" />
-    <link rel="stylesheet" href="./css/main.css" />
-    <link rel="stylesheet" href="./css/components.css" />
-    <link rel="stylesheet" href="./css/responsive.css" />
+    <link rel="stylesheet" href="./css/variables.css?v=5" />
+    <link rel="stylesheet" href="./css/shim.css?v=4" />
+    <link rel="stylesheet" href="./css/main.css?v=10" />
+    <link rel="stylesheet" href="./css/components.css?v=9" />
+    <link rel="stylesheet" href="./css/responsive.css?v=4" />
+    <link rel="stylesheet" href="./css/carbon-overrides.css?v=25" />
+    <link rel="stylesheet" href="./css/dynamic-theme.css?v=2" />
   </head>
   <body class="hub-view--home">
+    <a class="hub-skip-link" href="#main-content">Saltar al contenido principal</a>
     <!-- ── Carbon UI Shell ───────────────────────────────────────── -->
     <header class="cds--header hub-header" role="banner">
 
       <!-- IBM 8-bar logo + product name (LEFT anchor) -->
       <a class="cds--header__name" href="#/" aria-label="IBM Workshop Hub – inicio">
-        <svg class="cds--header__logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" aria-hidden="true" focusable="false">
-          <rect x="0"  y="0"  width="32" height="4" fill="currentColor"/>
-          <rect x="6"  y="7"  width="20" height="4" fill="currentColor"/>
-          <rect x="8"  y="14" width="16" height="4" fill="currentColor"/>
-          <rect x="6"  y="21" width="20" height="4" fill="currentColor"/>
-          <rect x="0"  y="28" width="32" height="4" fill="currentColor"/>
-          <rect x="0"  y="14" width="4"  height="4" fill="currentColor"/>
-          <rect x="28" y="14" width="4"  height="4" fill="currentColor"/>
-        </svg>
-        <span class="cds--header__name--prefix">IBM</span>&nbsp;Workshop Hub
+        <img src="./assets/icons/ibm-logo-white.png" alt="IBM" class="hub-header__ibm-logo" />
+        <span class="hub-header__product-name">Workshop Hub</span>
       </a>
 
       <!-- Primary navigation links (populated by renderPlatformNav) -->
       <nav class="cds--header__nav" aria-label="Navegación principal">
-        <ul class="cds--header__menu-bar" role="menubar" id="site-nav-items"></ul>
+        <ul class="cds--header__menu-bar" id="site-nav-items"></ul>
       </nav>
 
       <!-- Spacer pushes global actions to the right -->
@@ -48,25 +44,23 @@
       <!-- Global actions: search + theme + hamburger (mobile) -->
       <div class="cds--header__global">
 
-        <!-- Inline search field — icon on the LEFT -->
-        <div class="hub-header__search-wrap">
-          <label class="visually-hidden" for="site-search">Buscar workshops</label>
-          <svg class="hub-header__search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
-            <path fill="currentColor" d="M15,14.3L10.7,10c1.9-2.3,1.6-5.8-0.7-7.7S4.2,0.7,2.3,3S0.7,8.8,3,10.7c2,1.7,5,1.7,7,0l4.3,4.3L15,14.3z M2,6.5C2,4,4,2,6.5,2S11,4,11,6.5S9,11,6.5,11S2,9,2,6.5z"/>
+        <!-- Theme toggle: moon in light mode → sun in dark mode (Carbon icons: asleep / sunny) -->
+        <button id="theme-toggle" class="cds--header__action" type="button" aria-label="Cambiar a tema oscuro" aria-pressed="false" title="Cambiar a tema oscuro">
+          <!-- Moon (Carbon "asleep"): visible in light mode -->
+          <svg class="hub-theme-icon hub-theme-icon--moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" aria-hidden="true" focusable="false" fill="currentColor">
+            <path d="M13.5025,5.4136A15.0755,15.0755,0,0,0,25.096,23.6082a11.1134,11.1134,0,0,1-7.9749,3.3893c-.1385,0-.2782.0051-.4178,0A11.0944,11.0944,0,0,1,13.5025,5.4136M14.98,3a1.0024,1.0024,0,0,0-.1746.0156A13.0959,13.0959,0,0,0,16.63,28.9973c.1641.006.3282,0,.4909,0a13.0724,13.0724,0,0,0,10.702-5.5556,1.0094,1.0094,0,0,0-.7833-1.5644A13.08,13.08,0,0,1,15.8892,4.38,1.0149,1.0149,0,0,0,14.98,3Z"/>
           </svg>
-          <input
-            id="site-search"
-            class="hub-header__search-input"
-            type="search"
-            placeholder="Buscar…"
-            autocomplete="off"
-          />
-        </div>
-
-        <!-- Theme toggle -->
-        <button id="theme-toggle" class="cds--header__action" type="button" aria-label="Cambiar tema" title="Cambiar tema claro/oscuro">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" aria-hidden="true" focusable="false">
-            <path fill="currentColor" d="M16 12a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm0-2a6 6 0 1 0 0 12A6 6 0 0 0 16 10zm-1-8h2v4h-2zm0 22h2v4h-2zm12-12h4v2h-4zm-22 0H0v2h4zm17.07-7.49 1.42-1.42 2.83 2.83-1.42 1.42zm-14.14 14.14-1.42-1.42 2.83-2.83 1.42 1.42zm14.14 0 2.83 2.83-1.42 1.42-2.83-2.83zm-14.14-14.14L5.1 5.1 3.69 6.51l2.83 2.83z"/>
+          <!-- Sun (Carbon "sunny"): visible in dark mode -->
+          <svg class="hub-theme-icon hub-theme-icon--sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" aria-hidden="true" focusable="false" fill="currentColor">
+            <path d="M16,12a4,4,0,1,1-4,4,4.0045,4.0045,0,0,1,4-4m0-2a6,6,0,1,0,6,6,6,6,0,0,0-6-6Z" transform="translate(0 0.0049)"/>
+            <rect x="6.8536" y="5.3745" width="2" height="4.958" transform="translate(-3.253 7.8584) rotate(-45)"/>
+            <rect x="2" y="15.0049" width="5" height="2"/>
+            <rect x="5.3745" y="23.1466" width="4.958" height="2" transform="translate(-14.7739 12.6305) rotate(-45)"/>
+            <rect x="15" y="25.0049" width="2" height="5"/>
+            <rect x="23.1466" y="21.6675" width="2" height="4.958" transform="translate(-10.0018 24.1514) rotate(-45)"/>
+            <rect x="25" y="15.0049" width="5" height="2"/>
+            <rect x="21.6675" y="6.8536" width="4.958" height="2" transform="translate(1.5191 19.3793) rotate(-45)"/>
+            <rect x="15" y="2.0049" width="2" height="5"/>
           </svg>
         </button>
 
@@ -99,17 +93,17 @@
 
     <!-- ── Lab step sub-navigation (sólo visible en vistas de lab) ── -->
     <nav class="cds--tabs hub-subnav" aria-label="Navegación del laboratorio" id="subnav-region" hidden>
-      <div class="cds--tabs__nav" role="tablist" id="subnav-items"></div>
+      <ul class="cds--tabs__nav" id="subnav-items"></ul>
     </nav>
 
     <!-- ── Main content ──────────────────────────────────────────── -->
-    <main class="hub-page-content">
+    <main id="main-content" class="hub-page-content">
       <section id="home-view" class="view"></section>
       <section id="lab-view" class="view" hidden>
         <div id="lab-shell" class="lab-shell"></div>
       </section>
     </main>
 
-    <script type="module" src="./js/app.js"></script>
+    <script type="module" src="./js/app.js?v=43"></script>
   </body>
 </html>

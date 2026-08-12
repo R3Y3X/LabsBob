@@ -1,0 +1,767 @@
+<div class="content-panel lab-template prose--full">
+  <div class="lab-banner">
+    <div class="lab-banner__tags">
+      <span class="cds--tag cds--tag--purple">Despliegue Interfaz</span>
+      <span class="cds--tag cds--tag--cool-gray">~60 min</span>
+      <span class="cds--tag cds--tag--teal">Voltia Storefront</span>
+    </div>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Lab 3 — Voltia: tienda web con asistente de IA embebido</h1>
+    <p class="cds--body-02 lab-banner__summary">Construye el frontend de Voltia con IBM Bob e integra el asistente embebido de watsonx Orchestrate.</p>
+  </div>
+
+  <section class="lab-section">
+
+<p class="cds--body-01">En los Labs 1 y 2 construiste el "cerebro": un pipeline de inventario en tiempo real (Confluent/Kafka) y un sistema de agentes en <strong>watsonx Orchestrate</strong>, que terminó en un <strong>Asistente de Compra</strong> orientado al cliente final. En este Lab 3 vas a construir el "cuerpo": <strong>Voltia</strong>, la tienda web de electrónica donde ese asistente vive. Vas a desarrollar el frontend desde cero (guiado por <strong>IBM Bob</strong> y unos mockups) y, al final, <strong>embeber el agente</strong> que desplegaste en el Lab 2 para que los clientes lo usen dentro del sitio.</p>
+<p align="center"><em>Plan → Construir → Embeber el asistente → Pulir → Revisar → Documentar</em></p>
+
+<h2 class="cds--productive-heading-04" id="que-es-voltia">¿Qué es Voltia?</h2>
+<p class="cds--body-01"><strong>Voltia</strong> es una cadena de electrónica con retiro en tienda: el cliente navega laptops, smartphones y tablets, ve el precio, elige su <strong>sucursal de retiro</strong> (las mismas dos sucursales que conoce el agente del Lab 2 — <strong>DOT Shopping</strong> y <strong>Unicenter</strong>) y reserva para retirar. Lo interesante: cuando el cliente no sabe qué comprar, el <strong>Asistente de Compra de watsonx Orchestrate</strong> (el del Lab 2) aparece flotando en la esquina, entiende su necesidad en lenguaje natural y le recomienda un equipo <strong>que existe en esta misma tienda</strong>, con disponibilidad en tiempo real en la sucursal elegida.</p>
+<div class="callout" data-tone="info">
+<p class="callout__title">Lo que hace distinto a este lab</p>
+<p class="cds--body-01">No arrancás de una carpeta vacía. Partís de un <strong>esqueleto listo para correr</strong> (header con selector de sucursal, footer, ruteo, carrito, notificaciones y un cliente de datos ya cableados) más un set de <strong>mockups</strong>. Tu trabajo —y el de Bob— es implementar las pantallas para que coincidan con el diseño y luego <strong>embeber el agente</strong>. Sin backend que construir, sin cuentas, sin pagos. Frontend limpio de punta a punta.</p>
+</div>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="el-recorrido-la-evolucion-de-la-app">El recorrido (la "evolución" de la app)</h3>
+<table>
+<thead>
+<tr>
+<th>Parte</th>
+<th>Fase</th>
+<th>Qué hacés</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Planificar</td>
+<td>Levantás el starter, estudiás los mockups y el contrato de datos, y armás un plan con Bob.</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Construir</td>
+<td>El storefront: hero, filtros por categoría y grilla de productos.</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Construir</td>
+<td>La página de producto: specs, disponibilidad por sucursal y "Reservar para retiro".</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Construir</td>
+<td>El carrito: ítems, resumen y confirmación de retiro en tienda.</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td><strong>Embeber</strong></td>
+<td><strong>El Asistente de watsonx Orchestrate dentro del sitio.</strong> ← el corazón del lab</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Pulir</td>
+<td>Animaciones con Framer Motion.</td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>Revisar</td>
+<td>Responsive, accesibilidad y casos borde.</td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td>Documentar</td>
+<td>Un sitio de documentación con MkDocs.</td>
+</tr>
+</tbody>
+</table>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="requisitos-previos">Requisitos previos</h3>
+<ul class="cds--list--unordered">
+<li class="cds--list__item"><strong>IBM Bob IDE</strong> (última versión, con sesión iniciada) — <a href="https://bob.ibm.com/">bob.ibm.com</a></li>
+<li class="cds--list__item"><strong>Node.js v18+</strong> — verificá con <code>node --version</code></li>
+<li class="cds--list__item"><strong>Python 3</strong> (para la Parte 8) — verificá con <code>python3 --version</code></li>
+<li class="cds--list__item"><em>(Opcional)</em> <strong>Lab 2 completado</strong>: si tenés el <strong>Asistente de Compra</strong> (<code>Customer_Shopping_Assistant</code>) <strong>desplegado</strong> en watsonx Orchestrate y copiaste su <strong>snippet de embebido</strong> (Channels → <em>Embedded agent</em> → <em>Live</em>), vas a poder embeber <strong>tu</strong> agente en la Parte 5.</li>
+</ul>
+<div class="callout" data-tone="tip">
+<p class="callout__title">¿No tenés el snippet del Lab 2?</p>
+<p class="cds--body-01">No bloquea nada. El starter ya incluye un asistente <strong>provisto y funcional</strong> (en el archivo <code>wxo-snippet.html</code>), así que podés hacer el lab completo —Parte 5 incluida— sin haber terminado el Lab 2. En la Parte 5 elegís: usar tu agente del Lab 2, o el provisto.</p>
+</div>
+<h2 class="cds--productive-heading-04" id="consegui-el-starter">Conseguí el starter</h2>
+<p class="cds--body-01">Descargá el <strong>bundle del workshop</strong> (un único zip con los tres labs), descomprimilo y entrá en <code>Labs-tech-summit/Lab3/</code>. Ahí vas a encontrar <strong><code>voltia-starter.zip</code></strong>: descomprimilo y abrí la carpeta <code>voltia-starter</code> en IBM Bob.</p>
+<p class="cds--body-01"><a class="cds--btn cds--btn--primary" download="agentic-retail-workshop.zip" href="../downloads/agentic-retail-workshop.zip">Bundle del workshop (4.9 MB)</a></p>
+<h2 class="cds--productive-heading-04" id="parte-1-planificar">Parte 1 — Planificar</h2>
+<p class="cds--body-01">Todo buen desarrollo empieza antes de la primera línea de código. En esta parte vas a levantar el starter de <strong>Voltia</strong>, estudiar los mockups y el contrato de datos, y hacer que Bob convierta todo eso en un plan concreto.</p>
+<div class="callout" data-tone="info">
+<p class="callout__title">Lo que vas a lograr</p>
+<ul class="cds--list--unordered">
+<li class="cds--list__item">Correr la app starter y ver las tres pantallas placeholder.</li>
+<li class="cds--list__item">Entender el contrato de datos (el catálogo y las funciones del cliente).</li>
+<li class="cds--list__item">Mirar los tres mockups.</li>
+<li class="cds--list__item">Usar Bob para producir un <strong>plan pantalla por pantalla</strong> que seguirás en las Partes 2 a 4.</li>
+</ul>
+</div>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="1-consegui-el-starter-y-abrilo-en-bob">1. Conseguí el starter y abrilo en Bob</h3>
+<p class="cds--body-01">Descargá y descomprimí <strong><code>voltia-starter.zip</code></strong>, después abrí la carpeta <code>voltia-starter</code> en IBM Bob.</p>
+<p class="cds--body-01">Tomate un momento para mirar la estructura — fijate cuánto <strong>ya está hecho</strong> para que te concentres en las pantallas:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>voltia-starter/
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── mockups/                   ← las 3 capturas + el HTML de diseño
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>├── index.html                 ← tiene el #wxo-root y el comentario del asistente (Parte 5)
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>├── wxo-snippet.html           ← HECHO  — el snippet del asistente provisto (Parte 5)
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>├── requirements.txt           ← HECHO  — dependencia de las docs MkDocs (Parte 8)
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>├── docs/                       ← HECHO  — el esqueleto de la documentación + imágenes (Parte 8)
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>├── src/
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│   ├── api/
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│   │   ├── catalog.js         ← HECHO  — el catálogo (la fuente de datos) + categorías + sucursales
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│   │   └── client.js          ← HECHO  — getProducts, getProduct, getCategories, getStores, createReservation, formatPrice
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>│   ├── cart/CartContext.jsx   ← HECHO  — useCart(): addItem, setQty, removeItem, clear, count, subtotal
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>│   ├── branch/BranchContext.jsx ← HECHO — useBranch(): branch, setBranch, branches
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>│   ├── toast/ToastContext.jsx ← HECHO  — useToast(): notify(mensaje)
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>│   ├── components/
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>│   │   ├── Header.jsx          ← HECHO  — con selector de sucursal y badge del carrito
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>│   │   ├── Footer.jsx          ← HECHO
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>│   │   └── ProductCard.jsx     ← stub  — lo construís en la Parte 2
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>│   └── pages/
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>│       ├── Home.jsx            ← stub  — Parte 2
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>│       ├── Product.jsx         ← stub  — Parte 3
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>│       └── Cart.jsx            ← stub  — Parte 4
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>└── tailwind.config.js          ← los tokens de diseño de Voltia, listos para usar
+</span></code></pre></div>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="2-corre-el-starter">2. Corré el starter</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>npm<span class="w"> </span>install
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>npm<span class="w"> </span>run<span class="w"> </span>dev
+</span></code></pre></div>
+<p class="cds--body-01">El navegador abre <code>http://localhost:5173</code>. Deberías ver el header de <strong>Voltia</strong> (con el selector de sucursal y el ícono del carrito), el footer, y tres páginas "🚧 construime" en <code>/</code>, <code>/product/lo-que-sea</code> y <code>/cart</code>.</p>
+<div class="callout" data-tone="success">
+<p class="callout__title">Checkpoint</p>
+<p class="cds--body-01">Si se ven el header, el footer y los placeholders, tu entorno está listo. Los placeholders son a propósito — los vas a reemplazar en las próximas tres partes.</p>
+<p class="cds--body-01">Voltia <strong>no necesita backend ni archivo <code>.env</code></strong>: el catálogo viaja dentro de la app y el asistente vive en watsonx Orchestrate.</p>
+</div>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="3-entende-el-contrato-de-datos">3. Entendé el contrato de datos</h3>
+<p class="cds--body-01">Todas las pantallas hablan con los datos <strong>solo</strong> a través de <code>src/api/client.js</code>. No vas a escribir <code>fetch</code> a mano, pero sí conviene saber qué hay disponible:</p>
+<table>
+<thead>
+<tr>
+<th>Función</th>
+<th>Devuelve</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>getProducts({ category, search })</code></td>
+<td>Lista de productos (filtra por categoría/búsqueda).</td>
+</tr>
+<tr>
+<td><code>getProduct(id)</code></td>
+<td>Un producto.</td>
+</tr>
+<tr>
+<td><code>getCategories()</code></td>
+<td><code>["Laptops", "Smartphones", "Tablets", "Audio"]</code></td>
+</tr>
+<tr>
+<td><code>getStores()</code></td>
+<td>Las sucursales de retiro (<code>DOT Shopping</code>, <code>Unicenter</code>).</td>
+</tr>
+<tr>
+<td><code>createReservation({ store, items })</code></td>
+<td>Una confirmación — <strong>siempre confirma</strong>.</td>
+</tr>
+<tr>
+<td><code>formatPrice(n)</code></td>
+<td>Formatea un precio (ej. <code>2499</code> → <code>"$2.499"</code>).</td>
+</tr>
+</tbody>
+</table>
+<p class="cds--body-01">Un producto se ve así (no usa URLs de imágenes: se dibuja con un <strong>emoji</strong> sobre un <strong>degradado</strong>, igual que en los mockups):</p>
+<div class="language-js highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;iphone-17-pro-max&quot;</span><span class="p">,</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;iPhone 17 Pro Max&quot;</span><span class="p">,</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="nx">category</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Smartphones&quot;</span><span class="p">,</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span><span class="nx">brand</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Apple&quot;</span><span class="p">,</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">  </span><span class="nx">price</span><span class="o">:</span><span class="w"> </span><span class="mf">1399</span><span class="p">,</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">  </span><span class="nx">emoji</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;📱&quot;</span><span class="p">,</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">  </span><span class="nx">colors</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;#dfe6f5&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;#b3c2e8&quot;</span><span class="p">],</span><span class="w">   </span><span class="c1">// [from, to] del degradado del thumbnail</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">  </span><span class="nx">shortDescription</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;…&quot;</span><span class="p">,</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">  </span><span class="nx">longDescription</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;…&quot;</span><span class="p">,</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">  </span><span class="nx">highlights</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;256 GB&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Chip A19 Pro&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Cámara 48 MP&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;6,9\&quot; OLED&quot;</span><span class="p">],</span><span class="w">  </span><span class="c1">// chips de specs</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">  </span><span class="nx">warranty</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;12 meses&quot;</span><span class="p">,</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">  </span><span class="nx">rating</span><span class="o">:</span><span class="w"> </span><span class="mf">4.9</span><span class="p">,</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">  </span><span class="nx">reviewCount</span><span class="o">:</span><span class="w"> </span><span class="mf">212</span><span class="p">,</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w">  </span><span class="nx">inStock</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">  </span><span class="nx">featured</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="p">}</span>
+</span></code></pre></div>
+<div class="callout" data-tone="info">
+<p class="callout__title">Nota</p>
+<p class="cds--body-01">Los productos del catálogo coinciden con los que conoce el agente del Lab 2 (MacBook Pro, Dell XPS, iPhone 17 Pro Max, Samsung S24 Ultra, Pixel 8 Pro…). Es a propósito: cuando el asistente recomiende un equipo, el cliente lo va a encontrar tal cual en la tienda.</p>
+</div>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="4-mira-los-mockups">4. Mirá los mockups</h3>
+<p class="cds--body-01">Estas tres capturas son tu fuente de verdad. En cada parte de construcción vas a <strong>adjuntar la que corresponde al chat de Bob</strong> para que construya a partir de la imagen. Están en tu proyecto, dentro de <code>mockups/</code>, junto con los <code>*.mockup.html</code> que detallan cada color y tamaño.</p>
+<p class="cds--body-01"><strong>Inicio / storefront</strong> — <code>mockups/home.png</code></p>
+<p class="cds--body-01"><a class="glightbox" href="./assets/images/solutions/voltia/home.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Mockup de la home / storefront de Voltia" src="./assets/images/solutions/voltia/home.png" /></a></p>
+<p class="cds--body-01"><strong>Detalle de producto</strong> — <code>mockups/product.png</code></p>
+<p class="cds--body-01"><a class="glightbox" href="./assets/images/solutions/voltia/product.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Mockup de la página de producto de Voltia" src="./assets/images/solutions/voltia/product.png" /></a></p>
+<p class="cds--body-01"><strong>Reserva</strong> — <code>mockups/cart.png</code></p>
+<p class="cds--body-01"><a class="glightbox" href="./assets/images/solutions/voltia/cart.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Mockup de la página de reserva (carrito) de Voltia" src="./assets/images/solutions/voltia/cart.png" /></a></p>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="5-pedile-a-bob-el-plan-de-construccion">5. Pedile a Bob el plan de construcción</h3>
+<p class="cds--body-01">Pasá Bob a <strong>📋 Modo Plan</strong> — analiza y propone un plan sin tocar archivos todavía.</p>
+<p class="cds--body-01"><strong>Prompt para Bob:</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Estoy construyendo una tienda web de 3 pantallas en este proyecto (Voltia). El
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>shell de la app, el ruteo, el carrito (src/cart/CartContext.jsx), la sucursal
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>(src/branch/BranchContext.jsx) y el cliente de datos (src/api/client.js) ya están
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>hechos.
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>Necesito implementar tres pantallas para que coincidan con los mockups de la
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>carpeta mockups/:
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>- Home.jsx + ProductCard.jsx → mockups/home.png    (usa getProducts, getCategories)
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>- Product.jsx                → mockups/product.png  (usa getProduct, useBranch, addItem)
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>- Cart.jsx                   → mockups/cart.png     (usa useCart, useBranch, createReservation)
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>Leé src/api/client.js, src/api/catalog.js, src/cart/CartContext.jsx y
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>src/branch/BranchContext.jsx para conocer las funciones exactas disponibles.
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>Después dame un plan corto, pantalla por pantalla: para cada una, qué datos
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>necesita, qué componentes/secciones crear y qué funciones existentes llamar.
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>No escribas código todavía. No agregues dependencias ni cambies el cliente de datos.
+</span></code></pre></div>
+<div class="callout" data-tone="tip">
+<p class="callout__title">Cómo se ve un buen plan</p>
+<p class="cds--body-01">Bob debería responder con un plan que use los nombres <strong>reales</strong> de las funciones (<code>getProducts</code>, <code>getProduct</code>, <code>createReservation</code>, <code>formatPrice</code>, <code>useCart</code>, <code>useBranch</code>) y que divida cada pantalla en secciones que se mapean con los mockups. Si inventa endpoints o propone un backend, devolvelo a <code>src/api/client.js</code> y al alcance de abajo.</p>
+</div>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="alcance-que-construimos-y-que-no">Alcance — qué construimos y qué no</h3>
+<div class="callout" data-tone="warning">
+<p class="callout__title">Leé esto antes de empezar a construir</p>
+<p class="cds--body-01"><strong>✅ En alcance</strong></p>
+<ul class="cds--list--unordered">
+<li class="cds--list__item">Las tres pantallas, fieles a los mockups.</li>
+<li class="cds--list__item">Leer datos a través del <code>src/api/client.js</code> existente.</li>
+<li class="cds--list__item">Carrito/reserva en el navegador con <code>useCart()</code>.</li>
+<li class="cds--list__item">Reserva de retiro que siempre confirma.</li>
+<li class="cds--list__item">Embeber el asistente de watsonx Orchestrate (Parte 5).</li>
+</ul>
+<p class="cds--body-01"><strong>❌ Fuera de alcance (no los construyas, y frená a Bob si los propone)</strong></p>
+<ul class="cds--list--unordered">
+<li class="cds--list__item">Un backend, base de datos o endpoints nuevos.</li>
+<li class="cds--list__item">Cuentas, login o autenticación.</li>
+<li class="cds--list__item">Pago online real o envío a domicilio.</li>
+<li class="cds--list__item">Paginación, lista de deseos, reseñas o panel de administración.</li>
+</ul>
+<p class="cds--body-01">Mantener el alcance ajustado es la lección, no una limitación.</p>
+</div>
+<div class="callout" data-tone="success">
+<p class="callout__title">Criterios de éxito</p>
+<ul class="cds--list--unordered" style="list-style-type: none;">
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Starter descomprimido y abierto en Bob.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>npm run dev</code> muestra el shell + los placeholders.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Miraste los tres mockups.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Bob produjo un plan pantalla por pantalla que referencia las funciones reales del cliente.</li>
+</ul>
+</div>
+<h2 class="cds--productive-heading-04" id="parte-2-construi-el-storefront">Parte 2 — Construí el storefront</h2>
+<p class="cds--body-01">Hora de escribir código. Vas a implementar la <strong>home</strong> y la <strong>tarjeta de producto</strong> para que coincidan con <code>mockups/home.png</code>, alimentadas por el catálogo.</p>
+<div class="callout" data-tone="info">
+<p class="callout__title">Lo que vas a construir</p>
+<ul class="cds--list--unordered">
+<li class="cds--list__item"><code>src/components/ProductCard.jsx</code> — una tarjeta de producto (thumbnail, categoría, nombre, precio, botón +).</li>
+<li class="cds--list__item"><code>src/pages/Home.jsx</code> — hero, chips de filtro por categoría y una grilla responsive de tarjetas.</li>
+<li class="cds--list__item">Cada tarjeta enlaza a <code>/product/:id</code>.</li>
+</ul>
+</div>
+<p class="cds--body-01"><strong>La meta:</strong> <code>mockups/home.png</code>.</p>
+<p class="cds--body-01"><a class="glightbox" href="./assets/images/solutions/voltia/home.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Mockup de la home / storefront de Voltia" src="./assets/images/solutions/voltia/home.png" /></a></p>
+<p class="cds--body-01">Pasá Bob a <strong>💻 Modo Código</strong> para esta parte.</p>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="1-construi-la-tarjeta-de-producto">1. Construí la tarjeta de producto</h3>
+<p class="cds--body-01">Empezá por la pieza chica y reutilizable de la que depende la grilla.</p>
+<div class="callout" data-tone="info">
+<p class="callout__title">📎 Paso obligatorio — adjuntá el mockup antes de enviar el prompt</p>
+<p class="cds--body-01">Este prompt referencia <code>mockups/home.png</code> por nombre: es el diseño que Bob tiene que replicar. <strong>Antes de enviarlo, adjuntá esa imagen al chat de Bob.</strong> Sin la imagen, Bob construye a ciegas.</p>
+<p class="cds--body-01"><strong>Cómo adjuntarla:</strong> hacé clic en el botón de <strong>agregar imagen</strong> (el ícono al lado del botón de enviar mensaje), navegá hasta la carpeta <code>mockups/</code> del proyecto y elegí <code>home.png</code>.</p>
+<p class="cds--body-01"><strong>💡 Tip:</strong> si primero <strong>abrís la imagen dentro de Bob</strong> (doble clic en <code>mockups/home.png</code> en el explorador de archivos) y <em>después</em> tocás el botón de agregar imagen, el selector se abre directamente en la carpeta <code>mockups/</code>.</p>
+</div>
+<p class="cds--body-01"><strong>Prompt para Bob:</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Implementá src/components/ProductCard.jsx para que coincida con una tarjeta de la
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>grilla en mockups/home.png.
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>- Recibe una prop `product` (ver el typedef Product en src/api/catalog.js).
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>- Mostrá: el thumbnail (el emoji product.emoji centrado y grande sobre un
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>  degradado lineal que va de product.colors[0] a product.colors[1]), la categoría
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>  (etiqueta chica en mayúsculas), el nombre, el precio (usá formatPrice de
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>  ../api/client) y un botón &quot;+&quot; abajo a la derecha. El botón + es un CUADRADO
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>  REDONDEADO (esquinas redondeadas, ~40x40, bg-brand, &quot;+&quot; blanco) — como en el
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>  mockup, NO un círculo.
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>- Envolvé la tarjeta en un &lt;Link&gt; a `/product/${product.id}` de react-router-dom.
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>- El botón &quot;+&quot; llama addItem(product, 1) de useCart() SIN navegar (frená la
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>  propagación del evento para que no dispare el link de la tarjeta) y después llama
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>  notify(`${product.name} agregado a la reserva`) de useToast()
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>  (../toast/ToastContext) para dar feedback visible.
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>- Usá los tokens de Tailwind ya definidos: bg-white, border-line, rounded-card,
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>  shadow-card, text-ink, text-muted, bg-brand, text-accent, etc.
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>No modifiques src/api/client.js ni src/api/catalog.js. No agregues dependencias.
+</span></code></pre></div>
+<div class="callout" data-tone="tip">
+<p class="callout__title">Tip</p>
+<p class="cds--body-01">Todavía no se ve nada (Home sigue siendo un placeholder), así que no verás la tarjeta hasta el próximo paso. Es lo esperado.</p>
+</div>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="2-construi-la-home">2. Construí la home</h3>
+<div class="callout" data-tone="info">
+<p class="callout__title">📎 Adjuntá el mockup antes de enviar el prompt</p>
+<p class="cds--body-01">Igual que en el paso anterior, <strong>adjuntá <code>mockups/home.png</code></strong> al chat de Bob antes de enviar este prompt.</p>
+</div>
+<p class="cds--body-01"><strong>Prompt para Bob:</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Implementá src/pages/Home.jsx para que coincida con mockups/home.png. Reemplazá el
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>placeholder.
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>Layout, de arriba hacia abajo, dentro de un contenedor centrado max-w-page:
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>1. Un hero: rebordes redondeados, degradado azul (de brand-dark a brand a accent),
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>   texto blanco, una línea &quot;eyebrow&quot; en mayúsculas, un título grande &quot;Tecnología
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>   que te sigue el ritmo.&quot;, un párrafo corto y un botón claro &quot;Explorar productos&quot;.
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>2. Un encabezado de sección &quot;Destacados&quot; con una fila de chips de categoría. Traé
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>   las categorías con getCategories() e incluí un chip &quot;Todos&quot; primero. El chip
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>   activo va relleno con bg-brand y texto blanco.
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>3. Una grilla responsive de productos (4 columnas en desktop, menos en pantallas
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>   chicas) de &lt;ProductCard /&gt; construida desde getProducts(). Al tocar un chip se
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>   vuelve a pedir con getProducts({ category }).
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>Traé los datos con useEffect/useState. Mostrá un estado de carga simple mientras
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>pide y un mensaje amable si la llamada falla. Importá getProducts y getCategories
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>de ../api/client y ProductCard de ../components/ProductCard.
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>No modifiques src/api/client.js. No agregues dependencias ni armes paginación.
+</span></code></pre></div>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="3-corre-y-verifica">3. Corré y verificá</h3>
+<p class="cds--body-01">Con <code>npm run dev</code> corriendo, abrí <code>http://localhost:5173</code>:</p>
+<ol class="cds--list--ordered">
+<li class="cds--list__item">Se ven el hero, los chips y una grilla de productos.</li>
+<li class="cds--list__item">Los thumbnails (emoji sobre degradado) se renderizan.</li>
+<li class="cds--list__item">Tocar un chip de categoría filtra la grilla.</li>
+<li class="cds--list__item">Tocar el <strong>+</strong> de una tarjeta sube el badge del carrito <strong>y</strong> muestra un toast "… agregado a la reserva".</li>
+<li class="cds--list__item">Tocar una tarjeta navega a <code>/product/&lt;id&gt;</code> (todavía es un placeholder — eso es la Parte 3).</li>
+</ol>
+<div class="callout" data-tone="success">
+<p class="callout__title">Checkpoint</p>
+<p class="cds--body-01">Tu storefront debería verse como <code>home.png</code>: paleta azul, hero con degradado, tarjetas en grilla, filtro de categoría funcionando, un botón de agregar que es un <strong>cuadrado redondeado</strong> (no un círculo) y un badge del carrito que incrementa con un toast. (En la Parte 6 vas a hacer que ese toast aparezca con rebote.)</p>
+</div>
+<details class="failure">
+<summary>Solución de problemas</summary>
+<ul class="cds--list--unordered">
+<li class="cds--list__item"><strong>No se ve la grilla / "no se pudieron cargar los productos".</strong> Abrí la consola del navegador. Confirmá que <code>Home.jsx</code> importa y llama <code>getProducts()</code> de <code>../api/client</code>, y que maneja la promesa con <code>useEffect</code>.</li>
+<li class="cds--list__item"><strong>Tocar el + también navega a la página de producto.</strong> El botón está dentro del link de la tarjeta. Pedile a Bob que llame <code>e.preventDefault()</code> y <code>e.stopPropagation()</code> en el <code>onClick</code> del botón.</li>
+<li class="cds--list__item"><strong>El precio se ve como "1399" sin formato.</strong> Usá <code>formatPrice(product.price)</code> de <code>../api/client</code>.</li>
+</ul>
+</details>
+<div class="callout" data-tone="success">
+<p class="callout__title">Criterios de éxito</p>
+<ul class="cds--list--unordered" style="list-style-type: none;">
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>ProductCard.jsx</code> muestra thumbnail, categoría, nombre, precio y botón de agregar.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>Home.jsx</code> muestra el hero, los chips y la grilla desde el catálogo.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> El filtro por categoría funciona.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Las tarjetas enlazan a <code>/product/:id</code>; el <strong>+</strong> agrega a la reserva y muestra un toast.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> La página se parece a <code>home.png</code>.</li>
+</ul>
+</div>
+<h2 class="cds--productive-heading-04" id="parte-3-construi-la-pagina-de-producto">Parte 3 — Construí la página de producto</h2>
+<p class="cds--body-01">Cuando el cliente toca una tarjeta, llega acá. Vas a implementar el <strong>detalle de producto</strong> para que coincida con <code>mockups/product.png</code>, traer el producto correcto desde la URL y conectar "Reservar para retiro".</p>
+<div class="callout" data-tone="info">
+<p class="callout__title">Lo que vas a construir</p>
+<ul class="cds--list--unordered">
+<li class="cds--list__item"><code>src/pages/Product.jsx</code> — thumbnail grande, categoría, nombre, rating, precio, descripción, chips de specs, aviso de disponibilidad por sucursal, selector de cantidad y botón "Reservar para retiro".</li>
+<li class="cds--list__item">La página lee el id del producto desde la URL y trae ese producto.</li>
+</ul>
+</div>
+<p class="cds--body-01"><strong>La meta:</strong> <code>mockups/product.png</code>. Quedate en <strong>💻 Modo Código</strong>.</p>
+<p class="cds--body-01"><a class="glightbox" href="./assets/images/solutions/voltia/product.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Mockup de la página de producto de Voltia" src="./assets/images/solutions/voltia/product.png" /></a></p>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="1-construi-el-detalle-de-producto">1. Construí el detalle de producto</h3>
+<div class="callout" data-tone="info">
+<p class="callout__title">📎 Paso obligatorio — adjuntá el mockup antes de enviar el prompt</p>
+<p class="cds--body-01"><strong>Adjuntá <code>mockups/product.png</code></strong> al chat de Bob antes de enviar este prompt (botón de agregar imagen, al lado del de enviar → carpeta <code>mockups/</code>). Igual que en la Parte 2: si abrís la imagen en Bob primero, el selector se abre directo en <code>mockups/</code>.</p>
+</div>
+<p class="cds--body-01"><strong>Prompt para Bob:</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Implementá src/pages/Product.jsx para que coincida con mockups/product.png.
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>Reemplazá el placeholder.
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>- Leé el id del producto de la URL con useParams() (ya está importado).
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>- Traé ese producto con getProduct(id) de ../api/client (useEffect/useState).
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>  Mostrá un estado de carga mientras pide y un mensaje &quot;Producto no encontrado&quot; si
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>  falla.
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>- Layout de dos columnas en desktop (thumbnail a la izquierda, detalle a la
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>  derecha), apiladas en mobile:
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>  • Izquierda: el thumbnail grande en una tarjeta redondeada — el emoji
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>    product.emoji sobre un degradado de product.colors[0] a product.colors[1].
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>  • Derecha: un breadcrumb (Inicio / &lt;categoría&gt; / &lt;nombre&gt;), la etiqueta de
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>    categoría, el nombre, un rating con estrellas y &quot;&lt;rating&gt; · &lt;reviewCount&gt;
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>    reseñas&quot;, el precio (formatPrice), la longDescription, los highlights como
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>    chips chicos redondeados, un selector de cantidad (− / valor / +, mínimo 1) y
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>    un botón ancho &quot;Reservar para retiro · &lt;precio&gt;&quot;.
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>  • Importá useBranch() de ../branch/BranchContext y mostrá un aviso verde
+</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>    &quot;Disponible para retiro hoy en &lt;branch&gt;&quot; usando la sucursal elegida. Si
+</span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>    product.inStock es false, mostrá en cambio un aviso gris &quot;Sin stock en &lt;branch&gt;&quot;.
+</span><span id="__span-7-20"><a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a>  • Debajo del botón: una fila meta con Marca (product.brand), Garantía
+</span><span id="__span-7-21"><a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a>    (product.warranty) y Disponibilidad (verde &quot;En stock&quot; / gris &quot;Sin stock&quot;).
+</span><span id="__span-7-22"><a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>- &quot;Reservar para retiro&quot; llama addItem(product, cantidad) de useCart(), después
+</span><span id="__span-7-23"><a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a>  notify(...) de useToast(), y el badge del header debe reflejar el nuevo total.
+</span><span id="__span-7-24"><a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a>  Si el producto no tiene stock, deshabilitá el botón.
+</span><span id="__span-7-25"><a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a>
+</span><span id="__span-7-26"><a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a>Usá los tokens de Tailwind (bg-brand, bg-haze, text-accent, text-success…). No
+</span><span id="__span-7-27"><a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a>modifiques src/api/client.js. No agregues dependencias.
+</span></code></pre></div>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="2-corre-y-verifica">2. Corré y verificá</h3>
+<p class="cds--body-01">Desde el storefront, tocá cualquier producto:</p>
+<ol class="cds--list--ordered">
+<li class="cds--list__item">El detalle muestra los datos reales de ese producto.</li>
+<li class="cds--list__item">El selector de cantidad sube y baja (nunca por debajo de 1).</li>
+<li class="cds--list__item">El aviso de disponibilidad menciona la <strong>sucursal elegida</strong> en el header — cambiala con el selector y mirá cómo se actualiza.</li>
+<li class="cds--list__item">"Reservar para retiro" aumenta el badge del carrito según la cantidad elegida.</li>
+<li class="cds--list__item">Probá el <strong>Sony WH-1000XM5</strong> — tiene <code>inStock: false</code>, así que debería mostrarse "Sin stock" y el botón deshabilitado.</li>
+</ol>
+<div class="callout" data-tone="success">
+<p class="callout__title">Checkpoint</p>
+<p class="cds--body-01">La página coincide con <code>product.png</code>, refleja la sucursal elegida y agregar a la reserva actualiza el badge.</p>
+</div>
+<details class="failure">
+<summary>Solución de problemas</summary>
+<ul class="cds--list--unordered">
+<li class="cds--list__item"><strong>"Producto no encontrado" para un producto válido.</strong> El id viene de la URL. Confirmá que las tarjetas del storefront usan <code>/product/${product.id}</code> y que <code>getProduct(id)</code> recibe ese mismo id.</li>
+<li class="cds--list__item"><strong>La cantidad puede llegar a 0 o negativo.</strong> Pedile a Bob: "Limitá el selector de cantidad a un mínimo de 1".</li>
+<li class="cds--list__item"><strong>El aviso no cambia al cambiar de sucursal.</strong> La página debe leer <code>branch</code> de <code>useBranch()</code> y usarlo en el texto, no un valor fijo.</li>
+</ul>
+</details>
+<div class="callout" data-tone="success">
+<p class="callout__title">Criterios de éxito</p>
+<ul class="cds--list--unordered" style="list-style-type: none;">
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>Product.jsx</code> trae y muestra el producto según el id de la URL.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Thumbnail, rating, precio, descripción y chips de specs se renderizan.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> El selector funciona (mín. 1); "Reservar para retiro" agrega esa cantidad.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> El aviso de disponibilidad usa la sucursal de <code>useBranch()</code>.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> El caso sin stock (Sony WH-1000XM5) se renderiza bien.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> La página se parece a <code>product.png</code>.</li>
+</ul>
+</div>
+<h2 class="cds--productive-heading-04" id="parte-4-construi-la-reserva">Parte 4 — Construí la reserva</h2>
+<p class="cds--body-01">La última pantalla. Vas a implementar la <strong>reserva</strong> (el carrito) para que coincida con <code>mockups/cart.png</code>, mostrar un resumen y conectar el botón <strong>Confirmar reserva</strong> para que devuelva una confirmación de retiro en tienda.</p>
+<div class="callout" data-tone="info">
+<p class="callout__title">Lo que vas a construir</p>
+<ul class="cds--list--unordered">
+<li class="cds--list__item"><code>src/pages/Cart.jsx</code> — líneas con selectores de cantidad, un resumen con la sucursal de retiro, y un botón que llama <code>createReservation()</code> y muestra una confirmación con código de reserva.</li>
+<li class="cds--list__item">El estado de reserva vacía.</li>
+</ul>
+</div>
+<p class="cds--body-01"><strong>La meta:</strong> <code>mockups/cart.png</code>. Quedate en <strong>💻 Modo Código</strong>. <em>(Antes de empezar, agregá un par de productos a la reserva así tenés datos con qué trabajar.)</em></p>
+<p class="cds--body-01"><a class="glightbox" href="./assets/images/solutions/voltia/cart.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Mockup de la página de reserva (carrito) de Voltia" src="./assets/images/solutions/voltia/cart.png" /></a></p>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="1-construi-el-carrito">1. Construí el carrito</h3>
+<div class="callout" data-tone="info">
+<p class="callout__title">📎 Paso obligatorio — adjuntá el mockup antes de enviar el prompt</p>
+<p class="cds--body-01"><strong>Adjuntá <code>mockups/cart.png</code></strong> al chat de Bob antes de enviar este prompt (botón de agregar imagen, al lado del de enviar → carpeta <code>mockups/</code>). Igual que en la Parte 2: si abrís la imagen en Bob primero, el selector se abre directo en <code>mockups/</code>.</p>
+</div>
+<p class="cds--body-01"><strong>Prompt para Bob:</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Implementá src/pages/Cart.jsx para que coincida con mockups/cart.png. Reemplazá el
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>placeholder.
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>Leé la reserva con useCart(): { items, subtotal, setQty, removeItem, clear }.
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>Leé la sucursal con useBranch(): { branch }.
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>Layout: un título &quot;Tu reserva&quot;, después dos columnas en desktop (líneas a la
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>izquierda, resumen a la derecha), apiladas en mobile.
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>Líneas (izquierda): para cada item mostrá un thumbnail chico (emoji item.emoji
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>sobre degradado de item.colors), la categoría, el nombre, el precio unitario
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>(formatPrice), un selector de cantidad que llama setQty(item.id, nuevaCantidad), el
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>total de la línea (price × quantity) y un botón &quot;Quitar&quot; que llama removeItem(item.id).
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>Resumen (derecha, en una tarjeta): primero una cajita con la &quot;Sucursal de retiro&quot;
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>(branch de useBranch), después Subtotal (= subtotal de useCart), &quot;Retiro en tienda&quot;
+</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>en verde como &quot;Gratis&quot;, &quot;Impuestos estimados&quot; del 8 % del subtotal (redondeado) y
+</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>un Total = subtotal + impuestos. Después un botón ancho &quot;Confirmar reserva&quot; y la
+</span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>línea &quot;Sin pago online · pagás al retirar en la sucursal&quot;.
+</span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a>
+</span><span id="__span-8-21"><a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a>Estado vacío: cuando items está vacío, mostrá un mensaje amable y un botón que
+</span><span id="__span-8-22"><a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a>vuelve a &quot;/&quot;.
+</span><span id="__span-8-23"><a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a>
+</span><span id="__span-8-24"><a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a>Usá los tokens de Tailwind. Importá formatPrice de ../api/client, useCart de
+</span><span id="__span-8-25"><a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a>../cart/CartContext y useBranch de ../branch/BranchContext. No modifiques
+</span><span id="__span-8-26"><a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a>src/api/client.js. No agregues dependencias.
+</span></code></pre></div>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="2-conecta-el-checkout">2. Conectá el checkout</h3>
+<p class="cds--body-01"><strong>Prompt para Bob:</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Hacé que el botón &quot;Confirmar reserva&quot; funcione:
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>- Al hacer clic, llamá createReservation({ store: branch, items: items.map(i =&gt; ({
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>  id: i.id, quantity: i.quantity })) }) de ../api/client.
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>- Mientras la petición está en curso, deshabilitá el botón y mostrá &quot;Confirmando…&quot;.
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>- Al confirmar, mostrá un estado de confirmación que reemplaza la reserva: un ícono
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>  de check, &quot;¡Reserva confirmada!&quot;, el reservationCode devuelto, la sucursal de
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>  retiro (store), el total y el readyBy, más un botón &quot;Seguir explorando&quot; que vuelve
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>  a &quot;/&quot;. Después llamá clear() para vaciar la reserva.
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>- Si falla, mostrá un mensaje de error chico y reactivá el botón.
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>La API siempre confirma, así que el camino feliz es el que importa — igual manejá
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>el error con elegancia.
+</span></code></pre></div>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="3-corre-y-verifica_1">3. Corré y verificá</h3>
+<ol class="cds--list--ordered">
+<li class="cds--list__item">Agregá productos desde el storefront y la página de producto.</li>
+<li class="cds--list__item">Abrí la reserva (el ícono del carrito en el header).</li>
+<li class="cds--list__item">Cambiá cantidades — los totales de línea, el subtotal, los impuestos y el total se actualizan. Quitar el último de un item elimina la línea.</li>
+<li class="cds--list__item">El resumen muestra la sucursal elegida en el header (cambiala y volvé a la reserva para verlo).</li>
+<li class="cds--list__item">Tocá <strong>Confirmar reserva</strong> → obtenés una confirmación con un <code>reservationCode</code> (como <code>VOL-7QF2K9</code>) y la reserva se vacía (el badge vuelve a 0).</li>
+<li class="cds--list__item">Vaciá la reserva y confirmá que se muestra el estado vacío.</li>
+</ol>
+<div class="callout" data-tone="success">
+<p class="callout__title">Checkpoint</p>
+<p class="cds--body-01">Podés armar una reserva, ver los totales correctos, elegir sucursal, confirmar y obtener un código — el flujo completo de la tienda funciona de punta a punta.</p>
+</div>
+<details class="failure">
+<summary>Solución de problemas</summary>
+<ul class="cds--list--unordered">
+<li class="cds--list__item"><strong>Los totales no se actualizan al cambiar la cantidad.</strong> El selector debe llamar <code>setQty(item.id, nuevaCantidad)</code> de <code>useCart()</code> (no estado local). El <code>subtotal</code> de <code>useCart()</code> se recalcula solo cuando cambia el carrito.</li>
+<li class="cds--list__item"><strong>No pasa nada al confirmar.</strong> Abrí la consola. El cuerpo debe ser <code>{ store, items: [{ id, quantity }] }</code>.</li>
+<li class="cds--list__item"><strong>La reserva se vacía pero la confirmación desaparece al refrescar.</strong> Es lo esperado — la confirmación es estado de pantalla. Deshabilitá "Confirmar reserva" cuando no hay items.</li>
+</ul>
+</details>
+<div class="callout" data-tone="success">
+<p class="callout__title">Criterios de éxito</p>
+<ul class="cds--list--unordered" style="list-style-type: none;">
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>Cart.jsx</code> lista las líneas con selectores y "Quitar" funcionando.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> El resumen muestra sucursal, subtotal, retiro gratis, impuestos 8 % y total.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Confirmar reserva</strong> llama <code>createReservation()</code> y muestra una confirmación con <code>reservationCode</code>.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> La reserva se vacía tras confirmar; el estado vacío se renderiza.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> La página se parece a <code>cart.png</code>.</li>
+</ul>
+</div>
+<h2 class="cds--productive-heading-04" id="parte-5-embebe-el-asistente-de-watsonx-orchestrate">Parte 5 — Embebé el Asistente de watsonx Orchestrate ⭐</h2>
+<p class="cds--body-01">Esta es <strong>la parte que define el lab</strong>. Tenés una tienda que funciona; ahora le vas a dar el cerebro: el <strong>Asistente de Compra</strong> de watsonx Orchestrate. El asistente genera un snippet de JavaScript que, al cargarse en la página, agrega un <strong>chat flotante</strong> en la esquina inferior derecha (exactamente donde lo muestran los mockups 💬).</p>
+<p class="cds--body-01">Lo bueno: <strong>el snippet ya viene en el starter</strong>, en el archivo <code>wxo-snippet.html</code>, apuntando a un asistente funcional. Así que vas a poder embeber el chat aunque no hayas terminado el Lab 2. Y, como todo el lab, <strong>lo hace Bob</strong>: vos solo elegís qué asistente usar y le das un prompt.</p>
+<div class="callout" data-tone="info">
+<p class="callout__title">Lo que vas a lograr</p>
+<ul class="cds--list--unordered">
+<li class="cds--list__item">Elegir qué asistente embeber (el tuyo del Lab 2 o el provisto).</li>
+<li class="cds--list__item">Pedirle a Bob que inserte el snippet en <code>index.html</code>.</li>
+<li class="cds--list__item">Ver el asistente flotando sobre tu tienda y conversar con él.</li>
+</ul>
+</div>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="1-elegi-que-asistente-embeber">1. Elegí qué asistente embeber</h3>
+<p class="cds--body-01">En la raíz del proyecto abrí <strong><code>wxo-snippet.html</code></strong>. Es el archivo que contiene el bloque <code>&lt;script&gt;</code> del asistente. Tenés <strong>dos opciones</strong> — elegí una:</p>
+<ul class="cds--list--unordered">
+<li class="cds--list__item">
+<p class="cds--body-01"><strong>Opción A · Tu agente del Lab 2.</strong> Si completaste el Lab 2 y copiaste tu snippet (watsonx Orchestrate → tu agente → <strong>Channels</strong> → <strong>Embedded agent</strong> → <strong>Live</strong> → <strong>Embed on your website</strong>), <strong>reemplazá todo el contenido de <code>wxo-snippet.html</code></strong> por ese snippet. (No te preocupes por <code>rootElementID</code>: Bob lo ajusta en el paso 2.)</p>
+</li>
+<li class="cds--list__item">
+<p class="cds--body-01"><strong>Opción B · El asistente provisto.</strong> ¿No tenés snippet del Lab 2, o querés ir directo? <strong>No toques nada.</strong> <code>wxo-snippet.html</code> ya apunta a un asistente funcional para el workshop — funciona tal cual.</p>
+</li>
+</ul>
+<div class="callout" data-tone="info">
+<p class="callout__title">En los dos casos el siguiente paso es el mismo</p>
+<p class="cds--body-01">Bob lee <code>wxo-snippet.html</code> y mete su <code>&lt;script&gt;</code> en <code>index.html</code>. No tenés que editar <code>index.html</code> a mano.</p>
+</div>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="2-pedile-a-bob-que-inserte-el-snippet">2. Pedile a Bob que inserte el snippet</h3>
+<p class="cds--body-01">Pasá Bob a <strong>💻 Modo Código</strong> y mandale este prompt <strong>tal cual</strong>:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Leé el archivo wxo-snippet.html que está en la raíz del proyecto. Copiá de él
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>ÚNICAMENTE el bloque &lt;script&gt;…&lt;/script&gt; (ignorá el comentario HTML de arriba) y
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>pegalo en index.html justo antes de la etiqueta de cierre &lt;/body&gt;, debajo del
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>&lt;div id=&quot;wxo-root&quot;&gt;&lt;/div&gt; que ya existe.
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>Reglas estrictas:
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>- Pegá el &lt;script&gt; TAL CUAL. NO lo envuelvas en un componente de React, NO crees
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>  un AssistantWidget, NO agregues useEffect ni lógica de limpieza: el web chat
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>  se rompe con React.StrictMode si se monta/desmonta desde React.
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>- Si el snippet trae rootElementID: &quot;root&quot;, cambialo a &quot;wxo-root&quot;. Si ya dice
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>  &quot;wxo-root&quot;, dejalo como está.
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>- No modifiques los valores de configuración (orchestrationID, hostURL, crn,
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>  agentId, agentEnvironmentId): dejalos exactamente como vienen en wxo-snippet.html.
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>- No toques el &lt;div id=&quot;root&quot;&gt;, ni src/main.jsx, ni ningún otro archivo. El único
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>  archivo que editás es index.html.
+</span></code></pre></div>
+<div class="callout" data-tone="info">
+<p class="callout__title">¿Por qué <code>wxo-root</code> y no <code>root</code>?</p>
+<p class="cds--body-01">En una app de React + Vite, el <code>&lt;div id="root"&gt;</code> le pertenece a React (ahí monta toda la tienda). Si el web chat también apuntara a <code>"root"</code>, los dos se pelearían por el mismo nodo. Por eso el starter trae un contenedor aparte, <code>&lt;div id="wxo-root"&gt;</code>, solo para el asistente.</p>
+</div>
+<div class="callout" data-tone="warning">
+<p class="callout__title">No lo conviertas en un componente de React</p>
+<p class="cds--body-01">Pegar el <code>&lt;script&gt;</code> directo en <code>index.html</code> es a propósito: el snippet corre <strong>una sola vez</strong> al cargar la página, fuera del ciclo de vida de React. Si lo movés a un componente con <code>useEffect</code> y <em>cleanup</em>, <code>React.StrictMode</code> (activo en <code>src/main.jsx</code>) lo monta y desmonta dos veces en desarrollo; la limpieza borra <code>window.wxOConfiguration</code> y saca el loader antes de tiempo, y <strong>el botón del chat nunca aparece</strong>. Dejalo en <code>index.html</code>.</p>
+</div>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="3-reinicia-y-proba">3. Reiniciá y probá</h3>
+<p class="cds--body-01">Vite a veces no recarga cambios de <code>index.html</code> en caliente — <strong>reiniciá</strong> <code>npm run dev</code>. Abrí <code>http://localhost:5173</code>:</p>
+<ol class="cds--list--ordered">
+<li class="cds--list__item">Tras un par de segundos aparece el <strong>botón flotante del asistente</strong> abajo a la derecha.</li>
+<li class="cds--list__item">Hacé clic: se abre el chat del <strong>Asistente de Compra</strong>.</li>
+<li class="cds--list__item">Probá esta consulta:</li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Busco una laptop para diseño gráfico, voy a ir a Dot Shopping.
+</span></code></pre></div>
+<div class="callout" data-tone="tip">
+<p class="callout__title">Resultado esperado</p>
+<p class="cds--body-01">El asistente consulta el catálogo, verifica el stock en <strong>DOT Shopping</strong> en tiempo real y recomienda hasta 2 laptops disponibles <strong>que existen en Voltia</strong> (p. ej. MacBook Pro 16" o Dell XPS 15), con su nombre comercial y sin tecnicismos internos.</p>
+</div>
+<div class="callout" data-tone="success">
+<p class="callout__title">Checkpoint — el lab cerró el círculo</p>
+<p class="cds--body-01">El cliente entra a Voltia, no sabe qué comprar, abre el asistente, recibe una recomendación con disponibilidad real para su sucursal… y ese producto está, tal cual, en la tienda que vos construiste. Frontend (Lab 3) + agentes (Lab 2) + inventario en vivo (Lab 1), todo junto.</p>
+</div>
+<details class="failure">
+<summary>Solución de problemas</summary>
+<ul class="cds--list--unordered">
+<li class="cds--list__item"><strong>No aparece el botón flotante.</strong> (1) Confirmá que el <code>&lt;script&gt;</code> quedó <strong>antes</strong> de <code>&lt;/body&gt;</code> en <code>index.html</code> y que <strong>reiniciaste</strong> <code>npm run dev</code>. (2) Abrí la consola del navegador y buscá errores. (3) Verificá que Bob <strong>no</strong> haya creado un componente de React (<code>AssistantWidget</code>) para el chat: tiene que estar pegado directo en <code>index.html</code> (ver el aviso del paso 2).</li>
+<li class="cds--list__item"><strong>El chat aparece pero está vacío / no responde</strong> (Opción A). Confirmá que tu snippet trae los <strong>cuatro</strong> valores —<code>orchestrationID</code>, <code>crn</code>, <code>agentId</code> y <code>agentEnvironmentId</code>— y que el agente está <strong>desplegado</strong> (Deployed) en watsonx Orchestrate con su canal <em>Embedded agent</em> en <strong>Live</strong>. Que falte <code>agentEnvironmentId</code> es una causa típica de que el chat no levante.</li>
+<li class="cds--list__item"><strong>Error de origen / dominio no permitido en la consola</strong> (Opción A). En watsonx Orchestrate, en la configuración del canal <em>Embedded agent</em>, agregá <code>http://localhost:5173</code> como origen permitido.</li>
+<li class="cds--list__item"><strong>El asistente "tapa" el carrito o el footer.</strong> Es normal que flote por encima; el <code>z-index</code> del web chat es alto a propósito. No necesitás ajustarlo para el lab.</li>
+</ul>
+</details>
+<div class="callout" data-tone="success">
+<p class="callout__title">Criterios de éxito</p>
+<ul class="cds--list--unordered" style="list-style-type: none;">
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Bob insertó el <code>&lt;script&gt;</code> de <code>wxo-snippet.html</code> en <code>index.html</code> (no en un componente).</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>rootElementID</code> apunta a <code>"wxo-root"</code>, no a <code>"root"</code>.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> El botón flotante del asistente aparece sobre la tienda.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> El asistente responde y recomienda productos que existen en Voltia.</li>
+</ul>
+</div>
+<h2 class="cds--productive-heading-04" id="parte-6-animaciones">Parte 6 — Animaciones</h2>
+<p class="cds--body-01">Tu tienda funciona y ya tiene su asistente. Ahora vas a usar <strong>Framer Motion</strong> (ya instalado) para que se sienta pulida: una grilla que entra escalonada, un toast con rebote, el badge del carrito que "salta" y una confirmación de reserva satisfactoria.</p>
+<div class="callout" data-tone="info">
+<p class="callout__title">Antes de empezar</p>
+<p class="cds--body-01">Vas a editar algunos archivos que estaban "hechos" (<code>ToastContext.jsx</code>, <code>Header.jsx</code>) — es lo esperado: esta es la fase de pulido. Usá <strong>💻 Modo Código</strong>.</p>
+</div>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="1-que-la-grilla-cobre-vida">1. Que la grilla cobre vida</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Usando framer-motion (ya instalado), animá la grilla del storefront.
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>- En src/pages/Home.jsx, envolvé la grilla en un contenedor motion que escalone a
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>  sus hijos (staggerChildren ~0.06s) al cargar.
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>- En src/components/ProductCard.jsx, convertí la tarjeta en un elemento motion:
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>  initial { opacity: 0, y: 16 } animando a { opacity: 1, y: 0 }, más un whileHover
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>  sutil (y: -4) y un whileTap. Mantené transiciones de ~200–300ms. No cambies la
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>  lógica de datos.
+</span></code></pre></div>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="2-el-momento-de-agregar-a-la-reserva">2. El momento de agregar a la reserva</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Hacé que agregar a la reserva se sienta bien con framer-motion:
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>1. En src/toast/ToastContext.jsx, envolvé la lista de toasts en &lt;AnimatePresence&gt; y
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>   hacé que cada toast sea un motion.div que entra desde abajo con un spring
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>   (initial { opacity: 0, y: 20, scale: 0.9 } -&gt; animate completo; exit de vuelta).
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>2. En src/components/Header.jsx, hacé que el badge del carrito &quot;salte&quot; cuando cambia
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>   el número: dale key={count} y un pequeño rebote de escala al montarse.
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>3. En el botón &quot;+&quot; de la tarjeta, agregá un whileTap que lo achique al presionar.
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>Mantenelo rápido y elástico, no rebotón de más.
+</span></code></pre></div>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="3-suaviza-la-pagina-de-producto-y-la-confirmacion">3. Suavizá la página de producto y la confirmación</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>En src/pages/Product.jsx, animá la entrada con framer-motion: el thumbnail
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>aparece/escala desde la izquierda y la columna de detalle desde la derecha, en un
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>stagger corto. Agregá un whileTap al botón &quot;Reservar para retiro&quot;.
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>En src/pages/Cart.jsx: animá las líneas con &lt;AnimatePresence&gt; para que quitar un
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>item se desvanezca/deslice. Cuando aparece la confirmación, que el check entre con
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>un spring y los detalles suban debajo. Rápido y prolijo.
+</span></code></pre></div>
+<div class="callout" data-tone="warning">
+<p class="callout__title">Que el movimiento guíe, no que pelee por atención</p>
+<p class="cds--body-01">Rápido (~150–300ms) y sutil. Pedile a Bob que respete <code>prefers-reduced-motion</code> para suavizar/desactivar el movimiento no esencial.</p>
+</div>
+<div class="callout" data-tone="success">
+<p class="callout__title">Criterios de éxito</p>
+<ul class="cds--list--unordered" style="list-style-type: none;">
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Las tarjetas entran escalonadas con feedback de hover/tap.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Agregar a la reserva hace entrar el toast con spring y "saltar" el badge.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> La página de producto entra suave; la confirmación tiene un estado animado.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Nada se siente lento; el movimiento es de buen gusto.</li>
+</ul>
+</div>
+<h2 class="cds--productive-heading-04" id="parte-7-revision-y-pulido">Parte 7 — Revisión y pulido</h2>
+<p class="cds--body-01">Tenés una tienda funcionando, animada y con asistente. La fase de revisión se asegura de que la app aguante más allá del camino feliz: que sea <strong>responsive</strong>, <strong>accesible</strong> y que los casos borde no la rompan.</p>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="responsive-y-accesibilidad">Responsive y accesibilidad</h3>
+<p class="cds--body-01">Achicá el navegador a ancho de teléfono.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>Asegurate de que las tres pantallas sean responsive: la grilla colapsa a menos
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>columnas, el detalle de producto pasa de dos columnas a apilado, y la reserva apila
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>el resumen debajo de las líneas en pantallas chicas. Arreglá cualquier layout que
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>se desborde o superponga.
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>Después una pasada rápida de accesibilidad: cada thumbnail con texto alternativo
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>con sentido, botones y links como &lt;button&gt;/&lt;a&gt; reales con etiquetas claras, los
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>selectores y botones navegables por teclado, y que los estados de carga, reserva
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>vacía y &quot;producto no encontrado&quot; se rendericen sin errores. Listá qué cambiaste.
+</span></code></pre></div>
+<p class="cds--body-01">Después probá los casos borde vos mismo:</p>
+<ul class="cds--list--unordered" style="list-style-type: none;">
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Reserva vacía muestra su estado, no un resumen roto.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Producto sin stock (Sony WH-1000XM5) se renderiza bien y con el botón deshabilitado.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Cambiar de sucursal se refleja en la home, el producto y la reserva.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> El asistente sigue apareciendo y respondiendo después de todos los cambios.</li>
+</ul>
+<div class="callout" data-tone="info">
+<p class="callout__title">Reflexión</p>
+<p class="cds--body-01">Mirá el ciclo completo: <strong>Planificaste</strong> (mockups + contrato de datos → plan), <strong>Construiste</strong> (pantalla por pantalla desde una captura), <strong>Embebiste</strong> la inteligencia (el Asistente de watsonx Orchestrate), <strong>Puliste</strong> con animaciones y <strong>Revisaste</strong> responsive, accesibilidad y casos borde. ¿Dónde te ahorró tiempo el esqueleto pre-armado? ¿Dónde un prompt específico ganó contra uno vago?</p>
+</div>
+<div class="callout" data-tone="success">
+<p class="callout__title">Criterios de éxito</p>
+<ul class="cds--list--unordered" style="list-style-type: none;">
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Las tres pantallas son responsive.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Accesibilidad y casos borde (vacío/error/sin stock) manejados.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> El asistente sigue apareciendo y respondiendo después de los cambios.</li>
+</ul>
+</div>
+<h2 class="cds--productive-heading-04" id="parte-8-documenta-la-app">Parte 8 — Documentá la app</h2>
+<p class="cds--body-01">El software no termina cuando funciona, termina cuando la próxima persona lo entiende. En esta parte vas a hacer que Bob genere un sitio de documentación con <strong>MkDocs</strong>.</p>
+<p class="cds--body-01">Para ahorrar tiempo, <strong>el esqueleto ya está armado en el starter</strong>: <code>requirements.txt</code> (con <code>mkdocs-material</code>), la carpeta <code>docs/</code> con una página por sección, y <code>docs/images/</code> con los tres mockups ya copiados. Bob solo tiene que escribir el <strong>tema</strong> (<code>mkdocs.yml</code>) y <strong>completar el contenido</strong> de cada página.</p>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="1-genera-la-documentacion">1. Generá la documentación</h3>
+<p class="cds--body-01">En <strong>💻 Modo Código</strong>, mandale este prompt a Bob:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>Documentá este proyecto (Voltia) para un desarrollador nuevo como un sitio MkDocs.
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>El esqueleto YA EXISTE en el proyecto: requirements.txt (con mkdocs-material), la
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>carpeta docs/ con las páginas stub de abajo, y docs/images/ con home.png,
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>product.png y cart.png ya copiados. NO crees requirements.txt ni vuelvas a copiar
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>imágenes.
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>Leé src/ y documentá lo que REALMENTE hay — no inventes APIs. Referenciá los
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>archivos fuente como código en línea (ej. `src/api/client.js`), nunca como links.
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>IMPORTANTE: el asistente embebido es de **watsonx Orchestrate**. Escribilo siempre
+</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>así, exactamente: &quot;watsonx Orchestrate&quot;. NUNCA lo llames &quot;watsonx Assistant&quot;.
+</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>
+</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>Tu trabajo:
+</span><span id="__span-16-14"><a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a>1. Creá mkdocs.yml en la raíz: tema Material, en los colores de Voltia (azul/cyan),
+</span><span id="__span-16-15"><a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a>   con una nav que liste todas las páginas de docs/ de abajo.
+</span><span id="__span-16-16"><a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a>2. Completá el contenido de cada una de estas páginas que YA existen (reemplazá su
+</span><span id="__span-16-17"><a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a>   contenido stub):
+</span><span id="__span-16-18"><a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a>   - docs/index.md            : qué es Voltia; un tour corto de features
+</span><span id="__span-16-19"><a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a>   - docs/getting-started.md  : requisitos, instalación, npm run dev
+</span><span id="__span-16-20"><a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a>   - docs/architecture.md     : SPA React + Vite, las rutas, el límite del cliente
+</span><span id="__span-16-21"><a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a>                                de datos (src/api/client.js), el catálogo local
+</span><span id="__span-16-22"><a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a>                                (src/api/catalog.js), carrito y sucursal globales, y
+</span><span id="__span-16-23"><a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a>                                cómo embebemos el asistente de watsonx Orchestrate
+</span><span id="__span-16-24"><a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a>   - docs/assistant.md        : cómo está embebido el agente (el &lt;script&gt; en
+</span><span id="__span-16-25"><a id="__codelineno-16-25" name="__codelineno-16-25" href="#__codelineno-16-25"></a>                                index.html, el div #wxo-root, rootElementID)
+</span><span id="__span-16-26"><a id="__codelineno-16-26" name="__codelineno-16-26" href="#__codelineno-16-26"></a>   - docs/screens/storefront.md, docs/screens/product.md, docs/screens/cart.md :
+</span><span id="__span-16-27"><a id="__codelineno-16-27" name="__codelineno-16-27" href="#__codelineno-16-27"></a>                                una página por pantalla. En cada una embebé arriba la
+</span><span id="__span-16-28"><a id="__codelineno-16-28" name="__codelineno-16-28" href="#__codelineno-16-28"></a>                                captura correspondiente desde ../images/ (home.png,
+</span><span id="__span-16-29"><a id="__codelineno-16-29" name="__codelineno-16-29" href="#__codelineno-16-29"></a>                                product.png, cart.png respectivamente).
+</span><span id="__span-16-30"><a id="__codelineno-16-30" name="__codelineno-16-30" href="#__codelineno-16-30"></a>
+</span><span id="__span-16-31"><a id="__codelineno-16-31" name="__codelineno-16-31" href="#__codelineno-16-31"></a>No modifiques src/. No agregues dependencias nuevas a requirements.txt.
+</span></code></pre></div>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="2-corre-el-sitio-de-docs">2. Corré el sitio de docs</h3>
+<p class="cds--body-01"><strong>Abrí una terminal nueva</strong> (dejá <code>npm run dev</code> corriendo en la otra) y posicionate en la carpeta <code>voltia-starter</code>. Después corré los comandos <strong>uno por uno</strong>.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">macOS / Linux</label><label for="__tabbed_1_2">Windows</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><code>python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+mkdocs serve
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-powershell highlight"><pre><code>python -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+mkdocs serve
+</code></pre></div>
+</div>
+</div>
+</div>
+<p class="cds--body-01">Abrí <code>http://localhost:8000</code>. Deberías ver un sitio navegable y con buscador, documentando la tienda que construiste y cómo embebiste el asistente.</p>
+<h2 class="cds--productive-heading-04" id="listo">🎉 ¡Listo!</h2>
+<p class="cds--body-01">Llevaste <strong>Voltia</strong> por todo el ciclo: <strong>planificar → construir (pantalla por pantalla) → embeber el asistente de IA → animar → revisar → documentar</strong>, todo guiado por <strong>IBM Bob</strong>. Y, sobre todo, <strong>conectaste los tres labs</strong>: el frontend que acabás de construir es la cara visible del sistema de agentes del Lab 2, que a su vez razona sobre el inventario en tiempo real del Lab 1.</p>
+<div class="callout" data-tone="info">
+<p class="callout__title">El rol de IBM Bob</p>
+<p class="cds--body-01">A lo largo del lab, Bob convirtió instrucciones en lenguaje natural y mockups en componentes React funcionales, te ayudó a embeber el agente sin pelearte con la integración y revisó el diseño en una sola pasada. La ingeniería de software asistida por IA te dejó enfocarte en la experiencia del cliente y la arquitectura, no en el plumbing.</p>
+</div>
+
+
+
+
+
+
+
+
+  </section>
+</div>

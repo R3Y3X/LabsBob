@@ -40,5 +40,12 @@
   --space-8: 64px;   /* = $spacing-10 */
 
   /* Carbon container width */
-  --container-width: 1584px;
+  --container-width: 1312px;
+}
+
+/* Keep Carbon's token contract available even when the CDN stylesheet is slow
+   or unavailable during a local static preview. */
+body {
+  --cds-interactive: var(--hub-core, #0f62fe);
+  --cds-focus: var(--hub-focus, #0f62fe);
 }

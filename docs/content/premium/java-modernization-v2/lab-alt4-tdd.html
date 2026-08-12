@@ -2,140 +2,332 @@
 
   <div class="lab-banner">
     <div class="lab-banner__tags">
-      <span class="cds--tag cds--tag--teal">Bob Premium · Java</span>
-      <span class="cds--tag cds--tag--cool-gray">~30 min</span>
       <span class="cds--tag cds--tag--purple">TDD</span>
-      <span class="cds--tag cds--tag--magenta">Avanzado</span>
+      <span class="cds--tag cds--tag--cool-gray">~20 min</span>
     </div>
-    <h1 class="cds--productive-heading-05 lab-banner__title">LAB Alt-4 — Test-Driven Development (TDD)</h1>
+    <h1 class="cds--productive-heading-05 lab-banner__title">LAB alternativo 4 — Desarrollo guiado por tests (TDD)</h1>
     <p class="cds--body-02 lab-banner__summary">
-      Implementa <code>PrescriptionResource.java</code> desde cero para hacer pasar tests ya escritos,
-      siguiendo el ciclo <strong>Red → Green → Refactor</strong>.
-      Criterio de éxito: <code>mvn test</code> → todos los tests pasan (GREEN).
+      Implementa desarrollo API-first usando metodología Test-Driven Development (TDD):
+      genera tests desde una especificación OpenAPI 3.0 y luego implementa el código guiado por esos tests.
+      Ciclo <strong>Red → Green → Refactor</strong>.
     </p>
+
+    <div class="lab-banner__metrics">
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">8–15</span>
+        <span class="lab-banner__metric-label">BobCoins estimados</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">~20</span>
+        <span class="lab-banner__metric-label">minutos</span>
+      </div>
+    </div>
   </div>
 
-  <figure class="lab-figure">
-    <img src="./assets/images/labs/java-modernization-v2/lab-alt4-banner.png"
-         alt="Banner del LAB Alt-4 — Test-Driven Development ciclo Red Green Refactor"
-         class="lab-figure__img" />
-  </figure>
-
-  <!-- Contexto -->
-  <section class="lab-section" aria-labelledby="labalt4-contexto">
-    <h2 class="cds--productive-heading-03" id="labalt4-contexto">📋 Ciclo TDD</h2>
-    <div class="callout" data-tone="note">
-      <p class="callout__title">Regla fundamental del TDD</p>
-      <p>Los tests ya están escritos en <code>src/test/</code>. Tu trabajo es implementar el código de producción para que pasen.
-         <strong>Los archivos en <code>src/test/</code> NO se modifican.</strong></p>
+  <!-- Qué construirás -->
+  <section class="lab-section" aria-labelledby="labalt4-que">
+    <h2 class="cds--productive-heading-03" id="labalt4-que">Qué construirás</h2>
+    <p class="cds--body-01" style="max-width:72ch">
+      Una implementación JAX-RS completa de <code>PrescriptionResource</code> (más modelos y repositorios de soporte),
+      generada a partir de los tests, que a su vez se generaron desde la especificación OpenAPI. Puro Red-Green-Refactor.
+    </p>
+    <div class="callout" data-tone="note" style="margin-top:var(--cds-spacing-05,1rem)">
+      <p class="callout__title">Alternativa independiente al Lab 4</p>
+      <p>No necesitas haber completado los Labs 1–4 — solo la especificación OpenAPI en el bundle del workshop.</p>
     </div>
-    <div class="callout" data-tone="note">
-      <p class="callout__title">💡 Prerequisito</p>
-      <p>Lee <code>prescription-api-spec.yaml</code> — es el contrato que debes implementar antes de empezar.</p>
+    <div class="callout" data-tone="note" style="margin-top:var(--cds-spacing-04,0.75rem)">
+      <p class="callout__title">Un solo modo durante todo el lab</p>
+      <p>Cada ejercicio se ejecuta en el único Agent Mode de Bob — no hay nada que cambiar entre generar tests, implementar y comparar.</p>
     </div>
   </section>
 
-  <!-- Checklist -->
-  <section class="lab-section" aria-labelledby="labalt4-check">
-    <h2 class="cds--productive-heading-03" id="labalt4-check">✅ Checklist antes de empezar</h2>
+  <!-- Qué es TDD -->
+  <section class="lab-section" aria-labelledby="labalt4-tdd">
+    <h2 class="cds--productive-heading-03" id="labalt4-tdd">¿Qué es Test-Driven Development?</h2>
+    <p class="cds--body-01" style="max-width:72ch;margin-bottom:var(--cds-spacing-05,1rem)">
+      TDD es una metodología donde los tests se escriben antes que el código de implementación. El ciclo TDD sigue tres pasos:
+    </p>
+    <ol class="cds--list--ordered">
+      <li class="cds--list__item"><strong>Red</strong> — escribir un test que falle y defina la funcionalidad deseada</li>
+      <li class="cds--list__item"><strong>Green</strong> — escribir el código mínimo para que el test pase</li>
+      <li class="cds--list__item"><strong>Refactor</strong> — mejorar el código manteniendo los tests en verde</li>
+    </ol>
+
+    <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">TDD con especificaciones de API</h3>
     <ul class="cds--list--unordered">
-      <li class="cds--list__item">Carpeta <code>snapTDD/</code> abierta como raíz en Bob</li>
-      <li class="cds--list__item"><code>java -version</code> dice <code>21</code></li>
-      <li class="cds--list__item">Lee <code>prescription-api-spec.yaml</code> antes de iniciar</li>
+      <li class="cds--list__item"><strong>Contrato claro</strong> — la especificación API define el comportamiento esperado antes de la implementación</li>
+      <li class="cds--list__item"><strong>Tests completos</strong> — genera suites de test completas desde la especificación</li>
+      <li class="cds--list__item"><strong>Guía de implementación</strong> — los tests dirigen los detalles de implementación</li>
+      <li class="cds--list__item"><strong>Aseguramiento de calidad</strong> — garantiza que la implementación coincide con la especificación</li>
     </ul>
   </section>
 
-  <!-- Fase 1 — RED -->
-  <section class="lab-section" aria-labelledby="labalt4-fase1">
-    <h2 class="cds--productive-heading-03" id="labalt4-fase1">FASE 1 — RED (confirmar que los tests fallan)</h2>
+  <!-- Prerrequisitos -->
+  <div class="callout" data-tone="note">
+    <p class="callout__title">Antes de empezar — configura el entorno</p>
+    <p>Alternativa al Lab 4. Usa <strong>Java 21</strong> y Maven. Lee <code>prescription-api-spec.yaml</code> antes de iniciar. Sigue la guía de setup del overview si aún no lo has hecho.</p>
+    <a class="cds--link" href="#/lab/java-modernization-v2/overview">Ver guía de setup en el overview →</a>
+  </div>
 
-    <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Leer el spec, listar los tests y confirmar RED</h3>
-      <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
-        <pre><code>Alt-Lab 4: implementar la Prescription API usando TDD (Red → Green → Refactor).
-
-Carpeta raíz: la que está abierta (snapTDD).
-Los tests ya están en src/test/. Solo añades código de producción.
-Regla: los tests NO se modifican.
-
----
-
-FASE 1 — RED (confirmar que los tests fallan)
-
-1. Lee prescription-api-spec.yaml y resume:
-   - Los 4 endpoints, modelos Prescription/PrescriptionRequest y reglas de negocio
-
-2. Lee src/test/java/com/pharmacy/api/PrescriptionResourceTest.java
-   y lista todos los tests con su @DisplayName
-
-3. Ejecuta: mvn test
-   Confirma que los tests FALLAN — este es el RED del ciclo TDD.
-   Muéstrame el output completo.
-
-Preséntame el análisis. Cuando yo diga "adelante", pasamos a Fase 2.</code></pre>
+  <section class="lab-workspace-setup" aria-labelledby="labalt4-workspace">
+    <div class="lab-workspace-setup__box">
+      <span class="lab-workspace-setup__badge">Paso obligatorio — antes de cualquier prompt</span>
+      <h2 class="lab-workspace-setup__title" id="labalt4-workspace">Abre esta carpeta como raíz en Bob</h2>
+      <p class="lab-workspace-setup__lead">
+        Descarga el bundle del workshop (solo necesitas <code>prescription-api-spec.yaml</code> para este lab).
+        Al abrir <code>snapTDD</code>, Bob inicia un chat nuevo.
+      </p>
+      <div class="lab-workspace-setup__path">
+        <p class="lab-workspace-setup__path-label">File → Open Folder</p>
+        <code class="lab-workspace-setup__path-value">.../simple-pharmacy-workshop-v2/labs/alt-lab4-test-driven-development/snapTDD/</code>
       </div>
-      <figure class="lab-figure">
-        <img src="./assets/images/labs/java-modernization-v2/lab-alt4-phase1-red.png"
-             alt="Terminal mostrando mvn test con tests fallando en rojo, confirmando el estado RED del ciclo TDD"
-             class="lab-figure__img" />
-        <figcaption class="lab-figure__caption">Terminal: <code>mvn test</code> falla — estado <strong>RED</strong> confirmado</figcaption>
-      </figure>
+      <ul class="lab-workspace-setup__checks">
+        <li>En el explorador de Bob deben verse <code>pom.xml</code> y <code>prescription-api-spec.yaml</code> en la raíz</li>
+        <li><strong>No</strong> abras <code>simple-pharmacy-workshop-v2/</code> ni <code>labs/</code></li>
+        <li>Java 21 activo (<code>java -version</code>)</li>
+      </ul>
     </div>
   </section>
 
-  <!-- Fase 2 — GREEN -->
-  <section class="lab-section" aria-labelledby="labalt4-fase2">
-    <h2 class="cds--productive-heading-03" id="labalt4-fase2">FASE 2 — GREEN (implementar para pasar los tests)</h2>
+  <!-- Estado inicial -->
+  <section class="lab-section" aria-labelledby="labalt4-estado">
+    <h2 class="cds--productive-heading-03" id="labalt4-estado">Estado inicial del snapshot</h2>
+    <p class="cds--body-01" style="max-width:72ch;margin-bottom:var(--cds-spacing-05,1rem)">
+      El snapshot incluye la especificación, un <code>pom.xml</code> listo para compilar y el layout Maven vacío —
+      puedes compilar y ejecutar tests desde el primer turno (el verdadero inicio de Red-Green-Refactor).
+      Solo generas los tests y la implementación:
+    </p>
+    <div class="code-block">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>alt-lab4-test-driven-development/
+└── snapTDD/
+    ├── pom.xml                       ← LISTO — Java 21 + JUnit 5 + Mockito + jakarta JAX-RS
+    ├── prescription-api-spec.yaml    ← la especificación OpenAPI
+    └── src/
+        ├── main/java/com/pharmacy/{api,model,repository}/   ← vacío, listo para tu código
+        └── test/java/com/pharmacy/api/                      ← vacío, listo para tus tests</code></pre>
+    </div>
+    <p class="cds--body-01" style="max-width:72ch;margin-top:var(--cds-spacing-05,1rem)">Rellenarás con Bob:</p>
+    <div class="code-block">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>        ├── main/java/com/pharmacy/api/
+        │       ├── PrescriptionResource.java       (generas, Ejercicio 2)
+        │       ├── Prescription.java / Medicine.java
+        │       └── PrescriptionRepository.java / MedicineRepository.java
+        └── test/java/com/pharmacy/api/
+                └── PrescriptionResourceTest.java    (generas, Ejercicio 1)</code></pre>
+    </div>
 
-    <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Implementar los 4 pasos en orden</h3>
-      <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
-        <pre><code>FASE 2 — GREEN (implementar para pasar los tests)
-
-Muéstrame cada archivo completo antes de crearlo.
-
-Paso 1 — Modelo Prescription (campos mínimos requeridos por los tests)
-Paso 2 — MedicineRepository (si no existe): getInstance(), findById, existsById, getMedicineName
-Paso 3 — PrescriptionRepository (si no existe): getInstance(), findAll, findById, save, generateId, update
-
-Paso 4 — PrescriptionResource (el núcleo del lab):
-  GET  /prescriptions          → Lista todas
-  GET  /prescriptions/{id}     → 200 existe, 404 no existe
-  POST /prescriptions          → 400 si medicineId inválido, 201 con reglas de negocio
-                                  (prescriptionDate=now, expiryDate=now+30días, status=PENDING)
-  PUT  /prescriptions/{id}/validate → 404 no existe, 400 no PENDING, 200 PENDING→VALIDATED
-
-Usa jakarta.ws.rs.* para todas las anotaciones JAX-RS.</code></pre>
-      </div>
-      <figure class="lab-figure">
-        <img src="./assets/images/labs/java-modernization-v2/lab-alt4-phase2-implementation.png"
-             alt="Bob implementando PrescriptionResource.java con los 4 endpoints JAX-RS para hacer pasar los tests"
-             class="lab-figure__img" />
-        <figcaption class="lab-figure__caption">Bob implementa <code>PrescriptionResource.java</code> — los 4 endpoints del spec</figcaption>
-      </figure>
+    <div class="callout" data-tone="warning" style="margin-top:var(--cds-spacing-05,1rem)">
+      <p class="callout__title">Lo que ya está cableado (no lo recrees)</p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item"><code>snapTDD/pom.xml</code> está listo — Java 21, JUnit 5, Mockito, AssertJ y Jakarta JAX-RS API + runtime (<code>jakarta.ws.rs.*</code>). No pidas a Bob que lo cree o reemplace.</li>
+        <li class="cds--list__item">Las carpetas Maven <code>src/main</code> y <code>src/test</code> ya existen.</li>
+        <li class="cds--list__item">Todo el proyecto usa el namespace <code>jakarta</code> — mezclar <code>javax.ws.rs</code> rompe la compilación.</li>
+      </ul>
     </div>
   </section>
 
-  <!-- Fase 3 — GREEN verificación -->
-  <section class="lab-section" aria-labelledby="labalt4-fase3">
-    <h2 class="cds--productive-heading-03" id="labalt4-fase3">FASE 3 — GREEN verificación</h2>
+  <!-- Configuración del entorno -->
+  <section class="lab-section" aria-labelledby="labalt4-setup">
+    <h2 class="cds--productive-heading-03" id="labalt4-setup">Configuración del entorno</h2>
+
+    <h3 class="cds--productive-heading-02">Paso 1: Revisar la especificación API</h3>
+    <p class="cds--body-01">Abre <code>prescription-api-spec.yaml</code> y revisa los endpoints:</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item"><code>GET /prescriptions</code> — recuperar todas las prescripciones</li>
+      <li class="cds--list__item"><code>GET /prescriptions/{id}</code> — obtener prescripción por ID</li>
+      <li class="cds--list__item"><code>POST /prescriptions</code> — crear nueva prescripción</li>
+      <li class="cds--list__item"><code>PUT /prescriptions/{id}/validate</code> — validar una prescripción</li>
+    </ul>
+    <p class="cds--body-01" style="margin-top:var(--cds-spacing-04,0.75rem)">Características clave:</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">Generación automática de ID</li>
+      <li class="cds--list__item">Cálculo de caducidad a 30 días</li>
+      <li class="cds--list__item">Gestión de estado (<code>PENDING</code> → <code>VALIDATED</code>)</li>
+      <li class="cds--list__item">Validación de medicamentos</li>
+      <li class="cds--list__item">Manejo completo de errores</li>
+    </ul>
+  </section>
+
+  <!-- Cómo aborda Bob el TDD -->
+  <section class="lab-section" aria-labelledby="labalt4-como">
+    <h2 class="cds--productive-heading-03" id="labalt4-como">Cómo aborda Bob el TDD</h2>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item"><strong>Análisis de especificación API</strong> — lee specs OpenAPI, identifica endpoints/parámetros/respuestas, reconoce escenarios de éxito y error</li>
+      <li class="cds--list__item"><strong>Generación completa de tests</strong> — cubre todos los endpoints, rutas de éxito, escenarios de error, estructuras request/response</li>
+      <li class="cds--list__item"><strong>Implementación desde tests</strong> — usa los tests como guía, asegura que todos pasen, sigue la especificación exactamente</li>
+      <li class="cds--list__item"><strong>Comparación de calidad</strong> — puede comparar implementación TDD con una tradicional</li>
+    </ul>
+  </section>
+
+  <!-- Ejercicio 1 -->
+  <section class="lab-section" aria-labelledby="labalt4-ej1">
+    <h2 class="cds--productive-heading-03" id="labalt4-ej1">Ejercicio 1: Generar unit tests desde la especificación API</h2>
+    <p class="cds--body-01" style="max-width:72ch;margin-bottom:var(--cds-spacing-05,1rem)">
+      <strong>Objetivo:</strong> generar una suite completa de unit tests desde la especificación OpenAPI usando la metodología TDD de Bob.
+    </p>
 
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Confirmar todos los tests en verde</h3>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Solicitar generación de tests (RED)</h3>
+      <p class="cds--body-01">Confirma que estás en Agent Mode. Copia y pega el prompt exacto:</p>
       <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
-        <pre><code>FASE 3 — GREEN verificación
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>Genera un conjunto completo de unit tests JUnit 5 + Mockito (Java, NO JavaScript/Jest) siguiendo
+la metodología TDD para 'prescription-api-spec.yaml'. Coloca el archivo de test en
+src/test/java/com/pharmacy/api/PrescriptionResourceTest.java.
 
-Ejecuta: mvn test
+Usa el namespace jakarta.ws.rs. Cubre, con las cadenas de error EXACTAS de la especificación:
+- getAllPrescriptions() -> 200, list
+- getPrescriptionById(String): 200 encontrado; 404 con "Prescription not found"
+- createPrescription(Map): 201 creado; 400 "Invalid medicine ID" para un
+  medicineId desconocido; 400 para datos inválidos
+- validatePrescription(String): 200; 404 "Prescription not found";
+  400 "Prescription is not in PENDING status"
 
-Si todos los tests pasan → GREEN confirmado, pasar a Fase 4.
-Si algún test sigue fallando:
-  1. Muéstrame el stack trace exacto
-  2. Identifica qué contrato del spec no se cumple
-  3. Propón el cambio mínimo en el código de producción
-  4. Ejecuta mvn test de nuevo</code></pre>
+Usa los IDs de medicamento de los ejemplos de la especificación (M001, M002). El enum de estado solo
+tiene PENDING y VALIDATED — no introduzcas FULFILLED ni EXPIRED.</code></pre>
+      </div>
+      <p class="cds--body-01" style="margin-top:var(--cds-spacing-05,1rem)"><strong>Qué hará Bob:</strong></p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">Analizar la especificación OpenAPI</li>
+        <li class="cds--list__item">Identificar todos los endpoints y operaciones</li>
+        <li class="cds--list__item">Crear casos de test completos para <code>getAllPrescriptions()</code>, <code>getPrescriptionById()</code>, <code>createPrescription()</code> y <code>validatePrescription()</code></li>
+        <li class="cds--list__item">Generar el archivo en <code>src/test/java/com/pharmacy/api/PrescriptionResourceTest.java</code></li>
+      </ul>
+    </div>
+
+    <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">Lista de revisión de calidad</h3>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">✅ Completitud — todos los endpoints cubiertos</li>
+      <li class="cds--list__item">✅ Rutas de éxito — escenarios happy-path testeados</li>
+      <li class="cds--list__item">✅ Manejo de errores — todas las respuestas de error validadas</li>
+      <li class="cds--list__item">✅ Casos límite — condiciones de frontera testeadas</li>
+      <li class="cds--list__item">✅ Nombres claros — los nombres de test describen qué prueban</li>
+      <li class="cds--list__item">✅ Aserciones adecuadas — valores esperados verificados</li>
+      <li class="cds--list__item">✅ Datos mock — datos de test realistas</li>
+      <li class="cds--list__item">✅ Códigos de estado — respuestas HTTP validadas</li>
+    </ul>
+
+    <div class="callout" data-tone="warning" style="margin-top:var(--cds-spacing-05,1rem)">
+      <p class="callout__title">Checkpoint RED — ejecuta los tests ahora y observa que FALLAN</p>
+      <p>Este es el Red de Red-Green-Refactor. Con los tests escritos pero sin implementación aún, ejecuta:</p>
+      <div class="code-block">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>mvn test</code></pre>
+      </div>
+      <p>Debería fallar — o no compilará (<code>PrescriptionResource</code> aún no existe) o los tests darán error. Ese rojo es correcto y esperado. El Ejercicio 2 lo pone en verde.</p>
+    </div>
+  </section>
+
+  <!-- Ejercicio 2 -->
+  <section class="lab-section" aria-labelledby="labalt4-ej2">
+    <h2 class="cds--productive-heading-03" id="labalt4-ej2">Ejercicio 2: Implementar <code>PrescriptionResource</code> desde los tests</h2>
+    <p class="cds--body-01" style="max-width:72ch;margin-bottom:var(--cds-spacing-05,1rem)">
+      <strong>Objetivo:</strong> crear la implementación <code>PrescriptionResource.java</code> guiada por los unit tests, siguiendo metodología TDD pura.
+      Ubicación: <code>snapTDD/src/main/java/com/pharmacy/api/PrescriptionResource.java</code>.
+    </p>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Solicitar implementación desde tests (GREEN)</h3>
+      <div class="code-block">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>Crea PrescriptionResource.java desde 'PrescriptionResourceTest.java' siguiendo la estructura de directorios estándar de Maven. Colócalo en snapTDD/src/main/java/com/pharmacy/api/. También crea las clases de modelo requeridas (Prescription.java, Medicine.java) y las clases de repositorio (PrescriptionRepository.java, MedicineRepository.java).
+
+Usa el namespace jakarta.ws.rs (NO javax). @Path("/prescriptions"), con @GET getAllPrescriptions(), @GET @Path("/{id}") getPrescriptionById, @POST createPrescription(Map), y @PUT @Path("/{id}/validate") validatePrescription. Inicializa MedicineRepository con los M001/M002 de la especificación. El estado solo va de PENDING a VALIDATED. Escribe solo el código suficiente para que pasen los tests (fase Green).</code></pre>
+      </div>
+      <p class="cds--body-01" style="margin-top:var(--cds-spacing-05,1rem)"><strong>Qué hará Bob:</strong></p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">Analizar los requisitos de la suite de tests</li>
+        <li class="cds--list__item">Crear clase JAX-RS con anotaciones <code>@Path</code>, <code>@GET</code>, <code>@POST</code>, <code>@PUT</code></li>
+        <li class="cds--list__item">Manejo de request/response y errores según expectativas de los tests</li>
+        <li class="cds--list__item">Generar modelos y repositorios de soporte</li>
+        <li class="cds--list__item">Lógica de negocio: validación, cálculo de caducidad a 30 días, gestión de estado</li>
+      </ul>
+    </div>
+
+    <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">Lista de revisión de implementación</h3>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">✅ Todos los endpoints — coincide con la especificación API</li>
+      <li class="cds--list__item">✅ Anotaciones correctas — JAX-RS adecuadas</li>
+      <li class="cds--list__item">✅ Manejo de errores — devuelve los códigos de estado correctos</li>
+      <li class="cds--list__item">✅ Validación — validación de medicine ID</li>
+      <li class="cds--list__item">✅ Lógica de negocio — cálculo de caducidad a 30 días</li>
+      <li class="cds--list__item">✅ Gestión de estado — flujo <code>PENDING</code> → <code>VALIDATED</code></li>
+      <li class="cds--list__item">✅ Uso de repositorios — acceso a datos adecuado</li>
+      <li class="cds--list__item">✅ Formato de respuesta — respuestas JSON según spec</li>
+    </ul>
+  </section>
+
+  <!-- Ejercicio 3 -->
+  <section class="lab-section" aria-labelledby="labalt4-ej3">
+    <h2 class="cds--productive-heading-03" id="labalt4-ej3">Ejercicio 3: Comparar implementación TDD vs tradicional</h2>
+    <p class="cds--body-01" style="max-width:72ch;margin-bottom:var(--cds-spacing-05,1rem)">
+      <strong>Objetivo:</strong> comparar la implementación generada por TDD con una implementación tradicional para entender los beneficios y diferencias del Test-Driven Development.
+    </p>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Añadir implementación tradicional y solicitar comparación</h3>
+
+      <div class="callout" data-tone="warning" style="margin-bottom:var(--cds-spacing-05,1rem)">
+        <p class="callout__title">Requiere el Lab 4 completado (o <code>snapD</code> del bundle)</p>
+        <p>El archivo <code>PrescriptionResource.java</code> que se copia solo existe en <code>snapD-unit-test-gen</code> una vez que el Lab 4 lo ha generado. Si no hiciste el Lab 4, abre <code>snapD</code> del bundle del workshop — contiene la implementación de referencia. Este ejercicio no puede completarse sin ese archivo.</p>
+      </div>
+
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">Copia <code>PrescriptionResource.java</code> desde <code>../lab4-unit-test-generation/snapD-unit-test-gen/src/main/java/com/pharmacy/api/</code> a <code>snapTDD</code></li>
+        <li class="cds--list__item">Renómbralo a <code>traditional_PrescriptionResource.java</code></li>
+      </ol>
+      <div class="code-block" style="margin-top:var(--cds-spacing-05,1rem)">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>Compara el original traditional_PrescriptionResource.java con la versión TDD en snapTDD/src/main/java/com/pharmacy/api/PrescriptionResource.java y resume las diferencias</code></pre>
+      </div>
+      <div class="callout" data-tone="note" style="margin-top:var(--cds-spacing-04,0.75rem)">
+        <p class="callout__title">Pide análisis, no ediciones</p>
+        <p>Este ejercicio es de lectura, no de cambio. Agent Mode puede editar archivos — la palabra "resume" en el prompt de arriba lo evita. Si Bob empieza a editar, dile que pare y solo reporte.</p>
+      </div>
+    </div>
+
+    <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">Resultados de comparación esperados</h3>
+    <p class="cds--body-01"><strong>Similitudes:</strong></p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">✅ Ambas implementan los mismos endpoints API</li>
+      <li class="cds--list__item">✅ Ambas usan anotaciones JAX-RS correctamente</li>
+      <li class="cds--list__item">✅ Ambas interactúan con repositorios</li>
+      <li class="cds--list__item">✅ Lógica de negocio central equivalente</li>
+    </ul>
+    <p class="cds--body-01" style="margin-top:var(--cds-spacing-04,0.75rem)"><strong>Diferencias (ventajas TDD):</strong></p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">✅ Manejo de errores más completo — más casos límite</li>
+      <li class="cds--list__item">✅ Mejor validación — validación de entrada más exhaustiva</li>
+      <li class="cds--list__item">✅ Estructura de código más clara — código más modular</li>
+      <li class="cds--list__item">✅ Mensajes de error explícitos</li>
+      <li class="cds--list__item">✅ Cobertura de casos límite — TDD captura condiciones de frontera</li>
+    </ul>
+  </section>
+
+  <!-- Ejercicio 4 -->
+  <section class="lab-section" aria-labelledby="labalt4-ej4">
+    <h2 class="cds--productive-heading-03" id="labalt4-ej4">Ejercicio 4: Ejecutar y verificar tests</h2>
+    <p class="cds--body-01" style="max-width:72ch;margin-bottom:var(--cds-spacing-05,1rem)">
+      <strong>Objetivo:</strong> ejecutar los tests generados para verificar que la implementación cumple todos los requisitos.
+    </p>
+
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">La configuración Maven ya está proporcionada</p>
+      <p><code>snapTDD/pom.xml</code> incluye Java 21, JUnit 5 + Mockito + AssertJ, Jakarta JAX-RS API (RESTEasy) y Surefire. No pidas a Bob que lo cree o reemplace. Todo usa <code>jakarta.ws.rs.*</code> — no añadas dependencias <code>javax.ws.rs</code> / Jersey 2.x.</p>
+    </div>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 4 — Ejecutar todos los tests</h3>
+      <div class="code-block">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>mvn clean test</code></pre>
+      </div>
+      <p class="cds--body-01" style="margin-top:var(--cds-spacing-04,0.75rem)">Para ejecutar una suite específica:</p>
+      <div class="code-block">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>mvn test -Dtest=PrescriptionResourceTest</code></pre>
       </div>
       <figure class="lab-figure">
         <img src="./assets/images/labs/java-modernization-v2/lab-alt4-phase3-green.png"
@@ -144,38 +336,157 @@ Si algún test sigue fallando:
         <figcaption class="lab-figure__caption">Terminal: <code>mvn test</code> → todos los tests pasan — estado <strong>GREEN</strong></figcaption>
       </figure>
     </div>
-  </section>
 
-  <!-- Fase 4 — REFACTOR -->
-  <section class="lab-section" aria-labelledby="labalt4-fase4">
-    <h2 class="cds--productive-heading-03" id="labalt4-fase4">FASE 4 — REFACTOR</h2>
-
-    <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 4 — Refactorizar sin romper los tests</h3>
+    <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
+      <p class="callout__title">Resultado esperado</p>
       <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
-        <pre><code>FASE 4 — REFACTOR (solo después de confirmar GREEN)
-
-Revisa PrescriptionResource y propón mejoras sin romper los tests:
-- Extraer la lógica de creación a método privado si supera 20 líneas
-- Añadir validación de campos null en el body del POST
-- Mejorar mensajes de error para que sean más descriptivos
-
-Después de cualquier refactor ejecuta mvn test para confirmar que sigue en GREEN.</code></pre>
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>[INFO]  T E S T S
+[INFO] Running com.pharmacy.api.PrescriptionResourceTest
+[INFO] Tests run: N, Failures: 0, Errors: 0, Skipped: 0
+[INFO]
+[INFO] BUILD SUCCESS</code></pre>
       </div>
+      <p>El conteo exacto depende de cuántos tests generó Bob — lo que importa es 0 failures y 0 errors (fase Green).</p>
     </div>
   </section>
 
-  <!-- Criterios de éxito -->
-  <div class="callout" data-tone="tip">
-    <p class="callout__title">🎉 Criterios de Éxito — Alt-Lab 4</p>
+  <!-- Ejercicio 5 -->
+  <section class="lab-section" aria-labelledby="labalt4-ej5">
+    <h2 class="cds--productive-heading-03" id="labalt4-ej5">Ejercicio 5: Refactorizar y mejorar (opcional)</h2>
+    <p class="cds--body-01" style="max-width:72ch;margin-bottom:var(--cds-spacing-05,1rem)">
+      <strong>Objetivo:</strong> aplicar la fase Refactor de TDD para mejorar la calidad del código manteniendo la cobertura de tests.
+    </p>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 5a — Identificar oportunidades de mejora</h3>
+      <div class="code-block">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>Revisa la implementación de PrescriptionResource.java y sugiere mejoras de refactorización manteniendo todos los tests en verde</code></pre>
+      </div>
+      <p class="cds--body-01" style="margin-top:var(--cds-spacing-04,0.75rem)">Recomendaciones típicas de Bob:</p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">Extraer lógica de validación a métodos separados</li>
+        <li class="cds--list__item">Crear métodos auxiliares para cálculos de fechas</li>
+        <li class="cds--list__item">Mejorar consistencia de mensajes de error</li>
+        <li class="cds--list__item">Añadir logging para depuración</li>
+        <li class="cds--list__item">Extraer constantes para valores mágicos</li>
+      </ul>
+    </div>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 5b — Aplicar el refactor</h3>
+      <div class="code-block">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>Aplica las mejoras de refactorización que sugeriste en PrescriptionResource.java. Empieza extrayendo constantes para valores mágicos y usando createErrorResponse() de forma consistente.</code></pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 5c — Añadir logging</h3>
+      <div class="code-block">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>Añade declaraciones de logging para operaciones clave como creación y validación de prescripciones</code></pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 5d — Verificar que los tests siguen en verde</h3>
+      <div class="code-block">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>mvn test</code></pre>
+      </div>
+    </div>
+
+    <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">Ejemplo de refactor</h3>
+    <p class="cds--body-01"><strong>Antes:</strong></p>
+    <div class="code-block">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>Date prescriptionDate = new Date();
+Calendar cal = Calendar.getInstance();
+cal.setTime(prescriptionDate);
+cal.add(Calendar.DAY_OF_MONTH, 30);
+Date expiryDate = cal.getTime();</code></pre>
+    </div>
+    <p class="cds--body-01" style="margin-top:var(--cds-spacing-04,0.75rem)"><strong>Después:</strong></p>
+    <div class="code-block">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>Date prescriptionDate = new Date();
+Date expiryDate = calculateExpiryDate(prescriptionDate);
+
+private Date calculateExpiryDate(Date startDate) {
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(startDate);
+    cal.add(Calendar.DAY_OF_MONTH, 30);
+    return cal.getTime();
+}</code></pre>
+    </div>
+  </section>
+
+  <!-- Solución de problemas + Ayuda (colapsado) -->
+  <details class="lab-troubleshooting-full">
+    <summary>Solución de problemas y ayuda</summary>
+  <section class="lab-section" aria-labelledby="labalt4-troubleshooting">
+    <h2 class="cds--productive-heading-03" id="labalt4-troubleshooting">Solución de problemas</h2>
+
+    <h3 class="cds--productive-heading-02">API request failed — el chat muestra <code>{"apiProtocol":"openai"}</code></h3>
+    <p class="cds--body-01">Haz clic en <strong>Retry</strong> en la ventana de chat de Bob.</p>
+
+    <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">Generación de tests incompleta</h3>
     <ul class="cds--list--unordered">
-      <li class="cds--list__item">✅ mvn test inicial → tests FALLAN (RED confirmado)</li>
-      <li class="cds--list__item">✅ PrescriptionResource implementada con los 4 endpoints del spec</li>
-      <li class="cds--list__item">✅ mvn test final → BUILD SUCCESS, todos los tests pasan (GREEN)</li>
-      <li class="cds--list__item">✅ Los archivos en src/test/ no fueron modificados</li>
-      <li class="cds--list__item">✅ Los 4 contratos de respuesta del spec se cumplen: 200, 201, 400, 404</li>
+      <li class="cds--list__item">Verifica que la especificación OpenAPI esté completa</li>
+      <li class="cds--list__item">Pide a Bob tests para escenarios faltantes:
+        <div class="code-block" style="margin-top:var(--cds-spacing-03,0.5rem)">
+          <button type="button" class="copy-button">Copiar</button>
+          <pre><code>Genera tests adicionales para los escenarios de error del endpoint createPrescription</code></pre>
+        </div>
+      </li>
     </ul>
-  </div>
+
+    <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">La implementación no coincide con los tests</h3>
+    <div class="code-block">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>El test de medicine ID inválido está fallando. Por favor actualiza la implementación para devolver un estado 400 con el mensaje de error "Invalid medicine ID"</code></pre>
+    </div>
+
+    <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)"><code>package jakarta.ws.rs does not exist</code> o <code>package javax.ws.rs does not exist</code></h3>
+    <p class="cds--body-01">
+      Un archivo generado está en el namespace JAX-RS incorrecto. Este proyecto es Jakarta — cada archivo debe importar <code>jakarta.ws.rs.*</code>.
+      Pide a Bob: "Cambia todos los imports javax.ws.rs a jakarta.ws.rs para coincidir con el pom." No añadas <code>javax.ws.rs</code> / Jersey 2.x al pom.
+    </p>
+
+    <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">Dependencias faltantes — <code>Cannot resolve symbol 'Prescription'</code></h3>
+    <div class="code-block">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>Genera la clase modelo Prescription y PrescriptionRepository basándote en la especificación API</code></pre>
+    </div>
+
+    <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">Problemas de cálculo de fechas</h3>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">Usa fechas fijas en tests en lugar de <code>new Date()</code></li>
+      <li class="cds--list__item">Mockea fecha/hora en tests para consistencia</li>
+      <li class="cds--list__item">Considera la API de fecha/hora de Java 8+ (<code>LocalDateTime</code>)</li>
+    </ul>
+  </section>
+
+  <!-- Ayuda -->
+  <section class="lab-section" aria-labelledby="labalt4-ayuda">
+    <h2 class="cds--productive-heading-03" id="labalt4-ayuda">Obtener ayuda durante el lab</h2>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item"><strong>Pregunta a Bob</strong> — explica conceptos TDD y corrige problemas de implementación</li>
+      <li class="cds--list__item"><strong>Pregunta a tu instructor</strong> — no dudes en levantar la mano</li>
+      <li class="cds--list__item"><strong>Colabora</strong> — discute enfoques TDD con tus compañeros</li>
+    </ul>
+
+    <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">Consejos específicos de Bob</h3>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">Sé específico sobre qué tests están fallando</li>
+      <li class="cds--list__item">Proporciona mensajes de error al pedir ayuda</li>
+      <li class="cds--list__item">Pide a Bob que explique principios TDD si no están claros</li>
+      <li class="cds--list__item">Solicita ejemplos de patrones de test</li>
+      <li class="cds--list__item">Usa Bob para revisar y mejorar la calidad de los tests</li>
+    </ul>
+  </section>
+  </details>
 
 </div>

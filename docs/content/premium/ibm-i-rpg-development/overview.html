@@ -1,51 +1,213 @@
-<div class="content-panel lab-template">
+<div class="content-panel lab-template" data-custom-overview="true">
 
   <div class="lab-banner">
     <div class="lab-banner__tags">
-      <span class="cds--tag cds--tag--green">Generative AI</span>
-      <span class="cds--tag cds--tag--cool-gray">~120 min</span>
-      <span class="cds--tag cds--tag--teal">Bob Premium · IBM i</span>
-      <span class="cds--tag cds--tag--cyan">Partner Only</span>
-      <span class="cds--tag cds--tag--magenta">Advanced</span>
+      <span class="cds--tag cds--tag--green">IA generativa</span>
+      <span class="cds--tag cds--tag--cool-gray">~90 min</span>
+      <span class="cds--tag cds--tag--cyan">IBM i · RPG</span>
     </div>
-    <h1 class="cds--productive-heading-05 lab-banner__title">IBM i RPG Development — Fixed-Format to Free-Format RPGLE with Bob Premium</h1>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Modernización RPG en IBM i — SAMCO con IBM Bob</h1>
+
+    <div class="lab-hero-image">
+      <img src="./assets/images/labs/ibm-i-rpg-development/hero_bob.png"
+           alt="Desarrollo RPG en IBM i con IBM Bob"
+           class="lab-hero-image__img" />
+    </div>
+
     <p class="cds--body-02 lab-banner__summary">
-      Bob Premium connects natively to your IBM i system, explains legacy Fixed-Format RPG in plain English,
-      converts it to modern Free-Format RPGLE with full annotations, compiles it directly on IBM i,
-      and validates the output — all from the Bob IDE without context switching.
+      SAMCO es un sistema de gestión de pedidos con pantalla verde y código RPG de más de 20 años.
+      En este workshop usas IBM Bob sobre el código fuente local: descubrimiento, Fixed-to-Free, UI React + Carbon y RLA a SQL.
     </p>
+
+    <div class="lab-banner__metrics">
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">4</span>
+        <span class="lab-banner__metric-label">laboratorios</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">~90</span>
+        <span class="lab-banner__metric-label">minutos</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">12–28</span>
+        <span class="lab-banner__metric-label">BobCoins estimados</span>
+      </div>
+    </div>
   </div>
 
-  <section class="lab-section" aria-labelledby="prereq-heading">
-    <h2 class="cds--productive-heading-03" id="prereq-heading">Prerequisites</h2>
-    <ul class="cds--list--unordered">
-      <li class="cds--list__item">IBM Bob IDE installed with <strong>Premium Package for IBM i</strong> subscription</li>
-      <li class="cds--list__item">IBM i system access credentials (hostname, port, username, password)</li>
-      <li class="cds--list__item">Bob IBM i native connection configured (via secure shell)</li>
-      <li class="cds--list__item">RPG source members accessible in your IBM i library</li>
-      <li class="cds--list__item">Appropriate authority to compile and run programs on the target IBM i system</li>
-    </ul>
+  <section class="lab-section" aria-labelledby="ov-que">
+    <h2 class="cds--productive-heading-03" id="ov-que">
+      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="vertical-align:-3px;margin-right:8px"><path d="M11 8l16 8-16 8z"/></svg>
+      Qué vamos a modernizar
+    </h2>
+    <p class="cds--body-01" style="max-width:72ch;margin-bottom:var(--cds-spacing-06,1.5rem)">
+      Trabajarás con el árbol fuente <strong>SAMCO</strong> (RPG, DDS, SQL) abierto en Bob:
+      un sistema de pedidos con pantalla verde y código de más de 20 años.
+      Cada lab es independiente; el orden recomendado construye habilidades de forma progresiva.
+    </p>
+
+    <div class="stack-compare">
+      <div class="stack-compare__col">
+        <p class="stack-compare__heading">Estado inicial (legacy)</p>
+        <div class="stack-compare__item">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-text-helper,#6f6f6f)"><path d="M24 9.4 22.6 8 16 14.6 9.4 8 8 9.4l6.6 6.6L8 22.6 9.4 24l6.6-6.6 6.6 6.6 1.4-1.4-6.6-6.6z"/></svg>
+          Pantalla verde 5250 con patrón panel-step
+        </div>
+        <div class="stack-compare__item">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-text-helper,#6f6f6f)"><path d="M24 9.4 22.6 8 16 14.6 9.4 8 8 9.4l6.6 6.6L8 22.6 9.4 24l6.6-6.6 6.6 6.6 1.4-1.4-6.6-6.6z"/></svg>
+          RPG formato fijo (columnar) y subrutinas
+        </div>
+        <div class="stack-compare__item">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-text-helper,#6f6f6f)"><path d="M24 9.4 22.6 8 16 14.6 9.4 8 8 9.4l6.6 6.6L8 22.6 9.4 24l6.6-6.6 6.6 6.6 1.4-1.4-6.6-6.6z"/></svg>
+          Acceso a datos con RLA (<code>CHAIN</code>, <code>SETLL</code>, <code>READ</code>)
+        </div>
+        <div class="stack-compare__item">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-text-helper,#6f6f6f)"><path d="M24 9.4 22.6 8 16 14.6 9.4 8 8 9.4l6.6 6.6L8 22.6 9.4 24l6.6-6.6 6.6 6.6 1.4-1.4-6.6-6.6z"/></svg>
+          Sin interfaz web moderna
+        </div>
+      </div>
+
+      <div class="stack-compare__arrow" aria-hidden="true">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor"><path d="M18 6l-1.43 1.393L24.15 15H4v2h20.15l-7.58 7.573L18 26l10-10z"/></svg>
+      </div>
+
+      <div class="stack-compare__col stack-compare__col--after">
+        <p class="stack-compare__heading">Estado objetivo (modernizado)</p>
+        <div class="stack-compare__item stack-compare__item--new">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-success,#24a148)"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/></svg>
+          Reglas de negocio y flujos claros con Ask Mode
+        </div>
+        <div class="stack-compare__item stack-compare__item--new">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-success,#24a148)"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/></svg>
+          RPG free-format con <code>Dcl-Proc</code> y constantes nombradas
+        </div>
+        <div class="stack-compare__item stack-compare__item--new">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-success,#24a148)"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/></svg>
+          SQL embebido con <code>SELECT</code> y <code>JOIN</code>
+        </div>
+        <div class="stack-compare__item stack-compare__item--new">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-success,#24a148)"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/></svg>
+          UI React + TypeScript + Carbon Design System
+        </div>
+      </div>
+    </div>
+    <p class="cds--body-01" style="margin-top:var(--cds-spacing-05,1rem)">
+      También puedes empezar por el <strong>Lab 2</strong> si prefieres ver primero la interfaz web.
+    </p>
   </section>
 
-  <section class="lab-section" aria-labelledby="rules-heading">
-    <h2 class="cds--productive-heading-03" id="rules-heading">Rules &amp; Considerations</h2>
-    <div class="callout" data-tone="warning">
-      <p class="callout__title">IBM Bob Premium Package for IBM i Required</p>
-      <p>Native IBM i connectivity, RPG-specific skills (explain, refactor, convert, test), and the IBM i modernization
-         workflows require the <strong>IBM Bob Premium Package for IBM i</strong>.
-         Direct system access may require additional network configuration by your IBM i administrator.</p>
+  <section class="lab-section" aria-labelledby="ov-como">
+    <h2 class="cds--productive-heading-03" id="ov-como">
+      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="vertical-align:-3px;margin-right:8px"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
+      Cómo trabaja Bob en cada lab
+    </h2>
+    <p class="cds--body-01" style="max-width:72ch;margin-bottom:var(--cds-spacing-05,1rem)">
+      Usas Ask Mode para descubrir y explicar, y Agent/Code Mode cuando hay que crear o convertir código.
+      Bob muestra el cambio y tú apruebas antes de aplicar.
+    </p>
+    <div class="prereq-grid">
+      <div class="prereq-item">
+        <div class="prereq-item__icon">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 32 32" fill="currentColor"><path d="M17 22h-2v-2h2zm0-4h-2v-8h2z"/><path d="M16 2C8.3 2 2 8.3 2 16s6.3 14 14 14 14-6.3 14-14S23.7 2 16 2zm0 26C9.4 28 4 22.6 4 16S9.4 4 16 4s12 5.4 12 12-5.4 12-12 12z"/></svg>
+        </div>
+        <div class="prereq-item__body">
+          <p class="prereq-item__title">Descubrimiento</p>
+          <p class="prereq-item__desc">Bob lee el código SAMCO y explica reglas de negocio, flujos y patrones sin modificar archivos.</p>
+        </div>
+      </div>
+      <div class="prereq-item">
+        <div class="prereq-item__icon">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 32 32" fill="currentColor"><path d="M18 28H8a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12l6 6v6h-2v-5h-5V4H8v20h10v2zm2-24v4h4zm-1 15 5 5-5 5-1.4-1.4 3.6-3.6-3.6-3.6L19 19zm-4 3.6 3.6 3.6-3.6 3.6L14 25l3.6-3.6L14 18l1.4-1.4z"/></svg>
+        </div>
+        <div class="prereq-item__body">
+          <p class="prereq-item__title">Modernización</p>
+          <p class="prereq-item__desc">Conviertes RPG Fixed-to-Free y RLA a SQL con prompts; revisas el resultado antes de continuar.</p>
+        </div>
+      </div>
+      <div class="prereq-item">
+        <div class="prereq-item__icon">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 32 32" fill="currentColor"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
+        </div>
+        <div class="prereq-item__body">
+          <p class="prereq-item__title">UI moderna</p>
+          <p class="prereq-item__desc">En el Lab 2 construyes una app React + Carbon con datos de muestra y la validas en el navegador.</p>
+        </div>
+      </div>
     </div>
-    <div class="callout" data-tone="warning">
-      <p class="callout__title">System-Level Credentials</p>
-      <p>Bob connects to IBM i via a secure shell connection. It will read and write source members directly.
-         Do not use production system credentials in workshop environments.
-         Use a dedicated development partition or sandbox IBM i system.</p>
-    </div>
+  </section>
+
+  <section class="lab-section" aria-labelledby="ov-materials">
+    <h2 class="cds--productive-heading-03" id="ov-materials">
+      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="vertical-align:-3px;margin-right:8px"><path d="M18 28H8a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12l6 6v14a2 2 0 0 1-2 2zm-10-2h10V14h-5V6H8v20zm12-14v-2l-4-4v4h4z"/></svg>
+      Materiales del workshop
+    </h2>
     <div class="callout" data-tone="note">
-      <p class="callout__title">Supported RPG Modernizations</p>
-      <p>Bob supports: Fixed-Format RPG → Free-Format RPGLE, RPG II/III → ILE RPG,
-         monolithic → modular refactoring, embedded SQL modernization, DDS → DDL conversion,
-         and OSPEC → printer file conversion.</p>
+      <p class="callout__title">Descarga el material del workshop</p>
+      <p>El zip incluye <code>SAMCO/</code> (RPG / DDS / SQL para Labs 0, 1 y 3) y un <code>README.md</code> de referencia. Descomprímelo y ábrelo como carpeta raíz en Bob.</p>
+      <a class="cds--btn cds--btn--primary" style="margin-top:1rem" download="samco-workshop.zip" href="./downloads/samco-workshop.zip">
+        Descargar workshop SAMCO (7.5 MB)
+      </a>
+    </div>
+  </section>
+
+  <section class="lab-section" aria-labelledby="ov-prereqs">
+    <h2 class="cds--productive-heading-03" id="ov-prereqs">
+      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="vertical-align:-3px;margin-right:8px"><path d="M16 4a5 5 0 1 1-5 5 5 5 0 0 1 5-5m0-2a7 7 0 1 0 7 7 7 7 0 0 0-7-7ZM26 30h-2v-5a5 5 0 0 0-5-5h-6a5 5 0 0 0-5 5v5H6v-5a7 7 0 0 1 7-7h6a7 7 0 0 1 7 7Z"/></svg>
+      Prerrequisitos
+    </h2>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">Prepara el workspace antes del Lab 0</p>
+      <p>Abre la carpeta del workshop (la que contiene <code>SAMCO/</code>) como raíz en Bob. Para el Lab 2 necesitas Node.js 18+.</p>
+    </div>
+    <div class="prereq-grid" style="margin-top:var(--cds-spacing-06,1.5rem)">
+      <div class="prereq-item">
+        <div class="prereq-item__icon">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
+        </div>
+        <div class="prereq-item__body">
+          <p class="prereq-item__title">IBM Bob IDE</p>
+          <p class="prereq-item__desc">Ask Mode para Labs 0, 1 y 3; Agent/Code Mode para el Lab 2. Todos los labs usan los prompts incluidos.</p>
+        </div>
+      </div>
+      <div class="prereq-item">
+        <div class="prereq-item__icon">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 32 32" fill="currentColor"><path d="M18 28H8a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12l6 6v14a2 2 0 0 1-2 2zm-10-2h10V14h-5V6H8v20zm12-14v-2l-4-4v4h4z"/></svg>
+        </div>
+        <div class="prereq-item__body">
+          <p class="prereq-item__title">Proyecto SAMCO</p>
+          <p class="prereq-item__desc">Descarga el bundle arriba y abre la carpeta del workshop como raíz del workspace.</p>
+        </div>
+      </div>
+      <div class="prereq-item">
+        <div class="prereq-item__icon">
+          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 32 32" fill="currentColor"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
+        </div>
+        <div class="prereq-item__body">
+          <p class="prereq-item__title">Node.js 18+ (solo Lab 2)</p>
+          <p class="prereq-item__desc"><code>brew install node</code> — solo para React + Vite + Carbon. Verificar: <code>node --version</code></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="lab-section" aria-labelledby="ov-learning">
+    <h2 class="cds--productive-heading-03" id="ov-learning">
+      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="vertical-align:-3px;margin-right:8px"><path d="M18 2h-8a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8zm-8 2h7l5 5v15H10zm7 12v2h-4v-2zm4-4v2H10v-2zm0-4v2H10v-2z"/></svg>
+      Qué vas a aprender
+    </h2>
+    <div class="lab-table-wrap">
+      <table class="lab-table">
+        <caption class="visually-hidden">Habilidades por lab</caption>
+        <thead>
+          <tr><th scope="col">Lab</th><th scope="col">Habilidades</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Lab 0</th><td>Leer RPG legacy, extraer reglas de negocio, patrón panel-step, RLA vs SQL</td></tr>
+          <tr><th scope="row">Lab 1</th><td>Conversión Fixed-to-Free, procedimientos vs subrutinas, constantes nombradas</td></tr>
+          <tr><th scope="row">Lab 2</th><td>Carbon Design System, React + TypeScript + Vite, patrones de UI moderna</td></tr>
+          <tr><th scope="row">Lab 3</th><td>SQL embebido en RPG, JOINs, idiomas de conversión RLA-to-SQL</td></tr>
+        </tbody>
+      </table>
     </div>
   </section>
 

@@ -4,22 +4,35 @@
     <div class="lab-banner__tags">
       <span class="cds--tag cds--tag--blue">Ask Mode</span>
       <span class="cds--tag cds--tag--cool-gray">8 min</span>
-      <span class="cds--tag cds--tag--green">Principiante</span>
     </div>
     <h1 class="cds--productive-heading-05 lab-banner__title">LAB 1 — Conociendo a IBM Bob: Ask Mode</h1>
-    <p class="cds--body-02 lab-banner__summary">
-      Ask Mode es el modo de IBM Bob especializado en <strong>análisis y comprensión de código</strong>.
-      A diferencia de otros asistentes de IA que solo responden preguntas, IBM Bob en Ask Mode analiza
-      múltiples archivos simultáneamente, mantiene contexto de <strong>270 000 tokens</strong> y genera documentación estructurada —
-      sin modificar ningún archivo del proyecto.
-    </p>
-  </div>
 
-  <figure class="lab-figure">
-    <img src="./assets/images/labs/hands-on-inicial/lab1_bob.png"
-         alt="Banner del LAB 1 — Ask Mode de IBM Bob"
-         class="lab-figure__img" />
-  </figure>
+    <!-- ── Hero image ──────────────────────────────────────────────── -->
+    <div class="lab-hero-image">
+      <img src="./assets/images/labs/hands-on-inicial/lab1_bob.png"
+           alt="Banner del LAB 1 — Ask Mode de IBM Bob"
+           class="lab-hero-image__img" />
+    </div>
+
+    <div class="lab-banner__metrics">
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">270k</span>
+        <span class="lab-banner__metric-label">tokens de contexto</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">0</span>
+        <span class="lab-banner__metric-label">archivos modificados</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">2–4</span>
+        <span class="lab-banner__metric-label">BobCoins estimados</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">6</span>
+        <span class="lab-banner__metric-label">pasos</span>
+      </div>
+    </div>
+  </div>
 
   <!-- Objetivos -->
   <section class="lab-section" aria-labelledby="lab1-obj">
@@ -81,14 +94,14 @@
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Preparar el Proyecto de Ejemplo</h3>
       <p class="cds--body-01">Vamos a analizar una aplicación de e-commerce simple incluida en este laboratorio.</p>
       <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
+        <button type="button" class="copy-button">Copiar</button>
         <pre><code># Verifica que estás en el directorio correcto
 cd lab-1-ask-mode
 ls -la</code></pre>
       </div>
       <p class="cds--body-01">Deberías ver la siguiente estructura:</p>
       <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
+        <button type="button" class="copy-button">Copiar</button>
         <pre><code>├── README.md
 ├── src/
 │   ├── app.js
@@ -131,7 +144,7 @@ ls -la</code></pre>
         <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Análisis de Arquitectura</h3>
         <p class="cds--body-01">Abre el chat (<kbd>Cmd/Ctrl + Shift + I</kbd>) y pega este prompt:</p>
         <div class="code-block">
-          <button class="copy-button" type="button">Copiar</button>
+          <button type="button" class="copy-button">Copiar</button>
           <pre><code>Analiza la arquitectura de este proyecto de e-commerce.
 Explícame:
 1. ¿Qué patrón arquitectónico se está usando?
@@ -162,12 +175,18 @@ Explícame:
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 4 — Análisis Profundo de Código</h3>
       <p class="cds--body-01">Profundiza en un componente específico:</p>
       <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
+        <button type="button" class="copy-button">Copiar</button>
         <pre><code>Analiza el archivo authController.js y explícame:
 1. ¿Qué vulnerabilidades de seguridad tiene?
 2. ¿Qué mejores prácticas no se están siguiendo?
 3. ¿Cómo podría mejorarse el manejo de errores?</code></pre>
       </div>
+      <figure class="lab-figure">
+        <img src="./assets/images/labs/hands-on-inicial/lab1-analisis-profundo.png"
+             alt="IBM Bob realizando análisis profundo de código en authController.js"
+             class="lab-figure__img" />
+        <figcaption class="lab-figure__caption">Referencia: Bob detecta vulnerabilidades y sugiere mejoras en el código</figcaption>
+      </figure>
       <div class="callout" data-tone="note">
         <p class="callout__title">Tip Pro</p>
         <p>IBM Bob puede leer archivos completos en un solo paso. Si necesitas más contexto puedes decir: <em>"Lee también User.js y api.js"</em> — con 270k tokens de contexto, Bob mantiene todo en mente.</p>
@@ -180,7 +199,7 @@ Explícame:
         <h3 class="cds--productive-heading-02 lab-step__title">Paso 5 — Generar Documentación Automática</h3>
         <p class="cds--body-01">Pide un README profesional. Ask Mode no escribe archivos hasta que lo apruebes (o puedes copiar el resultado).</p>
         <div class="code-block">
-          <button class="copy-button" type="button">Copiar</button>
+          <button type="button" class="copy-button">Copiar</button>
           <pre><code>Genera un README.md completo para este proyecto que incluya:
 1. Descripción del proyecto
 2. Arquitectura y componentes
@@ -204,15 +223,15 @@ Explícame:
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 6 — Preguntas de Seguimiento (Contexto)</h3>
       <p class="cds--body-01">IBM Bob <strong>recuerda toda la conversación</strong>. Aprovecha el contexto acumulado con preguntas de seguimiento:</p>
       <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
+        <button type="button" class="copy-button">Copiar</button>
         <pre><code>¿Dónde se validan los datos de entrada del usuario?</code></pre>
       </div>
       <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
+        <button type="button" class="copy-button">Copiar</button>
         <pre><code>¿Qué pasa si un usuario intenta acceder a un producto que no existe?</code></pre>
       </div>
       <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
+        <button type="button" class="copy-button">Copiar</button>
         <pre><code>¿Cómo se manejan las sesiones de usuario?</code></pre>
       </div>
     </div>
@@ -227,7 +246,7 @@ Explícame:
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Desafío 1 — Análisis de Dependencias</h3>
       <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
+        <button type="button" class="copy-button">Copiar</button>
         <pre><code>Analiza el package.json y dime:
 1. ¿Qué dependencias tienen vulnerabilidades conocidas?
 2. ¿Hay dependencias obsoletas?
@@ -237,10 +256,28 @@ Explícame:
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Desafío 2 — Diagrama de Secuencia</h3>
       <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
+        <button type="button" class="copy-button">Copiar</button>
         <pre><code>Genera un diagrama de secuencia en Mermaid que muestre
 el flujo completo de una petición de login desde que
 llega al servidor hasta que se devuelve el token JWT.</code></pre>
+      </div>
+      <div class="lab-figure-row" style="display:flex;gap:16px;margin-top:16px;flex-wrap:wrap;">
+        <figure class="lab-figure" style="flex:1;min-width:280px;display:flex;flex-direction:column;gap:12px;">
+          <img src="./assets/images/labs/hands-on-inicial/lab1-diagramaaltonivel.png"
+               alt="Diagrama de secuencia a alto nivel generado por IBM Bob para el flujo de login JWT"
+               class="lab-figure__img" />
+          <figcaption class="lab-figure__caption">Diagrama de alto nivel — flujo completo de login</figcaption>
+          <img src="./assets/images/labs/hands-on-inicial/lab1-diagramaresumen.png"
+               alt="Diagrama resumen del flujo de login JWT generado por IBM Bob"
+               class="lab-figure__img" />
+          <figcaption class="lab-figure__caption">Diagrama resumen — vista consolidada del flujo</figcaption>
+        </figure>
+        <figure class="lab-figure" style="flex:1;min-width:280px">
+          <img src="./assets/images/labs/hands-on-inicial/lab1-diagramadetallado.png"
+               alt="Diagrama de secuencia detallado generado por IBM Bob mostrando cada paso del flujo JWT"
+               class="lab-figure__img" />
+          <figcaption class="lab-figure__caption">Diagrama detallado — cada paso del flujo JWT</figcaption>
+        </figure>
       </div>
     </div>
   </section>

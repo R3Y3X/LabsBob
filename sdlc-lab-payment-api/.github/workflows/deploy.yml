@@ -1,0 +1,90 @@
+name: Payment API — CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # ─── Etapa 1: Calidad y Seguridad ──────────────────────────────────────────
+  lint-and-test:
+    name: Lint & Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Ejecutar linter
+        run: npm run lint
+
+      - name: Ejecutar pruebas con cobertura
+        run: npm test -- --ci --forceExit
+        env:
+          DB_PATH: ":memory:"
+
+      # TODO (Lab — fase Deploy): Agregar un paso de análisis SAST con SonarQube
+      # - name: Análisis SonarQube
+      #   uses: SonarSource/sonarqube-scan-action@master
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  # ─── Etapa 2: Build de la imagen Docker ────────────────────────────────────
+  build-docker:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+    needs: lint-and-test
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Construir imagen Docker
+        run: |
+          docker build -t payment-api:${{ github.sha }} .
+          docker build -t payment-api:latest .
+
+      - name: Verificar que la imagen construyó correctamente
+        run: docker run --rm payment-api:latest node -e "require('./src/app'); console.log('OK')"
+
+      # TODO (Lab — fase Deploy): Agregar push a un registry (Docker Hub, ECR, etc.)
+      # - name: Login a Docker Hub
+      #   uses: docker/login-action@v3
+      #   with:
+      #     username: ${{ secrets.DOCKERHUB_USERNAME }}
+      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
+      #
+      # - name: Push imagen
+      #   run: docker push payment-api:latest
+
+  # ─── Etapa 3: Deploy (solo en main) ────────────────────────────────────────
+  deploy:
+    name: Deploy a Producción
+    runs-on: ubuntu-latest
+    needs: build-docker
+    if: github.ref == 'refs/heads/main'
+    environment: production
+
+    steps:
+      - name: Deploy
+        run: |
+          echo "🚀 Aquí iría el deploy a tu plataforma (Railway, Render, K8s, etc.)"
+          echo "   Commit: ${{ github.sha }}"
+          echo "   Rama:   ${{ github.ref_name }}"
+
+      # TODO (Lab — fase Deploy): Reemplaza este step con tu deploy real
+      # Ejemplos:
+      #   - Railway: usa el CLI railway deploy
+      #   - AWS ECS: usa aws ecs update-service
+      #   - Kubernetes: usa kubectl set image

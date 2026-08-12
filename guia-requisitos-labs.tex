@@ -1,0 +1,743 @@
+% ============================================================
+% Guía de Requisitos — IBM Bob Labs
+% Formato: Overleaf / pdfLaTeX
+% ============================================================
+\documentclass[11pt, a4paper]{article}
+
+% ── Paquetes ─────────────────────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage[margin=2.2cm, top=2.5cm, bottom=2.5cm]{geometry}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\usepackage{fontawesome5}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{mdframed}
+\usepackage{multicol}
+\usepackage{tabularx}
+\usepackage{colortbl}
+
+% ── Colores corporativos IBM ──────────────────────────────────
+\definecolor{ibmblue}{HTML}{0F62FE}
+\definecolor{ibmdark}{HTML}{161616}
+\definecolor{ibmgray}{HTML}{525252}
+\definecolor{ibmlightgray}{HTML}{F4F4F4}
+\definecolor{ibmborder}{HTML}{E0E0E0}
+\definecolor{ibmred}{HTML}{DA1E28}
+\definecolor{ibmgreen}{HTML}{198038}
+\definecolor{ibmyellow}{HTML}{F1C21B}
+\definecolor{ibmpurple}{HTML}{6929C4}
+\definecolor{ibmteal}{HTML}{009D9A}
+\definecolor{ibmcyan}{HTML}{1192E8}
+\definecolor{ibmmagenta}{HTML}{9F1853}
+
+% ── Tipografía y secciones ───────────────────────────────────
+\titleformat{\section}
+  {\Large\bfseries\color{ibmdark}}
+  {}
+  {0em}
+  {}
+  [\vspace{-4pt}\textcolor{ibmblue}{\rule{\linewidth}{2pt}}\vspace{4pt}]
+
+\titleformat{\subsection}
+  {\large\bfseries\color{ibmdark}}
+  {}
+  {0em}
+  {}
+
+\titleformat{\subsubsection}
+  {\normalsize\bfseries\color{ibmgray}}
+  {}
+  {0em}
+  {}
+
+% ── Cajas de información ─────────────────────────────────────
+\tcbuselibrary{skins, breakable, listingsutf8}
+
+\newtcolorbox{warningbox}{
+  colback=ibmyellow!15, colframe=ibmyellow!80!black,
+  fonttitle=\bfseries\small, title={\faExclamationTriangle\quad Atención},
+  breakable, left=6pt, right=6pt, top=4pt, bottom=4pt
+}
+
+\newtcolorbox{infobox}{
+  colback=ibmcyan!10, colframe=ibmcyan!70!black,
+  fonttitle=\bfseries\small, title={\faInfoCircle\quad Información},
+  breakable, left=6pt, right=6pt, top=4pt, bottom=4pt
+}
+
+\newtcolorbox{criticalbox}{
+  colback=ibmred!8, colframe=ibmred!70,
+  fonttitle=\bfseries\small\color{white}, coltitle=white,
+  colbacktitle=ibmred!80,
+  title={\faShieldAlt\quad Requisito crítico},
+  breakable, left=6pt, right=6pt, top=4pt, bottom=4pt
+}
+
+\newtcolorbox{labbox}[2][]{
+  colback=ibmlightgray, colframe=ibmborder,
+  fonttitle=\bfseries\small\color{white}, coltitle=white,
+  colbacktitle=#1,
+  title={#2},
+  breakable, left=8pt, right=8pt, top=6pt, bottom=6pt
+}
+
+% ── Comando para versión requerida ───────────────────────────
+\newcommand{\version}[1]{\texttt{\textcolor{ibmblue}{#1}}}
+\newcommand{\cmd}[1]{\texttt{\textcolor{ibmdark}{\small #1}}}
+\newcommand{\req}[1]{\textbf{\textcolor{ibmred}{#1}}}
+\newcommand{\optional}[1]{\textit{\textcolor{ibmgray}{#1}}}
+\newcommand{\checkmark}{\textcolor{ibmgreen}{\faCheckCircle}}
+\newcommand{\critical}{\textcolor{ibmred}{\faTimesCircle}}
+
+% ── Encabezado y pie de página ───────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{ibmgray}{Guía de Requisitos — IBM Bob Labs}}
+\fancyhead[R]{\small\textcolor{ibmgray}{\thepage}}
+\fancyfoot[C]{\small\textcolor{ibmgray}{IBM Technology Expert Labs · Uso interno}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{ibmborder}\leaders\hrule height \headrulewidth\hfill}}
+
+% ── Hiperenlaces ─────────────────────────────────────────────
+\hypersetup{
+  colorlinks=true,
+  linkcolor=ibmblue,
+  urlcolor=ibmblue,
+  citecolor=ibmblue,
+  pdfauthor={IBM Technology Expert Labs},
+  pdftitle={Guia de Requisitos IBM Bob Labs},
+  pdfsubject={Prereq instalacion laboratorios IBM Bob}
+}
+
+% ──────────────────────────────────────────────────────────────
+\begin{document}
+% ──────────────────────────────────────────────────────────────
+
+% ── Portada ──────────────────────────────────────────────────
+\begin{titlepage}
+  \pagecolor{ibmdark}
+  \color{white}
+  \vspace*{2cm}
+  \begin{flushleft}
+    \includegraphics[height=1.4cm]{ibm-logo-white}%
+    \hspace{0.6cm}%
+    {\large\color{ibmlightgray} Technology Expert Labs}
+  \end{flushleft}
+  \vspace{3cm}
+  {\fontsize{36}{42}\selectfont\bfseries Guía de\\Requisitos\par}
+  \vspace{0.8cm}
+  {\LARGE\color{ibmlightgray} IBM Bob Labs\par}
+  \vspace{0.5cm}
+  {\large\color{ibmgray} Prerrequisitos de instalación para todos los laboratorios\par}
+  \vfill
+  \textcolor{ibmborder}{\rule{\linewidth}{0.5pt}}
+  \vspace{0.4cm}
+  \begin{multicols}{2}
+    {\small\color{ibmgray}
+    \textbf{Versión del documento} \\
+    1.0 — \today
+    \columnbreak \\
+    \textbf{Audiencia} \\
+    Participantes y facilitadores
+    }
+  \end{multicols}
+\end{titlepage}
+
+\pagecolor{white}
+\color{ibmdark}
+
+% ──────────────────────────────────────────────────────────────
+\section*{Instrucciones de uso}
+
+Este documento lista \textbf{todos} los prerrequisitos de software, cuentas, accesos y configuraciones necesarios para participar en los laboratorios de IBM Bob. Está organizado en tres partes:
+
+\begin{enumerate}[leftmargin=*, label=\arabic{enumi}.]
+  \item \textbf{Requisitos universales} — herramientas necesarias para \emph{cualquier} lab.
+  \item \textbf{Requisitos por laboratorio} — dependencias específicas de cada lab.
+  \item \textbf{Guía de instalación paso a paso} — instrucciones por sistema operativo.
+\end{enumerate}
+
+\begin{warningbox}
+  \textbf{Instala y valida todo el software con anticipación.} El día del lab no habrá tiempo para resolver problemas de entorno. Ejecuta los comandos de validación de cada sección y confirma que devuelven la versión esperada antes de la sesión.
+\end{warningbox}
+
+\tableofcontents
+\newpage
+
+% ──────────────────────────────────────────────────────────────
+\section{Requisitos Universales (todos los labs)}
+
+Las herramientas de esta sección son \req{obligatorias para todos los laboratorios} sin excepción. Deben estar instaladas y validadas antes del inicio de cualquier sesión.
+
+% ── IBM Bob IDE ──────────────────────────────────────────────
+\subsection{IBM Bob IDE}
+
+IBM Bob es el partner de IA que asiste en todo el ciclo de vida del software — desde planificación y diseño hasta implementación, pruebas y despliegue. Es el eje central de todos los laboratorios.
+
+\begin{labbox}[ibmblue]{\faRobot\quad IBM Bob IDE — Instalación}
+\begin{description}[leftmargin=3cm, style=nextline]
+  \item[Descarga] \url{https://bob.ibm.com/download}
+  \item[Versión] La más reciente disponible (siempre actualizar antes del lab)
+  \item[Modos requeridos] Ask Mode, Plan Mode, Agent Mode
+\end{description}
+\vspace{6pt}
+\textbf{Windows:} Seleccionar \emph{Bob IDE → Windows x64 (User)} \quad \texttt{.exe}\\
+\textbf{macOS ARM} (M1/M2/M3/M4): Seleccionar \emph{Bob IDE → macOS → Mac ARM} \quad \texttt{.pkg}\\
+\textbf{macOS Intel:} Seleccionar \emph{Bob IDE → macOS → Mac Intel} \quad \texttt{.pkg}\\
+\textbf{Linux .deb} (Debian/Ubuntu): Seleccionar \emph{Bob IDE → Linux .deb amd64} \quad \texttt{.deb}\\
+\textbf{Linux .rpm} (Fedora/RHEL): Seleccionar \emph{Bob IDE → Linux RPM x64} \quad \texttt{.rpm}
+\vspace{6pt}\\
+\textbf{Validación:} Abrir IBM Bob desde el menú Inicio o Launchpad. Si el editor carga correctamente, la instalación es válida. \checkmark
+\end{labbox}
+
+\begin{criticalbox}
+  El Lab \textbf{IBM i RPG} requiere la suscripción \textbf{Premium Package for IBM i} habilitada en la cuenta de Bob, además de la instalación base. Confirmar con el facilitador antes de la sesión.
+\end{criticalbox}
+
+% ── Google Chrome ────────────────────────────────────────────
+\subsection{Google Chrome}
+
+Navegador requerido para ejecutar, depurar y visualizar aplicaciones web generadas durante los laboratorios.
+
+\begin{labbox}[ibmgray]{\faChrome\quad Google Chrome}
+\begin{description}[leftmargin=3cm, style=nextline]
+  \item[Descarga] \url{https://www.google.com/chrome/}
+  \item[Versión] Cualquier versión reciente (actualizar antes del lab)
+\end{description}
+\vspace{6pt}
+\textbf{Validación:} Abrir Chrome, ingresar \cmd{chrome://version} en la barra de URL. Debe mostrar el número de versión. \checkmark
+\end{labbox}
+
+% ──────────────────────────────────────────────────────────────
+\section{Requisitos por Laboratorio}
+
+\subsection{Lab: Primeros pasos con Bob}
+\label{sec:hands-on-inicial}
+
+\textit{Habilitación Core — Workshop base · $\sim$90 min}
+
+\vspace{4pt}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Herramienta} & \textbf{Versión mínima} & \textbf{Requerimiento} & \textbf{Lab que la usa} \\
+\midrule
+IBM Bob IDE & Más reciente & \req{Obligatorio} & Todos los labs \\
+Node.js & \version{18.x LTS o superior} & \req{Obligatorio} & Labs 1, 2, 5 \\
+Git & \version{2.x} & Recomendado & Labs 2, 3 \\
+Google Chrome & Reciente & \req{Obligatorio} & Lab 5 \\
+Tavily API Key & N/A (cuenta gratuita) & \req{Obligatorio} & Lab 5 \\
+\bottomrule
+\end{tabular}
+
+\vspace{10pt}
+\begin{infobox}
+  \textbf{Tavily API Key (Lab 5):} Registrarse en \url{https://tavily.com}. El plan gratuito incluye 1.000 búsquedas por mes, suficientes para el lab. La clave se configura dentro de IBM Bob en la sección de herramientas MCP.
+\end{infobox}
+
+% ── SDLC ─────────────────────────────────────────────────────
+\subsection{Lab: SaaS Payment API — SDLC completo}
+\label{sec:sdlc}
+
+\textit{Habilitación Core — Node.js · Express · SQLite · $\sim$90 min}
+
+\vspace{4pt}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Herramienta} & \textbf{Versión mínima} & \textbf{Requerimiento} & \textbf{Uso} \\
+\midrule
+IBM Bob IDE & Más reciente & \req{Obligatorio} & Plan, Agent, Ask Mode \\
+Node.js & \version{18.x LTS o superior} & \req{Obligatorio} & Ejecutar la API \\
+npm & \version{10.x} (incluido con Node) & \req{Obligatorio} & Instalar dependencias \\
+Git & \version{2.x} & \req{Obligatorio} & Control de versiones \\
+Google Chrome & Reciente & Recomendado & Verificar endpoints \\
+draw.io & N/A (app web gratuita) & \req{Obligatorio} & Diagrama de secuencia \\
+Docker & \version{24.x o superior} & \optional{Opcional} & Fase Deploy \\
+\bottomrule
+\end{tabular}
+
+\vspace{10pt}
+\begin{infobox}
+  \textbf{Proyecto base:} Descargar \texttt{sdlc-lab-payment-api.zip} desde la sección \emph{Inicio} del lab en el portal. Descomprimir y ejecutar \cmd{npm install} antes de comenzar. \\[4pt]
+  \textbf{draw.io:} Disponible en \url{https://app.diagrams.net} sin registro. También existe versión de escritorio descargable.
+\end{infobox}
+
+\begin{warningbox}
+  \textbf{Variable de entorno:} Antes de ejecutar la API, copiar el archivo \texttt{.env.example} como \texttt{.env} y definir \cmd{API\_SECRET\_KEY=<valor-seguro>}. Sin esta variable, el servidor no arrancará correctamente.
+\end{warningbox}
+
+% ── Confluent ────────────────────────────────────────────────
+\subsection{Lab: Inventario en tiempo real — Confluent Kafka}
+\label{sec:confluent}
+
+\textit{Integración de plataforma — Caso Voltia Lab 1 · 60--90 min}
+
+\vspace{4pt}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Herramienta / Acceso} & \textbf{Versión / Detalle} & \textbf{Requerimiento} & \textbf{Uso} \\
+\midrule
+IBM Bob IDE & Más reciente & \req{Obligatorio} & Asistencia AI \\
+Python & \version{3.10+} & \req{Obligatorio} & Scripts del lab \\
+Confluent Cloud — Cluster Kafka & Provisto por instructor & \req{Obligatorio} & Pipeline eventos \\
+Confluent Cloud UI — Credenciales & Provistas por instructor & \req{Obligatorio} & Acceso web \\
+Archivo \texttt{.env} & Provisto por instructor & \optional{Opcional} & Scripts avanzados \\
+Git & \version{2.x} & Recomendado & Clonar repositorio \\
+\bottomrule
+\end{tabular}
+
+\vspace{10pt}
+\begin{criticalbox}
+  \textbf{Infraestructura provista por el instructor.} El cluster de Confluent Kafka (con Kafka + ksqlDB) ya estará provisionado. El instructor entregará las credenciales de acceso a la UI de Confluent y, si corresponde, el archivo \texttt{.env} con las credenciales del cluster. \textbf{No es necesario instalar Kafka localmente.}
+\end{criticalbox}
+
+\begin{infobox}
+  \textbf{Proyecto base:} Descargar \texttt{agentic-retail-workshop.zip} (4.9 MB) desde la sección \emph{Inicio} del lab. Los scripts del Lab 1 están en \texttt{Labs-tech-summit/Lab1/inventory-pipeline/}.
+\end{infobox}
+
+% ── watsonx Orchestrate ──────────────────────────────────────
+\subsection{Lab: Agentes Inteligentes — watsonx Orchestrate}
+\label{sec:wxo}
+
+\textit{Integración de plataforma — Caso Voltia Lab 2 · 60--90 min}
+
+\vspace{4pt}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Herramienta / Acceso} & \textbf{Versión / Detalle} & \textbf{Requerimiento} & \textbf{Uso} \\
+\midrule
+IBM Bob IDE & Más reciente & \req{Obligatorio} & Asistencia AI \\
+Python & \version{3.10+} & \req{Obligatorio} & ADK y scripts \\
+Agent Development Kit (ADK) & Más reciente & \req{Obligatorio} & watsonx Orchestrate \\
+IBM Cloud API Key & Provista por instructor & \req{Obligatorio} & Autenticación \\
+Instancia watsonx Orchestrate & Provista por instructor & \req{Obligatorio} & Deploy agentes \\
+CLI \texttt{orchestrate} & Incluida en ADK & \req{Obligatorio} & \cmd{orchestrate env activate} \\
+Lab 1 Confluent (completado) & Sección \ref{sec:confluent} & Recomendado & Conexión Kafka \\
+\bottomrule
+\end{tabular}
+
+\vspace{10pt}
+\begin{warningbox}
+  \textbf{Expiración de sesión:} El token de autenticación de watsonx Orchestrate expira periódicamente. Si los comandos del CLI fallan con error de autenticación, ejecutar \cmd{orchestrate env activate <nombre-entorno>} para renovar la sesión.
+\end{warningbox}
+
+\begin{infobox}
+  \textbf{Proyecto base:} Mismo \texttt{agentic-retail-workshop.zip} del Lab 1. Los archivos de este lab están en \texttt{Labs-tech-summit/Lab2/confluent\_agents/}.
+\end{infobox}
+
+% ── Voltia ───────────────────────────────────────────────────
+\subsection{Lab: Retail Inteligente en Acción — Voltia}
+\label{sec:voltia}
+
+\textit{Integración de plataforma — Caso Voltia Lab 3 · $\sim$60 min}
+
+\vspace{4pt}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Herramienta / Acceso} & \textbf{Versión / Detalle} & \textbf{Requerimiento} & \textbf{Uso} \\
+\midrule
+IBM Bob IDE & Más reciente & \req{Obligatorio} & Asistencia AI \\
+Node.js & \version{18.x LTS o superior} & \req{Obligatorio} & React dev server \\
+npm & \version{10.x} (incluido con Node) & \req{Obligatorio} & Instalar dependencias \\
+Google Chrome & Reciente & \req{Obligatorio} & Ver tienda Voltia \\
+Lab 2 watsonx Orchestrate & Sección \ref{sec:wxo} & \optional{Recomendado} & Agente en vivo \\
+\bottomrule
+\end{tabular}
+
+\vspace{10pt}
+\begin{infobox}
+  \textbf{Fallback incluido:} El proyecto starter de Voltia incluye un snippet funcional de watsonx Orchestrate preconfigurado. Aunque el Lab 2 no se haya completado, el lab puede realizarse usando este fallback. \\[4pt]
+  \textbf{Proyecto base:} Mismo \texttt{agentic-retail-workshop.zip}. Los archivos están en \texttt{Labs-tech-summit/Lab3/voltia-starter/}.
+\end{infobox}
+
+% ── Java Modernization ───────────────────────────────────────
+\subsection{Lab: Modernización de aplicaciones Java}
+\label{sec:java}
+
+\textit{Modernización empresarial — Simple Pharmacy · 4--6 h}
+
+\vspace{4pt}
+Este lab tiene los requisitos más complejos del catálogo. Lee esta sección completa antes del día del lab.
+
+\begin{labbox}[ibmpurple]{\faJava\quad Requisitos de Java — Atención especial}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Versión de Java} & \textbf{Labs que la usan} & \textbf{Requerimiento} & \textbf{Validación} \\
+\midrule
+\version{Java 8} (JDK 1.8.x) & Solo Lab 1 (Replatforming) & \req{Obligatorio} & \cmd{java -version → 1.8.0\_...} \\
+\version{Java 21 LTS} & Labs 2, 3, 4, 5 & \req{Obligatorio} & \cmd{java -version → 21...} \\
+\bottomrule
+\end{tabular}
+\vspace{6pt}\\
+\textbf{Importante:} Se deben instalar \emph{ambas versiones}. Es necesario cambiar la variable \cmd{JAVA\_HOME} entre el Lab 1 (Java 8) y los labs siguientes (Java 21). El facilitador indicará cómo hacerlo según el sistema operativo.
+\end{labbox}
+
+\vspace{10pt}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Herramienta} & \textbf{Versión mínima} & \textbf{Requerimiento} & \textbf{Uso} \\
+\midrule
+IBM Bob IDE & Más reciente & \req{Obligatorio} & Plan y Agent Mode \\
+Java 8 (JDK 1.8.x) & \version{8u392+} & \req{Obligatorio} & Lab 1 únicamente \\
+Java 21 LTS & \version{21.0.x LTS} & \req{Obligatorio} & Labs 2–5 \\
+Maven & \version{3.8.x o superior} & \req{Obligatorio} & Build y tests \\
+Node.js & \version{18.x LTS} & \req{Obligatorio} & Solo Lab 3 (UI React) \\
+npm & \version{10.x} & \req{Obligatorio} & Solo Lab 3 (UI React) \\
+Google Chrome & Reciente & \req{Obligatorio} & Ver UI de Simple Pharmacy \\
+Git & \version{2.x} & \req{Obligatorio} & Control de versiones \\
+\bottomrule
+\end{tabular}
+
+\vspace{10pt}
+\begin{infobox}
+  \textbf{Proyecto base:} Descargar \texttt{simple-pharmacy-workshop-v2.zip} (2.1 MB) desde la sección \emph{Inicio} del lab. Contiene los snapshots: \texttt{snapA}, \texttt{snapB}, \texttt{snapC}, \texttt{snapD}, \texttt{snapE} y \texttt{snapTDD}.
+\end{infobox}
+
+\begin{criticalbox}
+  \textbf{Abrir siempre la carpeta \texttt{snap*} del lab activo como raíz del workspace en IBM Bob} — nunca la carpeta padre. Abrir una carpeta incorrecta como raíz causará que Bob analice un contexto equivocado. \\[4pt]
+  \textbf{Stack objetivo:} Java 21 LTS · Open Liberty · Struts 6.4.0 · Jakarta EE 10 · JAX-RS · React + TypeScript + Vite · JUnit 5 + Mockito 5 + AssertJ 3.
+\end{criticalbox}
+
+% ── IBM i RPG ────────────────────────────────────────────────
+\subsection{Lab: Modernización RPG en IBM i}
+\label{sec:ibmi}
+
+\textit{Modernización empresarial — IBM i · 75--90 min}
+
+\begin{criticalbox}
+  Este lab requiere la suscripción \textbf{Premium Package for IBM i} en IBM Bob y \textbf{acceso a un sistema IBM i real}. Confirmar ambos con el facilitador antes de registrarse para esta sesión. \textbf{No utilizar credenciales de un sistema de producción.}
+\end{criticalbox}
+
+\vspace{10pt}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Herramienta / Acceso} & \textbf{Detalle} & \textbf{Requerimiento} & \textbf{Uso} \\
+\midrule
+IBM Bob IDE & Premium Package for IBM i & \req{Obligatorio} & Análisis y conversión RPG \\
+IBM i — Hostname & Provisto por facilitador & \req{Obligatorio} & Conexión SSH \\
+IBM i — Puerto & Provisto por facilitador & \req{Obligatorio} & Conexión SSH \\
+IBM i — Usuario & Provisto por facilitador & \req{Obligatorio} & Autenticación \\
+IBM i — Contraseña & Provista por facilitador & \req{Obligatorio} & Autenticación \\
+Conexión de red a IBM i & Confirmar con el administrador & \req{Obligatorio} & Acceso SSH \\
+Permisos de compilación & Provistos por administrador & \req{Obligatorio} & Compilar RPGLE \\
+\bottomrule
+\end{tabular}
+
+\vspace{10pt}
+\begin{warningbox}
+  \textbf{Configuración de red:} El acceso a IBM i puede requerir VPN o configuración especial de red. Coordinar con el administrador de sistemas IBM i de tu organización con al menos 48 horas de anticipación para garantizar la conectividad.
+\end{warningbox}
+
+% ──────────────────────────────────────────────────────────────
+\section{Guía de Instalación por Sistema Operativo}
+\label{sec:guia-instalacion}
+
+Las instrucciones de esta sección cubren los prerrequisitos universales más las herramientas más frecuentes. Para herramientas específicas de labs avanzados (ADK, Confluent CLI, Maven, etc.), el facilitador proveerá instrucciones adicionales.
+
+% ── WINDOWS ─────────────────────────────────────────────────
+\subsection{Windows}
+\label{sec:windows}
+
+Los pasos asumen una PC con Windows sin herramientas de desarrollo previas. Ejecutar todos los comandos en \textbf{Git Bash} (instalado en el Paso 1), no en el símbolo del sistema de Windows.
+
+\vspace{8pt}
+\begin{labbox}[ibmdark]{\textbf{1} \quad Git Bash}
+\textbf{Instalación:}
+\begin{enumerate}[leftmargin=*, nosep]
+  \item Descargar el instalador de 64 bits desde \url{https://git-scm.com/download/win}
+  \item Ejecutar y completar el asistente con las opciones por defecto
+\end{enumerate}
+\vspace{4pt}
+\textbf{Validación} (abrir Git Bash desde el menú Inicio):
+\begin{center}
+  \cmd{git -{}-version} \quad→\quad debe devolver \version{git version 2.x.x} \checkmark
+\end{center}
+\end{labbox}
+
+\vspace{6pt}
+\begin{labbox}[ibmdark]{\textbf{2} \quad Node.js LTS (incluye npm)}
+\textbf{Instalación:}
+\begin{enumerate}[leftmargin=*, nosep]
+  \item Descargar el instalador LTS para Windows (.msi, 64 bits) desde \url{https://nodejs.org}
+  \item Ejecutar el instalador con las opciones por defecto — \textbf{mantener activada la opción que agrega Node al PATH}
+\end{enumerate}
+\vspace{4pt}
+\textbf{Validación} (en Git Bash):
+\begin{center}
+  \cmd{node -v} \quad→\quad \version{v24.x.x} \checkmark \qquad
+  \cmd{npm -v} \quad→\quad \version{10.x.x} \checkmark
+\end{center}
+\textit{npm se instala automáticamente junto con Node.js.}
+\end{labbox}
+
+\vspace{6pt}
+\begin{labbox}[ibmdark]{\textbf{3} \quad Python 3.12}
+\begin{criticalbox}
+  Debe ser \textbf{específicamente la versión 3.12.x}. Versiones anteriores o posteriores pueden causar incompatibilidades con librerías de los labs.
+\end{criticalbox}
+\vspace{6pt}
+\textbf{Instalación:}
+\begin{enumerate}[leftmargin=*, nosep]
+  \item Descargar la versión más reciente \version{3.12.x} para Windows (64 bits) desde \url{https://www.python.org/downloads/windows/}
+  \item Ejecutar el instalador y \textbf{marcar la opción «Add python.exe to PATH»} antes de continuar
+  \item Completar con las opciones por defecto
+\end{enumerate}
+\vspace{4pt}
+\textbf{Validación} (en Git Bash):
+\begin{center}
+  \cmd{python -{}-version} \quad→\quad \version{Python 3.12.x} \checkmark
+\end{center}
+\end{labbox}
+
+\vspace{6pt}
+\begin{labbox}[ibmdark]{\textbf{4} \quad Google Chrome}
+\textbf{Instalación:}
+\begin{enumerate}[leftmargin=*, nosep]
+  \item Descargar desde \url{https://www.google.com/chrome/}
+  \item Ejecutar el instalador
+\end{enumerate}
+\vspace{4pt}
+\textbf{Validación:}
+\begin{center}
+  Abrir Chrome → ingresar \cmd{chrome://version} → debe mostrar número de versión \checkmark
+\end{center}
+\end{labbox}
+
+\vspace{6pt}
+\begin{labbox}[ibmblue]{\textbf{5} \quad IBM Bob IDE}
+\textbf{Instalación:}
+\begin{enumerate}[leftmargin=*, nosep]
+  \item Ingresar a \url{https://bob.ibm.com/download}
+  \item Seleccionar \emph{Bob IDE → Windows x64 (User)} para descargar el instalador \texttt{.exe}
+  \item Ejecutar el instalador y completar el asistente manteniendo el directorio por defecto
+\end{enumerate}
+\vspace{4pt}
+\textbf{Validación:}
+\begin{center}
+  Abrir IBM Bob desde el menú Inicio → si el editor carga, la instalación es correcta \checkmark
+\end{center}
+\end{labbox}
+
+% ── MACOS ────────────────────────────────────────────────────
+\subsection{macOS}
+\label{sec:macos}
+
+Aplica tanto a equipos con procesador \textbf{Apple Silicon} (M1, M2, M3, M4) como a Mac con procesador \textbf{Intel}. Los pasos asumen una Mac sin herramientas de desarrollo previas. Usar la app \textbf{Terminal}.
+
+\vspace{8pt}
+\begin{labbox}[ibmdark]{\textbf{1} \quad Node.js LTS (incluye npm)}
+\textbf{Instalación:}
+\begin{enumerate}[leftmargin=*, nosep]
+  \item Descargar el instalador LTS para macOS (.pkg, \textbf{universal}) desde \url{https://nodejs.org}
+  \item Ejecutar el \texttt{.pkg} con las opciones por defecto
+\end{enumerate}
+\vspace{4pt}
+\textbf{Validación} (en Terminal):
+\begin{center}
+  \cmd{node -v} \quad→\quad \version{v24.x.x} \checkmark \qquad
+  \cmd{npm -v} \quad→\quad \version{10.x.x} \checkmark
+\end{center}
+\end{labbox}
+
+\vspace{6pt}
+\begin{labbox}[ibmdark]{\textbf{2} \quad Python 3.12}
+\begin{criticalbox}
+  Debe ser \textbf{específicamente la versión 3.12.x}.
+\end{criticalbox}
+\vspace{6pt}
+\textbf{Instalación:}
+\begin{enumerate}[leftmargin=*, nosep]
+  \item Descargar la versión más reciente \version{3.12.x} para macOS (\textbf{universal2}) desde \url{https://www.python.org/downloads/macos/}
+  \item Ejecutar el \texttt{.pkg} con las opciones por defecto
+\end{enumerate}
+\vspace{4pt}
+\textbf{Validación} (en Terminal):
+\begin{center}
+  \cmd{python3 -{}-version} \quad→\quad \version{Python 3.12.x} \checkmark
+\end{center}
+\textit{En macOS el intérprete se invoca como \cmd{python3}, no \cmd{python}.}
+\end{labbox}
+
+\vspace{6pt}
+\begin{labbox}[ibmdark]{\textbf{3} \quad Google Chrome}
+\textbf{Instalación:}
+\begin{enumerate}[leftmargin=*, nosep]
+  \item Descargar el archivo \texttt{.dmg} desde \url{https://www.google.com/chrome/}
+  \item Abrir el \texttt{.dmg} y arrastrar Google Chrome a la carpeta Aplicaciones
+\end{enumerate}
+\vspace{4pt}
+\textbf{Validación:} Abrir Chrome desde Launchpad → ingresar \cmd{chrome://version} \checkmark
+\end{labbox}
+
+\vspace{6pt}
+\begin{labbox}[ibmblue]{\textbf{4} \quad IBM Bob IDE}
+\textbf{Instalación:}
+\begin{enumerate}[leftmargin=*, nosep]
+  \item Ingresar a \url{https://bob.ibm.com/download}
+  \item Seleccionar según procesador:
+    \begin{itemize}[nosep]
+      \item \textbf{Apple Silicon} (M1/M2/M3/M4): \emph{Bob IDE → macOS → Mac ARM} \quad \texttt{.pkg}
+      \item \textbf{Intel}: \emph{Bob IDE → macOS → Mac Intel} \quad \texttt{.pkg}
+    \end{itemize}
+  \item Ejecutar el \texttt{.pkg} y completar el asistente
+\end{enumerate}
+\vspace{4pt}
+\textbf{Validación:} Abrir IBM Bob desde Launchpad o la carpeta Aplicaciones → si el editor carga, la instalación es correcta \checkmark
+\end{labbox}
+
+% ── LINUX ────────────────────────────────────────────────────
+\subsection{Linux (Debian/Ubuntu)}
+\label{sec:linux}
+
+Las instrucciones corresponden a distribuciones basadas en \textbf{Debian/Ubuntu}. Para Red Hat/Fedora, sustituir \cmd{apt} por \cmd{dnf} y el paquete \texttt{.deb} por \texttt{.rpm}.
+
+\vspace{8pt}
+\begin{labbox}[ibmdark]{\textbf{1} \quad Node.js LTS (incluye npm)}
+\textbf{Instalación} (repositorio oficial NodeSource):
+\begin{center}
+\small
+\cmd{curl -fsSL https://deb.nodesource.com/setup\_24.x | sudo -E bash -}\\
+\cmd{sudo apt install -y nodejs}
+\end{center}
+\vspace{4pt}
+\textbf{Validación:}
+\begin{center}
+  \cmd{node -v} \quad→\quad \version{v24.x.x} \checkmark \qquad
+  \cmd{npm -v} \quad→\quad \version{10.x.x} \checkmark
+\end{center}
+\end{labbox}
+
+\vspace{6pt}
+\begin{labbox}[ibmdark]{\textbf{2} \quad Python 3.12}
+\begin{criticalbox}
+  Debe ser \textbf{específicamente la versión 3.12.x}. En Ubuntu 24.04 y Debian 12 está disponible en los repositorios oficiales.
+\end{criticalbox}
+\vspace{6pt}
+\textbf{Instalación:}
+\begin{center}
+  \cmd{sudo apt update \&\& sudo apt install -y python3.12}
+\end{center}
+\textit{Verificar primero si ya está instalado: \cmd{python3 -{}-version}. Si devuelve \version{3.12.x}, no es necesario reinstalar.}
+\vspace{4pt}\\
+\textbf{Validación:}
+\begin{center}
+  \cmd{python3 -{}-version} \quad→\quad \version{Python 3.12.x} \checkmark
+\end{center}
+\end{labbox}
+
+\vspace{6pt}
+\begin{labbox}[ibmdark]{\textbf{3} \quad Google Chrome}
+\textbf{Instalación:}
+\begin{enumerate}[leftmargin=*, nosep]
+  \item Descargar el paquete \texttt{.deb} desde \url{https://www.google.com/chrome/}
+  \item Instalar:
+\end{enumerate}
+\begin{center}
+  \cmd{sudo apt install -y ./google-chrome-stable\_current\_amd64.deb}
+\end{center}
+\vspace{4pt}
+\textbf{Validación:} Abrir Chrome desde el menú de aplicaciones → ingresar \cmd{chrome://version} \checkmark
+\end{labbox}
+
+\vspace{6pt}
+\begin{labbox}[ibmblue]{\textbf{4} \quad IBM Bob IDE}
+\textbf{Instalación:}
+\begin{enumerate}[leftmargin=*, nosep]
+  \item Ingresar a \url{https://bob.ibm.com/download}
+  \item Seleccionar:
+    \begin{itemize}[nosep]
+      \item \textbf{Debian/Ubuntu}: \emph{Bob IDE → Linux .deb amd64} \quad \texttt{.deb}
+      \item \textbf{Fedora/RHEL}: \emph{Bob IDE → Linux RPM x64} \quad \texttt{.rpm}
+    \end{itemize}
+  \item Instalar desde la carpeta de descarga:
+\end{enumerate}
+\begin{center}
+  \cmd{sudo apt install -y ./<archivo-descargado>.deb}
+\end{center}
+\vspace{4pt}
+\textbf{Validación:} Abrir IBM Bob desde el menú de aplicaciones del sistema → si el editor carga, la instalación es correcta \checkmark
+\end{labbox}
+
+% ──────────────────────────────────────────────────────────────
+\section{Tabla de Versiones de Referencia}
+\label{sec:versiones}
+
+\begin{center}
+\begin{tabular}{@{}lllll@{}}
+\toprule
+\textbf{Herramienta} & \textbf{Versión requerida} & \textbf{Labs} & \textbf{Descarga} \\
+\midrule
+IBM Bob IDE & Más reciente & Todos & \url{bob.ibm.com/download} \\
+Node.js & \version{18.x LTS mín. / 24.x LTS rec.} & Varios & \url{nodejs.org} \\
+npm & \version{10.x} (con Node.js) & Varios & (incluido) \\
+Python & \version{3.12.x específicamente} & Varios & \url{python.org} \\
+Git & \version{2.x} & Varios & \url{git-scm.com} \\
+Google Chrome & Reciente & Varios & \url{google.com/chrome} \\
+Java 8 (JDK) & \version{1.8.0\_392+} & Java Mod. Lab 1 & Azul Zulu / Oracle \\
+Java 21 LTS & \version{21.0.x LTS} & Java Mod. Labs 2–5 & Azul Zulu / Oracle \\
+Maven & \version{3.8.x o superior} & Java Mod. & \url{maven.apache.org} \\
+draw.io & N/A (app web) & SDLC & \url{app.diagrams.net} \\
+Docker & \version{24.x o superior} & SDLC (opcional) & \url{docker.com} \\
+Tavily API Key & N/A (cuenta gratuita) & Hands-on Lab 5 & \url{tavily.com} \\
+ADK (watsonx) & Más reciente & Voltia Lab 2 & Instructor \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+% ──────────────────────────────────────────────────────────────
+\section{Checklist de Validación Pre-Lab}
+\label{sec:checklist}
+
+Usar esta lista el día antes del lab para confirmar que el entorno está listo. Marcar cada ítem con \checkmark\ al confirmarlo.
+
+\begin{center}
+\begin{tabular}{@{}clll@{}}
+\toprule
+& \textbf{Validación} & \textbf{Comando} & \textbf{Resultado esperado} \\
+\midrule
+$\square$ & IBM Bob IDE abre correctamente & (visual) & Editor visible \\
+$\square$ & Node.js & \cmd{node -v} & \version{v18.x+} \\
+$\square$ & npm & \cmd{npm -v} & \version{10.x} \\
+$\square$ & Python & \cmd{python3 -{}-version} & \version{3.12.x} \\
+$\square$ & Git & \cmd{git -{}-version} & \version{2.x.x} \\
+$\square$ & Google Chrome & \cmd{chrome://version} & Número de versión \\
+$\square$ & draw.io accesible & \url{app.diagrams.net} & Página carga \\
+$\square$ & Proyecto ZIP descargado & (según lab) & Archivo en disco \\
+$\square$ & \cmd{npm install} sin errores & (en carpeta del proyecto) & Sin \texttt{ERR!} en salida \\
+$\square$ & Java 8 (solo Java Mod. Lab 1) & \cmd{java -version} & \version{1.8.0\_...} \\
+$\square$ & Java 21 (solo Java Mod. Labs 2–5) & \cmd{java -version} & \version{21.x.x} \\
+$\square$ & Maven (solo Java Mod.) & \cmd{mvn -{}-version} & \version{3.8.x+} \\
+$\square$ & Tavily API Key (solo Hands-on L5) & (configurada en Bob) & Key activa \\
+$\square$ & Credenciales IBM i (solo RPG) & (confirmadas con facilitador) & Acceso SSH \\
+$\square$ & Credenciales Confluent (solo Kafka) & (provistas por instructor) & UI accesible \\
+$\square$ & IBM Cloud API Key (solo WxO) & (provista por instructor) & CLI autenticado \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{12pt}
+\begin{warningbox}
+  \textbf{Si algún ítem falla el día del lab:} Contactar al facilitador con al menos 30 minutos de anticipación al inicio de la sesión. No esperes al momento de comenzar el lab para reportar problemas de entorno.
+\end{warningbox}
+
+% ──────────────────────────────────────────────────────────────
+\vfill
+\textcolor{ibmborder}{\rule{\linewidth}{0.5pt}}
+{\small\color{ibmgray}
+  \textbf{IBM Technology Expert Labs} ·
+  Versiones de referencia: Node.js 24.x LTS, Python 3.12.x, Git 2.x, Google Chrome (reciente), IBM Bob IDE (reciente). ·
+  Documento generado con \LaTeX.
+}
+
+\end{document}

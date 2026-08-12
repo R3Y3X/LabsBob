@@ -1,0 +1,169 @@
+<div class="content-panel lab-template prose--full">
+
+  <div class="lab-banner">
+    <div class="lab-banner__tags">
+      <span class="cds--tag cds--tag--cyan">Lab 06</span>
+      <span class="cds--tag cds--tag--cool-gray">~20 min</span>
+      <span class="cds--tag cds--tag--teal">Plan · Agent</span>
+    </div>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Lab 06 — Revisión y ajustes</h1>
+
+    <div class="lab-banner__metrics">
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">4–8</span>
+        <span class="lab-banner__metric-label">BobCoins</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">~20</span>
+        <span class="lab-banner__metric-label">minutos</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="cds--body-01">Ya tienes una tienda funcionando y animada. La fase de revisión pone la aplicación al lado del diseño, cierra las diferencias en una sola pasada y verifica que se sostenga más allá del camino feliz.</p>
+
+  <div class="callout" data-tone="info">
+    <p class="callout__title">Lo que vas a hacer</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">(Opcional) Hacer que Bob revise las tres pantallas contra los mockups y aplique las correcciones.</li>
+      <li class="cds--list__item">Verificar responsividad, accesibilidad y casos borde.</li>
+      <li class="cds--list__item">Reflexionar sobre el flujo de trabajo de mockup a aplicación.</li>
+    </ul>
+  </div>
+
+  <div class="callout" data-tone="note">
+    <p class="callout__title">Antes de empezar</p>
+    <p>Labs 02–05 completos: las tres pantallas están construidas y animadas, y la aplicación corre.</p>
+  </div>
+
+  <section class="lab-section lab-step" aria-labelledby="lab6-step1">
+    <h2 class="cds--productive-heading-03" id="lab6-step1">Paso 1 — (Opcional) Revisa las tres pantallas contra los mockups</h2>
+    <div class="callout" data-tone="info">
+      <p class="callout__title">Opcional</p>
+      <p>Si tus pantallas ya coinciden bastante con los mockups después de los Labs 02–05, puedes saltar al paso 3 (Verifica la responsividad). Ejecuta esta revisión cuando quieras que Bob detecte las diferencias visuales más finas.</p>
+    </div>
+    <p class="cds--body-01">Cambia Bob a <strong>Plan Mode</strong> para que revise sin editar. Adjunta las tres capturas — <code>mockups/home.png</code>, <code>mockups/product.png</code> y <code>mockups/cart.png</code> — al chat de Bob y después ejecuta un único análisis.</p>
+    <div class="code-block">
+      <button class="copy-button" type="button" aria-label="Copiar prompt">Copiar</button>
+      <pre><code>Adjunto los tres mockups de diseño de esta aplicación (home, product, cart). Compará cada
+uno con cómo se renderiza actualmente la página correspondiente (src/pages/Home.jsx,
+src/pages/Product.jsx, src/pages/Cart.jsx y src/components/ProductCard.jsx).
+
+Producí UNA sola checklist consolidada y concreta de las diferencias visuales que
+encuentres, agrupadas por pantalla: espaciado, tamaños, colores, alineación, elementos
+faltantes o sobrantes. Sé específico (qué elemento, qué debería cambiar).
+
+Los textos de la UI están en inglés a propósito, igual que los mockups: no los reportes
+como diferencias ni propongas traducirlos.
+
+No cambies código todavía.</code></pre>
+    </div>
+    <div class="callout" data-tone="tip">
+      <p class="callout__title">Haz que la lista sea accionable</p>
+      <p>Si Bob es vago ("mejorar el espaciado"), insiste: "Sé específico — qué elemento y qué valor debería cambiar." Quieres una checklist verificable, no opiniones.</p>
+    </div>
+  </section>
+
+  <section class="lab-section lab-step" aria-labelledby="lab6-step2">
+    <h2 class="cds--productive-heading-03" id="lab6-step2">Paso 2 — (Opcional) Aplica las correcciones</h2>
+    <p class="cds--body-01">Si ejecutaste la revisión anterior, cambia a <strong>Agent Mode</strong> y haz que Bob trabaje toda la checklist en una pasada guiada.</p>
+    <div class="code-block">
+      <button class="copy-button" type="button" aria-label="Copiar prompt">Copiar</button>
+      <pre><code>Recorré la checklist que acabás de producir y aplicá las correcciones en Home.jsx,
+ProductCard.jsx, Product.jsx y Cart.jsx para que cada pantalla coincida con su mockup.
+Hacé los cambios en lotes chicos y contame qué cambiaste en cada lote, así puedo ir
+verificando en el navegador.
+
+Mantené todos los textos de la UI en inglés. No toques src/api/client.js.</code></pre>
+    </div>
+    <p class="cds--body-01">Mira el navegador después de cada lote y ve tachando ítems de la lista.</p>
+  </section>
+
+  <section class="lab-section lab-step" aria-labelledby="lab6-step3">
+    <h2 class="cds--productive-heading-03" id="lab6-step3">Paso 3 — Verifica la responsividad</h2>
+    <p class="cds--body-01">Redimensiona el navegador (o usa la barra de dispositivos en las herramientas de desarrollo) hasta el ancho de un teléfono.</p>
+    <div class="code-block">
+      <button class="copy-button" type="button" aria-label="Copiar prompt">Copiar</button>
+      <pre><code>Asegurate de que las tres pantallas sean responsive: la grilla de productos se reduce a
+menos columnas, el detalle de producto pasa de dos columnas a apilado, y el carrito apila
+el resumen debajo de los ítems en pantallas chicas. Corregí cualquier layout que se
+desborde o se superponga.
+
+Mantené todos los textos de la UI en inglés.</code></pre>
+    </div>
+  </section>
+
+  <section class="lab-section lab-step" aria-labelledby="lab6-step4">
+    <h2 class="cds--productive-heading-03" id="lab6-step4">Paso 4 — Pasada rápida de accesibilidad y casos borde</h2>
+    <div class="code-block">
+      <button class="copy-button" type="button" aria-label="Copiar prompt">Copiar</button>
+      <pre><code>Hacé una pasada rápida de accesibilidad y robustez sobre las tres pantallas:
+- Cada imagen de producto tiene un alt significativo (el nombre del producto).
+- Los botones y links son elementos &lt;button&gt;/&lt;a&gt; reales con etiquetas discernibles.
+- Los selectores de cantidad y los botones "Add to cart" / "Place order" son enfocables
+  por teclado.
+- Los estados de carga, carrito vacío y "product not found" se renderizan sin errores.
+Listá qué cambiaste.
+
+Mantené todos los textos de la UI en inglés.</code></pre>
+    </div>
+    <p class="cds--body-01">Después prueba tú mismo los casos borde:</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">El carrito vacío muestra el estado vacío, no un resumen roto.</li>
+      <li class="cds--list__item">El producto sin stock (GrindPro Burr Grinder) se renderiza correctamente.</li>
+      <li class="cds--list__item">Una llamada a la API lenta o fallida muestra un mensaje amable, no una pantalla en blanco.</li>
+      <li class="cds--list__item">Hacer un pedido desde un carrito con ítems muestra la confirmación y vacía el carrito.</li>
+    </ul>
+  </section>
+
+  <section class="lab-section lab-step" aria-labelledby="lab6-step5">
+    <h2 class="cds--productive-heading-03" id="lab6-step5">Paso 5 — (Opcional) Compila para producción</h2>
+    <p class="cds--body-01">Confirma que la aplicación compila sin errores:</p>
+    <div class="code-block">
+      <button class="copy-button" type="button" aria-label="Copiar comandos">Copiar</button>
+      <pre><code>npm run build
+npm run preview</code></pre>
+    </div>
+    <p class="cds--body-01"><code>npm run build</code> debería terminar sin errores, y la vista previa debería comportarse igual que el servidor de desarrollo. Este es el artefacto que desplegarías en cualquier hosting estático.</p>
+  </section>
+
+  <section class="lab-section" aria-labelledby="lab6-reflexion">
+    <h2 class="cds--productive-heading-03" id="lab6-reflexion">Reflexión</h2>
+    <p class="cds--body-01">Toma distancia y mira cómo fue el ciclo de vida con Bob:</p>
+    <div class="lab-table-wrap">
+      <table class="lab-table">
+        <thead>
+          <tr><th>Fase</th><th>Qué hiciste</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Planificar</td><td>Convertiste mockups + un contrato de API en un plan pantalla por pantalla, antes de escribir código.</td></tr>
+          <tr><td>Construir</td><td>Implementaste una pantalla a la vez a partir de una captura, contra una API y un sistema de diseño fijos.</td></tr>
+          <tr><td>Pulir</td><td>Agregaste movimiento para que la tienda se sintiera viva.</td></tr>
+          <tr><td>Revisar</td><td>Comparaste contra el diseño en una sola pasada y reforzaste los estados.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout" data-tone="note">
+      <p class="callout__title">Preguntas para debatir</p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">¿Dónde ayudó el esqueleto preconstruido (cliente, carrito, toast, tokens) a mantener a Bob en el camino?</li>
+        <li class="cds--list__item">¿Dónde ser específico en un prompt produjo un mejor resultado que ser vago?</li>
+        <li class="cds--list__item">Si mañana se suma alguien nuevo al equipo, ¿qué necesitaría tener documentado primero? (Eso es el Lab 07.)</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="lab-section lab-step" aria-labelledby="lab6-gate">
+    <h2 class="cds--productive-heading-03" id="lab6-gate">Criterios de éxito</h2>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">(Opcional) Las tres pantallas revisadas contra sus mockups y las diferencias aplicadas.</li>
+      <li class="cds--list__item">Las tres pantallas son responsive.</li>
+      <li class="cds--list__item">Accesibilidad y casos borde (vacío, error, sin stock) contemplados.</li>
+      <li class="cds--list__item"><code>npm run build</code> termina con éxito.</li>
+    </ul>
+    <a class="cds--btn cds--btn--primary" style="margin-top:1rem" href="#/lab/software-development-lifecycle/docs">
+      Siguiente: Lab 07 — Documentar →
+    </a>
+  </section>
+
+</div>

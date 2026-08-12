@@ -2,64 +2,91 @@
 
   <div class="lab-banner">
     <div class="lab-banner__tags">
-      <span class="cds--tag cds--tag--teal">Bob Premium · Java</span>
-      <span class="cds--tag cds--tag--cool-gray">~20 min</span>
-      <span class="cds--tag cds--tag--magenta">Avanzado</span>
+      <span class="cds--tag cds--tag--purple">Agent Mode</span>
+      <span class="cds--tag cds--tag--cool-gray">~15 min</span>
     </div>
-    <h1 class="cds--productive-heading-05 lab-banner__title">LAB 1 — Java Liberty Replatforming</h1>
-    <p class="cds--body-02 lab-banner__summary">
-      Migra Simple Pharmacy de Traditional WebSphere (TWas) a Open Liberty.
-      El código Java y Struts no se modifican — solo cambia el runtime y la configuración de build.
-      Criterio de éxito: <code>mvn clean compile</code> → <strong>BUILD SUCCESS</strong>.
-    </p>
+    <h1 class="cds--productive-heading-05 lab-banner__title">LAB 1 — Replatforming de Java a Liberty</h1>
+
+    <div class="lab-banner__metrics">
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">4–6</span>
+        <span class="lab-banner__metric-label">BobCoins estimados</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">~15</span>
+        <span class="lab-banner__metric-label">minutos</span>
+      </div>
+    </div>
   </div>
 
-  <figure class="lab-figure">
-    <img src="./assets/images/labs/java-modernization-v2/lab1-banner.png"
-         alt="Banner del LAB 1 — Java Liberty Replatforming"
-         class="lab-figure__img" />
-  </figure>
+  <!-- Qué lograrás -->
+  <section class="lab-section" aria-labelledby="lab1-intro">
+    <h2 class="cds--productive-heading-03" id="lab1-intro">Qué lograrás</h2>
+    <p class="cds--body-01" style="max-width:72ch">
+      Migrarás el Simple Pharmacy Management System de Traditional WebSphere Application Server (TWas)
+      al runtime ligero Liberty usando <strong>Agent Mode</strong> de Bob V2 en tres fases:
+      Analizar → Aplicar cambios → Validar. Bob trabaja los problemas de migración uno a uno,
+      explicando cada uno y pidiendo tu aprobación antes de tocar un archivo.
+    </p>
+  </section>
 
-  <!-- Contexto -->
-  <section class="lab-section" aria-labelledby="lab1-contexto">
-    <h2 class="cds--productive-heading-03" id="lab1-contexto">📋 Contexto del Lab</h2>
-    <div class="callout" data-tone="note">
-      <p class="callout__title">¿Qué cambia en este lab?</p>
-      <ul class="cds--list--unordered">
-        <li class="cds--list__item"><strong>Java:</strong> 8 (sin cambios)</li>
-        <li class="cds--list__item"><strong>Runtime:</strong> Traditional WebSphere → Open Liberty</li>
-        <li class="cds--list__item"><strong>Build:</strong> se añade <code>liberty-maven-plugin 3.10</code></li>
-        <li class="cds--list__item"><strong>Código Java y Struts:</strong> intactos</li>
+  <!-- Qué cambia en este lab -->
+  <div class="lab-delta">
+    <span class="lab-delta__item lab-delta__item--changed">TWas <span class="lab-delta__arrow">→</span> Open Liberty</span>
+    <span class="lab-delta__item lab-delta__item--changed">liberty-maven-plugin 3.10 <span class="lab-delta__arrow">nuevo</span></span>
+    <span class="lab-delta__item lab-delta__item--same">Java 8 (sin cambios)</span>
+    <span class="lab-delta__item lab-delta__item--same">Struts (sin cambios)</span>
+    <span class="lab-delta__item lab-delta__item--same">Código Java (sin cambios)</span>
+  </div>
+
+  <!-- Prerrequisitos -->
+  <div class="callout" data-tone="note">
+    <p class="callout__title">Antes de empezar — configura el entorno</p>
+    <p>Este lab usa <strong>Java 8</strong> y Maven. Sigue la guía de setup del overview si aún no lo has hecho: IBM Bob V2, SDKMAN! (o winget en Windows), Java 8 + Maven.</p>
+    <a class="cds--link" href="#/lab/java-modernization-v2/overview">Ver guía de setup en el overview →</a>
+  </div>
+
+  <!-- Workspace setup -->
+  <section class="lab-workspace-setup" aria-labelledby="lab1-workspace">
+    <div class="lab-workspace-setup__box">
+      <span class="lab-workspace-setup__badge">Paso obligatorio — antes de cualquier prompt</span>
+      <h2 class="lab-workspace-setup__title" id="lab1-workspace">Paso 1: Abre el proyecto</h2>
+      <p class="lab-workspace-setup__lead">Lanza tu IDE con IBM Bob instalado. Abre la carpeta <code>snapA-java-liberty-replatforming</code> como raíz del proyecto. Si el chat de Bob no está abierto, haz clic en el icono de Bob en la parte superior del IDE.</p>
+      <div class="lab-workspace-setup__path">
+        <p class="lab-workspace-setup__path-label">File → Open Folder</p>
+        <code class="lab-workspace-setup__path-value">.../simple-pharmacy-workshop-v2/labs/lab1-java-liberty-replatforming/snapA-java-liberty-replatforming/</code>
+      </div>
+      <ul class="lab-workspace-setup__checks">
+        <li>En el explorador de Bob debe verse <code>pom.xml</code> y <code>src/</code> en la raíz</li>
+        <li><strong>No</strong> abras <code>simple-pharmacy-workshop-v2/</code>, <code>labs/</code> ni <code>lab1-java-liberty-replatforming/</code></li>
+        <li>El migration plan ZIP está un nivel arriba (hermano de snapA): <code>../simple-pharmacy.war_migrationPlan.zip</code></li>
       </ul>
+      <p class="lab-workspace-setup__note"><strong>Confirma Agent Mode:</strong> en el panel de chat de Bob, comprueba que el indicador de modo en la parte inferior muestra <strong>Agent</strong>. Es el único modo que necesitas — no hay nada que cambiar en ningún punto de este lab.</p>
     </div>
   </section>
 
-  <!-- Checklist -->
-  <section class="lab-section" aria-labelledby="lab1-check">
-    <h2 class="cds--productive-heading-03" id="lab1-check">✅ Checklist antes de empezar</h2>
-    <ul class="cds--list--unordered">
-      <li class="cds--list__item">Carpeta <code>snapA-java-liberty-replatforming/</code> abierta como raíz en Bob</li>
-      <li class="cds--list__item"><code>java -version</code> dice <code>1.8.x</code></li>
-      <li class="cds--list__item"><code>mvn --version</code> dice <code>Java version: 1.8</code></li>
-    </ul>
-    <div class="callout" data-tone="warning">
-      <p class="callout__title">⚠️ Regla crítica de carpeta</p>
-      <p>Abre <strong>siempre</strong> la carpeta <code>snapA-java-liberty-replatforming/</code> como raíz — <em>nunca</em> la carpeta padre del lab.</p>
-    </div>
-  </section>
-
-  <!-- Fase 1 -->
+  <!-- FASE 1 -->
   <section class="lab-section" aria-labelledby="lab1-fase1">
-    <h2 class="cds--productive-heading-03" id="lab1-fase1">FASE 1 — Análisis</h2>
+    <h2 class="cds--productive-heading-03" id="lab1-fase1">Paso 2 — FASE 1: Análisis</h2>
 
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Pega el prompt de rol y el prompt del lab</h3>
-      <p class="cds--body-01">Abre el chat de Bob en modo Agent y pega primero el <strong>Prompt General de Rol</strong> y luego el siguiente prompt del lab:</p>
+      <h3 class="cds--productive-heading-02 lab-step__title">Objetivo</h3>
+      <p class="cds--body-01">Que Bob analice la aplicación, consuma el migration plan AMA y construya un inventario de cambios necesarios — sin modificar archivos todavía.</p>
+
+      <h3 class="cds--productive-heading-02 lab-step__title" style="margin-top:var(--cds-spacing-05,1rem)">Pega el prompt de Fase 1</h3>
+      <p class="cds--body-01">Al abrir la carpeta <code>snapA</code> empiezas un chat nuevo en Bob en <strong>Agent Mode</strong>. Copia y pega <strong>todo</strong> el bloque de abajo — incluye las reglas de trabajo y arranca la Fase 1 directamente.</p>
       <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
-        <pre><code>Lab 1: migrar Simple Pharmacy de Traditional WebSphere a Liberty.
-Carpeta raíz del proyecto: la que está abierta en el IDE (snapA).
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>Reglas de trabajo:
+- Fases: (1) Análisis — no modifiques archivos hasta mi "adelante"; (2) Cambios — un diff a la vez, espera mi "ok"; (3) Validación — mvn compile o mvn test con output completo.
+- Solo la carpeta raíz abierta en Bob. No explores otras carpetas snap*.
+- Cambios mínimos para el objetivo del lab. Sin refactors ni funcionalidades extra.
+- PROTOCOLO Fase 2: un "Cambio N" por mensaje — diff unified completo, pregunta "¿Aplico el Cambio N?", PARA hasta mi "ok". Prohibido batch, saltar a validación o ejecutar mvn/git sin permiso.
+
+Lab 1: migrar Simple Pharmacy de Traditional WebSphere a Liberty.
+Carpeta raíz del proyecto: snapA-java-liberty-replatforming/ (la carpeta abierta en Bob).
 Migration plan ZIP: ../simple-pharmacy.war_migrationPlan.zip
+  (está en lab1-java-liberty-replatforming/, un nivel arriba de snapA — NO busques fuera del workshop)
 
 Java sigue siendo 8. El código Java y Struts no cambian.
 Solo cambia el runtime y la configuración de build.
@@ -68,9 +95,9 @@ Solo cambia el runtime y la configuración de build.
 
 FASE 1 — ANÁLISIS (no toques ningún archivo todavía)
 
-1. Lee pom.xml y describe: versión Java, servidor, dependencias principales,
-   qué le falta para correr en Liberty
-2. Abre el ZIP del migration plan y lee:
+1. Lee pom.xml (en la raíz del workspace) y describe: versión Java, servidor,
+   dependencias principales, qué le falta para correr en Liberty
+2. Abre el ZIP del migration plan en la ruta indicada arriba y lee:
    - reports/simple-pharmacy.war_AnalysisReport.json
      → lista todos los findings Critical y Warning con su biblioteca, versión y propuesta
    - src/main/liberty/config/server.xml (lo usaremos en Fase 2)
@@ -87,17 +114,31 @@ Cuando yo diga "adelante", pasamos a Fase 2.</code></pre>
     </div>
   </section>
 
-  <!-- Fase 2 -->
+  <!-- FASE 2 -->
   <section class="lab-section" aria-labelledby="lab1-fase2">
-    <h2 class="cds--productive-heading-03" id="lab1-fase2">FASE 2 — Cambios</h2>
+    <h2 class="cds--productive-heading-03" id="lab1-fase2">Paso 3 — FASE 2: Cambios</h2>
 
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Aprobar y aplicar los 6 cambios</h3>
-      <p class="cds--body-01">Di <strong>"adelante"</strong> y luego usa este prompt para la fase de cambios. Bob explicará cada cambio y esperará tu aprobación antes de aplicarlo:</p>
+      <h3 class="cds--productive-heading-02 lab-step__title">Flujo de aprobación interactivo</h3>
+      <p class="cds--body-01">Di <strong>"adelante"</strong> en el chat de <strong>Agent Mode</strong> y luego pega <strong>solo</strong> el prompt de Fase 2 (mensaje aparte). Bob debe presentar <strong>un cambio con diff</strong> y parar hasta tu <strong>"ok"</strong>:</p>
+
       <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
+        <button type="button" class="copy-button">Copiar</button>
         <pre><code>FASE 2 — CAMBIOS (uno a la vez — explica el cambio, espera mi "ok", luego aplica)
 
+PROTOCOLO OBLIGATORIO (no negociable):
+1. UN solo "Cambio N" por mensaje. No prepares el siguiente hasta mi "ok" literal.
+2. Para cada cambio, en ESTE orden:
+   a) Encabezado: "Cambio N — [título]"
+   b) Explicación breve (archivo(s) y por qué)
+   c) Diff unified COMPLETO en el chat (líneas - y + visibles). Archivo nuevo = contenido completo.
+   d) Pregunta: "¿Aplico el Cambio N?"
+   e) PARA. No edites archivos. No ejecutes mvn/git. No avances.
+3. PROHIBIDO: aplicar varios cambios seguidos; decir "todos aplicados"; pasar a Fase 3 sin mi prompt.
+4. Empieza SOLO con el Cambio 1. Los Cambios 2–6 son referencia — no los ejecutes aún.
+5. Si ya aplicaste algo sin "ok", DETENTE y pregúntame antes de continuar.
+
+---
 Cambio 1 — Javassist 3.29.2-GA (APROBAR)
   Fix: añadir javassist como dependencia explícita en pom.xml.
   ⚠️ La versión DEBE ser exactamente 3.29.2-GA.
@@ -118,25 +159,68 @@ Cambio 5 — server.xml (APROBAR)
   Fix: crear src/main/liberty/config/server.xml desde el ZIP del migration plan.
 
 Cambio 6 — Scripts de conveniencia (APROBAR)
-  Crear: run-liberty.sh, quick-start.sh, stop-liberty.sh</code></pre>
+  Crear: run-liberty.sh, quick-start.sh, stop-liberty.sh
+
+Cuando termines el Cambio 6 con mi "ok", DETENTE. No ejecutes mvn hasta que yo pegue el prompt de Fase 3.</code></pre>
       </div>
-      <figure class="lab-figure">
-        <img src="./assets/images/labs/java-modernization-v2/lab1-phase2-changes.png"
-             alt="Bob mostrando el diff del pom.xml con el liberty-maven-plugin y las nuevas dependencias añadidas"
-             class="lab-figure__img" />
-        <figcaption class="lab-figure__caption">Bob muestra cada cambio como diff antes de aplicarlo — aprueba con "ok"</figcaption>
-      </figure>
+
+      <p class="cds--body-01" style="margin-top:var(--cds-spacing-05,1rem)">Problemas esperados en este proyecto (los tuyos pueden variar):</p>
+      <div class="lab-table-wrap">
+        <table class="lab-table">
+          <caption class="visually-hidden">Problemas de migración esperados y respuestas</caption>
+          <thead>
+            <tr><th scope="col">#</th><th scope="col">Problema que plantea Bob</th><th scope="col">Tu respuesta</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Javassist charset warning — "Avoid using default charset when the output stream is a PrintStream"</td>
+              <td>Aprobar, fijado a <code>3.29.2-GA</code> — ver advertencia abajo</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>OGNL SecurityManager conflict — "The default value of the java.security.manager system property has been changed to disallow"</td>
+              <td>Rechazar — es un falso positivo</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout" data-tone="warning" style="margin-top:var(--cds-spacing-05,1rem)">
+        <p class="callout__title">Javassist: insiste en <code>3.29.2-GA</code> — Bob puede proponer otra versión</p>
+        <p>Bob suele proponer una javassist más nueva (por ejemplo <code>3.30.2-GA</code>) y ofrecer <code>3.29.2-GA</code> como segunda opción, formulada como rechazo:</p>
+        <div class="code-block">
+          <button type="button" class="copy-button">Copiar</button>
+          <pre><code>Yes, upgrade javassist to 3.30.2-GA
+No, use 3.29.2-GA instead</code></pre>
+        </div>
+        <p style="margin-top:0.75rem">Elige <code>3.29.2-GA</code>. Es la versión con la que este workshop está construido y probado, y la que <code>snapB</code>/<code>snapC</code> ya fijan. Ambas versiones son compatibles con Java 8, así que una más nueva no romperá tu build hoy — pero mantén todo el grupo en una sola versión.</p>
+        <p style="margin-top:0.75rem">Lo que hagas, no omitas el cambio por completo — eso deja el finding sin resolver.</p>
+      </div>
+
+      <div class="callout" data-tone="note" style="margin-top:var(--cds-spacing-05,1rem)">
+        <p class="callout__title">Por qué el finding de OGNL es un falso positivo — vale dos minutos</p>
+        <p>El <code>pom.xml</code> de <code>snapA</code> ya fija <code>ognl</code> a <code>3.1.26</code> para compatibilidad con Struts 2.5.30, y lo dice en un comentario justo encima de la dependencia. La clase <code>OgnlSecurityManager</code> marcada existe en todas las versiones OGNL disponibles (3.1.26–3.4.11), así que actualizar no la eliminaría. La llamada solo lanza excepción en runtime en Java 18+ cuando hay un SecurityManager no nulo instalado — cosa que Liberty nunca hace.</p>
+        <p style="margin-top:0.75rem">El escáner tiene razón en que el código existe, y está completamente equivocado en que importe aquí. Rechazar es la respuesta correcta — y es el momento más transferible del lab: que un finding sea real y que sea relevante para tu runtime son dos preguntas distintas, y solo tú puedes responder la segunda.</p>
+      </div>
+
+      <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
+        <p class="callout__title">El finding de javassist también es menos urgente de lo que parece</p>
+        <p>Bob probablemente citará JEP 400 y "Java 17+" como razón. Ten en cuenta que el Lab 1 se queda en Java 8 — el charset por defecto no cambió a UTF-8 hasta Java 18, así que el bug que describe no puede afectarte en este lab. AMA lo marca porque planifica para un destino Liberty que podría correr en una JVM más nueva.</p>
+        <p style="margin-top:0.75rem">Aprobar sigue siendo correcto (es inofensivo y es real), solo no dejes que el encuadre de "desajustes silenciosos de charset" convenza a la sala de que esquivaron un bug activo.</p>
+      </div>
     </div>
   </section>
 
-  <!-- Fase 3 -->
+  <!-- FASE 3 -->
   <section class="lab-section" aria-labelledby="lab1-fase3">
-    <h2 class="cds--productive-heading-03" id="lab1-fase3">FASE 3 — Validación</h2>
+    <h2 class="cds--productive-heading-03" id="lab1-fase3">Paso 4 — FASE 3: Validación</h2>
 
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Compilar con Maven</h3>
+      <h3 class="cds--productive-heading-02 lab-step__title">Compilar con Maven</h3>
+      <p class="cds--body-01">La meta de este lab es un replatforming limpio a Liberty, y la comprobación que importa es que la app migrada siga compilando. Pega el prompt en el chat de <strong>Agent Mode</strong>:</p>
       <div class="code-block">
-        <button class="copy-button" type="button">Copiar</button>
+        <button type="button" class="copy-button">Copiar</button>
         <pre><code>FASE 3 — VALIDACIÓN
 
 Ejecuta: mvn clean compile
@@ -144,6 +228,7 @@ Ejecuta: mvn clean compile
 Resultado esperado: BUILD SUCCESS con Java 1.8.
 Si falla, muéstrame el error completo antes de proponer ningún fix.</code></pre>
       </div>
+      <p class="cds--body-01" style="margin-top:var(--cds-spacing-05,1rem)">Deberías ver <code>BUILD SUCCESS</code>. El Lab 1 cambia el runtime (Traditional WebSphere → Liberty) y la configuración de build — mantiene la app en Java 1.8 con el namespace <code>javax.*</code>, así que el código de la aplicación no cambia.</p>
       <figure class="lab-figure">
         <img src="./assets/images/labs/java-modernization-v2/lab1-phase3-build-success.png"
              alt="Terminal mostrando BUILD SUCCESS de Maven con Java 1.8 en el Lab 1 de Liberty Replatforming"
@@ -153,18 +238,148 @@ Si falla, muéstrame el error completo antes de proponer ningún fix.</code></pr
     </div>
   </section>
 
-  <!-- Criterios de éxito -->
-  <div class="callout" data-tone="tip">
-    <p class="callout__title">🎉 Criterios de Éxito — Lab 1</p>
+  <!-- Checkpoint -->
+  <section class="lab-section" aria-labelledby="lab1-checkpoint">
+    <h2 class="cds--productive-heading-03" id="lab1-checkpoint">Checkpoint — cómo se ve un replatforming terminado</h2>
     <ul class="cds--list--unordered">
-      <li class="cds--list__item">✅ pom.xml: liberty-maven-plugin 3.10 con openliberty-runtime 26.0.0.5</li>
-      <li class="cds--list__item">✅ pom.xml: javassist 3.29.2-GA exactamente</li>
-      <li class="cds--list__item">✅ pom.xml: asm-analysis 9.7</li>
-      <li class="cds--list__item">✅ pom.xml: bloque ognl 3.1.26 con "DO NOT CHANGE" intacto</li>
-      <li class="cds--list__item">✅ src/main/liberty/config/server.xml con features: servlet-3.1, jsp-2.3, jdbc-4.1</li>
-      <li class="cds--list__item">✅ maven.compiler.source y target: 1.8</li>
-      <li class="cds--list__item">✅ mvn clean compile → BUILD SUCCESS</li>
+      <li class="cds--list__item"><code>pom.xml</code> tiene el <code>io.openliberty.tools:liberty-maven-plugin</code></li>
+      <li class="cds--list__item"><code>src/main/liberty/config/server.xml</code> existe, con la app <code>simple-pharmacy.war</code> y las features de Liberty</li>
+      <li class="cds--list__item"><code>maven.compiler.source</code>/<code>target</code> siguen en 1.8, y el código sigue importando <code>javax.servlet.*</code> — el Lab 1 no cambia ni la versión de Java ni el namespace</li>
+      <li class="cds--list__item"><code>mvn clean compile</code> → <code>BUILD SUCCESS</code></li>
     </ul>
-  </div>
+
+    <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
+      <p class="callout__title">¿Quieres ejecutarla? Puedes — pero no es obligatorio</p>
+      <p>Ya viste la aplicación en la demo de apertura, así que ejecutarla no es requisito para terminar este lab — una compilación limpia basta. Si quieres verla en Liberty de todos modos, adelante. Si algo falla, copia el error — de la terminal o del navegador — al chat de Bob y pídele que lo arregle. Depurar su propia migración a partir del texto del error es exactamente para lo que sirve Agent Mode.</p>
+    </div>
+
+    <div class="callout" data-tone="warning" style="margin-top:var(--cds-spacing-05,1rem)">
+      <p class="callout__title">Libera el puerto antes del siguiente lab</p>
+      <p>Si Bob o tú arrancasteis un servidor Liberty, deténlo para que el Lab 2 no quede bloqueado:</p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item"><strong>macOS / Linux:</strong> pulsa Ctrl+C en la terminal donde corre Liberty. Si el puerto sigue ocupado: <code>lsof -ti:9080 | xargs kill -9</code></li>
+        <li class="cds--list__item"><strong>Windows (PowerShell):</strong> pulsa Ctrl+C; si el puerto sigue ocupado, ejecuta <code>mvn liberty:stop</code>, o <code>netstat -ano | findstr :9080</code> y luego <code>taskkill /PID &lt;pid&gt; /F</code></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Solución de problemas + Ayuda (colapsado) -->
+  <details class="lab-troubleshooting-full">
+    <summary>Solución de problemas y ayuda</summary>
+  <section class="lab-section" aria-labelledby="lab1-troubleshooting">
+    <h2 class="cds--productive-heading-03" id="lab1-troubleshooting">Solución de problemas</h2>
+
+    <h3 class="cds--productive-heading-02"><code>mvn: command not found</code> tras instalar Maven</h3>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">Confirma que Maven está instalado: <code>mvn --version</code>. En macOS/Linux (SDKMAN!) comprueba <code>sdk version</code> y reinstala con <code>sdk install maven</code>; en Windows reinstala con <code>winget install Apache.Maven</code></li>
+      <li class="cds--list__item">Reinicia tu IDE / Bob por completo y abre una terminal nueva para que se tome el <code>PATH</code> actualizado</li>
+      <li class="cds--list__item">Verifica de nuevo: <code>mvn --version</code></li>
+    </ul>
+
+    <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">La terminal de Bob usa la versión de Java equivocada</h3>
+    <p class="cds--body-01"><code>sdk use java</code> solo aplica a la shell donde se ejecutó — la terminal de Bob es una shell separada. Ejecútalo en la terminal de Bob específicamente:</p>
+    <div class="code-block">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>sdk use java 8.0.492-zulu</code></pre>
+    </div>
+    <p class="cds--body-01" style="margin-top:0.75rem">O establece el default global para que cada shell nueva lo tome:</p>
+    <div class="code-block">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>sdk default java 8.0.492-zulu</code></pre>
+    </div>
+
+    <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">Bob no puede leer archivos del proyecto (<code>I cannot access that file</code> / <code>File not found</code>)</h3>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">Verifica que abriste la subcarpeta <code>snapA-java-liberty-replatforming</code> como raíz del proyecto — no la carpeta padre <code>lab1-*</code></li>
+      <li class="cds--list__item">Comprueba permisos de archivos: <code>ls -la</code></li>
+      <li class="cds--list__item">Asegúrate de que Bob tiene acceso de lectura al workspace</li>
+      <li class="cds--list__item">Prueba referenciar archivos con la sintaxis <code>@filename</code></li>
+    </ul>
+
+    <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)"><code>Unable to access jarfile</code> al proporcionar la ruta del ZIP AMA</h3>
+    <p class="cds--body-01">El error se parece a:</p>
+    <div class="code-block">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>Error: Unable to access jarfile /Applications/IBM Bob.app/Contents/Resources/app/extensions/bob-code/assets/jars/ta-jam-2.2.1.jar</code></pre>
+    </div>
+    <p class="cds--body-01" style="margin-top:0.75rem">A Bob le faltan los JARs de tooling AMA. Vienen con este workshop — descarga <code>jars.zip</code> (51 MB) desde los materiales del workshop y:</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">Crea una carpeta <code>jars</code> dentro del bundle de la app Bob en <code>/Applications/IBM Bob.app/Contents/Resources/app/extensions/bob-code/assets</code></li>
+      <li class="cds--list__item">Descomprime <code>jars.zip</code> ahí para que la estructura sea:
+        <div class="code-block" style="margin-top:0.5rem">
+          <pre><code>├── jars/
+│   └── prompt-lib/
+│       ├── prompt-lib-2.2.0.jar
+│   └── ta-jam-2.2.1.jar</code></pre>
+        </div>
+      </li>
+      <li class="cds--list__item">Cierra y reinicia Bob</li>
+    </ul>
+    <div class="callout" data-tone="warning" style="margin-top:var(--cds-spacing-05,1rem)">
+      <p class="callout__title">Ejecuta Bob desde /Applications, no desde /Volumes</p>
+      <p>Asegúrate de que Bob no se ejecuta desde <code>/Volumes</code> (un <code>.dmg</code> montado). Mueve la app IBM Bob a <code>/Applications</code> y ejecútala desde ahí; de lo contrario macOS no le permitirá crear carpetas ni colocar archivos <code>.jar</code> dentro del bundle.</p>
+    </div>
+
+    <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)"><code>SRVE0321E: The [struts2] filter did not load during start up</code></h3>
+    <p class="cds--body-01">Seguro ignorar. La app migrada funciona correctamente — refleja un efecto secundario de class-loading que no afecta el comportamiento en runtime.</p>
+
+    <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)"><code>CWWKS9660E: The orb element with the defaultOrb id attribute requires a user registry</code></h3>
+    <p class="cds--body-01">Seguro ignorar, siempre que la app no use componentes EJB basados en ORB — y esta no los usa.</p>
+
+    <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">Build falla con <code>invalid target release: 21</code> / Bob dice "Java 21 is not available"</h3>
+    <p class="cds--body-01">El <code>recipeConfig/rewrite.yml</code> del migration plan lista recetas OpenRewrite de upgrade Java (<code>Java8toJava11</code>, <code>UpgradeToJava17</code>, <code>UpgradeToJava21</code>). Esas pertenecen al Lab 2 — el Lab 1 se queda en Java 8 con el namespace <code>javax.*</code>. Si se aplican, <code>pom.xml</code> salta a Java 21 y el compilador Java 8 no puede apuntar a un release más nuevo.</p>
+    <p class="cds--body-01" style="margin-top:0.75rem">Esto es deriva de recetas, no un JDK faltante — no instales ni cambies a Java 21 aquí. Revierte el pom a Java 8:</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">Establece <code>maven.compiler.source</code>/<code>target</code> y el maven-compiler-plugin <code>&lt;source&gt;</code>/<code>&lt;target&gt;</code> de vuelta a <code>1.8</code></li>
+      <li class="cds--list__item">Mantén el namespace <code>javax.*</code></li>
+    </ul>
+    <p class="cds--body-01" style="margin-top:0.75rem">O pídeselo a Bob:</p>
+    <div class="code-block">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>Este es el Lab 1 (solo replatforming Liberty). Revierte pom.xml a Java 1.8 (los cuatro marcadores),
+mantén el namespace javax.*, y elimina cualquier bump de javassist/asm más allá del fix aprobado.
+NO apliques las recetas Java 8→11/17/21 — eso es el Lab 2.</code></pre>
+    </div>
+    <p class="cds--body-01" style="margin-top:0.75rem">Luego recompila con <code>mvn clean package</code>.</p>
+
+    <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">Build falla con <code>Unsupported class file major version</code></h3>
+    <p class="cds--body-01">Maven corre en un JDK más nuevo que 8. El Lab 1 se queda en Java 8 — apunta Maven a él.</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item"><strong>macOS / Linux (SDKMAN!):</strong> <code>sdk use java 8.0.492-zulu</code></li>
+      <li class="cds--list__item"><strong>Windows:</strong> establece <code>JAVA_HOME</code> a tu carpeta Temurin 8 y reabre la terminal — o ejecuta <code>sdk use java 8.0.492-zulu</code> si instalaste vía SDKMAN! en Git Bash/WSL</li>
+    </ul>
+    <p class="cds--body-01" style="margin-top:0.75rem">Luego recompila:</p>
+    <div class="code-block">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>mvn clean package</code></pre>
+    </div>
+    <p class="cds--body-01" style="margin-top:0.75rem">Confirma con <code>mvn --version</code> (imprime la versión de Java que usa Maven, que puede diferir del <code>java -version</code> de tu shell).</p>
+
+    <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">Bob propone un cambio y no estás seguro</h3>
+    <p class="cds--body-01">Siempre que Bob ofrezca "show me the exact edits before applying them", acéptalo — Bob renderiza el diff completo para revisión antes de tocar archivos. También puedes hacerle una pregunta de seguimiento en el chat; Bob espera.</p>
+
+    <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)"><code>Address already in use</code> / el puerto no se libera tras Ctrl+C</h3>
+    <p class="cds--body-01">Una ejecución anterior de Liberty sigue reteniéndolo.</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item"><strong>macOS / Linux:</strong> <code>lsof -ti:9080,9443 | xargs kill -9</code></li>
+      <li class="cds--list__item"><strong>Windows (PowerShell):</strong> <code>mvn liberty:stop</code>. Si el puerto sigue ocupado: <code>netstat -ano | findstr :9080</code>, luego <code>taskkill /PID &lt;pid&gt; /F</code></li>
+    </ul>
+    <div class="callout" data-tone="warning" style="margin-top:var(--cds-spacing-05,1rem)">
+      <p class="callout__title">No ignores este — hace que cada fix posterior parezca roto</p>
+      <p>Si el puerto está tomado, tu servidor nuevo nunca lo enlaza y el antiguo sigue respondiendo. Editarás archivos, recompilarás, reiniciarás y no verás ningún cambio — porque sigues hablando con el servidor obsoleto. Cada vez que un fix "no hace nada", comprueba primero si hay un Liberty suelto.</p>
+    </div>
+  </section>
+
+  <!-- Ayuda -->
+  <section class="lab-section" aria-labelledby="lab1-help">
+    <h2 class="cds--productive-heading-03" id="lab1-help">Obtener ayuda durante el lab</h2>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">Revisa la sección de solución de problemas de arriba — la mayoría de problemas comunes están cubiertos</li>
+      <li class="cds--list__item">Pregunta a Bob — puede explicar errores y sugerir fixes</li>
+      <li class="cds--list__item">Pregunta a tu instructor — no dudes en levantar la mano</li>
+      <li class="cds--list__item">Colabora — discute con tus compañeros</li>
+    </ul>
+  </section>
+  </details>
 
 </div>

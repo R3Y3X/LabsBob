@@ -1,0 +1,79 @@
+<div class="content-panel lab-template prose--full">
+  <div class="lab-banner">
+    <div class="lab-banner__tags">
+      <span class="cds--tag cds--tag--purple">Tópicos y Streaming</span>
+      <span class="cds--tag cds--tag--cool-gray">~20 min</span>
+      <span class="cds--tag cds--tag--teal">Confluent Kafka</span>
+    </div>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Tópicos y Streaming con Confluent Kafka</h1>
+    <p class="cds--body-02 lab-banner__summary">Crea y configura los tópicos de Kafka y las tablas ksqlDB para el procesamiento de transacciones de inventario en tiempo real.</p>
+  </div>
+
+  <section class="lab-section">
+    <h2 class="cds--productive-heading-04">Step 1. Crear un tópico en Confluent Kafka</h2>
+    <h3 class="cds--productive-heading-03" style="margin-top: 0.5rem; margin-bottom: 1rem;">Crear un tópico en Confluent manualmente desde la UI</h3>
+    <p class="cds--body-01">Iniciarás sesión en Confluent y crearás un tópico para las transacciones de inventario.</p>
+
+    <ol class="cds--list--ordered">
+      <li class="cds--list__item">Iniciar sesión en Confluent.</li>
+      <li class="cds--list__item">Seleccionar un cluster de Kafka ya creado.</li>
+      <li class="cds--list__item">En el menú de navegación del cluster, seleccionar <strong>Topics</strong>.</li>
+      <li class="cds--list__item">Hacer click en <strong>Add topic</strong>.</li>
+      <li class="cds--list__item">Nombrar el tópico como: <code>inventory.transactions</code>.</li>
+      <li class="cds--list__item">Establecer <strong>Partitions</strong> en 1. Usar una sola partición mantiene el orden de los eventos determinístico y simplifica la consumición de eventos para este tutorial.</li>
+      <li class="cds--list__item">Dejar todas las otras configuraciones en sus valores por defecto.</li>
+      <li class="cds--list__item">Hacer click en <strong>Create with defaults</strong>.</li>
+      <li class="cds--list__item">Seleccionar la pestaña <strong>Configuration</strong>.</li>
+      <li class="cds--list__item">Hacer click en <strong>Edit Settings</strong> y cambiar el <strong>Retention Time</strong> a <code>infinite</code> y luego hacer click en <strong>Save changes</strong>.</li>
+    </ol>
+  </section>
+
+  <section class="lab-section" style="margin-top: 3rem;">
+    <h2 class="cds--productive-heading-04">Step 2. Crear un tópico derivado en Confluent Kafka</h2>
+    <p class="cds--body-01">En este paso vamos a crear un tópico derivado llamado <code>inventory.availability</code> que automáticamente calcula cuántas unidades de cada producto están disponibles en cada sucursal procesando las transacciones del primer tópico.</p>
+    <p class="cds--body-01">Vamos a usar un cluster de ksqlDB que procesará tus datos en streaming. Un cluster de ksqlDB es un motor de procesamiento que se ejecuta continuamente en segundo plano para leer datos de tópicos de Kafka, realizar cálculos y escribir resultados en otros tópicos usando comandos similares a SQL.</p>
+
+    <ol class="cds--list--ordered">
+      <li class="cds--list__item">Hacer click en <strong>ksqlDB</strong> en el menú izquierdo.</li>
+      <li class="cds--list__item">Hacer click en el cluster <strong>ksqlDB</strong> que está corriendo.</li>
+      <li class="cds--list__item">Hacer click en la pestaña <strong>Streams</strong> y <strong>Create in Editor</strong>.</li>
+      <li class="cds--list__item">Copiar y pegar el siguiente código en el editor:</li>
+    </ol>
+
+<pre><code class="language-sql">CREATE STREAM inventory_transactions (
+     sku VARCHAR,
+     branch VARCHAR,
+     quantity INT
+ ) WITH (
+     KAFKA_TOPIC='inventory.transactions',
+     KEY_FORMAT='KAFKA',
+     VALUE_FORMAT='JSON'
+ );</code></pre>
+
+    <ol class="cds--list--ordered" start="5">
+      <li class="cds--list__item">Hacer click en <strong>Run Query</strong>.</li>
+      <li class="cds--list__item">Ahora vamos a crear una tabla llamada <code>inventory_availability</code> que calcule automáticamente la cantidad disponible agrupando las transacciones por SKU y sucursal usando la siguiente declaración SQL, y luego hacer clic en <strong>Run Query</strong>. Esto realiza lo siguiente:
+        <ul class="cds--list--unordered" style="margin-top: 0.5rem;">
+          <li class="cds--list__item">Agrupa todas las transacciones por SKU y sucursal.</li>
+          <li class="cds--list__item">Suma las cantidades (positivas para los inventarios adicionales, negativas para las ventas).</li>
+          <li class="cds--list__item">Escribe los resultados en el tópico <code>inventory.availability</code>.</li>
+          <li class="cds--list__item">Actualiza automáticamente cuando llegan nuevas transacciones.</li>
+        </ul>
+      </li>
+    </ol>
+
+<pre><code class="language-sql">CREATE TABLE inventory_availability WITH (
+  KAFKA_TOPIC='inventory.availability',
+  KEY_FORMAT='JSON',
+  VALUE_FORMAT='JSON',
+  PARTITIONS=1
+) AS
+SELECT 
+  sku,
+  branch,
+  SUM(quantity) AS available_quantity
+FROM inventory_transactions
+GROUP BY sku, branch
+EMIT CHANGES;</code></pre>
+  </section>
+</div>

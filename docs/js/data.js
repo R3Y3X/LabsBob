@@ -7,8 +7,8 @@ export const siteData = {
   ],
   hero: {
     eyebrow: 'IBM Bob · habilitación práctica',
-    title: 'Del primer prompt a producción',
-    description: 'IBM Bob acompaña a tu equipo en cada fase del desarrollo: entiende el contexto, propone un plan, implementa con aprobación y valida el resultado. Explora rutas prácticas para pasar de la idea a un output ejecutable.',
+    title: 'Bienvenido a IBM Bob: Tu Socio de Desarrollo Potenciado por IA',
+    description: '¡Hola, soy Bob! Estoy aquí para trabajar junto a ti en tu código y ayudarte a construir software de calidad más rápido.',
     ctaLabel: 'Explorar laboratorios'
   },
   highlights: [
@@ -19,12 +19,12 @@ export const siteData = {
   sections: [
     {
       id: 'basic',
-      title: 'Habilitación Core',
+      title: 'Primeros Pasos',
       eyebrow: 'Desarrollo asistido',
       label: 'Fundamentos de Bob',
       bobMode: 'Modos agénticos',
       description: 'Construye una base sólida para trabajar con Bob: configura el entorno, entiende sus modos y recorre el ciclo de vida del software con una guía clara y práctica.',
-      actionLabel: 'Explorar Habilitación Core',
+      actionLabel: 'Explorar Primeros Pasos',
       labs: [
         {
           slug: 'hands-on-inicial',

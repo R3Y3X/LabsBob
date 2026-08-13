@@ -841,10 +841,10 @@ function renderHome(searchTerm = '') {
             </div>
           </a>
 
-          <a class="hub-resource-card hub-resource-card--red"
-             href="https://www.youtube.com/@ibm-bob/videos"
-             target="_blank" rel="noreferrer noopener"
-             aria-label="Abrir canal de YouTube de IBM Bob">
+          <button class="hub-resource-card hub-resource-card--red"
+             id="yt-overlay-trigger"
+             aria-haspopup="dialog"
+             aria-label="Ver videos de IBM Bob en YouTube">
             <div class="hub-resource-card__badge">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M7 28a1 1 0 0 1-1-1V5a1 1 0 0 1 1.482-.876l20 11a1 1 0 0 1 0 1.752l-20 11A1 1 0 0 1 7 28z"/></svg>
               <span>Video</span>
@@ -855,11 +855,144 @@ function renderHome(searchTerm = '') {
               <span class="hub-resource-card__link">Ver videos <span aria-hidden="true">→</span></span>
               <span class="hub-resource-card__domain">youtube.com/@ibm-bob</span>
             </div>
-          </a>
+          </button>
 
         </div>
       </div>
     </section>
+
+    <!-- ── YouTube Videos Overlay ─────────────────────────────── -->
+    <div id="yt-overlay" class="yt-overlay" role="dialog" aria-modal="true" aria-labelledby="yt-overlay-title">
+      <div class="yt-overlay__panel">
+        <button class="yt-overlay__close" id="yt-overlay-close" aria-label="Cerrar">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M17.414 16L26 7.414 24.586 6 16 14.586 7.414 6 6 7.414 14.586 16 6 24.586 7.414 26 16 17.414 24.586 26 26 24.586z"/></svg>
+        </button>
+
+        <div class="yt-overlay__header">
+          <div class="yt-overlay__avatar">
+            <img src="./assets/images/bobinicial.jpeg" alt="IBM Bob" />
+          </div>
+          <div class="yt-overlay__header-text">
+            <p class="yt-overlay__eyebrow">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="12" height="12" fill="currentColor" aria-hidden="true"><path d="M7 28a1 1 0 0 1-1-1V5a1 1 0 0 1 1.482-.876l20 11a1 1 0 0 1 0 1.752l-20 11A1 1 0 0 1 7 28z"/></svg>
+              Canal oficial
+            </p>
+            <h2 class="yt-overlay__title" id="yt-overlay-title">IBM Bob en YouTube</h2>
+            <p class="yt-overlay__subtitle">Demos, tutoriales y casos de uso reales — organizados por temática</p>
+          </div>
+          <a class="yt-overlay__channel-btn"
+             href="https://www.youtube.com/@ibm-bob/videos"
+             target="_blank" rel="noreferrer noopener"
+             aria-label="Abrir canal completo de IBM Bob en YouTube">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M7 28a1 1 0 0 1-1-1V5a1 1 0 0 1 1.482-.876l20 11a1 1 0 0 1 0 1.752l-20 11A1 1 0 0 1 7 28z"/></svg>
+            Ver canal completo
+          </a>
+        </div>
+
+        <div class="yt-overlay__categories">
+
+          <div class="yt-overlay__category yt-overlay__category--dev">
+            <p class="yt-overlay__cat-title">Tu socio de codificación con IA</p>
+            <div class="yt-overlay__links">
+              <a class="yt-overlay__link" href="https://www.youtube.com/watch?v=fO43F8LlOSE" target="_blank" rel="noreferrer noopener">
+                <span class="yt-overlay__link-num">01</span>
+                <svg class="yt-overlay__link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="12" height="12" fill="currentColor" aria-hidden="true"><path d="M7 28a1 1 0 0 1-1-1V5a1 1 0 0 1 1.482-.876l20 11a1 1 0 0 1 0 1.752l-20 11A1 1 0 0 1 7 28z"/></svg>
+                Incorporarse a un codebase en 5 minutos
+              </a>
+              <a class="yt-overlay__link" href="https://www.youtube.com/watch?v=VynsWjLQhTE" target="_blank" rel="noreferrer noopener">
+                <span class="yt-overlay__link-num">02</span>
+                <svg class="yt-overlay__link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="12" height="12" fill="currentColor" aria-hidden="true"><path d="M7 28a1 1 0 0 1-1-1V5a1 1 0 0 1 1.482-.876l20 11a1 1 0 0 1 0 1.752l-20 11A1 1 0 0 1 7 28z"/></svg>
+                Codificación segura proactiva
+              </a>
+              <a class="yt-overlay__link" href="https://www.youtube.com/watch?v=lBa6-rVq6eE" target="_blank" rel="noreferrer noopener">
+                <span class="yt-overlay__link-num">03</span>
+                <svg class="yt-overlay__link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="12" height="12" fill="currentColor" aria-hidden="true"><path d="M7 28a1 1 0 0 1-1-1V5a1 1 0 0 1 1.482-.876l20 11a1 1 0 0 1 0 1.752l-20 11A1 1 0 0 1 7 28z"/></svg>
+                Arquitecturar e implementar una nueva funcionalidad
+              </a>
+              <a class="yt-overlay__link" href="https://www.youtube.com/watch?v=9KEw_glsLPw" target="_blank" rel="noreferrer noopener">
+                <span class="yt-overlay__link-num">04</span>
+                <svg class="yt-overlay__link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="12" height="12" fill="currentColor" aria-hidden="true"><path d="M7 28a1 1 0 0 1-1-1V5a1 1 0 0 1 1.482-.876l20 11a1 1 0 0 1 0 1.752l-20 11A1 1 0 0 1 7 28z"/></svg>
+                Revisión de código Shift-left
+              </a>
+              <a class="yt-overlay__link" href="https://www.youtube.com/watch?v=xzxnH305SEE" target="_blank" rel="noreferrer noopener">
+                <span class="yt-overlay__link-num">05</span>
+                <svg class="yt-overlay__link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="12" height="12" fill="currentColor" aria-hidden="true"><path d="M7 28a1 1 0 0 1-1-1V5a1 1 0 0 1 1.482-.876l20 11a1 1 0 0 1 0 1.752l-20 11A1 1 0 0 1 7 28z"/></svg>
+                Primer en el mundo: Literate Coding
+              </a>
+              <a class="yt-overlay__link" href="https://www.youtube.com/watch?v=sBWzf1QiXgQ" target="_blank" rel="noreferrer noopener">
+                <span class="yt-overlay__link-num">06</span>
+                <svg class="yt-overlay__link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="12" height="12" fill="currentColor" aria-hidden="true"><path d="M7 28a1 1 0 0 1-1-1V5a1 1 0 0 1 1.482-.876l20 11a1 1 0 0 1 0 1.752l-20 11A1 1 0 0 1 7 28z"/></svg>
+                bobshell: Bob en tu terminal
+              </a>
+            </div>
+          </div>
+
+          <div class="yt-overlay__category yt-overlay__category--java">
+            <p class="yt-overlay__cat-title">Modernización de Java</p>
+            <div class="yt-overlay__links">
+              <a class="yt-overlay__link" href="https://www.youtube.com/watch?v=Qwl0Za2cXWw" target="_blank" rel="noreferrer noopener">
+                <span class="yt-overlay__link-num">01</span>
+                <svg class="yt-overlay__link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="12" height="12" fill="currentColor" aria-hidden="true"><path d="M7 28a1 1 0 0 1-1-1V5a1 1 0 0 1 1.482-.876l20 11a1 1 0 0 1 0 1.752l-20 11A1 1 0 0 1 7 28z"/></svg>
+                Actualizaciones de Java sin interrupciones con Bob
+              </a>
+              <a class="yt-overlay__link" href="https://www.youtube.com/watch?v=mLl67iGUhsM" target="_blank" rel="noreferrer noopener">
+                <span class="yt-overlay__link-num">02</span>
+                <svg class="yt-overlay__link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="12" height="12" fill="currentColor" aria-hidden="true"><path d="M7 28a1 1 0 0 1-1-1V5a1 1 0 0 1 1.482-.876l20 11a1 1 0 0 1 0 1.752l-20 11A1 1 0 0 1 7 28z"/></svg>
+                Migración a Liberty a velocidad rayo con Bob
+              </a>
+              <a class="yt-overlay__link" href="https://www.youtube.com/watch?v=7tEBpSLgyEA" target="_blank" rel="noreferrer noopener">
+                <span class="yt-overlay__link-num">03</span>
+                <svg class="yt-overlay__link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="12" height="12" fill="currentColor" aria-hidden="true"><path d="M7 28a1 1 0 0 1-1-1V5a1 1 0 0 1 1.482-.876l20 11a1 1 0 0 1 0 1.752l-20 11A1 1 0 0 1 7 28z"/></svg>
+                Moderniza todo: Upgrade Java + Poder de Liberty
+              </a>
+              <a class="yt-overlay__link" href="https://www.youtube.com/watch?v=gqZG_afyQyg" target="_blank" rel="noreferrer noopener">
+                <span class="yt-overlay__link-num">04</span>
+                <svg class="yt-overlay__link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="12" height="12" fill="currentColor" aria-hidden="true"><path d="M7 28a1 1 0 0 1-1-1V5a1 1 0 0 1 1.482-.876l20 11a1 1 0 0 1 0 1.752l-20 11A1 1 0 0 1 7 28z"/></svg>
+                Modernización de UI Java con Quarkus
+              </a>
+            </div>
+          </div>
+
+          <div class="yt-overlay__category yt-overlay__category--deploy">
+            <p class="yt-overlay__cat-title">Implementación con confianza</p>
+            <div class="yt-overlay__links">
+              <a class="yt-overlay__link" href="https://www.youtube.com/watch?v=cXatmllOTac" target="_blank" rel="noreferrer noopener">
+                <span class="yt-overlay__link-num">01</span>
+                <svg class="yt-overlay__link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="12" height="12" fill="currentColor" aria-hidden="true"><path d="M7 28a1 1 0 0 1-1-1V5a1 1 0 0 1 1.482-.876l20 11a1 1 0 0 1 0 1.752l-20 11A1 1 0 0 1 7 28z"/></svg>
+                Del diagrama al despliegue
+              </a>
+              <a class="yt-overlay__link" href="https://www.youtube.com/watch?v=flo7L7rVvKw" target="_blank" rel="noreferrer noopener">
+                <span class="yt-overlay__link-num">02</span>
+                <svg class="yt-overlay__link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="12" height="12" fill="currentColor" aria-hidden="true"><path d="M7 28a1 1 0 0 1-1-1V5a1 1 0 0 1 1.482-.876l20 11a1 1 0 0 1 0 1.752l-20 11A1 1 0 0 1 7 28z"/></svg>
+                Del diagrama al despliegue — con bobshell
+              </a>
+              <a class="yt-overlay__link" href="https://www.youtube.com/watch?v=T4A04Jsxogs" target="_blank" rel="noreferrer noopener">
+                <span class="yt-overlay__link-num">03</span>
+                <svg class="yt-overlay__link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="12" height="12" fill="currentColor" aria-hidden="true"><path d="M7 28a1 1 0 0 1-1-1V5a1 1 0 0 1 1.482-.876l20 11a1 1 0 0 1 0 1.752l-20 11A1 1 0 0 1 7 28z"/></svg>
+                Elimina problemas de seguridad en tu código
+              </a>
+              <a class="yt-overlay__link" href="https://www.youtube.com/watch?v=55qvXvBXdCA" target="_blank" rel="noreferrer noopener">
+                <span class="yt-overlay__link-num">04</span>
+                <svg class="yt-overlay__link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="12" height="12" fill="currentColor" aria-hidden="true"><path d="M7 28a1 1 0 0 1-1-1V5a1 1 0 0 1 1.482-.876l20 11a1 1 0 0 1 0 1.752l-20 11A1 1 0 0 1 7 28z"/></svg>
+                Squash Security Issues in your code
+              </a>
+            </div>
+          </div>
+
+          <div class="yt-overlay__category yt-overlay__category--obs">
+            <p class="yt-overlay__cat-title">Desde la observabilidad a la acción</p>
+            <div class="yt-overlay__links">
+              <a class="yt-overlay__link" href="https://www.youtube.com/watch?v=yNiOlF95eKQ" target="_blank" rel="noreferrer noopener">
+                <span class="yt-overlay__link-num">01</span>
+                <svg class="yt-overlay__link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="12" height="12" fill="currentColor" aria-hidden="true"><path d="M7 28a1 1 0 0 1-1-1V5a1 1 0 0 1 1.482-.876l20 11a1 1 0 0 1 0 1.752l-20 11A1 1 0 0 1 7 28z"/></svg>
+                Insights de rendimiento desde datos de observabilidad
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
 
     <section id="acerca-de" class="hub-about">
       <div class="hub-about__inner">
@@ -1618,6 +1751,35 @@ function bindEvents() {
       }
     });
   }
+
+  // YouTube overlay — open
+  document.addEventListener('click', (event) => {
+    if (event.target.closest('#yt-overlay-trigger')) {
+      const overlay = document.getElementById('yt-overlay');
+      if (overlay) {
+        overlay.classList.add('is-open');
+        document.getElementById('yt-overlay-close')?.focus();
+      }
+      return;
+    }
+    // Close — X button or backdrop click
+    if (event.target.closest('#yt-overlay-close') || event.target.id === 'yt-overlay') {
+      document.getElementById('yt-overlay')?.classList.remove('is-open');
+      document.getElementById('yt-overlay-trigger')?.focus();
+    }
+  });
+
+  // YouTube overlay — close on Escape (must run after the side-nav Escape handler)
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      const overlay = document.getElementById('yt-overlay');
+      if (overlay?.classList.contains('is-open')) {
+        overlay.classList.remove('is-open');
+        document.getElementById('yt-overlay-trigger')?.focus();
+        event.stopImmediatePropagation();
+      }
+    }
+  });
 
   document.addEventListener('click', async (event) => {
     // Copy button

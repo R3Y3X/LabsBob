@@ -7,14 +7,14 @@ export const siteData = {
   ],
   hero: {
     eyebrow: 'IBM Bob · habilitación práctica',
-    title: 'Bienvenido a IBM Bob: Tu Socio de Desarrollo Potenciado por IA',
+    title: 'Bienvenido a IBM Bob:<br>Tu Socio de Desarrollo Potenciado por IA',
     description: '¡Hola, soy Bob! Estoy aquí para trabajar junto a ti en tu código y ayudarte a construir software de calidad más rápido.',
     ctaLabel: 'Explorar laboratorios'
   },
   highlights: [
-    { value: '3', label: 'modos de trabajo' },
-    { value: '7', label: 'laboratorios prácticos' },
-    { value: '100%', label: 'ciclo completo de desarrollo' }
+    { value: '', label: 'modos de trabajo' },
+    { value: '', label: 'laboratorios prácticos' },
+    { value: '', label: 'ciclo completo de desarrollo' }
   ],
   sections: [
     {
@@ -63,12 +63,12 @@ export const siteData = {
     },
     {
       id: 'integraciones',
-      title: 'Integración de plataforma',
+      title: 'Integra tu plataforma fácilmente con IBM Bob',
       eyebrow: 'Automatización',
       label: 'Integración externa',
       bobMode: 'Eventos y agentes',
       description: 'Construye un caso retail de extremo a extremo: streaming de inventario en Confluent Kafka, agentes de IA en watsonx Orchestrate y una tienda que consume datos en tiempo real.',
-      actionLabel: 'Explorar Integración de plataforma',
+      actionLabel: 'Explorar integración de plataforma',
       labs: [
         {
           slug: 'agentic-retail-confluent',
@@ -109,12 +109,12 @@ export const siteData = {
     },
     {
       id: 'premium',
-      title: 'Modernización empresarial',
+      title: 'Modernización de aplicaciones empresariales',
       eyebrow: 'Modernización',
-      label: 'Modernización empresarial',
+      label: 'Modernización de aplicaciones',
       bobMode: 'Sistemas legacy',
       description: 'Moderniza aplicaciones y sistemas empresariales con análisis profundo, cambios trazables y validación continua usando Ask, Plan y Agent Mode.',
-      actionLabel: 'Explorar Modernización empresarial',
+      actionLabel: 'Explorar Modernización de aplicaciones empresariales',
       labs: [
         {
           slug: 'java-modernization-v2',

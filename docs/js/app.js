@@ -336,8 +336,8 @@ function renderPlatformNav() {
 // ── Section tag config ───────────────────────────────────────────
 const SECTION_TAG = {
   basic: { cls: 'cds--tag--blue', label: 'Fundamentos de Bob' },
-  integraciones: { cls: 'cds--tag--purple', label: 'Integración externa' },
-  premium: { cls: 'cds--tag--green', label: 'Modernización empresarial' }
+  integraciones: { cls: 'cds--tag--purple', label: 'Integración de plataforma' },
+  premium: { cls: 'cds--tag--green', label: 'Modernización de aplicaciones' }
 };
 
 function ensureLabBanner(proseEl, section, lab, step) {
@@ -402,7 +402,6 @@ function buildLabCard(lab, section) {
           <span class="cds--tag ${tag.cls}">${escapeHtml(lab.supporting)}</span>
           ${audienceTag}
         </div>
-        <p class="cds--label-01 hub-lab-card__meta">${escapeHtml(lab.supporting)}</p>
         <h3 class="cds--productive-heading-02 hub-lab-card__title">${escapeHtml(lab.title)}</h3>
         <p class="cds--body-01 hub-lab-card__description">${escapeHtml(lab.description)}</p>
         <div class="hub-lab-card__footer">
@@ -997,7 +996,7 @@ function renderHome(searchTerm = '') {
     <section id="acerca-de" class="hub-about">
       <div class="hub-about__inner">
         <p class="hub-section-eyebrow">Acerca de</p>
-        <h2 class="hub-section-heading-expressive">IBM Workshop Hub</h2>
+        <h2 class="hub-section-heading-expressive">IBM </h2>
         <p class="hub-section-lead">
           El futuro del desarrollo no consiste en escribir más código, sino en entregar más valor.
           IBM Bob acompaña a los desarrolladores desde el contexto hasta la implementación y validación,

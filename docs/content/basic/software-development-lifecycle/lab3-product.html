@@ -51,15 +51,15 @@
     <h2 class="cds--productive-heading-03" id="lab3-step1">Paso 1 — Construye la página de detalle</h2>
     <div class="code-block">
       <button class="copy-button" type="button" aria-label="Copiar prompt">Copiar</button>
-      <pre><code>Implementá src/pages/Product.jsx para que coincida con mockups/product.png. Reemplazá el
+      <pre><code>Implementa src/pages/Product.jsx para que coincida con mockups/product.png. Reemplaza el
 marcador de posición.
 
-- Leé el id del producto desde la URL con useParams() (ya está importado).
-- Traé ese producto con getProduct(id) de ../api/client (useEffect/useState). Mostrá un
+- Lee el id del producto desde la URL con useParams() (ya está importado).
+- Trae ese producto con getProduct(id) de ../api/client (useEffect/useState). Muestra un
   estado de carga mientras consulta y un mensaje "Product not found" si falla.
 - Layout de dos columnas en desktop (imagen a la izquierda, detalles a la derecha),
   apilado en mobile:
-  • Izquierda: una imagen grande del producto en una tarjeta redondeada. Usá
+  • Izquierda: una imagen grande del producto en una tarjeta redondeada. Usa
     imageUrl(product.image).
   • Derecha: un breadcrumb (Home / &lt;category&gt; / &lt;name&gt;), la etiqueta de categoría, el
     nombre, una calificación con estrellas con "&lt;rating&gt; · &lt;reviewCount&gt; reviews", el
@@ -71,9 +71,9 @@ marcador de posición.
 - "Add to cart" llama a addItem(product, quantity) de useCart(), y después el badge del
   header debe reflejar el nuevo total.
 
-Usá los tokens de Tailwind de café.
+Usa los tokens de Tailwind de café.
 
-Escribí el código y todos los textos visibles de la UI en inglés, exactamente como
+Escribe el código y todos los textos visibles de la UI en inglés, exactamente como
 aparecen en el mockup. No traduzcas la interfaz.
 
 No modifiques src/api/client.js. No agregues dependencias.</code></pre>
@@ -100,11 +100,11 @@ No modifiques src/api/client.js. No agregues dependencias.</code></pre>
     <h2 class="cds--productive-heading-03" id="lab3-step3">Paso 3 — Casos borde</h2>
     <div class="code-block">
       <button class="copy-button" type="button" aria-label="Copiar prompt">Copiar</button>
-      <pre><code>Algunos productos (Equipment) tienen roast = null y un array tastingNotes vacío. Asegurate
+      <pre><code>Algunos productos (Equipment) tienen roast = null y un array tastingNotes vacío. Asegúrate
 de que la página oculte el campo roast y la fila de notas de cata cuando no hay datos, en
 lugar de mostrar "null" o una caja vacía.
 
-Mantené los textos de la UI en inglés.</code></pre>
+Mantén los textos de la UI en inglés.</code></pre>
     </div>
   </section>
 
@@ -116,7 +116,7 @@ Mantené los textos de la UI en inglés.</code></pre>
     </div>
     <div class="callout" data-tone="warning">
       <p class="callout__title">La cantidad puede llegar a 0 o a números negativos</p>
-      <p>Pídele a Bob: "Limitá el selector de cantidad a un mínimo de 1."</p>
+      <p>Pídele a Bob: "Limita el selector de cantidad a un mínimo de 1."</p>
     </div>
     <div class="callout" data-tone="warning">
       <p class="callout__title">Add to cart agrega la cantidad equivocada</p>

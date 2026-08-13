@@ -46,16 +46,16 @@
     <h2 class="cds--productive-heading-03" id="lab5-step1">Paso 1 — Dale vida a la grilla de la tienda</h2>
     <div class="code-block">
       <button class="copy-button" type="button" aria-label="Copiar prompt">Copiar</button>
-      <pre><code>Usando framer-motion (ya instalado), animá la grilla de productos de la tienda.
-- En src/pages/Home.jsx, envolvé la grilla en un contenedor motion que escalone sus hijos
+      <pre><code>Usando framer-motion (ya instalado), anima la grilla de productos de la tienda.
+- En src/pages/Home.jsx, envuelve la grilla en un contenedor motion que escalone sus hijos
   (staggerChildren ~0.06s) al cargar.
-- En src/components/ProductCard.jsx, convertí la tarjeta en un elemento motion: initial
+- En src/components/ProductCard.jsx, convierte la tarjeta en un elemento motion: initial
   { opacity: 0, y: 16 } animando hacia { opacity: 1, y: 0 }, más una elevación sutil en
   whileHover (por ejemplo y: -4) y un whileTap al presionar.
-Mantené las transiciones en ~200–300ms. No cambies la lógica de obtención de datos.
-Cuando conviertas un elemento en elemento motion, cambiá la etiqueta de apertura Y su
+Mantén las transiciones en ~200–300ms. No cambies la lógica de obtención de datos.
+Cuando conviertas un elemento en elemento motion, cambia la etiqueta de apertura Y su
 etiqueta de cierre correspondiente juntas (&lt;div&gt;…&lt;/div&gt; -&gt; &lt;motion.div&gt;…&lt;/motion.div&gt;), y
-después releé cada archivo para confirmar que cada &lt;motion.*&gt; tiene su &lt;/motion.*&gt; antes
+después vuelve a leer cada archivo para confirmar que cada &lt;motion.*&gt; tiene su &lt;/motion.*&gt; antes
 de terminar.
 No cambies los textos de la UI: se mantienen en inglés.</code></pre>
     </div>
@@ -66,20 +66,20 @@ No cambies los textos de la UI: se mantienen en inglés.</code></pre>
     <p class="cds--body-01">Esta es la interacción que más hacen los compradores: hazla sentir responsiva.</p>
     <div class="code-block">
       <button class="copy-button" type="button" aria-label="Copiar prompt">Copiar</button>
-      <pre><code>Hacé que agregar al carrito se sienta bien con framer-motion:
-1. En src/toast/ToastContext.jsx, envolvé la lista de toasts en &lt;AnimatePresence&gt; y
-   convertí cada toast en un motion.div que entre con rebote desde abajo a la derecha
+      <pre><code>Haz que agregar al carrito se sienta bien con framer-motion:
+1. En src/toast/ToastContext.jsx, envuelve la lista de toasts en &lt;AnimatePresence&gt; y
+   convierte cada toast en un motion.div que entre con rebote desde abajo a la derecha
    (initial { opacity: 0, y: 20, scale: 0.9 } -&gt; animate al estado completo con un spring;
    exit hacia afuera).
-2. En src/components/Header.jsx, hacé que el badge del carrito "salte" cada vez que cambia
+2. En src/components/Header.jsx, haz que el badge del carrito "salte" cada vez que cambia
    el total: dale al elemento del badge un key={count} y un pequeño rebote de escala al
    montarse.
-3. En el botón "+" de la tarjeta de producto, agregá un whileTap que reduzca la escala para
+3. En el botón "+" de la tarjeta de producto, agrega un whileTap que reduzca la escala para
    que la presión se sienta táctil.
-Mantenelo rápido y elástico, sin rebotes gratuitos.
-Cuando conviertas un elemento en elemento motion, cambiá la etiqueta de apertura Y su
+Mantenlo rápido y elástico, sin rebotes gratuitos.
+Cuando conviertas un elemento en elemento motion, cambia la etiqueta de apertura Y su
 etiqueta de cierre correspondiente juntas (&lt;div&gt;…&lt;/div&gt; -&gt; &lt;motion.div&gt;…&lt;/motion.div&gt;), y
-después releé cada archivo para confirmar que cada &lt;motion.*&gt; tiene su &lt;/motion.*&gt; antes
+después vuelve a leer cada archivo para confirmar que cada &lt;motion.*&gt; tiene su &lt;/motion.*&gt; antes
 de terminar.
 No cambies los textos de la UI: se mantienen en inglés.</code></pre>
     </div>
@@ -93,9 +93,9 @@ No cambies los textos de la UI: se mantienen en inglés.</code></pre>
     <h2 class="cds--productive-heading-03" id="lab5-step3">Paso 3 — Suaviza la entrada de la página de producto</h2>
     <div class="code-block">
       <button class="copy-button" type="button" aria-label="Copiar prompt">Copiar</button>
-      <pre><code>En src/pages/Product.jsx, animá la página al cargar con framer-motion: la imagen entra con
+      <pre><code>En src/pages/Product.jsx, anima la página al cargar con framer-motion: la imagen entra con
 fundido y escala desde la izquierda y la columna de detalles entra con fundido desde la
-derecha, en un escalonado corto. Agregá un whileTap al botón "Add to cart". Mantenelo
+derecha, en un escalonado corto. Agrega un whileTap al botón "Add to cart". Mantenlo
 rápido y sutil.
 Cuando conviertas un elemento en elemento motion, cambiá la etiqueta de apertura Y su
 etiqueta de cierre correspondiente juntas (&lt;div&gt;…&lt;/div&gt; -&gt; &lt;motion.div&gt;…&lt;/motion.div&gt;), y
@@ -109,17 +109,17 @@ No cambies los textos de la UI: se mantienen en inglés.</code></pre>
     <h2 class="cds--productive-heading-03" id="lab5-step4">Paso 4 — Un checkout gratificante</h2>
     <div class="code-block">
       <button class="copy-button" type="button" aria-label="Copiar prompt">Copiar</button>
-      <pre><code>Hacé que el checkout se sienta gratificante en src/pages/Cart.jsx con framer-motion:
-- Animá los ítems del carrito con &lt;AnimatePresence&gt; para que al quitar uno se desvanezca y
+      <pre><code>Haz que el checkout se sienta gratificante en src/pages/Cart.jsx con framer-motion:
+- Anima los artículos del carrito con &lt;AnimatePresence&gt; para que al quitar uno se desvanezca y
   se deslice hacia afuera.
-- Mientras se está procesando el pedido, animá el botón (por ejemplo un spinner o una
+- Mientras se está procesando el pedido, anima el botón (por ejemplo un spinner o una
   etiqueta que pulse).
-- Cuando aparece la confirmación, hacé aparecer un ícono de check con un spring y después
-  fundí los detalles del pedido hacia arriba, debajo del ícono.
-Mantené todo elegante y rápido.
-Cuando conviertas un elemento en elemento motion, cambiá la etiqueta de apertura Y su
+- Cuando aparece la confirmación, haz aparecer un ícono de check con un spring y después
+  funde los detalles del pedido hacia arriba, debajo del ícono.
+Mantén todo elegante y rápido.
+Cuando conviertas un elemento en elemento motion, cambia la etiqueta de apertura Y su
 etiqueta de cierre correspondiente juntas (&lt;div&gt;…&lt;/div&gt; -&gt; &lt;motion.div&gt;…&lt;/motion.div&gt;), y
-después releé el archivo para confirmar que cada &lt;motion.*&gt; tiene su &lt;/motion.*&gt; antes de
+después vuelve a leer el archivo para confirmar que cada &lt;motion.*&gt; tiene su &lt;/motion.*&gt; antes de
 terminar.
 No cambies los textos de la UI: se mantienen en inglés.</code></pre>
     </div>
@@ -129,8 +129,8 @@ No cambies los textos de la UI: se mantienen en inglés.</code></pre>
     <h2 class="cds--productive-heading-03" id="lab5-step5">Paso 5 — (Opcional) Transiciones entre rutas</h2>
     <div class="code-block">
       <button class="copy-button" type="button" aria-label="Copiar prompt">Copiar</button>
-      <pre><code>Agregá transiciones sutiles entre rutas para que cada página entre con fundido o
-deslizamiento. Usá AnimatePresence de framer-motion con la ubicación de la ruta actual
+      <pre><code>Agrega transiciones sutiles entre rutas para que cada página entre con fundido o
+deslizamiento. Usa AnimatePresence de framer-motion con la ubicación de la ruta actual
 como key en src/App.jsx.
 
 No cambies los textos de la UI: se mantienen en inglés.</code></pre>

@@ -71,7 +71,7 @@
     <p class="cds--body-01"><strong>Role definition</strong> (pégalo en el campo Role definition):</p>
     <div class="code-block">
       <button class="copy-button" type="button" aria-label="Copiar role definition">Copiar</button>
-      <pre><code>Sos un especialista en documentación para el proyecto Bob's Beans. Producís documentación
+      <pre><code>Eres un especialista en documentación para el proyecto Bob's Beans. Produces documentación
 técnica clara y precisa en español, en formato Markdown, para un sitio MkDocs con el tema
 Material.</code></pre>
     </div>
@@ -79,14 +79,14 @@ Material.</code></pre>
     <div class="code-block">
       <button class="copy-button" type="button" aria-label="Copiar custom instructions">Copiar</button>
       <pre><code>- Un tema por página; una introducción corta y después secciones con prosa concisa.
-- Usá admonitions (!!! note / tip / warning) para los destacados.
-- Usá bloques de código con lenguaje declarado para cualquier código o comando.
-- Leé siempre el código y referenciá archivos y funciones reales; nunca inventes APIs.
-- Referenciá los archivos fuente como código en línea (por ejemplo `src/api/client.js`),
+- Usa admonitions (!!! note / tip / warning) para los destacados.
+- Usa bloques de código con lenguaje declarado para cualquier código o comando.
+- Lee siempre el código y referencia archivos y funciones reales; nunca inventes APIs.
+- Referencia los archivos fuente como código en línea (por ejemplo `src/api/client.js`),
   nunca como links de Markdown.
-- Mantené una navegación clara en mkdocs.yml y respetá la identidad visual de café del
+- Mantén una navegación clara en mkdocs.yml y respeta la identidad visual de café del
   producto.
-- Escribí la prosa en español. Los nombres de archivo, funciones, rutas, tokens y textos de
+- Escribe la prosa en español. Los nombres de archivo, funciones, rutas, tokens y textos de
   la interfaz de la aplicación se mantienen en inglés, tal como están en el código.</code></pre>
     </div>
     <div class="callout" data-tone="info">
@@ -100,12 +100,12 @@ Material.</code></pre>
     <p class="cds--body-01">En el 📝 Modo Docs, dale a Bob este prompt:</p>
     <div class="code-block">
       <button class="copy-button" type="button" aria-label="Copiar prompt">Copiar</button>
-      <pre><code>Documentá este proyecto para una persona desarrolladora que recién se suma, como un sitio
-MkDocs. Leé src/ y documentá lo que realmente está ahí — no inventes APIs. Referenciá los
+      <pre><code>Documenta este proyecto para una persona desarrolladora que recién se suma, como un sitio
+MkDocs. Lee src/ y documenta lo que realmente está ahí — no inventes APIs. Referencia los
 archivos fuente como código en línea (por ejemplo `src/api/client.js`), nunca como links de
 Markdown y nunca enlazando a números de línea.
 
-Creá, en la raíz del proyecto:
+Crea, en la raíz del proyecto:
 - requirements.txt          : con "mkdocs-material"
 - mkdocs.yml                : tema Material, adaptado a la estética de la tostaduría
                               (configuración más abajo)
@@ -125,11 +125,11 @@ Creá, en la raíz del proyecto:
                               caramel, ink, muted, line, success) y las convenciones de
                               componentes
 
-Copiá las tres capturas de los mockups desde mockups/ hacia docs/images/, y embebé la
+Copia las tres capturas de los mockups desde mockups/ hacia docs/images/, y embebe la
 captura correspondiente al principio de cada página de pantalla:
 storefront -&gt; home.png, product -&gt; product.png, cart -&gt; cart.png.
 
-Usá este tema en mkdocs.yml para que la documentación acompañe la estética de la tostaduría:
+Usa este tema en mkdocs.yml para que la documentación acompañe la estética de la tostaduría:
   theme:
     name: material
     icon: { logo: material/coffee }
@@ -139,9 +139,9 @@ Usá este tema en mkdocs.yml para que la documentación acompañe la estética d
         accent: deep orange
     features: [navigation.sections, navigation.top, content.code.copy, search.suggest]
   markdown_extensions: [admonition, pymdownx.superfences, pymdownx.highlight]
-Agrupá las páginas de pantallas bajo una sección "Screens" en la navegación.
+Agrupa las páginas de pantallas bajo una sección "Screens" en la navegación.
 
-Escribí toda la prosa en español. Los nombres de archivo, las rutas, las funciones, los
+Escribe toda la prosa en español. Los nombres de archivo, las rutas, las funciones, los
 tokens y los textos de la interfaz de la aplicación se mantienen en inglés.</code></pre>
     </div>
     <p class="cds--body-01">Tu <code>requirements.txt</code> generado debería contener:</p>
@@ -188,11 +188,11 @@ pip install -r requirements.txt</code></pre>
     <p class="cds--body-01">En el 📝 Modo Docs, pídele a Bob que lo ajuste:</p>
     <div class="code-block">
       <button class="copy-button" type="button" aria-label="Copiar prompt">Copiar</button>
-      <pre><code>Revisá la documentación generada contra el código real. Corregí cualquier imprecisión,
-agregá una descripción corta del "flujo de datos" a architecture.md y asegurate de que cada
+      <pre><code>Revisa la documentación generada contra el código real. Corrige cualquier imprecisión,
+agrega una descripción corta del "flujo de datos" a architecture.md y asegúrate de que cada
 página tenga una introducción de una línea.
 
-Mantené la prosa en español y las referencias al código en inglés.</code></pre>
+Mantén la prosa en español y las referencias al código en inglés.</code></pre>
     </div>
     <div class="callout" data-tone="note">
       <p class="callout__title">Solo local</p>
@@ -212,7 +212,7 @@ Mantené la prosa en español y las referencias al código en inglés.</code></p
     </div>
     <div class="callout" data-tone="warning">
       <p class="callout__title"><code>mkdocs serve</code> imprime advertencias 'link ... not found'</p>
-      <p>Bob convirtió referencias a archivos en links de Markdown hacia los archivos fuente. Pídele: "En la documentación, referenciá los archivos fuente como código en línea, no como links de Markdown — quitá los links a archivos y a números de línea." Vuelve a ejecutar <code>mkdocs serve</code>; debería quedar sin advertencias.</p>
+      <p>Bob convirtió referencias a archivos en links de Markdown hacia los archivos fuente. Pídele: "En la documentación, referencia los archivos fuente como código en línea, no como links de Markdown — quita los links a archivos y a números de línea." Vuelve a ejecutar <code>mkdocs serve</code>; debería quedar sin advertencias.</p>
     </div>
     <div class="callout" data-tone="info">
       <p class="callout__title">La documentación referencia archivos o funciones que no existen</p>

@@ -63,24 +63,24 @@
     <p class="cds--body-01">Empieza por la pieza pequeña y reutilizable de la que depende la grilla.</p>
     <div class="code-block">
       <button class="copy-button" type="button" aria-label="Copiar prompt">Copiar</button>
-      <pre><code>Implementá src/components/ProductCard.jsx para que coincida con una tarjeta de producto
+      <pre><code>Implementa src/components/ProductCard.jsx para que coincida con una tarjeta de producto
 individual de mockups/home.png.
 
 - Recibe una prop `product` (ver el typedef Product en src/api/client.js).
-- Mostrá: la imagen del producto, la categoría (etiqueta chica en mayúsculas), el nombre,
+- Muestra: la imagen del producto, la categoría (etiqueta chica en mayúsculas), el nombre,
   el precio y un botón "+" de agregar abajo a la derecha. El botón de agregar es un
   CUADRADO REDONDEADO (esquinas redondeadas, unos 40x40, bg-coffee, "+" blanco) — como en
   el mockup, NO un círculo.
-- Construí la URL de la imagen con imageUrl(product.image) de ../api/client.
-- Envolvé la tarjeta en un link a `/product/${product.id}` usando &lt;Link&gt; de react-router-dom.
-- El botón "+" debe llamar a addItem(product, 1) de useCart() SIN navegar (frená la
+- Construye la URL de la imagen con imageUrl(product.image) de ../api/client.
+- Envuelve la tarjeta en un link a `/product/${product.id}` usando &lt;Link&gt; de react-router-dom.
+- El botón "+" debe llamar a addItem(product, 1) de useCart() SIN navegar (frena la
   propagación del evento para que no se dispare el link de la tarjeta), y después llamar a
   notify(`Added ${product.name} to cart`) de useToast() (../toast/ToastContext) para que
   el comprador reciba feedback visible.
-- Usá los tokens de Tailwind ya definidos: bg-white, border-line, rounded-card,
+- Usa los tokens de Tailwind ya definidos: bg-white, border-line, rounded-card,
   shadow-card, text-ink, text-muted, bg-coffee, etc.
 
-Escribí el código y todos los textos visibles de la UI en inglés, exactamente como
+Escribe el código y todos los textos visibles de la UI en inglés, exactamente como
 aparecen en el mockup. No traduzcas la interfaz.
 
 No modifiques src/api/client.js. No agregues dependencias.</code></pre>
@@ -96,25 +96,25 @@ No modifiques src/api/client.js. No agregues dependencias.</code></pre>
     <p class="cds--body-01">Ahora la página que junta todo. Adjunta de nuevo <code>mockups/home.png</code> antes de enviar.</p>
     <div class="code-block">
       <button class="copy-button" type="button" aria-label="Copiar prompt">Copiar</button>
-      <pre><code>Implementá src/pages/Home.jsx para que coincida con mockups/home.png. Reemplazá el
+      <pre><code>Implementa src/pages/Home.jsx para que coincida con mockups/home.png. Reemplaza el
 marcador de posición.
 
 Layout, de arriba hacia abajo, dentro de un contenedor centrado max-w-page:
-1. Un banner hero: redondeado, degradé marrón (usá los tokens coffee/espresso), texto
+1. Un banner hero: redondeado, degradé marrón (usa los tokens coffee/espresso), texto
    blanco, una línea de eyebrow, un titular grande "Coffee worth waking up for.", un
    párrafo corto y un botón claro "Shop the beans".
 2. Un encabezado de sección "Featured coffee" con una fila de chips de filtro por
-   categoría. Traé las categorías con getCategories() e incluí un chip "All" primero. El
+   categoría. Trae las categorías con getCategories() e incluye un chip "All" primero. El
    chip activo va relleno con bg-coffee y texto blanco.
 3. Una grilla de productos responsive (4 columnas en desktop, menos en pantallas chicas)
    de &lt;ProductCard /&gt; construida con getProducts(). Al hacer clic en un chip se vuelve a
    consultar con getProducts({ category }).
 
-Traé los datos con useEffect/useState. Mostrá un estado de carga simple mientras consulta
-y un mensaje amable si la consulta falla. Importá getProducts y getCategories de
+Trae los datos con useEffect/useState. Muestra un estado de carga simple mientras consulta
+y un mensaje amable si la consulta falla. Importa getProducts y getCategories de
 ../api/client y ProductCard de ../components/ProductCard.
 
-Escribí el código y todos los textos visibles de la UI en inglés, exactamente como
+Escribe el código y todos los textos visibles de la UI en inglés, exactamente como
 aparecen en el mockup. No traduzcas la interfaz.
 
 No modifiques src/api/client.js. No agregues dependencias ni construyas paginación.</code></pre>
@@ -142,8 +142,8 @@ No modifiques src/api/client.js. No agregues dependencias ni construyas paginaci
     <p class="cds--body-01">Rara vez la primera pasada coincide con el mockup píxel a píxel. Itera con Bob — por ejemplo:</p>
     <div class="code-block">
       <button class="copy-button" type="button" aria-label="Copiar prompt">Copiar</button>
-      <pre><code>Compará la página de inicio actual con mockups/home.png. El espaciado de las tarjetas y el
-padding del hero se ven distintos. Ajustá el gap de la grilla y el padding del hero para
+      <pre><code>Compara la página de inicio actual con mockups/home.png. El espaciado de las tarjetas y el
+padding del hero se ven distintos. Ajusta el gap de la grilla y el padding del hero para
 acercarte más al mockup.</code></pre>
     </div>
   </section>
@@ -156,7 +156,7 @@ acercarte más al mockup.</code></pre>
     </div>
     <div class="callout" data-tone="warning">
       <p class="callout__title">Las imágenes se ven rotas</p>
-      <p>La URL de la imagen tiene que construirse con <code>imageUrl(product.image)</code> — un <code>product.image</code> pelado apunta al servidor de Vite, no a la API. Pídele a Bob: "Usá imageUrl() de ../api/client para el src de la imagen del producto."</p>
+      <p>La URL de la imagen tiene que construirse con <code>imageUrl(product.image)</code> — un <code>product.image</code> pelado apunta al servidor de Vite, no a la API. Pídele a Bob: "Usa imageUrl() de ../api/client para el src de la imagen del producto."</p>
     </div>
     <div class="callout" data-tone="warning">
       <p class="callout__title">Al hacer clic en + también navega a la página de producto</p>

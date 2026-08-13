@@ -14,14 +14,14 @@
     <p class="cds--body-01">En este paso vas a crear el <strong>Store Associate Agent</strong>. Este agente funciona como supervisor: recibe una consulta de un asociado de tienda, delega la verificación de stock al agente de disponibilidad y, si hace falta, delega la búsqueda de alternativas al agente de sustitutos.</p>
 
     <h3 class="cds--productive-heading-03" style="margin-top: 2rem;">3.1. Importar y desplegar el agente supervisor</h3>
-    <p class="cds--body-01">Desde la terminal en <code>Lab2</code>, ejecutá:</p>
+    <p class="cds--body-01">Desde la terminal en <code>Lab2</code>, ejecuta:</p>
 <pre><code class="language-bash">orchestrate agents import -f confluent_agents/Store_Associate_Agent.yaml</code></pre>
-    <p class="cds--body-01">Luego, en la UI de watsonx Orchestrate, abrí el agente <code>Store_Associate_Agent</code> y hacé clic en <strong>Deploy</strong>.</p>
+    <p class="cds--body-01">Luego, en la UI de watsonx Orchestrate, abre el agente <code>Store_Associate_Agent</code> y haz clic en <strong>Deploy</strong>.</p>
 
     <div class="callout" data-tone="info" style="margin-top: 2rem;">
       <p class="callout__title">Probar el agente supervisor</p>
-      <p>Probá una consulta de disponibilidad y sustitutos en la interfaz del agente:</p>
-      <p><em>"¿Tenés LAPTOP-MACBOOK-PRO-16 en Unicenter?"</em></p>
+      <p>Prueba una consulta de disponibilidad y sustitutos en la interfaz del agente:</p>
+      <p><em>"¿Tienes LAPTOP-MACBOOK-PRO-16 en Unicenter?"</em></p>
       <p>Si el producto no está disponible según el inventario actual, el agente delega la tarea y recomienda alternativas del catálogo.</p>
     </div>
   </section>
@@ -31,24 +31,24 @@
     <p class="cds--body-01">En este paso vas a crear el <strong>Customer Shopping Assistant</strong>, un agente orientado al cliente final. A diferencia del agente para asociados de tienda, este asistente no parte necesariamente de un SKU: interpreta necesidades expresadas en lenguaje natural y las traduce en recomendaciones concretas.</p>
 
     <h3 class="cds--productive-heading-03" style="margin-top: 2rem;">4.1. Importar el asistente</h3>
-    <p class="cds--body-01">Desde <code>Lab2</code>, ejecutá:</p>
+    <p class="cds--body-01">Desde <code>Lab2</code>, ejecuta:</p>
 <pre><code class="language-bash">orchestrate agents import -f confluent_agents/Customer_Shopping_Assistant.yaml</code></pre>
 
     <h3 class="cds--productive-heading-03" style="margin-top: 2rem;">4.2. Vincular la base de conocimiento y herramienta</h3>
     <ol class="cds--list--ordered">
-      <li class="cds--list__item">Abrí el agente <code>Customer_Shopping_Assistant</code>.</li>
-      <li class="cds--list__item">En el menú lateral, ingresá a <strong>Knowledge</strong>, hacé clic en <strong>Add source</strong> y seleccioná la fuente existente <code>enterprise_documents</code>.</li>
-      <li class="cds--list__item">En el menú lateral, ingresá a <strong>Toolset</strong>, y asegurate de que la herramienta <code>sku-availability-checker:get_sku_availability</code> esté vinculada. Si no lo está, agregala.</li>
-      <li class="cds--list__item">Volvé a la vista principal del agente y hacé clic en <strong>Deploy</strong>.</li>
+      <li class="cds--list__item">Abre el agente <code>Customer_Shopping_Assistant</code>.</li>
+      <li class="cds--list__item">En el menú lateral, ingresa a <strong>Knowledge</strong>, haz clic en <strong>Add source</strong> y selecciona la fuente existente <code>enterprise_documents</code>.</li>
+      <li class="cds--list__item">En el menú lateral, ingresa a <strong>Toolset</strong>, y asegúrate de que la herramienta <code>sku-availability-checker:get_sku_availability</code> esté vinculada. Si no lo está, agrégala.</li>
+      <li class="cds--list__item">Vuelve a la vista principal del agente y haz clic en <strong>Deploy</strong>.</li>
     </ol>
 
     <h3 class="cds--productive-heading-03" style="margin-top: 2rem;">4.3. Obtener el snippet para embeber el asistente</h3>
     <p class="cds--body-01">Este paso prepara el material necesario para el Lab 3, donde el asistente se integrará en una página web local (Voltia Storefront).</p>
     <ol class="cds--list--ordered">
-      <li class="cds--list__item">En el menú lateral del agente, ingresá a <strong>Channels</strong>.</li>
-      <li class="cds--list__item">Seleccioná <strong>Embedded agent</strong>.</li>
-      <li class="cds--list__item">Abrí la pestaña <strong>Live</strong>.</li>
-      <li class="cds--list__item">En <strong>Embed on your website</strong>, copiá el snippet de código HTML/JS.</li>
+      <li class="cds--list__item">En el menú lateral del agente, ingresa a <strong>Channels</strong>.</li>
+      <li class="cds--list__item">Selecciona <strong>Embedded agent</strong>.</li>
+      <li class="cds--list__item">Abre la pestaña <strong>Live</strong>.</li>
+      <li class="cds--list__item">En <strong>Embed on your website</strong>, copia el snippet de código HTML/JS.</li>
       <li class="cds--list__item">Guardalo de forma segura, lo utilizarás en el próximo laboratorio.</li>
     </ol>
   </section>

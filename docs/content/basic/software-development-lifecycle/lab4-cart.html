@@ -51,15 +51,15 @@
     <h2 class="cds--productive-heading-03" id="lab4-step1">Paso 1 — Construye el carrito y el resumen</h2>
     <div class="code-block">
       <button class="copy-button" type="button" aria-label="Copiar prompt">Copiar</button>
-      <pre><code>Implementá src/pages/Cart.jsx para que coincida con mockups/cart.png. Reemplazá el
+      <pre><code>Implementa src/pages/Cart.jsx para que coincida con mockups/cart.png. Reemplaza el
 marcador de posición.
 
-Leé el carrito desde useCart(): { items, subtotal, setQty, removeItem, clear }.
+Lee el carrito desde useCart(): { items, subtotal, setQty, removeItem, clear }.
 
-Layout: un título de página "Your cart", después dos columnas en desktop (ítems a la
+Layout: un título de página "Your cart", después dos columnas en desktop (artículos a la
 izquierda, resumen del pedido a la derecha), apilado en mobile.
 
-Ítems (izquierda): para cada uno mostrá una imagen chica (imageUrl(item.image)), la
+Artículos (izquierda): para cada uno muestra una imagen chica (imageUrl(item.image)), la
 categoría, el nombre, el precio unitario, un selector de cantidad que llame a
 setQty(item.id, newQty), el total de la línea (precio × cantidad) y un link "Remove" que
 llame a removeItem(item.id).
@@ -69,13 +69,13 @@ mostrado como un "Free" en verde, un impuesto estimado del 8% del subtotal (redo
 un Total = subtotal + impuesto. Después un botón de ancho completo "Place order" y la
 línea "No account needed · orders confirm instantly".
 
-Estado vacío: cuando items está vacío, mostrá un mensaje amable y un botón que enlace de
+Estado vacío: cuando items está vacío, muestra un mensaje amable y un botón que enlace de
 vuelta a "/".
 
-Usá los tokens de Tailwind de café. Importá imageUrl de ../api/client y useCart de
+Usa los tokens de Tailwind de café. Importa imageUrl de ../api/client y useCart de
 ../cart/CartContext.
 
-Escribí el código y todos los textos visibles de la UI en inglés, exactamente como
+Escribe el código y todos los textos visibles de la UI en inglés, exactamente como
 aparecen en el mockup. No traduzcas la interfaz.
 
 No modifiques src/api/client.js. No agregues dependencias.</code></pre>
@@ -86,21 +86,21 @@ No modifiques src/api/client.js. No agregues dependencias.</code></pre>
     <h2 class="cds--productive-heading-03" id="lab4-step2">Paso 2 — Conecta el checkout</h2>
     <div class="code-block">
       <button class="copy-button" type="button" aria-label="Copiar prompt">Copiar</button>
-      <pre><code>Hacé que el botón "Place order" complete la compra:
-- Al hacer clic, llamá a
+      <pre><code>Haz que el botón "Place order" complete la compra:
+- Al hacer clic, llama a
   createOrder({ items: items.map(i => ({ id: i.id, quantity: i.quantity })) })
   de ../api/client.
-- Mientras el request está en vuelo, deshabilitá el botón y mostrá "Placing order…".
-- Si tiene éxito, mostrá un estado de confirmación que reemplace al carrito: un ícono de
+- Mientras el request está en vuelo, deshabilita el botón y muestra "Placing order…".
+- Si tiene éxito, muestra un estado de confirmación que reemplace al carrito: un ícono de
   check, "Order confirmed!", el orderId devuelto, el total y el estimatedDelivery, más un
-  botón "Continue shopping" que enlace a "/". Después llamá a clear() para vaciar el
+  botón "Continue shopping" que enlace a "/". Después llama a clear() para vaciar el
   carrito.
-- Si falla, mostrá un mensaje de error chico y volvé a habilitar el botón.
+- Si falla, muestra un mensaje de error chico y vuelve a habilitar el botón.
 
-La API siempre tiene éxito, así que el camino feliz es el que importa — pero manejá el
+La API siempre tiene éxito, así que el camino feliz es el que importa — pero maneja el
 caso de error con elegancia igual.
 
-Escribí el código y todos los textos visibles de la UI en inglés, exactamente como
+Escribe el código y todos los textos visibles de la UI en inglés, exactamente como
 aparecen en el mockup. No traduzcas la interfaz.</code></pre>
     </div>
   </section>
@@ -133,7 +133,7 @@ aparecen en el mockup. No traduzcas la interfaz.</code></pre>
     </div>
     <div class="callout" data-tone="info">
       <p class="callout__title">El carrito se vacía pero la confirmación desaparece al refrescar</p>
-      <p>Es lo esperable: la confirmación es estado de pantalla. Habría que impedir volver a ejecutar el checkout desde un carrito vacío (deshabilita Place order cuando no hay ítems).</p>
+      <p>Es lo esperable: la confirmación es estado de pantalla. Habría que impedir volver a ejecutar el checkout desde un carrito vacío (deshabilita Place order cuando no hay artículos).</p>
     </div>
   </section>
 

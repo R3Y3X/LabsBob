@@ -1,0 +1,387 @@
+<div class="content-panel lab-template">
+
+  <div class="lab-banner">
+    <div class="lab-banner__tags">
+      <span class="cds--tag cds--tag--red">Seguridad · Skills · ASVS</span>
+      <span class="cds--tag cds--tag--cool-gray">~25 min</span>
+    </div>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Lab 2 — Auditoría</h1>
+
+    <div class="lab-hero-image">
+      <img src="./assets/images/labs/hands-on-inicial/lab3_bob.png"
+           alt="Banner del Lab 2 — Auditoría de código y reportes de seguridad con IBM Bob"
+           class="lab-hero-image__img" />
+    </div>
+
+    <div class="lab-banner__metrics">
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">7</span>
+        <span class="lab-banner__metric-label">controles ASVS</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">3</span>
+        <span class="lab-banner__metric-label">modos (Ask · Plan · Agent)</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">2</span>
+        <span class="lab-banner__metric-label">artefactos (SARIF + OSCAL)</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">5–10</span>
+        <span class="lab-banner__metric-label">BobCoins estimados</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Objetivos -->
+  <section class="lab-section" aria-labelledby="lab1-obj">
+    <h2 class="cds--productive-heading-03" id="lab1-obj">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
+      Objetivos de aprendizaje
+    </h2>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">✅ Crear un <strong>skill reutilizable</strong> que enseña a Bob un flujo de auditoría repetible</li>
+      <li class="cds--list__item">✅ Acotar <strong>permisos por tarea</strong> según lo que Bob necesita en cada fase</li>
+      <li class="cds--list__item">✅ Usar <strong>menciones de contexto</strong> (<code>@archivo</code>) para enfocar el análisis</li>
+      <li class="cds--list__item">✅ Elegir entre <strong>Ask, Plan y Agent Mode</strong> según la fase del trabajo</li>
+      <li class="cds--list__item">✅ Generar un reporte <strong>SARIF</strong> y un plan de remediación <strong>OSCAL POA&M</strong></li>
+    </ul>
+  </section>
+
+  <!-- Escenario -->
+  <section class="lab-section" aria-labelledby="lab1-escenario">
+    <h2 class="cds--productive-heading-03" id="lab1-escenario">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M26 4H6a2 2 0 0 0-2 2v8c0 9.63 7.88 13.74 11.29 15.1a2.27 2.27 0 0 0 1.42 0C20.12 27.74 28 23.63 28 14V6a2 2 0 0 0-2-2Zm0 10c0 8.23-6.86 11.89-10 13.22C12.86 25.89 6 22.23 6 14V6h20Z"/></svg>
+      Escenario
+    </h2>
+    <p class="cds--body-01"><strong>Galaxium Travels</strong> es una aplicación que creció durante varios años en un codebase complejo. Una revisión manual de seguridad consume tiempo y produce resultados inconsistentes entre miembros del equipo. Necesitas un proceso repetible que genere salida estructurada que los desarrolladores puedan actuar de inmediato y que alimente un pipeline de remediación automatizado.</p>
+    <p class="cds--body-01" style="margin-top:12px">En este lab usarás IBM Bob para crear un skill de auditoría basado en OWASP ASVS, ejecutarlo contra Galaxium Travels, generar un reporte SARIF y producir un OSCAL Plan of Action and Milestones (POA&M) que Bob puede usar para guiar la remediación.</p>
+
+    <div class="callout" data-tone="note">
+      <p class="callout__title">Alcance de la auditoría</p>
+      <p>Este lab audita contra ASVS Level 1 en control de acceso (V4), validación de inputs (V5), seguridad de API (V13) y configuración (V14). El mismo patrón de skill funciona con cualquier estándar: reemplaza los controles ASVS por CWE Top 25, un checklist interno u otro framework.</p>
+    </div>
+
+    <table class="lab-table">
+      <thead>
+        <tr>
+          <th scope="col">Categoría</th>
+          <th scope="col">Control</th>
+          <th scope="col">Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>V4.1 General Access Control</td><td>V4.1.3</td><td>Los usuarios solo acceden a sus propios recursos</td></tr>
+        <tr><td>V4.1 General Access Control</td><td>V4.1.5</td><td>Control de acceso deniega por defecto — requests no autenticados se rechazan</td></tr>
+        <tr><td>V4.2 Operation Level Access Control</td><td>V4.2.1</td><td>Recursos sensibles no accesibles manipulando IDs predecibles (IDOR)</td></tr>
+        <tr><td>V5.1 Input Validation</td><td>V5.1.1</td><td>Todos los inputs de texto tienen longitud máxima definida</td></tr>
+        <tr><td>V13.1 Generic Web Service Security</td><td>V13.1.3</td><td>Endpoints no aceptan credenciales ni PII en query params de URL</td></tr>
+        <tr><td>V14.4 HTTP Security Headers</td><td>V14.4.1</td><td>Respuestas HTTP incluyen headers de seguridad apropiados</td></tr>
+        <tr><td>V14.5 HTTP Request Header Validation</td><td>V14.5.3</td><td>Origen CORS validado contra allowlist explícita — sin wildcards</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Setup -->
+  <section class="lab-section" aria-labelledby="lab1-setup">
+    <h2 class="cds--productive-heading-03" id="lab1-setup">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
+      Configuración del lab
+    </h2>
+    <ol class="cds--list--ordered">
+      <li class="cds--list__item">Sigue en el workspace de Galaxium Travels del Lab 1 (Rules). Si partes de cero: descomprime <code>LabHandsOnBob.zip</code> y abre <code>lab-3-seguridad/galaxium-travels</code>, o clona <code>git clone -b bob-learning-path-branch https://github.com/IBM/galaxium-travels</code>.</li>
+      <li class="cds--list__item">En IBM Bob, ve a <strong>File → Open Folder</strong> si aún no tienes esa carpeta abierta.</li>
+      <li class="cds--list__item">Abre el chat de Bob con <kbd>Option + Command + B</kbd> (macOS) o <kbd>Ctrl + Alt + B</kbd> (Windows).</li>
+      <li class="cds--list__item">Si no lo ejecutaste en el Lab 1, en el chat ejecuta <code>/init</code> para inicializar el entorno y crear los archivos <code>AGENTS.md</code>. Haz clic en <strong>Approve todo tools for task</strong> si Bob lo solicita.</li>
+    </ol>
+  </section>
+
+  <!-- Ejercicio -->
+  <section class="lab-section" aria-labelledby="lab1-ejercicio">
+    <h2 class="cds--productive-heading-03" id="lab1-ejercicio">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
+      Ejercicio: Auditoría ASVS con skills y reportes estructurados
+    </h2>
+
+    <!-- Paso 1 -->
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Crear el skill de auditoría</h3>
+      <p class="cds--body-01">Un <strong>skill</strong> es un conjunto de instrucciones reutilizable que Bob sigue para una tarea específica. Vas a crear <code>asvs-audit</code> para auditar Galaxium Travels contra OWASP ASVS Level 1.</p>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">Bajo el chat, haz clic en <strong>Bob - Settings</strong> → <strong>Bob Settings</strong>.</li>
+        <li class="cds--list__item">Haz clic en <strong>Skills</strong> en la barra lateral.</li>
+        <li class="cds--list__item">Haz clic en <strong>+</strong> para crear un skill nuevo.</li>
+        <li class="cds--list__item"><strong>Skill Name:</strong> <code>asvs-audit</code> (se invoca con <code>/asvs-audit</code> en el chat).</li>
+        <li class="cds--list__item"><strong>Description:</strong></li>
+      </ol>
+      <div class="code-block code-block--prompt">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>Audita un codebase contra OWASP ASVS Level 1 en control de acceso, validación de inputs, seguridad de API y configuración.</code></pre>
+      </div>
+      <ol class="cds--list--ordered" start="6">
+        <li class="cds--list__item">Activa <strong>Allow Bob to use this skill</strong> (permitir que Bob use este skill) para que pueda invocarlo cuando un plan o prompt lo requiera.</li>
+        <li class="cds--list__item"><strong>Scope &amp; Location:</strong> selecciona el proyecto <code>galaxium-travels</code> para guardar el skill en <code>.bob/skills/</code> y versionarlo con el codebase.</li>
+        <li class="cds--list__item">Pega las instrucciones completas del skill en <strong>Skill Instructions</strong>:</li>
+      </ol>
+      <div class="code-block code-block--yaml">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>---
+name: asvs-audit
+description: Audita un codebase contra OWASP ASVS Level 1 en control de acceso, validación de inputs, seguridad de API y configuración, y produce hallazgos estructurados listos para exportar a SARIF y OSCAL.
+user-invocable: true
+---
+
+Realiza una auditoría de seguridad estructurada de este codebase. Recorre las fases siguientes en orden. No las saltes ni las combines.
+
+## Fase 1: Descubrir
+Lee y entiende la aplicación antes de auditar. Concéntrate en:
+- Puntos de entrada: archivos principales, definición de rutas, controladores
+- Código de autenticación y manejo de sesión
+- Código de validación y sanitización de inputs
+- Código de consultas a base de datos
+- Cualquier archivo marcado como de alto riesgo en un análisis previo
+
+Resume lo que encuentres antes de pasar a la Fase 2.
+
+## Fase 2: Auditar
+Revisa cada control de abajo. Para cada uno registra: PASS, FAIL o N/A.
+En cada FAIL, registra la ruta del archivo y el número de línea.
+
+### V4.1 General Access Control
+- V4.1.3 — Las personas usuarias solo acceden a sus propios recursos; los datos de otras no son accesibles
+- V4.1.5 — El control de acceso deniega por defecto: las peticiones no autenticadas se rechazan
+
+### V4.2 Operation Level Access Control
+- V4.2.1 — Los recursos sensibles no se pueden acceder manipulando un ID de objeto predecible (protección IDOR)
+
+### V5.1 Input Validation
+- V5.1.1 — Todos los inputs de texto tienen una longitud máxima definida
+
+### V13.1 Generic Web Service Security
+- V13.1.3 — Los endpoints de API no aceptan credenciales ni PII en query params de URL
+
+### V14.4 HTTP Security Headers
+- V14.4.1 — Las respuestas HTTP incluyen headers de seguridad apropiados, como Content-Security-Policy, X-Frame-Options y X-Content-Type-Options
+
+### V14.5 HTTP Request Header Validation
+- V14.5.3 — El origen CORS se valida contra una allowlist explícita: no se permiten wildcards
+
+## Fase 3: Generar hallazgos
+Por cada FAIL, produce un hallazgo en este formato:
+
+**Hallazgo [N]:**
+- Regla: ASVS [número de control]
+- Severidad: Critical / High / Medium / Low
+- Archivo: [ruta]
+- Línea: [número o rango, si se identifica]
+- Problema: [una frase describiendo lo encontrado]
+- Corrección: [una frase describiendo el cambio recomendado]
+
+## Fase 4: Resumen
+Produce un resumen corto:
+- Total de controles revisados
+- Conteos Pass / Fail / N/A
+- Evaluación de la postura de seguridad en dos frases
+
+Guarda los hallazgos en la ubicación que indique el plan o el prompt que invocó este skill. No generes SARIF, OSCAL ni otros reportes: la generación de reportes es una tarea aparte. Informa que la auditoría está completa y espera la siguiente instrucción.</code></pre>
+      </div>
+      <p class="cds--body-01" style="margin-top:12px">Haz clic en <strong>Create</strong>.</p>
+    </div>
+
+    <!-- Paso 2 -->
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Identificar áreas de alto riesgo (Ask Mode)</h3>
+      <p class="cds--body-01">Para ahorrar tokens, pide a Bob que identifique los archivos y carpetas más relevantes para seguridad antes de ejecutar el skill de auditoría.</p>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">Abre el chat de Bob si no está visible.</li>
+        <li class="cds--list__item">Selecciona <strong>Ask</strong> en el selector de modos.</li>
+        <li class="cds--list__item">Envía este prompt:</li>
+      </ol>
+      <div class="code-block code-block--prompt">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>Explora este codebase como Senior Security Analyst. Dame un resumen corto que cubra:
+1. El stack y el framework principales
+2. Los archivos y carpetas más relevantes para seguridad
+
+Revisa también:
+1. Cómo se manejan la autenticación y las sesiones
+2. Cómo se aceptan y validan los inputs de usuario
+3. Dónde se hacen las consultas a la base de datos
+4. Cualquier endpoint de API que acepte input externo
+
+Quiero entender las áreas de mayor riesgo de seguridad antes de ejecutar una auditoría.</code></pre>
+      </div>
+      <div class="callout" data-tone="tip">
+        <p class="callout__title">Salida esperada</p>
+        <p>Bob lee los archivos y responde con un resumen de la estructura de la aplicación y las áreas de mayor riesgo.</p>
+      </div>
+    </div>
+
+    <!-- Paso 3 -->
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Crear el plan de auditoría (Plan Mode)</h3>
+      <p class="cds--body-01">Cambia a <strong>Plan Mode</strong> y pide a Bob un plan para auditar las áreas de alto riesgo identificadas.</p>
+      <div class="code-block code-block--prompt">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>Crea un plan para auditar las áreas de alto riesgo identificadas
+en la exploración anterior.
+
+Al auditar, usa el skill asvs-audit para guiar el proceso.
+
+Cuando se ejecute el plan, crea el directorio security/ si no existe
+y guarda los hallazgos en security/audit-findings.md
+
+Guarda el plan en plan/audit-plan.md</code></pre>
+      </div>
+      <p class="cds--body-01" style="margin-top:12px">Bob puede hacer preguntas de seguimiento sobre el alcance. Puedes responderlas o escribir <code>usa tu recomendación</code>.</p>
+      <p class="cds--body-01" style="margin-top:8px">Abre <code>plan/audit-plan.md</code> para revisar el enfoque de auditoría antes de ejecutarlo.</p>
+    </div>
+
+    <!-- Paso 4 -->
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 4 — Ejecutar la auditoría (Agent Mode)</h3>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">Haz clic en <strong>+</strong> para iniciar una tarea nueva.</li>
+        <li class="cds--list__item">Selecciona <strong>Agent Mode</strong>.</li>
+        <li class="cds--list__item">En <strong>Permissions</strong>, activa <strong>Read</strong>, <strong>Edit</strong>, <strong>Execute</strong> y <strong>Skill</strong>. Deja el resto desactivado.</li>
+      </ol>
+
+      <table class="lab-table">
+        <thead>
+          <tr><th scope="col">Permiso</th><th scope="col">Estado</th><th scope="col">Por qué</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Read</td><td>✅ On</td><td>Bob lee el codebase, el plan y el skill</td></tr>
+          <tr><td>Edit</td><td>✅ On</td><td>Bob escribe los hallazgos en <code>security/audit-findings.md</code></td></tr>
+          <tr><td>Execute</td><td>✅ On</td><td>Bob puede ejecutar comandos para confirmar estructura de archivos</td></tr>
+          <tr><td>Skill</td><td>✅ On</td><td>El plan invoca el skill <code>asvs-audit</code></td></tr>
+          <tr><td>MCP</td><td>❌ Off</td><td>No necesario para análisis local de código</td></tr>
+        </tbody>
+      </table>
+
+      <p class="cds--body-01" style="margin-top:16px">Pide a Bob que implemente el plan:</p>
+      <div class="code-block code-block--prompt">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>Implementa el @plan/audit-plan.md</code></pre>
+      </div>
+      <p class="cds--body-01" style="margin-top:12px">Revisa los hallazgos en <code>security/audit-findings.md</code>.</p>
+      <div class="callout" data-tone="note">
+        <p class="callout__title">Ventana de contexto</p>
+        <p>Guardar los hallazgos en un archivo te permite iniciar un chat nuevo y generar reportes sin releer todo el codebase. En codebases grandes, audita una categoría ASVS a la vez (V4, luego V5, V13, V14) y pide a Bob que consolide al final.</p>
+      </div>
+      <div class="callout" data-tone="warning">
+        <p class="callout__title">Agent Mode requiere aprobación</p>
+        <p>Cada escritura de archivo mostrará un <em>diff</em> para que lo revises antes de confirmar.</p>
+      </div>
+    </div>
+
+    <!-- Paso 5 -->
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 5 — Generar reporte SARIF (Agent Mode)</h3>
+      <p class="cds--body-01">SARIF es el formato estándar de intercambio para resultados de análisis estático. IDEs, GitHub Advanced Security y la mayoría de pipelines CI/CD lo consumen directamente.</p>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">Inicia una tarea nueva con <strong>+</strong>.</li>
+        <li class="cds--list__item">Usa <strong>Agent Mode</strong>.</li>
+        <li class="cds--list__item">En Permissions, activa <strong>Read</strong>, <strong>Edit</strong> y <strong>Execute</strong>. Deja <strong>Skill</strong> y <strong>MCP</strong> desactivados.</li>
+      </ol>
+      <div class="code-block code-block--prompt">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>@security/audit-findings.md
+
+Genera un reporte SARIF 2.1.0 a partir de los hallazgos de la auditoría.
+Guárdalo en `security/audit-results.sarif`.
+
+Incluye:
+- Nombre de la herramienta: "ASVS Security Audit"
+- Una entrada de regla por cada control ASVS revisado, con el ID del control y su descripción
+- Una entrada de resultado por cada hallazgo, con nivel de severidad, ruta de archivo, número de línea y la corrección recomendada en el campo message</code></pre>
+      </div>
+      <div class="callout" data-tone="tip">
+        <p class="callout__title">Salida esperada</p>
+        <p>El archivo <code>security/audit-results.sarif</code> debe contener un array <code>runs</code> con entradas <code>results</code>, una por hallazgo. Bob suele mapear Critical/High → SARIF error y Medium/Low → SARIF warning.</p>
+      </div>
+    </div>
+
+    <!-- Paso 6 -->
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 6 — Generar plan de remediación OSCAL POA&amp;M (Agent Mode)</h3>
+      <p class="cds--body-01">El POA&M OSCAL es un documento JSON legible por máquinas que mapea cada hallazgo a una tarea de remediación estructurada. Bob puede leerlo como cola de trabajo y aplicar correcciones sistemáticamente.</p>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">Inicia una tarea nueva con <strong>+</strong>.</li>
+        <li class="cds--list__item">Usa <strong>Agent Mode</strong>.</li>
+        <li class="cds--list__item">En Permissions, activa <strong>Read</strong>, <strong>Edit</strong> y <strong>Execute</strong>.</li>
+      </ol>
+      <div class="code-block code-block--prompt">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>@security/audit-findings.md
+
+Genera un Plan of Action and Milestones (POA&amp;M) OSCAL a partir de los hallazgos de la auditoría.
+Guárdalo en `security/poam.json`.
+
+Para cada hallazgo incluye:
+- Un UUID único
+- El ID del control ASVS como referencia del hallazgo
+- Severidad y una descripción del riesgo en una frase
+- Una tarea de remediación concreta, con detalle suficiente para que un agente de IA la implemente sin contexto extra: incluye ruta de archivo, referencia de línea y el cambio específico requerido
+- Una etiqueta de hito según severidad: Critical y High reciben "sprint-1"; Medium y Low reciben "sprint-2"
+
+Usa la estructura de OSCAL versión 1.1.2.</code></pre>
+      </div>
+      <p class="cds--body-01" style="margin-top:12px">Al terminar tendrás dos artefactos en <code>security/</code>:</p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item"><code>audit-results.sarif</code> — hallazgos estructurados para tooling y CI/CD</li>
+        <li class="cds--list__item"><code>poam.json</code> — cola de remediación para asistencia humana o por IA</li>
+      </ul>
+    </div>
+
+    <!-- Paso 7 -->
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 7 — Revisar y priorizar hallazgos (Ask Mode)</h3>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">Inicia una tarea nueva con <strong>+</strong>.</li>
+        <li class="cds--list__item">Selecciona <strong>Ask Mode</strong>.</li>
+        <li class="cds--list__item">Envía este prompt:</li>
+      </ol>
+      <div class="code-block code-block--prompt">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>@security/poam.json
+
+Revisa este plan de remediación e identifica los 3 ítems más críticos para corregir primero.
+
+Para cada uno incluye:
+- Qué vulnerabilidad es y por qué es la de mayor prioridad
+- Qué archivo y línea hay que mirar
+- En qué consiste la corrección y cuánto tardaría aproximadamente una persona desarrolladora en implementarla</code></pre>
+      </div>
+      <div class="callout" data-tone="tip">
+        <p class="callout__title">Siguiente paso opcional</p>
+        <p>También puedes integrar un servidor MCP y pedir a Bob que cree tickets por hallazgo, enlazando el código relevante y la guía de remediación del POA&M.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Limpieza -->
+  <section class="lab-section" aria-labelledby="lab1-limpieza">
+    <h2 class="cds--productive-heading-03" id="lab1-limpieza">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M12 12h2v12h-2zm4 0h2v12h-2zm7-9H9v2h14zm-3 4H9v14h11a2 2 0 0 0 2-2V7zM9 4V2h14v2z"/></svg>
+      Limpieza (opcional)
+    </h2>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">En <strong>Bob Settings → Skills</strong>, elimina el skill <code>asvs-audit</code> si no lo necesitas.</li>
+      <li class="cds--list__item">Elimina los directorios <code>security/</code> y <code>plan/</code> generados durante el lab si quieres empezar de cero.</li>
+    </ul>
+  </section>
+
+  <div class="callout" data-tone="tip">
+    <p class="callout__title">Lo que acabas de lograr</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">✅ Exploraste Galaxium Travels para identificar áreas de alto riesgo antes de auditar</li>
+      <li class="cds--list__item">✅ Creaste un skill <code>asvs-audit</code> reutilizable y versionable con el equipo</li>
+      <li class="cds--list__item">✅ Auditaste contra OWASP ASVS con permisos acotados por tarea</li>
+      <li class="cds--list__item">✅ Generaste reportes SARIF y OSCAL POA&M listos para tooling y agentes</li>
+      <li class="cds--list__item">✅ Priorizaste los hallazgos más críticos para remediación</li>
+    </ul>
+    <p style="margin-top:12px"><strong>Siguiente paso:</strong> continúa con el Lab 3 — Código seguro para generar features nuevas con un flujo actor-critic, sin reintroducir las clases de problemas que esta auditoría encontró.</p>
+  </div>
+
+</div>

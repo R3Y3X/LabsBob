@@ -1,0 +1,44 @@
+<div class="content-panel lab-template prose--full">
+  <div class="lab-banner">
+    <div class="lab-banner__tags">
+      <span class="cds--tag cds--tag--purple">Asistente cliente</span>
+      <span class="cds--tag cds--tag--cool-gray">~15 min</span>
+      <span class="cds--tag cds--tag--teal">Embedded agent</span>
+    </div>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Asistente de compra para el cliente</h1>
+    <p class="cds--body-02 lab-banner__summary">Importa el Customer Shopping Assistant, conéctalo al catálogo y copia el snippet embebible.</p>
+  </div>
+
+  <section class="lab-section">
+    <h2 class="cds--productive-heading-04" id="paso-4-crear-el-asistente-de-compra-para-el-clie">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
+      Crear el asistente de compra para el cliente final
+    </h2>
+    <p class="cds--body-01">El <strong>Customer Shopping Assistant</strong> no parte necesariamente de un SKU: interpreta necesidades en lenguaje natural y las traduce en recomendaciones.</p>
+
+    <h3 class="cds--productive-heading-03" style="margin-top: 2rem;">Importar el asistente</h3>
+    <p class="cds--body-01">Desde <code>Lab2</code>, ejecuta:</p>
+    <div class="code-block code-block--prompt">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>orchestrate agents import -f confluent_agents/Customer_Shopping_Assistant.yaml</code></pre>
+    </div>
+
+    <h3 class="cds--productive-heading-03" style="margin-top: 2rem;">Vincular conocimiento y herramienta</h3>
+    <ol class="cds--list--ordered">
+      <li class="cds--list__item">Abre <code>Customer_Shopping_Assistant</code>.</li>
+      <li class="cds--list__item">En <strong>Knowledge</strong>, <strong>Add source</strong> y elige la fuente existente <code>enterprise_documents</code>.</li>
+      <li class="cds--list__item">En <strong>Toolset</strong>, confirma que <code>sku-availability-checker:get_sku_availability</code> esté vinculada.</li>
+      <li class="cds--list__item">Vuelve a la vista principal y haz clic en <strong>Deploy</strong>.</li>
+    </ol>
+
+    <h3 class="cds--productive-heading-03" style="margin-top: 2rem;">Obtener el snippet embebible</h3>
+    <p class="cds--body-01">Lo usarás en Voltia para integrar el chat en la tienda.</p>
+    <ol class="cds--list--ordered">
+      <li class="cds--list__item">En el menú del agente, entra a <strong>Channels</strong>.</li>
+      <li class="cds--list__item">Selecciona <strong>Embedded agent</strong>.</li>
+      <li class="cds--list__item">Abre la pestaña <strong>Live</strong>.</li>
+      <li class="cds--list__item">En <strong>Embed on your website</strong>, copia el snippet HTML/JS.</li>
+      <li class="cds--list__item">Guárdalo: lo pegas en el lab de Voltia.</li>
+    </ol>
+  </section>
+</div>

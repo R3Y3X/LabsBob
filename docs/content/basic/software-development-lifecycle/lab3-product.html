@@ -17,6 +17,14 @@
         <span class="lab-banner__metric-value">~20</span>
         <span class="lab-banner__metric-label">minutos</span>
       </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">3</span>
+        <span class="lab-banner__metric-label">pasos</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">1</span>
+        <span class="lab-banner__metric-label">modo de trabajo</span>
+      </div>
     </div>
   </div>
 
@@ -36,7 +44,10 @@
   </div>
 
   <section class="lab-section" aria-labelledby="lab3-objetivo">
-    <h2 class="cds--productive-heading-03" id="lab3-objetivo">El objetivo</h2>
+    <h2 class="cds--productive-heading-03" id="lab3-objetivo">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
+      Objetivos de aprendizaje
+    </h2>
     <figure class="lab-figure">
       <img src="./assets/images/labs/software-development-lifecycle/product.png" alt="Mockup del detalle de producto" class="lab-figure__img" />
       <figcaption class="lab-figure__caption"><code>mockups/product.png</code></figcaption>
@@ -47,9 +58,14 @@
     </div>
   </section>
 
-  <section class="lab-section lab-step" aria-labelledby="lab3-step1">
-    <h2 class="cds--productive-heading-03" id="lab3-step1">Paso 1 — Construye la página de detalle</h2>
-    <div class="code-block">
+  <section class="lab-section" aria-labelledby="lab3-ejercicio">
+    <h2 class="cds--productive-heading-03" id="lab3-ejercicio">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
+      Ejercicio
+    </h2>
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Construye la página de detalle</h3>
+<div class="code-block">
       <button class="copy-button" type="button" aria-label="Copiar prompt">Copiar</button>
       <pre><code>Implementa src/pages/Product.jsx para que coincida con mockups/product.png. Reemplaza el
 marcador de posición.
@@ -78,11 +94,10 @@ aparecen en el mockup. No traduzcas la interfaz.
 
 No modifiques src/api/client.js. No agregues dependencias.</code></pre>
     </div>
-  </section>
-
-  <section class="lab-section lab-step" aria-labelledby="lab3-step2">
-    <h2 class="cds--productive-heading-03" id="lab3-step2">Paso 2 — Ejecuta y verifica</h2>
-    <p class="cds--body-01">Desde la tienda, haz clic en cualquier producto:</p>
+    </div>
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Ejecuta y verifica</h3>
+<p class="cds--body-01">Desde la tienda, haz clic en cualquier producto:</p>
     <ol class="cds--list--ordered">
       <li class="cds--list__item">La página de detalle muestra los datos reales de ese producto.</li>
       <li class="cds--list__item">El selector de cantidad sube y baja (nunca por debajo de 1).</li>
@@ -94,11 +109,10 @@ No modifiques src/api/client.js. No agregues dependencias.</code></pre>
       <p class="callout__title">Checkpoint</p>
       <p>La página coincide con <code>product.png</code> y agregar al carrito actualiza el badge. Los ítems de equipamiento (sin roast, sin notas de cata) igual se renderizan con limpieza.</p>
     </div>
-  </section>
-
-  <section class="lab-section lab-step" aria-labelledby="lab3-step3">
-    <h2 class="cds--productive-heading-03" id="lab3-step3">Paso 3 — Casos borde</h2>
-    <div class="code-block">
+    </div>
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Casos borde</h3>
+<div class="code-block">
       <button class="copy-button" type="button" aria-label="Copiar prompt">Copiar</button>
       <pre><code>Algunos productos (Equipment) tienen roast = null y un array tastingNotes vacío. Asegúrate
 de que la página oculte el campo roast y la fila de notas de cata cuando no hay datos, en
@@ -106,10 +120,14 @@ lugar de mostrar "null" o una caja vacía.
 
 Mantén los textos de la UI en inglés.</code></pre>
     </div>
+    </div>
   </section>
 
-  <section class="lab-section" aria-labelledby="lab3-trouble">
-    <h2 class="cds--productive-heading-03" id="lab3-trouble">Solución de problemas</h2>
+<section class="lab-section" aria-labelledby="lab3-trouble">
+    <h2 class="cds--productive-heading-03" id="lab3-trouble">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2 2 28h28zm0 6 10.39 18H5.61z"/><rect x="15" y="12" width="2" height="8"/><rect x="15" y="22" width="2" height="2"/></svg>
+      Solución de problemas
+    </h2>
     <div class="callout" data-tone="warning">
       <p class="callout__title">La página muestra "not found" para un producto válido</p>
       <p>El id viene de la URL. Confirma que los links de la tienda usen <code>/product/${product.id}</code> y que <code>getProduct(id)</code> reciba ese mismo id. Compara contra un id de <code>&lt;API_URL&gt;/api/products</code>.</p>
@@ -124,18 +142,16 @@ Mantén los textos de la UI en inglés.</code></pre>
     </div>
   </section>
 
-  <section class="lab-section lab-step" aria-labelledby="lab3-gate">
-    <h2 class="cds--productive-heading-03" id="lab3-gate">Criterios de éxito</h2>
-    <ul class="cds--list--unordered">
+    <div class="callout" data-tone="tip">
+    <p class="callout__title">Lo que acabas de lograr</p>
+<ul class="cds--list--unordered">
       <li class="cds--list__item"><code>Product.jsx</code> consulta y muestra el producto según el id de la URL.</li>
       <li class="cds--list__item">Se renderizan imagen, calificación, precio, descripción y chips de notas de cata.</li>
       <li class="cds--list__item">El selector de cantidad funciona (mínimo 1); "Add to cart" agrega esa cantidad.</li>
       <li class="cds--list__item">Los casos de sin stock y de equipamiento (sin roast ni notas) se renderizan con limpieza.</li>
       <li class="cds--list__item">La página se parece a <code>product.png</code>.</li>
     </ul>
-    <a class="cds--btn cds--btn--primary" style="margin-top:1rem" href="#/lab/software-development-lifecycle/cart">
-      Siguiente: Lab 04 — Carrito y checkout →
-    </a>
-  </section>
+  </div>
+
 
 </div>

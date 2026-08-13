@@ -1,0 +1,143 @@
+<div class="content-panel lab-template">
+
+  <div class="lab-banner">
+    <div class="lab-banner__tags">
+      <span class="cds--tag cds--tag--teal">Rules</span>
+      <span class="cds--tag cds--tag--cool-gray">12 min</span>
+    </div>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Lab 1 — Rules</h1>
+
+    <div class="lab-banner__metrics">
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">3</span>
+        <span class="lab-banner__metric-label">rules persistentes</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">2–4</span>
+        <span class="lab-banner__metric-label">BobCoins estimados</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">5</span>
+        <span class="lab-banner__metric-label">pasos</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">1</span>
+        <span class="lab-banner__metric-label">modo de trabajo</span>
+      </div>
+    </div>
+  </div>
+
+  <section class="lab-section" aria-labelledby="lab2-obj">
+    <h2 class="cds--productive-heading-03" id="lab2-obj">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
+      Objetivos de aprendizaje
+    </h2>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">Distinguir una rule de un modo personalizado</li>
+      <li class="cds--list__item">Crear rules de proyecto en <code>.bob/rules/</code></li>
+      <li class="cds--list__item">Comprobar que Bob aplica las rules al actualizar el README</li>
+    </ul>
+  </section>
+
+  <section class="lab-section" aria-labelledby="lab2-que">
+    <h2 class="cds--productive-heading-03" id="lab2-que">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
+      Qué es una rule
+    </h2>
+    <p class="cds--body-01">Las rules son archivos de texto que Bob inyecta en <strong>todas</strong> las conversaciones, en todos los modos. Sirven para estándares de código, tono y restricciones de flujo, sin repetirlas en cada prompt.</p>
+    <div class="callout" data-tone="note">
+      <p class="callout__title">Rules vs modo personalizado</p>
+      <p>Una rule no la pisa un modo personalizado. Si defines un monólogo interno como rule global, seguirá aplicándose aunque uses Ask, Agent o un modo que tú creaste. Las rules son el mecanismo transversal; las instrucciones del modo cubren solo ese modo.</p>
+    </div>
+    <p class="cds--body-01">Las rules de proyecto viven en <code>.bob/rules/</code> y se versionan con el código: todo el equipo las hereda al clonar el repositorio.</p>
+  </section>
+
+  <section class="lab-section" aria-labelledby="lab2-crear">
+    <h2 class="cds--productive-heading-03" id="lab2-crear">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
+      Crear las rules del proyecto
+    </h2>
+    <p class="cds--body-01">Abre Galaxium Travels: <code>lab-3-seguridad/galaxium-travels</code> del zip del workshop, o clona <code>git clone -b bob-learning-path-branch https://github.com/IBM/galaxium-travels</code>. Si no existe <code>.bob</code>, ejecuta <code>/init</code> en Agent Mode.</p>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Carpeta y archivo</h3>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">Crea <code>.bob/rules/</code> si no existe</li>
+        <li class="cds--list__item">Crea el archivo <code>basic_rules.md</code> dentro de esa carpeta</li>
+      </ol>
+      <figure class="lab-figure">
+        <img src="./assets/images/labs/entendiendo-bob/ibm-rules-file.png"
+             alt="El archivo .bob/rules/basic_rules.md creado en el proyecto"
+             class="lab-figure__img" />
+        <figcaption class="lab-figure__caption">El archivo .bob/rules/basic_rules.md creado en el proyecto</figcaption>
+      </figure>
+    </div>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Rule de documentación</h3>
+      <p class="cds--body-01">Añade esta línea a <code>basic_rules.md</code>. Así Bob documenta cada función pública que escriba o modifique, da igual la tarea.</p>
+      <div class="code-block code-block--prompt">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>Incluye siempre JSDoc conciso en cada función pública.</code></pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Rule de comunicación</h3>
+      <p class="cds--body-01">Añade la segunda rule. Controla cómo Bob formula respuestas y comentarios: útil si el equipo prefiere salida directa y corta.</p>
+      <div class="code-block code-block--prompt">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>Sé muy conciso en tus respuestas.</code></pre>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 4 — Rule de monólogo interno</h3>
+      <p class="cds--body-01">Añade la tercera rule. Produce un log persistente de lo que Bob ha hecho en todas las conversaciones: auditoría, continuidad entre sesiones y transparencia para el equipo.</p>
+      <div class="code-block code-block--prompt">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>Escribe un resumen de cada interacción en la carpeta `internal-monologue/`.
+Nombra el archivo empezando por un timestamp, seguido de una descripción breve de la interacción.
+Ejemplo: 2026-01-15_actualizar-readme.md</code></pre>
+      </div>
+      <p class="cds--body-01" style="margin-top:12px">Con las tres rules, el archivo queda así:</p>
+      <figure class="lab-figure">
+        <img src="./assets/images/labs/entendiendo-bob/ibm-rules-content.png"
+             alt="El archivo basic_rules.md con las tres rules personalizadas"
+             class="lab-figure__img" />
+        <figcaption class="lab-figure__caption">basic_rules.md con las tres rules del proyecto</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="lab-section" aria-labelledby="lab2-probar">
+    <h2 class="cds--productive-heading-03" id="lab2-probar">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
+      Probar las rules
+    </h2>
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 5 — Agent Mode</h3>
+      <p class="cds--body-01">Abre el chat, cambia a <strong>Agent Mode</strong> y envía:</p>
+      <div class="code-block code-block--prompt">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>Actualiza el README</code></pre>
+      </div>
+      <p class="cds--body-01">Bob puede sugerir mejoras, un overhaul o correcciones. Elige la que encaje. Debería actualizar el README, crear <code>internal-monologue/</code> con un archivo fechado y ser más conciso de lo habitual. Las rules se inyectan en todos los modos, no solo en Agent.</p>
+      <figure class="lab-figure">
+        <img src="./assets/images/labs/entendiendo-bob/ibm-rules-readme.png"
+             alt="Bob actualiza el README.md y crea un archivo de monólogo interno"
+             class="lab-figure__img" />
+        <figcaption class="lab-figure__caption">Bob actualiza el README y crea un archivo en internal-monologue/</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <div class="callout" data-tone="tip">
+    <p class="callout__title">Lo que acabas de lograr</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">Definiste instructions persistentes a nivel de proyecto</li>
+      <li class="cds--list__item">Comprobaste que las rules se inyectan al editar el README y dejan un monólogo interno</li>
+    </ul>
+  </div>
+
+</div>

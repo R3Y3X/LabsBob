@@ -1,0 +1,112 @@
+<div class="content-panel lab-template">
+
+  <div class="lab-banner">
+    <div class="lab-banner__tags">
+      <span class="cds--tag cds--tag--blue">Plan Mode</span>
+      <span class="cds--tag cds--tag--cool-gray">10 min</span>
+    </div>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Lab 2 — Plan Mode</h1>
+
+    <div class="lab-hero-image">
+      <img src="./assets/images/labs/hands-on-inicial/lab2_bob.png"
+           alt="Banner del Lab 2 — Plan Mode de IBM Bob"
+           class="lab-hero-image__img" />
+    </div>
+
+    <div class="lab-banner__metrics">
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">0</span>
+        <span class="lab-banner__metric-label">archivos modificados</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">1</span>
+        <span class="lab-banner__metric-label">diseño de arquitectura</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">2–4</span>
+        <span class="lab-banner__metric-label">BobCoins estimados</span>
+      </div>
+    </div>
+  </div>
+
+  <section class="lab-section" aria-labelledby="lab2-obj">
+    <h2 class="cds--productive-heading-03" id="lab2-obj">Objetivos de aprendizaje</h2>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">Entender cuándo usar Plan Mode frente a Ask o Agent</li>
+      <li class="cds--list__item">Diseñar una solución con diagramas y alternativas, sin escribir código</li>
+      <li class="cds--list__item">Revisar un plan antes de implementarlo</li>
+    </ul>
+  </section>
+
+  <section class="lab-section" aria-labelledby="lab2-que">
+    <h2 class="cds--productive-heading-03" id="lab2-que">Qué es Plan Mode</h2>
+    <p class="cds--body-01">Plan Mode es el arquitecto: diseña la solución <strong>antes de implementarla</strong>. Crea diagramas, analiza requisitos y propone alternativas considerando seguridad y escalabilidad. No edita archivos.</p>
+    <div class="callout" data-tone="note">
+      <p class="callout__title">Regla de oro</p>
+      <p>Cambia de modo según lo que necesites hacer. <strong>No uses un solo modo para todo.</strong> Puedes cambiar de modo a mitad de una tarea.</p>
+    </div>
+  </section>
+
+  <section class="lab-section" aria-labelledby="lab2-ejercicio">
+    <h2 class="cds--productive-heading-03" id="lab2-ejercicio">Ejercicio: diseñar un carrito de compras</h2>
+    <p class="cds--body-01">Usa <strong>Plan Mode</strong> para diseñar la arquitectura de un carrito — sin escribir código. En el Lab 3 implementarás este plan con Agent Mode.</p>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Activa Plan Mode</h3>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">Abre el selector de modos → elige <strong>Plan</strong></li>
+        <li class="cds--list__item">Envía el prompt de diseño del carrito</li>
+      </ol>
+      <figure class="lab-figure" style="margin-top:16px;">
+        <img src="./assets/images/labs/hands-on-inicial/lab2-plan-mode.png"
+             alt="Selector de modos de IBM Bob con Plan Mode seleccionado"
+             class="lab-figure__img" />
+        <figcaption class="lab-figure__caption">Selecciona Plan Mode en el selector de modos</figcaption>
+      </figure>
+    </div>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Envía el prompt de diseño</h3>
+      <div class="code-block">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>Necesito diseñar un sistema de carrito de compras para nuestra API de e-commerce.
+
+Requisitos:
+- Los usuarios deben poder agregar/eliminar productos
+- Calcular el total con descuentos
+- Persistir el carrito en la base de datos
+- Validar stock antes de agregar
+
+Por favor, diseña:
+1. La estructura de datos del carrito
+2. Los endpoints necesarios
+3. El flujo de datos
+4. Consideraciones de seguridad
+5. Un diagrama de arquitectura</code></pre>
+      </div>
+      <figure class="lab-figure" style="margin-top:16px;">
+        <img src="./assets/images/labs/hands-on-inicial/lab2-plan-output.png"
+             alt="Plan Mode generando el diseño arquitectónico del carrito de compras con diagrama Mermaid"
+             class="lab-figure__img" />
+        <figcaption class="lab-figure__caption">Output esperado: diseño completo con diagrama Mermaid, sin ningún archivo creado</figcaption>
+      </figure>
+      <div class="callout" data-tone="tip">
+        <p class="callout__title">Qué debes ver</p>
+        <ul class="cds--list--unordered">
+          <li class="cds--list__item">Diseño sin archivos creados aún</li>
+          <li class="cds--list__item">Diagramas Mermaid y alternativas</li>
+          <li class="cds--list__item">Un plan que puedas revisar y ajustar antes de pasar a Agent Mode</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="callout" data-tone="tip">
+    <p class="callout__title">Lo que acabas de lograr</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">Diseñaste una solución con Plan Mode antes de tocar código</li>
+      <li class="cds--list__item">Revisaste el alcance, los riesgos y el diagrama sin que Bob escribiera archivos</li>
+    </ul>
+  </div>
+
+</div>

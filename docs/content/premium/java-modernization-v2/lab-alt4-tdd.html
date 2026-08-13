@@ -5,7 +5,7 @@
       <span class="cds--tag cds--tag--purple">TDD</span>
       <span class="cds--tag cds--tag--cool-gray">~20 min</span>
     </div>
-    <h1 class="cds--productive-heading-05 lab-banner__title">LAB alternativo 4 — Desarrollo guiado por tests (TDD)</h1>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Lab alternativo 4 — Desarrollo guiado por tests (TDD)</h1>
     <p class="cds--body-02 lab-banner__summary">
       Implementa desarrollo API-first usando metodología Test-Driven Development (TDD):
       genera tests desde una especificación OpenAPI 3.0 y luego implementa el código guiado por esos tests.
@@ -21,12 +21,23 @@
         <span class="lab-banner__metric-value">~20</span>
         <span class="lab-banner__metric-label">minutos</span>
       </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">9</span>
+        <span class="lab-banner__metric-label">pasos</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">1</span>
+        <span class="lab-banner__metric-label">modo de trabajo</span>
+      </div>
     </div>
   </div>
 
   <!-- Qué construirás -->
   <section class="lab-section" aria-labelledby="labalt4-que">
-    <h2 class="cds--productive-heading-03" id="labalt4-que">Qué construirás</h2>
+    <h2 class="cds--productive-heading-03" id="labalt4-que">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
+      Objetivos de aprendizaje
+    </h2>
     <p class="cds--body-01" style="max-width:72ch">
       Una implementación JAX-RS completa de <code>PrescriptionResource</code> (más modelos y repositorios de soporte),
       generada a partir de los tests, que a su vez se generaron desde la especificación OpenAPI. Puro Red-Green-Refactor.
@@ -43,7 +54,10 @@
 
   <!-- Qué es TDD -->
   <section class="lab-section" aria-labelledby="labalt4-tdd">
-    <h2 class="cds--productive-heading-03" id="labalt4-tdd">¿Qué es Test-Driven Development?</h2>
+    <h2 class="cds--productive-heading-03" id="labalt4-tdd">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
+      ¿Qué es Test-Driven Development?
+    </h2>
     <p class="cds--body-01" style="max-width:72ch;margin-bottom:var(--cds-spacing-05,1rem)">
       TDD es una metodología donde los tests se escriben antes que el código de implementación. El ciclo TDD sigue tres pasos:
     </p>
@@ -72,7 +86,10 @@
   <section class="lab-workspace-setup" aria-labelledby="labalt4-workspace">
     <div class="lab-workspace-setup__box">
       <span class="lab-workspace-setup__badge">Paso obligatorio — antes de cualquier prompt</span>
-      <h2 class="lab-workspace-setup__title" id="labalt4-workspace">Abre esta carpeta como raíz en Bob</h2>
+      <h2 class="lab-workspace-setup__title" id="labalt4-workspace">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
+      Abre esta carpeta como raíz en Bob
+    </h2>
       <p class="lab-workspace-setup__lead">
         Descarga el bundle del workshop (solo necesitas <code>prescription-api-spec.yaml</code> para este lab).
         Al abrir <code>snapTDD</code>, Bob inicia un chat nuevo.
@@ -91,7 +108,10 @@
 
   <!-- Estado inicial -->
   <section class="lab-section" aria-labelledby="labalt4-estado">
-    <h2 class="cds--productive-heading-03" id="labalt4-estado">Estado inicial del snapshot</h2>
+    <h2 class="cds--productive-heading-03" id="labalt4-estado">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
+      Estado inicial del snapshot
+    </h2>
     <p class="cds--body-01" style="max-width:72ch;margin-bottom:var(--cds-spacing-05,1rem)">
       El snapshot incluye la especificación, un <code>pom.xml</code> listo para compilar y el layout Maven vacío —
       puedes compilar y ejecutar tests desde el primer turno (el verdadero inicio de Red-Green-Refactor).
@@ -130,7 +150,10 @@
 
   <!-- Configuración del entorno -->
   <section class="lab-section" aria-labelledby="labalt4-setup">
-    <h2 class="cds--productive-heading-03" id="labalt4-setup">Configuración del entorno</h2>
+    <h2 class="cds--productive-heading-03" id="labalt4-setup">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
+      Configuración del entorno
+    </h2>
 
     <h3 class="cds--productive-heading-02">Paso 1: Revisar la especificación API</h3>
     <p class="cds--body-01">Abre <code>prescription-api-spec.yaml</code> y revisa los endpoints:</p>
@@ -152,7 +175,10 @@
 
   <!-- Cómo aborda Bob el TDD -->
   <section class="lab-section" aria-labelledby="labalt4-como">
-    <h2 class="cds--productive-heading-03" id="labalt4-como">Cómo aborda Bob el TDD</h2>
+    <h2 class="cds--productive-heading-03" id="labalt4-como">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
+      Cómo aborda Bob el TDD
+    </h2>
     <ul class="cds--list--unordered">
       <li class="cds--list__item"><strong>Análisis de especificación API</strong> — lee specs OpenAPI, identifica endpoints/parámetros/respuestas, reconoce escenarios de éxito y error</li>
       <li class="cds--list__item"><strong>Generación completa de tests</strong> — cubre todos los endpoints, rutas de éxito, escenarios de error, estructuras request/response</li>
@@ -163,7 +189,10 @@
 
   <!-- Ejercicio 1 -->
   <section class="lab-section" aria-labelledby="labalt4-ej1">
-    <h2 class="cds--productive-heading-03" id="labalt4-ej1">Ejercicio 1: Generar unit tests desde la especificación API</h2>
+    <h2 class="cds--productive-heading-03" id="labalt4-ej1">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
+      Ejercicio 1: Generar unit tests desde la especificación API
+    </h2>
     <p class="cds--body-01" style="max-width:72ch;margin-bottom:var(--cds-spacing-05,1rem)">
       <strong>Objetivo:</strong> generar una suite completa de unit tests desde la especificación OpenAPI usando la metodología TDD de Bob.
     </p>
@@ -222,7 +251,10 @@ tiene PENDING y VALIDATED — no introduzcas FULFILLED ni EXPIRED.</code></pre>
 
   <!-- Ejercicio 2 -->
   <section class="lab-section" aria-labelledby="labalt4-ej2">
-    <h2 class="cds--productive-heading-03" id="labalt4-ej2">Ejercicio 2: Implementar <code>PrescriptionResource</code> desde los tests</h2>
+    <h2 class="cds--productive-heading-03" id="labalt4-ej2">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
+      Ejercicio 2: Implementar PrescriptionResource desde los tests
+    </h2>
     <p class="cds--body-01" style="max-width:72ch;margin-bottom:var(--cds-spacing-05,1rem)">
       <strong>Objetivo:</strong> crear la implementación <code>PrescriptionResource.java</code> guiada por los unit tests, siguiendo metodología TDD pura.
       Ubicación: <code>snapTDD/src/main/java/com/pharmacy/api/PrescriptionResource.java</code>.
@@ -261,7 +293,10 @@ Usa el namespace jakarta.ws.rs (NO javax). @Path("/prescriptions"), con @GET get
 
   <!-- Ejercicio 3 -->
   <section class="lab-section" aria-labelledby="labalt4-ej3">
-    <h2 class="cds--productive-heading-03" id="labalt4-ej3">Ejercicio 3: Comparar implementación TDD vs tradicional</h2>
+    <h2 class="cds--productive-heading-03" id="labalt4-ej3">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
+      Ejercicio 3: Comparar implementación TDD vs tradicional
+    </h2>
     <p class="cds--body-01" style="max-width:72ch;margin-bottom:var(--cds-spacing-05,1rem)">
       <strong>Objetivo:</strong> comparar la implementación generada por TDD con una implementación tradicional para entender los beneficios y diferencias del Test-Driven Development.
     </p>
@@ -308,7 +343,10 @@ Usa el namespace jakarta.ws.rs (NO javax). @Path("/prescriptions"), con @GET get
 
   <!-- Ejercicio 4 -->
   <section class="lab-section" aria-labelledby="labalt4-ej4">
-    <h2 class="cds--productive-heading-03" id="labalt4-ej4">Ejercicio 4: Ejecutar y verificar tests</h2>
+    <h2 class="cds--productive-heading-03" id="labalt4-ej4">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
+      Ejercicio 4: Ejecutar y verificar tests
+    </h2>
     <p class="cds--body-01" style="max-width:72ch;margin-bottom:var(--cds-spacing-05,1rem)">
       <strong>Objetivo:</strong> ejecutar los tests generados para verificar que la implementación cumple todos los requisitos.
     </p>
@@ -353,7 +391,10 @@ Usa el namespace jakarta.ws.rs (NO javax). @Path("/prescriptions"), con @GET get
 
   <!-- Ejercicio 5 -->
   <section class="lab-section" aria-labelledby="labalt4-ej5">
-    <h2 class="cds--productive-heading-03" id="labalt4-ej5">Ejercicio 5: Refactorizar y mejorar (opcional)</h2>
+    <h2 class="cds--productive-heading-03" id="labalt4-ej5">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
+      Ejercicio 5: Refactorizar y mejorar (opcional)
+    </h2>
     <p class="cds--body-01" style="max-width:72ch;margin-bottom:var(--cds-spacing-05,1rem)">
       <strong>Objetivo:</strong> aplicar la fase Refactor de TDD para mejorar la calidad del código manteniendo la cobertura de tests.
     </p>
@@ -427,7 +468,10 @@ private Date calculateExpiryDate(Date startDate) {
   <details class="lab-troubleshooting-full">
     <summary>Solución de problemas y ayuda</summary>
   <section class="lab-section" aria-labelledby="labalt4-troubleshooting">
-    <h2 class="cds--productive-heading-03" id="labalt4-troubleshooting">Solución de problemas</h2>
+    <h2 class="cds--productive-heading-03" id="labalt4-troubleshooting">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2 2 28h28zm0 6 10.39 18H5.61z"/><rect x="15" y="12" width="2" height="8"/><rect x="15" y="22" width="2" height="2"/></svg>
+      Solución de problemas
+    </h2>
 
     <h3 class="cds--productive-heading-02">API request failed — el chat muestra <code>{"apiProtocol":"openai"}</code></h3>
     <p class="cds--body-01">Haz clic en <strong>Retry</strong> en la ventana de chat de Bob.</p>
@@ -471,7 +515,10 @@ private Date calculateExpiryDate(Date startDate) {
 
   <!-- Ayuda -->
   <section class="lab-section" aria-labelledby="labalt4-ayuda">
-    <h2 class="cds--productive-heading-03" id="labalt4-ayuda">Obtener ayuda durante el lab</h2>
+    <h2 class="cds--productive-heading-03" id="labalt4-ayuda">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M16 10a3.33 3.33 0 0 0-3.25 4h2.08A1.27 1.27 0 0 1 16 12.77 1.25 1.25 0 0 1 17.25 14c0 .91-.55 1.23-1.42 1.93A2.84 2.84 0 0 0 15 18.2V19h2v-.43a4.19 4.19 0 0 1 2.07-3.74C20.06 14.2 21 13.2 21 11.77A5 5 0 0 0 16 10z"/><circle cx="16" cy="23" r="1.5"/></svg>
+      Obtener ayuda durante el lab
+    </h2>
     <ul class="cds--list--unordered">
       <li class="cds--list__item"><strong>Pregunta a Bob</strong> — explica conceptos TDD y corrige problemas de implementación</li>
       <li class="cds--list__item"><strong>Pregunta a tu instructor</strong> — no dudes en levantar la mano</li>

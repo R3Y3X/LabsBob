@@ -17,6 +17,14 @@
         <span class="lab-banner__metric-value">~25</span>
         <span class="lab-banner__metric-label">minutos</span>
       </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">4</span>
+        <span class="lab-banner__metric-label">pasos</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">1</span>
+        <span class="lab-banner__metric-label">modo de trabajo</span>
+      </div>
     </div>
   </div>
 
@@ -37,7 +45,10 @@
   </div>
 
   <section class="lab-section" aria-labelledby="lab2-objetivo">
-    <h2 class="cds--productive-heading-03" id="lab2-objetivo">El objetivo</h2>
+    <h2 class="cds--productive-heading-03" id="lab2-objetivo">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
+      Objetivos de aprendizaje
+    </h2>
     <figure class="lab-figure">
       <img src="./assets/images/labs/software-development-lifecycle/home.png" alt="Mockup de la tienda Bob's Beans" class="lab-figure__img" />
       <figcaption class="lab-figure__caption"><code>mockups/home.png</code> — esto es lo que estás construyendo</figcaption>
@@ -45,7 +56,10 @@
   </section>
 
   <section class="lab-section" aria-labelledby="lab2-modo">
-    <h2 class="cds--productive-heading-03" id="lab2-modo">Cambia Bob a Agent Mode</h2>
+    <h2 class="cds--productive-heading-03" id="lab2-modo">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
+      Cambia Bob a Agent Mode
+    </h2>
     <p class="cds--body-01">Usa Agent Mode para este lab: está optimizado para generar y editar archivos de componentes.</p>
     <div class="callout" data-tone="warning">
       <p class="callout__title">Adjunta el mockup al chat de Bob</p>
@@ -58,9 +72,14 @@
     </div>
   </section>
 
-  <section class="lab-section lab-step" aria-labelledby="lab2-step1">
-    <h2 class="cds--productive-heading-03" id="lab2-step1">Paso 1 — Construye la tarjeta de producto</h2>
-    <p class="cds--body-01">Empieza por la pieza pequeña y reutilizable de la que depende la grilla.</p>
+  <section class="lab-section" aria-labelledby="lab2-ejercicio">
+    <h2 class="cds--productive-heading-03" id="lab2-ejercicio">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
+      Ejercicio
+    </h2>
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Construye la tarjeta de producto</h3>
+<p class="cds--body-01">Empieza por la pieza pequeña y reutilizable de la que depende la grilla.</p>
     <div class="code-block">
       <button class="copy-button" type="button" aria-label="Copiar prompt">Copiar</button>
       <pre><code>Implementa src/components/ProductCard.jsx para que coincida con una tarjeta de producto
@@ -89,11 +108,10 @@ No modifiques src/api/client.js. No agregues dependencias.</code></pre>
       <p class="callout__title">Verifica sobre la marcha</p>
       <p>Todavía no hay nada que renderice la tarjeta (Home sigue siendo un marcador de posición), así que no la vas a ver hasta el próximo paso. Es lo esperable.</p>
     </div>
-  </section>
-
-  <section class="lab-section lab-step" aria-labelledby="lab2-step2">
-    <h2 class="cds--productive-heading-03" id="lab2-step2">Paso 2 — Construye la página de inicio</h2>
-    <p class="cds--body-01">Ahora la página que junta todo. Adjunta de nuevo <code>mockups/home.png</code> antes de enviar.</p>
+    </div>
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Construye la página de inicio</h3>
+<p class="cds--body-01">Ahora la página que junta todo. Adjunta de nuevo <code>mockups/home.png</code> antes de enviar.</p>
     <div class="code-block">
       <button class="copy-button" type="button" aria-label="Copiar prompt">Copiar</button>
       <pre><code>Implementa src/pages/Home.jsx para que coincida con mockups/home.png. Reemplaza el
@@ -119,11 +137,10 @@ aparecen en el mockup. No traduzcas la interfaz.
 
 No modifiques src/api/client.js. No agregues dependencias ni construyas paginación.</code></pre>
     </div>
-  </section>
-
-  <section class="lab-section lab-step" aria-labelledby="lab2-step3">
-    <h2 class="cds--productive-heading-03" id="lab2-step3">Paso 3 — Ejecuta y verifica</h2>
-    <p class="cds--body-01">Con <code>npm run dev</code> corriendo, abre <code>http://localhost:5173</code>:</p>
+    </div>
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Ejecuta y verifica</h3>
+<p class="cds--body-01">Con <code>npm run dev</code> corriendo, abre <code>http://localhost:5173</code>:</p>
     <ol class="cds--list--ordered">
       <li class="cds--list__item">Se renderizan el hero, los chips y una grilla de productos de café.</li>
       <li class="cds--list__item">Las imágenes de los productos cargan (las sirve la API).</li>
@@ -135,21 +152,24 @@ No modifiques src/api/client.js. No agregues dependencias ni construyas paginaci
       <p class="callout__title">Checkpoint</p>
       <p>Tu tienda debería verse como <code>home.png</code>: paleta cálida, tarjetas de producto en grilla, filtro por categoría funcionando, un botón de agregar que es un cuadrado redondeado (no un círculo) y un badge de carrito que se incrementa junto con un toast. En el Lab 05 vas a hacer que ese toast entre con un rebote.</p>
     </div>
-  </section>
-
-  <section class="lab-section lab-step" aria-labelledby="lab2-step4">
-    <h2 class="cds--productive-heading-03" id="lab2-step4">Paso 4 — Ajusta hasta que coincida</h2>
-    <p class="cds--body-01">Rara vez la primera pasada coincide con el mockup píxel a píxel. Itera con Bob — por ejemplo:</p>
+    </div>
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 4 — Ajusta hasta que coincida</h3>
+<p class="cds--body-01">Rara vez la primera pasada coincide con el mockup píxel a píxel. Itera con Bob — por ejemplo:</p>
     <div class="code-block">
       <button class="copy-button" type="button" aria-label="Copiar prompt">Copiar</button>
       <pre><code>Compara la página de inicio actual con mockups/home.png. El espaciado de las tarjetas y el
 padding del hero se ven distintos. Ajusta el gap de la grilla y el padding del hero para
 acercarte más al mockup.</code></pre>
     </div>
+    </div>
   </section>
 
-  <section class="lab-section" aria-labelledby="lab2-trouble">
-    <h2 class="cds--productive-heading-03" id="lab2-trouble">Solución de problemas</h2>
+<section class="lab-section" aria-labelledby="lab2-trouble">
+    <h2 class="cds--productive-heading-03" id="lab2-trouble">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2 2 28h28zm0 6 10.39 18H5.61z"/><rect x="15" y="12" width="2" height="8"/><rect x="15" y="22" width="2" height="2"/></svg>
+      Solución de problemas
+    </h2>
     <div class="callout" data-tone="warning">
       <p class="callout__title">Los productos no cargan / error de red</p>
       <p>Abre la consola del navegador. Si ves "Could not reach the API", revisa <code>VITE_API_BASE_URL</code> en <code>.env</code> y después reinicia <code>npm run dev</code> (Vite lee <code>.env</code> solo al arrancar). Confirma que <code>&lt;API_URL&gt;/api/products</code> funciona en tu navegador.</p>
@@ -164,18 +184,16 @@ acercarte más al mockup.</code></pre>
     </div>
   </section>
 
-  <section class="lab-section lab-step" aria-labelledby="lab2-gate">
-    <h2 class="cds--productive-heading-03" id="lab2-gate">Criterios de éxito</h2>
-    <ul class="cds--list--unordered">
+    <div class="callout" data-tone="tip">
+    <p class="callout__title">Lo que acabas de lograr</p>
+<ul class="cds--list--unordered">
       <li class="cds--list__item"><code>ProductCard.jsx</code> renderiza imagen, categoría, nombre, precio y un botón de agregar.</li>
       <li class="cds--list__item"><code>Home.jsx</code> muestra el hero, los chips de categoría y una grilla de productos traída de la API.</li>
       <li class="cds--list__item">El filtro por categoría funciona.</li>
       <li class="cds--list__item">Las tarjetas enlazan a <code>/product/:id</code>; el + es un cuadrado redondeado que agrega al carrito y muestra un toast.</li>
       <li class="cds--list__item">La página se parece a <code>home.png</code>.</li>
     </ul>
-    <a class="cds--btn cds--btn--primary" style="margin-top:1rem" href="#/lab/software-development-lifecycle/product">
-      Siguiente: Lab 03 — Página de producto →
-    </a>
-  </section>
+  </div>
+
 
 </div>

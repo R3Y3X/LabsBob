@@ -5,7 +5,7 @@
       <span class="cds--tag cds--tag--purple">Agent Mode</span>
       <span class="cds--tag cds--tag--cool-gray">~15 min</span>
     </div>
-    <h1 class="cds--productive-heading-05 lab-banner__title">LAB 2 — Actualización de Java 8 a Java 21</h1>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Lab 2 — Actualización de Java 8 a Java 21</h1>
     <p class="cds--body-02 lab-banner__summary" style="max-width:72ch;margin-top:var(--cds-spacing-04,0.75rem)">
       Actualiza Simple Pharmacy de Java 8 a Java 21 y Jakarta EE 10: migración <code>javax.*</code> → <code>jakarta.*</code>,
       salto de Struts 2.5 a 7.x y remediación de CVEs — el lab más exigente del grupo.
@@ -20,6 +20,14 @@
         <span class="lab-banner__metric-value">~15</span>
         <span class="lab-banner__metric-label">minutos</span>
       </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">10</span>
+        <span class="lab-banner__metric-label">pasos</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">1</span>
+        <span class="lab-banner__metric-label">modo de trabajo</span>
+      </div>
     </div>
   </div>
 
@@ -33,7 +41,10 @@
   <section class="lab-workspace-setup" aria-labelledby="lab2-workspace">
     <div class="lab-workspace-setup__box">
       <span class="lab-workspace-setup__badge">Paso obligatorio — antes de cualquier prompt</span>
-      <h2 class="lab-workspace-setup__title" id="lab2-workspace">Abre esta carpeta como raíz en Bob</h2>
+      <h2 class="lab-workspace-setup__title" id="lab2-workspace">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
+      Abre esta carpeta como raíz en Bob
+    </h2>
       <p class="lab-workspace-setup__lead">Cambia de carpeta respecto al Lab 1. Abre la subcarpeta <code>snapB</code> — no su padre. Al cambiar de carpeta, Bob inicia un chat nuevo; pega el prompt de Fase 1 de abajo.</p>
       <div class="lab-workspace-setup__path">
         <p class="lab-workspace-setup__path-label">File → Open Folder</p>
@@ -59,7 +70,10 @@
 
   <!-- Parámetros de migración -->
   <section class="lab-section" aria-labelledby="lab2-contexto">
-    <h2 class="cds--productive-heading-03" id="lab2-contexto">Parámetros de migración</h2>
+    <h2 class="cds--productive-heading-03" id="lab2-contexto">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
+      Parámetros de migración
+    </h2>
     <p class="cds--body-01" style="max-width:72ch;margin-bottom:var(--cds-spacing-04,0.75rem)">
       Tres cosas cambian a la vez — JDK, namespace Jakarta y versión mayor de Struts — y la app no arrancará hasta que las tres estén alineadas,
       más la configuración de Liberty que a veces hay que corregir a mano.
@@ -106,7 +120,10 @@
 
   <!-- Fase 1 -->
   <section class="lab-section" aria-labelledby="lab2-fase1">
-    <h2 class="cds--productive-heading-03" id="lab2-fase1">FASE 1 — Análisis</h2>
+    <h2 class="cds--productive-heading-03" id="lab2-fase1">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
+      FASE 1 — Análisis
+    </h2>
 
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Pega el prompt del lab</h3>
@@ -152,7 +169,10 @@ Preséntame el análisis completo. Cuando yo diga "adelante", pasamos a Fase 2.<
 
   <!-- Fase 2 -->
   <section class="lab-section" aria-labelledby="lab2-fase2">
-    <h2 class="cds--productive-heading-03" id="lab2-fase2">FASE 2 — Cambios</h2>
+    <h2 class="cds--productive-heading-03" id="lab2-fase2">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
+      FASE 2 — Cambios
+    </h2>
 
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Aplicar la migración (un cambio a la vez)</h3>
@@ -238,7 +258,10 @@ Cuando termines el Cambio 8 con mi "ok", DETENTE. No ejecutes mvn ni pases a val
 
   <!-- Fase 3 -->
   <section class="lab-section" aria-labelledby="lab2-fase3">
-    <h2 class="cds--productive-heading-03" id="lab2-fase3">FASE 3 — Validación</h2>
+    <h2 class="cds--productive-heading-03" id="lab2-fase3">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
+      FASE 3 — Validación
+    </h2>
 
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Compilar con Java 21</h3>
@@ -302,7 +325,10 @@ mvn liberty:run
   <details class="lab-troubleshooting-full">
     <summary>Solución de problemas y ayuda</summary>
   <section class="lab-section" aria-labelledby="lab2-troubleshooting">
-    <h2 class="cds--productive-heading-03" id="lab2-troubleshooting">Solución de problemas</h2>
+    <h2 class="cds--productive-heading-03" id="lab2-troubleshooting">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2 2 28h28zm0 6 10.39 18H5.61z"/><rect x="15" y="12" width="2" height="8"/><rect x="15" y="22" width="2" height="2"/></svg>
+      Solución de problemas
+    </h2>
     <p class="cds--body-01" style="max-width:72ch;margin-bottom:var(--cds-spacing-04,0.75rem)">
       Trabaja estos puntos <strong>en orden</strong> — se apilan y cada uno puede enmascarar los de abajo:
     </p>
@@ -370,7 +396,10 @@ mvn liberty:run</code></pre>
 
   <!-- Ayuda -->
   <section class="lab-section" aria-labelledby="lab2-ayuda">
-    <h2 class="cds--productive-heading-03" id="lab2-ayuda">Obtener ayuda durante el lab</h2>
+    <h2 class="cds--productive-heading-03" id="lab2-ayuda">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M16 10a3.33 3.33 0 0 0-3.25 4h2.08A1.27 1.27 0 0 1 16 12.77 1.25 1.25 0 0 1 17.25 14c0 .91-.55 1.23-1.42 1.93A2.84 2.84 0 0 0 15 18.2V19h2v-.43a4.19 4.19 0 0 1 2.07-3.74C20.06 14.2 21 13.2 21 11.77A5 5 0 0 0 16 10z"/><circle cx="16" cy="23" r="1.5"/></svg>
+      Obtener ayuda durante el lab
+    </h2>
     <ul class="cds--list--unordered">
       <li class="cds--list__item">Consulta la sección de solución de problemas — cubre los casos más comunes</li>
       <li class="cds--list__item">Pregunta a Bob — puede explicar errores y sugerir fixes</li>

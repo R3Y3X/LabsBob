@@ -240,6 +240,46 @@ body.cds--g100 .hub-hero__visual img {
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
 }
 
+.hub-hero__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.25rem 0 0.5rem;
+}
+
+.hub-hero__chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.375rem 0.75rem;
+  border: 1px solid var(--cds-border-subtle-01, #e0e0e0);
+  border-radius: 999px;
+  background: var(--cds-layer-01, #f4f4f4);
+  color: var(--cds-text-secondary, #525252);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.25;
+  text-decoration: none;
+}
+
+.hub-hero__chip:hover,
+.hub-hero__chip:focus-visible {
+  color: var(--cds-text-primary, #161616);
+  border-color: var(--hub-core, #0f62fe);
+}
+
+.cds--g100 .hub-hero__chip {
+  background: #262626;
+  border-color: #393939;
+  color: #c6c6c6;
+}
+
+.cds--g100 .hub-hero__chip:hover,
+.cds--g100 .hub-hero__chip:focus-visible {
+  color: #f4f4f4;
+  border-color: #4589ff;
+}
+
 /* Inline Metrics Strip inside Hero Content */
 .hub-hero__metrics-strip {
   display: flex;
@@ -546,6 +586,30 @@ a.hub-lab-card {
   flex: 1;
 }
 
+.hub-lab-card__tag--featured {
+  flex-shrink: 0;
+}
+
+.hub-lab-card__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  color: var(--cds-text-secondary, #525252);
+  font-size: 0.8125rem;
+  line-height: 1.25;
+}
+
+.hub-lab-card__stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.hub-lab-card__stat-icon {
+  flex-shrink: 0;
+  color: var(--hub-core, #0f62fe);
+}
+
 .hub-lab-card__title {
   color: var(--cds-text-primary, #161616);
   font-size: 1.125rem;
@@ -671,6 +735,7 @@ a.hub-lab-card:focus-visible {
 .lab-shell {
   /* A lab is a reading flow, not a two-column documentation app.
      Let the exercises, screenshots and code use the reclaimed width. */
+  --lab-media-max: 100%;
   max-width: 1440px;
   padding: 3rem clamp(1.25rem, 3vw, 3rem) 7rem;
 }
@@ -681,12 +746,15 @@ a.hub-lab-card:focus-visible {
   padding-top: 0;
 }
 
-.lab-shell--overview .lab-section > h2 > svg {
+.lab-shell .lab-section > h2 > svg,
+.lab-shell .lab-section__icon {
   width: 20px;
   height: 20px;
   margin-right: 0.75rem !important;
   vertical-align: -0.25rem !important;
   color: var(--hub-core);
+  display: inline-block;
+  flex: 0 0 auto;
 }
 
 .lab-shell--overview .lab-section > h2 {
@@ -1607,50 +1675,54 @@ body.cds--g100 .callout[data-tone="danger"] {
   overflow-wrap: anywhere;
 }
 
-.lab-shell--hands-on-inicial .lab-section > h2 > svg {
-  display: none;
-}
-
-.lab-shell--hands-on-inicial .lab-step__title {
-  max-width: 38ch;
+.lab-shell .lab-step__title {
+  max-width: none;
   line-height: 1.35;
 }
 
-/* The five Hands-on labs contain instructional screenshots that are much
-   taller than their accompanying copy.  Keeping them side-by-side produces
-   an accidental blank column; use a deliberate documentation rhythm instead:
-   instruction, evidence, checkpoint. */
-.lab-shell--hands-on-inicial .lab-step--split {
+.lab-shell .lab-step--split {
   grid-template-columns: minmax(0, 1fr);
   gap: 1.25rem;
 }
 
-.lab-shell--hands-on-inicial .lab-step__body {
+.lab-shell .lab-step__body,
+.lab-shell .lab-section > p,
+.lab-shell .lab-section > .cds--list--unordered,
+.lab-shell .lab-section > .cds--list--ordered {
   max-width: 72ch;
 }
 
-.lab-shell--hands-on-inicial .lab-step__media,
-.lab-shell--hands-on-inicial .lab-step > .lab-figure {
-  width: min(100%, 68rem);
+.lab-shell .code-block,
+.lab-shell .lab-step__media,
+.lab-shell .lab-step > .lab-figure,
+.lab-shell .lab-section > .lab-figure {
+  width: 100%;
+  max-width: var(--lab-media-max);
+  margin-inline: 0;
 }
 
-.lab-shell--hands-on-inicial .lab-step__media .lab-figure {
-  margin: 0;
-}
-
-.lab-shell--hands-on-inicial .lab-step__media .lab-figure__img,
-.lab-shell--hands-on-inicial .lab-step > .lab-figure .lab-figure__img {
-  width: auto;
+.lab-shell .lab-step__media .lab-figure {
+  width: 100%;
   max-width: 100%;
-  max-height: min(40rem, 65vh);
   margin: 0;
+}
+
+.lab-shell .lab-figure {
+  align-items: stretch;
+}
+
+.lab-shell .lab-figure__img {
+  width: 100%;
+  max-width: 100%;
+  max-height: min(36rem, 60vh);
+  margin-inline: 0;
   background: var(--hub-layer);
   object-fit: contain;
-  object-position: left top;
+  object-position: center top;
 }
 
-.lab-shell--hands-on-inicial .lab-figure__caption {
-  max-width: 72ch;
+.lab-shell .lab-figure__caption {
+  max-width: none;
   padding-top: 0.5rem;
   border-top: 1px solid var(--hub-border);
   color: var(--hub-text-helper);
@@ -1660,7 +1732,7 @@ body.cds--g100 .callout[data-tone="danger"] {
   line-height: 1.4;
 }
 
-.lab-shell--hands-on-inicial .code-block {
+.lab-shell .code-block {
   display: grid;
   min-width: 0;
   margin: 1.5rem 0;
@@ -1668,7 +1740,7 @@ body.cds--g100 .callout[data-tone="danger"] {
   border-left: 3px solid var(--hub-core);
 }
 
-.lab-shell--hands-on-inicial .code-block .copy-button {
+.lab-shell .code-block .copy-button {
   position: static;
   justify-self: end;
   margin: 0.75rem 0.75rem 0;
@@ -1677,16 +1749,40 @@ body.cds--g100 .callout[data-tone="danger"] {
   color: #f4f4f4;
 }
 
-.lab-shell--hands-on-inicial .code-block .copy-button:hover {
+.lab-shell .code-block .copy-button:hover {
   border-color: #ffffff;
   background: #262626;
 }
 
-.lab-shell--hands-on-inicial .code-block pre {
+.lab-shell .code-block pre {
   margin: 0.5rem 0 0 !important;
   padding: 0 1.25rem 1.25rem !important;
   border-left: 0 !important;
   background: transparent !important;
+}
+
+.lab-shell .code-block--prompt {
+  --code-label: 'prompt';
+}
+
+.lab-shell .code-block--yaml {
+  --code-label: 'yaml';
+}
+
+.lab-shell .code-block--json {
+  --code-label: 'json';
+}
+
+.lab-shell .code-block--tree {
+  max-width: var(--lab-media-max);
+}
+
+.lab-shell .code-block--tree::before {
+  content: 'estructura';
+}
+
+.lab-shell .code-block--tree .copy-button {
+  display: none;
 }
 
 .lab-response {
@@ -1744,6 +1840,14 @@ body.cds--g100 .callout[data-tone="danger"] {
   background: var(--hub-surface);
 }
 
+.lab-closure--next {
+  padding: 1.25rem 1.5rem;
+}
+
+.lab-closure--next .lab-closure__next {
+  margin-top: 0.75rem;
+}
+
 .lab-guide__grid,
 .lab-closure__grid {
   margin-top: 1.5rem;
@@ -1775,13 +1879,24 @@ body.cds--g100 .callout[data-tone="danger"] {
   padding: 0 1rem 1rem;
 }
 
-.lab-closure__next {
-  margin-top: 1.5rem;
+.lab-shell a.cds--btn.cds--btn--tertiary.lab-closure__next {
+  margin-top: 0.75rem;
   display: inline-flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.35rem;
-  white-space: nowrap;
+  box-sizing: border-box;
+  width: fit-content;
+  max-width: 100%;
+  height: auto;
+  min-height: 3rem;
+  padding-block: 0.75rem;
+  padding-inline: 1rem;
+  white-space: normal;
+  text-align: left;
   text-decoration: none;
+  overflow: visible;
+  line-height: 1.35;
 }
 
 .prose .callout {
@@ -1937,12 +2052,8 @@ body[data-category="premium"] .prose .code-block pre code {
 
 @media (min-width: 1056px) {
   .lab-step--split {
-    grid-template-columns: minmax(0, 1.1fr) minmax(22rem, 0.9fr);
-    gap: 2.5rem;
-  }
-
-  .lab-step--split .lab-step__media {
-    align-self: start;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
   }
 }
 

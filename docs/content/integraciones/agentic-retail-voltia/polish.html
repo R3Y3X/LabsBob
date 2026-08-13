@@ -1,0 +1,177 @@
+<div class="content-panel lab-template prose--full">
+  <div class="lab-banner">
+    <div class="lab-banner__tags">
+      <span class="cds--tag cds--tag--purple">Cierre</span>
+      <span class="cds--tag cds--tag--cool-gray">~15 min</span>
+      <span class="cds--tag cds--tag--teal">Animar · Revisar · Docs</span>
+    </div>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Pulir, revisar y documentar</h1>
+    <p class="cds--body-02 lab-banner__summary">Anima la UI, revisa contra los mockups y documenta la tienda con MkDocs.</p>
+  </div>
+
+  <section class="lab-section">
+<h2 class="cds--productive-heading-04" id="parte-6-animaciones">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
+      Parte 6 — Animaciones
+    </h2>
+<p class="cds--body-01">Tu tienda funciona y ya tiene su asistente. Ahora vas a usar <strong>Framer Motion</strong> (ya instalado) para que se sienta pulida: una grilla que entra escalonada, un toast con rebote, el badge del carrito que "salta" y una confirmación de reserva satisfactoria.</p>
+<div class="callout" data-tone="info">
+<p class="callout__title">Antes de empezar</p>
+<p class="cds--body-01">Vas a editar algunos archivos que estaban "hechos" (<code>ToastContext.jsx</code>, <code>Header.jsx</code>) — es lo esperado: esta es la fase de pulido. Usa <strong>💻 Modo Código</strong>.</p>
+</div>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="1-que-la-grilla-cobre-vida">1. Que la grilla cobre vida</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Usando framer-motion (ya instalado), anima la grilla del storefront.
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>- En src/pages/Home.jsx, envuelve la grilla en un contenedor motion que escalone a
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>  sus hijos (staggerChildren ~0.06s) al cargar.
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>- En src/components/ProductCard.jsx, convierte la tarjeta en un elemento motion:
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>  initial { opacity: 0, y: 16 } animando a { opacity: 1, y: 0 }, más un whileHover
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>  sutil (y: -4) y un whileTap. Mantén transiciones de ~200–300ms. No cambies la
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>  lógica de datos.
+</span></code></pre></div>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="2-el-momento-de-agregar-a-la-reserva">2. El momento de agregar a la reserva</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Haz que agregar a la reserva se sienta bien con framer-motion:
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>1. En src/toast/ToastContext.jsx, envuelve la lista de toasts en &lt;AnimatePresence&gt; y
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>   haz que cada toast sea un motion.div que entra desde abajo con un spring
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>   (initial { opacity: 0, y: 20, scale: 0.9 } -&gt; animate completo; exit de vuelta).
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>2. En src/components/Header.jsx, haz que el badge del carrito &quot;salte&quot; cuando cambia
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>   el número: dale key={count} y un pequeño rebote de escala al montarse.
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>3. En el botón &quot;+&quot; de la tarjeta, agrega un whileTap que lo achique al presionar.
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>Mantenlo rápido y elástico, sin rebotes de más.
+</span></code></pre></div>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="3-suaviza-la-pagina-de-producto-y-la-confirmacion">3. Suaviza la página de producto y la confirmación</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>En src/pages/Product.jsx, anima la entrada con framer-motion: el thumbnail
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>aparece/escala desde la izquierda y la columna de detalle desde la derecha, en un
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>stagger corto. Agrega un whileTap al botón &quot;Reservar para retiro&quot;.
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>En src/pages/Cart.jsx: anima las líneas con &lt;AnimatePresence&gt; para que quitar un
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>item se desvanezca/deslice. Cuando aparece la confirmación, que el check entre con
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>un spring y los detalles suban debajo. Rápido y prolijo.
+</span></code></pre></div>
+<div class="callout" data-tone="warning">
+<p class="callout__title">Que el movimiento guíe, no que pelee por atención</p>
+<p class="cds--body-01">Rápido (~150–300ms) y sutil. Pedile a Bob que respete <code>prefers-reduced-motion</code> para suavizar/desactivar el movimiento no esencial.</p>
+</div>
+<div class="callout" data-tone="success">
+<p class="callout__title">Criterios de éxito</p>
+<ul class="cds--list--unordered" style="list-style-type: none;">
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Las tarjetas entran escalonadas con feedback de hover/tap.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Agregar a la reserva hace entrar el toast con spring y "saltar" el badge.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> La página de producto entra suave; la confirmación tiene un estado animado.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Nada se siente lento; el movimiento es de buen gusto.</li>
+</ul>
+</div>
+<h2 class="cds--productive-heading-04" id="parte-7-revision-y-pulido">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
+      Parte 7 — Revisión y pulido
+    </h2>
+<p class="cds--body-01">Tienes una tienda funcionando, animada y con asistente. La fase de revisión se asegura de que la app aguante más allá del camino feliz: que sea <strong>responsive</strong>, <strong>accesible</strong> y que los casos borde no la rompan.</p>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="responsive-y-accesibilidad">Responsive y accesibilidad</h3>
+<p class="cds--body-01">Achicá el navegador a ancho de teléfono.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>Asegúrate de que las tres pantallas sean responsive: la grilla colapsa a menos
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>columnas, el detalle de producto pasa de dos columnas a apilado, y la reserva apila
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>el resumen debajo de las líneas en pantallas chicas. Arreglá cualquier layout que
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>se desborde o superponga.
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>Después una pasada rápida de accesibilidad: cada thumbnail con texto alternativo
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>con sentido, botones y links como &lt;button&gt;/&lt;a&gt; reales con etiquetas claras, los
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>selectores y botones navegables por teclado, y que los estados de carga, reserva
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>vacía y &quot;producto no encontrado&quot; se rendericen sin errores. Lista qué cambiaste.
+</span></code></pre></div>
+<p class="cds--body-01">Después prueba los casos borde tú mismo:</p>
+<ul class="cds--list--unordered" style="list-style-type: none;">
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Reserva vacía muestra su estado, no un resumen roto.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Producto sin stock (Sony WH-1000XM5) se renderiza bien y con el botón deshabilitado.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Cambiar de sucursal se refleja en la home, el producto y la reserva.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> El asistente sigue apareciendo y respondiendo después de todos los cambios.</li>
+</ul>
+<div class="callout" data-tone="info">
+<p class="callout__title">Reflexión</p>
+<p class="cds--body-01">Mira el ciclo completo: <strong>Planificaste</strong> (mockups + contrato de datos → plan), <strong>Construiste</strong> (pantalla por pantalla desde una captura), <strong>Embebiste</strong> la inteligencia (el Asistente de watsonx Orchestrate), <strong>Puliste</strong> con animaciones y <strong>Revisaste</strong> responsive, accesibilidad y casos borde. ¿Dónde te ahorró tiempo el esqueleto pre-armado? ¿Dónde un prompt específico ganó contra uno vago?</p>
+</div>
+<div class="callout" data-tone="success">
+<p class="callout__title">Criterios de éxito</p>
+<ul class="cds--list--unordered" style="list-style-type: none;">
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Las tres pantallas son responsive.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Accesibilidad y casos borde (vacío/error/sin stock) manejados.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> El asistente sigue apareciendo y respondiendo después de los cambios.</li>
+</ul>
+</div>
+<h2 class="cds--productive-heading-04" id="parte-8-documenta-la-app">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
+      Parte 8 — Documenta la app
+    </h2>
+<p class="cds--body-01">El software no termina cuando funciona, termina cuando la próxima persona lo entiende. En esta parte vas a hacer que Bob genere un sitio de documentación con <strong>MkDocs</strong>.</p>
+<p class="cds--body-01">Para ahorrar tiempo, <strong>el esqueleto ya está armado en el starter</strong>: <code>requirements.txt</code> (con <code>mkdocs-material</code>), la carpeta <code>docs/</code> con una página por sección, y <code>docs/images/</code> con los tres mockups ya copiados. Bob solo tiene que escribir el <strong>tema</strong> (<code>mkdocs.yml</code>) y <strong>completar el contenido</strong> de cada página.</p>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="1-genera-la-documentacion">1. Genera la documentación</h3>
+<p class="cds--body-01">En <strong>💻 Modo Código</strong>, mandale este prompt a Bob:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>Documenta este proyecto (Voltia) para un desarrollador nuevo como un sitio MkDocs.
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>El esqueleto YA EXISTE en el proyecto: requirements.txt (con mkdocs-material), la
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>carpeta docs/ con las páginas stub de abajo, y docs/images/ con home.png,
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>product.png y cart.png ya copiados. NO crees requirements.txt ni vuelvas a copiar
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>imágenes.
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>Lee src/ y documenta lo que REALMENTE hay — no inventes APIs. Referencia los
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>archivos fuente como código en línea (ej. `src/api/client.js`), nunca como links.
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>IMPORTANTE: el asistente embebido es de **watsonx Orchestrate**. Escribilo siempre
+</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>así, exactamente: &quot;watsonx Orchestrate&quot;. NUNCA lo llames &quot;watsonx Assistant&quot;.
+</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>
+</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>Tu trabajo:
+</span><span id="__span-16-14"><a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a>1. Crea mkdocs.yml en la raíz: tema Material, en los colores de Voltia (azul/cyan),
+</span><span id="__span-16-15"><a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a>   con una nav que liste todas las páginas de docs/ de abajo.
+</span><span id="__span-16-16"><a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a>2. Completa el contenido de cada una de estas páginas que YA existen (reemplaza su
+</span><span id="__span-16-17"><a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a>   contenido stub):
+</span><span id="__span-16-18"><a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a>   - docs/index.md            : qué es Voltia; un tour corto de features
+</span><span id="__span-16-19"><a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a>   - docs/getting-started.md  : requisitos, instalación, npm run dev
+</span><span id="__span-16-20"><a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a>   - docs/architecture.md     : SPA React + Vite, las rutas, el límite del cliente
+</span><span id="__span-16-21"><a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a>                                de datos (src/api/client.js), el catálogo local
+</span><span id="__span-16-22"><a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a>                                (src/api/catalog.js), carrito y sucursal globales, y
+</span><span id="__span-16-23"><a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a>                                cómo embebemos el asistente de watsonx Orchestrate
+</span><span id="__span-16-24"><a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a>   - docs/assistant.md        : cómo está embebido el agente (el &lt;script&gt; en
+</span><span id="__span-16-25"><a id="__codelineno-16-25" name="__codelineno-16-25" href="#__codelineno-16-25"></a>                                index.html, el div #wxo-root, rootElementID)
+</span><span id="__span-16-26"><a id="__codelineno-16-26" name="__codelineno-16-26" href="#__codelineno-16-26"></a>   - docs/screens/storefront.md, docs/screens/product.md, docs/screens/cart.md :
+</span><span id="__span-16-27"><a id="__codelineno-16-27" name="__codelineno-16-27" href="#__codelineno-16-27"></a>                                una página por pantalla. En cada una embebé arriba la
+</span><span id="__span-16-28"><a id="__codelineno-16-28" name="__codelineno-16-28" href="#__codelineno-16-28"></a>                                captura correspondiente desde ../images/ (home.png,
+</span><span id="__span-16-29"><a id="__codelineno-16-29" name="__codelineno-16-29" href="#__codelineno-16-29"></a>                                product.png, cart.png respectivamente).
+</span><span id="__span-16-30"><a id="__codelineno-16-30" name="__codelineno-16-30" href="#__codelineno-16-30"></a>
+</span><span id="__span-16-31"><a id="__codelineno-16-31" name="__codelineno-16-31" href="#__codelineno-16-31"></a>No modifiques src/. No agregues dependencias nuevas a requirements.txt.
+</span></code></pre></div>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="2-corre-el-sitio-de-docs">2. Ejecuta el sitio de docs</h3>
+<p class="cds--body-01"><strong>Abre una terminal nueva</strong> (deja <code>npm run dev</code> corriendo en la otra) y posiciónate en la carpeta <code>voltia-starter</code>. Después ejecuta los comandos <strong>uno por uno</strong>.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">macOS / Linux</label><label for="__tabbed_1_2">Windows</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><code>python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+mkdocs serve
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-powershell highlight"><pre><code>python -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+mkdocs serve
+</code></pre></div>
+</div>
+</div>
+</div>
+<p class="cds--body-01">Abre <code>http://localhost:8000</code>. Deberías ver un sitio navegable y con buscador, documentando la tienda que construiste y cómo embebiste el asistente.</p>
+<h2 class="cds--productive-heading-04" id="listo">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
+      🎉 ¡Listo!
+    </h2>
+<p class="cds--body-01">Llevaste <strong>Voltia</strong> por todo el ciclo: <strong>planificar → construir (pantalla por pantalla) → embeber el asistente de IA → animar → revisar → documentar</strong>, todo guiado por <strong>IBM Bob</strong>. Y, sobre todo, <strong>conectaste los tres labs</strong>: el frontend que acabas de construir es la cara visible del sistema de agentes del Lab 2, que a su vez razona sobre el inventario en tiempo real del Lab 1.</p>
+<div class="callout" data-tone="info">
+<p class="callout__title">El rol de IBM Bob</p>
+<p class="cds--body-01">A lo largo del lab, Bob convirtió instrucciones en lenguaje natural y mockups en componentes React funcionales, te ayudó a embeber el agente sin pelearte con la integración y revisó el diseño en una sola pasada. La ingeniería de software asistida por IA te dejó enfocarte en la experiencia del cliente y la arquitectura, no en el plumbing.</p>
+</div>
+
+
+
+
+
+
+
+  </section>
+</div>

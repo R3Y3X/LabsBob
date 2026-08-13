@@ -811,18 +811,12 @@ body {
   font-weight: 600;
 }
 
-/* Split step: copy + image side-by-side on desktop */
+/* Split step: instruction, then evidence. Screenshots are too tall for two columns. */
 .lab-step--split {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--cds-spacing-06, 1.5rem);
   align-items: start;
-}
-
-@media (min-width: 1056px) {
-  .lab-step--split {
-    grid-template-columns: 1fr 1fr;
-  }
 }
 
 .lab-step__body {
@@ -918,7 +912,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  align-items: center;
+  align-items: stretch;
 }
 
 .lab-figure--row {
@@ -943,11 +937,15 @@ body {
 }
 
 .lab-figure__img {
-  width: auto;
+  width: 100%;
   max-width: 100%;
   height: auto;
+  max-height: min(36rem, 60vh);
   display: block;
-  margin-inline: auto;
+  margin-inline: 0;
+  object-fit: contain;
+  object-position: center top;
+  background: var(--cds-layer-01, #f4f4f4);
   border: 1px solid var(--cds-border-subtle-01, #c6c6c6);
   border-radius: 0;
 }

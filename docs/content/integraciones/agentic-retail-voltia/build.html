@@ -1,0 +1,293 @@
+<div class="content-panel lab-template prose--full">
+  <div class="lab-banner">
+    <div class="lab-banner__tags">
+      <span class="cds--tag cds--tag--purple">Construir</span>
+      <span class="cds--tag cds--tag--cool-gray">~25 min</span>
+      <span class="cds--tag cds--tag--teal">React · Mockups</span>
+    </div>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Construir pantallas de Voltia</h1>
+    <p class="cds--body-02 lab-banner__summary">Implementa home, ficha de producto y reserva a partir de los mockups, guiado por IBM Bob.</p>
+  </div>
+
+  <section class="lab-section">
+<h2 class="cds--productive-heading-04" id="parte-2-construi-el-storefront">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
+      Parte 2 — Construye el storefront
+    </h2>
+<p class="cds--body-01">Hora de escribir código. Vas a implementar la <strong>home</strong> y la <strong>tarjeta de producto</strong> para que coincidan con <code>mockups/home.png</code>, alimentadas por el catálogo.</p>
+<div class="callout" data-tone="info">
+<p class="callout__title">Lo que vas a construir</p>
+<ul class="cds--list--unordered">
+<li class="cds--list__item"><code>src/components/ProductCard.jsx</code> — una tarjeta de producto (thumbnail, categoría, nombre, precio, botón +).</li>
+<li class="cds--list__item"><code>src/pages/Home.jsx</code> — hero, chips de filtro por categoría y una grilla responsive de tarjetas.</li>
+<li class="cds--list__item">Cada tarjeta enlaza a <code>/product/:id</code>.</li>
+</ul>
+</div>
+<p class="cds--body-01"><strong>La meta:</strong> <code>mockups/home.png</code>.</p>
+<p class="cds--body-01"><a class="glightbox" href="./assets/images/solutions/voltia/home.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Mockup de la home / storefront de Voltia" src="./assets/images/solutions/voltia/home.png" /></a></p>
+<p class="cds--body-01">Pasá Bob a <strong>💻 Modo Código</strong> para esta parte.</p>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="1-construi-la-tarjeta-de-producto">1. Construye la tarjeta de producto</h3>
+<p class="cds--body-01">Empieza por la pieza chica y reutilizable de la que depende la grilla.</p>
+<div class="callout" data-tone="info">
+<p class="callout__title">📎 Paso obligatorio — adjunta el mockup antes de enviar el prompt</p>
+<p class="cds--body-01">Este prompt referencia <code>mockups/home.png</code> por nombre: es el diseño que Bob tiene que replicar. <strong>Antes de enviarlo, adjunta esa imagen al chat de Bob.</strong> Sin la imagen, Bob construye a ciegas.</p>
+<p class="cds--body-01"><strong>Cómo adjuntarla:</strong> haz clic en el botón de <strong>agregar imagen</strong> (el ícono al lado del botón de enviar mensaje), navega hasta la carpeta <code>mockups/</code> del proyecto y elige <code>home.png</code>.</p>
+<p class="cds--body-01"><strong>💡 Tip:</strong> si primero <strong>abres la imagen dentro de Bob</strong> (doble clic en <code>mockups/home.png</code> en el explorador de archivos) y <em>después</em> tocas el botón de agregar imagen, el selector se abre directamente en la carpeta <code>mockups/</code>.</p>
+</div>
+<p class="cds--body-01"><strong>Prompt para Bob:</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Implementa src/components/ProductCard.jsx para que coincida con una tarjeta de la
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>grilla en mockups/home.png.
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>- Recibe una prop `product` (ver el typedef Product en src/api/catalog.js).
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>- Muestra: el thumbnail (el emoji product.emoji centrado y grande sobre un
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>  degradado lineal que va de product.colors[0] a product.colors[1]), la categoría
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>  (etiqueta chica en mayúsculas), el nombre, el precio (usa formatPrice de
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>  ../api/client) y un botón &quot;+&quot; abajo a la derecha. El botón + es un CUADRADO
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>  REDONDEADO (esquinas redondeadas, ~40x40, bg-brand, &quot;+&quot; blanco) — como en el
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>  mockup, NO un círculo.
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>- Envuelve la tarjeta en un &lt;Link&gt; a `/product/${product.id}` de react-router-dom.
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>- El botón &quot;+&quot; llama addItem(product, 1) de useCart() SIN navegar (frena la
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>  propagación del evento para que no dispare el link de la tarjeta) y después llama
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>  notify(`${product.name} agregado a la reserva`) de useToast()
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>  (../toast/ToastContext) para dar feedback visible.
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>- Usa los tokens de Tailwind ya definidos: bg-white, border-line, rounded-card,
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>  shadow-card, text-ink, text-muted, bg-brand, text-accent, etc.
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>No modifiques src/api/client.js ni src/api/catalog.js. No agregues dependencias.
+</span></code></pre></div>
+<div class="callout" data-tone="tip">
+<p class="callout__title">Tip</p>
+<p class="cds--body-01">Todavía no se ve nada (Home sigue siendo un placeholder), así que no verás la tarjeta hasta el próximo paso. Es lo esperado.</p>
+</div>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="2-construi-la-home">2. Construye la home</h3>
+<div class="callout" data-tone="info">
+<p class="callout__title">📎 Adjunta el mockup antes de enviar el prompt</p>
+<p class="cds--body-01">Igual que en el paso anterior, <strong>adjunta <code>mockups/home.png</code></strong> al chat de Bob antes de enviar este prompt.</p>
+</div>
+<p class="cds--body-01"><strong>Prompt para Bob:</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Implementa src/pages/Home.jsx para que coincida con mockups/home.png. Reemplaza el
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>placeholder.
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>Layout, de arriba hacia abajo, dentro de un contenedor centrado max-w-page:
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>1. Un hero: rebordes redondeados, degradado azul (de brand-dark a brand a accent),
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>   texto blanco, una línea &quot;eyebrow&quot; en mayúsculas, un título grande &quot;Tecnología
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>   que te sigue el ritmo.&quot;, un párrafo corto y un botón claro &quot;Explorar productos&quot;.
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>2. Un encabezado de sección &quot;Destacados&quot; con una fila de chips de categoría. Trae
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>   las categorías con getCategories() e incluye un chip &quot;Todos&quot; primero. El chip
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>   activo va relleno con bg-brand y texto blanco.
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>3. Una grilla responsive de productos (4 columnas en desktop, menos en pantallas
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>   chicas) de &lt;ProductCard /&gt; construida desde getProducts(). Al tocar un chip se
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>   vuelve a pedir con getProducts({ category }).
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>Trae los datos con useEffect/useState. Muestra un estado de carga simple mientras
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>pide y un mensaje amable si la llamada falla. Importá getProducts y getCategories
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>de ../api/client y ProductCard de ../components/ProductCard.
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>No modifiques src/api/client.js. No agregues dependencias ni armes paginación.
+</span></code></pre></div>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="3-corre-y-verifica">3. Ejecuta y verifica</h3>
+<p class="cds--body-01">Con <code>npm run dev</code> corriendo, abre <code>http://localhost:5173</code>:</p>
+<ol class="cds--list--ordered">
+<li class="cds--list__item">Se ven el hero, los chips y una grilla de productos.</li>
+<li class="cds--list__item">Los thumbnails (emoji sobre degradado) se renderizan.</li>
+<li class="cds--list__item">Tocar un chip de categoría filtra la grilla.</li>
+<li class="cds--list__item">Tocar el <strong>+</strong> de una tarjeta sube el badge del carrito <strong>y</strong> muestra un toast "… agregado a la reserva".</li>
+<li class="cds--list__item">Tocar una tarjeta navega a <code>/product/&lt;id&gt;</code> (todavía es un placeholder — eso es la Parte 3).</li>
+</ol>
+<div class="callout" data-tone="success">
+<p class="callout__title">Checkpoint</p>
+<p class="cds--body-01">Tu storefront debería verse como <code>home.png</code>: paleta azul, hero con degradado, tarjetas en grilla, filtro de categoría funcionando, un botón de agregar que es un <strong>cuadrado redondeado</strong> (no un círculo) y un badge del carrito que incrementa con un toast. (En la Parte 6 vas a hacer que ese toast aparezca con rebote.)</p>
+</div>
+<details class="failure">
+<summary>Solución de problemas</summary>
+<ul class="cds--list--unordered">
+<li class="cds--list__item"><strong>No se ve la grilla / "no se pudieron cargar los productos".</strong> Abre la consola del navegador. Confirma que <code>Home.jsx</code> importa y llama <code>getProducts()</code> de <code>../api/client</code>, y que maneja la promesa con <code>useEffect</code>.</li>
+<li class="cds--list__item"><strong>Tocar el + también navega a la página de producto.</strong> El botón está dentro del link de la tarjeta. Pedile a Bob que llame <code>e.preventDefault()</code> y <code>e.stopPropagation()</code> en el <code>onClick</code> del botón.</li>
+<li class="cds--list__item"><strong>El precio se ve como "1399" sin formato.</strong> Usa <code>formatPrice(product.price)</code> de <code>../api/client</code>.</li>
+</ul>
+</details>
+<div class="callout" data-tone="success">
+<p class="callout__title">Criterios de éxito</p>
+<ul class="cds--list--unordered" style="list-style-type: none;">
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>ProductCard.jsx</code> muestra thumbnail, categoría, nombre, precio y botón de agregar.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>Home.jsx</code> muestra el hero, los chips y la grilla desde el catálogo.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> El filtro por categoría funciona.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Las tarjetas enlazan a <code>/product/:id</code>; el <strong>+</strong> agrega a la reserva y muestra un toast.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> La página se parece a <code>home.png</code>.</li>
+</ul>
+</div>
+<h2 class="cds--productive-heading-04" id="parte-3-construi-la-pagina-de-producto">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
+      Parte 3 — Construye la página de producto
+    </h2>
+<p class="cds--body-01">Cuando el cliente toca una tarjeta, llega acá. Vas a implementar el <strong>detalle de producto</strong> para que coincida con <code>mockups/product.png</code>, traer el producto correcto desde la URL y conectar "Reservar para retiro".</p>
+<div class="callout" data-tone="info">
+<p class="callout__title">Lo que vas a construir</p>
+<ul class="cds--list--unordered">
+<li class="cds--list__item"><code>src/pages/Product.jsx</code> — thumbnail grande, categoría, nombre, rating, precio, descripción, chips de specs, aviso de disponibilidad por sucursal, selector de cantidad y botón "Reservar para retiro".</li>
+<li class="cds--list__item">La página lee el id del producto desde la URL y trae ese producto.</li>
+</ul>
+</div>
+<p class="cds--body-01"><strong>La meta:</strong> <code>mockups/product.png</code>. Quedate en <strong>💻 Modo Código</strong>.</p>
+<p class="cds--body-01"><a class="glightbox" href="./assets/images/solutions/voltia/product.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Mockup de la página de producto de Voltia" src="./assets/images/solutions/voltia/product.png" /></a></p>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="1-construi-el-detalle-de-producto">1. Construye el detalle de producto</h3>
+<div class="callout" data-tone="info">
+<p class="callout__title">📎 Paso obligatorio — adjunta el mockup antes de enviar el prompt</p>
+<p class="cds--body-01"><strong>Adjunta <code>mockups/product.png</code></strong> al chat de Bob antes de enviar este prompt (botón de agregar imagen, al lado del de enviar → carpeta <code>mockups/</code>). Igual que en la Parte 2: si abres la imagen en Bob primero, el selector se abre directo en <code>mockups/</code>.</p>
+</div>
+<p class="cds--body-01"><strong>Prompt para Bob:</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Implementa src/pages/Product.jsx para que coincida con mockups/product.png.
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>Reemplaza el placeholder.
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>- Lee el id del producto de la URL con useParams() (ya está importado).
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>- Trae ese producto con getProduct(id) de ../api/client (useEffect/useState).
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>  Muestra un estado de carga mientras pide y un mensaje &quot;Producto no encontrado&quot; si
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>  falla.
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>- Layout de dos columnas en desktop (thumbnail a la izquierda, detalle a la
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>  derecha), apiladas en mobile:
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>  • Izquierda: el thumbnail grande en una tarjeta redondeada — el emoji
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>    product.emoji sobre un degradado de product.colors[0] a product.colors[1].
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>  • Derecha: un breadcrumb (Inicio / &lt;categoría&gt; / &lt;nombre&gt;), la etiqueta de
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>    categoría, el nombre, un rating con estrellas y &quot;&lt;rating&gt; · &lt;reviewCount&gt;
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>    reseñas&quot;, el precio (formatPrice), la longDescription, los highlights como
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>    chips chicos redondeados, un selector de cantidad (− / valor / +, mínimo 1) y
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>    un botón ancho &quot;Reservar para retiro · &lt;precio&gt;&quot;.
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>  • Importa useBranch() de ../branch/BranchContext y muestra un aviso verde
+</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>    &quot;Disponible para retiro hoy en &lt;branch&gt;&quot; usando la sucursal elegida. Si
+</span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>    product.inStock es false, muestra en cambio un aviso gris &quot;Sin stock en &lt;branch&gt;&quot;.
+</span><span id="__span-7-20"><a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a>  • Debajo del botón: una fila meta con Marca (product.brand), Garantía
+</span><span id="__span-7-21"><a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a>    (product.warranty) y Disponibilidad (verde &quot;En stock&quot; / gris &quot;Sin stock&quot;).
+</span><span id="__span-7-22"><a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>- &quot;Reservar para retiro&quot; llama addItem(product, cantidad) de useCart(), después
+</span><span id="__span-7-23"><a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a>  notify(...) de useToast(), y el badge del header debe reflejar el nuevo total.
+</span><span id="__span-7-24"><a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a>  Si el producto no tiene stock, deshabilita el botón.
+</span><span id="__span-7-25"><a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a>
+</span><span id="__span-7-26"><a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a>Usa los tokens de Tailwind (bg-brand, bg-haze, text-accent, text-success…). No
+</span><span id="__span-7-27"><a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a>modifiques src/api/client.js. No agregues dependencias.
+</span></code></pre></div>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="2-corre-y-verifica">2. Ejecuta y verifica</h3>
+<p class="cds--body-01">Desde el storefront, toca cualquier producto:</p>
+<ol class="cds--list--ordered">
+<li class="cds--list__item">El detalle muestra los datos reales de ese producto.</li>
+<li class="cds--list__item">El selector de cantidad sube y baja (nunca por debajo de 1).</li>
+<li class="cds--list__item">El aviso de disponibilidad menciona la <strong>sucursal elegida</strong> en el header — cámbiala con el selector y mira cómo se actualiza.</li>
+<li class="cds--list__item">"Reservar para retiro" aumenta el badge del carrito según la cantidad elegida.</li>
+<li class="cds--list__item">Prueba con el <strong>Sony WH-1000XM5</strong> — tiene <code>inStock: false</code>, así que debería mostrarse "Sin stock" y el botón deshabilitado.</li>
+</ol>
+<div class="callout" data-tone="success">
+<p class="callout__title">Checkpoint</p>
+<p class="cds--body-01">La página coincide con <code>product.png</code>, refleja la sucursal elegida y agregar a la reserva actualiza el badge.</p>
+</div>
+<details class="failure">
+<summary>Solución de problemas</summary>
+<ul class="cds--list--unordered">
+<li class="cds--list__item"><strong>"Producto no encontrado" para un producto válido.</strong> El id viene de la URL. Confirma que las tarjetas del storefront usan <code>/product/${product.id}</code> y que <code>getProduct(id)</code> recibe ese mismo id.</li>
+<li class="cds--list__item"><strong>La cantidad puede llegar a 0 o negativo.</strong> Pídele a Bob: "Limita el selector de cantidad a un mínimo de 1".</li>
+<li class="cds--list__item"><strong>El aviso no cambia al cambiar de sucursal.</strong> La página debe leer <code>branch</code> de <code>useBranch()</code> y usarlo en el texto, no un valor fijo.</li>
+</ul>
+</details>
+<div class="callout" data-tone="success">
+<p class="callout__title">Criterios de éxito</p>
+<ul class="cds--list--unordered" style="list-style-type: none;">
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>Product.jsx</code> trae y muestra el producto según el id de la URL.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Thumbnail, rating, precio, descripción y chips de specs se renderizan.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> El selector funciona (mín. 1); "Reservar para retiro" agrega esa cantidad.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> El aviso de disponibilidad usa la sucursal de <code>useBranch()</code>.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> El caso sin stock (Sony WH-1000XM5) se renderiza bien.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> La página se parece a <code>product.png</code>.</li>
+</ul>
+</div>
+<h2 class="cds--productive-heading-04" id="parte-4-construi-la-reserva">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
+      Parte 4 — Construye la reserva
+    </h2>
+<p class="cds--body-01">La última pantalla. Vas a implementar la <strong>reserva</strong> (el carrito) para que coincida con <code>mockups/cart.png</code>, mostrar un resumen y conectar el botón <strong>Confirmar reserva</strong> para que devuelva una confirmación de retiro en tienda.</p>
+<div class="callout" data-tone="info">
+<p class="callout__title">Lo que vas a construir</p>
+<ul class="cds--list--unordered">
+<li class="cds--list__item"><code>src/pages/Cart.jsx</code> — líneas con selectores de cantidad, un resumen con la sucursal de retiro, y un botón que llama <code>createReservation()</code> y muestra una confirmación con código de reserva.</li>
+<li class="cds--list__item">El estado de reserva vacía.</li>
+</ul>
+</div>
+<p class="cds--body-01"><strong>La meta:</strong> <code>mockups/cart.png</code>. Quedate en <strong>💻 Modo Código</strong>. <em>(Antes de empezar, agrega un par de productos a la reserva, así tienes datos con qué trabajar.)</em></p>
+<p class="cds--body-01"><a class="glightbox" href="./assets/images/solutions/voltia/cart.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Mockup de la página de reserva (carrito) de Voltia" src="./assets/images/solutions/voltia/cart.png" /></a></p>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="1-construi-el-carrito">1. Construye el carrito</h3>
+<div class="callout" data-tone="info">
+<p class="callout__title">📎 Paso obligatorio — adjunta el mockup antes de enviar el prompt</p>
+<p class="cds--body-01"><strong>Adjunta <code>mockups/cart.png</code></strong> al chat de Bob antes de enviar este prompt (botón de agregar imagen, al lado del de enviar → carpeta <code>mockups/</code>). Igual que en la Parte 2: si abres la imagen en Bob primero, el selector se abre directo en <code>mockups/</code>.</p>
+</div>
+<p class="cds--body-01"><strong>Prompt para Bob:</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Implementa src/pages/Cart.jsx para que coincida con mockups/cart.png. Reemplaza el
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>placeholder.
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>Lee la reserva con useCart(): { items, subtotal, setQty, removeItem, clear }.
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>Lee la sucursal con useBranch(): { branch }.
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>Layout: un título &quot;Tu reserva&quot;, después dos columnas en desktop (líneas a la
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>izquierda, resumen a la derecha), apiladas en mobile.
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>Líneas (izquierda): para cada item muestra un thumbnail chico (emoji item.emoji
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>sobre degradado de item.colors), la categoría, el nombre, el precio unitario
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>(formatPrice), un selector de cantidad que llama setQty(item.id, nuevaCantidad), el
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>total de la línea (price × quantity) y un botón &quot;Quitar&quot; que llama removeItem(item.id).
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>Resumen (derecha, en una tarjeta): primero una cajita con la &quot;Sucursal de retiro&quot;
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>(branch de useBranch), después Subtotal (= subtotal de useCart), &quot;Retiro en tienda&quot;
+</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>en verde como &quot;Gratis&quot;, &quot;Impuestos estimados&quot; del 8 % del subtotal (redondeado) y
+</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>un Total = subtotal + impuestos. Después un botón ancho &quot;Confirmar reserva&quot; y la
+</span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>línea &quot;Sin pago online · pagas al retirar en la sucursal&quot;.
+</span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a>
+</span><span id="__span-8-21"><a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a>Estado vacío: cuando items está vacío, muestra un mensaje amable y un botón que
+</span><span id="__span-8-22"><a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a>vuelve a &quot;/&quot;.
+</span><span id="__span-8-23"><a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a>
+</span><span id="__span-8-24"><a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a>Usa los tokens de Tailwind. Importa formatPrice de ../api/client, useCart de
+</span><span id="__span-8-25"><a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a>../cart/CartContext y useBranch de ../branch/BranchContext. No modifiques
+</span><span id="__span-8-26"><a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a>src/api/client.js. No agregues dependencias.
+</span></code></pre></div>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="2-conecta-el-checkout">2. Conecta el checkout</h3>
+<p class="cds--body-01"><strong>Prompt para Bob:</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Haz que el botón &quot;Confirmar reserva&quot; funcione:
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>- Al hacer clic, llama createReservation({ store: branch, items: items.map(i =&gt; ({
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>  id: i.id, quantity: i.quantity })) }) de ../api/client.
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>- Mientras la petición está en curso, deshabilita el botón y muestra &quot;Confirmando…&quot;.
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>- Al confirmar, muestra un estado de confirmación que reemplaza la reserva: un ícono
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>  de check, &quot;¡Reserva confirmada!&quot;, el reservationCode devuelto, la sucursal de
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>  retiro (store), el total y el readyBy, más un botón &quot;Seguir explorando&quot; que vuelve
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>  a &quot;/&quot;. Después llama clear() para vaciar la reserva.
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>- Si falla, muestra un mensaje de error chico y reactiva el botón.
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>La API siempre confirma, así que el camino feliz es el que importa — igual manejá
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>el error con elegancia.
+</span></code></pre></div>
+<h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="3-corre-y-verifica_1">3. Ejecuta y verifica</h3>
+<ol class="cds--list--ordered">
+<li class="cds--list__item">Agrega productos desde el storefront y la página de producto.</li>
+<li class="cds--list__item">Abre la reserva (el ícono del carrito en el header).</li>
+<li class="cds--list__item">Cambia cantidades — los totales de línea, el subtotal, los impuestos y el total se actualizan. Quitar el último de un item elimina la línea.</li>
+<li class="cds--list__item">El resumen muestra la sucursal elegida en el header (cámbiala y vuelve a la reserva para verlo).</li>
+<li class="cds--list__item">Toca <strong>Confirmar reserva</strong> → obtienes una confirmación con un <code>reservationCode</code> (como <code>VOL-7QF2K9</code>) y la reserva se vacía (el badge vuelve a 0).</li>
+<li class="cds--list__item">Vacía la reserva y confirma que se muestra el estado vacío.</li>
+</ol>
+<div class="callout" data-tone="success">
+<p class="callout__title">Checkpoint</p>
+<p class="cds--body-01">Podés armar una reserva, ver los totales correctos, elegir sucursal, confirmar y obtener un código — el flujo completo de la tienda funciona de punta a punta.</p>
+</div>
+<details class="failure">
+<summary>Solución de problemas</summary>
+<ul class="cds--list--unordered">
+<li class="cds--list__item"><strong>Los totales no se actualizan al cambiar la cantidad.</strong> El selector debe llamar <code>setQty(item.id, nuevaCantidad)</code> de <code>useCart()</code> (no estado local). El <code>subtotal</code> de <code>useCart()</code> se recalcula solo cuando cambia el carrito.</li>
+<li class="cds--list__item"><strong>No pasa nada al confirmar.</strong> Abre la consola. El cuerpo debe ser <code>{ store, items: [{ id, quantity }] }</code>.</li>
+<li class="cds--list__item"><strong>La reserva se vacía pero la confirmación desaparece al refrescar.</strong> Es lo esperado — la confirmación es estado de pantalla. Deshabilitá "Confirmar reserva" cuando no hay items.</li>
+</ul>
+</details>
+<div class="callout" data-tone="success">
+<p class="callout__title">Criterios de éxito</p>
+<ul class="cds--list--unordered" style="list-style-type: none;">
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>Cart.jsx</code> lista las líneas con selectores y "Quitar" funcionando.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> El resumen muestra sucursal, subtotal, retiro gratis, impuestos 8 % y total.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Confirmar reserva</strong> llama <code>createReservation()</code> y muestra una confirmación con <code>reservationCode</code>.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> La reserva se vacía tras confirmar; el estado vacío se renderiza.</li>
+<li class="cds--list__item" style="display: flex; align-items: center; gap: 0.5rem;"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> La página se parece a <code>cart.png</code>.</li>
+</ul>
+</div>
+  </section>
+</div>

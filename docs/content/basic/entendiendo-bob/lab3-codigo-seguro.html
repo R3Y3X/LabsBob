@@ -1,0 +1,365 @@
+<div class="content-panel lab-template">
+
+  <div class="lab-banner">
+    <div class="lab-banner__tags">
+      <span class="cds--tag cds--tag--red">Actor-critic · NIST · ASVS</span>
+      <span class="cds--tag cds--tag--cool-gray">~35 min</span>
+    </div>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Lab 3 — Código seguro</h1>
+
+    <div class="lab-hero-image">
+      <img src="./assets/images/labs/hands-on-inicial/lab3_bob.png"
+           alt="Banner del Lab 3 — Generar código seguro con un flujo actor-critic en IBM Bob"
+           class="lab-hero-image__img" />
+    </div>
+
+    <div class="lab-banner__metrics">
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">2</span>
+        <span class="lab-banner__metric-label">skills (Actor + Critic)</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">1</span>
+        <span class="lab-banner__metric-label">rule de seguridad</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">3</span>
+        <span class="lab-banner__metric-label">estándares (NIST · ASVS · CWE)</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">8–15</span>
+        <span class="lab-banner__metric-label">BobCoins estimados</span>
+      </div>
+    </div>
+  </div>
+
+  <section class="lab-section" aria-labelledby="lab3-obj">
+    <h2 class="cds--productive-heading-03" id="lab3-obj">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
+      Objetivos de aprendizaje
+    </h2>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">✅ Añadir <code>.bob/rules/security.md</code> junto a las rules del Lab 1</li>
+      <li class="cds--list__item">✅ Crear un skill <strong>Actor</strong> que escribe Python/FastAPI cumpliendo ASVS y NIST</li>
+      <li class="cds--list__item">✅ Crear un skill <strong>Critic</strong> que audita el código contra NIST, ASVS y CWE Top 25</li>
+      <li class="cds--list__item">✅ Orquestar un flujo <strong>actor-critic</strong> con subagentes aislados</li>
+      <li class="cds--list__item">✅ Entregar un endpoint que llega a SAST con pocos hallazgos</li>
+    </ul>
+  </section>
+
+  <section class="lab-section" aria-labelledby="lab3-escenario">
+    <h2 class="cds--productive-heading-03" id="lab3-escenario">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M26 4H6a2 2 0 0 0-2 2v8c0 9.63 7.88 13.74 11.29 15.1a2.27 2.27 0 0 0 1.42 0C20.12 27.74 28 23.63 28 14V6a2 2 0 0 0-2-2Zm0 10c0 8.23-6.86 11.89-10 13.22C12.86 25.89 6 22.23 6 14V6h20Z"/></svg>
+      Escenario
+    </h2>
+    <p class="cds--body-01">Tras las rules del Lab 1 y la auditoría del Lab 2, Galaxium Travels necesita <strong>features nuevas sin reintroducir las mismas clases de fallos</strong>. Esperar a un SAST al final del ciclo sale caro. En este lab añades una rule de seguridad al <code>.bob/rules/</code> que ya tienes, un Actor que genera código seguro y un Critic que lo revisa en un contexto aislado — sin ver el razonamiento del Actor.</p>
+    <p class="cds--body-01" style="margin-top:12px">El resultado es un <code>GET /bookings/{booking_id}</code> que solo devuelve la reserva a su dueño: IDOR, identidad, validación, ORM, errores genéricos y logs sin PII.</p>
+    <div class="callout" data-tone="note">
+      <p class="callout__title">Por qué actor-critic</p>
+      <p>Las rules evitan anti-patrones antes de escribir. El Actor construye cumplimiento. El Critic valida en aislamiento. El código llega limpio al análisis estático.</p>
+    </div>
+  </section>
+
+  <section class="lab-section" aria-labelledby="lab3-ejercicio">
+    <h2 class="cds--productive-heading-03" id="lab3-ejercicio">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
+      Ejercicio: rules + Actor + Critic
+    </h2>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Añadir security.md a las rules del proyecto</h3>
+      <p class="cds--body-01">Sigue en Galaxium Travels, con <code>.bob/rules/basic_rules.md</code> del Lab 1. Ahora añades <code>security.md</code> en la misma carpeta: Bob carga ambos archivos en cada tarea. No hace falta volver a crear <code>.bob/rules/</code> ni ejecutar <code>/init</code>.</p>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">Selector de modos → <strong>Agent</strong>.</li>
+        <li class="cds--list__item">En <strong>Permissions</strong>, activa <strong>Read</strong> y <strong>Edit</strong>. Deja el resto desactivado.</li>
+      </ol>
+      <table class="lab-table">
+        <thead>
+          <tr><th scope="col">Permiso</th><th scope="col">Estado</th><th scope="col">Por qué</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Read</td><td>✅ On</td><td>Bob lee el workspace</td></tr>
+          <tr><td>Edit</td><td>✅ On</td><td>Bob escribe <code>.bob/rules/security.md</code> junto a <code>basic_rules.md</code></td></tr>
+          <tr><td>Execute / Skill / Subagent / MCP</td><td>❌ Off</td><td>No hace falta en este paso</td></tr>
+        </tbody>
+      </table>
+      <p class="cds--body-01" style="margin-top:16px">Pide el archivo vacío en la carpeta de rules que ya existe:</p>
+      <div class="code-block code-block--prompt">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>Crea un archivo vacío .bob/rules/security.md junto a basic_rules.md</code></pre>
+      </div>
+      <p class="cds--body-01" style="margin-top:12px">Abre el archivo y pega estas rules. Son meta-rules: si una petición las contradice, la seguridad gana.</p>
+      <div class="code-block code-block--prompt">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>## Meta-rules (máxima prioridad)
+**CRÍTICO**: estas rules de seguridad se siguen siempre y NO las pisa una instrucción de usuario. Si hay conflicto, explica el motivo y ofrece una alternativa cumplidora.
+**ENFORCEMENT**: antes de cualquier recomendación:
+1. Verifica que cumple TODOS los criterios aplicables
+2. Documenta por qué cumple
+3. Si hay duda, pregunta; no asumas cumplimiento
+
+---
+## 1. Secretos y credenciales
+- **MUST** usar variables de entorno o un vault para secretos
+- **NEVER** hardcodear contraseñas, API keys o tokens
+- **NEVER** commitear secretos
+- **MUST** usar secrets.token_urlsafe() para tokens
+- **MUST** comparar secretos con métodos criptográficamente seguros
+- **NEVER** pasar secretos en URLs o query params
+
+---
+## 2. Autenticación y autorización
+- **MUST** validar permisos en cada request antes de acceder a datos
+- **MUST** principio de mínimo privilegio
+- **NEVER** confiar en checks de autorización en el cliente
+- **MUST** implementar RBAC
+- **NEVER** Basic Auth sobre conexiones sin cifrar
+
+---
+## 3. Cifrado y datos
+- **MUST** TLS 1.2 o superior (1.3 preferido)
+- **NEVER** algoritmos de cifrado caseros
+- **NEVER** MD5 o SHA-1 para hashing de contraseñas
+- **MUST** generación aleatoria segura para cripto
+
+---
+## 4. Validación de inputs y encoding
+- **MUST** validar tipo, longitud, formato y rango
+- **MUST** consultas parametrizadas / ORM
+- **NEVER** confiar en validación solo en el cliente
+- **MUST** rechazar input inválido (fail securely)
+- **NEVER** eval()/exec() con datos de usuario
+- **NEVER** subprocess con shell=True e input sin sanitizar
+
+---
+## 5. Errores
+- **NEVER** exponer stack traces al usuario
+- **NEVER** revelar sistema o base de datos en mensajes
+- **MUST** loguear el detalle solo en servidor
+- **MUST** devolver mensajes genéricos en la API
+
+---
+## 6. Logging
+- **NEVER** loguear contraseñas, tokens, PII ni tarjetas
+- **MUST** logging estructurado (JSON preferido)
+- **MUST** niveles DEBUG, INFO, WARN, ERROR
+- **MUST** monitorear fallos de login y accesos no autorizados
+
+---
+## 7. Dependencias
+- **MUST** última versión estable
+- **NEVER** software o paquetes EOL o deprecados
+- **MUST** paquetes con mantenimiento reciente (commit &lt; 6 meses)
+
+---
+## Cuándo escalar
+Si la petición viola estas rules: explica por qué, ofrece una alternativa cumplidora y no des workarounds.</code></pre>
+      </div>
+      <p class="cds--body-01" style="margin-top:12px">Guarda el archivo. Bob lo carga al inicio de cada tarea: no hace falta repetir requisitos de seguridad en cada prompt. Para estándares de toda la organización, el mismo archivo puede vivir en <code>~/.bob/rules/</code>.</p>
+    </div>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Skill Actor</h3>
+      <p class="cds--body-01">El Actor escribe código. El Critic lo revisa. Como subagentes, el Critic no ve el razonamiento del Actor: solo el archivo generado.</p>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">Bob Settings → <strong>Skills</strong> → <strong>+</strong>.</li>
+        <li class="cds--list__item"><strong>Skill Name:</strong> <code>secure-python-actor</code> (se invoca con <code>/secure-python-actor</code>).</li>
+        <li class="cds--list__item"><strong>Description:</strong></li>
+      </ol>
+      <div class="code-block code-block--prompt">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>Escribe código Python/FastAPI que cumple las rules de Galaxium Travels y OWASP ASVS Level 1.</code></pre>
+      </div>
+      <ol class="cds--list--ordered" start="4">
+        <li class="cds--list__item">Activa <strong>Allow Bob to use this skill</strong>.</li>
+        <li class="cds--list__item"><strong>Scope:</strong> proyecto <code>galaxium-travels</code> (<code>.bob/skills/</code>).</li>
+        <li class="cds--list__item">Pega las instrucciones:</li>
+      </ol>
+      <div class="code-block code-block--yaml">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>---
+name: secure-python-actor
+description: Escribe código Python/FastAPI que cumple las rules de Galaxium Travels y OWASP ASVS Level 1.
+user-invocable: true
+---
+Eres un desarrollador Python consciente de seguridad. Escribe FastAPI de calidad de producción. Tras cada archivo, produce un checklist de cumplimiento: cada categoría aplicada o N/A con motivo.
+
+## Autenticación y autorización (NIST AC-3, OWASP ASVS V4.1)
+- Verifica la identidad del caller antes de cualquier acceso a datos — HTTP 401 si no se confirma
+- Verifica que el caller autenticado es dueño del recurso — nunca un ID de cliente como prueba de ownership (IDOR)
+- Deny-by-default: una petición no autenticada no llega a la lógica de negocio
+
+## Validación de inputs (NIST SI-10, OWASP ASVS V5.1)
+- Todos los modelos Pydantic declaran max_length en cada campo string
+- Valida path y query params de forma explícita — rechaza tipos inesperados antes de tocar la base
+
+## Acceso a datos (OWASP ASVS V5.3, CWE-89)
+- SQLAlchemy ORM para todas las consultas — nunca concatenar input en query strings
+- Escrituras en transacciones explícitas con rollback ante fallo
+
+## Errores (OWASP ASVS V7.4, CWE-209)
+- Mensajes genéricos al caller — nunca stack traces, rutas ni detalles de base
+- Loguea la excepción en ERROR con un correlation ID
+
+## Logging (NIST AU-3, OWASP ASVS V7.1)
+- Loguea tipo de evento, identificador de recurso y resultado HTTP — nunca email, contraseñas, tokens ni PII
+
+## Criptografía (NIST SC-13, OWASP ASVS V6.2)
+- secrets.token_urlsafe() o secrets.token_hex() para tokens y nonces
+- Nunca random.random() para valores de seguridad</code></pre>
+      </div>
+      <p class="cds--body-01" style="margin-top:12px">Pulsa <strong>Create</strong>.</p>
+    </div>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Skill Critic</h3>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item"><strong>+</strong> otra vez. Name: <code>secure-python-critic</code>.</li>
+        <li class="cds--list__item"><strong>Description:</strong></li>
+      </ol>
+      <div class="code-block code-block--prompt">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>Revisa código Python contra NIST SP 800-53, OWASP ASVS Level 1 y CWE Top 25. Mapea hallazgos a reglas SAST.</code></pre>
+      </div>
+      <ol class="cds--list--ordered" start="3">
+        <li class="cds--list__item">Allow Bob to use this skill: on. Scope: <code>galaxium-travels</code>.</li>
+        <li class="cds--list__item">Pega las instrucciones:</li>
+      </ol>
+      <div class="code-block code-block--yaml">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>---
+name: secure-python-critic
+description: Revisa código Python contra NIST SP 800-53, OWASP ASVS Level 1 y CWE Top 25. Mapea hallazgos a reglas SAST.
+user-invocable: true
+---
+Eres un arquitecto de seguridad haciendo code review pre-commit. Revisa cada línea contra los controles. Para cada uno: PASS, FAIL o N/A.
+En cada FAIL:
+**Hallazgo [N]:**
+- Estándar: [NIST / ASVS / CWE]
+- Regla SAST: [nombre o categoría]
+- Severidad: Critical / High / Medium / Low
+- Línea: [número o rango]
+- Problema: [una frase]
+- Corrección: [una frase — el cambio de código]
+
+## NIST SP 800-53
+- AC-3 — ¿hay autorización antes de cada operación de datos?
+- AC-6 — ¿solo el mínimo de permisos?
+- AU-3 — ¿el log captura evento, actor y resultado sin secretos ni PII?
+- IA-5 — ¿los secretos vienen de entorno, no del código?
+- SC-13 — ¿solo algoritmos aprobados por NIST?
+- SI-10 — ¿todo input se valida antes de procesarlo?
+
+## OWASP ASVS Level 1
+- V4.1.1 — control de acceso en servidor en cada request
+- V4.2.1 — autorización a nivel de objeto (sin IDOR)
+- V5.1.1 — strings con max_length
+- V5.3.4 — sin concatenar input en queries
+- V6.2.1 — sin MD5, SHA-1 ni cripto casera
+- V7.1.1 — credenciales y PII fuera de logs
+- V7.4.1 — errores sin stack traces ni interiores
+- V8.3.1 — datos sensibles fuera de query params
+
+## CWE Top 25
+- CWE-89 SQL Injection
+- CWE-78 OS Command Injection
+- CWE-22 Path Traversal
+- CWE-798 Hardcoded Credentials
+- CWE-209 Information Exposure
+- CWE-311 Missing Encryption
+- CWE-20 Improper Input Validation
+
+Al final indica:
+1. Si el código pasaría un SAST habitual con hallazgos de seguridad limitados
+2. Qué quedaría flagged, con el nombre exacto de la regla
+3. Una frase de veredicto</code></pre>
+      </div>
+      <p class="cds--body-01" style="margin-top:12px">Pulsa <strong>Create</strong>.</p>
+      <div class="callout" data-tone="tip">
+        <p class="callout__title">Skills efectivos</p>
+        <p>Mantén las instrucciones por debajo de ~2 000 palabras. <code>user-invocable: true</code> las hace seleccionables en la UI. Las rules evitan anti-patrones; los skills empaquetan el flujo de la tarea.</p>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 4 — Orquestar el flujo actor-critic</h3>
+      <p class="cds--body-01">Una tarea padre lanza Actor y Critic como subagentes. El Critic recibe solo el archivo generado. Los <code>@</code> pegan el contexto del backend existente.</p>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item"><strong>+</strong> para una tarea nueva (contexto limpio).</li>
+        <li class="cds--list__item"><strong>Agent Mode</strong>.</li>
+        <li class="cds--list__item">Permissions: <strong>Read</strong>, <strong>Edit</strong>, <strong>Execute</strong>, <strong>Skill</strong> y <strong>Subagent</strong>. MCP off.</li>
+      </ol>
+      <table class="lab-table">
+        <thead>
+          <tr><th scope="col">Permiso</th><th scope="col">Estado</th><th scope="col">Por qué</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Read</td><td>✅ On</td><td>Padre y subagentes leen código y salida</td></tr>
+          <tr><td>Edit</td><td>✅ On</td><td>El Actor escribe el endpoint</td></tr>
+          <tr><td>Execute</td><td>✅ On</td><td>Puede resolver rutas o estructura</td></tr>
+          <tr><td>Skill</td><td>✅ On</td><td>Carga Actor y Critic</td></tr>
+          <tr><td>Subagent</td><td>✅ On</td><td>Lanza Actor y Critic aislados</td></tr>
+          <tr><td>MCP</td><td>❌ Off</td><td>No hace falta</td></tr>
+        </tbody>
+      </table>
+      <div class="code-block code-block--prompt">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>Ejecuta un flujo actor-critic de generación de código con dos subagentes secuenciales.
+
+Paso 1 — Subagente Actor:
+Lanza un subagente para implementar un endpoint FastAPI nuevo. Carga el skill
+/secure-python-actor. Referencia estos archivos:
+@booking_system_backend/server.py
+@booking_system_backend/services/booking.py
+@booking_system_backend/schemas.py
+
+Escribe un módulo router en booking_system_backend/routers/booking_detail.py
+que implemente GET /bookings/{booking_id} con:
+- booking_id como path param entero positivo
+- identidad del caller en el header X-User-Email
+- devolver la reserva solo si pertenece a ese usuario
+- HTTP 404 si no existe
+- HTTP 403 si pertenece a otro usuario
+- loguear el intento de acceso sin incluir el email
+- mensaje genérico ante cualquier error inesperado de servidor
+Devuelve el checklist de cumplimiento al terminar.
+
+Paso 2 — Subagente Critic:
+Cuando el Actor termine, lanza un segundo subagente independiente para revisar
+la salida. Carga /secure-python-critic. Referencia:
+@booking_system_backend/routers/booking_detail.py
+Revisa el archivo contra todos los controles del skill. Indica si el código
+pasaría un SAST con hallazgos de seguridad limitados.
+Devuelve el informe completo del Critic.</code></pre>
+      </div>
+      <p class="cds--body-01" style="margin-top:12px">Aprueba las herramientas y cada subagente. Espera 2–3 prompts de aprobación. Abre <code>booking_system_backend/routers/booking_detail.py</code> y revisa el veredicto del Critic.</p>
+      <div class="callout" data-tone="tip">
+        <p class="callout__title">Salida esperada</p>
+        <p>El Actor entrega el archivo y un checklist (PASS por validación, autorización, etc.). El Critic responde con un informe y un veredicto del tipo <strong>OVERALL VERDICT: PASS</strong> / pasaría SAST con hallazgos limitados.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="lab-section" aria-labelledby="lab3-limpieza">
+    <h2 class="cds--productive-heading-03" id="lab3-limpieza">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M12 12h2v12h-2zm4 0h2v12h-2zm7-9H9v2h14zm-3 4H9v14h11a2 2 0 0 0 2-2V7zM9 4V2h14v2z"/></svg>
+      Limpieza (opcional)
+    </h2>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">En Bob Settings → Skills, elimina <code>secure-python-actor</code> y <code>secure-python-critic</code> si no los vas a reutilizar.</li>
+      <li class="cds--list__item">Puedes dejar <code>.bob/rules/security.md</code>: es el estándar del proyecto.</li>
+    </ul>
+  </section>
+
+  <div class="callout" data-tone="tip">
+    <p class="callout__title">Lo que acabas de lograr</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">Rules de seguridad que Bob aplica en cada tarea</li>
+      <li class="cds--list__item">Un Actor que genera FastAPI alineado a NIST y ASVS</li>
+      <li class="cds--list__item">Un Critic que mapea controles a reglas SAST</li>
+      <li class="cds--list__item">Un flujo donde generación y revisión no comparten contexto</li>
+    </ul>
+    <p style="margin-top:12px">Tutorial de referencia: <a class="cds--link" href="https://bob.ibm.com/docs/ide/tutorials/generate-secure-code" target="_blank" rel="noreferrer">Generate secure code with an actor-critic workflow</a>.</p>
+  </div>
+
+</div>

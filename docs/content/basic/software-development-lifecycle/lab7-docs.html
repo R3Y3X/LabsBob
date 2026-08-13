@@ -17,6 +17,14 @@
         <span class="lab-banner__metric-value">~25</span>
         <span class="lab-banner__metric-label">minutos</span>
       </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">5</span>
+        <span class="lab-banner__metric-label">pasos</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">1</span>
+        <span class="lab-banner__metric-label">modo de trabajo</span>
+      </div>
     </div>
   </div>
 
@@ -42,9 +50,14 @@
     <p>A diferencia de la interfaz de la aplicación, la documentación que genera Bob en este lab va en español. Los nombres de archivo, las rutas, las funciones y los fragmentos de configuración se mantienen en inglés, tal como están en el código.</p>
   </div>
 
-  <section class="lab-section lab-step" aria-labelledby="lab7-step1">
-    <h2 class="cds--productive-heading-03" id="lab7-step1">Paso 1 — Crea un Modo Docs para Bob</h2>
-    <p class="cds--body-01">Vas a configurar un Modo Docs personalizado — una persona reutilizable de Bob preparada para escribir documentación — desde la configuración de Bob.</p>
+  <section class="lab-section" aria-labelledby="lab7-ejercicio">
+    <h2 class="cds--productive-heading-03" id="lab7-ejercicio">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
+      Ejercicio
+    </h2>
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Crea un Modo Docs para Bob</h3>
+<p class="cds--body-01">Vas a configurar un Modo Docs personalizado — una persona reutilizable de Bob preparada para escribir documentación — desde la configuración de Bob.</p>
     <p class="cds--body-01">Abre Settings (el ícono de engranaje en el panel de Bob), ve a la pestaña Modes y haz clic en el botón + para crear un modo nuevo. Completa los campos en este orden:</p>
     <div class="lab-table-wrap">
       <table class="lab-table">
@@ -93,11 +106,10 @@ Material.</code></pre>
       <p class="callout__title">Scope: proyecto o global</p>
       <p>Project deja el modo dentro de este repositorio (en <code>.bob/</code>). Elige Global si quieres tener el Modo Docs disponible en todos tus proyectos futuros de Bob.</p>
     </div>
-  </section>
-
-  <section class="lab-section lab-step" aria-labelledby="lab7-step2">
-    <h2 class="cds--productive-heading-03" id="lab7-step2">Paso 2 — Genera la documentación</h2>
-    <p class="cds--body-01">En el 📝 Modo Docs, dale a Bob este prompt:</p>
+    </div>
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Genera la documentación</h3>
+<p class="cds--body-01">En el 📝 Modo Docs, dale a Bob este prompt:</p>
     <div class="code-block">
       <button class="copy-button" type="button" aria-label="Copiar prompt">Copiar</button>
       <pre><code>Documenta este proyecto para una persona desarrolladora que recién se suma, como un sitio
@@ -149,11 +161,10 @@ tokens y los textos de la interfaz de la aplicación se mantienen en inglés.</c
       <button class="copy-button" type="button" aria-label="Copiar requirements">Copiar</button>
       <pre><code>mkdocs-material</code></pre>
     </div>
-  </section>
-
-  <section class="lab-section lab-step" aria-labelledby="lab7-step3">
-    <h2 class="cds--productive-heading-03" id="lab7-step3">Paso 3 — Prepara el entorno de la documentación</h2>
-    <p class="cds--body-01">Abre una terminal nueva en la raíz del proyecto, y deja <code>npm run dev</code> corriendo en la otra.</p>
+    </div>
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Prepara el entorno de la documentación</h3>
+<p class="cds--body-01">Abre una terminal nueva en la raíz del proyecto, y deja <code>npm run dev</code> corriendo en la otra.</p>
     <p class="cds--body-01"><strong>macOS / Linux</strong></p>
     <div class="code-block">
       <button class="copy-button" type="button" aria-label="Copiar comandos macOS">Copiar</button>
@@ -168,11 +179,10 @@ pip install -r requirements.txt</code></pre>
 .venv\Scripts\Activate.ps1
 pip install -r requirements.txt</code></pre>
     </div>
-  </section>
-
-  <section class="lab-section lab-step" aria-labelledby="lab7-step4">
-    <h2 class="cds--productive-heading-03" id="lab7-step4">Paso 4 — Ejecuta el sitio de documentación</h2>
-    <div class="code-block">
+    </div>
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 4 — Ejecuta el sitio de documentación</h3>
+<div class="code-block">
       <button class="copy-button" type="button" aria-label="Copiar comando">Copiar</button>
       <pre><code>mkdocs serve</code></pre>
     </div>
@@ -181,11 +191,10 @@ pip install -r requirements.txt</code></pre>
       <p class="callout__title">Checkpoint</p>
       <p>El sitio de documentación corre localmente sin advertencias, la navegación agrupa las páginas de pantallas, cada página muestra su mockup y el contenido refleja el código real (nombres de archivo y funciones del cliente correctos). El tema se lee como "café".</p>
     </div>
-  </section>
-
-  <section class="lab-section lab-step" aria-labelledby="lab7-step5">
-    <h2 class="cds--productive-heading-03" id="lab7-step5">Paso 5 — Pulido</h2>
-    <p class="cds--body-01">En el 📝 Modo Docs, pídele a Bob que lo ajuste:</p>
+    </div>
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 5 — Pulido</h3>
+<p class="cds--body-01">En el 📝 Modo Docs, pídele a Bob que lo ajuste:</p>
     <div class="code-block">
       <button class="copy-button" type="button" aria-label="Copiar prompt">Copiar</button>
       <pre><code>Revisa la documentación generada contra el código real. Corrige cualquier imprecisión,
@@ -198,10 +207,14 @@ Mantén la prosa en español y las referencias al código en inglés.</code></pr
       <p class="callout__title">Solo local</p>
       <p>Este sitio de documentación es para correr localmente (<code>mkdocs serve</code>) — no lo vamos a desplegar en ningún lado.</p>
     </div>
+    </div>
   </section>
 
-  <section class="lab-section" aria-labelledby="lab7-trouble">
-    <h2 class="cds--productive-heading-03" id="lab7-trouble">Solución de problemas</h2>
+<section class="lab-section" aria-labelledby="lab7-trouble">
+    <h2 class="cds--productive-heading-03" id="lab7-trouble">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2 2 28h28zm0 6 10.39 18H5.61z"/><rect x="15" y="12" width="2" height="8"/><rect x="15" y="22" width="2" height="2"/></svg>
+      Solución de problemas
+    </h2>
     <div class="callout" data-tone="warning">
       <p class="callout__title"><code>mkdocs: command not found</code></p>
       <p>Verifica que el entorno virtual esté activado (deberías ver <code>(.venv)</code> en tu prompt) y después ejecuta <code>pip install -r requirements.txt</code> de nuevo. Como alternativa, ejecuta <code>python -m mkdocs serve</code>.</p>
@@ -220,8 +233,8 @@ Mantén la prosa en español y las referencias al código en inglés.</code></pr
     </div>
   </section>
 
-  <section class="lab-section lab-step" aria-labelledby="lab7-gate">
-    <h2 class="cds--productive-heading-03" id="lab7-gate">Criterios de éxito</h2>
+    <div class="callout" data-tone="tip">
+    <p class="callout__title">Lo que acabas de lograr</p>
     <ul class="cds--list--unordered">
       <li class="cds--list__item">Un 📝 Modo Docs creado en Bob.</li>
       <li class="cds--list__item">Una carpeta <code>docs/</code> con las páginas planificadas, generada a partir del código real.</li>
@@ -230,13 +243,7 @@ Mantén la prosa en español y las referencias al código en inglés.</code></pr
       <li class="cds--list__item">Un entorno virtual creado y las dependencias instaladas desde <code>requirements.txt</code>.</li>
       <li class="cds--list__item"><code>mkdocs serve</code> corre sin advertencias y el sitio se puede navegar en <code>http://localhost:8000</code>.</li>
     </ul>
-    <div class="callout" data-tone="tip">
-      <p class="callout__title">Ciclo completo</p>
-      <p>Llevaste Bob's Beans por todo el ciclo de vida: planificar → construir (pantalla por pantalla) → animar → revisar → documentar, con cada paso conducido por IBM Bob. Ahora tienes una tienda funcionando y pulida y un sitio de documentación viva que la acompaña.</p>
-    </div>
-    <a class="cds--btn cds--btn--secondary" style="margin-top:1rem" href="#/lab/software-development-lifecycle/overview">
-      ← Volver al inicio del lab
-    </a>
-  </section>
+  </div>
+
 
 </div>

@@ -5,7 +5,7 @@
       <span class="cds--tag cds--tag--purple">Agent Mode</span>
       <span class="cds--tag cds--tag--cool-gray">~20 min</span>
     </div>
-    <h1 class="cds--productive-heading-05 lab-banner__title">LAB 4 — Generación de tests unitarios</h1>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Lab 4 — Generación de tests unitarios</h1>
     <p class="cds--body-02 lab-banner__summary">
       Genera una suite completa de tests JUnit 5 / Mockito / AssertJ para la aplicación de farmacia modernizada
       usando prompts por fases en Agent Mode, y analiza la cobertura con JaCoCo.
@@ -20,6 +20,14 @@
         <span class="lab-banner__metric-value">~20</span>
         <span class="lab-banner__metric-label">minutos</span>
       </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">15</span>
+        <span class="lab-banner__metric-label">pasos</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">1</span>
+        <span class="lab-banner__metric-label">modo de trabajo</span>
+      </div>
     </div>
   </div>
 
@@ -33,7 +41,10 @@
   <section class="lab-workspace-setup" aria-labelledby="lab4-workspace">
     <div class="lab-workspace-setup__box">
       <span class="lab-workspace-setup__badge">Paso obligatorio — antes de cualquier prompt</span>
-      <h2 class="lab-workspace-setup__title" id="lab4-workspace">Abre esta carpeta como raíz en Bob</h2>
+      <h2 class="lab-workspace-setup__title" id="lab4-workspace">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
+      Abre esta carpeta como raíz en Bob
+    </h2>
       <p class="lab-workspace-setup__lead">
         Descarga el bundle del workshop, descomprímelo y abre el snapshot de inicio del Lab 4.
         Al abrir <code>snapD</code>, Bob inicia un chat nuevo — pega el prompt de Fase 1 de abajo.
@@ -65,7 +76,7 @@
 
   <section class="lab-section" aria-labelledby="lab4-caso">
     <h3 class="cds--productive-heading-02">Qué se prueba</h3>
-    <table class="cds--data-table" style="margin-top:var(--cds-spacing-04,0.75rem)">
+    <table class="lab-table" style="margin-top:var(--cds-spacing-04,0.75rem)">
       <thead>
         <tr>
           <th>Componente</th>
@@ -101,7 +112,10 @@
 
   <!-- Cómo funciona -->
   <section class="lab-section" aria-labelledby="lab4-como">
-    <h2 class="cds--productive-heading-03" id="lab4-como">Cómo funciona (Agent Mode por fases)</h2>
+    <h2 class="cds--productive-heading-03" id="lab4-como">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
+      Cómo funciona (Agent Mode por fases)
+    </h2>
     <p class="cds--body-01" style="max-width:72ch;margin-bottom:var(--cds-spacing-05,1rem)">
       En lugar del workflow Java Unit Testing, este lab usa <strong>prompts por fases</strong> en Agent Mode
       que reproducen el mismo flujo de nueve pasos del workshop:
@@ -124,7 +138,10 @@
 
   <!-- Fase 1 -->
   <section class="lab-section" aria-labelledby="lab4-fase1">
-    <h2 class="cds--productive-heading-03" id="lab4-fase1">FASE 1 — Análisis y estrategia (<code>UNITTEST.md</code>)</h2>
+    <h2 class="cds--productive-heading-03" id="lab4-fase1">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
+      FASE 1 — Análisis y estrategia ( UNITTEST.md )
+    </h2>
 
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Inventariar el proyecto y redactar la estrategia</h3>
@@ -175,7 +192,10 @@ Preséntame la estrategia. Cuando yo diga "adelante", pasamos a Fase 2.</code></
 
   <!-- Fase 2 -->
   <section class="lab-section" aria-labelledby="lab4-fase2">
-    <h2 class="cds--productive-heading-03" id="lab4-fase2">FASE 2 — JaCoCo y dependencias de test</h2>
+    <h2 class="cds--productive-heading-03" id="lab4-fase2">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
+      FASE 2 — JaCoCo y dependencias de test
+    </h2>
 
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Configurar JaCoCo, JUnit 5, Mockito y AssertJ</h3>
@@ -207,7 +227,10 @@ Confirma que UNITTEST.md existe en la raíz. No pases a Fase 3 sin mi "ok".</cod
 
   <!-- Fase 3 -->
   <section class="lab-section" aria-labelledby="lab4-fase3">
-    <h2 class="cds--productive-heading-03" id="lab4-fase3">FASE 3 — Generación de tests (3 lotes)</h2>
+    <h2 class="cds--productive-heading-03" id="lab4-fase3">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
+      FASE 3 — Generación de tests (3 lotes)
+    </h2>
     <p class="cds--body-01" style="max-width:72ch;margin-bottom:var(--cds-spacing-05,1rem)">
       Bob genera tests en lotes organizados por paquete. Cada subagente lee la clase de producción y <code>UNITTEST.md</code>.
       Si hay problemas de compilación a mitad del proceso, Bob añade tareas de recuperación y los corrige sin intervención.
@@ -288,7 +311,10 @@ Espera mi "ok" antes de crear los archivos.</code></pre>
 
   <!-- Fase 4 -->
   <section class="lab-section" aria-labelledby="lab4-fase4">
-    <h2 class="cds--productive-heading-03" id="lab4-fase4">FASE 4 — Ejecución, cobertura y revisión</h2>
+    <h2 class="cds--productive-heading-03" id="lab4-fase4">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
+      FASE 4 — Ejecución, cobertura y revisión
+    </h2>
 
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 6 — Ejecutar la suite y generar informe JaCoCo</h3>
@@ -351,7 +377,10 @@ Espera mi "ok" antes de crear los archivos.</code></pre>
   <details class="lab-troubleshooting-full">
     <summary>Solución de problemas y ayuda</summary>
   <section class="lab-section" aria-labelledby="lab4-troubleshooting">
-    <h2 class="cds--productive-heading-03" id="lab4-troubleshooting">Solución de problemas</h2>
+    <h2 class="cds--productive-heading-03" id="lab4-troubleshooting">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2 2 28h28zm0 6 10.39 18H5.61z"/><rect x="15" y="12" width="2" height="8"/><rect x="15" y="22" width="2" height="2"/></svg>
+      Solución de problemas
+    </h2>
 
     <h3 class="cds--productive-heading-02">API request failed — el chat muestra <code>{"apiProtocol":"openai"}</code></h3>
     <p class="cds--body-01">Haz clic en <strong>Retry</strong> en la ventana de chat de Bob.</p>
@@ -397,7 +426,10 @@ Espera mi "ok" antes de crear los archivos.</code></pre>
 
   <!-- Ayuda -->
   <section class="lab-section" aria-labelledby="lab4-ayuda">
-    <h2 class="cds--productive-heading-03" id="lab4-ayuda">Obtener ayuda durante el lab</h2>
+    <h2 class="cds--productive-heading-03" id="lab4-ayuda">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M16 10a3.33 3.33 0 0 0-3.25 4h2.08A1.27 1.27 0 0 1 16 12.77 1.25 1.25 0 0 1 17.25 14c0 .91-.55 1.23-1.42 1.93A2.84 2.84 0 0 0 15 18.2V19h2v-.43a4.19 4.19 0 0 1 2.07-3.74C20.06 14.2 21 13.2 21 11.77A5 5 0 0 0 16 10z"/><circle cx="16" cy="23" r="1.5"/></svg>
+      Obtener ayuda durante el lab
+    </h2>
     <ul class="cds--list--unordered">
       <li class="cds--list__item"><strong>Pregunta a Bob</strong> — puede explicar conceptos de testing, corregir tests fallidos y revisar código generado</li>
       <li class="cds--list__item"><strong>Pregunta a tu instructor</strong> — no dudes en levantar la mano</li>

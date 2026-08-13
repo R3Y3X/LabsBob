@@ -1,0 +1,69 @@
+<div class="content-panel lab-template prose--full">
+  <div class="lab-banner">
+    <div class="lab-banner__tags">
+      <span class="cds--tag cds--tag--purple">Streaming derivado</span>
+      <span class="cds--tag cds--tag--cool-gray">~15 min</span>
+      <span class="cds--tag cds--tag--teal">ksqlDB</span>
+    </div>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Tópico derivado con ksqlDB</h1>
+    <p class="cds--body-02 lab-banner__summary">Calcula disponibilidad por SKU y sucursal a partir de las transacciones de inventario.</p>
+  </div>
+
+  <section class="lab-section">
+    <h2 class="cds--productive-heading-04" id="step-2-crear-un-topico-derivado-en-confluent-kaf">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
+      Crear el tópico derivado inventory.availability
+    </h2>
+    <p class="cds--body-01">Vas a crear un tópico derivado llamado <code>inventory.availability</code> que calcula cuántas unidades de cada producto hay en cada sucursal, procesando las transacciones del tópico anterior.</p>
+    <p class="cds--body-01">Un cluster de ksqlDB lee tópicos de Kafka, hace cálculos y escribe resultados en otros tópicos con SQL.</p>
+
+    <ol class="cds--list--ordered">
+      <li class="cds--list__item">Haz clic en <strong>ksqlDB</strong> en el menú izquierdo.</li>
+      <li class="cds--list__item">Haz clic en el cluster <strong>ksqlDB</strong> que está corriendo.</li>
+      <li class="cds--list__item">Haz clic en la pestaña <strong>Streams</strong> y <strong>Create in Editor</strong>.</li>
+      <li class="cds--list__item">Copia y pega el siguiente código en el editor:</li>
+    </ol>
+
+    <div class="code-block code-block--prompt">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>CREATE STREAM inventory_transactions (
+     sku VARCHAR,
+     branch VARCHAR,
+     quantity INT
+ ) WITH (
+     KAFKA_TOPIC='inventory.transactions',
+     KEY_FORMAT='KAFKA',
+     VALUE_FORMAT='JSON'
+ );</code></pre>
+    </div>
+
+    <ol class="cds--list--ordered" start="5">
+      <li class="cds--list__item">Haz clic en <strong>Run Query</strong>.</li>
+      <li class="cds--list__item">Crea la tabla <code>inventory_availability</code> agrupando por SKU y sucursal, y luego <strong>Run Query</strong>. Esto:
+        <ul class="cds--list--unordered" style="margin-top: 0.5rem;">
+          <li class="cds--list__item">Agrupa las transacciones por SKU y sucursal.</li>
+          <li class="cds--list__item">Suma cantidades (positivas = ingreso, negativas = venta).</li>
+          <li class="cds--list__item">Escribe el resultado en <code>inventory.availability</code>.</li>
+          <li class="cds--list__item">Se actualiza cuando llegan transacciones nuevas.</li>
+        </ul>
+      </li>
+    </ol>
+
+    <div class="code-block code-block--prompt">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>CREATE TABLE inventory_availability WITH (
+  KAFKA_TOPIC='inventory.availability',
+  KEY_FORMAT='JSON',
+  VALUE_FORMAT='JSON',
+  PARTITIONS=1
+) AS
+SELECT
+  sku,
+  branch,
+  SUM(quantity) AS available_quantity
+FROM inventory_transactions
+GROUP BY sku, branch
+EMIT CHANGES;</code></pre>
+    </div>
+  </section>
+</div>

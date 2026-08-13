@@ -11,40 +11,51 @@ export const siteData = {
     description: '¡Hola, soy Bob! Estoy aquí para trabajar junto a ti en tu código y ayudarte a construir software de calidad más rápido.',
     ctaLabel: 'Explorar laboratorios'
   },
-  highlights: [
-    { value: '', label: 'modos de trabajo' },
-    { value: '', label: 'laboratorios prácticos' },
-    { value: '', label: 'ciclo completo de desarrollo' }
-  ],
   sections: [
     {
       id: 'basic',
       title: 'Primeros Pasos',
       eyebrow: 'Desarrollo asistido',
       label: 'Fundamentos de Bob',
-      bobMode: 'Modos agénticos',
-      description: 'Construye una base sólida para trabajar con Bob: configura el entorno, entiende sus modos y recorre el ciclo de vida del software con una guía clara y práctica.',
+      bobMode: 'Modos · Skills · SDLC',
+      description: 'Planifica y ejecuta con Bob, audita y genera código seguro con skills y rules, y construye una tienda de café de punta a punta.',
       actionLabel: 'Explorar Primeros Pasos',
       labs: [
         {
           slug: 'hands-on-inicial',
-          title: 'Primeros pasos con Bob: Construye una base sólida para trabajar con IBM Bob',
-          description: 'Configura tu workspace, conoce Ask Mode, Plan Mode y Agent Mode, y completa tu primera tarea agéntica con controles claros.',
-          supporting: 'Workshop base',
+          title: 'De la idea al código: planifica, valida y ejecuta con IBM Bob',
+          description: 'Multi-agentes + MCP para acelerar el desarrollo.',
+          supporting: 'Ask · Plan · Agent · MCP',
+          featured: true,
+          banner: './assets/images/labs/hands-on-inicial/banner_bob.png',
           audience: ['client', 'partner'],
           steps: [
             { slug: 'overview', label: 'Inicio', file: './content/basic/hands-on-inicial/overview.html', tags: ['Modos agénticos'] },
             { slug: 'lab1', label: 'Ask Mode', file: './content/basic/hands-on-inicial/lab1-ask-mode.html', tags: ['Ask Mode'], bobcoinCost: { min: 2, max: 4 } },
-            { slug: 'lab2', label: 'Plan y Agent Mode', file: './content/basic/hands-on-inicial/lab2-modos.html', tags: ['Plan · Agent'], bobcoinCost: { min: 4, max: 8 } },
-            { slug: 'lab3', label: 'Seguridad', file: './content/basic/hands-on-inicial/lab3-seguridad.html', tags: ['Seguridad · ASVS'], bobcoinCost: { min: 5, max: 10 } },
-            { slug: 'lab4', label: 'Modo personalizado', file: './content/basic/hands-on-inicial/lab4-modo-personalizado.html', tags: ['Modo personalizado'], bobcoinCost: { min: 2, max: 5 } },
-            { slug: 'lab5', label: 'MCP con Tavily', file: './content/basic/hands-on-inicial/lab5-mcp-tavily.html', tags: ['MCP · Tavily'], bobcoinCost: { min: 3, max: 6 } }
+            { slug: 'lab2', label: 'Plan y Agent', file: './content/basic/hands-on-inicial/lab2-modos.html', tags: ['Plan · Agent'], bobcoinCost: { min: 4, max: 8 } },
+            { slug: 'lab3', label: 'Modo personalizado', file: './content/basic/hands-on-inicial/lab4-modo-personalizado.html', tags: ['Modo personalizado'], bobcoinCost: { min: 2, max: 5 } },
+            { slug: 'lab4', label: 'MCP', file: './content/basic/entendiendo-bob/lab3-mcp-tavily.html', tags: ['MCP · Tavily'], bobcoinCost: { min: 3, max: 6 } }
+          ]
+        },
+        {
+          slug: 'entendiendo-bob',
+          title: '¿Tu código es seguro? Detecta vulnerabilidades antes de producción',
+          description: 'Aplica rules, audita el código y genera features con un flujo actor-critic.',
+          supporting: 'Skills · Rules · Actor-critic',
+          featured: true,
+          banner: './assets/images/labs/entendiendo-bob/banner_seguridad_bob.png',
+          audience: ['client', 'partner'],
+          steps: [
+            { slug: 'overview', label: 'Inicio', file: './content/basic/entendiendo-bob/overview.html', tags: ['Skills · Rules'] },
+            { slug: 'lab1', label: 'Rules', file: './content/basic/entendiendo-bob/lab2-rules.html', tags: ['Rules'], bobcoinCost: { min: 2, max: 4 } },
+            { slug: 'lab2', label: 'Auditoría', file: './content/basic/entendiendo-bob/lab1-seguridad.html', tags: ['Seguridad · ASVS'], bobcoinCost: { min: 5, max: 10 } },
+            { slug: 'lab3', label: 'Código seguro', file: './content/basic/entendiendo-bob/lab3-codigo-seguro.html', tags: ['Actor-critic'], bobcoinCost: { min: 8, max: 15 } }
           ]
         },
         {
           slug: 'software-development-lifecycle',
-          title: 'Ciclo de vida del software: de plan a producción',
-          description: 'Construye Bob\'s Beans, una tostaduría de café: planifica, implementa tres pantallas a partir de mockups, anima, revisa y documenta el resultado con Bob.',
+          title: 'Construye una tienda de café de punta a punta',
+          description: 'Planifica, implementa pantallas con mockups y documenta el resultado.',
           supporting: 'React · Vite · Tailwind',
           customOverview: true,
           audience: ['client', 'partner'],
@@ -65,44 +76,52 @@ export const siteData = {
       id: 'integraciones',
       title: 'Integra tu plataforma fácilmente con IBM Bob',
       eyebrow: 'Automatización',
-      label: 'Integración externa',
+      label: 'Integración de plataforma',
       bobMode: 'Eventos y agentes',
       description: 'Construye un caso retail de extremo a extremo: streaming de inventario en Confluent Kafka, agentes de IA en watsonx Orchestrate y una tienda que consume datos en tiempo real.',
       actionLabel: 'Explorar integración de plataforma',
       labs: [
         {
           slug: 'agentic-retail-confluent',
-          title: 'Inventario en tiempo real con streaming de eventos',
-          description: 'Construye la capa de datos operacionales en tiempo real de Voltia: tópicos de Kafka, procesamiento de streams con ksqlDB y cálculo de disponibilidad.',
+          title: 'Conecta tus agentes con tus datos en tiempo real',
+          description: 'Data streaming empresarial con Confluent + IBM Bob.',
           supporting: 'Confluent',
+          featured: true,
           audience: ['client', 'partner'],
           steps: [
             { slug: 'overview', label: 'Inicio', file: './content/integraciones/agentic-retail-confluent/overview.html', tags: ['Confluent Kafka'] },
-            { slug: 'topics', label: 'Tópicos Kafka', file: './content/integraciones/agentic-retail-confluent/topics.html', tags: ['ksqlDB'], bobcoinCost: { min: 4, max: 8 } },
+            { slug: 'topics', label: 'Tópico Kafka', file: './content/integraciones/agentic-retail-confluent/topics.html', tags: ['Topics'], bobcoinCost: { min: 2, max: 4 } },
+            { slug: 'ksqldb', label: 'ksqlDB', file: './content/integraciones/agentic-retail-confluent/ksqldb.html', tags: ['ksqlDB'], bobcoinCost: { min: 2, max: 4 } },
             { slug: 'publish', label: 'Publicar eventos', file: './content/integraciones/agentic-retail-confluent/publish.html', tags: ['Productores'], bobcoinCost: { min: 2, max: 5 } }
           ]
         },
         {
           slug: 'agentic-retail-wxo',
-          title: 'Agentes Inteligentes para la Gestión de Inventario',
-          description: 'Despliega agentes especializados en watsonx Orchestrate que utilizan herramientas MCP para interactuar con la base de datos de inventario en tiempo real.',
+          title: 'De agentes aislados a una fuerza de trabajo inteligente',
+          description: 'Orquesta agentes empresariales con watsonx Orchestrate.',
           supporting: 'watsonx Orchestrate',
+          featured: true,
           audience: ['client', 'partner'],
           steps: [
             { slug: 'overview', label: 'Inicio', file: './content/integraciones/agentic-retail-wxo/overview.html', tags: ['watsonx Orchestrate'] },
-            { slug: 'create', label: 'Crear agentes', file: './content/integraciones/agentic-retail-wxo/create.html', tags: ['Multiagente'], bobcoinCost: { min: 5, max: 10 } },
-            { slug: 'integration', label: 'Integración MCP', file: './content/integraciones/agentic-retail-wxo/integration.html', tags: ['Herramientas MCP'], bobcoinCost: { min: 4, max: 8 } }
+            { slug: 'create', label: 'Disponibilidad MCP', file: './content/integraciones/agentic-retail-wxo/create.html', tags: ['MCP'], bobcoinCost: { min: 3, max: 5 } },
+            { slug: 'rag', label: 'Sustitutos RAG', file: './content/integraciones/agentic-retail-wxo/rag.html', tags: ['RAG'], bobcoinCost: { min: 2, max: 5 } },
+            { slug: 'integration', label: 'Supervisor', file: './content/integraciones/agentic-retail-wxo/integration.html', tags: ['Supervisor'], bobcoinCost: { min: 2, max: 4 } },
+            { slug: 'shopping', label: 'Asistente cliente', file: './content/integraciones/agentic-retail-wxo/shopping.html', tags: ['Embedded'], bobcoinCost: { min: 2, max: 4 } }
           ]
         },
         {
           slug: 'agentic-retail-voltia',
-          title: 'Retail Inteligente en Acción',
-          description: 'Crea una interfaz en local para interactuar con los agentes de Orchestrate junto con Confluent de manera más visual integrando todo el sistema.',
-          supporting: 'Voltia',
+          title: 'La tienda web que habla con tus agentes',
+          description: 'Interfaz local de Voltia que consume Confluent y el asistente de Orchestrate.',
+          supporting: 'Voltia · React',
           audience: ['client', 'partner'],
           steps: [
             { slug: 'overview', label: 'Inicio', file: './content/integraciones/agentic-retail-voltia/overview.html', tags: ['Storefront React'] },
-            { slug: 'deploy', label: 'Desplegar tienda', file: './content/integraciones/agentic-retail-voltia/deploy.html', tags: ['Asistente embebido'], bobcoinCost: { min: 3, max: 7 } }
+            { slug: 'deploy', label: 'Planificar', file: './content/integraciones/agentic-retail-voltia/deploy.html', tags: ['Plan Mode'], bobcoinCost: { min: 2, max: 4 } },
+            { slug: 'build', label: 'Pantallas', file: './content/integraciones/agentic-retail-voltia/build.html', tags: ['Agent Mode'], bobcoinCost: { min: 6, max: 12 } },
+            { slug: 'embed', label: 'Asistente', file: './content/integraciones/agentic-retail-voltia/embed.html', tags: ['Asistente embebido'], bobcoinCost: { min: 3, max: 7 } },
+            { slug: 'polish', label: 'Pulir y docs', file: './content/integraciones/agentic-retail-voltia/polish.html', tags: ['MkDocs'], bobcoinCost: { min: 3, max: 6 } }
           ]
         }
       ]
@@ -118,9 +137,10 @@ export const siteData = {
       labs: [
         {
           slug: 'java-modernization-v2',
-          title: 'Modernización de aplicaciones Java',
-          description: 'Moderniza una aplicación Java legacy con Bob: replatforming a Liberty, upgrade a Java 21, UI con React, tests unitarios y remediación de CVEs.',
+          title: 'Moderniza Java a la velocidad del negocio',
+          description: 'Transforma tus aplicaciones Java con IBM Bob, sin empezar de cero.',
           supporting: 'Java legacy',
+          featured: true,
           overviewLabsOnly: true,
           audience: ['client', 'partner'],
           steps: [
@@ -135,9 +155,10 @@ export const siteData = {
         },
         {
           slug: 'ibm-i-rpg-development',
-          title: 'Modernización de aplicaciones RPG en IBM i',
-          description: 'Descubre SAMCO, moderniza RPG de formato fijo a libre, construye una UI React + Carbon y convierte RLA a SQL con archivos locales.',
+          title: 'Del RPG al futuro: moderniza IBM i',
+          description: 'Transforma aplicaciones RPG con IBM Bob.',
           supporting: 'IBM i · SAMCO',
+          featured: true,
           overviewLabsOnly: true,
           audience: ['client', 'partner'],
           steps: [
@@ -153,28 +174,40 @@ export const siteData = {
   ]
 };
 
-
-
-// Content guidance used by the shared workshop shell. Route and step data stay
-// above; this layer gives every overview the same briefing, preparation, and
-// learning-outcome structure without duplicating technical instructions.
 export const workshopGuides = {
   'hands-on-inicial': {
-    duration: '90 min',
-    outcome: 'Configurarás un workspace, usarás Ask, Plan y Agent Mode con controles de aprobación claros, y ejecutarás una auditoría de seguridad con skills y reportes SARIF/OSCAL.',
+    duration: '~50 min',
+    outcome: 'Usarás Ask, Plan y Agent Mode, crearás un modo personalizado y conectarás un servidor MCP.',
     requirements: [
       ['Acceso', 'IBM Bob IDE v2.x o posterior con una cuenta habilitada.'],
       ['Entorno', 'Un workspace local donde puedas crear y revisar archivos.'],
-      ['Herramientas', 'Node.js 18+ para los Labs 1, 2 y 5.'],
+      ['Herramientas', 'Node.js 18+ para los Labs 1, 2 y 4. Una API key de Tavily para MCP.'],
       ['Conocimiento', 'Manejo básico de editor, terminal y control de cambios.']
     ],
-    materials: ['Bundle LabHandsOnBob.zip con los 5 labs (incluye Galaxium Travels para el Lab 3).', 'Los prompts y capturas incluidos en cada etapa.', 'El resumen de Bob para revisar cada cambio antes de aprobarlo.'],
-    path: 'Completa los cinco labs en orden: primero consulta, luego planifica, audita con skills, personaliza e integra una herramienta MCP.',
+    materials: ['Bundle LabHandsOnBob.zip (carpetas de Ask, Plan y Agent).', 'Los prompts y capturas incluidos en cada etapa.', 'Cuenta gratuita en tavily.com para el Lab 4 (MCP).'],
+    path: 'Completa los cuatro labs en orden: Ask → Plan y Agent → modo personalizado → MCP.',
     learning: [
       ['Modos de Bob', 'Elegir Ask, Plan o Agent según el tipo de tarea.'],
       ['Gobernanza', 'Revisar cambios, comandos y aprobaciones antes de ejecutarlos.'],
-      ['Auditoría de seguridad', 'Crear skills reutilizables y generar reportes SARIF y OSCAL POA&M.'],
-      ['Extensibilidad', 'Usar configuraciones y MCP para especializar el flujo de trabajo.']
+      ['Personalización', 'Crear un modo con rol, instrucciones y herramientas propias.'],
+      ['MCP', 'Conectar una herramienta externa y usarla desde Agent Mode.']
+    ]
+  },
+  'entendiendo-bob': {
+    duration: '~75 min',
+    outcome: 'Fijarás rules de proyecto, auditarás Galaxium Travels y generarás un endpoint FastAPI con un flujo actor-critic antes de que llegue a SAST.',
+    requirements: [
+      ['Acceso', 'IBM Bob IDE v2.x o posterior con una cuenta habilitada.'],
+      ['Entorno', 'Workspace con Galaxium Travels para los tres labs.'],
+      ['Herramientas', 'Node.js 18+. Git si clonas el repo de ejemplo.'],
+      ['Conocimiento', 'Haber completado el track de modos, o familiaridad con Ask y Agent Mode.']
+    ],
+    materials: ['Bundle LabHandsOnBob.zip (incluye Galaxium Travels).', 'Prompts y capturas de cada etapa.'],
+    path: 'Completa los tres labs en orden: Rules → Auditoría → Código seguro (actor-critic).',
+    learning: [
+      ['Rules', 'Inyectar instrucciones persistentes, incluidas rules de seguridad de proyecto.'],
+      ['Skills', 'Crear un skill reutilizable y generar reportes SARIF y OSCAL POA&M.'],
+      ['Actor-critic', 'Generar código con un skill Actor y validarlo con un skill Critic en subagentes aislados.']
     ]
   },
   'software-development-lifecycle': {
@@ -182,7 +215,7 @@ export const workshopGuides = {
     outcome: 'Construirás Bob\'s Beans: tres pantallas a partir de mockups, conectadas a una API hospedada, con animaciones, revisión visual y un sitio MkDocs.',
     requirements: [
       ['Acceso', 'IBM Bob IDE con Ask, Plan y Agent Mode disponibles.'],
-      ['Herramientas', 'Node.js 18+, npm y Python 3 (para MkDocs en el Lab 07).'],
+      ['Herramientas', 'Node.js 18+, npm y Python 3 (para MkDocs en el Lab 7).'],
       ['Starter', 'Descarga bobs-beans-starter.zip desde el Inicio y ábrelo en Bob.'],
       ['Gobernanza', 'Auto-approve desactivado para revisar cada diff antes de aceptarlo.']
     ],
@@ -203,7 +236,7 @@ export const workshopGuides = {
       ['Conocimiento', 'Modelado de agentes, intenciones y herramientas MCP.']
     ],
     materials: ['Prompts de configuración para watsonx Orchestrate.', 'Esquema MCP en JSON/YAML.', 'Capturas de flujo agéntico.'],
-    path: 'Completa la configuración del asistente en watsonx Orchestrate y ejecuta las pruebas de extremo a extremo.',
+    path: 'Disponibilidad MCP → sustitutos RAG → supervisor de tienda → asistente embebible para el cliente.',
     learning: [
       ['Orquestación', 'Definir flujos multiagente autónomos.'],
       ['MCP Integración', 'Vincular herramientas externas a watsonx Orchestrate.'],
@@ -219,11 +252,25 @@ export const workshopGuides = {
       ['Kafka', 'Conceptos de topics, productores y consumidores.']
     ],
     materials: ['Credenciales de Confluent Cloud y cluster Kafka.', 'Scripts productores/consumidores de eventos.', 'Diagramas de arquitectura de eventos.'],
-    path: 'Revisa la arquitectura de eventos y construye el pipeline de streaming de inventario.',
+    path: 'Revisa la arquitectura, crea el tópico, deriva disponibilidad con ksqlDB y publica eventos de inventario.',
     learning: [
       ['Event Streaming', 'Publicar y consumir eventos de inventario en Confluent Kafka.'],
       ['Automatización', 'Asistir la configuración de conectores con Bob.'],
       ['Monitoreo', 'Validar flujo de datos y esquema de mensajes en tiempo real.']
+    ]
+  },
+  'agentic-retail-voltia': {
+    duration: '45–60 min',
+    outcome: 'Desplegarás una tienda local que consume inventario en tiempo real y el asistente de Orchestrate.',
+    requirements: [
+      ['Acceso', 'IBM Bob IDE y los labs de Confluent y Orchestrate completados o en curso.'],
+      ['Herramientas', 'Node.js 18+ para el storefront React.']
+    ],
+    materials: ['Starter de Voltia y credenciales de los labs anteriores.'],
+    path: 'Planifica → construye pantallas → embebe el asistente → pulir y documentar.',
+    learning: [
+      ['Integración', 'Conectar Confluent y Orchestrate en una UI local.'],
+      ['Validación', 'Probar el flujo retail de extremo a extremo.']
     ]
   },
   'java-modernization-v2': {
@@ -233,7 +280,7 @@ export const workshopGuides = {
       ['Entorno', 'IBM Bob IDE con Agent Mode y el repositorio Simple Pharmacy.'],
       ['Java', 'Java 8 para el Lab 1; Java 21 a partir del Lab 2. Configura JAVA_HOME antes de cada lab (ver Lab 1 y Lab 2). Verifica java -version y mvn --version.'],
       ['Herramientas', 'Maven 3.8+; Node.js solo para el Lab 3 de React.'],
-      ['Carpetas', 'Abre solo la carpeta snap* del lab en curso (File → Open Folder). No abras el bundle completo.'],
+      ['Carpetas', 'Abre solo la carpeta snap* del lab en curso (File → Open Folder). No abras el bundle completo.']
     ],
     materials: ['Repositorio Simple Pharmacy con snaps de inicio.', 'Prompts de modernización y capturas de referencia.', 'Resultados de Maven, tests y reportes de seguridad.'],
     path: 'Sigue Replatforming, Java 21, UI, tests y seguridad. El lab TDD es una alternativa al flujo de tests unitarios.',
@@ -272,4 +319,25 @@ export function findLab(slug) {
   }
 
   return null;
+}
+
+export function getAllLabs() {
+  return siteData.sections.flatMap((section) => section.labs.map((lab) => ({ section, lab })));
+}
+
+export function getNextLab(slug) {
+  const all = getAllLabs();
+  const index = all.findIndex((item) => item.lab.slug === slug);
+  return index >= 0 && index < all.length - 1 ? all[index + 1] : null;
+}
+
+export function getWorkshopStats(lab) {
+  const costs = (lab.steps || []).filter((step) => step.bobcoinCost);
+  const min = costs.reduce((sum, step) => sum + step.bobcoinCost.min, 0);
+  const max = costs.reduce((sum, step) => sum + step.bobcoinCost.max, 0);
+  const duration = workshopGuides[lab.slug]?.duration || '';
+  return {
+    duration,
+    bobcoins: costs.length ? { min, max } : null
+  };
 }

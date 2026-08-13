@@ -17,11 +17,22 @@
         <span class="lab-banner__metric-value">~50</span>
         <span class="lab-banner__metric-label">minutos</span>
       </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">1</span>
+        <span class="lab-banner__metric-label">pasos</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">1</span>
+        <span class="lab-banner__metric-label">modo de trabajo</span>
+      </div>
     </div>
   </div>
 
   <section class="lab-section" aria-labelledby="confluent-pipe">
-    <h2 class="cds--productive-heading-03" id="confluent-pipe">Construcción del Pipeline de Streaming</h2>
+    <h2 class="cds--productive-heading-03" id="confluent-pipe">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
+      Construcción del Pipeline de Streaming
+    </h2>
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Generar el Productor de Eventos de Inventario con Bob</h3>
       <p>Usa Agent Mode en Bob para implementar un script en Python que simule cambios de stock en tiempo real y los publique al cluster de Confluent Cloud.</p>

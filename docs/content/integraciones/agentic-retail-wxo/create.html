@@ -5,12 +5,15 @@
       <span class="cds--tag cds--tag--cool-gray">~30 min</span>
       <span class="cds--tag cds--tag--teal">MCP & Orchestrate</span>
     </div>
-    <h1 class="cds--productive-heading-05 lab-banner__title">Creación de Agentes y Herramientas MCP</h1>
-    <p class="cds--body-02 lab-banner__summary">Importa y despliega agentes especializados en watsonx Orchestrate conectados a herramientas MCP para consulta de inventario y catálogo.</p>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Agente de disponibilidad MCP</h1>
+    <p class="cds--body-02 lab-banner__summary">Importa la herramienta MCP y despliega el SKU Availability Agent.</p>
   </div>
 
   <section class="lab-section">
-    <h2 class="cds--productive-heading-04">Paso 1 — Crear la herramienta MCP y el agente de disponibilidad</h2>
+    <h2 class="cds--productive-heading-04" id="paso-1-crear-la-herramienta-mcp-y-el-agente-de-d">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
+      Paso 1 — Crear la herramienta MCP y el agente de disponibilidad
+    </h2>
     <p class="cds--body-01">En este paso vas a crear el primer agente del lab: <strong>SKU Availability Agent</strong>. Este agente consulta la disponibilidad de productos en tiempo real a través de una herramienta MCP.</p>
 
     <h3 class="cds--productive-heading-03" style="margin-top: 2rem;">1.1. Importar la herramienta MCP</h3>
@@ -28,30 +31,5 @@
       <li class="cds--list__item">En la esquina superior derecha, haz clic en <strong>Deploy</strong> y confirma.</li>
     </ol>
   </section>
-
-  <section class="lab-section" style="margin-top: 3rem;">
-    <h2 class="cds--productive-heading-04">Paso 2 — Crear el agente RAG para encontrar sustitutos</h2>
-    <p class="cds--body-01">En este paso vas a crear el <strong>Substitute Finder Agent</strong>. Este agente no consulta inventario en tiempo real; su función es razonar sobre el catálogo de productos para encontrar alternativas similares cuando un SKU no está disponible.</p>
-
-    <h3 class="cds--productive-heading-03" style="margin-top: 2rem;">2.1. Importar y desplegar el agente</h3>
-    <p class="cds--body-01">Desde la terminal en <code>Lab2</code>, ejecuta:</p>
-<pre><code class="language-bash">orchestrate agents import -f confluent_agents/Substitute_Finder_Agent.yaml</code></pre>
-    <p class="cds--body-01">Luego, en la UI de watsonx Orchestrate, abre el agente <code>Substitute_Finder_Agent</code> y haz clic en <strong>Deploy</strong>.</p>
-
-    <h3 class="cds--productive-heading-03" style="margin-top: 2rem;">2.2. Crear la base de conocimiento</h3>
-    <p class="cds--body-01">El archivo <code>product-catalog.docx</code> representa un catálogo interno de productos. El agente lo usa como fuente de conocimiento.</p>
-    <ol class="cds--list--ordered">
-      <li class="cds--list__item">Dentro del agente <code>Substitute_Finder_Agent</code>, ingresa a la sección <strong>Knowledge</strong> y haz clic en <strong>Add source</strong>.</li>
-      <li class="cds--list__item">Selecciona la opción para crear una nueva base de conocimiento.</li>
-      <li class="cds--list__item">Selecciona la opción <strong>Upload files</strong> y sube <code>product-catalog.docx</code>.</li>
-      <li class="cds--list__item">Usa el nombre <code>enterprise_documents</code> y guarda. Espera hasta que finalice la indexación.</li>
-    </ol>
-
-    <div class="callout" data-tone="info" style="margin-top: 2rem;">
-      <p class="callout__title">Probar el agente</p>
-      <p>Prueba una recomendación por similitud en la interfaz de chat del agente:</p>
-      <p><em>"LAPTOP-DELL-XPS-15 no está disponible. Sugiere una laptop similar usando el catálogo de productos."</em></p>
-      <p>El agente debe recomendar una laptop similar del catálogo y explicar brevemente qué atributos comparte.</p>
-    </div>
-  </section>
 </div>
+

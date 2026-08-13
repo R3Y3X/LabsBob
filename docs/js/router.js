@@ -1,17 +1,20 @@
 export function parseRoute(hash) {
-  const cleanHash = hash.replace(/^#?\/?/, '');
+  const raw = (hash || '').replace(/^#?\/?/, '');
 
-  if (!cleanHash) {
+  if (!raw) {
     return { view: 'home' };
   }
 
-  const parts = cleanHash.split('/').filter(Boolean);
+  const [path, query] = raw.split('?');
+  const params = new URLSearchParams(query || '');
+  const parts = path.split('/').filter(Boolean);
 
   if (parts.length >= 2 && parts[0] === 'lab') {
     return {
       view: 'lab',
       labSlug: parts[1],
-      stepSlug: parts[2] || 'overview'
+      stepSlug: parts[2] || 'overview',
+      headingId: params.get('h') || null
     };
   }
 
@@ -22,6 +25,7 @@ export function getHomeRoute() {
   return '#/';
 }
 
-export function getLabRoute(labSlug, stepSlug = 'overview') {
-  return `#/lab/${labSlug}/${stepSlug}`;
+export function getLabRoute(labSlug, stepSlug = 'overview', headingId) {
+  const base = `#/lab/${labSlug}/${stepSlug}`;
+  return headingId ? `${base}?h=${encodeURIComponent(headingId)}` : base;
 }

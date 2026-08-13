@@ -5,7 +5,7 @@
       <span class="cds--tag cds--tag--cool-gray">~60 min</span>
       <span class="cds--tag cds--tag--teal">Bob + watsonx Orchestrate</span>
     </div>
-    <h1 class="cds--productive-heading-05 lab-banner__title">Agentes Inteligentes para la Gestión de Inventario</h1>
+    <h1 class="cds--productive-heading-05 lab-banner__title">De agentes aislados a una fuerza de trabajo inteligente</h1>
 
     <div class="lab-hero-image">
       <img src="./assets/images/solutions/ibm-bob-agentic-retail-lab2-agents.png"
@@ -16,7 +16,7 @@
     <div class="lab-banner__metrics">
       <div class="lab-banner__metric">
         <span class="lab-banner__metric-value">4</span>
-        <span class="lab-banner__metric-label">agentes</span>
+        <span class="lab-banner__metric-label">laboratorios</span>
       </div>
       <div class="lab-banner__metric">
         <span class="lab-banner__metric-value">~60</span>
@@ -26,11 +26,18 @@
         <span class="lab-banner__metric-value">15–20</span>
         <span class="lab-banner__metric-label">BobCoins estimados</span>
       </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">1</span>
+        <span class="lab-banner__metric-label">modo de trabajo</span>
+      </div>
     </div>
   </div>
 
   <section class="lab-section">
-    <h2 class="cds--productive-heading-03">Sistema Multiagente para Retail</h2>
+    <h2 class="cds--productive-heading-03" id="sistema-multiagente-para-retail">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
+      Sistema Multiagente para Retail
+    </h2>
     <p class="cds--body-01">En este laboratorio vas a construir un sistema multiagente para asistir a una tienda retail. El sistema combina eventos de inventario en tiempo real, provistos por Confluent Cloud, con agentes de IA creados en IBM watsonx Orchestrate.</p>
     <p class="cds--body-01">El objetivo es que los agentes puedan responder preguntas de disponibilidad, sugerir sustitutos cuando un producto no tiene stock y, finalmente, asistir a un cliente final desde una experiencia conversacional.</p>
     
@@ -46,7 +53,10 @@
   </section>
 
   <section class="lab-section">
-    <h2 class="cds--productive-heading-03">Prerrequisitos de Configuración</h2>
+    <h2 class="cds--productive-heading-03" id="prerrequisitos-de-configuracion">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><polygon points="13 24 4 15 5.414 13.586 13 21.171 26.586 7.586 28 9 13 24"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
+      Prerrequisitos de Configuración
+    </h2>
     <p class="cds--body-01">Para este laboratorio es necesario contar con el <strong>Agent Development Kit (ADK)</strong> de watsonx Orchestrate y una <strong>IBM Cloud API Key</strong>. Todos los scripts necesarios se encuentran en el bundle descargable en <code>Labs-tech-summit/Lab2/confluent_agents/</code>.</p>
     
     <a class="cds--btn cds--btn--primary" style="margin-top: 1rem; margin-bottom: 2rem;" download="agentic-retail-workshop.zip" href="./downloads/agentic-retail-workshop.zip">
@@ -58,4 +68,17 @@
       <p>Asegúrate de haber configurado tu API Key y el ambiente de <code>orchestrate env</code> según los requisitos previos. Si tu token expira durante la ejecución, deberás correr <code>orchestrate env activate &lt;nombre&gt;</code> para recuperarlo.</p>
     </div>
   </section>
+
+  <section class="lab-section" aria-labelledby="soporte-heading">
+    <h2 class="cds--productive-heading-03" id="soporte-heading">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M16 10a3.33 3.33 0 0 0-3.25 4h2.08A1.27 1.27 0 0 1 16 12.77 1.25 1.25 0 0 1 17.25 14c0 .91-.55 1.23-1.42 1.93A2.84 2.84 0 0 0 15 18.2V19h2v-.43a4.19 4.19 0 0 1 2.07-3.74C20.06 14.2 21 13.2 21 11.77A5 5 0 0 0 16 10z"/><circle cx="16" cy="23" r="1.5"/></svg>
+      Soporte
+    </h2>
+    <p class="cds--body-01">¿Necesitas ayuda durante los laboratorios? Contacta al equipo IBM facilitador del workshop.</p>
+    <div class="callout callout--support" data-tone="tip">
+      <p class="callout__title">Tu opinión importa</p>
+      <p>Tu opinión mejora estos laboratorios. Al finalizar, pide el enlace de la encuesta al facilitador de tu sesión.</p>
+    </div>
+  </section>
+
 </div>

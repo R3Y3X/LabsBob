@@ -17,6 +17,14 @@
         <span class="lab-banner__metric-value">~20</span>
         <span class="lab-banner__metric-label">minutos</span>
       </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">6</span>
+        <span class="lab-banner__metric-label">pasos</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">1</span>
+        <span class="lab-banner__metric-label">modo de trabajo</span>
+      </div>
     </div>
   </div>
 
@@ -37,9 +45,14 @@
     <p>Las instrucciones y los prompts están en español, pero la aplicación se construye en <strong>inglés</strong>: mockups, nombres de archivo, funciones y todos los textos visibles de la interfaz. Cada prompt se lo pide a Bob explícitamente. Si Bob genera la UI en español, las pantallas dejan de coincidir con los mockups y el Lab 06 marcará diferencias en todos lados.</p>
   </div>
 
-  <section class="lab-section lab-step" aria-labelledby="lab1-step1">
-    <h2 class="cds--productive-heading-03" id="lab1-step1">Paso 1 — Consigue el starter y ábrelo en Bob</h2>
-    <p class="cds--body-01">Descarga y descomprime el starter, después abre la carpeta <code>bobs-beans-starter</code> en IBM Bob. El archivo está en el <a class="cds--link" href="#/lab/software-development-lifecycle/overview">Inicio del laboratorio</a>.</p>
+  <section class="lab-section" aria-labelledby="lab1-ejercicio">
+    <h2 class="cds--productive-heading-03" id="lab1-ejercicio">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
+      Ejercicio
+    </h2>
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Consigue el starter y ábrelo en Bob</h3>
+<p class="cds--body-01">Descarga y descomprime el starter, después abre la carpeta <code>bobs-beans-starter</code> en IBM Bob. El archivo está en el <a class="cds--link" href="#/lab/software-development-lifecycle/overview">Inicio del laboratorio</a>.</p>
     <p class="cds--body-01">Tómate un momento para mirar la estructura: fíjate cuánto ya está hecho, así puedes concentrarte en las pantallas.</p>
     <div class="code-block">
       <button class="copy-button" type="button" aria-label="Copiar estructura">Copiar</button>
@@ -59,11 +72,10 @@
 │       └── Cart.jsx          ← stub   — Lab 04
 └── tailwind.config.js        ← los tokens de diseño de café, listos para usar</code></pre>
     </div>
-  </section>
-
-  <section class="lab-section lab-step" aria-labelledby="lab1-step2">
-    <h2 class="cds--productive-heading-03" id="lab1-step2">Paso 2 — La aplicación ya está conectada a la API</h2>
-    <p class="cds--body-01">No hay nada que configurar. El starter viene con un <code>.env</code> listo para usar que apunta a la API de Bob's Beans hospedada:</p>
+    </div>
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — La aplicación ya está conectada a la API</h3>
+<p class="cds--body-01">No hay nada que configurar. El starter viene con un <code>.env</code> listo para usar que apunta a la API de Bob's Beans hospedada:</p>
     <div class="code-block">
       <button class="copy-button" type="button" aria-label="Copiar variable">Copiar</button>
       <pre><code>VITE_API_BASE_URL=https://bobs-beans-api.2akfv5yaq586.us-south.codeengine.appdomain.cloud</code></pre>
@@ -73,11 +85,10 @@
       <p class="callout__title">Si tu instructor te da otra URL de API</p>
       <p>Abre <code>.env</code>, reemplaza el valor de <code>VITE_API_BASE_URL</code> y reinicia <code>npm run dev</code>: Vite lee <code>.env</code> solo al arrancar. Lo mismo aplica si prefieres correr la API tú mismo: pon <code>VITE_API_BASE_URL=http://localhost:8080</code> y levántala localmente (ver el <code>README.md</code> de la API).</p>
     </div>
-  </section>
-
-  <section class="lab-section lab-step" aria-labelledby="lab1-step3">
-    <h2 class="cds--productive-heading-03" id="lab1-step3">Paso 3 — Ejecuta el starter</h2>
-    <div class="code-block">
+    </div>
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Ejecuta el starter</h3>
+<div class="code-block">
       <button class="copy-button" type="button" aria-label="Copiar comandos">Copiar</button>
       <pre><code>npm install
 npm run dev</code></pre>
@@ -87,11 +98,10 @@ npm run dev</code></pre>
       <p class="callout__title">Checkpoint</p>
       <p>Si se renderizan el header, el footer y los marcadores de posición, tu entorno está listo. Los marcadores son intencionales: los vas a reemplazar en los próximos tres labs.</p>
     </div>
-  </section>
-
-  <section class="lab-section lab-step" aria-labelledby="lab1-step4">
-    <h2 class="cds--productive-heading-03" id="lab1-step4">Paso 4 — Entiende el contrato de la API</h2>
-    <p class="cds--body-01">La aplicación habla con la API únicamente a través de <code>src/api/client.js</code>. No vas a escribir llamadas fetch a mano, pero sí necesitas saber qué datos hay disponibles.</p>
+    </div>
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 4 — Entiende el contrato de la API</h3>
+<p class="cds--body-01">La aplicación habla con la API únicamente a través de <code>src/api/client.js</code>. No vas a escribir llamadas fetch a mano, pero sí necesitas saber qué datos hay disponibles.</p>
     <div class="lab-table-wrap">
       <table class="lab-table">
         <thead>
@@ -137,11 +147,10 @@ https://bobs-beans-api.2akfv5yaq586.us-south.codeengine.appdomain.cloud/api/prod
       <p class="callout__title">¿Por qué no hay cuentas ni pagos?</p>
       <p>Es deliberado. <code>POST /api/orders</code> acepta cualquier carrito y devuelve al instante una confirmación con un <code>orderId</code>. No hay login, ni dirección, ni pago. Eso mantiene el workshop enfocado en construir UI a partir de un diseño — no en plomería de backend.</p>
     </div>
-  </section>
-
-  <section class="lab-section lab-step" aria-labelledby="lab1-step5">
-    <h2 class="cds--productive-heading-03" id="lab1-step5">Paso 5 — Revisa los mockups</h2>
-    <p class="cds--body-01">Estas tres capturas son tu fuente de verdad: en cada lab de construcción vas a adjuntar la que corresponda al chat de Bob para que construya a partir de la imagen. También están en tu proyecto, en <code>mockups/</code>, junto con los <code>*.mockup.html</code> de especificación de diseño.</p>
+    </div>
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 5 — Revisa los mockups</h3>
+<p class="cds--body-01">Estas tres capturas son tu fuente de verdad: en cada lab de construcción vas a adjuntar la que corresponda al chat de Bob para que construya a partir de la imagen. También están en tu proyecto, en <code>mockups/</code>, junto con los <code>*.mockup.html</code> de especificación de diseño.</p>
     <figure class="lab-figure">
       <img src="./assets/images/labs/software-development-lifecycle/home.png" alt="Mockup de la tienda — home.png" class="lab-figure__img" />
       <figcaption class="lab-figure__caption">Inicio / tienda — <code>mockups/home.png</code></figcaption>
@@ -154,11 +163,10 @@ https://bobs-beans-api.2akfv5yaq586.us-south.codeengine.appdomain.cloud/api/prod
       <img src="./assets/images/labs/software-development-lifecycle/cart.png" alt="Mockup del carrito — cart.png" class="lab-figure__img" />
       <figcaption class="lab-figure__caption">Carrito y checkout — <code>mockups/cart.png</code></figcaption>
     </figure>
-  </section>
-
-  <section class="lab-section lab-step" aria-labelledby="lab1-step6">
-    <h2 class="cds--productive-heading-03" id="lab1-step6">Paso 6 — Pide a Bob el plan de construcción</h2>
-    <p class="cds--body-01">Ahora convierte el diseño en un plan antes de construir. Cambia Bob a <strong>Plan Mode</strong>: analiza y propone un plan sin modificar ningún archivo todavía.</p>
+    </div>
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 6 — Pide a Bob el plan de construcción</h3>
+<p class="cds--body-01">Ahora convierte el diseño en un plan antes de construir. Cambia Bob a <strong>Plan Mode</strong>: analiza y propone un plan sin modificar ningún archivo todavía.</p>
     <div class="code-block">
       <button class="copy-button" type="button" aria-label="Copiar prompt">Copiar</button>
       <pre><code>Estoy construyendo una tienda de 3 pantallas en este proyecto. El shell de la aplicación,
@@ -185,10 +193,14 @@ No escribas código todavía. No agregues dependencias ni modifiques el cliente 
       <p class="callout__title">Cómo se ve un buen plan</p>
       <p>Bob debería responder con un plan que use los nombres reales de las funciones del cliente (<code>getProducts</code>, <code>getProduct</code>, <code>createOrder</code>, <code>imageUrl</code>, <code>useCart</code>) y que divida cada pantalla en secciones que se correspondan con los mockups. Si inventa endpoints o propone un backend, devuélvelo a <code>src/api/client.js</code> y al alcance de abajo.</p>
     </div>
+    </div>
   </section>
 
-  <section class="lab-section" aria-labelledby="lab1-scope">
-    <h2 class="cds--productive-heading-03" id="lab1-scope">Alcance — qué construimos y qué no</h2>
+<section class="lab-section" aria-labelledby="lab1-scope">
+    <h2 class="cds--productive-heading-03" id="lab1-scope">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
+      Alcance — qué construimos y qué no
+    </h2>
     <div class="hub-cap-grid">
       <div class="hub-cap-card">
         <p class="cds--productive-heading-02">En alcance</p>
@@ -212,18 +224,16 @@ No escribas código todavía. No agregues dependencias ni modifiques el cliente 
     <p class="cds--body-01" style="margin-top:1rem;">Mantener el alcance acotado es la lección, no una limitación. Frena a Bob si propone algo de la lista de fuera de alcance.</p>
   </section>
 
-  <section class="lab-section lab-step" aria-labelledby="lab1-gate">
-    <h2 class="cds--productive-heading-03" id="lab1-gate">Criterios de éxito</h2>
-    <ul class="cds--list--unordered">
+    <div class="callout" data-tone="tip">
+    <p class="callout__title">Lo que acabas de lograr</p>
+<ul class="cds--list--unordered">
       <li class="cds--list__item">Starter descomprimido y abierto en Bob.</li>
       <li class="cds--list__item"><code>npm run dev</code> muestra el esqueleto y los marcadores de posición (el <code>.env</code> incluido ya apunta a la API).</li>
       <li class="cds--list__item">Puedes abrir <code>/api/products</code> y un producto individual en el navegador.</li>
       <li class="cds--list__item">Revisaste los tres mockups.</li>
       <li class="cds--list__item">Bob produjo un plan de construcción pantalla por pantalla que referencia las funciones reales del cliente.</li>
     </ul>
-    <a class="cds--btn cds--btn--primary" style="margin-top:1rem" href="#/lab/software-development-lifecycle/storefront">
-      Siguiente: Lab 02 — Construir la tienda →
-    </a>
-  </section>
+  </div>
+
 
 </div>

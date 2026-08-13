@@ -1,5 +1,5 @@
 import { loadContent } from './content.js';
-import { siteData, workshopGuides, findLab } from './data.js';
+import { siteData, workshopGuides, findLab, getNextLab, getWorkshopStats } from './data.js';
 import { getHomeRoute, getLabRoute, parseRoute } from './router.js';
 import { initializeTheme, toggleTheme } from './theme.js';
 
@@ -207,13 +207,13 @@ function buildLabToc(proseEl, lab, step) {
   const usedIds = new Set();
   const prefix = `${lab.slug}-${step.slug}`;
   const headings = Array.from(proseEl.querySelectorAll('h2'))
+    .filter((heading) => !heading.closest('.lab-guide, .lab-closure, .workshop-format'))
     .map((heading) => ({
       id: getLabHeadingId(heading, prefix, usedIds),
-      label: heading.textContent.trim()
+      label: heading.textContent.trim().replace(/\s+/g, ' ')
     }))
     .filter(({ label }) => label.length > 0);
 
-  // A single heading does not need an extra navigation landmark.
   if (headings.length < 2) return;
 
   const toc = document.createElement('aside');
@@ -224,7 +224,7 @@ function buildLabToc(proseEl, lab, step) {
     <nav class="lab-toc__nav" aria-label="Secciones del lab">
       <ul class="lab-toc__list">
         ${headings.map(({ id, label }) => `
-          <li><a class="lab-toc__link" href="${getLabRoute(lab.slug, step.slug)}" data-toc-target="${id}">${escapeHtml(label)}</a></li>
+          <li><a class="lab-toc__link" href="${getLabRoute(lab.slug, step.slug, id)}" data-toc-target="${id}">${escapeHtml(label)}</a></li>
         `).join('')}
       </ul>
     </nav>`;
@@ -241,6 +241,10 @@ function buildLabToc(proseEl, lab, step) {
     const link = event.target.closest('.lab-toc__link');
     if (!link) return;
     event.preventDefault();
+    const href = link.getAttribute('href');
+    if (href && window.location.hash !== href) {
+      history.replaceState(null, '', href);
+    }
     scrollToTarget(link);
   });
 
@@ -340,6 +344,11 @@ const SECTION_TAG = {
   premium: { cls: 'cds--tag--green', label: 'Modernización de aplicaciones' }
 };
 
+function getBannerTitle(lab, step) {
+  if (step.slug === 'overview') return lab.title;
+  return getStepSubnavLabel(lab, step);
+}
+
 function ensureLabBanner(proseEl, section, lab, step) {
   let banner = proseEl.querySelector('.lab-banner');
 
@@ -347,13 +356,15 @@ function ensureLabBanner(proseEl, section, lab, step) {
     const panel = proseEl.querySelector('.content-panel') || proseEl;
     banner = document.createElement('div');
     banner.className = 'lab-banner';
-    const title = step.slug === 'overview' ? lab.title : step.label;
     banner.innerHTML = `
       <div class="lab-banner__tags"></div>
-      <h1 class="cds--productive-heading-05 lab-banner__title">${escapeHtml(title)}</h1>
+      <h1 class="cds--productive-heading-05 lab-banner__title">${escapeHtml(getBannerTitle(lab, step))}</h1>
     `;
     panel.insertBefore(banner, panel.firstElementChild);
   }
+
+  const titleEl = banner.querySelector('.lab-banner__title');
+  if (titleEl) titleEl.textContent = getBannerTitle(lab, step);
 
   let tags = banner.querySelector('.lab-banner__tags');
   if (!tags) {
@@ -388,7 +399,28 @@ function buildLabCard(lab, section) {
   const audienceTag = lab.audience && lab.audience.length === 1 && lab.audience[0] === 'partner'
     ? '<span class="cds--tag cds--tag--cyan hub-tag--partner">Solo Partners</span>'
     : '';
-  const imgPath = `./assets/images/labs/${lab.slug}/banner_bob.png`;
+  const featuredTag = lab.featured
+    ? '<span class="cds--tag cds--tag--high-contrast hub-lab-card__tag--featured">Track principal</span>'
+    : '';
+  const imgPath = lab.banner || `./assets/images/labs/${lab.slug}/banner_bob.png`;
+  const stats = getWorkshopStats(lab);
+  const durationStat = stats.duration
+    ? `<span class="hub-lab-card__stat">
+        <svg class="hub-lab-card__stat-icon" aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M16 30a14 14 0 1 1 14-14 14 14 0 0 1-14 14Zm0-26a12 12 0 1 0 12 12A12 12 0 0 0 16 4Z"/><path d="M20.59 22 15 16.41V7h2v8.58l5 5.01z"/></svg>
+        ${escapeHtml(stats.duration)}
+      </span>`
+    : '';
+  const bobcoinLabel = stats.bobcoins
+    ? (stats.bobcoins.min === stats.bobcoins.max
+      ? `${stats.bobcoins.min}`
+      : `${stats.bobcoins.min}–${stats.bobcoins.max}`)
+    : '';
+  const bobcoinStat = stats.bobcoins
+    ? `<span class="hub-lab-card__stat">
+        <svg class="hub-lab-card__stat-icon" aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"><path d="M28 10h-2V8a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h2v2a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2ZM4 22V8h20v2H8a2 2 0 0 0-2 2v10Zm24 4H8V12h20Z"/><path d="M22 18a2 2 0 1 0 2 2 2 2 0 0 0-2-2Z"/></svg>
+        ${escapeHtml(bobcoinLabel)} BobCoins
+      </span>`
+    : '';
 
   return `
     <a class="cds--tile cds--tile--clickable hub-lab-card hub-lab-card--${section.id}" href="${getLabRoute(lab.slug)}"
@@ -398,10 +430,12 @@ function buildLabCard(lab, section) {
       </div>
       <div class="hub-lab-card__body">
         <div class="hub-lab-card__tags">
+          ${featuredTag}
           <span class="cds--tag ${tag.cls}">${tag.label}</span>
           <span class="cds--tag ${tag.cls}">${escapeHtml(lab.supporting)}</span>
           ${audienceTag}
         </div>
+        ${(durationStat || bobcoinStat) ? `<div class="hub-lab-card__stats">${durationStat}${bobcoinStat}</div>` : ''}
         <h3 class="cds--productive-heading-02 hub-lab-card__title">${escapeHtml(lab.title)}</h3>
         <p class="cds--body-01 hub-lab-card__description">${escapeHtml(lab.description)}</p>
         <div class="hub-lab-card__footer">
@@ -504,13 +538,9 @@ function renderHome(searchTerm = '') {
           <p class="hub-hero__eyebrow">${siteData.hero.eyebrow}</p>
           <h1 class="hub-hero__title">${siteData.hero.title}</h1>
           <p class="cds--body-02 hub-hero__copy">${siteData.hero.description}</p>
-          <div class="hub-hero__metrics-strip">
-            ${siteData.highlights.map((item, idx) => `
-              ${idx > 0 ? '<div class="hub-hero__metric-divider" aria-hidden="true"></div>' : ''}
-              <div class="hub-hero__metric-item">
-                <span class="hub-hero__metric-val">${item.value}</span>
-                <span class="hub-hero__metric-lbl">${item.label}</span>
-              </div>
+          <div class="hub-hero__chips" aria-label="Secciones del hub">
+            ${siteData.sections.map((section) => `
+              <a class="hub-hero__chip" href="#available-workshops">${section.title}</a>
             `).join('')}
           </div>
           <div class="hub-hero__actions">
@@ -1326,103 +1356,76 @@ function buildStepBrief(section, lab, step) {
 
 const LAB_STEP_SEPARATOR = ' — ';
 
-const JAVA_LAB_NAV_PREFIXES = {
-  lab1: 'Lab 1',
-  lab2: 'Lab 2',
-  lab3: 'Lab 3',
-  lab4: 'Lab 4',
-  'lab-alt4': 'Lab 4 alternativo',
-  lab5: 'Lab 5',
-};
-
-const IBM_I_LAB_NAV_PREFIXES = {
-  lab0: 'Lab 0',
-  lab1: 'Lab 1',
-  lab2: 'Lab 2',
-  lab3: 'Lab 3',
-};
-
-const JAVA_LAB_NEXT_LABELS = {
-  lab1: 'Lab 1',
-  lab2: 'Lab 2',
-  lab3: 'Lab 3',
-  lab4: 'Lab 4',
-  'lab-alt4': 'Lab 4 alternativo',
-  lab5: 'Lab 5',
-};
-
-const IBM_I_LAB_NEXT_LABELS = {
-  lab0: 'Lab 0',
-  lab1: 'Lab 1',
-  lab2: 'Lab 2',
-  lab3: 'Lab 3',
-};
-
 function getLabNavPrefixes(lab) {
-  if (lab.slug === 'java-modernization-v2') return JAVA_LAB_NAV_PREFIXES;
-  if (lab.slug === 'ibm-i-rpg-development') return IBM_I_LAB_NAV_PREFIXES;
-  return null;
+  const map = {};
+  let n = 1;
+  for (const step of lab.steps) {
+    if (step.slug === 'overview') continue;
+    if (step.slug === 'lab-alt4') {
+      map[step.slug] = 'Lab 4 alternativo';
+      continue;
+    }
+    const numbered = step.slug.match(/^lab(\d+)$/);
+    if (numbered) {
+      map[step.slug] = `Lab ${Number(numbered[1])}`;
+      n = Math.max(n, Number(numbered[1]) + 1);
+      continue;
+    }
+    map[step.slug] = `Lab ${n}`;
+    n += 1;
+  }
+  return map;
 }
 
 function getLabNextLabels(lab) {
-  if (lab.slug === 'java-modernization-v2') return JAVA_LAB_NEXT_LABELS;
-  if (lab.slug === 'ibm-i-rpg-development') return IBM_I_LAB_NEXT_LABELS;
-  return null;
+  return getLabNavPrefixes(lab);
 }
 
 function getStepSubnavLabel(lab, step) {
   if (step.slug === 'overview') return step.label;
   const prefixes = getLabNavPrefixes(lab);
-  if (prefixes) {
-    const prefix = prefixes[step.slug];
-    if (prefix) {
-      // Some steps already use the full lab name as their label. Avoid
-      // rendering labels such as "Lab 4 alternativo — Lab 4 alternativo".
-      if (step.label.trim().toLowerCase() === prefix.trim().toLowerCase()) return prefix;
-      return `${prefix}${LAB_STEP_SEPARATOR}${step.label}`;
-    }
+  const prefix = prefixes[step.slug];
+  if (prefix) {
+    if (step.label.trim().toLowerCase() === prefix.trim().toLowerCase()) return prefix;
+    return `${prefix}${LAB_STEP_SEPARATOR}${step.label}`;
   }
   return step.label;
 }
 
-function getClosureNextLabel(lab, nextStep) {
-  if (!nextStep) return 'Volver al inicio del workshop';
-  const nextLabels = getLabNextLabels(lab);
-  if (nextLabels) {
-    const shortLabel = nextLabels[nextStep.slug];
-    return shortLabel ? `Continuar con ${shortLabel}` : `Continuar con ${nextStep.label}`;
+function getClosureNextLabel(lab, nextStep, nextWorkshop) {
+  if (nextStep) {
+    const nextLabels = getLabNextLabels(lab);
+    const shortLabel = nextLabels?.[nextStep.slug];
+    if (shortLabel) {
+      if (nextStep.label.trim().toLowerCase() === shortLabel.trim().toLowerCase()) {
+        return `Continuar con ${shortLabel}`;
+      }
+      return `Continuar con ${shortLabel}${LAB_STEP_SEPARATOR}${nextStep.label}`;
+    }
+    return `Continuar con ${nextStep.label}`;
   }
-  return `Continuar con ${nextStep.label}`;
+  if (nextWorkshop) {
+    const shortName = nextWorkshop.lab.supporting || nextWorkshop.lab.title;
+    return `Continuar con ${shortName}`;
+  }
+  return 'Volver al inicio del workshop';
 }
 
 function buildStepClosure(lab, step) {
   const stepIndex = lab.steps.findIndex((item) => item.slug === step.slug);
   const nextStep = lab.steps[stepIndex + 1];
-  const destination = nextStep ? getLabRoute(lab.slug, nextStep.slug) : getLabRoute(lab.slug, 'overview');
-  const destinationLabel = getClosureNextLabel(lab, nextStep);
+  const nextWorkshop = nextStep ? null : getNextLab(lab.slug);
+  const destination = nextStep
+    ? getLabRoute(lab.slug, nextStep.slug)
+    : nextWorkshop
+      ? getLabRoute(nextWorkshop.lab.slug, 'overview')
+      : getLabRoute(lab.slug, 'overview');
+  const destinationLabel = getClosureNextLabel(lab, nextStep, nextWorkshop);
 
   return `
-    <section class="lab-closure" aria-labelledby="${lab.slug}-${step.slug}-closure">
-      <p class="lab-guide__eyebrow">Validación</p>
-      <h2 id="${lab.slug}-${step.slug}-closure">Cierre de la etapa</h2>
-      <div class="lab-closure__grid">
-        <section aria-labelledby="${lab.slug}-${step.slug}-success">
-          <h3 id="${lab.slug}-${step.slug}-success">Criterios de éxito</h3>
-          <ul class="workshop-checklist">
-            ${checklistItem('El resultado esperado de los pasos está visible y revisado.')}
-            ${checklistItem('Los cambios, comandos o configuraciones fueron aprobados conscientemente.')}
-            ${checklistItem('El estado final queda listo para la siguiente etapa.')}
-          </ul>
-        </section>
-        <section aria-labelledby="${lab.slug}-${step.slug}-takeaways">
-          <h3 id="${lab.slug}-${step.slug}-takeaways">Aprendizajes clave</h3>
-          <p>La etapa combina instrucciones reproducibles, validación explícita y una decisión clara sobre cómo continuar dentro del workshop.</p>
-        </section>
-      </div>
-      <details class="lab-troubleshooting">
-        <summary>Problemas frecuentes y ayuda</summary>
-        <p>Confirma primero los requisitos del overview, el directorio o servicio activo y las credenciales requeridas. Si el resultado no coincide con el checkpoint, repite el último paso con el prompt incluido y revisa el diff antes de continuar.</p>
-      </details>
+    <section class="lab-closure lab-closure--next" aria-labelledby="${lab.slug}-${step.slug}-closure">
+      <p class="lab-guide__eyebrow">Continuar</p>
+      <h2 id="${lab.slug}-${step.slug}-closure">Siguiente</h2>
       <a class="cds--btn cds--btn--tertiary lab-closure__next" href="${destination}">${escapeHtml(destinationLabel)} <span aria-hidden="true">→</span></a>
     </section>`;
 }
@@ -1453,8 +1456,6 @@ function normalizeVisibleCopy(container) {
 }
 
 function normalizeHandsOnPresentation(proseEl, lab) {
-  if (lab.slug !== 'hands-on-inicial') return;
-
   proseEl.querySelectorAll('.cds--list__item').forEach((item) => {
     if (!item.textContent.trim().startsWith('✅') || item.dataset.carbonChecked === 'true') return;
     item.dataset.carbonChecked = 'true';
@@ -1558,9 +1559,8 @@ function enhanceLabContent(proseEl, section, lab, step, isOverview) {
       const anchor = proseEl.querySelector('.bobcoin-cost--total') || banner;
       if (anchor) anchor.insertAdjacentHTML('afterend', buildOverviewFormat(section, lab));
     }
-  } else if (!isOverview) {
-    const anchor = banner || proseEl.firstElementChild;
-    if (anchor) anchor.insertAdjacentHTML('afterend', buildStepBrief(section, lab, step));
+    proseEl.insertAdjacentHTML('beforeend', buildStepClosure(lab, step));
+  } else {
     proseEl.insertAdjacentHTML('beforeend', buildStepClosure(lab, step));
   }
 
@@ -1678,6 +1678,12 @@ async function renderLab(route) {
   enhanceLabContent(proseEl, section, lab, activeStep, isOverview);
   buildLabToc(proseEl, lab, activeStep);
   bindImageFallbacks(labShell);
+
+  if (route.headingId) {
+    requestAnimationFrame(() => {
+      document.getElementById(route.headingId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
 }
 
 // ── Route dispatcher ─────────────────────────────────────────────

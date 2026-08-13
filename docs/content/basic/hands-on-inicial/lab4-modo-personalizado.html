@@ -5,19 +5,18 @@
       <span class="cds--tag cds--tag--green">Modo Personalizado</span>
       <span class="cds--tag cds--tag--cool-gray">12 min</span>
     </div>
-    <h1 class="cds--productive-heading-05 lab-banner__title">LAB 4 — Crea tu Propio Modo Personalizado de IBM Bob</h1>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Lab 3 — Modo personalizado</h1>
 
-    <!-- ── Hero image ──────────────────────────────────────────────── -->
     <div class="lab-hero-image">
       <img src="./assets/images/labs/hands-on-inicial/lab4_bob.png"
-           alt="Banner del LAB 4 — Crear Modo Personalizado de IBM Bob"
+           alt="Banner del Lab 3 — Crear un modo personalizado de IBM Bob"
            class="lab-hero-image__img" />
     </div>
 
     <div class="lab-banner__metrics">
       <div class="lab-banner__metric">
         <span class="lab-banner__metric-value">1</span>
-        <span class="lab-banner__metric-label">modo creado en YAML</span>
+        <span class="lab-banner__metric-label">modo Product Manager</span>
       </div>
       <div class="lab-banner__metric">
         <span class="lab-banner__metric-value">0</span>
@@ -28,223 +27,223 @@
         <span class="lab-banner__metric-label">BobCoins estimados</span>
       </div>
       <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">4</span>
+        <span class="lab-banner__metric-value">5</span>
         <span class="lab-banner__metric-label">pasos</span>
       </div>
     </div>
   </div>
 
-  <!-- Objetivos -->
-  <section class="lab-section" aria-labelledby="lab4-obj">
-    <h2 class="cds--productive-heading-03" id="lab4-obj">
-      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="vertical-align:-3px;margin-right:8px"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
-      Objetivos de Aprendizaje
+  <section class="lab-section" aria-labelledby="lab3-obj">
+    <h2 class="cds--productive-heading-03" id="lab3-obj">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
+      Objetivos de aprendizaje
     </h2>
     <ul class="cds--list--unordered">
-      <li class="cds--list__item">✅ Entender la estructura de un modo personalizado</li>
-      <li class="cds--list__item">✅ Crear tu propio modo especializado en YAML</li>
-      <li class="cds--list__item">✅ Configurar capacidades y permisos del modo</li>
-      <li class="cds--list__item">✅ Importar y probar tu modo en IBM Bob</li>
+      <li class="cds--list__item">✅ Crear un modo personalizado desde la UI de IBM Bob</li>
+      <li class="cds--list__item">✅ Definir rol, instrucciones y herramientas del modo <strong>product-manager</strong></li>
+      <li class="cds--list__item">✅ Revisar el YAML que Bob escribe en <code>.bob/custom_modes.yaml</code></li>
+      <li class="cds--list__item">✅ Probar el modo pidiendo qué funcionalidad construir después</li>
     </ul>
   </section>
 
-  <!-- Casos de uso -->
-  <section class="lab-section" aria-labelledby="lab4-casos">
-    <h2 class="cds--productive-heading-03" id="lab4-casos">
-      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="vertical-align:-3px;margin-right:8px"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
-      ¿Para Qué Sirven los Modos Personalizados?
+  <section class="lab-section" aria-labelledby="lab3-para-que">
+    <h2 class="cds--productive-heading-03" id="lab3-para-que">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
+      Qué es un modo personalizado
     </h2>
-    <p class="cds--body-01">Piénsalo como <strong>contratar un consultor especializado</strong>: en lugar de un consultor genérico, entrenas a IBM Bob para ser experto en un tema específico de tu organización.</p>
-
-    <div class="lab-cases-grid">
-      <div class="cds--tile lab-case-tile">
-        <h3 class="cds--productive-heading-02 lab-case-tile__title">Fintech — Compliance</h3>
-        <p class="cds--body-01">Modo "Compliance Checker" que valida código contra PCI-DSS y SOC2 automáticamente en cada PR.</p>
-      </div>
-      <div class="cds--tile lab-case-tile">
-        <h3 class="cds--productive-heading-02 lab-case-tile__title">Healthcare — HIPAA</h3>
-        <p class="cds--body-01">Modo "HIPAA Validator" que asegura cumplimiento en cada módulo que maneja datos de pacientes.</p>
-      </div>
-      <div class="cds--tile lab-case-tile">
-        <h3 class="cds--productive-heading-02 lab-case-tile__title">E-commerce — Pricing</h3>
-        <p class="cds--body-01">Modo "Pricing Analyst" que compara precios con competencia y genera reportes ejecutivos.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Anatomía del modo -->
-  <section class="lab-section" aria-labelledby="lab4-anatomia">
-    <h2 class="cds--productive-heading-03" id="lab4-anatomia">
-      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="vertical-align:-3px;margin-right:8px"><path d="M25 5h-.17A3 3 0 0 0 22 3H10a3 3 0 0 0-2.83 2H7a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h18a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4ZM10 5h12a1 1 0 0 1 0 2H10a1 1 0 0 1 0-2Zm15 22H7a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h.17A3 3 0 0 0 10 9h12a3 3 0 0 0 2.83-2H25a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2Z"/><path d="M10 13h12v2H10zm0 5h12v2H10zm0 5h8v2h-8z"/></svg>
-      Anatomía de un Modo Personalizado
-    </h2>
-    <p class="cds--body-01">Un modo personalizado es un archivo YAML con estos campos:</p>
-    <div class="code-block">
-      <button type="button" class="copy-button">Copiar</button>
-      <pre><code>customModes:
-  - slug: nombre-del-modo        # ID único (lowercase, guiones)
-    name: Nombre Visible         # Lo que ves en la UI
-    description: Descripción     # Propósito del modo
-    scope: project               # 'project' o 'global'
-
-    roleDefinition: |            # EL CEREBRO — define qué sabe y cómo se comporta
-      Aquí defines QUÉ sabe hacer el modo
-      y CÓMO debe comportarse
-
-    whenToUse: |                 # Guía para Bob Agent sobre cuándo activar este modo
-      Orientación para el Agent Mode sobre cuándo delegar a este modo
-
-    groups:                      # Herramientas disponibles
-      - read                     # Leer archivos (auto-aprobado)
-      - edit                     # Editar archivos
-      - browser                  # Usar navegador web
-      - command                  # Ejecutar comandos
-      - mcp                      # Usar MCP (herramientas externas)</code></pre>
-    </div>
+    <p class="cds--body-01">Ask, Plan y Agent cubren el flujo de desarrollo. Un <strong>modo personalizado</strong> añade una persona especializada: rol, instrucciones de comportamiento y un conjunto fijo de herramientas. En este lab entrenas a Bob para actuar como Product Manager: clarifica el problema del usuario, propone un MVP, prioriza, define métricas y produce un roadmap.</p>
 
     <div class="callout" data-tone="note">
-      <p class="callout__title">El campo <code>whenToUse</code></p>
-      <p><code>whenToUse</code> guía a <strong>Agent Mode</strong> para decidir cuándo delegar una tarea a este modo personalizado como subagente. Es la clave de la orquestación automática.</p>
+      <p class="callout__title">Rules vs modo personalizado</p>
+      <p>Las <strong>rules</strong> se aplican a todas las conversaciones y a todos los modos. Un modo personalizado no las anula. Si configuraste un monólogo interno como rule global, seguirá generando resúmenes aunque uses este modo. Usa rules para estándares de equipo (tono, JSDoc, auditoría) y el modo para una persona especializada (product manager, pricing, compliance).</p>
     </div>
-
-    <figure class="lab-figure">
-      <img src="./assets/images/labs/hands-on-inicial/lab4-mode-structure.png"
-           alt="Estructura YAML de un modo personalizado de IBM Bob con sus campos anotados"
-           class="lab-figure__img" />
-      <figcaption class="lab-figure__caption">Estructura completa de un modo personalizado en YAML</figcaption>
-    </figure>
   </section>
 
-  <!-- Ejercicio -->
-  <section class="lab-section" aria-labelledby="lab4-ejercicio">
-    <h2 class="cds--productive-heading-03" id="lab4-ejercicio">
-      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" style="vertical-align:-3px;margin-right:8px"><path d="M11 8l16 8-16 8z"/></svg>
-      Ejercicio: Crear el Modo "Pricing Comparison Expert"
+  <section class="lab-section" aria-labelledby="lab3-ejercicio">
+    <h2 class="cds--productive-heading-03" id="lab3-ejercicio">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
+      Crear el modo product-manager
     </h2>
 
-    <!-- Paso 1 -->
     <div class="lab-step lab-step--split">
       <div class="lab-step__body">
-        <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Abrir el Gestor de Modos</h3>
+        <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Abrir la configuración de modos</h3>
         <ol class="cds--list--ordered">
-          <li class="cds--list__item">Abre el selector de modos del chat</li>
-          <li class="cds--list__item">Elige <strong>Manage Modes</strong> / <strong>Edit Modes</strong></li>
-          <li class="cds--list__item">Abre el editor de modos</li>
+          <li class="cds--list__item">En IBM Bob, abre el selector de modos del chat</li>
+          <li class="cds--list__item">Pulsa el <strong>engranaje</strong> para abrir la configuración de modos</li>
         </ol>
       </div>
       <div class="lab-step__media">
         <figure class="lab-figure">
-          <img src="./assets/images/labs/hands-on-inicial/lab4-mode-select.png"
-               alt="Selector de modos de IBM Bob mostrando la opción Manage Modes"
+          <img src="./assets/images/labs/hands-on-inicial/ibm-custom-mode-settings.png"
+               alt="Selector de modos de IBM Bob con el icono de engranaje para abrir la configuración"
                class="lab-figure__img" />
-          <figcaption class="lab-figure__caption">Verifica: acceso a Manage Modes desde el selector</figcaption>
+          <figcaption class="lab-figure__caption">Abre el selector de modos y pulsa el engranaje</figcaption>
         </figure>
       </div>
     </div>
 
-    <!-- Paso 2 -->
     <div class="lab-step lab-step--split">
       <div class="lab-step__body">
-        <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Crear el Modo en YAML</h3>
-        <p class="cds--body-01">Pega esta definición del modo <strong>Pricing Comparison Expert</strong>:</p>
-        <div class="code-block">
+        <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Crear un modo nuevo</h3>
+        <p class="cds--body-01">Pulsa el icono <strong>+</strong> para crear un modo nuevo. Se abre el formulario de detalle.</p>
+      </div>
+      <div class="lab-step__media">
+        <figure class="lab-figure">
+          <img src="./assets/images/labs/hands-on-inicial/ibm-add-mode.png"
+               alt="Diálogo de IBM Bob para añadir un modo personalizado con el botón +"
+               class="lab-figure__img" />
+          <figcaption class="lab-figure__caption">Pulsa + para crear un modo nuevo</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Completar los campos del modo</h3>
+      <p class="cds--body-01">Rellena slug, nombre, alcance, definición de rol, cuándo usarlo, instrucciones y herramientas con estos valores. El slug técnico se deja en inglés; el resto va en español para que Bob responda en el idioma del workshop.</p>
+      <div class="lab-table-wrap">
+        <table class="lab-table">
+          <thead><tr><th>Campo</th><th>Valor</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Slug</th><td><code>product-management</code></td></tr>
+            <tr><th scope="row">Name</th><td><code>product-manager</code></td></tr>
+            <tr><th scope="row">Description</th><td>Convierte ideas vagas en un plan de producto simple y priorizado, con resultados claros. Define el alcance del MVP, user stories, métricas de éxito y un roadmap ligero que el equipo puede ejecutar.</td></tr>
+            <tr><th scope="row">Scope</th><td>Project</td></tr>
+            <tr><th scope="row">Role definition</th><td>Eres un Product Manager. Ayudas a definir qué construir y por qué. Clarificas el problema del usuario, propones un MVP, priorizas el trabajo, defines métricas de éxito y produces artefactos simples y compartibles (tarjeta MVP, roadmap, user stories, riesgos). Lo mantienes práctico y cercano para demos: jerga mínima, decisiones rápidas y tradeoffs explícitos.</td></tr>
+            <tr><th scope="row">When to use</th><td>Usa este modo cuando necesites decidir qué construir (o qué construir después), definir un MVP, crear un roadmap simple, escribir user stories y criterios de aceptación, o definir métricas de éxito. No es para programar ni para arquitectura técnica profunda.</td></tr>
+            <tr><th scope="row">Available tools</th><td>Read files, Edit files, Use MCP</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="cds--body-01" style="margin-top:16px">En el campo de <strong>instrucciones personalizadas del modo</strong>, pega este texto:</p>
+      <div class="code-block code-block--prompt">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>1. Empieza resumiendo la petición en 2-3 líneas y extrae:
+    a. Usuario objetivo
+    b. Problema / dolor
+    c. Resultado deseado
+    d. Restricciones (tiempo, alcance, dependencias)
+
+2. Haz como máximo 5 preguntas de aclaración. Si faltan respuestas, asume con criterio y márcalas claramente como supuestos.
+
+3. Produce siempre estos artefactos, cortos y fáciles de presentar:
+    a. Tarjeta MVP: Objetivo, Usuario, Dolor, En alcance (3-6 viñetas), Fuera de alcance (2-4 viñetas)
+    b. Roadmap Ahora / Después / Más adelante (3-5 viñetas por columna)
+    c. Top 5 user stories con “Hecho cuando…” (2-3 criterios de aceptación cada una)
+    d. Métricas de éxito: 1 primaria, 1-2 secundarias, 1 guardrail
+    e. Riesgos y preguntas abiertas (2-4)
+
+4. Haz los tradeoffs explícitos. Si algo entra al MVP, otra cosa debe pasar a Después o Más adelante.
+
+5. Termina con una sola decisión recomendada para que la persona apruebe, por ejemplo confirmar el alcance del MVP o elegir entre dos opciones.
+
+6. Usa un lenguaje simple y cercano. Evita nombres de frameworks salvo que te lo pidan (nada de jerga RICE/PRD por defecto).
+
+7. Si ayuda, incluye un diagrama pequeño (opcional), por ejemplo un flujo corto del journey del usuario.</code></pre>
+      </div>
+
+      <p class="cds--body-01" style="margin-top:12px">Guarda el modo.</p>
+
+      <figure class="lab-figure" style="margin-top:16px;">
+        <img src="./assets/images/labs/hands-on-inicial/ibm-custom-mode-filled.png"
+             alt="Formulario de modo personalizado de IBM Bob relleno con los datos de product-manager"
+             class="lab-figure__img" />
+        <figcaption class="lab-figure__caption">Formulario relleno: slug, rol, herramientas y alcance Project</figcaption>
+      </figure>
+    </div>
+
+    <div class="lab-step lab-step--split">
+      <div class="lab-step__body">
+        <h3 class="cds--productive-heading-02 lab-step__title">Paso 4 — Revisar <code>.bob/custom_modes.yaml</code></h3>
+        <p class="cds--body-01">Bob crea <code>.bob/custom_modes.yaml</code> con la configuración del modo. Puedes editar ese archivo para ajustar el comportamiento. Debe parecerse a esto:</p>
+        <div class="code-block code-block--yaml">
           <button type="button" class="copy-button">Copiar</button>
           <pre><code>customModes:
-  - slug: pricing-comparison-expert
-    name: Pricing Comparison Expert
-    description: Compare AI coding tool pricing and generate executive cost reports
-    scope: global
+  - slug: product-management
+    name: product-manager
+    description: Convierte ideas vagas en un plan de producto simple y priorizado, con resultados claros. Define el alcance del MVP, user stories, métricas de éxito y un roadmap ligero que el equipo puede ejecutar.
+    scope: project
 
     roleDefinition: |
-      You are IBM Bob, an expert at comparing the price and cost of
-      coding agents in the market.
-
-      ## Pricing Data (Current)
-      - IBM Bob Enterprise Plan: $20/user/month + $2.5 per million tokens
-      - GitHub Copilot Enterprise: $39/user/month
-      - Cursor Pro: $20/user/month
-      - Claude Code: $30/user/month (Pro plan)
-
-      ## Core Principles
-      - Always use current market data for comparisons
-      - Calculate total cost of ownership including token costs
-      - Generate professional reports with clear ROI analysis
-      - Present data in tables for easy comparison
-      - Highlight IBM Bob advantages clearly but honestly
+      Eres un Product Manager. Ayudas a definir qué construir y por qué.
+      Clarificas el problema del usuario, propones un MVP, priorizas el
+      trabajo, defines métricas de éxito y produces artefactos simples y
+      compartibles (tarjeta MVP, roadmap, user stories, riesgos). Lo
+      mantienes práctico y cercano para demos: jerga mínima, decisiones
+      rápidas y tradeoffs explícitos.
 
     whenToUse: |
-      Use this mode when you need to:
-      - Compare pricing between AI coding tools
-      - Generate cost analysis reports for clients
-      - Calculate ROI and total cost of ownership
-      - Prepare executive presentations on AI tool costs
+      Usa este modo cuando necesites decidir qué construir (o qué construir
+      después), definir un MVP, crear un roadmap simple, escribir user
+      stories y criterios de aceptación, o definir métricas de éxito. No es
+      para programar ni para arquitectura técnica profunda.
+
+    customInstructions: |
+      1. Empieza resumiendo la petición en 2-3 líneas y extrae usuario,
+         problema, resultado y restricciones.
+      2. Haz como máximo 5 preguntas de aclaración.
+      3. Produce tarjeta MVP, roadmap Ahora/Después/Más adelante, user
+         stories, métricas y riesgos.
+      4. Haz los tradeoffs explícitos.
+      5. Termina con una sola decisión recomendada.
+      6. Lenguaje simple; sin jerga RICE/PRD por defecto.
 
     groups:
       - read
-      - edit</code></pre>
+      - edit
+      - mcp</code></pre>
         </div>
       </div>
       <div class="lab-step__media">
         <figure class="lab-figure">
-          <img src="./assets/images/labs/hands-on-inicial/lab4-import-yaml.png"
-               alt="Editor de IBM Bob con el YAML del modo personalizado listo para importar"
+          <img src="./assets/images/labs/hands-on-inicial/ibm-custom-modes-yaml.png"
+               alt="Archivo custom_modes.yaml generado por IBM Bob con el modo product-manager"
                class="lab-figure__img" />
-          <figcaption class="lab-figure__caption">Verifica: YAML del modo listo en el editor</figcaption>
+          <figcaption class="lab-figure__caption">Bob escribe el modo en .bob/custom_modes.yaml</figcaption>
         </figure>
       </div>
     </div>
+  </section>
 
-    <!-- Paso 3 -->
+  <section class="lab-section" aria-labelledby="lab3-probar">
+    <h2 class="cds--productive-heading-03" id="lab3-probar">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
+      Probar el modo product-manager
+    </h2>
+
     <div class="lab-step lab-step--split">
       <div class="lab-step__body">
-        <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Guardar e Importar el Modo</h3>
+        <h3 class="cds--productive-heading-02 lab-step__title">Paso 5 — Cambiar de modo y preguntar</h3>
         <ol class="cds--list--ordered">
-          <li class="cds--list__item">Guarda el YAML (<kbd>Cmd/Ctrl + S</kbd>)</li>
-          <li class="cds--list__item">Bob detecta el nuevo modo</li>
-          <li class="cds--list__item">En el selector debe aparecer <strong>Pricing Comparison Expert</strong></li>
+          <li class="cds--list__item">En el selector de modos, elige <strong>product-manager</strong></li>
+          <li class="cds--list__item">Envía este prompt:</li>
         </ol>
+        <div class="code-block code-block--prompt">
+          <button type="button" class="copy-button">Copiar</button>
+          <pre><code>¿Qué funcionalidad deberíamos construir después?</code></pre>
+        </div>
+        <p class="cds--body-01" style="margin-top:12px">Bob debería listar funcionalidades posibles y puede hacer preguntas de aclaración sobre el producto y las necesidades de las personas usuarias. Respóndelas; el modo está diseñado para extraer usuario, problema, resultado y restricciones antes de proponer un MVP.</p>
       </div>
       <div class="lab-step__media">
         <figure class="lab-figure">
-          <img src="./assets/images/labs/hands-on-inicial/lab4-mode-viewer.png"
-               alt="IBM Bob mostrando el modo personalizado Pricing Comparison Expert en el selector"
+          <img src="./assets/images/labs/hands-on-inicial/ibm-product-manager-mode.png"
+               alt="IBM Bob con el modo product-manager seleccionado en el chat"
                class="lab-figure__img" />
-          <figcaption class="lab-figure__caption">Verifica: el modo aparece en el selector</figcaption>
+          <figcaption class="lab-figure__caption">Cambia al modo product-manager y envía el prompt de prueba</figcaption>
         </figure>
-      </div>
-    </div>
-
-    <!-- Paso 4 -->
-    <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 4 — Probar el Modo en Acción</h3>
-      <p class="cds--body-01">Selecciona el modo <strong>Pricing Comparison Expert</strong> y envía este prompt:</p>
-      <div class="code-block">
-        <button type="button" class="copy-button">Copiar</button>
-        <pre><code>Genera un reporte ejecutivo comparando el costo total anual
-de IBM Bob vs GitHub Copilot vs Cursor para un equipo de 50 desarrolladores.
-
-Incluye:
-1. Tabla comparativa de precios por usuario
-2. Costo total anual por herramienta
-3. ROI estimado basado en ahorro de tiempo
-4. Recomendación final con justificación</code></pre>
-      </div>
-      <div class="callout" data-tone="tip">
-        <p class="callout__title">Observa la diferencia</p>
-        <p>Con el modo personalizado, IBM Bob ya sabe los precios exactos, el formato esperado del reporte y el estilo de presentación — <strong>sin necesidad de explicarlo cada vez</strong>.</p>
       </div>
     </div>
   </section>
 
   <div class="callout" data-tone="tip">
-    <p class="callout__title">¡Lo que acabas de lograr en 12 minutos!</p>
+    <p class="callout__title">Lo que acabas de lograr</p>
     <ul class="cds--list--unordered">
-      <li class="cds--list__item">✅ Entendiste la estructura completa de un modo personalizado en IBM Bob</li>
-      <li class="cds--list__item">✅ Creaste tu primer modo en YAML con <code>whenToUse</code> para Agent Mode</li>
-      <li class="cds--list__item">✅ Lo importaste y probaste en IBM Bob</li>
-      <li class="cds--list__item">✅ Generaste un reporte ejecutivo con conocimiento especializado</li>
+      <li class="cds--list__item">✅ Creaste un modo con rol, instrucciones y herramientas propias</li>
+      <li class="cds--list__item">✅ Revisaste el YAML en <code>.bob/custom_modes.yaml</code></li>
+      <li class="cds--list__item">✅ Probaste el modo Product Manager pidiendo la siguiente funcionalidad</li>
     </ul>
-    <p style="margin-top:12px"><strong>Próximo paso:</strong> Adapta el <code>roleDefinition</code> con los estándares, precios o reglas de <em>tu</em> organización para crear modos de alto valor.</p>
+    <p style="margin-top:12px">Prueba otras personas (diseño UX, analista de datos, DevOps) cambiando el <code>roleDefinition</code> y las herramientas. Si versionas <code>.bob/custom_modes.yaml</code> con el código, todo el equipo hereda el modo.</p>
   </div>
 
 </div>

@@ -13,7 +13,7 @@
 
     <div class="lab-banner__metrics">
       <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">6–12</span>
+        <span class="lab-banner__metric-value">4–6</span>
         <span class="lab-banner__metric-label">BobCoins estimados</span>
       </div>
       <div class="lab-banner__metric">
@@ -170,23 +170,18 @@
     </h2>
 
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Escanear dependencias y generar informe de vulnerabilidades</h3>
-      <p class="cds--body-01">Al cambiar de carpeta, Bob abre un chat nuevo en <strong>Agent Mode</strong>. Copia y pega <strong>todo</strong> el bloque.</p>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Prompt para Bob</h3>
+      <div class="callout" data-tone="note" style="margin-bottom:var(--cds-spacing-04,0.75rem)">
+        <p class="callout__title">Tu acción — pega esto en el chat (Agent Mode)</p>
+        <p>Al cambiar de carpeta, Bob abre un chat nuevo. Copia el bloque y pégalo como <strong>un solo mensaje</strong>. No añadas "adelante" ni el prompt de remediación todavía.</p>
+      </div>
       <div class="code-block">
         <button type="button" class="copy-button">Copiar</button>
-        <pre><code>Reglas de trabajo:
-- Fases: (1) Análisis — no modifiques archivos hasta mi "adelante"; (2) Cambios — un diff a la vez, espera mi "ok"; (3) Validación — mvn compile o mvn test con output completo.
-- Solo la carpeta raíz abierta en Bob. No explores otras carpetas snap*.
-- Cambios mínimos para el objetivo del lab. Sin refactors ni funcionalidades extra.
-- PROTOCOLO Fase 2: una CVE/cambio por turno — diff unified completo, pregunta "¿Aplico?", PARA hasta mi "ok". Prohibido batch y ejecutar mvn sin permiso.
-
-Lab 5: detectar y remediar vulnerabilidades de seguridad en las dependencias.
+        <pre><code>Lab 5: detectar y remediar vulnerabilidades de seguridad en las dependencias.
 Carpeta raíz: la que está abierta (snapE — Java 21, Liberty, API REST).
 El código de producción en src/main/ NO se toca en esta fase.
 
----
-
-FASE 1 — ESCANEO Y TRIAJE (no toques nada todavía)
+FASE 1 — ESCANEO Y TRIAJE (no toques ningún archivo)
 
 1. Lee el pom.xml y resuelve el árbol de dependencias completo (directas y transitivas).
    Reporta cuántos paquetes escanearás.
@@ -209,14 +204,23 @@ FASE 1 — ESCANEO Y TRIAJE (no toques nada todavía)
    - FormularyLoader (snakeyaml / deserialización YAML)
    - Solo grafo de dependencias (commons-lang3)
 
-Preséntame el informe. Cuando yo diga "adelante", pasamos a Fase 2.</code></pre>
+Preséntame el informe y espera el siguiente prompt.
+
+Reglas: solo la carpeta raíz abierta; no explores otras carpetas snap*.
+No modifiques src/main/. Sin refactors ni funcionalidades extra.</code></pre>
       </div>
+      <p class="cds--body-01" style="margin-top:var(--cds-spacing-05,1rem)"><strong>Qué hará Bob:</strong></p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">Escanear dependencias directas y transitivas contra CVE/OSV</li>
+        <li class="cds--list__item">Presentar una tabla con severidad, tipo y alcanzabilidad</li>
+        <li class="cds--list__item">Detenerse <strong>sin editar</strong> <code>pom.xml</code></li>
+      </ul>
     </div>
 
-    <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
+      <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
       <p class="callout__title">Checkpoint — el escaneo encontró los CVEs plantados</p>
-      <p>Bob debería reportar como mínimo CVE-2022-42889 (Text4Shell), GHSA-mjmj-j48q-9wg2 (SnakeYAML RCE) y GHSA-j288-q9x7-2f5v (commons-lang3). SnakeYAML suele mostrar varios CVEs a la vez — no te sorprendas si el conteo supera tres.</p>
-    </div>
+        <p>Bob debería reportar como mínimo CVE-2022-42889 (Text4Shell), GHSA-mjmj-j48q-9wg2 (SnakeYAML RCE) y GHSA-j288-q9x7-2f5v (commons-lang3). SnakeYAML suele mostrar varios CVEs a la vez — no te sorprendas si el conteo supera tres.</p>
+      </div>
 
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Revisar hallazgos y priorizar</h3>
@@ -235,6 +239,10 @@ Preséntame el informe. Cuando yo diga "adelante", pasamos a Fase 2.</code></pre
         <p class="callout__title">Severidad no es lo mismo que riesgo</p>
         <p>Un CVE Critical en una biblioteca cuyo método vulnerable nunca llamas es menor riesgo real que un High en un hot path. Dos de los tres hallazgos de este proyecto son alcanzables desde código de aplicación (<code>LabelTemplateService</code>, <code>FormularyLoader</code>); el tercero es un problema puro del grafo de dependencias sin call site alguno. El escáner reporta severidad. Solo tú puedes juzgar la alcanzabilidad.</p>
       </div>
+      <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
+        <p class="callout__title">Cuando hayas priorizado los hallazgos → baja a Paso 3</p>
+        <p>Pega el prompt de remediación (un mensaje nuevo). No escribas "adelante".</p>
+      </div>
     </div>
   </section>
 
@@ -246,17 +254,14 @@ Preséntame el informe. Cuando yo diga "adelante", pasamos a Fase 2.</code></pre
     </h2>
 
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Aplicar correcciones una a una</h3>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Prompt para Bob</h3>
+      <div class="callout" data-tone="note" style="margin-bottom:var(--cds-spacing-04,0.75rem)">
+        <p class="callout__title">Tu acción — pega solo este prompt (un mensaje nuevo)</p>
+        <p>No escribas "adelante". Loop: Bob propone una CVE con diff → tú dices <strong>ok</strong> → siguiente, hasta la 3.</p>
+      </div>
       <div class="code-block">
         <button type="button" class="copy-button">Copiar</button>
-        <pre><code>FASE 2 — REMEDIACIÓN (una CVE a la vez — explica el cambio exacto, espera "ok", luego aplica)
-
-PROTOCOLO OBLIGATORIO (no negociable):
-1. UNA sola CVE por mensaje. No prepares la siguiente hasta mi "ok" literal.
-2. Para cada CVE: (a) explica impacto, (b) diff unified COMPLETO del pom.xml (líneas - y +),
-   (c) pregunta "¿Aplico la remediación de [CVE]?", (d) PARA — no edites ni ejecutes mvn.
-3. PROHIBIDO: remediar varias CVEs seguidas; decir "todas aplicadas"; pasar a Fase 3 sin mi prompt.
-4. Empieza SOLO con la Vulnerabilidad 1. Las 2 y 3 son referencia — no las ejecutes aún.
+        <pre><code>FASE 2 — REMEDIACIÓN (una CVE a la vez)
 
 Para cada CVE del informe, Bob debe:
 - Explicar el CVE y su impacto
@@ -279,8 +284,17 @@ Vulnerabilidad 3 — commons-lang3 3.11 → 3.18.0 (APROBAR)
 Si un fix provoca efectos secundarios (p. ej. cambio de API por salto de versión mayor),
 identifícalo y pide aprobación para correcciones adicionales.
 
-Cuando termines la Vulnerabilidad 3 con mi "ok", DETENTE. No ejecutes mvn hasta que yo pegue el prompt de Fase 3.</code></pre>
+Reglas:
+- UNA CVE por mensaje: impacto, diff unified de pom.xml, pregunta "¿Aplico la remediación de [CVE]?" y PARA hasta mi "ok".
+- Empieza SOLO con la Vulnerabilidad 1. Sin batch, sin mvn, sin pasar a validación.
+- Tras el ok de la Vulnerabilidad 3, DETENTE. Espera el siguiente prompt.</code></pre>
       </div>
+      <p class="cds--body-01" style="margin-top:var(--cds-spacing-05,1rem)"><strong>Qué hará Bob:</strong></p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">Proponer el bump de commons-text con diff y esperar tu <strong>ok</strong></li>
+        <li class="cds--list__item">Seguir con snakeyaml y commons-lang3, uno a uno</li>
+        <li class="cds--list__item">Detenerse tras la tercera — no ejecuta <code>mvn</code> hasta el siguiente prompt</li>
+      </ul>
     </div>
 
     <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
@@ -313,6 +327,10 @@ Cuando termines la Vulnerabilidad 3 con mi "ok", DETENTE. No ejecutes mvn hasta 
       </table>
       <p style="margin-top:var(--cds-spacing-04,0.75rem)">Las tres versiones de fix están confirmadas en Maven Central y resuelven todos los CVEs detectados.</p>
     </div>
+      <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
+        <p class="callout__title">Cuando Bob confirme la Vulnerabilidad 3 → baja a Paso 4</p>
+        <p>Pega el prompt de validación. No esperes que Bob ejecute <code>mvn</code> por su cuenta.</p>
+      </div>
   </section>
 
   <!-- Fase 3 -->
@@ -323,7 +341,11 @@ Cuando termines la Vulnerabilidad 3 con mi "ok", DETENTE. No ejecutes mvn hasta 
     </h2>
 
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 4 — Compilar y confirmar BUILD SUCCESS</h3>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 4 — Prompt para Bob</h3>
+      <div class="callout" data-tone="note" style="margin-bottom:var(--cds-spacing-04,0.75rem)">
+        <p class="callout__title">Tu acción — pega esto ahora</p>
+        <p>Compila para confirmar que los bumps no rompieron la API. Pega el bloque en el mismo chat.</p>
+      </div>
       <div class="code-block">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>FASE 3 — VALIDACIÓN DE COMPILACIÓN
@@ -337,12 +359,21 @@ Si falla por incompatibilidad de API, muéstrame el error completo antes de prop
 Si FormularyLoader deja de compilar o lanza en runtime, no es un error: es el fix de seguridad haciendo su trabajo.
 Pega el error a Bob y deja que reconcilie el cambio de API.</code></pre>
       </div>
+      <p class="cds--body-01" style="margin-top:var(--cds-spacing-05,1rem)"><strong>Qué hará Bob:</strong></p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">Ejecutar <code>mvn clean compile</code> y mostrar el output completo</li>
+        <li class="cds--list__item">Si SnakeYAML 2.0 rompe <code>FormularyLoader</code>, mostrar el error antes de proponer el fix de API</li>
+      </ul>
       <figure class="lab-figure">
         <img src="./assets/images/labs/java-modernization-v2/lab5-phase3-build-success.png"
-             alt="Terminal mostrando BUILD SUCCESS de Maven tras corregir las 3 vulnerabilidades CVE en el pom.xml"
+             alt="Bob mostrando BUILD SUCCESS y las 3 CVE remediadas en el pom.xml del Lab 5"
              class="lab-figure__img" />
-        <figcaption class="lab-figure__caption">Terminal: <code>mvn clean compile</code> → BUILD SUCCESS con las 3 vulnerabilidades resueltas</figcaption>
+        <figcaption class="lab-figure__caption">Bob: Fase 3 — <code>mvn clean compile</code> → BUILD SUCCESS con las 3 vulnerabilidades resueltas</figcaption>
       </figure>
+      <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
+        <p class="callout__title">Cuando veas BUILD SUCCESS → baja a Paso 5</p>
+        <p>La remediación no termina en el compile. Pega el prompt de re-escaneo.</p>
+      </div>
     </div>
   </section>
 
@@ -354,11 +385,15 @@ Pega el error a Bob y deja que reconcilie el cambio de API.</code></pre>
     </h2>
 
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 5 — Volver a escanear para confirmar cero hallazgos</h3>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 5 — Prompt para Bob</h3>
       <p class="cds--body-01">
         La remediación no termina cuando se aplica el cambio — termina cuando el escaneo está limpio.
         Este paso es <strong>crítico</strong> en el workshop.
       </p>
+      <div class="callout" data-tone="note" style="margin-bottom:var(--cds-spacing-04,0.75rem)">
+        <p class="callout__title">Tu acción — pega esto ahora</p>
+        <p>Vuelve a escanear. Pega el bloque en el mismo chat.</p>
+      </div>
       <div class="code-block">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>FASE 4 — RE-ESCANEO (crítico)
@@ -379,6 +414,11 @@ Genera el informe final de remediación:
 | GHSA-mjmj-j48q-9wg2 | snakeyaml | 1.30 | 2.0 | High | Directa | FormularyLoader | ✅ Resuelto |
 | GHSA-j288-q9x7-2f5v | commons-lang3 | 3.11 | 3.18.0 | High | Transitiva | Solo grafo | ✅ Resuelto |</code></pre>
       </div>
+      <p class="cds--body-01" style="margin-top:var(--cds-spacing-05,1rem)"><strong>Qué hará Bob:</strong></p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">Re-escanear el árbol de dependencias contra CVE/OSV</li>
+        <li class="cds--list__item">Presentar el informe final con las tres filas en Resuelto</li>
+      </ul>
     </div>
 
     <div class="lab-step">

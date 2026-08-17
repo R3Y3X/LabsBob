@@ -1638,7 +1638,7 @@ body[data-category="premium"] .lab-workspace-setup__table th {
 
 /* ── Dark theme ─────────────────────────────────────────────────── */
 .cds--g100 .hub-profiles {
-  background: var(--cds-layer-01, #262626);
+  background: #161616;
   border-top-color: var(--cds-border-subtle-01, #393939);
 }
 

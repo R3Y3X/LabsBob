@@ -60,12 +60,6 @@ body {
 
 .hub-hero {
   background-color: var(--cds-background, #ffffff);
-  background-image:
-    radial-gradient(circle at 80% 40%, rgba(15, 98, 254, 0.06) 0%, transparent 60%),
-    radial-gradient(circle at 20% 70%, rgba(138, 63, 252, 0.05) 0%, transparent 60%),
-    linear-gradient(rgba(15, 98, 254, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(15, 98, 254, 0.04) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
   border-bottom: 1px solid var(--cds-border-subtle-01, #c6c6c6);
   overflow: hidden;
   position: relative;
@@ -177,13 +171,7 @@ body {
 
 /* Dark mode */
 .cds--g100 .hub-hero {
-  background-color: var(--cds-background, #161616);
-  background-image:
-    radial-gradient(circle at 80% 40%, rgba(69, 137, 255, 0.1) 0%, transparent 60%),
-    radial-gradient(circle at 20% 70%, rgba(138, 63, 252, 0.08) 0%, transparent 60%),
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+  background-color: #161616;
   border-bottom-color: var(--cds-border-subtle-01, #393939);
 }
 

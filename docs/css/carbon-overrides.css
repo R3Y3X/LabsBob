@@ -19,13 +19,14 @@
 
 body.cds--g100 {
   color-scheme: dark;
-  --hub-surface: var(--cds-background, #161616);
+  --hub-surface: #161616;
   --hub-layer: var(--cds-layer-01, #262626);
   --hub-layer-hover: var(--cds-layer-hover-01, #393939);
   --hub-text: var(--cds-text-primary, #f4f4f4);
   --hub-text-secondary: var(--cds-text-secondary, #c6c6c6);
   --hub-text-helper: var(--cds-text-helper, #a8a8a8);
   --hub-border: var(--cds-border-subtle-01, #525252);
+  background: #161616;
 }
 
 html {
@@ -79,6 +80,11 @@ a {
   background: #161616 !important;
   color: #f4f4f4;
   box-shadow: none;
+}
+
+body.cds--g100 .cds--header.hub-header,
+body.cds--g100 .cds--header {
+  background: #000000 !important;
 }
 
 .cds--header__name {

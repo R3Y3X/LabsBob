@@ -18,13 +18,13 @@ export const siteData = {
       eyebrow: 'Desarrollo asistido',
       label: 'Fundamentos de Bob',
       bobMode: 'Modos · Skills · SDLC',
-      description: 'Planifica y ejecuta con Bob, audita y genera código seguro con skills y rules, y construye una tienda de café de punta a punta.',
+      description: 'Usa los modos de Bob, especialízalo con skills y rules para auditar y generar código seguro, y construye una tienda de café de punta a punta.',
       actionLabel: 'Explorar Primeros Pasos',
       labs: [
         {
           slug: 'hands-on-inicial',
           title: 'De la idea al código: planifica, valida y ejecuta con IBM Bob',
-          description: 'Multi-agentes + MCP para acelerar el desarrollo.',
+          description: 'Analiza una app en Ask, diseña e implementa un carrito en Plan y Agent, crea un modo de Product Manager y conecta búsqueda web en tiempo real con MCP y Tavily.',
           supporting: 'Ask · Plan · Agent · MCP',
           featured: true,
           banner: './assets/images/labs/hands-on-inicial/banner_bob.png',
@@ -40,7 +40,7 @@ export const siteData = {
         {
           slug: 'entendiendo-bob',
           title: '¿Tu código es seguro? Detecta vulnerabilidades antes de producción',
-          description: 'Aplica rules, audita el código y genera features con un flujo actor-critic.',
+          description: 'Define rules persistentes para el equipo, audita Galaxium Travels con un skill ASVS (SARIF y OSCAL) y genera un endpoint seguro con un flujo actor-critic aislado.',
           supporting: 'Skills · Rules · Actor-critic',
           featured: true,
           banner: './assets/images/labs/entendiendo-bob/banner_seguridad_bob.png',
@@ -55,7 +55,7 @@ export const siteData = {
         {
           slug: 'software-development-lifecycle',
           title: 'Construye una tienda de café de punta a punta',
-          description: 'Planifica, implementa pantallas con mockups y documenta el resultado.',
+          description: 'Recorre el ciclo completo en Bob\'s Beans: planifica desde mockups, implementa tienda, producto y carrito en React, anima con Framer Motion, revisa el diseño y documenta con MkDocs.',
           supporting: 'React · Vite · Tailwind',
           customOverview: true,
           audience: ['client', 'partner'],
@@ -84,7 +84,7 @@ export const siteData = {
         {
           slug: 'agentic-retail-confluent',
           title: 'Conecta tus agentes con tus datos en tiempo real',
-          description: 'Data streaming empresarial con Confluent + IBM Bob.',
+          description: 'Crea tópicos Kafka de inventario para Voltia, deriva disponibilidad por SKU y sucursal con ksqlDB y publica eventos listos para que los consuman los agentes.',
           supporting: 'Confluent',
           featured: true,
           audience: ['client', 'partner'],
@@ -98,7 +98,7 @@ export const siteData = {
         {
           slug: 'agentic-retail-wxo',
           title: 'De agentes aislados a una fuerza de trabajo inteligente',
-          description: 'Orquesta agentes empresariales con watsonx Orchestrate.',
+          description: 'Construye un sistema multiagente en watsonx Orchestrate: disponibilidad vía MCP sobre Kafka, sustitutos con RAG, un supervisor de tienda y un asistente de compra para el cliente.',
           supporting: 'watsonx Orchestrate',
           featured: true,
           audience: ['client', 'partner'],
@@ -113,7 +113,7 @@ export const siteData = {
         {
           slug: 'agentic-retail-voltia',
           title: 'La tienda web que habla con tus agentes',
-          description: 'Interfaz local de Voltia que consume Confluent y el asistente de Orchestrate.',
+          description: 'Implementa el storefront React de Voltia: planifica las pantallas, embebe el Asistente de Compra de Orchestrate y documenta el resultado con MkDocs.',
           supporting: 'Voltia · React',
           audience: ['client', 'partner'],
           steps: [
@@ -132,31 +132,32 @@ export const siteData = {
       eyebrow: 'Modernización',
       label: 'Modernización de aplicaciones',
       bobMode: 'Sistemas legacy',
-      description: 'Moderniza aplicaciones y sistemas empresariales con análisis profundo, cambios trazables y validación continua usando Ask, Plan y Agent Mode.',
+      description: 'Moderniza Simple Pharmacy (Java 8 → 21, Liberty y React) y SAMCO en IBM i (RPG Fixed-to-Free, UI Carbon y RLA a SQL) con Ask, Plan y Agent Mode.',
       actionLabel: 'Explorar Modernización de aplicaciones empresariales',
       labs: [
         {
           slug: 'java-modernization-v2',
           title: 'Moderniza Java a la velocidad del negocio',
-          description: 'Transforma tus aplicaciones Java con IBM Bob, sin empezar de cero.',
+          description: 'Moderniza Simple Pharmacy de WebSphere y Java 8 a Open Liberty y Java 21: UI React, tests (o TDD) y remediación de CVEs, sin reescribir la app desde cero.',
           supporting: 'Java legacy',
           featured: true,
           overviewLabsOnly: true,
+          banner: './assets/images/labs/java-modernization-v2/banner_bob.png',
           audience: ['client', 'partner'],
           steps: [
             { slug: 'overview', label: 'Inicio', file: './content/premium/java-modernization-v2/overview.html' },
-            { slug: 'lab1', label: 'Replatforming Liberty', file: './content/premium/java-modernization-v2/lab1-replatforming.html', description: 'Migra de Traditional WebSphere a Open Liberty manteniendo el comportamiento de la app.', tags: ['Open Liberty'], bobcoinCost: { min: 4, max: 6 } },
-            { slug: 'lab2', label: 'Upgrade Java 21', file: './content/premium/java-modernization-v2/lab2-java-upgrade.html', description: 'Java 8 → 21, Jakarta EE 10, escaneo CVE y refactor Struts 2→7.', tags: ['Java 21'], bobcoinCost: { min: 5, max: 8 } },
-            { slug: 'lab3', label: 'UI con React', file: './content/premium/java-modernization-v2/lab3-ui-modernization.html', description: 'Struts/JSP → React + Material UI sobre backend JAX-RS; backend, frontend y contenedores.', tags: ['React · JAX-RS'], bobcoinCost: { min: 10, max: 20 } },
-            { slug: 'lab4', label: 'Tests unitarios', file: './content/premium/java-modernization-v2/lab4-unit-tests.html', description: 'UNITTEST.md, JaCoCo, JUnit 5 + Mockito + AssertJ en lotes por capa.', tags: ['JUnit 5'], bobcoinCost: { min: 8, max: 15 } },
-            { slug: 'lab-alt4', label: 'Lab 4 alternativo', file: './content/premium/java-modernization-v2/lab-alt4-tdd.html', description: 'Ruta TDD OpenAPI-first: tests primero, implementación después (Red-Green-Refactor).', tags: ['TDD'], bobcoinCost: { min: 8, max: 15 } },
-            { slug: 'lab5', label: 'Seguridad', file: './content/premium/java-modernization-v2/lab5-security.html', description: 'Detecta y remedia CVEs críticos en dependencias antes de la entrega.', tags: ['CVEs'], bobcoinCost: { min: 6, max: 12 } }
+            { slug: 'lab1', label: 'Replatforming Liberty', file: './content/premium/java-modernization-v2/lab1-replatforming.html', description: 'Migra de Traditional WebSphere a Open Liberty manteniendo el comportamiento de la app.', tags: ['Open Liberty'], bobcoinCost: { min: 4, max: 5 } },
+            { slug: 'lab2', label: 'Upgrade Java 21', file: './content/premium/java-modernization-v2/lab2-java-upgrade.html', description: 'Java 8 → 21, Jakarta EE 10, escaneo CVE y refactor Struts 2→7.', tags: ['Java 21'], bobcoinCost: { min: 8, max: 9 } },
+            { slug: 'lab3', label: 'UI con React', file: './content/premium/java-modernization-v2/lab3-ui-modernization.html', description: 'Struts/JSP → React + Material UI sobre backend JAX-RS; backend, frontend y contenedores.', tags: ['React · JAX-RS'], bobcoinCost: { min: 14, max: 16 } },
+            { slug: 'lab4', label: 'Tests unitarios', file: './content/premium/java-modernization-v2/lab4-unit-tests.html', description: 'UNITTEST.md, JaCoCo, JUnit 5 + Mockito + AssertJ en lotes por capa.', tags: ['JUnit 5'], bobcoinCost: { min: 10, max: 12 } },
+            { slug: 'lab-alt4', label: 'Lab 4 alternativo', file: './content/premium/java-modernization-v2/lab-alt4-tdd.html', description: 'Ruta TDD OpenAPI-first: tests primero, implementación después (Red-Green-Refactor).', tags: ['TDD'], alternative: true, bobcoinCost: { min: 5, max: 7 } },
+            { slug: 'lab5', label: 'Seguridad', file: './content/premium/java-modernization-v2/lab5-security.html', description: 'Detecta y remedia CVEs críticos en dependencias antes de la entrega.', tags: ['CVEs'], bobcoinCost: { min: 4, max: 6 } }
           ]
         },
         {
           slug: 'ibm-i-rpg-development',
           title: 'Del RPG al futuro: moderniza IBM i',
-          description: 'Transforma aplicaciones RPG con IBM Bob.',
+          description: 'Descubre las reglas de negocio de SAMCO, convierte RPG de formato fijo a libre, construye una UI React + Carbon y reemplaza CHAIN por SQL embebido.',
           supporting: 'IBM i · SAMCO',
           featured: true,
           overviewLabsOnly: true,
@@ -278,7 +279,7 @@ export const workshopGuides = {
     outcome: 'Modernizarás una aplicación Java hacia Java 21 y Liberty, validando UI, tests y seguridad.',
     requirements: [
       ['Entorno', 'IBM Bob IDE con Agent Mode y el repositorio Simple Pharmacy.'],
-      ['Java', 'Java 8 para el Lab 1; Java 21 a partir del Lab 2. Configura JAVA_HOME antes de cada lab (ver Lab 1 y Lab 2). Verifica java -version y mvn --version.'],
+      ['Java', 'Java 8 para el Lab 1; Java 21 a partir del Lab 2. Sigue la guía de setup del overview (SDKMAN! o winget). Verifica java -version y mvn --version.'],
       ['Herramientas', 'Maven 3.8+; Node.js solo para el Lab 3 de React.'],
       ['Carpetas', 'Abre solo la carpeta snap* del lab en curso (File → Open Folder). No abras el bundle completo.']
     ],
@@ -332,7 +333,7 @@ export function getNextLab(slug) {
 }
 
 export function getWorkshopStats(lab) {
-  const costs = (lab.steps || []).filter((step) => step.bobcoinCost);
+  const costs = (lab.steps || []).filter((step) => step.bobcoinCost && !step.alternative);
   const min = costs.reduce((sum, step) => sum + step.bobcoinCost.min, 0);
   const max = costs.reduce((sum, step) => sum + step.bobcoinCost.max, 0);
   const duration = workshopGuides[lab.slug]?.duration || '';

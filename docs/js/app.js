@@ -1541,11 +1541,28 @@ function copyToClipboard(textToCopy) {
 
 window.copyToClipboard = copyToClipboard;
 
+function siteDirectoryUrl() {
+  const pageUrl = window.location.href.split('#')[0];
+  if (/\/index\.html$/i.test(pageUrl)) return pageUrl.replace(/[^/]*$/, '');
+  return pageUrl.endsWith('/') ? pageUrl : `${pageUrl}/`;
+}
+
+function rewriteDownloadLinks(container) {
+  container.querySelectorAll('a[download][href], a[href$=".zip"]').forEach((link) => {
+    let href = link.getAttribute('href') || '';
+    if (!href || /^(https?:|mailto:|#)/i.test(href)) return;
+    const downloadsMatch = href.match(/(?:^|\/)downloads\/([^/?#]+)$/);
+    if (downloadsMatch) href = `./downloads/${downloadsMatch[1]}`;
+    link.setAttribute('href', new URL(href, siteDirectoryUrl()).href);
+  });
+}
+
 function enhanceLabContent(proseEl, section, lab, step, isOverview) {
   if (!proseEl || proseEl.dataset.workshopEnhanced === 'true') return;
   proseEl.dataset.workshopEnhanced = 'true';
   normalizeVisibleCopy(proseEl);
   normalizeHandsOnPresentation(proseEl, lab);
+  rewriteDownloadLinks(proseEl);
 
   const banner = ensureLabBanner(proseEl, section, lab, step);
 

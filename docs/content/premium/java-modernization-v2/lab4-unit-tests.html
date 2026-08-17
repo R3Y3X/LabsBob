@@ -13,7 +13,7 @@
 
     <div class="lab-banner__metrics">
       <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">8–15</span>
+        <span class="lab-banner__metric-value">10–12</span>
         <span class="lab-banner__metric-label">BobCoins estimados</span>
       </div>
       <div class="lab-banner__metric">
@@ -144,25 +144,20 @@
     </h2>
 
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Inventariar el proyecto y redactar la estrategia</h3>
-      <p class="cds--body-01">Al cambiar de carpeta, Bob abre un chat nuevo en <strong>Agent Mode</strong>. Copia y pega <strong>todo</strong> el bloque.</p>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Prompt para Bob</h3>
+      <div class="callout" data-tone="note" style="margin-bottom:var(--cds-spacing-04,0.75rem)">
+        <p class="callout__title">Tu acción — pega esto en el chat (Agent Mode)</p>
+        <p>Al cambiar de carpeta, Bob abre un chat nuevo. Copia el bloque y pégalo como <strong>un solo mensaje</strong>. No añadas "adelante" ni el prompt de Fase 2 todavía.</p>
+      </div>
       <div class="code-block">
         <button type="button" class="copy-button">Copiar</button>
-        <pre><code>Reglas de trabajo:
-- Fases: (1) Análisis — no modifiques archivos hasta mi "adelante"; (2) Cambios — un diff a la vez, espera mi "ok"; (3) Validación — mvn compile o mvn test con output completo.
-- Solo la carpeta raíz abierta en Bob. No explores otras carpetas snap*.
-- Cambios mínimos para el objetivo del lab. Sin refactors ni funcionalidades extra.
-- PROTOCOLO Fase 2–3: un cambio/lote por turno — diff o código completo, pregunta antes de aplicar/crear, PARA hasta mi "ok". Prohibido batch y ejecutar mvn sin permiso.
-
-Lab 4: generar una suite completa de unit tests para Simple Pharmacy.
+        <pre><code>Lab 4: generar una suite completa de unit tests para Simple Pharmacy.
 Carpeta raíz: la que está abierta (snapD — Java 21, Liberty, API REST).
 El código de producción en src/main/ NO se modifica.
 
 Stack de testing: JUnit 5 (Jupiter), Mockito 5, AssertJ 3, Maven Surefire, JaCoCo.
 
----
-
-FASE 1 — ANÁLISIS Y ESTRATEGIA (no toques nada todavía)
+FASE 1 — ANÁLISIS Y ESTRATEGIA (no toques nada todavía, salvo UNITTEST.md)
 
 1. Escanea la estructura del proyecto, el build tool y la infraestructura de tests existente
    (versión JUnit, JaCoCo, Surefire).
@@ -180,14 +175,27 @@ FASE 1 — ANÁLISIS Y ESTRATEGIA (no toques nada todavía)
    - Enfoque de mocking (Mockito, MockedStatic para singletons)
    - Brechas identificadas priorizadas P1/P2/P3
 
-Preséntame la estrategia. Cuando yo diga "adelante", pasamos a Fase 2.</code></pre>
+Preséntame la estrategia y espera el siguiente prompt.
+
+Reglas: solo la carpeta raíz abierta; no explores otras carpetas snap*.
+No modifiques src/main/. Sin refactors ni funcionalidades extra.</code></pre>
       </div>
+      <p class="cds--body-01" style="margin-top:var(--cds-spacing-05,1rem)"><strong>Qué hará Bob:</strong></p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">Inventariar modelos, repositorios y resources JAX-RS</li>
+        <li class="cds--list__item">Redactar <code>UNITTEST.md</code> con estrategia y umbral de cobertura</li>
+        <li class="cds--list__item">Detenerse sin tocar <code>pom.xml</code> ni crear tests todavía</li>
+      </ul>
     </div>
 
     <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
       <p class="callout__title"><code>UNITTEST.md</code> es el artefacto real</p>
-      <p>Los tests son la salida, pero <code>UNITTEST.md</code> es el razonamiento. Es lo que hace la suite revisable y extensible — y lo que cada subagente lee para mantener consistencia entre lotes paralelos.</p>
-    </div>
+        <p>Los tests son la salida, pero <code>UNITTEST.md</code> es el razonamiento. Es lo que hace la suite revisable y extensible — y lo que cada subagente lee para mantener consistencia entre lotes paralelos.</p>
+      </div>
+      <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
+        <p class="callout__title">Cuando veas <code>UNITTEST.md</code> redactado → baja a Paso 2</p>
+        <p>Pega el prompt de JaCoCo y dependencias. No escribas "adelante".</p>
+      </div>
   </section>
 
   <!-- Fase 2 -->
@@ -198,15 +206,14 @@ Preséntame la estrategia. Cuando yo diga "adelante", pasamos a Fase 2.</code></
     </h2>
 
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Configurar JaCoCo, JUnit 5, Mockito y AssertJ</h3>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Prompt para Bob</h3>
+      <div class="callout" data-tone="note" style="margin-bottom:var(--cds-spacing-04,0.75rem)">
+        <p class="callout__title">Tu acción — pega solo este prompt (un mensaje nuevo)</p>
+        <p>No escribas "adelante". Bob muestra el diff de <code>pom.xml</code> y espera tu <strong>ok</strong> antes de tocar el archivo.</p>
+      </div>
       <div class="code-block">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>FASE 2 — JACOCO Y DEPENDENCIAS (APROBAR antes de tocar pom.xml)
-
-PROTOCOLO OBLIGATORIO:
-1. Muestra el bloque XML completo que vas a añadir (diff unified con líneas - y +).
-2. Pregunta: "¿Aplico la configuración de JaCoCo y dependencias de test?"
-3. PARA hasta mi "ok" literal. No edites pom.xml ni ejecutes mvn.
 
 Detecta si JaCoCo no está configurado e instálalo en pom.xml.
 
@@ -220,7 +227,22 @@ Plugins en &lt;build&gt;&lt;plugins&gt;:
   - maven-surefire-plugin configurado para ejecutar **/*Test.java
   - jacoco-maven-plugin con goal report vinculado a la fase test
 
-Confirma que UNITTEST.md existe en la raíz. No pases a Fase 3 sin mi "ok".</code></pre>
+Confirma que UNITTEST.md existe en la raíz. No pases a Fase 3 sin mi "ok".
+
+Reglas:
+- Muestra el bloque XML completo (diff unified con líneas - y +).
+- Pregunta: "¿Aplico la configuración de JaCoCo y dependencias de test?"
+- PARA hasta mi "ok". No edites pom.xml ni ejecutes mvn.
+- Tras el ok, DETENTE. Espera el siguiente prompt.</code></pre>
+      </div>
+      <p class="cds--body-01" style="margin-top:var(--cds-spacing-05,1rem)"><strong>Qué hará Bob:</strong></p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">Mostrar el diff de JaCoCo, JUnit 5, Mockito y AssertJ en <code>pom.xml</code></li>
+        <li class="cds--list__item">Esperar tu <strong>ok</strong> antes de editar</li>
+      </ul>
+      <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
+        <p class="callout__title">Cuando Bob confirme el cambio en <code>pom.xml</code> → baja a Paso 3</p>
+        <p>Pega el prompt del Lote 1 (repositorios). No esperes que Bob genere tests por su cuenta.</p>
       </div>
     </div>
   </section>
@@ -237,13 +259,14 @@ Confirma que UNITTEST.md existe en la raíz. No pases a Fase 3 sin mi "ok".</cod
     </p>
 
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Lote 1: repositorios (3 clases)</h3>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Prompt para Bob (Lote 1)</h3>
+      <div class="callout" data-tone="note" style="margin-bottom:var(--cds-spacing-04,0.75rem)">
+        <p class="callout__title">Tu acción — pega esto ahora</p>
+        <p>Un mensaje nuevo. Bob muestra el código de los tres tests de repositorio y espera tu <strong>ok</strong> antes de crear archivos.</p>
+      </div>
       <div class="code-block">
         <button type="button" class="copy-button">Copiar</button>
-        <pre><code>FASE 3 — GENERACIÓN DE TESTS (un lote a la vez — muéstrame antes de crear)
-
-PROTOCOLO: un lote por turno. Código completo de cada archivo de test en el chat →
-"¿Creo el Lote N?" → PARA hasta mi "ok". No crees archivos ni ejecutes mvn sin permiso.
+        <pre><code>FASE 3 — GENERACIÓN DE TESTS (un lote a la vez)
 
 Lee UNITTEST.md y genera tests para el paquete com.pharmacy.repository:
 
@@ -257,17 +280,24 @@ Para cada repositorio:
   - AddUpdateDeleteTests: add/update/delete con cleanup en @AfterEach
   - Usa MockedStatic + reflexión si el singleton lo requiere (ver UNITTEST.md)
 
-Espera mi "ok" antes de crear los archivos.</code></pre>
+Reglas: código completo de cada archivo de test en el chat → "¿Creo el Lote 1?" → PARA hasta mi "ok".
+No crees archivos ni ejecutes mvn sin permiso. Tras el ok, DETENTE. Espera el siguiente prompt.</code></pre>
+      </div>
+      <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
+        <p class="callout__title">Cuando Bob cree los 3 tests de repositorio → baja a Paso 4</p>
+        <p>Pega el prompt del Lote 2 (modelos).</p>
       </div>
     </div>
 
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 4 — Lote 2: modelos (3 clases)</h3>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 4 — Prompt para Bob (Lote 2)</h3>
+      <div class="callout" data-tone="note" style="margin-bottom:var(--cds-spacing-04,0.75rem)">
+        <p class="callout__title">Tu acción — pega esto ahora</p>
+        <p>Un mensaje nuevo. Mismo loop: código → <strong>ok</strong> → crear archivos.</p>
+      </div>
       <div class="code-block">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>LOTE 2 — Tests de modelos (com.pharmacy.model)
-
-PROTOCOLO: muestra el código completo de cada test en el chat, pregunta, PARA hasta "ok".
 
   src/test/java/com/pharmacy/model/PrescriptionTest.java
   src/test/java/com/pharmacy/model/OrderTest.java
@@ -279,18 +309,24 @@ Para cada modelo:
   - EdgeCaseTests: null values, strings vacíos, números negativos
   - BusinessLogicTests: validaciones y lógica de negocio según UNITTEST.md
 
-Espera mi "ok" antes de crear los archivos.</code></pre>
+Reglas: muestra el código completo de cada test en el chat, pregunta, PARA hasta "ok".
+Tras el ok, DETENTE. Espera el siguiente prompt.</code></pre>
+      </div>
+      <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
+        <p class="callout__title">Cuando Bob cree los 3 tests de modelo → baja a Paso 5</p>
+        <p>Pega el prompt del Lote 3 (resources JAX-RS).</p>
       </div>
     </div>
 
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 5 — Lote 3: recursos JAX-RS (6 clases)</h3>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 5 — Prompt para Bob (Lote 3)</h3>
+      <div class="callout" data-tone="note" style="margin-bottom:var(--cds-spacing-04,0.75rem)">
+        <p class="callout__title">Tu acción — pega esto ahora</p>
+        <p>Un mensaje nuevo. Último lote de generación. Después de tu <strong>ok</strong>, baja a Paso 6.</p>
+      </div>
       <div class="code-block">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>LOTE 3 — Tests de resources JAX-RS (com.pharmacy.api)
-
-PROTOCOLO: muestra PrescriptionResourceTest.java completo con @Mock en el chat,
-pregunta "¿Creo el Lote 3?", PARA hasta "ok". No crees archivos ni ejecutes mvn.
 
   src/test/java/com/pharmacy/api/PrescriptionResourceTest.java
   src/test/java/com/pharmacy/api/OrderResourceTest.java
@@ -304,7 +340,13 @@ Para cada resource: @ExtendWith(MockitoExtension.class), @Mock del repositorio, 
   - PUT validate: 200 PENDING→VALIDATED, 400 ya VALIDATED, 404 no existe
   - Manejo de errores y códigos de estado según UNITTEST.md
 
-Espera mi "ok" antes de crear los archivos.</code></pre>
+Reglas: muestra PrescriptionResourceTest.java completo con @Mock en el chat,
+pregunta "¿Creo el Lote 3?", PARA hasta "ok". No crees archivos ni ejecutes mvn.
+Tras el ok, DETENTE. Espera el siguiente prompt.</code></pre>
+      </div>
+      <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
+        <p class="callout__title">Cuando Bob cree los tests JAX-RS → baja a Paso 6</p>
+        <p>Pega el prompt de validación y cobertura. No esperes que Bob ejecute <code>mvn test</code> por su cuenta.</p>
       </div>
     </div>
   </section>
@@ -317,7 +359,11 @@ Espera mi "ok" antes de crear los archivos.</code></pre>
     </h2>
 
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 6 — Ejecutar la suite y generar informe JaCoCo</h3>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 6 — Prompt para Bob</h3>
+      <div class="callout" data-tone="note" style="margin-bottom:var(--cds-spacing-04,0.75rem)">
+        <p class="callout__title">Tu acción — pega esto ahora</p>
+        <p>Ejecuta la suite y genera el informe JaCoCo. Pega el bloque en el mismo chat.</p>
+      </div>
       <div class="code-block">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>FASE 4 — VALIDACIÓN Y COBERTURA
@@ -339,11 +385,17 @@ Espera mi "ok" antes de crear los archivos.</code></pre>
 5. Si no aparece el informe, ejecuta:
    mvn clean test jacoco:report</code></pre>
       </div>
+      <p class="cds--body-01" style="margin-top:var(--cds-spacing-05,1rem)"><strong>Qué hará Bob:</strong></p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">Ejecutar <code>mvn clean test</code> y mostrar el output completo</li>
+        <li class="cds--list__item">Generar el informe JaCoCo y reportar cobertura por paquete</li>
+        <li class="cds--list__item">Si un test falla, mostrar el stack trace <strong>antes</strong> de proponer el fix (sin tocar <code>src/main/</code>)</li>
+      </ul>
       <figure class="lab-figure">
         <img src="./assets/images/labs/java-modernization-v2/lab4-phase4-mvn-test.png"
-             alt="Terminal mostrando mvn test con BUILD SUCCESS, 0 failures, 0 errors y todos los tests pasando"
+             alt="Bob mostrando FASE 4 con BUILD SUCCESS, 185 tests y cobertura JaCoCo del 95%"
              class="lab-figure__img" />
-        <figcaption class="lab-figure__caption">Terminal: <code>mvn test</code> → BUILD SUCCESS, 0 failures, 0 errors</figcaption>
+        <figcaption class="lab-figure__caption">Bob: Fase 4 — <code>mvn test</code> → BUILD SUCCESS, 185 tests, 0 failures, cobertura JaCoCo 95%</figcaption>
       </figure>
     </div>
 

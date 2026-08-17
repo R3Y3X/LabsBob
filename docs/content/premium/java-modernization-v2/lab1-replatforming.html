@@ -9,7 +9,7 @@
 
     <div class="lab-banner__metrics">
       <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">4–6</span>
+        <span class="lab-banner__metric-value">4–5</span>
         <span class="lab-banner__metric-label">BobCoins estimados</span>
       </div>
       <div class="lab-banner__metric">
@@ -90,17 +90,14 @@
       <h3 class="cds--productive-heading-02 lab-step__title">Objetivo</h3>
       <p class="cds--body-01">Que Bob analice la aplicación, consuma el migration plan AMA y construya un inventario de cambios necesarios — sin modificar archivos todavía.</p>
 
-      <h3 class="cds--productive-heading-02 lab-step__title" style="margin-top:var(--cds-spacing-05,1rem)">Pega el prompt de Fase 1</h3>
-      <p class="cds--body-01">Al abrir la carpeta <code>snapA</code> empiezas un chat nuevo en Bob en <strong>Agent Mode</strong>. Copia y pega <strong>todo</strong> el bloque de abajo — incluye las reglas de trabajo y arranca la Fase 1 directamente.</p>
+      <h3 class="cds--productive-heading-02 lab-step__title" style="margin-top:var(--cds-spacing-05,1rem)">Prompt para Bob</h3>
+      <div class="callout" data-tone="note" style="margin-bottom:var(--cds-spacing-04,0.75rem)">
+        <p class="callout__title">Tu acción — pega esto en el chat (Agent Mode)</p>
+        <p>Al abrir <code>snapA</code> empiezas un chat nuevo. Copia el bloque de abajo y pégalo como <strong>un solo mensaje</strong>. No añadas "adelante" ni el prompt de Fase 2 todavía.</p>
+      </div>
       <div class="code-block">
         <button type="button" class="copy-button">Copiar</button>
-        <pre><code>Reglas de trabajo:
-- Fases: (1) Análisis — no modifiques archivos hasta mi "adelante"; (2) Cambios — un diff a la vez, espera mi "ok"; (3) Validación — mvn compile o mvn test con output completo.
-- Solo la carpeta raíz abierta en Bob. No explores otras carpetas snap*.
-- Cambios mínimos para el objetivo del lab. Sin refactors ni funcionalidades extra.
-- PROTOCOLO Fase 2: un "Cambio N" por mensaje — diff unified completo, pregunta "¿Aplico el Cambio N?", PARA hasta mi "ok". Prohibido batch, saltar a validación o ejecutar mvn/git sin permiso.
-
-Lab 1: migrar Simple Pharmacy de Traditional WebSphere a Liberty.
+        <pre><code>Lab 1: migrar Simple Pharmacy de Traditional WebSphere a Liberty.
 Carpeta raíz del proyecto: snapA-java-liberty-replatforming/ (la carpeta abierta en Bob).
 Migration plan ZIP: ../simple-pharmacy.war_migrationPlan.zip
   (está en lab1-java-liberty-replatforming/, un nivel arriba de snapA — NO busques fuera del workshop)
@@ -108,9 +105,7 @@ Migration plan ZIP: ../simple-pharmacy.war_migrationPlan.zip
 Java sigue siendo 8. El código Java y Struts no cambian.
 Solo cambia el runtime y la configuración de build.
 
----
-
-FASE 1 — ANÁLISIS (no toques ningún archivo todavía)
+FASE 1 — ANÁLISIS (no toques ningún archivo)
 
 1. Lee pom.xml (en la raíz del workspace) y describe: versión Java, servidor,
    dependencias principales, qué le falta para correr en Liberty
@@ -118,16 +113,27 @@ FASE 1 — ANÁLISIS (no toques ningún archivo todavía)
    - reports/simple-pharmacy.war_AnalysisReport.json
      → lista todos los findings Critical y Warning con su biblioteca, versión y propuesta
    - src/main/liberty/config/server.xml (lo usaremos en Fase 2)
-3. Preséntame el análisis completo
+3. Preséntame el análisis completo y espera el siguiente prompt.
 
-Cuando yo diga "adelante", pasamos a Fase 2.</code></pre>
+Reglas: solo la carpeta raíz abierta; no explores otras carpetas snap*.
+Cambios mínimos para el objetivo del lab. Sin refactors ni funcionalidades extra.</code></pre>
       </div>
+      <p class="cds--body-01" style="margin-top:var(--cds-spacing-05,1rem)"><strong>Qué hará Bob:</strong></p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">Leer <code>pom.xml</code> y describir Java, servidor y dependencias</li>
+        <li class="cds--list__item">Abrir el ZIP del migration plan y listar findings Critical y Warning</li>
+        <li class="cds--list__item">Presentar el inventario completo <strong>sin modificar archivos</strong></li>
+      </ul>
       <figure class="lab-figure">
         <img src="./assets/images/labs/java-modernization-v2/lab1-phase1-analysis.png"
              alt="Bob analizando el pom.xml y el ZIP del migration plan de Simple Pharmacy"
              class="lab-figure__img" />
         <figcaption class="lab-figure__caption">Bob lee el pom.xml y el ZIP del migration plan, lista los findings críticos</figcaption>
       </figure>
+      <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
+        <p class="callout__title">Cuando veas el inventario de findings → baja a Paso 3</p>
+        <p>Lee el análisis — es el mapa de lo que va a cambiar. Después pega el prompt de Fase 2 (un mensaje nuevo). No escribas "adelante".</p>
+      </div>
     </div>
   </section>
 
@@ -139,26 +145,20 @@ Cuando yo diga "adelante", pasamos a Fase 2.</code></pre>
     </h2>
 
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Flujo de aprobación interactivo</h3>
-      <p class="cds--body-01">Di <strong>"adelante"</strong> en el chat de <strong>Agent Mode</strong> y luego pega <strong>solo</strong> el prompt de Fase 2 (mensaje aparte). Bob debe presentar <strong>un cambio con diff</strong> y parar hasta tu <strong>"ok"</strong>:</p>
-
+      <h3 class="cds--productive-heading-02 lab-step__title">Prompt para Bob</h3>
+      <div class="callout" data-tone="note" style="margin-bottom:var(--cds-spacing-04,0.75rem)">
+        <p class="callout__title">Tu acción — pega solo este prompt (un mensaje nuevo)</p>
+        <p>No escribas "adelante". Pegar este bloque <strong>es</strong> el Continue. Después entra el loop de aprobación:</p>
+      </div>
+      <ol class="cds--list--ordered" style="margin:0 0 var(--cds-spacing-05,1rem)">
+        <li class="cds--list__item">Bob propone el <strong>Cambio 1</strong> con un diff completo y pregunta "¿Aplico el Cambio 1?"</li>
+        <li class="cds--list__item">Tú respondes <strong>ok</strong> (nuestro Approve) o das otra instrucción</li>
+        <li class="cds--list__item">Bob aplica y propone el <strong>Cambio 2</strong> — repite hasta el Cambio 6</li>
+      </ol>
       <div class="code-block">
         <button type="button" class="copy-button">Copiar</button>
-        <pre><code>FASE 2 — CAMBIOS (uno a la vez — explica el cambio, espera mi "ok", luego aplica)
+        <pre><code>FASE 2 — CAMBIOS (uno a la vez)
 
-PROTOCOLO OBLIGATORIO (no negociable):
-1. UN solo "Cambio N" por mensaje. No prepares el siguiente hasta mi "ok" literal.
-2. Para cada cambio, en ESTE orden:
-   a) Encabezado: "Cambio N — [título]"
-   b) Explicación breve (archivo(s) y por qué)
-   c) Diff unified COMPLETO en el chat (líneas - y + visibles). Archivo nuevo = contenido completo.
-   d) Pregunta: "¿Aplico el Cambio N?"
-   e) PARA. No edites archivos. No ejecutes mvn/git. No avances.
-3. PROHIBIDO: aplicar varios cambios seguidos; decir "todos aplicados"; pasar a Fase 3 sin mi prompt.
-4. Empieza SOLO con el Cambio 1. Los Cambios 2–6 son referencia — no los ejecutes aún.
-5. Si ya aplicaste algo sin "ok", DETENTE y pregúntame antes de continuar.
-
----
 Cambio 1 — Javassist 3.29.2-GA (APROBAR)
   Fix: añadir javassist como dependencia explícita en pom.xml.
   ⚠️ La versión DEBE ser exactamente 3.29.2-GA.
@@ -181,7 +181,21 @@ Cambio 5 — server.xml (APROBAR)
 Cambio 6 — Scripts de conveniencia (APROBAR)
   Crear: run-liberty.sh, quick-start.sh, stop-liberty.sh
 
-Cuando termines el Cambio 6 con mi "ok", DETENTE. No ejecutes mvn hasta que yo pegue el prompt de Fase 3.</code></pre>
+Reglas:
+- Un "Cambio N" por mensaje: encabezado, explicación, diff unified completo, pregunta "¿Aplico el Cambio N?" y PARA hasta mi "ok".
+- Empieza SOLO con el Cambio 1. Sin batch, sin mvn/git, sin pasar a validación.
+- Si ya aplicaste algo sin "ok", DETENTE y pregúntame.
+- Tras el ok del Cambio 6, DETENTE. Espera el siguiente prompt.</code></pre>
+      </div>
+      <p class="cds--body-01" style="margin-top:var(--cds-spacing-05,1rem)"><strong>Qué hará Bob:</strong></p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">Proponer el Cambio 1 (javassist 3.29.2-GA) con diff y esperar tu <strong>ok</strong></li>
+        <li class="cds--list__item">Confirmar que OGNL se deja intacto (falso positivo)</li>
+        <li class="cds--list__item">Seguir uno a uno: asm-analysis, liberty-maven-plugin, server.xml, scripts</li>
+      </ul>
+      <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
+        <p class="callout__title">Cuando Bob confirme el Cambio 6 → baja a Paso 4</p>
+        <p>Pega el prompt de validación. No esperes que Bob lo pida ni que ejecute <code>mvn</code> por su cuenta.</p>
       </div>
 
       <p class="cds--body-01" style="margin-top:var(--cds-spacing-05,1rem)">Problemas esperados en este proyecto (los tuyos pueden variar):</p>
@@ -240,8 +254,11 @@ No, use 3.29.2-GA instead</code></pre>
     </h2>
 
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Compilar con Maven</h3>
-      <p class="cds--body-01">La meta de este lab es un replatforming limpio a Liberty, y la comprobación que importa es que la app migrada siga compilando. Pega el prompt en el chat de <strong>Agent Mode</strong>:</p>
+      <h3 class="cds--productive-heading-02 lab-step__title">Prompt para Bob</h3>
+      <div class="callout" data-tone="note" style="margin-bottom:var(--cds-spacing-04,0.75rem)">
+        <p class="callout__title">Tu acción — pega esto ahora</p>
+        <p>La meta es un replatforming limpio a Liberty: que la app migrada siga compilando. Pega el bloque en el mismo chat.</p>
+      </div>
       <div class="code-block">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>FASE 3 — VALIDACIÓN
@@ -251,12 +268,17 @@ Ejecuta: mvn clean compile
 Resultado esperado: BUILD SUCCESS con Java 1.8.
 Si falla, muéstrame el error completo antes de proponer ningún fix.</code></pre>
       </div>
+      <p class="cds--body-01" style="margin-top:var(--cds-spacing-05,1rem)"><strong>Qué hará Bob:</strong></p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">Ejecutar <code>mvn clean compile</code> y mostrar el output completo</li>
+        <li class="cds--list__item">Si falla, mostrar el error <strong>antes</strong> de proponer ningún fix</li>
+      </ul>
       <p class="cds--body-01" style="margin-top:var(--cds-spacing-05,1rem)">Deberías ver <code>BUILD SUCCESS</code>. El Lab 1 cambia el runtime (Traditional WebSphere → Liberty) y la configuración de build — mantiene la app en Java 1.8 con el namespace <code>javax.*</code>, así que el código de la aplicación no cambia.</p>
       <figure class="lab-figure">
         <img src="./assets/images/labs/java-modernization-v2/lab1-phase3-build-success.png"
-             alt="Terminal mostrando BUILD SUCCESS de Maven con Java 1.8 en el Lab 1 de Liberty Replatforming"
+             alt="Bob mostrando FASE 3 con BUILD SUCCESS de Maven y Java 1.8 en el Lab 1 de Liberty Replatforming"
              class="lab-figure__img" />
-        <figcaption class="lab-figure__caption">Terminal: <code>mvn clean compile</code> → BUILD SUCCESS con Java 1.8</figcaption>
+        <figcaption class="lab-figure__caption">Bob: Fase 3 — <code>mvn clean compile</code> → BUILD SUCCESS con Java 1.8</figcaption>
       </figure>
     </div>
   </section>
@@ -276,7 +298,7 @@ Si falla, muéstrame el error completo antes de proponer ningún fix.</code></pr
 
     <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
       <p class="callout__title">¿Quieres ejecutarla? Puedes — pero no es obligatorio</p>
-      <p>Ya viste la aplicación en la demo de apertura, así que ejecutarla no es requisito para terminar este lab — una compilación limpia basta. Si quieres verla en Liberty de todos modos, adelante. Si algo falla, copia el error — de la terminal o del navegador — al chat de Bob y pídele que lo arregle. Depurar su propia migración a partir del texto del error es exactamente para lo que sirve Agent Mode.</p>
+      <p>Ya viste la aplicación en la demo de apertura, así que ejecutarla no es requisito para terminar este lab — una compilación limpia basta. Si quieres verla en Liberty de todos modos, puedes hacerlo. Si algo falla, copia el error — de la terminal o del navegador — al chat de Bob y pídele que lo arregle. Depurar su propia migración a partir del texto del error es exactamente para lo que sirve Agent Mode.</p>
     </div>
 
     <div class="callout" data-tone="warning" style="margin-top:var(--cds-spacing-05,1rem)">

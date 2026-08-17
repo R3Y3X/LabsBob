@@ -13,7 +13,7 @@
 
     <div class="lab-banner__metrics">
       <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">10–20</span>
+        <span class="lab-banner__metric-value">14–16</span>
         <span class="lab-banner__metric-label">BobCoins estimados</span>
       </div>
       <div class="lab-banner__metric">
@@ -122,17 +122,14 @@
     </h2>
 
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Analiza la arquitectura Struts y elige el stack</h3>
-      <p class="cds--body-01">Al cambiar de carpeta, Bob abre un chat nuevo en <strong>Agent Mode</strong>. Copia y pega <strong>todo</strong> el bloque:</p>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Prompt para Bob</h3>
+      <div class="callout" data-tone="note" style="margin-bottom:var(--cds-spacing-04,0.75rem)">
+        <p class="callout__title">Tu acción — pega esto en el chat (Agent Mode)</p>
+        <p>Al cambiar de carpeta, Bob abre un chat nuevo. Copia el bloque y pégalo como <strong>un solo mensaje</strong>. No añadas "adelante" ni el prompt de Fase 2 todavía.</p>
+      </div>
       <div class="code-block">
         <button type="button" class="copy-button">Copiar</button>
-        <pre><code>Reglas de trabajo:
-- Fases: (1) Análisis — no modifiques archivos hasta mi "adelante"; (2) Backend — un diff a la vez, espera "ok"; (3) Frontend — muéstrame código antes de crear; (4) Validación — builds y curls con output completo.
-- Solo la carpeta raíz abierta en Bob. No explores otras carpetas snap*.
-- Cambios mínimos para el objetivo del lab. Sin refactors ni funcionalidades extra.
-- PROTOCOLO: un archivo/cambio por turno — diff o código completo en el chat, pregunta antes de crear/aplicar, PARA hasta mi "ok". Prohibido batch y ejecutar mvn/npm sin permiso.
-
-Lab 3: reemplazar el frontend Struts/JSP de Simple Pharmacy por una SPA React + Material UI.
+        <pre><code>Lab 3: reemplazar el frontend Struts/JSP de Simple Pharmacy por una SPA React + Material UI.
 Carpeta raíz: la que está abierta (snapC — Java 21, Jakarta EE 10, Struts 7.x).
 
 Stack objetivo:
@@ -140,9 +137,7 @@ Stack objetivo:
 - Backend: JAX-RS en Liberty (webProfile-10.0)
 - Orden: backend primero, frontend después, containerización al final
 
----
-
-FASE 1 — ANÁLISIS (no toques nada todavía)
+FASE 1 — ANÁLISIS (no toques ningún archivo)
 
 1. Lee todos los archivos bajo src/main/java/com/pharmacy/action/ y lista:
    nombre del método, datos que expone, operaciones que realiza
@@ -158,12 +153,25 @@ FASE 1 — ANÁLISIS (no toques nada todavía)
    OrderAction.* → GET /api/orders → OrderList/View.tsx
 
 Preséntame el mapa completo y tu recomendación (React + MUI + JAX-RS en Liberty).
-Cuando yo diga "adelante", pasamos a Fase 2 (backend).</code></pre>
+Espera el siguiente prompt. No toques archivos.
+
+Reglas: solo la carpeta raíz abierta; no explores otras carpetas snap*.
+Cambios mínimos para el objetivo del lab. Sin refactors ni funcionalidades extra.</code></pre>
       </div>
+      <p class="cds--body-01" style="margin-top:var(--cds-spacing-05,1rem)"><strong>Qué hará Bob:</strong></p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">Inventariar Actions Struts y JSPs</li>
+        <li class="cds--list__item">Proponer estado objetivo (Liberty+React vs Quarkus) y el mapa de conversión</li>
+        <li class="cds--list__item">Detenerse <strong>sin crear archivos</strong></li>
+      </ul>
 
       <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
         <p class="callout__title">La elección de estado objetivo es una decisión de riesgo</p>
         <p>Las opciones de riesgo medio mantienen Liberty y la lógica Java existente, descomponiendo solo la capa de presentación. Las de riesgo alto replatforman el backend a Quarkus a la vez — cambiar frontend y backend en el mismo release es cómo las modernizaciones se convierten en proyectos de 18 meses.</p>
+      </div>
+      <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
+        <p class="callout__title">Cuando veas el mapa de conversión → baja a Paso 2</p>
+        <p>Pega el prompt de Fase 2 (backend). No escribas "adelante".</p>
       </div>
     </div>
   </section>
@@ -176,18 +184,14 @@ Cuando yo diga "adelante", pasamos a Fase 2 (backend).</code></pre>
     </h2>
 
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Crear la capa REST y validar con Liberty</h3>
-      <p class="cds--body-01">Di <strong>"adelante"</strong> en el chat de <strong>Agent Mode</strong> y pega el prompt de Fase 2 (mensaje aparte):</p>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Prompt para Bob</h3>
+      <div class="callout" data-tone="note" style="margin-bottom:var(--cds-spacing-04,0.75rem)">
+        <p class="callout__title">Tu acción — pega solo este prompt (un mensaje nuevo)</p>
+        <p>No escribas "adelante". Pegar este bloque <strong>es</strong> el Continue. Loop de aprobación: Bob muestra el Archivo N → tú dices <strong>ok</strong> → siguiente archivo, hasta el 6.</p>
+      </div>
       <div class="code-block">
         <button type="button" class="copy-button">Copiar</button>
-        <pre><code>FASE 2 — BACKEND JAX-RS (un archivo a la vez — muéstrame el código antes de crear)
-
-PROTOCOLO OBLIGATORIO (no negociable):
-1. UN solo "Archivo N" por mensaje. No prepares el siguiente hasta mi "ok" literal.
-2. Para cada archivo: (a) encabezado "Archivo N — …", (b) código completo en el chat,
-   (c) pregunta "¿Creo el Archivo N?", (d) PARA — no uses herramientas de edición.
-3. PROHIBIDO: crear varios archivos seguidos; ejecutar mvn/npm; pasar a Fase 3 sin mi permiso.
-4. Empieza SOLO con el Archivo 1. Los Archivos 2–6 son referencia — no los crees aún.
+        <pre><code>FASE 2 — BACKEND JAX-RS (un archivo a la vez)
 
 El backend vive en src/main/java/com/pharmacy/api/ (o rest/).
 Los repositorios existentes ya funcionan — úsalos directamente, no los modifiques.
@@ -208,8 +212,19 @@ Después del Archivo 6 y mi "ok" final:
 2. Solo entonces: mvn clean package → BUILD SUCCESS
 3. Pregunta antes de liberty:run y curl. No ejecutes sin mi "ok".
 
-Pega cualquier error de arranque en el chat para depurar.</code></pre>
+Pega cualquier error de arranque en el chat para depurar.
+
+Reglas:
+- Un "Archivo N" por mensaje: encabezado, código completo, pregunta "¿Creo el Archivo N?" y PARA hasta mi "ok".
+- Empieza SOLO con el Archivo 1. Sin batch, sin mvn/npm, sin pasar a Fase 3.
+- Tras el ok del Archivo 6 y la validación del backend, DETENTE. Espera el siguiente prompt.</code></pre>
       </div>
+      <p class="cds--body-01" style="margin-top:var(--cds-spacing-05,1rem)"><strong>Qué hará Bob:</strong></p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">Mostrar cada recurso JAX-RS (uno a uno) y esperar tu <strong>ok</strong></li>
+        <li class="cds--list__item">Tras el Archivo 6, pedir permiso para <code>mvn clean package</code> y <code>liberty:run</code></li>
+        <li class="cds--list__item">No empezar el frontend hasta el siguiente prompt</li>
+      </ul>
 
       <div class="callout" data-tone="note" style="margin-top:var(--cds-spacing-05,1rem)">
         <p class="callout__title">Checkpoint — la capa REST funciona antes de tocar el frontend</p>
@@ -230,6 +245,10 @@ Pega cualquier error de arranque en el chat para depurar.</code></pre>
         </div>
         <p style="margin-top:0.75rem"><strong>Bonus:</strong> Swagger UI en <code>http://localhost:9081/openapi/ui/</code> es documentación, no un health check — puede cargar aunque cada ruta <code>/api</code> devuelva 404.</p>
       </div>
+      <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
+        <p class="callout__title">Cuando <code>/api/dashboard</code> devuelva JSON → baja a Paso 3</p>
+        <p>El backend está listo. Pega el prompt de scaffold del frontend. No escribas "adelante" ni esperes que Bob empiece React por su cuenta.</p>
+      </div>
     </div>
   </section>
 
@@ -241,13 +260,14 @@ Pega cualquier error de arranque en el chat para depurar.</code></pre>
     </h2>
 
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Crear el proyecto React y el dev server</h3>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Prompt para Bob</h3>
+      <div class="callout" data-tone="note" style="margin-bottom:var(--cds-spacing-04,0.75rem)">
+        <p class="callout__title">Tu acción — pega esto cuando el backend responda JSON</p>
+        <p>Un mensaje nuevo. Loop: Bob muestra el paso → tú dices <strong>ok</strong> → siguiente, hasta el scaffold vacío en el puerto 3000.</p>
+      </div>
       <div class="code-block">
         <button type="button" class="copy-button">Copiar</button>
-        <pre><code>FASE 3 — FRONTEND: SCAFFOLD (un paso a la vez — muéstrame antes de crear)
-
-PROTOCOLO: un paso por turno. Muestra comandos o código, pregunta, PARA hasta mi "ok".
-No ejecutes npm ni arranques el dev server sin permiso.
+        <pre><code>FASE 3 — FRONTEND: SCAFFOLD (un paso a la vez)
 
 Paso 1 — Scaffold Vite + React + TypeScript:
   npm create vite@latest frontend -- --template react-ts
@@ -263,12 +283,25 @@ Paso 4 — App.tsx mínimo con tema Material UI
 Solo con mi permiso: npm run dev → http://localhost:3000/
 
 El scaffold debe verse genérico y vacío — sin datos de farmacia todavía.
-Eso es el hito esperado, no un API rota. Confirma con "El scaffold se ve bien".</code></pre>
+Eso es el hito esperado, no un API rota. Confirma con "El scaffold se ve bien".
+
+Reglas: un paso por turno. Muestra comandos o código, pregunta, PARA hasta mi "ok".
+No ejecutes npm ni arranques el dev server sin permiso.</code></pre>
       </div>
+      <p class="cds--body-01" style="margin-top:var(--cds-spacing-05,1rem)"><strong>Qué hará Bob:</strong></p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">Crear el scaffold Vite + React + TypeScript (un paso a la vez)</li>
+        <li class="cds--list__item">Configurar el proxy <code>/api</code> hacia Liberty</li>
+        <li class="cds--list__item">Dejar una página genérica vacía — los datos llegan en Fase 4</li>
+      </ul>
 
       <div class="callout" data-tone="note" style="margin-top:var(--cds-spacing-05,1rem)">
         <p class="callout__title">El scaffold vacío es intencional</p>
         <p>Espera una página genérica sin dashboard ni datos — nada llama al backend aún. Los componentes que fetchean datos se construyen en la Fase 4. No depures la carga de datos aquí; eso ya se validó en la Fase 2.</p>
+      </div>
+      <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
+        <p class="callout__title">Cuando el scaffold vacío cargue en el puerto 3000 → baja a Paso 4</p>
+        <p>Pega el prompt de componentes. No esperes que Bob construya el dashboard por su cuenta.</p>
       </div>
     </div>
   </section>
@@ -281,13 +314,14 @@ Eso es el hito esperado, no un API rota. Confirma con "El scaffold se ve bien".<
     </h2>
 
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 4 — Construir la UI con datos reales</h3>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 4 — Prompt para Bob</h3>
+      <div class="callout" data-tone="note" style="margin-bottom:var(--cds-spacing-04,0.75rem)">
+        <p class="callout__title">Tu acción — pega esto ahora</p>
+        <p>Un mensaje nuevo. Loop: archivo → <strong>ok</strong> → siguiente, hasta que el dashboard muestre datos reales.</p>
+      </div>
       <div class="code-block">
         <button type="button" class="copy-button">Copiar</button>
-        <pre><code>FASE 4 — COMPONENTES Y PÁGINAS (un archivo a la vez — muéstrame antes de crear)
-
-PROTOCOLO: un archivo/paso por turno. Código completo en el chat → "¿Creo…?" → PARA hasta "ok".
-No ejecutes npm run dev sin permiso.
+        <pre><code>FASE 4 — COMPONENTES Y PÁGINAS (un archivo a la vez)
 
 Paso 1 — Tipos: src/types/pharmacy.ts (Medicine, Order, Prescription, Dashboard)
 Paso 2 — API client: src/api/pharmacyApi.ts (base URL relativa /api vía proxy Vite)
@@ -298,8 +332,16 @@ Paso 4 — App.tsx con react-router-dom y barra de navegación MUI
 Paso 5 — Con mi permiso: npm run dev → http://localhost:3000/
 
 Checkpoint: dashboard, medicinas, prescripciones y pedidos deben renderizar
-con datos en vivo del backend. Si las páginas están vacías, revisa context root / proxy.</code></pre>
+con datos en vivo del backend. Si las páginas están vacías, revisa context root / proxy.
+
+Reglas: un archivo/paso por turno. Código completo en el chat → "¿Creo…?" → PARA hasta "ok".
+No ejecutes npm run dev sin permiso.</code></pre>
       </div>
+      <p class="cds--body-01" style="margin-top:var(--cds-spacing-05,1rem)"><strong>Qué hará Bob:</strong></p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">Crear tipos, API client y páginas MUI (uno a uno)</li>
+        <li class="cds--list__item">Conectar el dashboard a datos reales del backend</li>
+      </ul>
       <figure class="lab-figure">
         <img src="./assets/images/labs/java-modernization-v2/lab3-phase3-react-app.png"
              alt="El frontend React de Simple Pharmacy corriendo en localhost:3000 mostrando el dashboard con datos reales del backend"
@@ -310,6 +352,10 @@ con datos en vivo del backend. Si las páginas están vacías, revisa context ro
       <div class="callout" data-tone="note" style="margin-top:var(--cds-spacing-05,1rem)">
         <p class="callout__title">Checkpoint — aquí deben aparecer datos reales</p>
         <p>Ahora — no en el scaffold de la Fase 3 — el dashboard, medicinas, prescripciones y pedidos deben renderizar con datos del backend. Si las páginas están construidas pero vacías, casi siempre es un desajuste de context-root/proxy de la Fase 2.</p>
+      </div>
+      <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
+        <p class="callout__title">Cuando veas datos reales en el dashboard → baja a Paso 5 o 6</p>
+        <p>Paso 5 (Docker) es opcional. Si no hay tiempo, pega el prompt de Fase 6 (validación integrada).</p>
       </div>
     </div>
   </section>
@@ -322,7 +368,11 @@ con datos en vivo del backend. Si las páginas están vacías, revisa context ro
     </h2>
 
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 5 — Containerizar y validar el estado final</h3>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 5 — Prompt para Bob (opcional)</h3>
+      <div class="callout" data-tone="note" style="margin-bottom:var(--cds-spacing-04,0.75rem)">
+        <p class="callout__title">Tu acción — solo si hay tiempo</p>
+        <p>Si saltas esta fase, baja a Paso 6. El lab se considera completo con la validación integrada.</p>
+      </div>
       <div class="code-block">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>FASE 5 — CONTAINERIZACIÓN (opcional si hay tiempo)
@@ -350,7 +400,11 @@ Si no hay tiempo, puedes saltar esta fase — el lab se considera completo con F
     </h2>
 
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 6 — Verificar backend + frontend juntos</h3>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 6 — Prompt para Bob</h3>
+      <div class="callout" data-tone="note" style="margin-bottom:var(--cds-spacing-04,0.75rem)">
+        <p class="callout__title">Tu acción — pega esto ahora</p>
+        <p>Verifica backend + frontend juntos. Pega el bloque en el mismo chat.</p>
+      </div>
       <div class="code-block">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>FASE 6 — VALIDACIÓN INTEGRADA
@@ -376,6 +430,11 @@ Si no hay tiempo, puedes saltar esta fase — el lab se considera completo con F
    curl http://localhost:3000/api/dashboard
    → JSON = proxy y backend coinciden; 404 = desajuste de context root</code></pre>
       </div>
+      <p class="cds--body-01" style="margin-top:var(--cds-spacing-05,1rem)"><strong>Qué hará Bob:</strong></p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">Arrancar Liberty y el frontend, y verificar curls + el dashboard en el navegador</li>
+        <li class="cds--list__item">Confirmar que el proxy Vite <code>/api</code> devuelve el mismo JSON que Liberty</li>
+      </ul>
     </div>
   </section>
 

@@ -14,7 +14,7 @@
 
     <div class="lab-banner__metrics">
       <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">8–15</span>
+        <span class="lab-banner__metric-value">5–7</span>
         <span class="lab-banner__metric-label">BobCoins estimados</span>
       </div>
       <div class="lab-banner__metric">
@@ -76,7 +76,13 @@
     </ul>
   </section>
 
-  <!-- Prerrequisitos -->
+  <!-- Qué cambia en este lab -->
+  <div class="lab-delta">
+    <span class="lab-delta__item lab-delta__item--changed">OpenAPI spec <span class="lab-delta__arrow">→</span> tests primero</span>
+    <span class="lab-delta__item lab-delta__item--changed">PrescriptionResource <span class="lab-delta__arrow">desde tests</span></span>
+    <span class="lab-delta__item lab-delta__item--changed">Red <span class="lab-delta__arrow">→</span> Green</span>
+  </div>
+
   <div class="callout" data-tone="note">
     <p class="callout__title">Antes de empezar — configura el entorno</p>
     <p>Alternativa al Lab 4. Usa <strong>Java 21</strong> y Maven. Lee <code>prescription-api-spec.yaml</code> antes de iniciar. Sigue la guía de setup del overview si aún no lo has hecho.</p>
@@ -199,7 +205,11 @@
 
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Solicitar generación de tests (RED)</h3>
-      <p class="cds--body-01">Confirma que estás en Agent Mode. Copia y pega el prompt exacto:</p>
+      <p class="cds--body-01"><strong>Prompt para Bob:</strong></p>
+      <div class="callout" data-tone="note" style="margin-bottom:var(--cds-spacing-04,0.75rem)">
+        <p class="callout__title">Tu acción — pega esto en el chat (Agent Mode)</p>
+        <p>Confirma que estás en Agent Mode. Copia el bloque y pégalo como un solo mensaje.</p>
+      </div>
       <div class="code-block">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>Genera un conjunto completo de unit tests JUnit 5 + Mockito (Java, NO JavaScript/Jest) siguiendo
@@ -247,6 +257,10 @@ tiene PENDING y VALIDATED — no introduzcas FULFILLED ni EXPIRED.</code></pre>
       </div>
       <p>Debería fallar — o no compilará (<code>PrescriptionResource</code> aún no existe) o los tests darán error. Ese rojo es correcto y esperado. El Ejercicio 2 lo pone en verde.</p>
     </div>
+      <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
+        <p class="callout__title">Cuando veas el rojo (fallo esperado) → baja al Ejercicio 2</p>
+        <p>Pega el prompt GREEN. No esperes que Bob implemente el resource por su cuenta.</p>
+      </div>
   </section>
 
   <!-- Ejercicio 2 -->
@@ -262,6 +276,11 @@ tiene PENDING y VALIDATED — no introduzcas FULFILLED ni EXPIRED.</code></pre>
 
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Solicitar implementación desde tests (GREEN)</h3>
+      <p class="cds--body-01"><strong>Prompt para Bob:</strong></p>
+      <div class="callout" data-tone="note" style="margin-bottom:var(--cds-spacing-04,0.75rem)">
+        <p class="callout__title">Tu acción — pega esto ahora</p>
+        <p>Un mensaje nuevo en el mismo chat.</p>
+      </div>
       <div class="code-block">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>Crea PrescriptionResource.java desde 'PrescriptionResourceTest.java' siguiendo la estructura de directorios estándar de Maven. Colócalo en snapTDD/src/main/java/com/pharmacy/api/. También crea las clases de modelo requeridas (Prescription.java, Medicine.java) y las clases de repositorio (PrescriptionRepository.java, MedicineRepository.java).
@@ -289,6 +308,10 @@ Usa el namespace jakarta.ws.rs (NO javax). @Path("/prescriptions"), con @GET get
       <li class="cds--list__item">✅ Uso de repositorios — acceso a datos adecuado</li>
       <li class="cds--list__item">✅ Formato de respuesta — respuestas JSON según spec</li>
     </ul>
+      <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
+        <p class="callout__title">Cuando Bob haya creado <code>PrescriptionResource.java</code> → baja al Ejercicio 3 o 4</p>
+        <p>El Ejercicio 3 (comparar TDD vs tradicional) necesita el Lab 4 o <code>snapD</code>. Si no lo tienes, salta al Ejercicio 4 y ejecuta <code>mvn test</code>.</p>
+      </div>
   </section>
 
   <!-- Ejercicio 3 -->
@@ -313,7 +336,8 @@ Usa el namespace jakarta.ws.rs (NO javax). @Path("/prescriptions"), con @GET get
         <li class="cds--list__item">Copia <code>PrescriptionResource.java</code> desde <code>../lab4-unit-test-generation/snapD-unit-test-gen/src/main/java/com/pharmacy/api/</code> a <code>snapTDD</code></li>
         <li class="cds--list__item">Renómbralo a <code>traditional_PrescriptionResource.java</code></li>
       </ol>
-      <div class="code-block" style="margin-top:var(--cds-spacing-05,1rem)">
+      <p class="cds--body-01" style="margin-top:var(--cds-spacing-05,1rem)"><strong>Prompt para Bob:</strong></p>
+      <div class="code-block" style="margin-top:var(--cds-spacing-04,0.75rem)">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>Compara el original traditional_PrescriptionResource.java con la versión TDD en snapTDD/src/main/java/com/pharmacy/api/PrescriptionResource.java y resume las diferencias</code></pre>
       </div>
@@ -339,6 +363,10 @@ Usa el namespace jakarta.ws.rs (NO javax). @Path("/prescriptions"), con @GET get
       <li class="cds--list__item">✅ Mensajes de error explícitos</li>
       <li class="cds--list__item">✅ Cobertura de casos límite — TDD captura condiciones de frontera</li>
     </ul>
+      <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
+        <p class="callout__title">Cuando tengas el resumen de diferencias → baja al Ejercicio 4</p>
+        <p>Ejecuta <code>mvn test</code> para confirmar GREEN. El Ejercicio 5 (refactor) es opcional.</p>
+      </div>
   </section>
 
   <!-- Ejercicio 4 -->
@@ -358,6 +386,10 @@ Usa el namespace jakarta.ws.rs (NO javax). @Path("/prescriptions"), con @GET get
 
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 4 — Ejecutar todos los tests</h3>
+      <div class="callout" data-tone="note" style="margin-bottom:var(--cds-spacing-04,0.75rem)">
+        <p class="callout__title">Tu acción — ejecuta esto en la terminal</p>
+        <p>No es un prompt para Bob. Corre Maven y confirma GREEN.</p>
+      </div>
       <div class="code-block">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>mvn clean test</code></pre>
@@ -387,6 +419,10 @@ Usa el namespace jakarta.ws.rs (NO javax). @Path("/prescriptions"), con @GET get
       </div>
       <p>El conteo exacto depende de cuántos tests generó Bob — lo que importa es 0 failures y 0 errors (fase Green).</p>
     </div>
+      <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
+        <p class="callout__title">Cuando los tests estén en verde → el lab está completo</p>
+        <p>El Ejercicio 5 (refactor) es opcional. Si lo haces, pega el prompt de 5a.</p>
+      </div>
   </section>
 
   <!-- Ejercicio 5 -->
@@ -401,6 +437,7 @@ Usa el namespace jakarta.ws.rs (NO javax). @Path("/prescriptions"), con @GET get
 
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 5a — Identificar oportunidades de mejora</h3>
+      <p class="cds--body-01"><strong>Prompt para Bob:</strong></p>
       <div class="code-block">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>Revisa la implementación de PrescriptionResource.java y sugiere mejoras de refactorización manteniendo todos los tests en verde</code></pre>
@@ -413,10 +450,15 @@ Usa el namespace jakarta.ws.rs (NO javax). @Path("/prescriptions"), con @GET get
         <li class="cds--list__item">Añadir logging para depuración</li>
         <li class="cds--list__item">Extraer constantes para valores mágicos</li>
       </ul>
+      <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
+        <p class="callout__title">Cuando Bob liste las mejoras → baja a Paso 5b</p>
+        <p>Pega el prompt de aplicar el refactor. Luego 5c (logging) y 5d (<code>mvn test</code>).</p>
+      </div>
     </div>
 
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 5b — Aplicar el refactor</h3>
+      <p class="cds--body-01"><strong>Prompt para Bob:</strong></p>
       <div class="code-block">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>Aplica las mejoras de refactorización que sugeriste en PrescriptionResource.java. Empieza extrayendo constantes para valores mágicos y usando createErrorResponse() de forma consistente.</code></pre>
@@ -425,6 +467,7 @@ Usa el namespace jakarta.ws.rs (NO javax). @Path("/prescriptions"), con @GET get
 
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 5c — Añadir logging</h3>
+      <p class="cds--body-01"><strong>Prompt para Bob:</strong></p>
       <div class="code-block">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>Añade declaraciones de logging para operaciones clave como creación y validación de prescripciones</code></pre>
@@ -511,6 +554,14 @@ private Date calculateExpiryDate(Date startDate) {
       <li class="cds--list__item">Mockea fecha/hora en tests para consistencia</li>
       <li class="cds--list__item">Considera la API de fecha/hora de Java 8+ (<code>LocalDateTime</code>)</li>
     </ul>
+
+    <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">La terminal de Bob muestra la versión incorrecta de Java</h3>
+    <p class="cds--body-01"><code>sdk use</code> es por sesión de shell — no se aplica entre pestañas ni a la terminal que Bob abre por su cuenta. Ejecútalo en la terminal de Bob (macOS/Linux):</p>
+    <div class="code-block">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>sdk use java 21.0.7-zulu</code></pre>
+    </div>
+    <p class="cds--body-01" style="margin-top:0.75rem">En Windows (PowerShell), asegúrate de que <code>JAVA_HOME</code> apunte a la instalación de Temurin 21 y reinicia la terminal.</p>
   </section>
 
   <!-- Ayuda -->

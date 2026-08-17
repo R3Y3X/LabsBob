@@ -809,6 +809,17 @@ function renderHome(searchTerm = '') {
             <div class="hub-team-card__accent hub-team-card__accent--blue"></div>
           </div>
 
+          <div class="hub-team-card">
+            <div class="hub-team-card__avatar-wrap hub-team-card__avatar-wrap--mascot">
+              <img src="./assets/images/equipo/ibmbob.png" alt="IBM Bob" class="hub-team-card__avatar" loading="lazy" />
+            </div>
+            <div class="hub-team-card__body">
+              <p class="hub-team-card__name">IBM Bob</p>
+              <p class="hub-team-card__role">Participante</p>
+            </div>
+            <div class="hub-team-card__accent hub-team-card__accent--purple"></div>
+          </div>
+
         </div>
       </div>
     </section>

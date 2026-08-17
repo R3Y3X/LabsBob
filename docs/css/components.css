@@ -1777,6 +1777,14 @@ body[data-category="premium"] .lab-workspace-setup__table th {
   display: block;
 }
 
+.hub-team-card__avatar-wrap--mascot {
+  background: #000;
+}
+
+.hub-team-card__avatar-wrap--mascot .hub-team-card__avatar {
+  object-fit: contain;
+}
+
 /* Placeholder shown when image fails or is missing */
 .hub-team-card__avatar-wrap--empty {
   display: flex !important;
@@ -1834,6 +1842,10 @@ body[data-category="premium"] .lab-workspace-setup__table th {
 .cds--g100 .hub-team-card__avatar-wrap {
   border-color: var(--cds-border-subtle-01, #393939);
   background: var(--cds-layer-02, #353535);
+}
+
+.cds--g100 .hub-team-card__avatar-wrap--mascot {
+  background: #000;
 }
 
 /* ── Responsive breakpoints ─────────────────────────────────────── */

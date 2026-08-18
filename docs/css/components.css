@@ -1659,6 +1659,10 @@ body[data-category="premium"] .lab-workspace-setup__table th {
   background: transparent;
 }
 
+.cds--g100 .hub-profile-card__tool img {
+  filter: brightness(0) invert(1);
+}
+
 .cds--g100 .hub-profile-card__tasks { border-top-color: rgba(255,255,255,0.15); }
 
 /* ── Responsive ─────────────────────────────────────────────────── */

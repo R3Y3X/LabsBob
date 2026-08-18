@@ -1874,7 +1874,7 @@ body[data-category="premium"] .lab-workspace-setup__table th {
   display: none;
   position: fixed;
   inset: 0;
-  z-index: 9000;
+  z-index: 9200;
   align-items: center;
   justify-content: center;
   padding: var(--cds-spacing-05, 1rem);

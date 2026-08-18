@@ -458,14 +458,13 @@ body {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  cursor: pointer;
   border-radius: 0 !important;
   min-height: 200px;
   padding: var(--cds-spacing-06, 1.5rem);
   background: var(--cds-background, #ffffff) !important;
   border: 1px solid var(--cds-border-subtle-01, #e0e0e0) !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.2s ease, background 0.15s;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.2s ease, background 0.25s;
 }
 
 .hub-lab-card:hover {
@@ -543,6 +542,13 @@ body {
   margin-top: auto;
   font-size: 0.875rem;
   color: var(--cds-link-primary, #0f62fe);
+}
+
+.hub-lab-card__disclaimer {
+  margin: 0;
+  font-size: 0.6875rem;
+  color: var(--cds-text-helper, #6f6f6f);
+  line-height: 1.4;
 }
 
 .hub-tag--partner {
@@ -1176,6 +1182,15 @@ body {
 
 .lab-mode-card__body p {
   margin: 0;
+}
+
+.lab-mode-card__body .cds--list--unordered {
+  padding-left: 0;
+  list-style: none;
+}
+
+.lab-mode-card__body .cds--list__item {
+  padding-left: 0;
 }
 
 /* ── Comparación DO / DON'T ─────────────────────────────────────── */

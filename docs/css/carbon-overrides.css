@@ -708,6 +708,12 @@ a.hub-lab-card:focus-visible {
   flex-wrap: nowrap;
   overflow-x: auto;
   overflow-y: hidden;
+  scrollbar-width: none;       /* Firefox */
+  -ms-overflow-style: none;    /* IE / Edge */
+}
+
+.hub-subnav .cds--tabs__nav::-webkit-scrollbar {
+  display: none;               /* Chrome / Safari */
 }
 
 .hub-subnav .cds--tabs__nav > li {

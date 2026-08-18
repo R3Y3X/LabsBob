@@ -438,6 +438,7 @@ function buildLabCard(lab, section) {
         ${(durationStat || bobcoinStat) ? `<div class="hub-lab-card__stats">${durationStat}${bobcoinStat}</div>` : ''}
         <h3 class="cds--productive-heading-02 hub-lab-card__title">${escapeHtml(lab.title)}</h3>
         <p class="cds--body-01 hub-lab-card__description">${escapeHtml(lab.description)}</p>
+        <p class="hub-lab-card__disclaimer">Los resultados de IA pueden variar entre sesiones.</p>
         <div class="hub-lab-card__footer">
           <span class="cds--link hub-lab-card__link">Abrir laboratorio <span aria-hidden="true">→</span></span>
         </div>

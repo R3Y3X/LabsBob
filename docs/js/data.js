@@ -30,8 +30,8 @@ export const siteData = {
           banner: './assets/images/labs/hands-on-inicial/banner_bob.png',
           audience: ['client', 'partner'],
           steps: [
-            { slug: 'overview', label: 'Inicio', file: './content/basic/hands-on-inicial/overview.html', tags: ['Modos agénticos'] },
-            { slug: 'lab1', label: 'Ask Mode', file: './content/basic/hands-on-inicial/lab1-ask-mode.html', tags: ['Ask Mode'], bobcoinCost: { min: 2, max: 4 } },
+            { slug: 'overview', label: 'Introducción', file: './content/basic/hands-on-inicial/overview.html', tags: ['Modos agénticos'] },
+            { slug: 'lab1', label: 'Ask Mode', file: './content/basic/hands-on-inicial/lab1-ask-mode.html', tags: ['Ask Mode'], bobcoinCost: { min: 1, max: 2 } },
             { slug: 'lab2', label: 'Plan y Agent', file: './content/basic/hands-on-inicial/lab2-modos.html', tags: ['Plan · Agent'], bobcoinCost: { min: 4, max: 8 } },
             { slug: 'lab3', label: 'Modo personalizado', file: './content/basic/hands-on-inicial/lab4-modo-personalizado.html', tags: ['Modo personalizado'], bobcoinCost: { min: 2, max: 5 } },
             { slug: 'lab4', label: 'MCP', file: './content/basic/entendiendo-bob/lab3-mcp-tavily.html', tags: ['MCP · Tavily'], bobcoinCost: { min: 3, max: 6 } }
@@ -46,7 +46,7 @@ export const siteData = {
           banner: './assets/images/labs/entendiendo-bob/banner_seguridad_bob.png',
           audience: ['client', 'partner'],
           steps: [
-            { slug: 'overview', label: 'Inicio', file: './content/basic/entendiendo-bob/overview.html', tags: ['Skills · Rules'] },
+            { slug: 'overview', label: 'Introducción', file: './content/basic/entendiendo-bob/overview.html', tags: ['Skills · Rules'] },
             { slug: 'lab1', label: 'Rules', file: './content/basic/entendiendo-bob/lab2-rules.html', tags: ['Rules'], bobcoinCost: { min: 2, max: 4 } },
             { slug: 'lab2', label: 'Auditoría', file: './content/basic/entendiendo-bob/lab1-seguridad.html', tags: ['Seguridad · ASVS'], bobcoinCost: { min: 5, max: 10 } },
             { slug: 'lab3', label: 'Código seguro', file: './content/basic/entendiendo-bob/lab3-codigo-seguro.html', tags: ['Actor-critic'], bobcoinCost: { min: 8, max: 15 } }
@@ -60,7 +60,7 @@ export const siteData = {
           customOverview: true,
           audience: ['client', 'partner'],
           steps: [
-            { slug: 'overview', label: 'Inicio', file: './content/basic/software-development-lifecycle/overview.html', tags: ['SDLC completo'] },
+            { slug: 'overview', label: 'Introducción', file: './content/basic/software-development-lifecycle/overview.html', tags: ['SDLC completo'] },
             { slug: 'plan', label: 'Planificación', file: './content/basic/software-development-lifecycle/plan.html', tags: ['Plan Mode'], bobcoinCost: { min: 3, max: 6 } },
             { slug: 'storefront', label: 'Tienda', file: './content/basic/software-development-lifecycle/lab2-storefront.html', tags: ['Agent Mode'], bobcoinCost: { min: 6, max: 12 } },
             { slug: 'product', label: 'Producto', file: './content/basic/software-development-lifecycle/lab3-product.html', tags: ['Agent Mode'], bobcoinCost: { min: 6, max: 12 } },
@@ -89,7 +89,7 @@ export const siteData = {
           featured: true,
           audience: ['client', 'partner'],
           steps: [
-            { slug: 'overview', label: 'Inicio', file: './content/integraciones/agentic-retail-confluent/overview.html', tags: ['Confluent Kafka'] },
+            { slug: 'overview', label: 'Introducción', file: './content/integraciones/agentic-retail-confluent/overview.html', tags: ['Confluent Kafka'] },
             { slug: 'topics', label: 'Tópico Kafka', file: './content/integraciones/agentic-retail-confluent/topics.html', tags: ['Topics'], bobcoinCost: { min: 2, max: 4 } },
             { slug: 'ksqldb', label: 'ksqlDB', file: './content/integraciones/agentic-retail-confluent/ksqldb.html', tags: ['ksqlDB'], bobcoinCost: { min: 2, max: 4 } },
             { slug: 'publish', label: 'Publicar eventos', file: './content/integraciones/agentic-retail-confluent/publish.html', tags: ['Productores'], bobcoinCost: { min: 2, max: 5 } }
@@ -103,7 +103,7 @@ export const siteData = {
           featured: true,
           audience: ['client', 'partner'],
           steps: [
-            { slug: 'overview', label: 'Inicio', file: './content/integraciones/agentic-retail-wxo/overview.html', tags: ['watsonx Orchestrate'] },
+            { slug: 'overview', label: 'Introducción', file: './content/integraciones/agentic-retail-wxo/overview.html', tags: ['watsonx Orchestrate'] },
             { slug: 'create', label: 'Disponibilidad MCP', file: './content/integraciones/agentic-retail-wxo/create.html', tags: ['MCP'], bobcoinCost: { min: 3, max: 5 } },
             { slug: 'rag', label: 'Sustitutos RAG', file: './content/integraciones/agentic-retail-wxo/rag.html', tags: ['RAG'], bobcoinCost: { min: 2, max: 5 } },
             { slug: 'integration', label: 'Supervisor', file: './content/integraciones/agentic-retail-wxo/integration.html', tags: ['Supervisor'], bobcoinCost: { min: 2, max: 4 } },
@@ -117,7 +117,7 @@ export const siteData = {
           supporting: 'Voltia · React',
           audience: ['client', 'partner'],
           steps: [
-            { slug: 'overview', label: 'Inicio', file: './content/integraciones/agentic-retail-voltia/overview.html', tags: ['Storefront React'] },
+            { slug: 'overview', label: 'Introducción', file: './content/integraciones/agentic-retail-voltia/overview.html', tags: ['Storefront React'] },
             { slug: 'deploy', label: 'Planificar', file: './content/integraciones/agentic-retail-voltia/deploy.html', tags: ['Plan Mode'], bobcoinCost: { min: 2, max: 4 } },
             { slug: 'build', label: 'Pantallas', file: './content/integraciones/agentic-retail-voltia/build.html', tags: ['Agent Mode'], bobcoinCost: { min: 6, max: 12 } },
             { slug: 'embed', label: 'Asistente', file: './content/integraciones/agentic-retail-voltia/embed.html', tags: ['Asistente embebido'], bobcoinCost: { min: 3, max: 7 } },
@@ -145,7 +145,7 @@ export const siteData = {
           banner: './assets/images/labs/java-modernization-v2/banner_bob.png',
           audience: ['client', 'partner'],
           steps: [
-            { slug: 'overview', label: 'Inicio', file: './content/premium/java-modernization-v2/overview.html' },
+            { slug: 'overview', label: 'Introducción', file: './content/premium/java-modernization-v2/overview.html' },
             { slug: 'lab1', label: 'Replatforming Liberty', file: './content/premium/java-modernization-v2/lab1-replatforming.html', description: 'Migra de Traditional WebSphere a Open Liberty manteniendo el comportamiento de la app.', tags: ['Open Liberty'], bobcoinCost: { min: 4, max: 5 } },
             { slug: 'lab2', label: 'Upgrade Java 21', file: './content/premium/java-modernization-v2/lab2-java-upgrade.html', description: 'Java 8 → 21, Jakarta EE 10, escaneo CVE y refactor Struts 2→7.', tags: ['Java 21'], bobcoinCost: { min: 8, max: 9 } },
             { slug: 'lab3', label: 'UI con React', file: './content/premium/java-modernization-v2/lab3-ui-modernization.html', description: 'Struts/JSP → React + Material UI sobre backend JAX-RS; backend, frontend y contenedores.', tags: ['React · JAX-RS'], bobcoinCost: { min: 14, max: 16 } },
@@ -163,7 +163,7 @@ export const siteData = {
           overviewLabsOnly: true,
           audience: ['client', 'partner'],
           steps: [
-            { slug: 'overview', label: 'Inicio', file: './content/premium/ibm-i-rpg-development/overview.html', tags: ['RPG legacy'] },
+            { slug: 'overview', label: 'Introducción', file: './content/premium/ibm-i-rpg-development/overview.html', tags: ['RPG legacy'] },
             { slug: 'lab0', label: 'Descubrir SAMCO', file: './content/premium/ibm-i-rpg-development/lab0-discover-samco.html', description: 'Reglas de negocio, patrón panel-step y flujo de pedidos con Ask Mode.', tags: ['Ask Mode'], bobcoinCost: { min: 3, max: 8 } },
             { slug: 'lab1', label: 'Fixed-to-Free RPG', file: './content/premium/ibm-i-rpg-development/lab1-fixed-to-free.html', description: 'Convierte una subrutina a formato libre con Dcl-Proc y constantes nombradas.', tags: ['RPGLE libre'], bobcoinCost: { min: 3, max: 6 } },
             { slug: 'lab2', label: 'React + Carbon UI', file: './content/premium/ibm-i-rpg-development/lab2-react-carbon-ui.html', description: 'Tabla web moderna con datos de muestra — sin sistema IBM i.', tags: ['React · Carbon'], bobcoinCost: { min: 4, max: 10 } },

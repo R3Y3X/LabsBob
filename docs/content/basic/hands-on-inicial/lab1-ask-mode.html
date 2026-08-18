@@ -24,7 +24,7 @@
         <span class="lab-banner__metric-label">archivos modificados</span>
       </div>
       <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">2–4</span>
+        <span class="lab-banner__metric-value">1–2</span>
         <span class="lab-banner__metric-label">BobCoins estimados</span>
       </div>
       <div class="lab-banner__metric">
@@ -61,13 +61,14 @@
       </div>
       <div class="lab-mode-card__body">
         <h3 class="cds--productive-heading-02">Ask Mode — El Consultor</h3>
-        <p class="cds--body-01">Modo especializado en <strong>análisis y comprensión</strong> de código. <em>No modifica ningún archivo.</em></p>
+        <p class="cds--body-01">Modo especializado en <strong>análisis y comprensión</strong> de código. <em>No modifica ningún archivo por sí solo.</em></p>
         <ul class="cds--list--unordered" style="margin-top:8px">
           <li class="cds--list__item">Analiza múltiples archivos simultáneamente</li>
           <li class="cds--list__item">Mantiene <strong>270 000 tokens de contexto</strong> en la conversación</li>
           <li class="cds--list__item">Genera visualizaciones y diagramas (Mermaid)</li>
           <li class="cds--list__item">Las lecturas se <strong>aprueban automáticamente</strong> — solo escrituras requieren confirmación</li>
           <li class="cds--list__item">Crea documentación estructurada</li>
+          <li class="cds--list__item">Si necesita escribir un archivo, <strong>pide permiso para cambiar a Agent Mode</strong> — si aceptas, lo hace desde ahí</li>
         </ul>
       </div>
     </div>
@@ -95,16 +96,15 @@
       <p class="cds--body-01">Vamos a analizar una aplicación de e-commerce simple incluida en este laboratorio.</p>
       <div class="callout" data-tone="info">
         <p class="callout__title">Workspace</p>
-        <p>Descarga <code>LabHandsOnBob.zip</code> desde el Inicio del workshop, descomprímelo y en IBM Bob abre la carpeta <code>lab-1-ask-mode</code> (<strong>File → Open Folder</strong>). Luego ejecuta los comandos de abajo en la terminal integrada.</p>
+        <p>Descarga <code>LabHandsOnBob.zip</code> desde la pestaña <strong>Introducción</strong> del workshop, descomprímelo y en IBM Bob abre la carpeta <code>lab-1-ask-mode</code> con <strong>File → Open Folder</strong>. Abrir la carpeta en el IDE es equivalente a navegar a ese directorio — si ya la abriste, estás dentro directamente.</p>
       </div>
       <div class="code-block">
         <button type="button" class="copy-button">Copiar</button>
-        <pre><code># Verifica que estás en el directorio correcto
-cd lab-1-ask-mode
+        <pre><code># Verifica que estás en el directorio correcto (la terminal ya apunta aquí si abriste la carpeta en el IDE)
 ls -la</code></pre>
       </div>
       <p class="cds--body-01">Deberías ver la siguiente estructura:</p>
-      <div class="code-block code-block--tree">
+      <div class="code-block code-block--tree" style="--code-label: 'lab-1-ask-mode'">
         <pre><code>├── README.md
 ├── src/
 │   ├── app.js
@@ -191,7 +191,7 @@ Explícame:
     <!-- Paso 5 -->
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 5 — Generar documentación</h3>
-      <p class="cds--body-01">Pide un README profesional. Ask Mode no escribe archivos hasta que lo apruebes (o puedes copiar el resultado).</p>
+      <p class="cds--body-01">Pide un README profesional. Ask Mode genera el contenido en el chat — no escribe archivos por sí solo. Si quieres guardarlo, puedes copiar el resultado o aceptar cuando Bob te pida cambiar a Agent Mode para escribirlo directamente.</p>
       <div class="code-block code-block--prompt">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>Genera un README.md completo para este proyecto que incluya:

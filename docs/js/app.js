@@ -6,7 +6,7 @@ import { initializeTheme, toggleTheme } from './theme.js';
 // Global audience mode state: 'client' | 'partner'
 let currentMode = 'client';
 
-const HOME_SECTION_IDS = new Set(['available-workshops', 'nosotros', 'acerca-de']);
+const HOME_SECTION_IDS = new Set(['available-workshops', 'nosotros', 'acerca-de', 'section-basic', 'section-integraciones', 'section-premium']);
 
 const homeView = document.querySelector('#home-view');
 const labView = document.querySelector('#lab-view');
@@ -25,7 +25,7 @@ function getHashTarget() {
   const raw = window.location.hash.replace(/^#/, '');
   if (!raw || raw === '/') return null;
   if (raw.startsWith('/lab/') || raw.startsWith('lab/')) return null;
-  // Support both #capacidades and #/capacidades
+  // Support both #capacidades and #/capacidades, and section anchors like #section-integraciones
   const id = raw.replace(/^\//, '').split('/')[0];
   return HOME_SECTION_IDS.has(id) ? id : null;
 }
@@ -1420,25 +1420,61 @@ function getClosureNextLabel(lab, nextStep, nextWorkshop) {
     const shortName = nextWorkshop.lab.supporting || nextWorkshop.lab.title;
     return `Continuar con ${shortName}`;
   }
-  return 'Volver al inicio del workshop';
+  return null;
+}
+
+function getClosurePrevLabel(lab, prevStep) {
+  if (!prevStep) return null;
+  if (prevStep.slug === 'overview') return 'Introducción';
+  const prefixes = getLabNavPrefixes(lab);
+  const prefix = prefixes[prevStep.slug];
+  if (prefix) {
+    if (prevStep.label.trim().toLowerCase() === prefix.trim().toLowerCase()) return prefix;
+    return `${prefix}${LAB_STEP_SEPARATOR}${prevStep.label}`;
+  }
+  return prevStep.label;
 }
 
 function buildStepClosure(lab, step) {
   const stepIndex = lab.steps.findIndex((item) => item.slug === step.slug);
+  const prevStep = stepIndex > 0 ? lab.steps[stepIndex - 1] : null;
   const nextStep = lab.steps[stepIndex + 1];
   const nextWorkshop = nextStep ? null : getNextLab(lab.slug);
-  const destination = nextStep
+
+  // Next destination
+  const nextDestination = nextStep
     ? getLabRoute(lab.slug, nextStep.slug)
     : nextWorkshop
       ? getLabRoute(nextWorkshop.lab.slug, 'overview')
-      : getLabRoute(lab.slug, 'overview');
-  const destinationLabel = getClosureNextLabel(lab, nextStep, nextWorkshop);
+      : null;
+  const nextLabel = getClosureNextLabel(lab, nextStep, nextWorkshop);
+
+  // Prev destination
+  const prevDestination = prevStep ? getLabRoute(lab.slug, prevStep.slug) : null;
+  const prevLabel = getClosurePrevLabel(lab, prevStep);
+
+  // "Back to all labs" — resolves to the section anchor of this lab's category
+  const sectionResult = findLab(lab.slug);
+  const sectionId = sectionResult?.section?.id || '';
+  const backToLabsHref = sectionId ? `#section-${sectionId}` : getHomeRoute();
+
+  const prevBtn = prevDestination
+    ? `<a class="cds--btn cds--btn--ghost lab-closure__prev" href="${prevDestination}"><span aria-hidden="true">←</span> ${escapeHtml(prevLabel)}</a>`
+    : `<span></span>`;
+
+  let nextBtn;
+  if (nextDestination) {
+    nextBtn = `<a class="cds--btn cds--btn--tertiary lab-closure__next" href="${nextDestination}">${escapeHtml(nextLabel)} <span aria-hidden="true">→</span></a>`;
+  } else {
+    nextBtn = `<a class="cds--btn cds--btn--tertiary lab-closure__back" href="${backToLabsHref}"><span aria-hidden="true">←</span> Volver a todos los labs</a>`;
+  }
 
   return `
     <section class="lab-closure lab-closure--next" aria-labelledby="${lab.slug}-${step.slug}-closure">
-      <p class="lab-guide__eyebrow">Continuar</p>
-      <h2 id="${lab.slug}-${step.slug}-closure">Siguiente</h2>
-      <a class="cds--btn cds--btn--tertiary lab-closure__next" href="${destination}">${escapeHtml(destinationLabel)} <span aria-hidden="true">→</span></a>
+      <div class="lab-closure__nav">
+        ${prevBtn}
+        ${nextBtn}
+      </div>
     </section>`;
 }
 

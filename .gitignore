@@ -21,4 +21,10 @@ id_rsa.pub
 .idea/
 
 *.pdf
-
+ambiente.md
+Lab1/
+lab-confluent-vm-plan.md
+ux.md
+profundizacionconfluent.md
+confluent-lab-deepdive-plan.md
+*testing/

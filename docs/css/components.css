@@ -2118,3 +2118,410 @@ body[data-category="premium"] .lab-workspace-setup__table th {
   }
 }
 
+
+/* ════════════════════════════════════════════════════════════════
+ * ENV SELECTOR — Global sticky banner
+ * ════════════════════════════════════════════════════════════════ */
+
+.env-selector-banner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.875rem 1.25rem;
+  margin-bottom: 2rem;
+  background: var(--cds-layer-01, #f4f4f4);
+  border: 1px solid var(--cds-border-subtle-01, #c6c6c6);
+  border-left: 4px solid var(--cds-border-interactive, #0f62fe);
+  border-radius: 4px;
+}
+
+.env-selector-banner__label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--cds-text-primary, #161616);
+  white-space: nowrap;
+}
+
+.env-selector-banner .env-toggle {
+  margin-bottom: 0;
+}
+
+.cds--g100 .env-selector-banner {
+  background: var(--cds-layer-01, #262626);
+  border-color: var(--cds-border-subtle-01, #393939);
+  border-left-color: var(--cds-border-interactive, #0f62fe);
+}
+
+/* ════════════════════════════════════════════════════════════════
+ * ENV TOGGLE (Confluent Platform / Confluent Cloud switcher)
+ * ════════════════════════════════════════════════════════════════ */
+
+.env-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--cds-border-subtle-01, #c6c6c6);
+  border-radius: 4px;
+  overflow: hidden;
+  width: fit-content;
+}
+
+.env-toggle__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.5rem 1.25rem;
+  border: none;
+  border-right: 1px solid var(--cds-border-subtle-01, #c6c6c6);
+  background: var(--cds-layer-01, #f4f4f4);
+  color: var(--cds-text-secondary, #525252);
+  font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  cursor: pointer;
+  transition: background 100ms, color 100ms;
+  white-space: nowrap;
+}
+
+.env-toggle__btn:last-child {
+  border-right: none;
+}
+
+.env-toggle__btn:hover:not(.env-toggle__btn--active) {
+  background: var(--cds-layer-hover-01, #e8e8e8);
+  color: var(--cds-text-primary, #161616);
+}
+
+.env-toggle__btn--active {
+  background: var(--cds-background, #ffffff);
+  color: var(--cds-text-primary, #161616);
+  font-weight: 600;
+  box-shadow: inset 0 -2px 0 var(--cds-border-interactive, #0f62fe);
+}
+
+.env-toggle__btn svg {
+  flex-shrink: 0;
+}
+
+/* Panels controlled by the toggle */
+[data-env-panel] {
+  display: none;
+}
+
+[data-env-panel].env-panel--active {
+  display: block;
+}
+
+/* Dark mode */
+.cds--g100 .env-toggle__btn {
+  background: var(--cds-layer-01, #262626);
+  border-color: var(--cds-border-subtle-01, #393939);
+  color: var(--cds-text-secondary, #a8a8a8);
+}
+
+.cds--g100 .env-toggle__btn--active {
+  background: var(--cds-background, #161616);
+  color: var(--cds-text-primary, #f4f4f4);
+}
+
+.cds--g100 .env-toggle__btn:hover:not(.env-toggle__btn--active) {
+  background: var(--cds-layer-hover-01, #353535);
+  color: var(--cds-text-primary, #f4f4f4);
+}
+
+/* ════════════════════════════════════════════════════════════════
+ * STEP HEADER — Context badge + title row
+ * ════════════════════════════════════════════════════════════════ */
+
+.step-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  margin-bottom: 1rem;
+}
+
+.step-header__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.ctx-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.125rem 0.625rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.ctx-badge--terminal {
+  background: #262626;
+  color: #a6c5fa;
+  border: 1px solid #393939;
+}
+
+.ctx-badge--browser {
+  background: #d0e2ff;
+  color: #0043ce;
+  border: 1px solid #a6c8ff;
+}
+
+.ctx-badge--bob {
+  background: #d9fbfb;
+  color: #005d5d;
+  border: 1px solid #9ef0f0;
+}
+
+.ctx-badge--orchestrate {
+  background: #fff8e1;
+  color: #6e4a00;
+  border: 1px solid #ffe082;
+}
+
+.ctx-badge--kafka {
+  background: #fde8e8;
+  color: #750e13;
+  border: 1px solid #ffb3b8;
+}
+
+.ctx-badge--config {
+  background: #f6f2ff;
+  color: #6929c4;
+  border: 1px solid #d4bbff;
+}
+
+.cds--g100 .ctx-badge--browser {
+  background: #002d9c;
+  color: #a6c8ff;
+  border-color: #0043ce;
+}
+
+.cds--g100 .ctx-badge--bob {
+  background: #022b30;
+  color: #9ef0f0;
+  border-color: #005d5d;
+}
+
+.cds--g100 .ctx-badge--orchestrate {
+  background: #3a2400;
+  color: #ffe082;
+  border-color: #a56300;
+}
+
+.cds--g100 .ctx-badge--kafka {
+  background: #2d0709;
+  color: #ffb3b8;
+  border-color: #750e13;
+}
+
+.cds--g100 .ctx-badge--config {
+  background: #1c0f30;
+  color: #d4bbff;
+  border-color: #6929c4;
+}
+
+.step-header__why {
+  font-size: 0.8125rem;
+  color: var(--cds-text-secondary, #525252);
+  font-style: italic;
+  margin: 0;
+}
+
+/* ════════════════════════════════════════════════════════════════
+ * ACCORDION — Collapsible troubleshooting / secondary content
+ * ════════════════════════════════════════════════════════════════ */
+
+.lab-accordion {
+  margin-top: 1rem;
+  border: 1px solid var(--cds-border-subtle-01, #c6c6c6);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.lab-accordion__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--cds-layer-01, #f4f4f4);
+  border: none;
+  color: var(--cds-text-secondary, #525252);
+  font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: background 100ms;
+}
+
+.lab-accordion__trigger:hover {
+  background: var(--cds-layer-hover-01, #e8e8e8);
+  color: var(--cds-text-primary, #161616);
+}
+
+.lab-accordion__trigger[aria-expanded="true"] {
+  color: var(--cds-text-primary, #161616);
+  background: var(--cds-background, #ffffff);
+  border-bottom: 1px solid var(--cds-border-subtle-01, #c6c6c6);
+}
+
+.lab-accordion__icon {
+  flex-shrink: 0;
+  transition: transform 200ms;
+}
+
+.lab-accordion__trigger[aria-expanded="true"] .lab-accordion__icon {
+  transform: rotate(180deg);
+}
+
+.lab-accordion__panel {
+  padding: 1rem 1.25rem;
+  background: var(--cds-background, #ffffff);
+}
+
+.lab-accordion__panel[hidden] {
+  display: none !important;
+}
+
+.cds--g100 .lab-accordion__trigger {
+  background: var(--cds-layer-01, #262626);
+  color: var(--cds-text-secondary, #a8a8a8);
+  border-color: var(--cds-border-subtle-01, #393939);
+}
+
+.cds--g100 .lab-accordion__trigger:hover {
+  background: var(--cds-layer-hover-01, #353535);
+  color: var(--cds-text-primary, #f4f4f4);
+}
+
+.cds--g100 .lab-accordion__trigger[aria-expanded="true"] {
+  background: var(--cds-background, #161616);
+  border-color: var(--cds-border-subtle-01, #393939);
+}
+
+.cds--g100 .lab-accordion__panel {
+  background: var(--cds-background, #161616);
+}
+
+/* ════════════════════════════════════════════════════════════════
+ * PROMPT BLOCK — Bob prompt copy-paste
+ * ════════════════════════════════════════════════════════════════ */
+
+.prompt-block {
+  position: relative;
+  margin: 1.25rem 0;
+  border: 1px solid #9ef0f0;
+  border-left: 4px solid #007d79;
+  border-radius: 4px;
+  background: #f0fafa;
+  overflow: hidden;
+}
+
+.prompt-block__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background: #d9fbfb;
+  border-bottom: 1px solid #9ef0f0;
+}
+
+.prompt-block__label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #005d5d;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.prompt-block__body {
+  padding: 0.875rem 1rem;
+  font-size: 0.875rem;
+  color: var(--cds-text-primary, #161616);
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-height: 1.6;
+}
+
+.prompt-block__body code {
+  background: rgba(0,125,121,0.1);
+  color: #005d5d;
+  padding: 0.1em 0.3em;
+  border-radius: 2px;
+  font-size: 0.8125rem;
+}
+
+.cds--g100 .prompt-block {
+  background: #022b30;
+  border-color: #005d5d;
+  border-left-color: #009d9a;
+}
+
+.cds--g100 .prompt-block__header {
+  background: #033a40;
+  border-bottom-color: #005d5d;
+}
+
+.cds--g100 .prompt-block__label {
+  color: #9ef0f0;
+}
+
+.cds--g100 .prompt-block__body {
+  color: #f4f4f4;
+}
+
+.cds--g100 .prompt-block__body code {
+  background: rgba(0,157,154,0.15);
+  color: #9ef0f0;
+}
+
+/* ════════════════════════════════════════════════════════════════
+ * CHECKLIST — Visual success checkpoint
+ * ════════════════════════════════════════════════════════════════ */
+
+.checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.checklist__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  font-size: 0.875rem;
+  color: var(--cds-text-primary, #161616);
+  line-height: 1.5;
+}
+
+.checklist__item::before {
+  content: '';
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  border: 2px solid var(--cds-support-success, #198038);
+  border-radius: 50%;
+  background: transparent;
+}
+
+@media (max-width: 671px) {
+  .env-selector-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .creds-form__row {
+    grid-template-columns: 1fr;
+  }
+}
+

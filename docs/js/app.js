@@ -1707,12 +1707,30 @@ async function renderLab(route) {
   enhanceLabContent(proseEl, section, lab, activeStep, isOverview);
   buildLabToc(proseEl, lab, activeStep);
   bindImageFallbacks(labShell);
+  // Restore persisted env choice for this page
+  applyPersistedEnv(proseEl);
 
   if (route.headingId) {
     requestAnimationFrame(() => {
       document.getElementById(route.headingId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   }
+}
+
+/** Apply persisted env selection to all toggles in the given scope. */
+function applyPersistedEnv(scope) {
+  const stored = localStorage.getItem('lab-env') || 'platform';
+  const toggles = (scope || document).querySelectorAll('.env-toggle[data-env-scope="global"], .env-selector-banner .env-toggle');
+  toggles.forEach((group) => {
+    group.querySelectorAll('.env-toggle__btn').forEach((b) => {
+      b.classList.toggle('env-toggle__btn--active', b.dataset.envTab === stored);
+    });
+  });
+  // Apply panels across entire prose scope
+  const root = scope || document;
+  root.querySelectorAll('[data-env-panel]').forEach((panel) => {
+    panel.classList.toggle('env-panel--active', panel.dataset.envPanel === stored);
+  });
 }
 
 // ── Route dispatcher ─────────────────────────────────────────────
@@ -1813,6 +1831,50 @@ function bindEvents() {
         event.stopImmediatePropagation();
       }
     }
+  });
+
+  // Env toggle — global: sync all toggles + all panels across entire prose
+  document.addEventListener('click', (event) => {
+    const btn = event.target.closest('.env-toggle__btn[data-env-tab]');
+    if (!btn) return;
+    const group = btn.closest('.env-toggle');
+    if (!group) return;
+    const target = btn.dataset.envTab;
+    const isGlobal = group.dataset.envScope === 'global'
+      || group.closest('.env-selector-banner') !== null;
+
+    if (isGlobal) {
+      // Persist and sync entire prose
+      localStorage.setItem('lab-env', target);
+      const prose = group.closest('.prose, .lab-reading-layout') || document;
+      prose.querySelectorAll('.env-toggle__btn[data-env-tab]').forEach((b) => {
+        b.classList.toggle('env-toggle__btn--active', b.dataset.envTab === target);
+      });
+      prose.querySelectorAll('[data-env-panel]').forEach((panel) => {
+        panel.classList.toggle('env-panel--active', panel.dataset.envPanel === target);
+      });
+    } else {
+      // Local toggle — only within nearest section
+      group.querySelectorAll('.env-toggle__btn').forEach((b) => {
+        b.classList.toggle('env-toggle__btn--active', b === btn);
+      });
+      const scope = group.closest('.lab-section, .prose, .content-panel') || document;
+      scope.querySelectorAll('[data-env-panel]').forEach((panel) => {
+        panel.classList.toggle('env-panel--active', panel.dataset.envPanel === target);
+      });
+    }
+  });
+
+  // Accordion
+  document.addEventListener('click', (event) => {
+    const trigger = event.target.closest('.lab-accordion__trigger');
+    if (!trigger) return;
+    const panelId = trigger.getAttribute('aria-controls');
+    const panel = panelId ? document.getElementById(panelId) : trigger.nextElementSibling;
+    if (!panel) return;
+    const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+    trigger.setAttribute('aria-expanded', String(!isOpen));
+    panel.hidden = isOpen;
   });
 
   document.addEventListener('click', async (event) => {

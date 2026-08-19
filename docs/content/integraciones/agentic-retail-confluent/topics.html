@@ -5,30 +5,267 @@
       <span class="cds--tag cds--tag--cool-gray">~20 min</span>
       <span class="cds--tag cds--tag--teal">Confluent Kafka</span>
     </div>
-    <h1 class="cds--productive-heading-05 lab-banner__title">Tópico de transacciones</h1>
-    <p class="cds--body-02 lab-banner__summary">Crea el tópico inventory.transactions en Confluent Kafka.</p>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Tópicos y Streaming con Confluent Kafka</h1>
+    <p class="cds--body-02 lab-banner__summary">Crea el tópico fuente y el tópico derivado con ksqlDB para procesar transacciones de inventario en tiempo real.</p>
   </div>
 
-  <section class="lab-section" aria-labelledby="step-1-crear-un-topico-en-confluent-kafka">
-    <h2 class="cds--productive-heading-04" id="step-1-crear-un-topico-en-confluent-kafka">
-      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
-      Paso 1. Crear un tópico en Confluent Kafka
-    </h2>
-    <h3 class="cds--productive-heading-03" style="margin-top: 0.5rem; margin-bottom: 1rem;">Crear un tópico en Confluent manualmente desde la UI</h3>
-    <p class="cds--body-01">Iniciarás sesión en Confluent y crearás un tópico para las transacciones de inventario.</p>
+  <!-- ── Step 1 ─────────────────────────────────────────────────── -->
+  <section class="lab-section">
+    <div class="step-header">
+      <div class="step-header__meta">
+        <div data-env-panel="platform" class="env-panel--active"><span class="ctx-badge ctx-badge--terminal">⬛ Terminal</span></div>
+        <div data-env-panel="cloud"><span class="ctx-badge ctx-badge--browser">🌐 Confluent Cloud UI</span></div>
+        <span class="ctx-badge ctx-badge--kafka">Kafka</span>
+      </div>
+    </div>
+    <h2 class="cds--productive-heading-04">Step 1. Crear el tópico <code>inventory.transactions</code></h2>
+    <p class="step-header__why">Necesitamos un canal central donde fluirán todas las transacciones de inventario antes de que ksqlDB las procese.</p>
 
-    <ol class="cds--list--ordered">
-      <li class="cds--list__item">Iniciar sesión en Confluent.</li>
-      <li class="cds--list__item">Seleccionar un cluster de Kafka ya creado.</li>
-      <li class="cds--list__item">En el menú de navegación del cluster, seleccionar <strong>Topics</strong>.</li>
-      <li class="cds--list__item">Hacer click en <strong>Add topic</strong>.</li>
-      <li class="cds--list__item">Nombrar el tópico como: <code>inventory.transactions</code>.</li>
-      <li class="cds--list__item">Establecer <strong>Partitions</strong> en 1. Usar una sola partición mantiene el orden de los eventos determinístico y simplifica la consumición de eventos para este tutorial.</li>
-      <li class="cds--list__item">Dejar todas las otras configuraciones en sus valores por defecto.</li>
-      <li class="cds--list__item">Hacer click en <strong>Create with defaults</strong>.</li>
-      <li class="cds--list__item">Seleccionar la pestaña <strong>Configuration</strong>.</li>
-      <li class="cds--list__item">Hacer click en <strong>Edit Settings</strong> y cambiar el <strong>Retention Time</strong> a <code>infinite</code> y luego hacer click en <strong>Save changes</strong>.</li>
-    </ol>
+    <div data-env-panel="platform" class="env-panel--active">
+      <p class="cds--body-01">El script sube el código a la VM via SSH, lanza un Kubernetes Job y crea el tópico desde dentro del cluster.</p>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">Abre una terminal y navega al lab:
+<pre><code class="language-bash">cd Labs-tech-summit/Lab1/inventory-pipeline</code></pre>
+        </li>
+        <li class="cds--list__item">Ejecuta el paso 1:</li>
+      </ol>
+<pre><code class="language-bash">./setup.sh -s 1</code></pre>
+
+      <div class="callout" data-tone="success" style="margin-top:1.25rem;">
+        <p class="callout__title">✓ Checkpoint</p>
+        <ul class="checklist">
+          <li class="checklist__item">El output termina con <code>Created topic 'inventory.transactions'</code></li>
+          <li class="checklist__item">Línea final: <code>OK: create_topic</code></li>
+        </ul>
+      </div>
+
+      <div class="lab-accordion" style="margin-top:1rem;">
+        <button class="lab-accordion__trigger" aria-expanded="false" aria-controls="acc-step1-internals">
+          ¿Qué hace internamente este paso?
+          <svg class="lab-accordion__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="16" height="16"><path d="M8 11L2 5h12z"/></svg>
+        </button>
+        <div class="lab-accordion__panel" id="acc-step1-internals" hidden>
+          <p class="cds--body-01">El script ejecuta <code>create_topic.py</code> dentro de un pod <code>python:3.11-slim</code> en el namespace <code>confluent</code>. Configura:</p>
+          <ul class="cds--list--unordered">
+            <li class="cds--list__item"><strong>1 partición</strong> — mantiene el orden de los eventos determinístico.</li>
+            <li class="cds--list__item"><strong>Replicación 3</strong> — alta disponibilidad con los 3 brokers del cluster.</li>
+            <li class="cds--list__item"><strong>retention.ms = -1</strong> — retención infinita para que los agentes puedan consultar el histórico completo.</li>
+          </ul>
+          <p class="cds--body-01" style="margin-top:0.5rem;">Si el tópico ya existe, el script lo detecta y lo omite sin error.</p>
+        </div>
+      </div>
+    </div>
+
+    <div data-env-panel="cloud">
+      <p class="cds--body-01">Crea el tópico manualmente desde la interfaz de Confluent Cloud.</p>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">Inicia sesión en <a href="https://confluent.cloud" target="_blank" rel="noopener">confluent.cloud</a> y selecciona tu cluster.</li>
+        <li class="cds--list__item">En el menú lateral, haz clic en <strong>Topics</strong> → <strong>Add topic</strong>.</li>
+        <li class="cds--list__item">Nombre: <code>inventory.transactions</code> · Partitions: <code>1</code> · haz clic en <strong>Create with defaults</strong>.</li>
+        <li class="cds--list__item">Ve a la pestaña <strong>Configuration</strong> → <strong>Edit Settings</strong> → cambia <strong>Retention Time</strong> a <code>infinite</code> → <strong>Save changes</strong>.</li>
+      </ol>
+      <div class="callout" data-tone="success" style="margin-top:1.25rem;">
+        <p class="callout__title">✓ Checkpoint</p>
+        <ul class="checklist">
+          <li class="checklist__item">El tópico <code>inventory.transactions</code> aparece en la lista con status <strong>Active</strong>.</li>
+          <li class="checklist__item">Configuration muestra Retention Time = <strong>Infinite</strong>.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <!-- ── Step 1b: Schema Registry ──────────────────────────────── -->
+  <section class="lab-section" style="margin-top:3rem;">
+    <div class="step-header">
+      <div class="step-header__meta">
+        <div data-env-panel="platform" class="env-panel--active">
+          <span class="ctx-badge ctx-badge--bob">🤖 Bob (IA)</span>
+        </div>
+        <div data-env-panel="cloud">
+          <span class="ctx-badge ctx-badge--browser">🌐 Confluent Cloud UI</span>
+        </div>
+        <span class="ctx-badge ctx-badge--kafka">Schema Registry</span>
+      </div>
+    </div>
+    <h2 class="cds--productive-heading-04">Step 1b. Registrar el Schema en Schema Registry</h2>
+    <p class="step-header__why">Registrar el schema antes de publicar mensajes garantiza que todos los productores y consumidores acuerden la estructura de los datos — cualquier campo incorrecto o tipo inválido es rechazado automáticamente.</p>
+
+    <div data-env-panel="platform" class="env-panel--active">
+      <p class="cds--body-01">Pide a Bob que registre el schema correspondiente al tópico <code>inventory.transactions</code>:</p>
+      <div class="prompt-block" style="margin-top:0.75rem;">
+        <div class="prompt-block__header">
+          <span class="prompt-block__label">🤖 Prompt para Bob — registrar schema en Schema Registry</span>
+        </div>
+        <div class="prompt-block__body">Bob, registra el Schema en el Schema Registry del clúster Confluent Platform para el tópico 'inventory.transactions'.
+
+Usa la siguiente definición JSON Schema (VALUE strategy):
+{
+  "type": "object",
+  "title": "InventoryTransaction",
+  "properties": {
+    "sku":              { "type": "string",  "description": "Código único del producto (SKU)" },
+    "branch":           { "type": "string",  "description": "Nombre de la sucursal" },
+    "quantity":         { "type": "integer", "description": "Cantidad (positivo = ingreso, negativo = venta)" },
+    "transaction_type": { "type": "string",  "enum": ["ADDITION", "SALE", "ADJUSTMENT"] },
+    "timestamp":        { "type": "string",  "format": "date-time" },
+    "source":           { "type": "string",  "description": "Sistema origen del evento" },
+    "reference":        { "type": "string",  "description": "Número de orden o referencia interna" }
+  },
+  "required": ["sku", "branch", "quantity", "transaction_type", "timestamp"]
+}
+
+Confírmame cuando el schema esté registrado y dime el ID asignado por el registro.</div>
+      </div>
+
+      <div class="image-placeholder" style="margin:1rem 0;">
+        <code>📸 [IMAGEN 4.1] — Tópico inventory.transactions en la plataforma web: muestra las métricas de partición y retención activas</code>
+      </div>
+
+      <div class="image-placeholder" style="margin:1rem 0;">
+        <code>📸 [IMAGEN 4.2] — Schema Registry: definición de campos de InventoryTransaction con tipos y campos requeridos</code>
+      </div>
+
+      <div class="callout" data-tone="success" style="margin-top:1.25rem;">
+        <p class="callout__title">✓ Checkpoint 1b</p>
+        <ul class="checklist">
+          <li class="checklist__item">El tópico <code>inventory.transactions</code> aparece en estado <strong>Active / Healthy</strong>.</li>
+          <li class="checklist__item">Bob confirma el Schema registrado con un ID numérico asignado por Schema Registry.</li>
+          <li class="checklist__item">La pestaña <strong>Schema</strong> del tópico muestra los 7 campos definidos.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div data-env-panel="cloud">
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">En el menú lateral, haz clic en <strong>Schema Registry</strong>.</li>
+        <li class="cds--list__item">Selecciona <strong>Add schema</strong> y elige el tópico <code>inventory.transactions</code> con estrategia <strong>TopicNameStrategy</strong> (VALUE).</li>
+        <li class="cds--list__item">Selecciona formato <strong>JSON Schema</strong>, pega la definición de campos y haz clic en <strong>Create</strong>.</li>
+      </ol>
+      <div class="callout" data-tone="success" style="margin-top:1.25rem;">
+        <p class="callout__title">✓ Checkpoint 1b</p>
+        <ul class="checklist">
+          <li class="checklist__item">El schema aparece vinculado al tópico <code>inventory.transactions</code> con versión <strong>v1</strong>.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Step 2 ─────────────────────────────────────────────────── -->
+  <section class="lab-section" style="margin-top:3rem;">
+    <div class="step-header">
+      <div class="step-header__meta">
+        <div data-env-panel="platform" class="env-panel--active"><span class="ctx-badge ctx-badge--terminal">⬛ Terminal</span></div>
+        <div data-env-panel="cloud"><span class="ctx-badge ctx-badge--browser">🌐 ksqlDB Editor</span></div>
+        <span class="ctx-badge ctx-badge--kafka">ksqlDB</span>
+      </div>
+    </div>
+    <h2 class="cds--productive-heading-04">Step 2. Crear el tópico derivado <code>inventory.availability</code></h2>
+    <p class="step-header__why">Un tópico derivado calcula disponibilidad por SKU/sucursal en tiempo real, sin que los agentes tengan que sumar transacciones ellos mismos.</p>
+
+    <div data-env-panel="platform" class="env-panel--active">
+      <p class="cds--body-01">El script ejecuta dos sentencias SQL contra el endpoint interno de ksqlDB mediante la API REST.</p>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">Ejecuta el paso 2:</li>
+      </ol>
+<pre><code class="language-bash">./setup.sh -s 2</code></pre>
+
+      <div class="callout" data-tone="success" style="margin-top:1.25rem;">
+        <p class="callout__title">✓ Checkpoint</p>
+        <ul class="checklist">
+          <li class="checklist__item"><code>currentStatus: SUCCESS (Stream created)</code></li>
+          <li class="checklist__item"><code>currentStatus: SUCCESS (Created query with ID CTAS_INVENTORY_AVAILABILITY_1)</code></li>
+          <li class="checklist__item">Línea final: <code>OK: create_derived_topic</code></li>
+        </ul>
+      </div>
+
+      <div class="lab-accordion" style="margin-top:1rem;">
+        <button class="lab-accordion__trigger" aria-expanded="false" aria-controls="acc-step2-sql">
+          SQL que se ejecuta internamente
+          <svg class="lab-accordion__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="16" height="16"><path d="M8 11L2 5h12z"/></svg>
+        </button>
+        <div class="lab-accordion__panel" id="acc-step2-sql" hidden>
+<pre><code class="language-sql">CREATE STREAM IF NOT EXISTS inventory_transactions (
+  sku VARCHAR,
+  branch VARCHAR,
+  quantity INT
+) WITH (
+  KAFKA_TOPIC='inventory.transactions',
+  KEY_FORMAT='KAFKA',
+  VALUE_FORMAT='JSON'
+);</code></pre>
+<pre><code class="language-sql">CREATE TABLE IF NOT EXISTS inventory_availability WITH (
+  KAFKA_TOPIC='inventory.availability',
+  KEY_FORMAT='JSON',
+  VALUE_FORMAT='JSON',
+  PARTITIONS=1
+) AS
+SELECT
+  sku,
+  branch,
+  SUM(quantity) AS available_quantity
+FROM inventory_transactions
+GROUP BY sku, branch
+EMIT CHANGES;</code></pre>
+        </div>
+      </div>
+
+      <!-- Pedagogical accordion: config choices explained -->
+      <div class="lab-accordion" style="margin-top:1rem;">
+        <button class="lab-accordion__trigger" aria-expanded="false" aria-controls="acc-config-why">
+          ¿Por qué 1 partición y retención infinita? — Explorando las configuraciones de Kafka
+          <svg class="lab-accordion__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="16" height="16"><path d="M8 11L2 5h12z"/></svg>
+        </button>
+        <div class="lab-accordion__panel" id="acc-config-why" hidden>
+          <p class="cds--body-01" style="margin-bottom:0.5rem;">Las decisiones de configuración de este lab están pensadas para el caso de uso específico de agentes de IA consultando un histórico de inventario:</p>
+          <ul class="cds--list--unordered">
+            <li class="cds--list__item"><strong>1 partición — orden determinístico:</strong> Con una sola partición, Kafka garantiza que los mensajes se consumen exactamente en el orden en que fueron producidos. Esto es crítico para el cálculo correcto de disponibilidad (sumas y restas de stock). Con 3 particiones los mensajes se distribuyen entre particiones y el orden global entre ellas no está garantizado.</li>
+            <li class="cds--list__item"><strong>Retención infinita (<code>retention.ms = -1</code>) — histórico para agentes:</strong> Los agentes de IA del Lab 2 necesitan consultar el historial completo de transacciones para calcular el stock actual desde el inicio. Con retención limitada (p. ej. 1 día con <code>cleanup.policy=delete</code>), los eventos más antiguos desaparecerían y los cálculos serían incorrectos.</li>
+            <li class="cds--list__item"><strong>¿Cuándo usarías 3 particiones?</strong> En producción con alto throughput (miles de transacciones por segundo), donde múltiples consumidores procesan en paralelo y el orden global no importa. El paralelismo mejora la velocidad de procesamiento a cambio de perder el orden estricto entre particiones.</li>
+            <li class="cds--list__item"><strong>¿Cuándo usarías <code>cleanup.policy=delete</code> con 1 día?</strong> En workshops efímeros o pipelines de telemetría donde solo importa el dato reciente, los eventos tienen corta vida útil y el almacenamiento del disco del servidor es limitado.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div data-env-panel="cloud">
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">En el menú lateral, haz clic en <strong>ksqlDB</strong> → selecciona el cluster activo.</li>
+        <li class="cds--list__item">Ve a <strong>Streams</strong> → <strong>Create in Editor</strong>.</li>
+        <li class="cds--list__item">Pega y ejecuta (Run Query):</li>
+      </ol>
+<pre><code class="language-sql">CREATE STREAM inventory_transactions (
+  sku VARCHAR,
+  branch VARCHAR,
+  quantity INT
+) WITH (
+  KAFKA_TOPIC='inventory.transactions',
+  KEY_FORMAT='KAFKA',
+  VALUE_FORMAT='JSON'
+);</code></pre>
+      <ol class="cds--list--ordered" start="4">
+        <li class="cds--list__item">Pega y ejecuta (Run Query):</li>
+      </ol>
+<pre><code class="language-sql">CREATE TABLE inventory_availability WITH (
+  KAFKA_TOPIC='inventory.availability',
+  KEY_FORMAT='JSON',
+  VALUE_FORMAT='JSON',
+  PARTITIONS=1
+) AS
+SELECT
+  sku,
+  branch,
+  SUM(quantity) AS available_quantity
+FROM inventory_transactions
+GROUP BY sku, branch
+EMIT CHANGES;</code></pre>
+
+      <div class="callout" data-tone="success" style="margin-top:1.25rem;">
+        <p class="callout__title">✓ Checkpoint</p>
+        <ul class="checklist">
+          <li class="checklist__item">El stream <code>INVENTORY_TRANSACTIONS</code> aparece en la pestaña Streams.</li>
+          <li class="checklist__item">La tabla <code>INVENTORY_AVAILABILITY</code> aparece en la pestaña Tables con status <strong>Running</strong>.</li>
+        </ul>
+      </div>
+    </div>
   </section>
 </div>
 

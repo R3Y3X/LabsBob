@@ -245,20 +245,12 @@ export const workshopGuides = {
     ]
   },
   'agentic-retail-confluent': {
-    duration: '60–90 min',
-    outcome: 'Construirás un pipeline de inventario en tiempo real sobre Confluent Cloud integrado con Bob.',
-    requirements: [
-      ['Acceso', 'IBM Bob IDE y cuenta activa en Confluent Cloud.'],
-      ['CLI', 'Confluent CLI y Python 3.10+ instalados.'],
-      ['Kafka', 'Conceptos de topics, productores y consumidores.']
-    ],
-    materials: ['Credenciales de Confluent Cloud y cluster Kafka.', 'Scripts productores/consumidores de eventos.', 'Diagramas de arquitectura de eventos.'],
-    path: 'Revisa la arquitectura, crea el tópico, deriva disponibilidad con ksqlDB y publica eventos de inventario.',
-    learning: [
-      ['Event Streaming', 'Publicar y consumir eventos de inventario en Confluent Kafka.'],
-      ['Automatización', 'Asistir la configuración de conectores con Bob.'],
-      ['Monitoreo', 'Validar flujo de datos y esquema de mensajes en tiempo real.']
-    ]
+    duration: '45–60 min',
+    outcome: 'Construirás un pipeline de inventario en tiempo real sobre Confluent Platform (TechZone) con Bob como agente de infraestructura.',
+    requirements: [],
+    materials: [],
+    path: 'Conecta Bob a la VM vía SSH, crea los tópicos, registra los schemas y publica los eventos de inventario.',
+    learning: []
   },
   'agentic-retail-voltia': {
     duration: '45–60 min',

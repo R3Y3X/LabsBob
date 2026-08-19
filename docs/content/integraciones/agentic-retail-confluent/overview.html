@@ -33,30 +33,41 @@
     </div>
   </div>
 
-  <!-- ── Selector de entorno + descarga ── -->
-  <div class="bobcoin-cost--total" style="padding:1rem 1.25rem; background:var(--cds-layer-02,#f4f4f4); border:1px solid var(--cds-border-subtle,#e0e0e0); border-radius:6px; display:flex; flex-direction:column; gap:1rem;">
-    <div>
-      <p style="font-size:0.75rem; font-weight:600; color:var(--cds-text-secondary,#525252); text-transform:uppercase; letter-spacing:0.04em; margin:0 0 0.5rem;">¿Con qué entorno trabajas?</p>
-      <div class="env-toggle" data-env-scope="global">
-        <button class="env-toggle__btn env-toggle__btn--active" data-env-tab="platform">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><rect x="1" y="3" width="14" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5 10h6M8 10V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-          Confluent Platform (VM TechZone)
-        </button>
-        <button class="env-toggle__btn" data-env-tab="cloud">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M12.5 6.5A4.5 4.5 0 0 0 4.06 7.5H4a3 3 0 0 0 0 6h8.5a3 3 0 0 0 0-6z"/></svg>
-          Confluent Cloud
-        </button>
-      </div>
-      <p style="font-size:0.75rem; color:var(--cds-text-secondary,#525252); margin:0.4rem 0 0;">Esta selección se aplica a todos los pasos del lab. Puedes cambiarla en cualquier momento.</p>
+  <!-- ── Selector de entorno ── -->
+  <div class="bobcoin-cost--total" style="padding:1rem 1.25rem; background:var(--cds-layer-02,#f4f4f4); border:1px solid var(--cds-border-subtle,#e0e0e0); border-radius:6px;">
+    <p style="font-size:0.75rem; font-weight:600; color:var(--cds-text-secondary,#525252); text-transform:uppercase; letter-spacing:0.04em; margin:0 0 0.5rem;">¿Con qué entorno trabajas?</p>
+    <div class="env-toggle" data-env-scope="global">
+      <button class="env-toggle__btn env-toggle__btn--active" data-env-tab="platform">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><rect x="1" y="3" width="14" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5 10h6M8 10V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Confluent Platform (VM TechZone)
+      </button>
+      <button class="env-toggle__btn" data-env-tab="cloud">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="13" height="13"><path d="M12.5 6.5A4.5 4.5 0 0 0 4.06 7.5H4a3 3 0 0 0 0 6h8.5a3 3 0 0 0 0-6z"/></svg>
+        Confluent Cloud
+      </button>
     </div>
-    <div style="border-top:1px solid var(--cds-border-subtle,#e0e0e0); padding-top:1rem; display:flex; align-items:center; gap:1rem; flex-wrap:wrap;">
-      <a class="cds--btn cds--btn--primary" style="display:inline-flex; align-items:center; gap:0.5rem;" download="agentic-retail-workshop.zip" href="./downloads/agentic-retail-workshop.zip">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="16" height="16"><path d="M8 11.5 3 6.5h3V1h4v5.5h3L8 11.5z"/><path d="M1 13h14v2H1z"/></svg>
-        Descargar bundle del workshop
-      </a>
-      <span style="font-size:0.8125rem; color:var(--cds-text-secondary,#525252);">4.9 MB &nbsp;·&nbsp; Scripts en <code>Lab1/inventory-pipeline/</code></span>
-    </div>
+    <p style="font-size:0.75rem; color:var(--cds-text-secondary,#525252); margin:0.4rem 0 0;">Esta selección se aplica a todos los pasos del lab. Puedes cambiarla en cualquier momento.</p>
   </div>
+
+  <!-- ── Descarga de materiales ── -->
+  <section class="lab-section" aria-labelledby="confluent-descarga">
+    <h2 class="cds--productive-heading-03" id="confluent-descarga">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M26 24v4H6v-4H4v4a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2v-4z"/><path d="M26 14l-1.41-1.41L17 20.17V2h-2v18.17l-7.59-7.58L6 14l10 10 10-10z"/></svg>
+      Descarga los materiales del workshop
+    </h2>
+    <p class="cds--body-01">El bundle contiene todos los scripts necesarios para los tres labs de este track. Descomprímelo y abre la carpeta en IBM Bob IDE.</p>
+    <a class="cds--btn cds--btn--primary" style="margin-top:1rem; margin-bottom:2rem;" download="agentic-retail-workshop.zip" href="./downloads/agentic-retail-workshop.zip">
+      Descargar bundle del workshop (4.9 MB)
+    </a>
+    <div class="callout" data-tone="info">
+      <p class="callout__title">Contenido del bundle</p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item"><code>Lab1/inventory-pipeline/</code> — scripts Python para crear tópicos, publicar eventos y gestionar schemas.</li>
+        <li class="cds--list__item"><code>Lab2/confluent_agents/</code> — agentes de watsonx Orchestrate y herramientas MCP.</li>
+        <li class="cds--list__item"><code>Lab3/voltia-starter/</code> — starter React + TailwindCSS de la tienda Voltia.</li>
+      </ul>
+    </div>
+  </section>
 
   <!-- ── Qué vas a construir ────────────────────────────────────── -->
   <section class="lab-section">
@@ -72,28 +83,8 @@
     </div>
   </section>
 
-  <!-- ── Visual Badge Legend ────────────────────────────────────── -->
-  <section class="lab-section">
-    <h2 class="cds--productive-heading-03">Guía rápida de identificadores visuales</h2>
-    <p class="cds--body-01" style="font-size:0.8125rem; color:var(--cds-text-secondary,#525252);">Cada sección del lab usa estos distintivos para que siempre sepas dónde estás y qué acción se espera de ti.</p>
-    <ul class="cds--list--unordered" style="margin-top:0.75rem; list-style:none; padding:0; display:flex; flex-direction:column; gap:0.5rem;">
-      <li style="display:flex; align-items:center; gap:0.5rem;"><span class="ctx-badge ctx-badge--terminal">⬛ Terminal</span> <span class="cds--body-01" style="font-size:0.8125rem;">Acción en consola o línea de comandos local / SSH.</span></li>
-      <li style="display:flex; align-items:center; gap:0.5rem;"><span class="ctx-badge ctx-badge--browser">🌐 Web UI</span> <span class="cds--body-01" style="font-size:0.8125rem;">Navegación o verificación en el panel web de Confluent / Kafka.</span></li>
-      <li style="display:flex; align-items:center; gap:0.5rem;"><span class="ctx-badge ctx-badge--bob">🤖 Bob (IA)</span> <span class="cds--body-01" style="font-size:0.8125rem;">Bloque de texto listo para copiar y pegar en el agente de IA.</span></li>
-      <li style="display:flex; align-items:center; gap:0.5rem;"><span class="ctx-badge ctx-badge--kafka">Kafka</span> <span class="cds--body-01" style="font-size:0.8125rem;">Operación directa sobre un tópico, schema o clúster Kafka.</span></li>
-      <li style="display:flex; align-items:center; gap:0.5rem;"><span class="ctx-badge ctx-badge--config">⚙ Config</span> <span class="cds--body-01" style="font-size:0.8125rem;">Configuración de entorno, variables o credenciales.</span></li>
-      <li style="display:flex; align-items:center; gap:0.5rem;"><span style="display:inline-flex;align-items:center;justify-content:center;width:1.25rem;height:1.25rem;border-radius:50%;background:#198038;color:#fff;font-size:0.75rem;font-weight:700;flex-shrink:0;">✓</span> <span class="cds--body-01" style="font-size:0.8125rem;"><strong>Checkpoint</strong> — criterio de validación para confirmar que todo funciona antes de avanzar.</span></li>
-    </ul>
-  </section>
-
   <!-- ── Fase 0: Ambiente TechZone ──────────────────────────────── -->
   <section class="lab-section">
-    <div class="step-header">
-      <div class="step-header__meta">
-        <span class="ctx-badge ctx-badge--browser">🌐 IBM TechZone</span>
-        <span class="ctx-badge ctx-badge--config">⚙ Config</span>
-      </div>
-    </div>
     <h2 class="cds--productive-heading-04">Fase 0. Reconocer el ambiente entregado</h2>
     <p class="step-header__why">Antes de cualquier acción, localiza la información que el instructor entregó en TechZone: la URL de acceso y las credenciales del ambiente.</p>
 
@@ -138,12 +129,6 @@
 
   <!-- ── Fase 0b: Login Confluent Platform ──────────────────────── -->
   <section class="lab-section">
-    <div class="step-header">
-      <div class="step-header__meta">
-        <span class="ctx-badge ctx-badge--browser">🌐 Confluent Platform</span>
-        <span class="ctx-badge ctx-badge--config">⚙ Config</span>
-      </div>
-    </div>
     <h2 class="cds--productive-heading-04">Fase 0b. Acceder a Confluent Platform y navegar al clúster</h2>
     <p class="step-header__why">Confluent Control Center es la UI web donde verás en tiempo real los tópicos, mensajes y schemas. Necesitas acceder antes de ejecutar cualquier script.</p>
 
@@ -288,6 +273,50 @@ Instrucciones para ti:
           <li class="cds--list__item">Cópialo a la raíz de <code>Labs-tech-summit/</code>.</li>
           <li class="cds--list__item">Inicia sesión en <a href="https://confluent.cloud" target="_blank" rel="noopener">confluent.cloud</a> y selecciona el cluster que indicó el instructor.</li>
         </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Guía de identificadores visuales ─────────────────────── -->
+  <section class="lab-section" aria-labelledby="guia-identificadores">
+    <h2 class="cds--productive-heading-03" id="guia-identificadores">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M16 10a3.33 3.33 0 0 0-3.25 4h2.08A1.27 1.27 0 0 1 16 12.77 1.25 1.25 0 0 1 17.25 14c0 .91-.55 1.23-1.42 1.93A2.84 2.84 0 0 0 15 18.2V19h2v-.43a4.19 4.19 0 0 1 2.07-3.74C20.06 14.2 21 13.2 21 11.77A5 5 0 0 0 16 10z"/><circle cx="16" cy="23" r="1.5"/></svg>
+      Guía de identificadores visuales
+    </h2>
+
+    <div class="lab-accordion" style="margin-top:0.5rem;">
+      <button class="lab-accordion__trigger" aria-expanded="false" aria-controls="acc-visual-guide">
+        ¿Cómo leer los distintivos de cada paso?
+        <svg class="lab-accordion__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="16" height="16"><path d="M8 11L2 5h12z"/></svg>
+      </button>
+      <div class="lab-accordion__panel" id="acc-visual-guide" hidden>
+        <p class="cds--body-01" style="margin-bottom:0.75rem;">Para evitar confusiones entre plataformas y tipos de acción, cada paso del lab usa los siguientes distintivos:</p>
+        <ul class="cds--list--unordered" style="display:flex; flex-direction:column; gap:0.6rem;">
+          <li class="cds--list__item" style="list-style:none; display:flex; align-items:flex-start; gap:0.75rem;">
+            <span class="ctx-badge ctx-badge--browser" style="flex-shrink:0; margin-top:0.1rem;">🌐 Entorno</span>
+            <span>Indica la plataforma, consola o herramienta activa en ese momento (Confluent Web UI, terminal, navegador).</span>
+          </li>
+          <li class="cds--list__item" style="list-style:none; display:flex; align-items:flex-start; gap:0.75rem;">
+            <span class="ctx-badge ctx-badge--kafka" style="flex-shrink:0; margin-top:0.1rem;">🎯 Propósito</span>
+            <span>Explica en una frase qué se va a lograr y por qué — visible como texto de apoyo bajo el título del paso.</span>
+          </li>
+          <li class="cds--list__item" style="list-style:none; display:flex; align-items:flex-start; gap:0.75rem;">
+            <span class="ctx-badge ctx-badge--terminal" style="flex-shrink:0; margin-top:0.1rem;">⬛ Acción</span>
+            <span>Pasos numerados directos que debes ejecutar manualmente en la terminal o en la UI web.</span>
+          </li>
+          <li class="cds--list__item" style="list-style:none; display:flex; align-items:flex-start; gap:0.75rem;">
+            <span class="ctx-badge ctx-badge--bob" style="flex-shrink:0; margin-top:0.1rem;">🤖 Bob (IA)</span>
+            <span>Bloque de texto listo para copiar y pegar en el chat de Bob — incluye instrucciones completas para que el agente ejecute la tarea automáticamente.</span>
+          </li>
+          <li class="cds--list__item" style="list-style:none; display:flex; align-items:flex-start; gap:0.75rem;">
+            <span class="ctx-badge ctx-badge--config" style="flex-shrink:0; margin-top:0.1rem;">⚙ Config</span>
+            <span>Valores que debes reemplazar antes de copiar el prompt — marcados con corchetes <code>[PLACEHOLDER]</code>.</span>
+          </li>
+        </ul>
+        <div class="callout" data-tone="success" style="margin-top:1rem;">
+          <p class="callout__title">✅ Checkpoint</p>
+          <p class="cds--body-01" style="margin-top:0.25rem;">Criterio de validación al final de cada paso — confirma que todo funciona correctamente antes de avanzar al siguiente. No continúes si el checkpoint no pasa.</p>
+        </div>
       </div>
     </div>
   </section>

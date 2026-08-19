@@ -1272,71 +1272,7 @@ function shouldInjectOverviewFormat(proseEl, lab) {
 }
 
 function buildOverviewFormat(section, lab) {
-  const guide = getWorkshopGuide(lab);
-  const steps = lab.steps.filter((step) => step.slug !== 'overview');
-  const requirements = guide.requirements.map(([title, text]) => checklistItem(`<strong>${escapeHtml(title)}:</strong> ${escapeHtml(text)}`)).join('');
-  const materials = guide.materials.map((item) => checklistItem(escapeHtml(item))).join('');
-  const cards = steps.map((step, index) => buildWorkshopStepCard(lab, step, index)).join('');
-  const learning = guide.learning.map(([area, result]) => `
-    <tr><th scope="row">${escapeHtml(area)}</th><td>${escapeHtml(result)}</td></tr>`).join('');
-
-  return `
-    <section class="workshop-format workshop-format--${escapeHtml(section.id)}" aria-label="Guía del workshop">
-      <div class="workshop-format__meta">
-        <span class="cds--tag cds--tag--gray">${escapeHtml(section.label)}</span>
-        <span class="cds--tag cds--tag--cool-gray">${escapeHtml(getAudienceLabel(lab.audience))}</span>
-        <span class="cds--tag cds--tag--teal">${escapeHtml(guide.duration)}</span>
-      </div>
-
-      <section class="workshop-format__section" aria-labelledby="${lab.slug}-build">
-        <p class="workshop-format__eyebrow">Resultado esperado</p>
-        <h2 id="${lab.slug}-build">Qué vas a construir</h2>
-        <p class="workshop-format__lead">${escapeHtml(guide.outcome)}</p>
-      </section>
-
-      <div class="workshop-format__split">
-        <section class="workshop-format__section" aria-labelledby="${lab.slug}-requirements">
-          <p class="workshop-format__eyebrow">Preparación</p>
-          <h2 id="${lab.slug}-requirements">Requisitos previos</h2>
-          <ul class="workshop-checklist">${requirements}</ul>
-        </section>
-        <section class="workshop-format__section" aria-labelledby="${lab.slug}-materials">
-          <p class="workshop-format__eyebrow">Recursos</p>
-          <h2 id="${lab.slug}-materials">Materiales del workshop</h2>
-          <ul class="workshop-checklist">${materials}</ul>
-        </section>
-      </div>
-
-      <section class="workshop-format__section workshop-format__section--labs" aria-labelledby="${lab.slug}-labs">
-        <p class="workshop-format__eyebrow">Etapas</p>
-        <h2 id="${lab.slug}-labs">Labs del workshop</h2>
-        <div class="workshop-step-grid">${cards}</div>
-      </section>
-
-      <div class="workshop-format__split">
-        <section class="workshop-format__section" aria-labelledby="${lab.slug}-path">
-          <p class="workshop-format__eyebrow">Recomendación</p>
-          <h2 id="${lab.slug}-path">Camino recomendado</h2>
-          <p>Completa cada etapa, revisa su resultado esperado y solo después avanza a la siguiente. Las rutas alternativas se indican explícitamente en la navegación.</p>
-        </section>
-        <section class="workshop-format__section" aria-labelledby="${lab.slug}-learning">
-          <p class="workshop-format__eyebrow">Resultados</p>
-          <h2 id="${lab.slug}-learning">Qué vas a aprender</h2>
-          <div class="lab-table-wrap">
-            <table class="lab-table">
-              <caption class="visually-hidden">Resultados de aprendizaje de ${escapeHtml(lab.title)}</caption>
-              <thead><tr><th scope="col">Área</th><th scope="col">Al finalizar podrás</th></tr></thead>
-              <tbody>${learning}</tbody>
-            </table>
-          </div>
-        </section>
-      </div>
-
-      <aside class="workshop-format__help callout" data-tone="note" aria-label="Ayuda durante el workshop">
-        <p class="callout__title">Ayuda durante el workshop</p>
-        <p>Usa las capturas y prompts como referencia, revisa los checkpoints de cada etapa y vuelve al inicio del workshop si necesitas confirmar requisitos o materiales.</p>
-      </aside>
-    </section>`;
+  return '';
 }
 
 function buildStepBrief(section, lab, step) {

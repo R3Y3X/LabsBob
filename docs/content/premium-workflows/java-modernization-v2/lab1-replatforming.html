@@ -1,0 +1,1424 @@
+<div class="content-panel lab-template premium-workflow">
+  <div class="lab-banner">
+    <div class="lab-banner__tags">
+      <span class="cds--tag cds--tag--green">Premium</span>
+      <span class="cds--tag cds--tag--cool-gray">Flujo Liberty</span>
+    </div>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Laboratorio 1 — Replataformización de Java a Open Liberty</h1>
+    <p class="cds--body-02 lab-banner__summary">
+      Migra Simple Pharmacy de Traditional WebSphere a Open Liberty manteniendo el comportamiento de la app.
+    </p>
+    <div class="lab-banner__metrics">
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">Flujo</span>
+        <span class="lab-banner__metric-label">Java Modernization</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">~20</span>
+        <span class="lab-banner__metric-label">minutos</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">4–5</span>
+        <span class="lab-banner__metric-label">BobCoins estimados</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">Premium</span>
+        <span class="lab-banner__metric-label">acceso requerido</span>
+      </div>
+    </div>
+  </div>
+  <section class="lab-section" aria-labelledby="lab1-introduccion">
+    <h2 class="cds--productive-heading-03" id="lab1-introduccion">Introducción</h2>
+    <p>
+Migre
+      <strong>Simple Pharmacy Management System</strong>
+ de Traditional WebSphere Application Server (TWas) al tiempo de ejecución liviano
+      <strong>Liberty</strong>
+ utilizando el flujo de trabajo Java Modernization de Bob V2.
+    </p>
+    <div class="callout" data-tone="note">
+      <p class="callout__title">Lo que lograrás</p>
+      <p>
+Recorra el flujo de trabajo Java Modernization de Bob de principio a fin:
+        <strong>Analyze → Upgrade (Liberty Replatforming) → Validate</strong>
+. Bob analiza los problemas de migración uno por uno, explica cada uno de ellos y solicita su aprobación antes de tocar un archivo.
+      </p>
+    </div>
+  </section>
+  <section class="lab-section" aria-labelledby="get-the-source-code-first">
+    <h2 class="cds--productive-heading-03" id="get-the-source-code-first">Obtén primero el código fuente</h2>
+    <p>Descargue el paquete del taller y el ZIP del plan de migración Liberty antes de comenzar; se hace referencia a ambos desde el interior de Bob durante la práctica de laboratorio.</p>
+    <p>
+      <a download="simple-pharmacy-workshop-v2.zip" href="./downloads/simple-pharmacy-workshop-v2.zip" class="cds--btn cds--btn--primary">
+        <span class="premium-button-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M5 20h14v-2H5m14-9h-4V3H9v6H5l7 7z"></path>
+          </svg>
+        </span>
+ Paquete de taller (2,1 MB)
+      </a>
+      <a download="simple-pharmacy.war_migrationPlan.zip" href="./downloads/premium/java-modernization-v2/simple-pharmacy.war_migrationPlan.zip" class="cds--btn cds--btn--primary">
+        <span class="premium-button-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M5 20h14v-2H5m14-9h-4V3H9v6H5l7 7z"></path>
+          </svg>
+        </span>
+ Plan de migración ZIP (168 KB)
+      </a>
+    </p>
+    <p>Descomprima el paquete del taller, luego abra la instantánea inicial del Laboratorio 1 en IBM Bob:</p>
+    <div data-language="text" class="code-block premium-code-block">
+      <pre>
+        <code>simple-pharmacy-workshop-v2/labs/lab1-java-liberty-replatforming/snapA-java-liberty-replatforming/</code>
+      </pre>
+    </div>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">
+Abra la carpeta
+        <code>snapA-*</code>
+, no su carpeta principal
+      </p>
+      <p>
+El flujo de trabajo Java Modernization solo aparece cuando se abre Bob
+        <strong> en la carpeta de instantáneas</strong>
+. Si abre la carpeta principal
+        <code>lab1-*</code>
+, el flujo de trabajo no aparecerá en la lista.
+      </p>
+    </div>
+  </section>
+  <section class="lab-section" aria-labelledby="use-case-migrate-from-traditional-websphere-to-liberty">
+    <h2 class="cds--productive-heading-03" id="use-case-migrate-from-traditional-websphere-to-liberty">Caso de uso: migrar de Traditional WebSphere a Liberty</h2>
+    <p>La aplicación se ejecuta actualmente en:</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+        <strong>Servidor de aplicaciones</strong>
+: WebSphere Application Server (TWas)
+      </li>
+      <li class="cds--list__item">
+        <strong>Versión Java</strong>
+: 8
+      </li>
+      <li class="cds--list__item">
+        <strong>Interfaz</strong>
+: Struts
+      </li>
+    </ul>
+    <p>Lo migrarás a:</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+        <strong>Servidor de aplicaciones</strong>
+: Liberty Application Server
+      </li>
+      <li class="cds--list__item">
+        <strong>Versión de Java</strong>
+: 8 (sin cambios; consulte el Laboratorio 2 para conocer la actualización de la versión)
+      </li>
+      <li class="cds--list__item">
+        <strong>Interfaz</strong>
+: Struts (sin cambios; consulte el Laboratorio 3 para conocer la migración de la interfaz de usuario)
+      </li>
+    </ul>
+    <h3 id="why-this-matters" class="cds--productive-heading-02 lab-step__title">Por qué esto importa</h3>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+        <strong>WebSphere Application Server (TWas)</strong>
+ es un servidor Java empresarial tradicional y pesado.
+      </li>
+      <li class="cds--list__item">
+        <strong>Liberty</strong>
+ es el sucesor moderno, liviano, modular y compatible con la nube: inicio más rápido, espacio más pequeño y compatible con contenedores.
+      </li>
+    </ul>
+  </section>
+  <section class="lab-section" aria-labelledby="prerequisites">
+    <h2 class="cds--productive-heading-03" id="prerequisites">Requisitos previos</h2>
+    <p>Antes de comenzar esta práctica de laboratorio, asegúrese de tener instalado lo siguiente.</p>
+    <h3 id="1-ibm-bob-ide-v2" class="cds--productive-heading-02 lab-step__title">1. IBM Bob IDE (V2)</h3>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+Instale la última extensión IDE
+        <strong>Bob V2</strong>
+.
+      </li>
+      <li class="cds--list__item">Inicia sesión para que Bob esté conectado.</li>
+      <li class="cds--list__item">
+Necesita un plan que incluya el paquete de flujo de trabajo Java Modernization (el paquete
+        <strong>Premium</strong>
+).
+      </li>
+    </ul>
+    <h3 id="2-java-8-and-maven" class="cds--productive-heading-02 lab-step__title">2. Java 8 y Maven</h3>
+    <p>
+Bob construye este proyecto con
+      <strong>Java</strong>
+ y
+      <strong>Maven</strong>
+ (herramienta de compilación de Java).
+      <strong>El Laboratorio 1 usa Java 8.</strong>
+ Siga la pestaña de su sistema operativo: cada uno instala Java 8 y Maven.
+    </p>
+    <div class="callout" data-tone="tip">
+      <p class="callout__title">Bob puede instalar Java 8 por ti</p>
+      <p>
+Si falta Java 8, el flujo de trabajo lo instala a través de SDKMAN! por sí solo. Para un taller cronometrado, es aún más rápido tenerlo listo desde el principio, por lo que vale la pena seguir los pasos a continuación de todos modos.
+        <strong>Maven, sin embargo, debes instalarlo tú mismo.</strong>
+      </p>
+    </div>
+    <div data-tabs="1:3" class="premium-platform-options">
+      <input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" />
+      <input id="__tabbed_1_2" name="__tabbed_1" type="radio" />
+      <input id="__tabbed_1_3" name="__tabbed_1" type="radio" />
+      <div class="premium-platform-options__labels">
+        <label for="__tabbed_1_1">macOS</label>
+        <label for="__tabbed_1_2">Linux</label>
+        <label for="__tabbed_1_3">Windows</label>
+      </div>
+      <div class="premium-platform-options__content">
+        <div class="premium-platform-option">
+          <p>
+La forma más sencilla es
+            <strong>SDKMAN!</strong>
+, una herramienta que instala y cambia entre versiones de Java por usted.
+          </p>
+          <p>Instalar SDKMAN!:</p>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>curl -s "https://get.sdkman.io" | bash</code>
+            </pre>
+          </div>
+          <p>Cárgalo en tu terminal (necesario una vez en cada nueva terminal):</p>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>source "$HOME/.sdkman/bin/sdkman-init.sh"</code>
+            </pre>
+          </div>
+          <p>
+Instale Java 8 (Azul
+            <strong>Zulu</strong>
+: Temurin/Adoptium no tiene una compilación de Java 8 para Apple Silicon, y Zulu funciona tanto en Intel como en Mac de la serie M) y conviértalo en el predeterminado:
+          </p>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>sdk install java 8.0.492-zulu</code>
+            </pre>
+          </div>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>sdk default java 8.0.492-zulu</code>
+            </pre>
+          </div>
+          <p>Instalar Maven:</p>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>sdk install maven</code>
+            </pre>
+          </div>
+        </div>
+        <div class="premium-platform-option">
+          <p>
+La forma más sencilla es
+            <strong>SDKMAN!</strong>
+, una herramienta que instala y cambia entre versiones de Java por usted.
+          </p>
+          <p>Instalar SDKMAN!:</p>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>curl -s "https://get.sdkman.io" | bash</code>
+            </pre>
+          </div>
+          <p>Cárgalo en tu terminal (necesario una vez en cada nueva terminal):</p>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>source "$HOME/.sdkman/bin/sdkman-init.sh"</code>
+            </pre>
+          </div>
+          <p>
+Instale Java 8 (Azul
+            <strong>Zulu</strong>
+: Temurin/Adoptium no tiene una compilación de Java 8 para Apple Silicon, y Zulu funciona tanto en Intel como en Mac de la serie M) y conviértalo en el predeterminado:
+          </p>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>sdk install java 8.0.492-zulu</code>
+            </pre>
+          </div>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>sdk default java 8.0.492-zulu</code>
+            </pre>
+          </div>
+          <p>Instalar Maven:</p>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>sdk install maven</code>
+            </pre>
+          </div>
+        </div>
+        <div class="premium-platform-option">
+          <p>
+SDKMAN! (usado en macOS/Linux) no se puede ejecutar en PowerShell, por lo que Windows tiene
+            <strong>dos opciones</strong>
+: elija una.
+          </p>
+          <p>
+            <strong>Opción A — Winget (permanece en PowerShell, la más simple).</strong>
+            <code>winget</code>
+ es el instalador de la aplicación integrado en Windows 10/11. Ejecute cada línea en
+            <strong>PowerShell</strong>
+:
+          </p>
+          <div data-language="powershell" class="code-block premium-code-block">
+            <pre>
+              <code>winget install EclipseAdoptium.Temurin.8.JDK</code>
+            </pre>
+          </div>
+          <div data-language="powershell" class="code-block premium-code-block">
+            <pre>
+              <code>winget install Apache.Maven</code>
+            </pre>
+          </div>
+          <p>
+Luego,
+            <strong> cierra y vuelve a abrir PowerShell</strong>
+ para que se encuentren los nuevos comandos
+            <code>java</code>
+ y
+            <code>mvn</code>
+.
+          </p>
+          <p>
+            <strong>Opción B — SDKMAN! en Git Bash o WSL (idéntico a macOS/Linux).</strong>
+ SDKMAN! hace que cambiar entre Java 8 y Java 21 (necesitará 21 del Laboratorio 2 en adelante) sea de una sola línea, pero necesita un shell estilo Linux:
+          </p>
+          <ul class="cds--list--unordered">
+            <li class="cds--list__item">
+              <strong>Git Bash</strong>
+ viene con
+              <a href="https://git-scm.com/download/win">Git para Windows</a>
+.
+            </li>
+            <li class="cds--list__item">
+              <strong>WSL</strong>
+ es el entorno Linux integrado: ejecute
+              <code>wsl --install</code>
+ en un PowerShell de administrador y luego vuelva a abrir.
+            </li>
+          </ul>
+          <p>
+Abra Git Bash o WSL y ejecute los comandos
+            <strong>macOS/Linux</strong>
+ desde las otras pestañas. Siga usando el mismo shell para cada comando
+            <code>sdk</code>
+,
+            <code>java</code>
+ y
+            <code>mvn</code>
+ en esta práctica de laboratorio.
+          </p>
+        </div>
+      </div>
+    </div>
+    <p>Ahora verifique: estas comprobaciones son las mismas en todos los sistemas operativos:</p>
+    <div data-language="bash" class="code-block premium-code-block">
+      <pre>
+        <code>java -version</code>
+      </pre>
+    </div>
+    <p>
+Debería ver una versión que comience con
+      <code>1.8.</code>
+, p.
+      <code>openjdk version "1.8.0_492"</code>
+ de Zulu (el número de parche exacto no importa; la parte clave es
+      <strong>1.8</strong>
+ = Java 8).
+    </p>
+    <div data-language="bash" class="code-block premium-code-block">
+      <pre>
+        <code>mvn --version</code>
+      </pre>
+    </div>
+    <div class="callout" data-tone="note">
+      <p class="callout__title">
+        <code>mvn --version</code>
+ muestra el Java con el que Maven construirá
+      </p>
+      <p>
+Esto puede diferir del valor predeterminado de su shell
+        <code>java -version</code>
+: Maven sigue a
+        <code>JAVA_HOME</code>
+ (o, con SDKMAN!, la instalación activa). Para el Laboratorio 1, ambos deben informar
+        <strong>Java 8</strong>
+. En Windows con ala, apunte
+        <code>JAVA_HOME</code>
+ a la carpeta Temurin 8 (por ejemplo,
+        <code>C:\Program Files\Eclipse Adoptium\jdk-8…</code>
+) si Maven elige la carpeta equivocada.
+      </p>
+    </div>
+    <div class="callout" data-tone="tip">
+      <p class="callout__title">Otras formas de instalar Java 8 (y Apple Silicon gotcha)</p>
+      <p>
+En
+        <strong>Macs Apple Silicon (serie M)</strong>
+, Eclipse Temurin/Adoptium tiene
+        <strong>no</strong>
+ compilación Java 8; los identificadores obsoletos como
+        <code>8.0.432-tem</code>
+ fallarán con "no disponible". Utilice
+        <strong>Azul Zulu</strong>
+ (el ID de
+        <code>-zulu</code>
+ arriba) o
+        <strong>Amazon Corretto</strong>
+ (
+        <code>sdk install java 8.0.472-amzn</code>
+); ambos tienen compilaciones nativas de arm64. Para ver todas las compilaciones de Java 8 disponibles para su máquina:
+        <code>sdk list java | grep " 8\."</code>
+.
+      </p>
+      <p>
+En
+        <strong>Intel Macs / x64 Linux</strong>
+, Temurin 8 también funciona. ¿Prefieres un instalador GUI? Descargue
+        <a href="https://www.azul.com/downloads/?version=java-8-lts">Zulu 8</a>
+ para su arquitectura, o en Ubuntu/Debian
+        <code>sudo apt install openjdk-8-jdk</code>
+.
+      </p>
+    </div>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">Reinicie Bob después de instalar Maven</p>
+      <p>
+Después de instalar Maven, usted
+        <strong>debe</strong>
+ cerrar y reiniciar IBM Bob (o su IDE) para que recoja el nuevo
+        <code>PATH</code>
+ y pueda detectar Maven.
+      </p>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">Cierra tu IDE por completo.</li>
+        <li class="cds--list__item">Vuelva a abrir su IDE.</li>
+        <li class="cds--list__item">
+Verifique que se detecte Maven ejecutando
+          <code>mvn --version</code>
+ en la terminal de Bob.
+        </li>
+      </ol>
+    </div>
+  </section>
+  <section class="lab-section" aria-labelledby="worth-watching-for">
+    <h2 class="cds--productive-heading-03" id="worth-watching-for">Vale la pena verlo</h2>
+    <p>El flujo de trabajo tiene algunos comportamientos en los que es fácil hacer clic:</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+        <strong>Flujo de aprobación interactivo</strong>
+: Bob propone cada cambio de migración y pregunta antes de aplicarlo. Puede aceptar, pedirle que mire más de cerca o solicitar una vista previa de la edición exacta.
+      </li>
+      <li class="cds--list__item">
+        <strong>Actualización problema por problema</strong>
+: el flujo de trabajo aborda cada problema de migración individualmente, con una justificación para cada solución.
+      </li>
+      <li class="cds--list__item">
+        <strong>Mitigaciones en capas</strong>
+: cuando tiene sentido, Bob sugiere una solución tanto a nivel de biblioteca como a nivel de tiempo de ejecución (por ejemplo, actualizar una dependencia
+        <em> y</em>
+ agregando una opción de JVM).
+      </li>
+      <li class="cds--list__item">
+        <strong>Desglose de costos por tarea</strong>
+: el resumen de cierre muestra el costo en monedas Bob y el recuento de tokens por subtarea.
+      </li>
+      <li class="cds--list__item">
+        <strong>Resumen de modernización visual</strong>
+: un gráfico generado automáticamente que muestra cada paso realizado, categorizado por resultado.
+      </li>
+      <li class="cds--list__item">
+        <strong>Instalación de herramienta autónoma</strong>
+: si Java no está configurado, el flujo de trabajo lo instala a través del propio SDKMAN!.
+      </li>
+    </ul>
+  </section>
+  <section class="lab-section" aria-labelledby="bobs-java-modernization-workflow">
+    <h2 class="cds--productive-heading-03" id="bobs-java-modernization-workflow">Flujo de trabajo Java Modernization de Bob</h2>
+    <p>El flujo de trabajo tiene tres fases:</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+        <strong>Analyze</strong>
+: Bob inspecciona su proyecto Java y usted elige un tipo de modernización (Java Upgrade, Liberty Replatforming o UI Modernization).
+      </li>
+      <li class="cds--list__item">
+        <strong>Actualización</strong>
+: Bob realiza la actualización agente y soluciona los problemas uno por uno con su aprobación.
+      </li>
+      <li class="cds--list__item">
+        <strong>Validar</strong>
+: Bob crea, implementa y valida la aplicación migrada y luego genera un resumen de modernización.
+      </li>
+    </ul>
+    <h3 id="controlling-bobs-permissions" class="cds--productive-heading-02 lab-step__title">Controlando los permisos de Bob</h3>
+    <p>Utilice el selector de permisos en la ventana de chat para controlar lo que hace Bob sin preguntar:</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+        <strong>Read</strong>
+: deja que Bob lea archivos sin preguntar.
+      </li>
+      <li class="cds--list__item">
+        <strong>Edit</strong>
+: deja que Bob modifique archivos sin preguntar.
+      </li>
+      <li class="cds--list__item">
+        <strong>Ejecutar</strong>
+: deja que Bob ejecute comandos sin preguntar.
+      </li>
+      <li class="cds--list__item">
+        <strong>MCP</strong>
+: deja que Bob use las capacidades de MCP sin preguntar.
+      </li>
+    </ul>
+    <div class="callout" data-tone="tip">
+      <p class="callout__title">consejo</p>
+      <p>
+Comience solo con
+        <strong>Read</strong>
+ habilitado hasta que se sienta cómodo, luego amplíe a medida que gane confianza.
+      </p>
+    </div>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/permissions-selector.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/permissions-selector.png" class="lab-figure__img" alt="Selector de permisos que muestra lectura, edición, ejecución y alternancia MCP" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — Selector de permisos que muestra lectura, edición, ejecución y alternancia MCP. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+  </section>
+  <section class="lab-section" aria-labelledby="step-1-open-the-project">
+    <h2 class="cds--productive-heading-03" id="step-1-open-the-project">Paso 1: abre el proyecto</h2>
+    <ol class="cds--list--ordered">
+      <li class="cds--list__item">Inicie su IDE con IBM Bob instalado.</li>
+      <li class="cds--list__item">
+Abra la carpeta
+        <code>snapA-java-liberty-replatforming</code>
+        <strong> como raíz del proyecto </strong>
+.
+      </li>
+      <li class="cds--list__item">Si la ventana de chat de Bob aún no está abierta, haga clic en el ícono de Bob en la parte superior de su IDE.</li>
+    </ol>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/snapa-open-in-bob.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/snapa-open-in-bob.png" class="lab-figure__img" alt="Bob IDE con la carpeta snapA abierta en el explorador de archivos" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — Bob IDE con la carpeta snapA abierta en el explorador de archivos. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+    <h3 id="confirm-agent-mode" class="cds--productive-heading-02 lab-step__title">Confirmar Agent mode</h3>
+    <p>
+En el panel de chat de Bob, verifique que el indicador de modo en la parte inferior muestre
+      <strong>Agent</strong>
+. Ese es el único modo que necesita: no hay nada a lo que cambiar en ningún momento de esta práctica de laboratorio.
+    </p>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/agent-mode-indicator.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/agent-mode-indicator.png" class="lab-figure__img" alt="Indicador Agent mode en la parte inferior del panel de chat de Bob" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — Indicador Agent mode en la parte inferior del panel de chat de Bob. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+    <h3 id="confirm-the-workflow-appears" class="cds--productive-heading-02 lab-step__title">Confirme que aparece el flujo de trabajo</h3>
+    <p>
+Haga clic en el botón de reproducción (
+      <strong>▶</strong>
+) en la parte superior de la ventana de chat de Bob para abrir la pestaña
+      <strong>Workflows</strong>
+ y busque
+      <strong>Java Modernization</strong>
+.
+    </p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+        <strong>¿El botón Flujo de trabajo no está disponible?</strong>
+ Asegúrese de que su instalación de Bob esté actualizada.
+      </li>
+      <li class="cds--list__item">
+        <strong>¿No encuentras el flujo de trabajo?</strong>
+ Verifica que abriste la carpeta
+        <code>snapA-*</code>
+ como raíz y verifica la membresía/plan de tu equipo en la configuración de Bob.
+      </li>
+    </ul>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/java-modernization-workflow-card.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/java-modernization-workflow-card.png" class="lab-figure__img" alt="Java Modernization tarjeta de flujo de trabajo en la pestaña Flujos de trabajo" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — Java Modernization tarjeta de flujo de trabajo en la pestaña Flujos de trabajo. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+  </section>
+  <section class="lab-section" aria-labelledby="step-2-run-the-liberty-replatforming-workflow">
+    <h2 class="cds--productive-heading-03" id="step-2-run-the-liberty-replatforming-workflow">Paso 2: ejecute el flujo de trabajo de cambio de plataforma Liberty</h2>
+    <h3 id="objective" class="cds--productive-heading-02 lab-step__title">Objetivo</h3>
+    <p>Haga que Bob analice la aplicación, aplique el plan de migración AMA y valide el resultado en Liberty.</p>
+    <h3 id="21-start-the-workflow" class="cds--productive-heading-02 lab-step__title">2.1 Iniciar el flujo de trabajo</h3>
+    <p>
+Seleccione
+      <strong>Java Modernization</strong>
+ de la lista de flujo de trabajo y haga clic en
+      <strong>(▶) Iniciar</strong>
+.
+    </p>
+    <h3 id="22-analyze-analyze-java-project" class="cds--productive-heading-02 lab-step__title">2.2 Analizar - Analizar proyecto Java</h3>
+    <p>
+La
+      <strong>Ruta del proyecto</strong>
+ debería completarse automáticamente en la carpeta
+      <code>snapA</code>
+. Confirma que termina con:
+    </p>
+    <div data-language="text" class="code-block premium-code-block">
+      <pre>
+        <code>…/simple-pharmacy-workshop-v2/labs/lab1-java-liberty-replatforming/snapA-java-liberty-replatforming</code>
+      </pre>
+    </div>
+    <p>
+Esa cola es solo un
+      <strong>ejemplo de cómo debe terminar tu camino</strong>
+: tu camino real comienza donde guardaste el paquete (por ejemplo,
+      <code>/Users/you/Downloads/…</code>
+). Deje
+      <strong>Comando de compilación personalizada</strong>
+ en blanco y haga clic en
+      <strong>Continuar</strong>
+.
+    </p>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/analyze-project-panel.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/analyze-project-panel.png" class="lab-figure__img" alt="Panel Analizar proyecto con la ruta del proyecto completada automáticamente" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — Panel Analizar proyecto con la ruta del proyecto completada automáticamente. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+    <h3 id="23-analyze-select-modernization-type" class="cds--productive-heading-02 lab-step__title">2.3 Analizar: seleccionar el tipo de modernización</h3>
+    <p>
+El panel
+      <strong>Tipo de modernización</strong>
+ ofrece cuatro subtipos. Elige:
+    </p>
+    <table class="lab-table">
+      <thead>
+        <tr>
+          <th>Configuración</th>
+          <th>Valor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <strong>Tipo de modernización</strong>
+          </td>
+          <td>
+            <strong>Liberty Replatforming</strong>
+ —
+            <em>"Replatforming su aplicación Java a Liberty"</em>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Habilitar Git Flow</strong>
+          </td>
+          <td>
+            <strong>Off</strong>
+ (la administración de sucursales permanece fuera del flujo de trabajo de esta práctica de laboratorio)
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+Haga clic en
+      <strong>Continuar</strong>
+.
+    </p>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/select-liberty-replatforming.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/select-liberty-replatforming.png" class="lab-figure__img" alt="Seleccione el panel Tipo de modernización con Liberty Replatforming seleccionado y Git Flow desactivado" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — Seleccione el panel Tipo de modernización con Liberty Replatforming seleccionado y Git Flow desactivado. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+    <div class="callout" data-tone="note">
+      <p class="callout__title">Los otros tres subtipos son los otros laboratorios.</p>
+      <p>
+        <strong>Java Upgrade</strong>
+ es el Laboratorio 2,
+        <strong>UI Modernization</strong>
+ es el Laboratorio 3 y
+        <strong>Java Unit Testing</strong>
+ es el Laboratorio 4 (que también aparece como su propio flujo de trabajo de nivel superior). Estás viendo el menú de todo el grupo: selecciona Liberty Replatforming e ignora el resto por ahora.
+      </p>
+    </div>
+    <h3 id="24-upgrade-provide-the-ama-migration-plan" class="cds--productive-heading-02 lab-step__title">2.4 Actualización: proporcione el plan de migración de AMA</h3>
+    <p>
+Pegue la ruta completa al archivo ZIP del plan de migración
+      <strong>Application Modernization Accelerator (AMA)</strong>
+ y luego haga clic en
+      <strong>Continue</strong>
+. Bob analiza el plan y elabora una lista de tareas pendientes.
+    </p>
+    <div data-language="text" class="code-block premium-code-block">
+      <pre>
+        <code>[tu ruta local]/simple-pharmacy-workshop-v2/labs/lab1-java-liberty-replatforming/simple-pharmacy.war_migrationPlan.zip</code>
+      </pre>
+    </div>
+    <p>
+Consíguelo de la segunda descarga en la parte superior de esta página:
+      <strong>o</strong>
+ usa la copia que ya está dentro del paquete en la ruta anterior.
+    </p>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/ama-migration-plan-input.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/ama-migration-plan-input.png" class="lab-figure__img" alt="Panel de entrada de ruta del plan de migración de AMA" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — Panel de entrada de ruta del plan de migración de AMA. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+    <h3 id="25-upgrade-interactive-approval-flow" class="cds--productive-heading-02 lab-step__title">2.5 Actualización: flujo de aprobación interactivo</h3>
+    <p>
+Bob ahora resuelve los problemas de migración
+      <strong>uno a la vez</strong>
+. Para cada uno, explica la causa raíz, propone una solución y espera su aprobación. Normalmente verá tres opciones:
+    </p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+        <code>Approve the fix and proceed with implementation</code>
+      </li>
+      <li class="cds--list__item">
+        <code>Do not change dependencies yet; inspect further</code>
+      </li>
+      <li class="cds--list__item">
+        <code>Approve the fix, but show me the exact edits before applying them</code>
+      </li>
+    </ul>
+    <div class="callout" data-tone="tip">
+      <p class="callout__title">Elija 'muéstreme las ediciones exactas' para el primer número o dos</p>
+      <p>Es la forma más clara de ver lo que Bob realmente propone cambiar. Una vez que lo tenga una idea, aprobarlo directamente está bien. Si alguna vez no está seguro, lea el razonamiento que se encuentra arriba del mensaje o simplemente hágale a Bob una pregunta de seguimiento antes de aprobar.</p>
+    </div>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/interactive-approval-prompt.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/interactive-approval-prompt.png" class="lab-figure__img" alt="Mensaje de aprobación interactivo que muestra el razonamiento de Bob y las tres opciones de aprobación." />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — Mensaje de aprobación interactivo que muestra el razonamiento de Bob y las tres opciones de aprobación. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/diff-preview.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/diff-preview.png" class="lab-figure__img" alt="Vista previa de diferencias que muestra las ediciones exactas que propone Bob" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — Vista previa de diferencias que muestra las ediciones exactas que propone Bob. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+    <p>
+      <strong>Problemas esperados en este proyecto</strong>
+ (el suyo puede variar):
+    </p>
+    <table class="lab-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Problema que plantea Bob</th>
+          <th>Tu respuesta</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>
+            <strong>Advertencia sobre el juego de caracteres de Javassist</strong>
+ —
+            <em>"Evite el uso del juego de caracteres predeterminado cuando el flujo de salida sea un PrintStream"</em>
+          </td>
+          <td>
+            <strong>Aprobar</strong>
+, fijado a
+            <strong>
+              <code>3.29.2-GA</code>
+            </strong>
+: consulte la advertencia a continuación
+          </td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>
+            <strong>Conflicto de OGNL SecurityManager</strong>
+ —
+            <em>"El valor predeterminado de la propiedad del sistema java.security.manager se ha cambiado para no permitir"</em>
+          </td>
+          <td>
+            <strong>Rechazo</strong>
+: es un falso positivo
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">
+Javassist: insista en
+        <code>3.29.2-GA</code>
+; Bob puede proponer una versión diferente
+      </p>
+      <p>
+Bob a menudo propone un javassist
+        <strong>más nuevo</strong>
+ (por ejemplo
+        <code>3.30.2-GA</code>
+) y ofrece
+        <code>3.29.2-GA</code>
+ como la opción
+        <em>segundo</em>
+, redactado como un rechazo:
+      </p>
+      <div data-language="text" class="code-block premium-code-block">
+        <pre>
+          <code>Sí, actualice javassist a 3.30.2-GA
+No, usa 3.29.2-GA en lugar de &lt;-- elige este
+No, omite este cambio</code>
+        </pre>
+      </div>
+      <p>
+        <strong>
+Elija
+          <code>3.29.2-GA</code>
+.
+        </strong>
+ Es la versión con la que se construyó y probó este taller, y la que
+        <code>snapB</code>
+/
+        <code>snapC</code>
+ ya está fijada. Ambas versiones son compatibles con Java 8, por lo que una más nueva no interrumpirá su compilación actual, pero mantendrá a todo el grupo en una versión.
+      </p>
+      <p>
+Hagas lo que hagas,
+        <strong>no te saltes el cambio por completo</strong>
+, eso deja el hallazgo sin resolver.
+      </p>
+    </div>
+    <details class="premium-details">
+      <summary>Por qué el hallazgo de OGNL es un falso positivo: vale dos minutos</summary>
+      <p>
+        <code>pom.xml</code>
+ de
+        <code>snapA</code>
+ ya fija
+        <code>ognl</code>
+ a
+        <code>3.1.26</code>
+ para compatibilidad con Struts 2.5.30, y lo dice en un comentario justo encima de la dependencia. La clase
+        <code>OgnlSecurityManager</code>
+ marcada existe en
+        <em>todas las</em>
+ versiones OGNL disponibles (3.1.26–3.4.11), por lo que la actualización no la eliminará. La llamada solo se produce en tiempo de ejecución en Java 18+ cuando en realidad está instalado un SecurityManager no nulo, lo cual Liberty nunca ocurre.
+      </p>
+      <p>
+Entonces, el escáner tiene razón en cuanto a que el código existe, y está completamente equivocado en que importa aquí.
+        <strong>Rechazar es la respuesta correcta</strong>
+, y es el momento más transferible en esta práctica de laboratorio: un hallazgo que es
+        <em>real</em>
+ y que es
+        <em>relevante para su tiempo de ejecución</em>
+ son dos preguntas diferentes, y solo usted puede responder la segunda.
+      </p>
+    </details>
+    <details class="premium-details">
+      <summary>El hallazgo de javassist también es menos urgente de lo que parece.</summary>
+      <p>
+Bob probablemente citará
+        <strong>JEP 400</strong>
+ y "Java 17+" como motivo. Tenga en cuenta que el Laboratorio 1 permanece en
+        <strong>Java 8</strong>
+: el juego de caracteres predeterminado no cambió a UTF-8 hasta Java 18, por lo que el error que describe no puede afectarlo en este laboratorio. AMA lo marca porque está planeando un objetivo Liberty que
+        <em> podría</em>
+ ejecutar una JVM más nueva.
+      </p>
+      <p>Aprobar sigue siendo correcto (es inofensivo y es real), pero no permita que el encuadre de "desajustes silenciosos en el conjunto de caracteres" convenza a la sala de que evitaron un error real.</p>
+    </details>
+    <h3 id="26-upgrade-deployment" class="cds--productive-heading-02 lab-step__title">2.6 Actualización: implementación</h3>
+    <p>Una vez que se aplican las correcciones, el flujo de trabajo crea la aplicación y la implementa en Liberty. Bob informa cuando el servidor está activo y le proporciona las URL.</p>
+    <h3 id="27-validate-modernization-summary" class="cds--productive-heading-02 lab-step__title">2.7 Validar: resumen de modernización</h3>
+    <p>
+Bob genera un
+      <strong>resumen de modernización visual</strong>
+ de cada paso realizado, categorizado por resultado, más
+      <strong>costo por tarea y estadísticas simbólicas</strong>
+ para la ejecución.
+    </p>
+    <p>
+Confirme los informes de flujo de trabajo
+      <em>"se inició correctamente sin errores"</em>
+ (o elija la opción que coincida con sus registros). Si hay errores, péguelos directamente en el chat de Bob para depurarlos.
+    </p>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/modernization-summary.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/modernization-summary.png" class="lab-figure__img" alt="Resumen de implementación y modernización visual" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — Resumen de implementación y modernización visual. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+  </section>
+  <section class="lab-section" aria-labelledby="step-3-verify-the-migrated-application">
+    <h2 class="cds--productive-heading-03" id="step-3-verify-the-migrated-application">Paso 3: verificar la aplicación migrada</h2>
+    <p>Abra un navegador y vaya a:</p>
+    <div data-language="text" class="code-block premium-code-block">
+      <pre>
+        <code>http://localhost:9080/simple-pharmacy.war/</code>
+      </pre>
+    </div>
+    <div class="callout" data-tone="note">
+      <p class="callout__title">Si Bob agregó una raíz de contexto explícita</p>
+      <p>
+Si el
+        <code>server.xml</code>
+ generado establece
+        <code>context-root="/simple-pharmacy"</code>
+, use
+        <code>http://localhost:9080/simple-pharmacy/dashboard</code>
+ en su lugar. Cualquiera de los dos es un resultado correcto; simplemente siga lo que informa Bob.
+      </p>
+    </div>
+    <p>Deberías ver el panel de farmacia con datos reales (recetas, pedidos, medicamentos).</p>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/pharmacy-dashboard-liberty.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/pharmacy-dashboard-liberty.png" class="lab-figure__img" alt="Panel de farmacia ejecutándose en Liberty en localhost:9080" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — Panel de farmacia ejecutándose en Liberty en localhost:9080. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+    <p>Navegue a cada página para confirmar que toda la aplicación funciona:</p>
+    <div data-language="text" class="code-block premium-code-block">
+      <pre>
+        <code>http://localhost:9080/simple-pharmacy.war/dashboard</code>
+      </pre>
+    </div>
+    <div data-language="text" class="code-block premium-code-block">
+      <pre>
+        <code>http://localhost:9080/simple-pharmacy.war/prescription-list.action</code>
+      </pre>
+    </div>
+    <div data-language="text" class="code-block premium-code-block">
+      <pre>
+        <code>http://localhost:9080/simple-pharmacy.war/order-list.action</code>
+      </pre>
+    </div>
+    <div data-language="text" class="code-block premium-code-block">
+      <pre>
+        <code>http://localhost:9080/simple-pharmacy.war/medicine-list.action</code>
+      </pre>
+    </div>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/prescription-list-page.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/prescription-list-page.png" class="lab-figure__img" alt="Página de lista de recetas que confirma que la navegación completa de la aplicación funciona" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — Página de lista de recetas que confirma que la navegación completa de la aplicación funciona. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+    <p>Si se procesan todas las páginas, la migración se completa.</p>
+    <div class="callout" data-tone="success">
+      <p class="callout__title">Punto de control: cómo se ve una nueva plataforma terminada</p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">
+          <code>pom.xml</code>
+ tiene el
+          <code>io.openliberty.tools:liberty-maven-plugin</code>
+.
+        </li>
+        <li class="cds--list__item">
+          <code>src/main/liberty/config/server.xml</code>
+ existe, con la aplicación
+          <code>simple-pharmacy.war</code>
+ y las funciones Liberty.
+        </li>
+        <li class="cds--list__item">
+          <code>maven.compiler.source</code>
+/
+          <code>target</code>
+ son
+          <strong>todavía 1.8</strong>
+, y el código aún importa
+          <code>javax.servlet.*</code>
+: el Laboratorio 1 no cambia ni la versión de Java ni el espacio de nombres.
+        </li>
+        <li class="cds--list__item">El panel carga y enumera datos.</li>
+      </ul>
+    </div>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">Detenga el servidor antes de continuar</p>
+      <p>Libere el puerto para que el siguiente laboratorio no esté bloqueado.</p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">
+          <strong>macOS / Linux:</strong>
+ presione
+          <span class="premium-keys">
+            <kbd class="key-control">Ctrl</kbd>
+            <span>+</span>
+            <kbd class="key-c">C</kbd>
+          </span>
+ en el terminal en ejecución Liberty. Si el puerto permanece retenido:
+          <code>lsof -ti:9080 | xargs kill -9</code>
+.
+        </li>
+        <li class="cds--list__item">
+          <strong>Windows (PowerShell):</strong>
+ presione
+          <span class="premium-keys">
+            <kbd class="key-control">Ctrl</kbd>
+            <span>+</span>
+            <kbd class="key-c">C</kbd>
+          </span>
+; si el puerto permanece ocupado, ejecute
+          <code>mvn liberty:stop</code>
+ o
+          <code>netstat -ano | findstr :9080</code>
+ y luego
+          <code>taskkill /PID &lt;pid&gt; /F</code>
+.
+        </li>
+      </ul>
+    </div>
+  </section>
+  <section class="lab-section" aria-labelledby="troubleshooting">
+    <h2 class="cds--productive-heading-03" id="troubleshooting">Solución de problemas</h2>
+    <details class="premium-details">
+      <summary>
+        <code>mvn: command not found</code>
+ después de instalar Maven
+      </summary>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">
+Confirme que Maven esté instalado:
+          <code>mvn --version</code>
+. En macOS/Linux (SDKMAN!) verifique
+          <code>sdk version</code>
+ y reinstale con
+          <code>sdk install maven</code>
+; en Windows reinstale con
+          <code>winget install Apache.Maven</code>
+.
+        </li>
+        <li class="cds--list__item">
+          <strong>Reinicie su IDE/Bob completamente</strong>
+ y abra una nueva terminal para que se recoja el
+          <code>PATH</code>
+ actualizado.
+        </li>
+        <li class="cds--list__item">
+Verifique nuevamente:
+          <code>mvn --version</code>
+.
+        </li>
+      </ol>
+    </details>
+    <details class="premium-details">
+      <summary>La terminal de Bob usa la versión de Java incorrecta</summary>
+      <p>
+        <code>sdk use java &lt;id&gt;</code>
+ solo se aplica al shell en el que se ejecutó: la terminal de Bob es un shell separado. Ejecútelo en la terminal de Bob específicamente:
+      </p>
+      <div data-language="bash" class="code-block premium-code-block">
+        <pre>
+          <code>sdk use java 8.0.492-zulu</code>
+        </pre>
+      </div>
+      <p>O establezca el valor predeterminado global para que cada nuevo shell lo recoja:</p>
+      <div data-language="bash" class="code-block premium-code-block">
+        <pre>
+          <code>sdk default java 8.0.492-zulu</code>
+        </pre>
+      </div>
+    </details>
+    <details class="premium-details">
+      <summary>
+Bob no puede leer archivos de proyecto (
+        <code>I cannot access that file</code>
+ /
+        <code>File not found</code>
+)
+      </summary>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">
+Verifique que abrió la subcarpeta
+          <code>snapA-java-liberty-replatforming</code>
+ como raíz del proyecto:
+          <strong>no</strong>
+ la carpeta principal
+          <code>lab1-*</code>
+.
+        </li>
+        <li class="cds--list__item">
+Verifique los permisos del archivo:
+          <code>ls -la</code>
+.
+        </li>
+        <li class="cds--list__item">Asegúrese de que Bob tenga acceso de lectura al espacio de trabajo.</li>
+        <li class="cds--list__item">
+Intente hacer referencia a archivos con la sintaxis
+          <code>@filename</code>
+.
+        </li>
+      </ol>
+    </details>
+    <details class="premium-details">
+      <summary>
+        <code>Unable to access jarfile</code>
+ al proporcionar la ruta ZIP AMA
+      </summary>
+      <p>El error se parece a:</p>
+      <div data-language="text" class="code-block premium-code-block">
+        <pre>
+          <code>Error: No se puede acceder al archivo jar /Applications/IBM Bob.app/Contents/Resources/app/extensions/bob-code/assets/jars/ta-jam-2.2.1.jar</code>
+        </pre>
+      </div>
+      <p>A Bob le faltan los JAR de herramientas AMA. Se envían con este taller; consíguelos aquí:</p>
+      <p>
+        <a download="jars.zip" href="./downloads/premium/java-modernization-v2/jars.zip" class="cds--btn cds--btn--primary">
+          <span class="premium-button-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M5 20h14v-2H5m14-9h-4V3H9v6H5l7 7z"></path>
+            </svg>
+          </span>
+ JAR de herramientas AMA (51 MB)
+        </a>
+      </p>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">
+Cree una carpeta
+          <code>jars</code>
+ dentro del paquete de aplicaciones Bob en
+          <code>/Applications/IBM Bob.app/Contents/Resources/app/extensions/bob-code/assets</code>
+.
+        </li>
+        <li class="cds--list__item">
+          <p>
+Descomprima
+            <code>jars.zip</code>
+ allí para que la estructura sea:
+          </p>
+          <div data-language="text" class="code-block premium-code-block">
+            <pre>
+              <code>├── frascos/
+│ └── mensaje-lib/
+│ ├── prompt-lib-2.2.0.jar
+│ └── ta-jam-2.2.1.jar</code>
+            </pre>
+          </div>
+        </li>
+        <li class="cds--list__item">
+          <p>Cierra y reinicia Bob.</p>
+        </li>
+      </ol>
+      <div class="callout" data-tone="warning">
+        <p class="callout__title">Ejecute Bob desde /Aplicaciones, no desde /Volúmenes</p>
+        <p>
+Asegúrese de que Bob esté
+          <strong>no</strong>
+ ejecutándose desde
+          <code>/Volumes</code>
+ (un
+          <code>.dmg</code>
+ montado). Mueva la aplicación IBM Bob a
+          <code>/Applications</code>
+ y ejecútela desde allí; de lo contrario, macOS no le permitirá crear carpetas ni colocar archivos
+          <code>.jar</code>
+ dentro del paquete.
+        </p>
+      </div>
+    </details>
+    <details class="premium-details">
+      <summary>
+        <code>SRVE0321E: The [struts2] filter did not load during start up</code>
+      </summary>
+      <p>Es seguro ignorarlo. La aplicación migrada funciona correctamente; esto refleja un efecto secundario de la carga de clases que no afecta el comportamiento en tiempo de ejecución.</p>
+    </details>
+    <details class="premium-details">
+      <summary>
+        <code>CWWKS9660E: The orb element with the defaultOrb id attribute requires a user registry</code>
+      </summary>
+      <p>Es seguro ignorarlo, siempre que la aplicación no utilice componentes EJB basados en ORB, y éste no lo hace.</p>
+    </details>
+    <details class="premium-details">
+      <summary>
+La compilación falla con
+        <code>invalid target release: 21</code>
+ / Bob dice \"Java 21 no está disponible\"
+      </summary>
+      <p>
+El
+        <code>recipeConfig/rewrite.yml</code>
+ del plan de migración enumera las recetas OpenRewrite
+        <strong>Java upgrade</strong>
+ (
+        <code>Java8toJava11</code>
+,
+        <code>UpgradeToJava17</code>
+,
+        <code>UpgradeToJava21</code>
+). Estos pertenecen a
+        <strong>Lab 2</strong>
+: el Laboratorio 1 permanece en
+        <strong>Java 8</strong>
+ con el espacio de nombres
+        <code>javax.*</code>
+. Si se aplican,
+        <code>pom.xml</code>
+ cambia a Java 21 y el compilador de Java 8 no puede apuntar a una versión más reciente.
+      </p>
+      <p>
+Esta es la deriva de la receta
+        <strong>, no falta un JDK</strong>
+: instale
+        <em>not</em>
+ o cambie a Java 21 aquí. Revierta el pom a Java 8:
+      </p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">
+Configure
+          <code>maven.compiler.source</code>
+/
+          <code>target</code>
+ y el complemento del compilador maven
+          <code>&lt;source&gt;</code>
+/
+          <code>&lt;target&gt;</code>
+ todos de nuevo en
+          <code>1.8</code>
+.
+        </li>
+        <li class="cds--list__item">
+Mantenga el espacio de nombres
+          <code>javax.*</code>
+.
+        </li>
+      </ul>
+      <p>O pregúntale a Bob:</p>
+      <div data-language="text" class="code-block premium-code-block">
+        <pre>
+          <code>Este es el Laboratorio 1 (Liberty solo cambio de plataforma). Revertir pom.xml a Java 1.8 (los cuatro marcadores),
+mantenga el espacio de nombres javax.* y elimine cualquier mejora javassist/asm más allá de la solución aprobada
+añadido. NO aplique las recetas de Java 8→11/17/21; ese es el laboratorio 2.</code>
+        </pre>
+      </div>
+      <p>
+Luego reconstruya con
+        <code>mvn clean package</code>
+.
+      </p>
+    </details>
+    <details class="premium-details">
+      <summary>
+La compilación falla con
+        <code>Unsupported class file major version</code>
+      </summary>
+      <p>
+Maven se ejecuta en un JDK posterior a 8. Lab 1 permanece en
+        <strong>Java 8</strong>
+; apunte Maven hacia él.
+      </p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">
+          <strong>macOS / Linux (SDKMAN!):</strong>
+          <code>sdk use java 8.0.492-zulu</code>
+        </li>
+        <li class="cds--list__item">
+          <strong>Windows:</strong>
+ configure
+          <code>JAVA_HOME</code>
+ en su carpeta Temurin 8 y vuelva a abrir la terminal, o ejecute
+          <code>sdk use java 8.0.492-zulu</code>
+ si instaló a través de SDKMAN! en Git Bash/WSL.
+        </li>
+      </ul>
+      <p>Luego reconstruir:</p>
+      <div data-language="bash" class="code-block premium-code-block">
+        <pre>
+          <code>mvn clean package</code>
+        </pre>
+      </div>
+      <p>
+Confirme con
+        <code>mvn --version</code>
+ (imprime la versión de Java que está usando Maven, que puede diferir de la
+        <code>java -version</code>
+ de su shell).
+      </p>
+    </details>
+    <details class="premium-details">
+      <summary>El flujo de trabajo propone un cambio y no estás seguro</summary>
+      <p>
+Siempre que Bob ofrezca
+        <em>"muéstrame las ediciones exactas antes de aplicarlas"</em>
+, tómalo: Bob presenta la diferencia completa para revisarla antes de tocar cualquier archivo. También puedes simplemente hacerle una pregunta de seguimiento en el chat; el flujo de trabajo espera.
+      </p>
+    </details>
+    <details class="premium-details">
+      <summary>
+        <code>Address already in use</code>
+ / el puerto no se liberará después de Ctrl+C
+      </summary>
+      <p>Una ejecución Liberty anterior todavía lo mantiene.</p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">
+          <strong>macOS / Linux:</strong>
+          <code>lsof -ti:9080,9443 | xargs kill -9</code>
+.
+        </li>
+        <li class="cds--list__item">
+          <strong>Windows (PowerShell):</strong>
+          <code>mvn liberty:stop</code>
+. Si el puerto permanece ocupado:
+          <code>netstat -ano | findstr :9080</code>
+, entonces
+          <code>taskkill /PID &lt;pid&gt; /F</code>
+.
+        </li>
+      </ul>
+      <div class="callout" data-tone="danger">
+        <p class="callout__title">No ignores este: hace que cualquier solución posterior parezca fallida</p>
+        <p>
+Si se toma el puerto, su nuevo servidor
+          <strong>nunca lo vincula</strong>
+ y el
+          <em>antiguo</em>
+ sigue respondiendo. Editarás archivos, reconstruirás, reiniciarás y no verás ningún cambio, porque todavía estás hablando con el servidor obsoleto. Cada vez que una solución "no hace nada", verifique si hay un Liberty
+          <strong>primero</strong>
+.
+        </p>
+      </div>
+    </details>
+  </section>
+  <section class="lab-section" aria-labelledby="getting-help-during-the-lab">
+    <h2 class="cds--productive-heading-03" id="getting-help-during-the-lab">Obtén ayuda durante el laboratorio</h2>
+    <ol class="cds--list--ordered">
+      <li class="cds--list__item">
+        <strong>Consulte la sección de solución de problemas anterior</strong>
+: se tratan los problemas más comunes.
+      </li>
+      <li class="cds--list__item">
+        <strong>Pregúntale a Bob</strong>
+: Bob puede explicar errores y sugerir soluciones.
+      </li>
+      <li class="cds--list__item">
+        <strong>Pregúntale a tu instructor</strong>
+; no dudes en levantar la mano.
+      </li>
+      <li class="cds--list__item">
+        <strong>Colaborar</strong>
+: discutir con compañeros de clase.
+      </li>
+    </ol>
+  </section>
+  <section class="lab-section" aria-labelledby="success-criteria">
+    <h2 class="cds--productive-heading-03" id="success-criteria">Criterios de éxito</h2>
+    <p>Ha completado con éxito esta práctica de laboratorio cuando:</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ Java 8 y Maven son instalados y detectados por Bob.
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ Bob está en modo
+        <strong>Agent</strong>
+ y se inicia el flujo de trabajo
+        <strong>Java Modernization</strong>
+.
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ Bob analizó el proyecto y usted seleccionó
+        <strong>Liberty Replatforming</strong>
+ con Git Flow desactivado.
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ Bob consumió el ZIP del plan de migración de AMA y creó una lista de tareas pendientes.
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ Trabajó en el
+        <strong>flujo de aprobación interactivo</strong>
+, aprobando la corrección de javassist y rechazando el falso positivo de OGNL.
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ Bob implementó en Liberty y produjo el
+        <strong>resumen de modernización visual</strong>
+ y el desglose de costos por tarea.
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ El panel se carga en
+        <code>http://localhost:9080/simple-pharmacy.war/</code>
+ y cada página se representa,
+        <strong>aún en Java 1.8</strong>
+ con el espacio de nombres
+        <code>javax.*</code>
+.
+      </li>
+    </ul>
+  </section>
+  <section class="lab-section" aria-labelledby="key-takeaways">
+    <h2 class="cds--productive-heading-03" id="key-takeaways">Conclusiones clave</h2>
+    <ol class="cds--list--ordered">
+      <li class="cds--list__item">
+El flujo de trabajo Java Modernization
+ de
+        <strong>Bob convierte un cambio de plataforma complejo en un flujo trifásico guiado.</strong>
+      </li>
+      <li class="cds--list__item">
+Los
+        <strong>planes de migración de AMA</strong>
+ son la entrada autorizada: Bob consume el ZIP del plan para saber qué cambiar.
+      </li>
+      <li class="cds--list__item">
+        <strong>Aprobación problema por problema</strong>
+: Bob explica y pregunta por cambio en lugar de aplicar un lote, lo que hace que los falsos positivos (como el hallazgo de OGNL) sean algo que usted decide, no algo que limpia después.
+      </li>
+      <li class="cds--list__item">
+        <strong>No todos los hallazgos son un error</strong>
+: rechazar la corrección OGNL es la respuesta
+        <em>correcta</em>
+. Lea el fundamento antes de aprobar.
+      </li>
+      <li class="cds--list__item">
+        <strong>Pinar versiones deliberadamente</strong>
+: cuando Bob proponga una versión de dependencia, compárala con lo que usa el resto de tu proyecto.
+        <code>3.29.2-GA</code>
+ aquí, no lo más nuevo.
+      </li>
+      <li class="cds--list__item">
+        <strong>Reinicie Bob después de los cambios de RUTA</strong>
+: el problema más común. Si acaba de instalar Maven y Bob no puede encontrarlo, reinicie.
+      </li>
+    </ol>
+  </section>
+  <section class="lab-section" aria-labelledby="next">
+    <h2 class="cds--productive-heading-03" id="next">Siguiente</h2>
+    <p>
+      <a href="#/lab/java-modernization-v2/lab2" class="cds--btn cds--btn--primary">
+Lab 2 — Actualización de Java 8 → Java 21
+        <span class="premium-button-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.75.75 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0"></path>
+          </svg>
+        </span>
+      </a>
+    </p>
+  </section>
+</div>

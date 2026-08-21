@@ -5,33 +5,121 @@
       <span class="cds--tag cds--tag--cool-gray">~15 min</span>
       <span class="cds--tag cds--tag--teal">Publicación</span>
     </div>
-    <h1 class="cds--productive-heading-05 lab-banner__title">Mensajes de Ejemplo — Publicación y Automatización</h1>
-    <p class="cds--body-02 lab-banner__summary">Publica eventos de prueba manualmente o mediante automatización con IBM Bob para alimentar el stream de inventario.</p>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Publicar eventos de inventario</h1>
+    <p class="cds--body-02 lab-banner__summary">Publica 20 transacciones de ejemplo al tópico y verifica que ksqlDB las procesa en tiempo real.</p>
   </div>
 
-  <section class="lab-section" aria-labelledby="step-3-publicar-mensajes-de-ejemplo-al-topico">
-    <h2 class="cds--productive-heading-04" id="step-3-publicar-mensajes-de-ejemplo-al-topico">
-      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
-      Paso 3. Publicar mensajes de ejemplo al tópico
-    </h2>
-    <p class="cds--body-01">En este punto ya tenemos creados dos tópicos:</p>
-    <ul class="cds--list--unordered">
-      <li class="cds--list__item"><strong>inventory.transactions</strong>: Incluye todas las transacciones (positivo significa stock adicional, y negativo significa transacción de venta).</li>
-      <li class="cds--list__item"><strong>inventory.availability</strong>: Este es un tópico derivado que creamos en el paso anterior para calcular la disponibilidad automáticamente.</li>
+  <!-- ── Context ────────────────────────────────────────────────── -->
+  <section class="lab-section">
+    <p class="cds--body-01">Ya tienes los dos tópicos creados. <code>inventory.transactions</code> está vacío — necesita mensajes para que ksqlDB empiece a calcular disponibilidad.</p>
+    <ul class="cds--list--unordered" style="margin-top:0.75rem;">
+      <li class="cds--list__item"><strong>inventory.transactions</strong> — canal de entrada (cantidad positiva = stock adicional, negativa = venta).</li>
+      <li class="cds--list__item"><strong>inventory.availability</strong> — calculado automáticamente por ksqlDB.</li>
     </ul>
-    <p class="cds--body-01" style="margin-top: 1rem;">El tópico <code>inventory.transactions</code> existe pero no tiene mensajes. Tenemos que publicar mensajes en el tópico.</p>
   </section>
 
-  <section class="lab-section" style="margin-top: 3rem;">
-    <h3 class="cds--productive-heading-03">Publicar mensajes de manera manual</h3>
-    <p class="cds--body-01">Para crear cada mensaje manualmente sería de esta manera:</p>
-    <ol class="cds--list--ordered">
-      <li class="cds--list__item">Acceder al tópico <code>inventory.transactions</code> desde el menú de la izquierda.</li>
-      <li class="cds--list__item">Hacer click en <strong>Messages</strong>.</li>
-      <li class="cds--list__item">Hacer click en <strong>Produce new message</strong>.</li>
-    </ol>
+  <!-- ── Step 3 ─────────────────────────────────────────────────── -->
+  <section class="lab-section" style="margin-top:2rem;">
+    <div class="step-header">
+      <div class="step-header__meta">
+        <div data-env-panel="platform" class="env-panel--active">
+          <span class="ctx-badge ctx-badge--bob">🤖 Bob (IA)</span>
+        </div>
+        <div data-env-panel="cloud"><span class="ctx-badge ctx-badge--browser">🌐 Confluent Cloud UI</span><span class="ctx-badge ctx-badge--terminal" style="margin-left:0.25rem;">⬛ Terminal</span></div>
+        <span class="ctx-badge ctx-badge--kafka">Kafka Producer</span>
+      </div>
+    </div>
+    <h2 class="cds--productive-heading-04">Step 3. Publicar 20 mensajes de ejemplo</h2>
+    <p class="step-header__why">Los 20 mensajes simulan ventas y reposiciones reales de Voltia, para que los agentes del Lab 2 encuentren datos desde el primer momento.</p>
 
-<pre><code class="language-json"> {
+    <!-- PLATFORM -->
+    <div data-env-panel="platform" class="env-panel--active">
+
+      <div class="callout" data-tone="info" style="margin-bottom:1rem;">
+        <p class="callout__title">¿Qué hace <code>run_in_cluster.sh produce_messages</code> internamente?</p>
+        <p class="cds--body-01" style="margin-top:0.25rem;">Empaqueta <code>produce_messages.py</code> y el <code>.env</code> en un ConfigMap, lanza un Job de Kubernetes en el namespace <code>confluent</code> y el pod produce 20 mensajes al tópico <code>inventory.transactions</code> usando las credenciales SASL del <code>.env</code>. Cada mensaje incluye:</p>
+        <ul class="cds--list--unordered" style="margin-top:0.5rem;">
+          <li class="cds--list__item">Campos <code>sku</code>, <code>branch</code>, <code>quantity</code>, <code>transaction_type</code>, <code>timestamp</code>, <code>source</code> y <code>reference</code> — alineados con el schema Protobuf registrado en Step 1b.</li>
+          <li class="cds--list__item">Variedad de tipos: <code>ADDITION</code>, <code>SALE</code> y <code>ADJUSTMENT</code> — para que ksqlDB calcule disponibilidades reales.</li>
+          <li class="cds--list__item">En cuanto llega el primer mensaje, <code>INVENTORY_AVAILABILITY</code> empieza a actualizar su tabla en tiempo real.</li>
+        </ul>
+      </div>
+
+      <p class="cds--body-01">Pega el siguiente prompt en Bob (en la misma conversación, ya tiene SSH y <code>.env</code> activos):</p>
+
+      <div class="prompt-block" style="margin-top:0.75rem;">
+        <div class="prompt-block__header" style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
+          <span class="prompt-block__label" style="flex:1; min-width:0;">🤖 Prompt para Bob — publicar 20 mensajes al tópico</span>
+          <button
+            style="display:inline-flex; align-items:center; gap:0.4rem; padding:0.4rem 1rem; background:#0f62fe; color:#fff; border:none; border-radius:4px; font-size:0.8125rem; font-weight:600; cursor:pointer; white-space:nowrap; transition:background 0.15s;"
+            onmouseover="this.style.background='#0353e9'"
+            onmouseout="this.style.background='#0f62fe'"
+            onclick="(function(btn){const body=btn.closest('.prompt-block').querySelector('.prompt-block__body');navigator.clipboard.writeText(body.innerText).then(function(){btn.innerHTML='<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;currentColor&quot; width=&quot;14&quot; height=&quot;14&quot;><path d=&quot;M6.5 11.5 3 8l1.4-1.4 2.1 2.1 4.6-4.6L12.5 5.5z&quot;/></svg> Copiado';btn.style.background=&apos;#198038&apos;;setTimeout(function(){btn.innerHTML=&apos;<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;currentColor&quot; width=&quot;14&quot; height=&quot;14&quot;><path d=&quot;M13 1H5a2 2 0 0 0-2 2v1H2a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1h1a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm-3 13H2V5h1v7a2 2 0 0 0 2 2h5v1zm4-3H5V3h8v8z&quot;/></svg> Copiar prompt&apos;;btn.style.background=&apos;#0f62fe&apos;},2500)})})(this)">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="14" height="14"><path d="M13 1H5a2 2 0 0 0-2 2v1H2a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1h1a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm-3 13H2V5h1v7a2 2 0 0 0 2 2h5v1zm4-3H5V3h8v8z"/></svg>
+            Copiar prompt
+          </button>
+        </div>
+        <div class="prompt-block__body">Bob, ya tienes el SSH activo y el .env configurado. Necesito que ejecutes el Step 3 del Lab de inventario.
+
+Desde la VM, en la carpeta '~/inventory-pipeline', ejecuta:
+
+bash run_in_cluster.sh produce_messages
+
+Este script produce 20 mensajes de transacciones de inventario al tópico 'inventory.transactions'. Los mensajes incluyen SKUs de productos Voltia con operaciones de tipo ADDITION, SALE y ADJUSTMENT, usando las credenciales SASL del .env.
+
+En cuanto se publiquen, ksqlDB comenzará a calcular automáticamente la disponibilidad en la tabla INVENTORY_AVAILABILITY.
+
+Dime el output completo del comando. El resultado exitoso debe terminar con:
+- "Delivered: 20/20 (failed: 0)"
+- "OK: produce_messages"</div>
+      </div>
+
+      <div class="callout" data-tone="success" style="margin-top:1.25rem;">
+        <p class="callout__title">✓ Checkpoint</p>
+        <ul class="checklist">
+          <li class="checklist__item">Bob reporta <code>Delivered: 20/20 (failed: 0)</code>.</li>
+          <li class="checklist__item">Línea final del script: <code>OK: produce_messages</code></li>
+        </ul>
+      </div>
+
+      <!-- imagen flujo inventory.transactions → ksqlDB → inventory.availability -->
+      <div style="margin-top:1.5rem;">
+        <p class="cds--body-01" style="font-size:0.8125rem; color:var(--cds-text-secondary,#525252); margin-bottom:0.5rem;">Flujo completo — los mensajes publicados en <code>inventory.transactions</code> son procesados por ksqlDB y el resultado llega a <code>inventory.availability</code> en tiempo real:</p>
+        <img src="./assets/images/labs/agentic-retail-confluent/ksqldbFlowTopics.png"
+             alt="Diagrama del flujo en Confluent Platform: inventory.transactions → ksqlDB INVENTORY_AVAILABILITY → inventory.availability"
+             data-placeholder-path="./assets/images/labs/agentic-retail-confluent/ksqldbFlowTopics.png"
+             class="lab-hero-image__img" style="margin:0; border-radius:4px;" />
+      </div>
+
+      <div class="lab-accordion" style="margin-top:1.25rem;">
+        <button class="lab-accordion__trigger" aria-expanded="false" aria-controls="acc-verify-ksql">
+          Verificar disponibilidad calculada desde ksqlDB (opcional)
+          <svg class="lab-accordion__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="16" height="16"><path d="M8 11L2 5h12z"/></svg>
+        </button>
+        <div class="lab-accordion__panel" id="acc-verify-ksql" hidden>
+          <p class="cds--body-01">Consulta la tabla de disponibilidad directamente desde el endpoint externo de ksqlDB:</p>
+<pre><code class="language-bash">curl -sk -u admin:&lt;KSQLDB_PASSWORD&gt; \
+  https://&lt;VM_IP&gt;/ksqldb/query \
+  -H "Content-Type: application/vnd.ksql.v1+json" \
+  -d '{"ksql":"SELECT * FROM INVENTORY_AVAILABILITY LIMIT 5;","streamsProperties":{}}'</code></pre>
+          <p class="cds--body-01" style="margin-top:0.5rem;">Deberías ver 5 filas con <code>sku</code>, <code>branch</code> y <code>available_quantity</code>.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CLOUD -->
+    <div data-env-panel="cloud">
+      <h3 class="cds--productive-heading-03">Opción A — Script desde terminal</h3>
+      <p class="cds--body-01">Asegúrate de tener el <code>.env</code> configurado con las credenciales del cluster, luego:</p>
+<pre><code class="language-bash">cd Labs-tech-summit/Lab1/inventory-pipeline
+./setup.sh -s 3</code></pre>
+
+      <h3 class="cds--productive-heading-03" style="margin-top:1.5rem;">Opción B — Publicar un mensaje manual (verificación)</h3>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">Accede al tópico <code>inventory.transactions</code> → <strong>Messages</strong> → <strong>Produce new message</strong>.</li>
+        <li class="cds--list__item">Pega el siguiente JSON como valor:</li>
+      </ol>
+<pre><code class="language-json">{
   "sku": "LAPTOP-DELL-XPS-15",
   "branch": "Dot Shopping",
   "quantity": 50,
@@ -40,34 +128,184 @@
   "source": "inventory_manager",
   "reference": "PO-2025-001"
 }</code></pre>
+
+      <div class="callout" data-tone="success" style="margin-top:1.25rem;">
+        <p class="callout__title">✓ Checkpoint</p>
+        <ul class="checklist">
+          <li class="checklist__item">Los mensajes aparecen en la pestaña <strong>Messages</strong> del tópico <code>inventory.transactions</code>.</li>
+          <li class="checklist__item">La tabla <code>INVENTORY_AVAILABILITY</code> en ksqlDB muestra filas con disponibilidad calculada.</li>
+        </ul>
+      </div>
+    </div>
   </section>
 
-  <section class="lab-section" style="margin-top: 3rem;">
-    <h3 class="cds--productive-heading-03">Automatizar con IBM Bob</h3>
-    <p class="cds--body-01">Pero como queremos crear 20 mensajes de ejemplo, vamos a utilizar un script de Python ejecutado en la terminal.</p>
-    <ol class="cds--list--ordered">
-      <li class="cds--list__item">Abre una terminal integrada en tu IDE (si estás en Windows, asegúrate de que sea <strong>Git Bash</strong> y no PowerShell).</li>
-      <li class="cds--list__item">Navega a la carpeta de este laboratorio:</li>
-    </ol>
-<pre><code class="language-bash">cd Labs-tech-summit/Lab1/inventory-pipeline</code></pre>
+  <!-- ── Step 4a: Bob — 5 test events ─────────────────────────── -->
+  <section class="lab-section" style="margin-top:3rem;">
+    <div class="step-header">
+      <div class="step-header__meta">
+        <div data-env-panel="platform" class="env-panel--active">
+          <span class="ctx-badge ctx-badge--bob">🤖 Bob (IA)</span>
+        </div>
+        <div data-env-panel="cloud"><span class="ctx-badge ctx-badge--terminal">⬛ Terminal</span></div>
+        <span class="ctx-badge ctx-badge--kafka">Kafka Producer</span>
+      </div>
+    </div>
+    <h2 class="cds--productive-heading-04">Step 4a. Emitir 5 eventos de prueba adicionales</h2>
+    <p class="step-header__why">Con los 5 eventos de prueba podrás ver en tiempo real cómo el tópico <code>inventory.availability</code> recalcula disponibilidad para cada SKU/sucursal en cuanto llegan los mensajes — sin esperar a que el pipeline principal esté estabilizado.</p>
 
-    <ol class="cds--list--ordered" start="3">
-      <li class="cds--list__item">Ejecuta el script de configuración para inyectar los datos:</li>
-    </ol>
-<pre><code class="language-bash">./setup.sh -s 3</code></pre>
+    <div data-env-panel="platform" class="env-panel--active">
 
-    <ol class="cds--list--ordered" start="4">
-      <li class="cds--list__item">Verifica la creación desde la UI de Confluent: Accede al tópico <code>inventory.transactions</code> y haz click en <strong>Messages</strong>.</li>
+      <p class="cds--body-01">Pega el siguiente prompt en Bob (en la misma conversación, ya tiene SSH y <code>.env</code> activos):</p>
+
+      <div class="prompt-block" style="margin-top:0.75rem;">
+        <div class="prompt-block__header" style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
+          <span class="prompt-block__label" style="flex:1; min-width:0;">🤖 Prompt para Bob — emitir 5 eventos de prueba variados</span>
+          <button
+            style="display:inline-flex; align-items:center; gap:0.4rem; padding:0.4rem 1rem; background:#0f62fe; color:#fff; border:none; border-radius:4px; font-size:0.8125rem; font-weight:600; cursor:pointer; white-space:nowrap; transition:background 0.15s;"
+            onmouseover="this.style.background='#0353e9'"
+            onmouseout="this.style.background='#0f62fe'"
+            onclick="(function(btn){const body=btn.closest('.prompt-block').querySelector('.prompt-block__body');navigator.clipboard.writeText(body.innerText).then(function(){btn.innerHTML='<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;currentColor&quot; width=&quot;14&quot; height=&quot;14&quot;><path d=&quot;M6.5 11.5 3 8l1.4-1.4 2.1 2.1 4.6-4.6L12.5 5.5z&quot;/></svg> Copiado';btn.style.background=&apos;#198038&apos;;setTimeout(function(){btn.innerHTML=&apos;<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;currentColor&quot; width=&quot;14&quot; height=&quot;14&quot;><path d=&quot;M13 1H5a2 2 0 0 0-2 2v1H2a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1h1a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm-3 13H2V5h1v7a2 2 0 0 0 2 2h5v1zm4-3H5V3h8v8z&quot;/></svg> Copiar prompt&apos;;btn.style.background=&apos;#0f62fe&apos;},2500)})})(this)">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="14" height="14"><path d="M13 1H5a2 2 0 0 0-2 2v1H2a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1h1a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm-3 13H2V5h1v7a2 2 0 0 0 2 2h5v1zm4-3H5V3h8v8z"/></svg>
+            Copiar prompt
+          </button>
+        </div>
+        <div class="prompt-block__body">Bob, inicia la publicación de 5 eventos de prueba adicionales al tópico 'inventory.transactions'.
+
+Usa las credenciales SASL del .env ya configurado. Genera los mensajes variando:
+- 'transaction_type': incluye al menos un ADDITION, un SALE y un ADJUSTMENT.
+- 'quantity': usa valores positivos para ADDITION y negativos para SALE.
+- 'sku': usa al menos 2 SKUs distintos de Voltia (ej. LAPTOP-DELL-XPS-15, MOUSE-LOGITECH-MX3).
+- 'branch': usa al menos 2 sucursales distintas (ej. "Dot Shopping", "Centro Cívico").
+
+Publica directamente vía la API de Kafka usando las variables BOOTSTRAP_SERVERS y KAFKA_SASL_* del .env.
+
+Indícame cuando termines de emitir los 5 mensajes e infórmame los offsets generados en el tópico.</div>
+      </div>
+
+      <div class="callout" data-tone="success" style="margin-top:1.25rem;">
+        <p class="callout__title">✓ Checkpoint 4a</p>
+        <ul class="checklist">
+          <li class="checklist__item">Bob confirma la entrega de los 5 mensajes con sus offsets.</li>
+          <li class="checklist__item">Los tipos <code>ADDITION</code>, <code>SALE</code> y <code>ADJUSTMENT</code> están presentes en los eventos emitidos.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div data-env-panel="cloud">
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">Accede al tópico <code>inventory.transactions</code> → <strong>Messages</strong> → <strong>Produce new message</strong>.</li>
+        <li class="cds--list__item">Publica 5 mensajes variando <code>transaction_type</code> (<code>ADDITION</code>, <code>SALE</code>, <code>ADJUSTMENT</code>) y <code>quantity</code> (positivo para adición, negativo para venta).</li>
+        <li class="cds--list__item">Usa al menos 2 <code>sku</code> y 2 <code>branch</code> distintos por mensaje.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ── Step 4b: UI Inspection ────────────────────────────────── -->
+  <section class="lab-section" style="margin-top:3rem;">
+    <div class="step-header">
+      <div class="step-header__meta">
+        <span class="ctx-badge ctx-badge--browser">🌐 Confluent Web UI</span>
+        <span class="ctx-badge ctx-badge--kafka">Visor de mensajes</span>
+      </div>
+    </div>
+    <h2 class="cds--productive-heading-04">Step 4b. Inspeccionar payloads, timestamps y offsets en la consola web</h2>
+    <p class="step-header__why">Verificar visualmente los mensajes en la plataforma web confirma que el pipeline completo funciona: el productor emitió correctamente, Kafka almacenó respetando el schema y ksqlDB procesó los datos hacia <code>inventory.availability</code>.</p>
+
+    <ol class="cds--list--ordered" style="margin-top:0.75rem;">
+      <li class="cds--list__item">
+        <span class="ctx-badge ctx-badge--browser" style="margin-right:0.5rem;">🌐 Entorno</span>
+        En la consola web, navega al tópico <code>inventory.transactions</code> y haz clic en la pestaña <strong>Messages</strong> o <strong>Live Tail</strong>.
+      </li>
+      <li class="cds--list__item">Configura el visor para leer desde el inicio: selecciona <strong>From Beginning</strong> / <strong>Earliest</strong> en el selector de offset.</li>
+      <li class="cds--list__item">Haz clic en cualquiera de los mensajes para abrir el panel de detalle y verifica:
+        <ul class="cds--list--unordered" style="margin-top:0.5rem;">
+          <li class="cds--list__item"><strong>Offset y Partición</strong> — confirma en cuál de las particiones se almacenó el evento (debe ser partición 0 con 1 sola partición).</li>
+          <li class="cds--list__item"><strong>Timestamp</strong> — fecha y hora exacta de emisión registrada por el broker.</li>
+          <li class="cds--list__item"><strong>Payload (cuerpo)</strong> — comprueba que el JSON incluye los campos: <code>sku</code>, <code>branch</code>, <code>quantity</code>, <code>transaction_type</code>, <code>timestamp</code>, <code>source</code> y <code>reference</code>.</li>
+        </ul>
+      </li>
+      <li class="cds--list__item">Navega al tópico <code>inventory.availability</code> y verifica que ksqlDB ya calculó filas con <code>available_quantity</code> actualizada para cada SKU/sucursal de los eventos emitidos.</li>
     </ol>
 
-    <div class="callout" data-tone="success" style="margin-top: 2rem;">
-      <p class="callout__title">Criterios de Éxito</p>
-      <ul class="cds--list--unordered">
-        <li class="cds--list__item">El tópico <code>inventory.transactions</code> existe con <strong>Partitions = 1</strong> y <strong>Retention Time = infinite</strong>.</li>
-        <li class="cds--list__item">El stream <code>inventory_transactions</code> y la tabla <code>inventory_availability</code> están creados y corriendo en ksqlDB.</li>
-        <li class="cds--list__item">El tópico derivado <code>inventory.availability</code> se llena automáticamente al llegar transacciones.</li>
-        <li class="cds--list__item">Hay 20 mensajes de ejemplo publicados en <code>inventory.transactions</code> (visibles desde Messages en la UI).</li>
+    <img src="./assets/images/labs/agentic-retail-confluent/messagesLivePanel.png"
+         alt="Panel de mensajes en vivo mostrando la lista de eventos en inventory.transactions con timestamps y offsets visibles"
+         data-placeholder-path="./assets/images/labs/agentic-retail-confluent/messagesLivePanel.png"
+         class="lab-hero-image__img" style="margin:1rem 0; border-radius:4px;" />
+
+    <img src="./assets/images/labs/agentic-retail-confluent/messagePayloadDetail.png"
+         alt="Modal de detalle de un mensaje con JSON del payload desplegado mostrando sku, branch, quantity, transaction_type"
+         data-placeholder-path="./assets/images/labs/agentic-retail-confluent/messagePayloadDetail.png"
+         class="lab-hero-image__img" style="margin:1rem 0; border-radius:4px;" />
+
+    <div class="callout" data-tone="success" style="margin-top:1.25rem;">
+      <p class="callout__title">✓ Checkpoint 4b (Final)</p>
+      <ul class="checklist">
+        <li class="checklist__item">Se visualizan los mensajes en la pestaña <strong>Messages</strong> con sus <strong>timestamps</strong> y <strong>offsets</strong> correctos.</li>
+        <li class="checklist__item">El JSON del payload coincide con la estructura del schema Protobuf registrado en Step 1b (campos <code>sku</code>, <code>branch</code>, <code>quantity</code>, <code>transaction_type</code>, <code>timestamp</code>, <code>source</code>, <code>reference</code>).</li>
+        <li class="checklist__item">El tópico <code>inventory.availability</code> muestra disponibilidad calculada por SKU y sucursal con <code>available_quantity</code> actualizada.</li>
+        <li class="checklist__item">El subject <code>inventory.transactions-value</code> en Schema Registry sigue mostrando versión <strong>v1</strong> sin errores de validación.</li>
       </ul>
     </div>
+  </section>
+
+  <!-- ── Success summary ───────────────────────────────────────── -->
+  <section class="lab-section" style="margin-top:3rem;">
+    <div class="callout" data-tone="success">
+      <p class="callout__title">Lab 1 completo — Criterios de éxito</p>
+      <ul class="checklist">
+        <li class="checklist__item">Tópico <code>inventory.transactions</code> — 1 partición, retention infinita.</li>
+        <li class="checklist__item">Stream <code>INVENTORY_TRANSACTIONS</code> y tabla <code>INVENTORY_AVAILABILITY</code> creados en ksqlDB.</li>
+        <li class="checklist__item">Schema <code>InventoryTransaction</code> registrado en Schema Registry con versión <strong>v1</strong>.</li>
+        <li class="checklist__item">Tópico <code>inventory.availability</code> se actualiza automáticamente con cada transacción.</li>
+        <li class="checklist__item">20 mensajes publicados en <code>inventory.transactions</code> y visibles en la consola web.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── Troubleshooting ────────────────────────────────────────── -->
+  <section class="lab-section" style="margin-top:3rem;">
+    <h2 class="cds--productive-heading-03">Troubleshooting — Errores frecuentes</h2>
+    <p class="cds--body-01" style="font-size:0.8125rem; color:var(--cds-text-secondary,#525252); margin-bottom:1rem;">Referencia rápida para resolver los problemas más comunes durante el workshop.</p>
+    <table style="width:100%; border-collapse:collapse; font-size:0.875rem; line-height:1.6;">
+      <thead>
+        <tr style="background:var(--cds-layer-02,#f4f4f4); border-bottom:2px solid var(--cds-border-subtle,#e0e0e0);">
+          <th style="text-align:left; padding:0.75rem 1rem; font-weight:600; color:var(--cds-text-primary,#161616);">Síntoma / Error</th>
+          <th style="text-align:left; padding:0.75rem 1rem; font-weight:600; color:var(--cds-text-primary,#161616);">Causa probable</th>
+          <th style="text-align:left; padding:0.75rem 1rem; font-weight:600; color:var(--cds-text-primary,#161616);">Solución inmediata</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--cds-border-subtle,#e0e0e0);">
+          <td style="padding:0.875rem 1rem; vertical-align:top;"><code>Permissions 0644 for .pem are too open</code></td>
+          <td style="padding:0.875rem 1rem; vertical-align:top;">Permisos incorrectos en la llave SSH.</td>
+          <td style="padding:0.875rem 1rem; vertical-align:top;">Ejecuta <code>chmod 600 cflt-vsi-key.pem</code> o indícaselo a Bob.</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--cds-border-subtle,#e0e0e0); background:var(--cds-layer-01,#f9f9f9);">
+          <td style="padding:0.875rem 1rem; vertical-align:top;"><code>Connection timed out</code> <span style="display:inline-block; margin-left:0.2rem;">al puerto SSH (22)</span></td>
+          <td style="padding:0.875rem 1rem; vertical-align:top;">IP incorrecta o Security Group / Firewall bloqueado.</td>
+          <td style="padding:0.875rem 1rem; vertical-align:top;">Verifica la IP pública activa en la consola de IBM Cloud y que el puerto 22 esté habilitado en el Security Group.</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--cds-border-subtle,#e0e0e0);">
+          <td style="padding:0.875rem 1rem; vertical-align:top;"><code>Schema validation failed</code> <span style="display:inline-block; margin-left:0.2rem;">al publicar mensajes</span></td>
+          <td style="padding:0.875rem 1rem; vertical-align:top;">El JSON del evento no coincide con los tipos definidos en el Schema.</td>
+          <td style="padding:0.875rem 1rem; vertical-align:top;">Asegúrate de que <code>quantity</code> sea entero (no string) y que <code>transaction_type</code> sea uno de: <code>ADDITION</code>, <code>SALE</code>, <code>ADJUSTMENT</code>.</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--cds-border-subtle,#e0e0e0); background:var(--cds-layer-01,#f9f9f9);">
+          <td style="padding:0.875rem 1rem; vertical-align:top;"><code>Topic already exists</code></td>
+          <td style="padding:0.875rem 1rem; vertical-align:top;">El tópico ya fue creado en un intento previo.</td>
+          <td style="padding:0.875rem 1rem; vertical-align:top;">El script lo detecta y lo omite sin error. Si deseas empezar de cero ejecuta <code>./setup.sh -c</code> para limpiar el entorno.</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--cds-border-subtle,#e0e0e0); background:var(--cds-layer-01,#f9f9f9);">
+          <td style="padding:0.875rem 1rem; vertical-align:top;"><code>No se ven mensajes en el Web UI</code></td>
+          <td style="padding:0.875rem 1rem; vertical-align:top;">El filtro de mensajes está en <em>Offset Actual</em> en lugar de <em>Inicio</em>.</td>
+          <td style="padding:0.875rem 1rem; vertical-align:top;">Cambia el selector de visualización a <strong>From Beginning / Earliest</strong> en la pestaña Messages del tópico.</td>
+        </tr>
+        <tr>
+          <td style="padding:0.875rem 1rem; vertical-align:top;"><code>Schema validation failed</code> <span style="display:inline-block; margin-left:0.2rem;">en Schema Registry</span></td>
+          <td style="padding:0.875rem 1rem; vertical-align:top;">El payload JSON no respeta los tipos Protobuf: un campo numérico (<code>quantity</code>) llega como <em>string</em>, o falta un campo requerido.</td>
+          <td style="padding:0.875rem 1rem; vertical-align:top;">Verifica que <code>quantity</code> sea entero (no <code>"50"</code> sino <code>50</code>), que <code>transaction_type</code> sea uno de <code>ADDITION</code>, <code>SALE</code>, <code>ADJUSTMENT</code> y que todos los campos del schema estén presentes. Consulta el subject registrado con: <code>curl -sk -u admin:[PASSWORD] https://[IP]/sr/subjects/inventory.transactions-value/versions/latest</code></td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 </div>

@@ -3,55 +3,50 @@
     <div class="lab-banner__tags">
       <span class="cds--tag cds--tag--purple">Streaming derivado</span>
       <span class="cds--tag cds--tag--cool-gray">~15 min</span>
-      <span class="cds--tag cds--tag--teal">ksqlDB</span>
+      <span class="cds--tag cds--tag--teal">ksqlDB · Flink</span>
     </div>
-    <h1 class="cds--productive-heading-05 lab-banner__title">Tópico derivado con ksqlDB</h1>
-    <p class="cds--body-02 lab-banner__summary">Calcula disponibilidad por SKU y sucursal a partir de las transacciones de inventario.</p>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Lógica de streaming con ksqlDB</h1>
+    <p class="cds--body-02 lab-banner__summary">Entiende cómo Bob implementó el stream y la tabla de disponibilidad, y verifica los resultados en Confluent Platform.</p>
   </div>
 
-  <section class="lab-section" aria-labelledby="step-2-crear-un-topico-derivado-en-confluent-kaf">
-    <h2 class="cds--productive-heading-04" id="step-2-crear-un-topico-derivado-en-confluent-kaf">
-      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
-      Crear el tópico derivado inventory.availability
-    </h2>
-    <p class="cds--body-01">Vas a crear un tópico derivado llamado <code>inventory.availability</code> que calcula cuántas unidades de cada producto hay en cada sucursal, procesando las transacciones del tópico anterior.</p>
-    <p class="cds--body-01">Un cluster de ksqlDB lee tópicos de Kafka, hace cálculos y escribe resultados en otros tópicos con SQL.</p>
+  <!-- ── Contexto ──────────────────────────────────────────────── -->
+  <section class="lab-section">
+    <p class="cds--body-01">En el Lab anterior Bob ejecutó <code>setup.sh -s 2</code> y creó toda la infraestructura de streaming. Este lab explica <strong>qué construyó exactamente</strong> — el SQL que corre dentro de ksqlDB — y te muestra cómo verificarlo visualmente en Confluent Platform.</p>
 
-    <ol class="cds--list--ordered">
-      <li class="cds--list__item">Haz clic en <strong>ksqlDB</strong> en el menú izquierdo.</li>
-      <li class="cds--list__item">Haz clic en el cluster <strong>ksqlDB</strong> que está corriendo.</li>
-      <li class="cds--list__item">Haz clic en la pestaña <strong>Streams</strong> y <strong>Create in Editor</strong>.</li>
-      <li class="cds--list__item">Copia y pega el siguiente código en el editor:</li>
-    </ol>
-
-    <div class="code-block code-block--prompt">
-      <button type="button" class="copy-button">Copiar</button>
-      <pre><code>CREATE STREAM inventory_transactions (
-     sku VARCHAR,
-     branch VARCHAR,
-     quantity INT
- ) WITH (
-     KAFKA_TOPIC='inventory.transactions',
-     KEY_FORMAT='KAFKA',
-     VALUE_FORMAT='JSON'
- );</code></pre>
+    <div class="callout" data-tone="info" style="margin-top:1rem;">
+      <p class="callout__title">Resumen de lo que ya tienes</p>
+      <ul class="cds--list--unordered" style="margin-top:0.5rem;">
+        <li class="cds--list__item">Stream <code>INVENTORY_TRANSACTIONS</code> — lee el tópico fuente y expone sus mensajes como filas SQL.</li>
+        <li class="cds--list__item">Tabla <code>INVENTORY_AVAILABILITY</code> — agrega disponibilidad por SKU y sucursal en tiempo real, escribiendo el resultado en <code>inventory.availability</code>.</li>
+        <li class="cds--list__item">Schema <code>inventory.availability-value</code> registrado en Schema Registry.</li>
+      </ul>
     </div>
+  </section>
 
-    <ol class="cds--list--ordered" start="5">
-      <li class="cds--list__item">Haz clic en <strong>Run Query</strong>.</li>
-      <li class="cds--list__item">Crea la tabla <code>inventory_availability</code> agrupando por SKU y sucursal, y luego <strong>Run Query</strong>. Esto:
-        <ul class="cds--list--unordered" style="margin-top: 0.5rem;">
-          <li class="cds--list__item">Agrupa las transacciones por SKU y sucursal.</li>
-          <li class="cds--list__item">Suma cantidades (positivas = ingreso, negativas = venta).</li>
-          <li class="cds--list__item">Escribe el resultado en <code>inventory.availability</code>.</li>
-          <li class="cds--list__item">Se actualiza cuando llegan transacciones nuevas.</li>
-        </ul>
-      </li>
-    </ol>
+  <!-- ── SQL que Bob ejecutó ───────────────────────────────────── -->
+  <section class="lab-section" style="margin-top:2.5rem;">
+    <div class="step-header">
+      <div class="step-header__meta">
+        <span class="ctx-badge ctx-badge--browser">🌐 Confluent Platform</span>
+        <span class="ctx-badge ctx-badge--kafka">ksqlDB</span>
+      </div>
+    </div>
+    <h2 class="cds--productive-heading-04">El SQL que implementó Bob</h2>
+    <p class="step-header__why">Entender el SQL permite verificar que la lógica es correcta y ajustarla en proyectos reales.</p>
 
-    <div class="code-block code-block--prompt">
-      <button type="button" class="copy-button">Copiar</button>
-      <pre><code>CREATE TABLE inventory_availability WITH (
+    <p class="cds--body-01" style="margin-bottom:0.5rem;"><strong>Paso 1 — Stream de entrada:</strong> envuelve el tópico <code>inventory.transactions</code> como una vista SQL.</p>
+<pre><code class="language-sql">CREATE STREAM IF NOT EXISTS inventory_transactions (
+  sku VARCHAR,
+  branch VARCHAR,
+  quantity INT
+) WITH (
+  KAFKA_TOPIC='inventory.transactions',
+  KEY_FORMAT='KAFKA',
+  VALUE_FORMAT='JSON'
+);</code></pre>
+
+    <p class="cds--body-01" style="margin:1rem 0 0.5rem;"><strong>Paso 2 — Tabla derivada:</strong> agrega disponibilidad sumando la columna <code>quantity</code> agrupada por SKU y sucursal. El resultado se escribe continuamente en <code>inventory.availability</code>.</p>
+<pre><code class="language-sql">CREATE TABLE IF NOT EXISTS inventory_availability WITH (
   KAFKA_TOPIC='inventory.availability',
   KEY_FORMAT='JSON',
   VALUE_FORMAT='JSON',
@@ -64,6 +59,147 @@ SELECT
 FROM inventory_transactions
 GROUP BY sku, branch
 EMIT CHANGES;</code></pre>
+
+    <div class="callout" data-tone="tip" style="margin-top:1rem;">
+      <p class="callout__title">¿Por qué <code>EMIT CHANGES</code>?</p>
+      <p class="cds--body-01" style="margin-top:0.25rem;">Le indica a ksqlDB que el resultado es un <strong>streaming continuo</strong> — cada nueva transacción recalcula y publica el stock actualizado de ese SKU/sucursal. Sin <code>EMIT CHANGES</code> sería una consulta de una sola vez.</p>
+    </div>
+  </section>
+
+  <!-- ── Verificación visual en Confluent Platform ─────────────── -->
+  <section class="lab-section" style="margin-top:2.5rem;">
+    <div class="step-header">
+      <div class="step-header__meta">
+        <span class="ctx-badge ctx-badge--browser">🌐 Confluent Platform</span>
+        <span class="ctx-badge ctx-badge--kafka">ksqlDB</span>
+      </div>
+    </div>
+    <h2 class="cds--productive-heading-04">Verificar el stream y la tabla en la UI</h2>
+    <p class="step-header__why">Ver el stream y la tabla en la interfaz confirma que ksqlDB los registró correctamente y están procesando mensajes.</p>
+
+    <ol class="cds--list--ordered" style="margin-top:0.75rem;">
+      <li class="cds--list__item">En el menú lateral de Confluent Control Center, haz clic en <strong>ksqlDB</strong>.</li>
+      <li class="cds--list__item">Selecciona el cluster activo.</li>
+      <li class="cds--list__item">Ve a la pestaña <strong>Streams</strong> — verás <code>INVENTORY_TRANSACTIONS</code> con status <strong>Running</strong>.</li>
+      <li class="cds--list__item">Ve a la pestaña <strong>Tables</strong> — verás <code>INVENTORY_AVAILABILITY</code> con status <strong>Running</strong>.</li>
+    </ol>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin:1.25rem 0;">
+      <img src="./assets/images/labs/agentic-retail-confluent/ksqldbStreamsView.png"
+           alt="Pestaña Streams en ksqlDB de Confluent Platform mostrando INVENTORY_TRANSACTIONS en estado Running"
+           data-placeholder-path="./assets/images/labs/agentic-retail-confluent/ksqldbStreamsView.png"
+           class="lab-hero-image__img" style="width:100%; margin:0; border-radius:4px;" />
+      <img src="./assets/images/labs/agentic-retail-confluent/ksqldbTableView.png"
+           alt="Pestaña Tables en ksqlDB de Confluent Platform mostrando INVENTORY_AVAILABILITY en estado Running"
+           data-placeholder-path="./assets/images/labs/agentic-retail-confluent/ksqldbTableView.png"
+           class="lab-hero-image__img" style="width:100%; margin:0; border-radius:4px;" />
+    </div>
+
+    <div class="callout" data-tone="success" style="margin-top:1.25rem;">
+      <p class="callout__title">✓ Checkpoint visual</p>
+      <ul class="checklist">
+        <li class="checklist__item">Stream <code>INVENTORY_TRANSACTIONS</code> visible en la pestaña Streams con status <strong>Running</strong>.</li>
+        <li class="checklist__item">Tabla <code>INVENTORY_AVAILABILITY</code> visible en la pestaña Tables con status <strong>Running</strong>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── Prompt Bob — lógica Flink ─────────────────────────────── -->
+  <section class="lab-section" style="margin-top:2.5rem;">
+    <div class="step-header">
+      <div class="step-header__meta">
+        <span class="ctx-badge ctx-badge--bob">🤖 Bob (IA)</span>
+        <span class="ctx-badge ctx-badge--kafka">Flink · ksqlDB</span>
+      </div>
+    </div>
+    <h2 class="cds--productive-heading-04">Implementar la lógica en Flink con Bob</h2>
+    <p class="step-header__why">ksqlDB es ideal para agregaciones simples en tiempo real. Flink permite lógica más avanzada — ventanas de tiempo, joins entre streams y detección de anomalías — sobre los mismos tópicos Kafka.</p>
+
+    <div class="callout" data-tone="warning" style="margin-bottom:1rem;">
+      <p class="callout__title">
+        <span class="ctx-badge ctx-badge--config" style="margin-right:0.5rem;">⚙ Config</span>
+        Reemplaza estos valores antes de copiar
+      </p>
+      <ul class="cds--list--unordered" style="margin-top:0.5rem;">
+        <li class="cds--list__item"><code>[IP_PUBLICA_VM]</code> — IP pública de tu VM en TechZone.</li>
+        <li class="cds--list__item"><code>[PASSWORD_ADMIN]</code> — contraseña del usuario <code>admin</code>.</li>
+        <li class="cds--list__item"><code>[PASSWORD_KAFKA_ADMIN]</code> — contraseña del usuario <code>kafka-admin</code>.</li>
+      </ul>
+    </div>
+
+    <p class="cds--body-01">Pega el siguiente prompt en Bob (en la misma conversación donde configuraste el entorno):</p>
+
+    <div class="prompt-block" style="margin-top:0.75rem;">
+      <div class="prompt-block__header" style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
+        <span class="prompt-block__label" style="flex:1; min-width:0;">🤖 Prompt para Bob — lógica Flink sobre inventory.transactions</span>
+        <button
+          style="display:inline-flex; align-items:center; gap:0.4rem; padding:0.4rem 1rem; background:#0f62fe; color:#fff; border:none; border-radius:4px; font-size:0.8125rem; font-weight:600; cursor:pointer; white-space:nowrap; transition:background 0.15s;"
+          onmouseover="this.style.background='#0353e9'"
+          onmouseout="this.style.background='#0f62fe'"
+          onclick="(function(btn){const body=btn.closest('.prompt-block').querySelector('.prompt-block__body');navigator.clipboard.writeText(body.innerText).then(function(){btn.innerHTML='<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;currentColor&quot; width=&quot;14&quot; height=&quot;14&quot;><path d=&quot;M6.5 11.5 3 8l1.4-1.4 2.1 2.1 4.6-4.6L12.5 5.5z&quot;/></svg> Copiado';btn.style.background=&apos;#198038&apos;;setTimeout(function(){btn.innerHTML=&apos;<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 16 16&quot; fill=&quot;currentColor&quot; width=&quot;14&quot; height=&quot;14&quot;><path d=&quot;M13 1H5a2 2 0 0 0-2 2v1H2a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1h1a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm-3 13H2V5h1v7a2 2 0 0 0 2 2h5v1zm4-3H5V3h8v8z&quot;/></svg> Copiar prompt&apos;;btn.style.background=&apos;#0f62fe&apos;},2500)})})(this)">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="14" height="14"><path d="M13 1H5a2 2 0 0 0-2 2v1H2a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1h1a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm-3 13H2V5h1v7a2 2 0 0 0 2 2h5v1zm4-3H5V3h8v8z"/></svg>
+          Copiar prompt
+        </button>
+      </div>
+      <div class="prompt-block__body">Bob, continuamos con el workshop de Event Streaming. Hasta ahora hemos:
+
+1. Creado el tópico 'inventory.transactions' (1 partición, retención infinita) con su schema Protobuf registrado en Schema Registry.
+2. Creado el stream INVENTORY_TRANSACTIONS y la tabla INVENTORY_AVAILABILITY en ksqlDB — que agrega disponibilidad por SKU y sucursal en tiempo real.
+3. Registrado el schema 'inventory.availability-value' en Schema Registry.
+
+El entorno Confluent Platform está en:
+- VM: [IP_PUBLICA_VM]
+- Kafka brokers: [IP_PUBLICA_VM]:9094,[IP_PUBLICA_VM]:9095,[IP_PUBLICA_VM]:9096
+- Usuario kafka-admin / contraseña: [PASSWORD_KAFKA_ADMIN]
+- Flink CMF endpoint: https://[IP_PUBLICA_VM]/cmf
+- ksqlDB endpoint: https://[IP_PUBLICA_VM]/ksqldb
+- Usuario admin / contraseña: [PASSWORD_ADMIN]
+
+Ahora necesito que implementes la misma lógica de agregación usando Apache Flink sobre el tópico 'inventory.transactions':
+
+1. Crea un job Flink SQL que:
+   - Lea desde el tópico Kafka 'inventory.transactions' (campos: sku STRING, branch STRING, quantity INT)
+   - Agrupe por sku y branch
+   - Sume la columna quantity como available_quantity
+   - Escriba el resultado en el tópico 'inventory.availability.flink'
+
+2. Usa el Flink Compute Pool disponible en el CMF del ambiente.
+
+3. Muéstrame el SQL Flink completo que vas a ejecutar antes de correrlo, y confírmame cuando el job esté en estado RUNNING.</div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin:1.25rem 0;">
+      <img src="./assets/images/labs/agentic-retail-confluent/flinkJobRunning.png"
+           alt="Job Flink en estado RUNNING en Confluent Platform CMF mostrando el pipeline de inventory.transactions"
+           data-placeholder-path="./assets/images/labs/agentic-retail-confluent/flinkJobRunning.png"
+           class="lab-hero-image__img" style="width:100%; margin:0; border-radius:4px;" />
+      <img src="./assets/images/labs/agentic-retail-confluent/flinkSqlEditor.png"
+           alt="Editor SQL de Flink en Confluent Platform mostrando el query de agregación de disponibilidad"
+           data-placeholder-path="./assets/images/labs/agentic-retail-confluent/flinkSqlEditor.png"
+           class="lab-hero-image__img" style="width:100%; margin:0; border-radius:4px;" />
+    </div>
+
+    <div class="callout" data-tone="success" style="margin-top:1.25rem;">
+      <p class="callout__title">✓ Checkpoint</p>
+      <ul class="checklist">
+        <li class="checklist__item">Bob muestra el SQL Flink antes de ejecutarlo — puedes revisarlo y confirmar.</li>
+        <li class="checklist__item">El job aparece en estado <strong>RUNNING</strong> en el panel de Flink del CMF.</li>
+        <li class="checklist__item">El tópico <code>inventory.availability.flink</code> aparece en la lista de Topics con mensajes entrantes.</li>
+      </ul>
+    </div>
+
+    <div class="lab-accordion" style="margin-top:1rem;">
+      <button class="lab-accordion__trigger" aria-expanded="false" aria-controls="acc-ksql-vs-flink">
+        ¿Cuándo usar ksqlDB y cuándo Flink?
+        <svg class="lab-accordion__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="16" height="16"><path d="M8 11L2 5h12z"/></svg>
+      </button>
+      <div class="lab-accordion__panel" id="acc-ksql-vs-flink" hidden>
+        <ul class="cds--list--unordered">
+          <li class="cds--list__item"><strong>ksqlDB</strong> — ideal para agregaciones simples, filtros y joins sobre streams de Kafka con sintaxis SQL familiar. Perfecto para este lab: calcular stock disponible en tiempo real con pocas líneas.</li>
+          <li class="cds--list__item"><strong>Apache Flink</strong> — recomendado cuando necesitas ventanas de tiempo (tumbling, sliding), joins complejos entre múltiples streams, detección de patrones (CEP) o procesamiento con estado avanzado. Escala mejor en producción con alto throughput.</li>
+          <li class="cds--list__item"><strong>En este workshop</strong> ambos escriben al mismo tópico lógico de disponibilidad — ksqlDB para el pipeline principal, Flink como extensión para mostrar su potencia en escenarios más avanzados.</li>
+        </ul>
+      </div>
     </div>
   </section>
 </div>

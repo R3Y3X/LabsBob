@@ -6,7 +6,7 @@ import { initializeTheme, toggleTheme } from './theme.js';
 // Global audience mode state: 'client' | 'partner'
 let currentMode = 'client';
 
-const HOME_SECTION_IDS = new Set(['available-workshops', 'nosotros', 'acerca-de']);
+const HOME_SECTION_IDS = new Set(['available-workshops', 'nosotros', 'acerca-de', 'section-basic', 'section-integraciones', 'section-premium']);
 
 const homeView = document.querySelector('#home-view');
 const labView = document.querySelector('#lab-view');
@@ -25,7 +25,7 @@ function getHashTarget() {
   const raw = window.location.hash.replace(/^#/, '');
   if (!raw || raw === '/') return null;
   if (raw.startsWith('/lab/') || raw.startsWith('lab/')) return null;
-  // Support both #capacidades and #/capacidades
+  // Support both #capacidades and #/capacidades, and section anchors like #section-integraciones
   const id = raw.replace(/^\//, '').split('/')[0];
   return HOME_SECTION_IDS.has(id) ? id : null;
 }
@@ -503,7 +503,7 @@ function renderHome(searchTerm = '') {
   const normalizedTerm = searchTerm.trim().toLowerCase();
 
   const sectionsMarkup = siteData.sections
-    .map((section) => {
+    .map((section, idx) => {
       const labs = section.labs.filter((lab) => {
         if (!normalizedTerm) return true;
         return [lab.title, lab.description, lab.supporting, section.title]
@@ -515,18 +515,35 @@ function renderHome(searchTerm = '') {
         : '<p class="cds--body-01 hub-empty-state">Ningún laboratorio coincide con esta búsqueda.</p>';
 
       const tag = SECTION_TAG[section.id] || { cls: 'cds--tag--gray', label: section.label };
+      // All sections start open; first one is the primary but all are open by default
+      const isOpen = true;
+      const panelId = `panel-section-${section.id}`;
 
       return `
-        <div class="hub-workshop-section" id="section-${section.id}">
-          <div class="cds--tile hub-level-banner" role="region" aria-label="${section.title}">
+        <div class="hub-workshop-section hub-workshop-section--accordion" id="section-${section.id}">
+          <button
+            class="hub-level-banner hub-level-banner--trigger cds--tile"
+            aria-expanded="${isOpen}"
+            aria-controls="${panelId}"
+            type="button"
+          >
             <div class="hub-level-banner__badges">
               <span class="cds--tag ${tag.cls}">${section.label}</span>
               <span class="cds--tag ${tag.cls}">${section.bobMode}</span>
             </div>
-            <h2 class="cds--productive-heading-04 hub-level-banner__title">${section.title}</h2>
-            <p class="cds--body-01 hub-level-banner__desc">${section.description}</p>
+            <div class="hub-level-banner__row">
+              <div class="hub-level-banner__content">
+                <h2 class="cds--productive-heading-04 hub-level-banner__title">${section.title}</h2>
+                <p class="hub-level-banner__desc">${section.description}</p>
+              </div>
+              <svg class="hub-level-banner__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="24" height="24" aria-hidden="true"><path d="M8 11L2 5h12z"/></svg>
+            </div>
+          </button>
+          <div class="hub-section-panel" id="${panelId}" aria-hidden="${!isOpen}">
+            <div class="hub-section-panel__inner">
+              <div class="hub-cards-grid">${cardsMarkup}</div>
+            </div>
           </div>
-          <div class="hub-cards-grid">${cardsMarkup}</div>
         </div>
       `;
     })
@@ -1272,71 +1289,7 @@ function shouldInjectOverviewFormat(proseEl, lab) {
 }
 
 function buildOverviewFormat(section, lab) {
-  const guide = getWorkshopGuide(lab);
-  const steps = lab.steps.filter((step) => step.slug !== 'overview');
-  const requirements = guide.requirements.map(([title, text]) => checklistItem(`<strong>${escapeHtml(title)}:</strong> ${escapeHtml(text)}`)).join('');
-  const materials = guide.materials.map((item) => checklistItem(escapeHtml(item))).join('');
-  const cards = steps.map((step, index) => buildWorkshopStepCard(lab, step, index)).join('');
-  const learning = guide.learning.map(([area, result]) => `
-    <tr><th scope="row">${escapeHtml(area)}</th><td>${escapeHtml(result)}</td></tr>`).join('');
-
-  return `
-    <section class="workshop-format workshop-format--${escapeHtml(section.id)}" aria-label="Guía del workshop">
-      <div class="workshop-format__meta">
-        <span class="cds--tag cds--tag--gray">${escapeHtml(section.label)}</span>
-        <span class="cds--tag cds--tag--cool-gray">${escapeHtml(getAudienceLabel(lab.audience))}</span>
-        <span class="cds--tag cds--tag--teal">${escapeHtml(guide.duration)}</span>
-      </div>
-
-      <section class="workshop-format__section" aria-labelledby="${lab.slug}-build">
-        <p class="workshop-format__eyebrow">Resultado esperado</p>
-        <h2 id="${lab.slug}-build">Qué vas a construir</h2>
-        <p class="workshop-format__lead">${escapeHtml(guide.outcome)}</p>
-      </section>
-
-      <div class="workshop-format__split">
-        <section class="workshop-format__section" aria-labelledby="${lab.slug}-requirements">
-          <p class="workshop-format__eyebrow">Preparación</p>
-          <h2 id="${lab.slug}-requirements">Requisitos previos</h2>
-          <ul class="workshop-checklist">${requirements}</ul>
-        </section>
-        <section class="workshop-format__section" aria-labelledby="${lab.slug}-materials">
-          <p class="workshop-format__eyebrow">Recursos</p>
-          <h2 id="${lab.slug}-materials">Materiales del workshop</h2>
-          <ul class="workshop-checklist">${materials}</ul>
-        </section>
-      </div>
-
-      <section class="workshop-format__section workshop-format__section--labs" aria-labelledby="${lab.slug}-labs">
-        <p class="workshop-format__eyebrow">Etapas</p>
-        <h2 id="${lab.slug}-labs">Labs del workshop</h2>
-        <div class="workshop-step-grid">${cards}</div>
-      </section>
-
-      <div class="workshop-format__split">
-        <section class="workshop-format__section" aria-labelledby="${lab.slug}-path">
-          <p class="workshop-format__eyebrow">Recomendación</p>
-          <h2 id="${lab.slug}-path">Camino recomendado</h2>
-          <p>Completa cada etapa, revisa su resultado esperado y solo después avanza a la siguiente. Las rutas alternativas se indican explícitamente en la navegación.</p>
-        </section>
-        <section class="workshop-format__section" aria-labelledby="${lab.slug}-learning">
-          <p class="workshop-format__eyebrow">Resultados</p>
-          <h2 id="${lab.slug}-learning">Qué vas a aprender</h2>
-          <div class="lab-table-wrap">
-            <table class="lab-table">
-              <caption class="visually-hidden">Resultados de aprendizaje de ${escapeHtml(lab.title)}</caption>
-              <thead><tr><th scope="col">Área</th><th scope="col">Al finalizar podrás</th></tr></thead>
-              <tbody>${learning}</tbody>
-            </table>
-          </div>
-        </section>
-      </div>
-
-      <aside class="workshop-format__help callout" data-tone="note" aria-label="Ayuda durante el workshop">
-        <p class="callout__title">Ayuda durante el workshop</p>
-        <p>Usa las capturas y prompts como referencia, revisa los checkpoints de cada etapa y vuelve al inicio del workshop si necesitas confirmar requisitos o materiales.</p>
-      </aside>
-    </section>`;
+  return '';
 }
 
 function buildStepBrief(section, lab, step) {
@@ -1420,25 +1373,61 @@ function getClosureNextLabel(lab, nextStep, nextWorkshop) {
     const shortName = nextWorkshop.lab.supporting || nextWorkshop.lab.title;
     return `Continuar con ${shortName}`;
   }
-  return 'Volver al inicio del workshop';
+  return null;
+}
+
+function getClosurePrevLabel(lab, prevStep) {
+  if (!prevStep) return null;
+  if (prevStep.slug === 'overview') return 'Introducción';
+  const prefixes = getLabNavPrefixes(lab);
+  const prefix = prefixes[prevStep.slug];
+  if (prefix) {
+    if (prevStep.label.trim().toLowerCase() === prefix.trim().toLowerCase()) return prefix;
+    return `${prefix}${LAB_STEP_SEPARATOR}${prevStep.label}`;
+  }
+  return prevStep.label;
 }
 
 function buildStepClosure(lab, step) {
   const stepIndex = lab.steps.findIndex((item) => item.slug === step.slug);
+  const prevStep = stepIndex > 0 ? lab.steps[stepIndex - 1] : null;
   const nextStep = lab.steps[stepIndex + 1];
   const nextWorkshop = nextStep ? null : getNextLab(lab.slug);
-  const destination = nextStep
+
+  // Next destination
+  const nextDestination = nextStep
     ? getLabRoute(lab.slug, nextStep.slug)
     : nextWorkshop
       ? getLabRoute(nextWorkshop.lab.slug, 'overview')
-      : getLabRoute(lab.slug, 'overview');
-  const destinationLabel = getClosureNextLabel(lab, nextStep, nextWorkshop);
+      : null;
+  const nextLabel = getClosureNextLabel(lab, nextStep, nextWorkshop);
+
+  // Prev destination
+  const prevDestination = prevStep ? getLabRoute(lab.slug, prevStep.slug) : null;
+  const prevLabel = getClosurePrevLabel(lab, prevStep);
+
+  // "Back to all labs" — resolves to the section anchor of this lab's category
+  const sectionResult = findLab(lab.slug);
+  const sectionId = sectionResult?.section?.id || '';
+  const backToLabsHref = sectionId ? `#section-${sectionId}` : getHomeRoute();
+
+  const prevBtn = prevDestination
+    ? `<a class="cds--btn cds--btn--ghost lab-closure__prev" href="${prevDestination}"><span aria-hidden="true">←</span> ${escapeHtml(prevLabel)}</a>`
+    : `<span></span>`;
+
+  let nextBtn;
+  if (nextDestination) {
+    nextBtn = `<a class="cds--btn cds--btn--tertiary lab-closure__next" href="${nextDestination}">${escapeHtml(nextLabel)} <span aria-hidden="true">→</span></a>`;
+  } else {
+    nextBtn = `<a class="cds--btn cds--btn--tertiary lab-closure__back" href="${backToLabsHref}"><span aria-hidden="true">←</span> Volver a todos los labs</a>`;
+  }
 
   return `
     <section class="lab-closure lab-closure--next" aria-labelledby="${lab.slug}-${step.slug}-closure">
-      <p class="lab-guide__eyebrow">Continuar</p>
-      <h2 id="${lab.slug}-${step.slug}-closure">Siguiente</h2>
-      <a class="cds--btn cds--btn--tertiary lab-closure__next" href="${destination}">${escapeHtml(destinationLabel)} <span aria-hidden="true">→</span></a>
+      <div class="lab-closure__nav">
+        ${prevBtn}
+        ${nextBtn}
+      </div>
     </section>`;
 }
 
@@ -1707,12 +1696,30 @@ async function renderLab(route) {
   enhanceLabContent(proseEl, section, lab, activeStep, isOverview);
   buildLabToc(proseEl, lab, activeStep);
   bindImageFallbacks(labShell);
+  // Restore persisted env choice for this page
+  applyPersistedEnv(proseEl);
 
   if (route.headingId) {
     requestAnimationFrame(() => {
       document.getElementById(route.headingId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   }
+}
+
+/** Apply persisted env selection to all toggles in the given scope. */
+function applyPersistedEnv(scope) {
+  const stored = localStorage.getItem('lab-env') || 'platform';
+  const toggles = (scope || document).querySelectorAll('.env-toggle[data-env-scope="global"], .env-selector-banner .env-toggle');
+  toggles.forEach((group) => {
+    group.querySelectorAll('.env-toggle__btn').forEach((b) => {
+      b.classList.toggle('env-toggle__btn--active', b.dataset.envTab === stored);
+    });
+  });
+  // Apply panels across entire prose scope
+  const root = scope || document;
+  root.querySelectorAll('[data-env-panel]').forEach((panel) => {
+    panel.classList.toggle('env-panel--active', panel.dataset.envPanel === stored);
+  });
 }
 
 // ── Route dispatcher ─────────────────────────────────────────────
@@ -1812,6 +1819,94 @@ function bindEvents() {
         document.getElementById('yt-overlay-trigger')?.focus();
         event.stopImmediatePropagation();
       }
+    }
+  });
+
+  // Env toggle — global: sync all toggles + all panels across entire prose
+  document.addEventListener('click', (event) => {
+    const btn = event.target.closest('.env-toggle__btn[data-env-tab]');
+    if (!btn) return;
+    const group = btn.closest('.env-toggle');
+    if (!group) return;
+    const target = btn.dataset.envTab;
+    const isGlobal = group.dataset.envScope === 'global'
+      || group.closest('.env-selector-banner') !== null;
+
+    if (isGlobal) {
+      // Persist and sync entire prose
+      localStorage.setItem('lab-env', target);
+      const prose = group.closest('.prose, .lab-reading-layout') || document;
+      prose.querySelectorAll('.env-toggle__btn[data-env-tab]').forEach((b) => {
+        b.classList.toggle('env-toggle__btn--active', b.dataset.envTab === target);
+      });
+      prose.querySelectorAll('[data-env-panel]').forEach((panel) => {
+        panel.classList.toggle('env-panel--active', panel.dataset.envPanel === target);
+      });
+    } else {
+      // Local toggle — only within nearest section
+      group.querySelectorAll('.env-toggle__btn').forEach((b) => {
+        b.classList.toggle('env-toggle__btn--active', b === btn);
+      });
+      const scope = group.closest('.lab-section, .prose, .content-panel') || document;
+      scope.querySelectorAll('[data-env-panel]').forEach((panel) => {
+        panel.classList.toggle('env-panel--active', panel.dataset.envPanel === target);
+      });
+    }
+  });
+
+  // Lab step accordion (inside lab pages)
+  document.addEventListener('click', (event) => {
+    const trigger = event.target.closest('.lab-accordion__trigger');
+    if (!trigger) return;
+    const panelId = trigger.getAttribute('aria-controls');
+    const panel = panelId ? document.getElementById(panelId) : trigger.nextElementSibling;
+    if (!panel) return;
+    const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+    trigger.setAttribute('aria-expanded', String(!isOpen));
+    panel.hidden = isOpen;
+  });
+
+  // Workshop section accordion (home page sections)
+  // Uses JS scrollHeight for pixel-perfect max-height animation —
+  // grid-template-rows:0fr is unreliable without a fixed parent height.
+  document.addEventListener('click', (event) => {
+    const trigger = event.target.closest('.hub-level-banner--trigger');
+    if (!trigger) return;
+    if (event.target.closest('a')) return;
+    const panelId = trigger.getAttribute('aria-controls');
+    const panel = panelId ? document.getElementById(panelId) : null;
+    if (!panel) return;
+
+    const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+    const willOpen = !isOpen;
+
+    if (panel._openEndHandler) {
+      panel.removeEventListener('transitionend', panel._openEndHandler);
+      panel._openEndHandler = null;
+    }
+
+    trigger.setAttribute('aria-expanded', String(willOpen));
+    panel.setAttribute('aria-hidden', String(!willOpen));
+
+    if (willOpen) {
+      panel.style.maxHeight = '0px';
+      panel.getBoundingClientRect();
+      panel.style.maxHeight = `${panel.scrollHeight}px`;
+      panel._openEndHandler = (transitionEvent) => {
+        if (transitionEvent.propertyName !== 'max-height') return;
+        if (trigger.getAttribute('aria-expanded') !== 'true') return;
+        panel.style.maxHeight = 'none';
+        panel.removeEventListener('transitionend', panel._openEndHandler);
+        panel._openEndHandler = null;
+      };
+      panel.addEventListener('transitionend', panel._openEndHandler);
+    } else {
+      const currentHeight = panel.style.maxHeight;
+      if (currentHeight === 'none' || currentHeight === '') {
+        panel.style.maxHeight = `${panel.scrollHeight}px`;
+      }
+      panel.getBoundingClientRect();
+      panel.style.maxHeight = '0px';
     }
   });
 

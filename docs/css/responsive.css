@@ -56,9 +56,17 @@
   }
 
   .hub-workshop-section:nth-child(even) {
-    margin: 0 -1rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    margin-inline: -1rem;
+    padding-inline: 1rem;
+    margin-bottom: 0;
+  }
+
+  .hub-level-banner__row {
+    gap: 1rem;
+  }
+
+  .hub-level-banner__desc {
+    font-size: 1rem;
   }
 
   /* Cards: 1 columna */
@@ -111,6 +119,7 @@
     margin: 0 -1.5rem;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+    margin-bottom: 0;
   }
 }
 
@@ -121,7 +130,11 @@
   }
 
   .hub-cards-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  }
+
+  .hub-cards-grid:has(> :nth-child(2):last-child) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

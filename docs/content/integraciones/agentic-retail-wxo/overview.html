@@ -52,20 +52,25 @@
     </div>
   </section>
 
-  <section class="lab-section">
-    <h2 class="cds--productive-heading-03" id="prerrequisitos-de-configuracion">
-      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><polygon points="13 24 4 15 5.414 13.586 13 21.171 26.586 7.586 28 9 13 24"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
-      Prerrequisitos de Configuración
+  <section class="lab-section" aria-labelledby="wxo-descarga">
+    <h2 class="cds--productive-heading-03" id="wxo-descarga">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M26 24v4H6v-4H4v4a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2v-4z"/><path d="M26 14l-1.41-1.41L17 20.17V2h-2v18.17l-7.59-7.58L6 14l10 10 10-10z"/></svg>
+      Descarga los materiales del workshop
     </h2>
-    <p class="cds--body-01">Para este laboratorio es necesario contar con el <strong>Agent Development Kit (ADK)</strong> de watsonx Orchestrate y una <strong>IBM Cloud API Key</strong>. Todos los scripts necesarios se encuentran en el bundle descargable en <code>Labs-tech-summit/Lab2/confluent_agents/</code>.</p>
-    
-    <a class="cds--btn cds--btn--primary" style="margin-top: 1rem; margin-bottom: 2rem;" download="agentic-retail-workshop.zip" href="./downloads/agentic-retail-workshop.zip">
+    <p class="cds--body-01">Todos los scripts necesarios se encuentran en el bundle del workshop. Descomprímelo y abre la carpeta en IBM Bob IDE.</p>
+    <a class="cds--btn cds--btn--primary" style="margin-top:1rem; margin-bottom:2rem;" download="agentic-retail-workshop.zip" href="./downloads/agentic-retail-workshop.zip">
       Descargar bundle del workshop (4.9 MB)
     </a>
-
-    <div class="callout" data-tone="warning">
+    <div class="callout" data-tone="info">
+      <p class="callout__title">Contenido del bundle — Lab 2</p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item"><code>Lab2/confluent_agents/</code> — agentes de watsonx Orchestrate, herramientas MCP y scripts de configuración del ADK.</li>
+        <li class="cds--list__item">Requiere el <strong>Agent Development Kit (ADK)</strong> de watsonx Orchestrate y una <strong>IBM Cloud API Key</strong>.</li>
+      </ul>
+    </div>
+    <div class="callout" data-tone="warning" style="margin-top:1rem;">
       <p class="callout__title">Mantén tu entorno activo</p>
-      <p>Asegúrate de haber configurado tu API Key y el ambiente de <code>orchestrate env</code> según los requisitos previos. Si tu token expira durante la ejecución, deberás correr <code>orchestrate env activate &lt;nombre&gt;</code> para recuperarlo.</p>
+      <p>Si tu token expira durante la ejecución, corre <code>orchestrate env activate &lt;nombre&gt;</code> para recuperarlo.</p>
     </div>
   </section>
 

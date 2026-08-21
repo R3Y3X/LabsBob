@@ -386,55 +386,112 @@ body {
   padding: 0 var(--cds-spacing-07, 2rem);
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 1.917rem;
 }
 
+/* ── Workshop sections — accordion layout ──────────────────────── */
 .hub-workshop-section {
-  padding: 40px 0 48px;
   border-top: 1px solid var(--cds-border-subtle-01, #c6c6c6);
+  margin-bottom: 0;
+  border-radius: 2px;
 }
 
-/* Fondo alterno — sección par (Ecosistema, índice 1) */
+/* Even sections: no alt background — uniform white across all sections */
 .hub-workshop-section:nth-child(even) {
-  background-color: var(--cds-layer-01, #f4f4f4);
-  padding: 40px var(--cds-spacing-07, 2rem) 48px;
-  margin: 0 calc(-1 * var(--cds-spacing-07, 2rem));
+  padding: 0;
+  margin-bottom: 0;
 }
 
-/* ── Banner de nivel (tile destacado) ───────────────────────────── */
+/* ── Banner de nivel — compact trigger ──────────────────────────── */
 .hub-level-banner {
-  border: 1px solid var(--cds-border-subtle-01, #c6c6c6) !important;
+  border: none !important;
   border-left: 4px solid var(--cds-border-interactive, #0f62fe) !important;
   border-radius: 0 !important;
-  padding: var(--cds-spacing-06, 1.5rem) var(--cds-spacing-07, 2rem);
-  margin-bottom: var(--cds-spacing-06, 1.5rem);
+  /* More vertical padding so the trigger feels substantial, not thin */
+  padding: 1.25rem 1.25rem 1.25rem 1.5rem;
+  margin-bottom: 0;
   background: var(--cds-background, #ffffff);
+}
+
+.hub-level-banner--trigger {
+  display: block;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+
+.hub-level-banner--trigger:hover {
+  background: var(--cds-layer-hover-01, #e8e8e8) !important;
 }
 
 .hub-level-banner__badges {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
-  gap: 8px;
-  margin-bottom: var(--cds-spacing-04, 1rem);
+  gap: 6px;
+  margin-bottom: 0.5rem;
 }
 
 .hub-level-banner__badges .cds--tag {
   white-space: nowrap;
   flex-shrink: 0;
+  font-size: 0.8125rem;
+}
+
+/* Title + description stacked; chevron aligned top-right */
+.hub-level-banner__row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  min-width: 0;
+}
+
+.hub-level-banner__content {
+  flex: 1;
+  min-width: 0;
 }
 
 .hub-level-banner__title {
-  margin: 0 0 var(--cds-spacing-03, 0.75rem);
+  margin: 0;
   color: var(--cds-text-primary, #161616);
+  font-size: 1.75rem;
+  font-weight: 600;
+  line-height: 1.25;
 }
 
 .hub-level-banner__desc {
-  margin: 0;
+  margin: 0.625rem 0 0;
   color: var(--cds-text-secondary, #525252);
-  max-width: 72ch;
-  font-size: 0.9375rem;
+  font-size: 1.0625rem;
   line-height: 1.5;
+}
+
+.hub-level-banner__chevron {
+  flex-shrink: 0;
+  margin-top: 0.35rem;
+  color: var(--cds-text-secondary, #525252);
+  transition: transform 340ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hub-level-banner--trigger[aria-expanded="true"] .hub-level-banner__chevron {
+  transform: rotate(180deg);
+}
+
+/* ── Collapsible panel — JS max-height animation ────────────────── *
+ * JS sets panel.style.maxHeight = scrollHeight+'px' on open, and   *
+ * '0px' on close. overflow:hidden does the actual visual clipping.  *
+ * This is the only reliable way to clip card box-shadows perfectly. *
+ * ─────────────────────────────────────────────────────────────────*/
+.hub-section-panel {
+  overflow: hidden;
+  max-height: none;          /* open state: no limit */
+  transition: max-height 400ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hub-section-panel__inner {
+  padding: 1.25rem 0 2rem;
 }
 
 .hub-section-cta {
@@ -444,8 +501,12 @@ body {
 /* ── Cards grid ─────────────────────────────────────────────────── */
 .hub-cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 2rem;
+}
+
+.hub-cards-grid:has(> :nth-child(2):last-child) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 /* Reset Carbon CDN tile defaults that conflict with our box style */

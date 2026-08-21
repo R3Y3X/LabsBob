@@ -1,0 +1,905 @@
+<div class="content-panel lab-template premium-workflow">
+  <div class="lab-banner">
+    <div class="lab-banner__tags">
+      <span class="cds--tag cds--tag--green">Premium</span>
+      <span class="cds--tag cds--tag--cool-gray">Vulnerabilidades</span>
+    </div>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Laboratorio 5 — Detección y corrección de vulnerabilidades</h1>
+    <p class="cds--body-02 lab-banner__summary">
+      Escanea las dependencias de la aplicación de farmacia en busca de CVEs conocidos,
+      entiende cada hallazgo, remedia y vuelve a escanear limpio — todo con prompts por fases en Agent Mode.
+    </p>
+    <div class="lab-banner__metrics">
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">Objetivo</span>
+        <span class="lab-banner__metric-label">CVEs críticos</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">~20</span>
+        <span class="lab-banner__metric-label">minutos</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">4–6</span>
+        <span class="lab-banner__metric-label">BobCoins estimados</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">Premium</span>
+        <span class="lab-banner__metric-label">acceso requerido</span>
+      </div>
+    </div>
+  </div>
+  <section class="lab-section" aria-labelledby="lab5-introduccion">
+    <h2 class="cds--productive-heading-03" id="lab5-introduccion">Introducción</h2>
+    <p>
+Escanee las dependencias de la aplicación de farmacia en busca de CVEs conocidas utilizando el flujo de trabajo
+      <strong>Java Vulnerabilities Detection</strong>
+ dedicado de Bob, comprenda cada hallazgo, corríjalos y vuelva a escanear de forma limpia.
+    </p>
+    <div class="callout" data-tone="note">
+      <p class="callout__title">Lo que lograrás</p>
+      <p>
+Ejecute un análisis de dependencia completo (directo
+        <strong> y</strong>
+ transitivo), evalúe los hallazgos con la base de datos
+        <a href="https://osv.dev">OSV</a>
+, apruebe los cambios de versión específicos a través del flujo de corrección interactivo de Bob y verifique que la aplicación aún se compila.
+      </p>
+    </div>
+    <div class="callout" data-tone="note">
+      <p class="callout__title">El laboratorio más corto del grupo.</p>
+      <p>
+El análisis en sí tarda unos segundos: este flujo de trabajo es una búsqueda CVE específica, no una migración agente. La mayor parte de su tiempo aquí se dedica a
+        <strong>triage</strong>
+: decidir qué hallazgos realmente importan y por qué. Ese es el objetivo del laboratorio.
+      </p>
+    </div>
+  </section>
+  <section class="lab-section" aria-labelledby="get-the-source-code-first">
+    <h2 class="cds--productive-heading-03" id="get-the-source-code-first">Obtén primero el código fuente</h2>
+    <p>Si aún no lo has hecho, descarga el paquete del taller:</p>
+    <p>
+      <a download="simple-pharmacy-workshop-v2.zip" href="./downloads/simple-pharmacy-workshop-v2.zip" class="cds--btn cds--btn--primary">
+        <span class="premium-button-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M5 20h14v-2H5m14-9h-4V3H9v6H5l7 7z"></path>
+          </svg>
+        </span>
+ Paquete de taller (2,1 MB)
+      </a>
+    </p>
+    <p>Descomprímalo y luego abra la instantánea inicial de Lab 5 en IBM Bob:</p>
+    <div data-language="text" class="code-block premium-code-block">
+      <pre>
+        <code>simple-pharmacy-workshop-v2/labs/lab5-security-vulnerability-remediation/snapE-security-vulnerabilities/</code>
+      </pre>
+    </div>
+    <p>Esta es la aplicación modernizada con versiones de dependencia vulnerables integradas. Puede usarla independientemente de los otros laboratorios.</p>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">
+Abra la carpeta
+        <code>snapE-*</code>
+, no su carpeta principal
+      </p>
+      <p>
+El flujo de trabajo solo aparece en el nivel de instantánea, no en la carpeta principal
+        <code>lab5-*</code>
+.
+      </p>
+    </div>
+  </section>
+  <section class="lab-section" aria-labelledby="use-case-find-and-fix-vulnerable-dependencies">
+    <h2 class="cds--productive-heading-03" id="use-case-find-and-fix-vulnerable-dependencies">Caso de uso: buscar y corregir dependencias vulnerables</h2>
+    <p>
+Cada aplicación Java depende de bibliotecas de terceros, directamente (declaradas en
+      <code>pom.xml</code>
+) o transitivamente (extraídas por otra biblioteca). Cualquiera de ellos puede portar vulnerabilidades conocidas catalogadas como CVEs. La detección de vulnerabilidad de dependencia significa:
+    </p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+        <strong>Escaneando</strong>
+ las dependencias declaradas y transitivas del proyecto
+      </li>
+      <li class="cds--list__item">
+        <strong>Coincidencia</strong>
+ con bases de datos CVE publicadas
+      </li>
+      <li class="cds--list__item">
+        <strong>Informes</strong>
+ cada coincidencia con gravedad, versiones afectadas y una solución
+      </li>
+      <li class="cds--list__item">
+        <p>
+          <strong>Remediando</strong>
+ actualizando o excluyendo la biblioteca vulnerable
+        </p>
+      </li>
+      <li class="cds--list__item">
+        <p>
+          <strong>Antes</strong>
+: aplicación de farmacia con versiones de dependencia vulnerables en
+          <code>pom.xml</code>
+        </p>
+      </li>
+      <li class="cds--list__item">
+        <strong>Después</strong>
+: dependencias vulnerables actualizadas, resultado de escaneo limpio, rastro de corrección documentado
+      </li>
+    </ul>
+    <h3 id="whats-hiding-in-this-project" class="cds--productive-heading-02 lab-step__title">¿Qué se esconde en este proyecto?</h3>
+    <p>Se plantean deliberadamente tres vulnerabilidades. Bob debería encontrar los tres:</p>
+    <table class="lab-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>dependencia</th>
+          <th>Versión vulnerable</th>
+          <th>CVE/GHSA</th>
+          <th>Gravedad</th>
+          <th>Versión reparada</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>
+            <code>commons-text</code>
+          </td>
+          <td>
+            <code>1.9</code>
+          </td>
+          <td>
+CVE-2022-42889 (
+            <strong>Text4Shell</strong>
+)
+          </td>
+          <td>Crítico (CVSS 9.8)</td>
+          <td>
+            <code>1.10.0</code>
+          </td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>
+            <code>snakeyaml</code>
+          </td>
+          <td>
+            <code>1.30</code>
+          </td>
+          <td>GHSA-mjmj-j48q-9wg2</td>
+          <td>Alto</td>
+          <td>
+            <code>2.0</code>
+          </td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>
+            <code>commons-lang3</code>
+          </td>
+          <td>
+            <code>3.11</code>
+          </td>
+          <td>GHSA-j288-q9x7-2f5v</td>
+          <td>Alto</td>
+          <td>
+            <code>3.18.0</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <details class="premium-details">
+      <summary>Lo que realmente hace cada uno (léelo después de haber escaneado)</summary>
+      <p>
+        <strong>1. Text4Shell: CVE-2022-42889.</strong>
+        <code>StringSubstitutor</code>
+ en commons-text admite prefijos de interpolación más allá de la simple sustitución de variables:
+        <code>${script:…}</code>
+,
+        <code>${url:…}</code>
+,
+        <code>${dns:…}</code>
+. Si alguna parte del mapa de sustitución contiene información controlada por el atacante, se trata de ejecución de script arbitraria, exfiltración de DNS o recuperación de URL. En esta aplicación, se puede acceder a él a través de
+        <code>LabelTemplateService</code>
+, que genera etiquetas de dispensación de medicamentos a partir de una plantilla.
+      </p>
+      <p>
+        <strong>2. RCE de deserialización de SnakeYAML: GHSA-mjmj-j48q-9wg2.</strong>
+ El constructor predeterminado
+        <code>new Yaml()</code>
+ felizmente crea instancias de clases Java arbitrarias a las que se hace referencia en YAML (por ejemplo,
+        <code>!!java.net.URL</code>
+). La carga de YAML controlado por un atacante se convierte en una instanciación de clase arbitraria y un RCE potencial. Aquí se puede acceder a él a través de
+        <code>FormularyLoader</code>
+, que carga
+        <code>formulary.yaml</code>
+ para decidir las categorías de medicamentos aprobados.
+      </p>
+      <p>
+        <strong>3. Commons Lang3 recursividad incontrolada — GHSA-j288-q9x7-2f5v.</strong>
+ Ciertas entradas desencadenan una recursividad ilimitada y una denegación de servicio por desbordamiento de pila.
+        <code>commons-text:1.9</code>
+ tira de
+        <code>commons-lang3:3.11</code>
+ transitivamente; se declara explícitamente aquí en esa misma versión para que el escaneo pueda detectarlo y fijarlo.
+      </p>
+      <p>
+Observe la forma de esto: dos de los tres son solo
+        <em>interesantes</em>
+ porque el código de la aplicación realmente les llega. El tercero es un problema puro de gráfico de dependencia. El triaje real se parece exactamente a esta mezcla.
+      </p>
+    </details>
+  </section>
+  <section class="lab-section" aria-labelledby="prerequisites">
+    <h2 class="cds--productive-heading-03" id="prerequisites">Requisitos previos</h2>
+    <h3 id="1-ibm-bob-ide-v2" class="cds--productive-heading-02 lab-step__title">1. IBM Bob IDE (V2)</h3>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+Última extensión IDE
+        <strong>Bob V2</strong>
+ instalada, iniciada sesión.
+      </li>
+      <li class="cds--list__item">
+Un plan que incluye el flujo de trabajo
+        <strong>Java Vulnerabilities Detection</strong>
+ (el paquete
+        <strong>Premium</strong>
+).
+      </li>
+    </ul>
+    <h3 id="2-java-21-and-maven" class="cds--productive-heading-02 lab-step__title">2. Java 21 y Maven</h3>
+    <div class="callout" data-tone="note">
+      <p class="callout__title">Laboratorio exclusivo de backend</p>
+      <p>
+Node.js y npm son
+        <strong>no</strong>
+ necesarios aquí.
+      </p>
+    </div>
+    <div data-tabs="1:3" class="premium-platform-options">
+      <input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" />
+      <input id="__tabbed_1_2" name="__tabbed_1" type="radio" />
+      <input id="__tabbed_1_3" name="__tabbed_1" type="radio" />
+      <div class="premium-platform-options__labels">
+        <label for="__tabbed_1_1">macOS</label>
+        <label for="__tabbed_1_2">Linux</label>
+        <label for="__tabbed_1_3">Windows</label>
+      </div>
+      <div class="premium-platform-options__content">
+        <div class="premium-platform-option">
+          <p>
+Usando
+            <strong>SDKMAN!</strong>
+. Si aún no lo tienes:
+          </p>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>curl -s "https://get.sdkman.io" | bash</code>
+            </pre>
+          </div>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>source "$HOME/.sdkman/bin/sdkman-init.sh"</code>
+            </pre>
+          </div>
+          <p>Instale Java 21 y actívelo:</p>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>sdk install java 21.0.11-zulu</code>
+            </pre>
+          </div>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>sdk use java 21.0.11-zulu</code>
+            </pre>
+          </div>
+          <p>Instalar Maven:</p>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>sdk install maven</code>
+            </pre>
+          </div>
+        </div>
+        <div class="premium-platform-option">
+          <p>
+Usando
+            <strong>SDKMAN!</strong>
+. Si aún no lo tienes:
+          </p>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>curl -s "https://get.sdkman.io" | bash</code>
+            </pre>
+          </div>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>source "$HOME/.sdkman/bin/sdkman-init.sh"</code>
+            </pre>
+          </div>
+          <p>Instale Java 21 y actívelo:</p>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>sdk install java 21.0.11-zulu</code>
+            </pre>
+          </div>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>sdk use java 21.0.11-zulu</code>
+            </pre>
+          </div>
+          <p>Instalar Maven:</p>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>sdk install maven</code>
+            </pre>
+          </div>
+        </div>
+        <div class="premium-platform-option">
+          <p>Dos opciones: elija una (SDKMAN! no se puede ejecutar en PowerShell).</p>
+          <p>
+            <strong>Opción A — Winget (permanece en PowerShell).</strong>
+ Ejecutar en
+            <strong>PowerShell</strong>
+:
+          </p>
+          <div data-language="powershell" class="code-block premium-code-block">
+            <pre>
+              <code>winget install EclipseAdoptium.Temurin.21.JDK</code>
+            </pre>
+          </div>
+          <div data-language="powershell" class="code-block premium-code-block">
+            <pre>
+              <code>winget install Apache.Maven</code>
+            </pre>
+          </div>
+          <p>
+Cierre y vuelva a abrir PowerShell para encontrar
+            <code>java</code>
+ y
+            <code>mvn</code>
+.
+          </p>
+          <p>
+            <strong>Opción B — SDKMAN! en Git Bash o WSL (idéntico a macOS/Linux).</strong>
+ Abra Git Bash (de
+            <a href="https://git-scm.com/download/win">Git para Windows</a>
+) o WSL (
+            <code>wsl --install</code>
+), luego ejecute el
+            <strong>macOS/Linux comandos</strong>
+ de las otras pestañas.
+          </p>
+        </div>
+      </div>
+    </div>
+    <p>Verificar: lo mismo en todos los sistemas operativos:</p>
+    <div data-language="bash" class="code-block premium-code-block">
+      <pre>
+        <code>java -version</code>
+      </pre>
+    </div>
+    <div data-language="bash" class="code-block premium-code-block">
+      <pre>
+        <code>mvn --version</code>
+      </pre>
+    </div>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">Reinicie Bob después de instalar Maven</p>
+      <p>Salga y reinicie Bob por completo después de instalar Maven para que adopte el nuevo entorno.</p>
+    </div>
+  </section>
+  <section class="lab-section" aria-labelledby="worth-watching-for">
+    <h2 class="cds--productive-heading-03" id="worth-watching-for">Vale la pena verlo</h2>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+        <strong>Flujo de trabajo independiente de nivel superior</strong>
+: Java Vulnerabilities Detection es su propio flujo de trabajo, no un subtipo dentro de Java Modernization.
+      </li>
+      <li class="cds--list__item">
+        <strong>Escaneo rápido y determinista</strong>
+: una búsqueda CVE específica que finaliza en segundos, en lugar de un bucle agente.
+      </li>
+      <li class="cds--list__item">
+        <strong>Alcance directo + transitivo</strong>
+: Bob resuelve el árbol de dependencia completo, no solo lo que se declara en
+        <code>pom.xml</code>
+.
+      </li>
+      <li class="cds--list__item">
+        <strong>Flujo de corrección interactivo</strong>
+: cada CVE recibe una solución propuesta y un mensaje de aprobación.
+      </li>
+      <li class="cds--list__item">
+        <strong>Desglose de costos por tarea</strong>
+: incluso las tiradas cortas muestran la contabilidad de costos y tokens.
+      </li>
+    </ul>
+  </section>
+  <section class="lab-section" aria-labelledby="step-1-open-the-project">
+    <h2 class="cds--productive-heading-03" id="step-1-open-the-project">Paso 1: abre el proyecto</h2>
+    <ol class="cds--list--ordered">
+      <li class="cds--list__item">
+Abra la carpeta
+        <code>snapE-security-vulnerabilities</code>
+        <strong> como raíz del proyecto </strong>
+.
+      </li>
+      <li class="cds--list__item">
+Confirme que el indicador de modo en la parte inferior del chat muestra
+        <strong>Agent</strong>
+.
+      </li>
+      <li class="cds--list__item">
+Haga clic en el botón de reproducción (
+        <strong>▶</strong>
+) y confirme que
+        <strong>Java Vulnerabilities Detection</strong>
+ aparece en la lista de flujo de trabajo.
+      </li>
+    </ol>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/vulnerabilities-workflow-card.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/vulnerabilities-workflow-card.png" class="lab-figure__img" alt="Panel de flujo de trabajo de Bob que muestra Java Vulnerabilities Detection junto con los otros flujos de trabajo" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — Panel de flujo de trabajo de Bob que muestra Java Vulnerabilities Detection junto con los otros flujos de trabajo. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+  </section>
+  <section class="lab-section" aria-labelledby="step-2-run-the-vulnerabilities-detection-workflow">
+    <h2 class="cds--productive-heading-03" id="step-2-run-the-vulnerabilities-detection-workflow">Paso 2: ejecute el flujo de trabajo Vulnerabilities Detection</h2>
+    <h3 id="objective" class="cds--productive-heading-02 lab-step__title">Objetivo</h3>
+    <p>Active el flujo de trabajo y deje que Bob realice un análisis completo de las dependencias.</p>
+    <h3 id="21-start-the-workflow" class="cds--productive-heading-02 lab-step__title">2.1 Iniciar el flujo de trabajo</h3>
+    <p>
+Haga clic en
+      <strong>Inicio</strong>
+ en el flujo de trabajo
+      <strong>Java Vulnerabilities Detection</strong>
+.
+    </p>
+    <h3 id="22-dependency-detection" class="cds--productive-heading-02 lab-step__title">2.2 Detección de dependencia</h3>
+    <p>
+Bob lee
+      <code>pom.xml</code>
+, resuelve el árbol de dependencia completo (directo
+      <strong> y </strong>
+ transitivo) e informa cuántos paquetes escaneará.
+    </p>
+    <h3 id="23-cve-lookup" class="cds--productive-heading-02 lab-step__title">2.3 búsqueda de CVE</h3>
+    <p>
+Bob consulta la base de datos CVE para cada paquete detectado. Esto es rápido: normalmente
+      <strong>menos de 30 segundos</strong>
+ para un proyecto de este tamaño.
+    </p>
+    <h3 id="24-findings-report" class="cds--productive-heading-02 lab-step__title">2.4 Informe de hallazgos</h3>
+    <p>Bob informa cada vulnerabilidad con:</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">Paquete y versión afectados</li>
+      <li class="cds--list__item">Identificadores CVE</li>
+      <li class="cds--list__item">Gravedad (crítica, alta, media, baja)</li>
+      <li class="cds--list__item">
+Si la dependencia es
+        <strong>directa o transitiva</strong>
+      </li>
+      <li class="cds--list__item">Remediación sugerida</li>
+    </ul>
+    <div class="callout" data-tone="success">
+      <p class="callout__title">Punto de control: el escaneo encontró el CVEs plantado</p>
+      <p>
+Bob debe informar como mínimo
+        <strong>CVE-2022-42889</strong>
+ (Text4Shell),
+        <strong>GHSA-mjmj-j48q-9wg2</strong>
+ (SnakeYAML RCE) y
+        <strong>GHSA-j288-q9x7-2f5v</strong>
+ (lengua común3). SnakeYAML a menudo muestra varios CVEs a la vez, así que no se sorprenda si cuenta más de tres.
+      </p>
+    </div>
+  </section>
+  <section class="lab-section" aria-labelledby="step-3-review-the-findings">
+    <h2 class="cds--productive-heading-03" id="step-3-review-the-findings">Paso 3: revisar los hallazgos</h2>
+    <h3 id="objective_1" class="cds--productive-heading-02 lab-step__title">Objetivo</h3>
+    <p>Comprenda lo que Bob encontró y priorice antes de remediar.</p>
+    <h3 id="31-read-through-each-finding" class="cds--productive-heading-02 lab-step__title">3.1 Lea cada hallazgo</h3>
+    <p>Para cada CVE, tenga en cuenta:</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+¿La biblioteca vulnerable
+        <strong>se declara directamente</strong>
+ o se extrae
+        <strong>transitivamente</strong>
+?
+      </li>
+      <li class="cds--list__item">¿Qué versión fija recomienda Bob?</li>
+      <li class="cds--list__item">¿Cuál es la gravedad? ¿Se aplica a cómo esta aplicación utiliza realmente la biblioteca?</li>
+    </ul>
+    <h3 id="32-group-the-findings" class="cds--productive-heading-02 lab-step__title">3.2 Agrupar los hallazgos</h3>
+    <p>Pregúntate:</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">¿Cuáles son soluciones rápidas (un aumento de versión única)?</li>
+      <li class="cds--list__item">¿Cuáles necesitan excluir una dependencia transitiva y agregar un reemplazo directo?</li>
+      <li class="cds--list__item">¿Hay duplicados causados por múltiples rutas que traen la misma versión vulnerable?</li>
+    </ul>
+    <h3 id="33-confirm-you-understand-each-cve-before-remediating" class="cds--productive-heading-02 lab-step__title">3.3 Confirme que comprende cada CVE antes de corregirlo</h3>
+    <p>Si tienes algo que no te resulte familiar, pregúntale directamente a Bob:</p>
+    <div data-language="text" class="code-block premium-code-block">
+      <pre>
+        <code>Explique CVE-2022-42889 en términos sencillos y cómo podría afectar esta aplicación.</code>
+      </pre>
+    </div>
+    <details class="premium-details">
+      <summary>Gravedad no es lo mismo que riesgo: este es el objetivo del ejercicio</summary>
+      <p>
+Un CVE crítico en una biblioteca cuyo método vulnerable nunca llama tiene un riesgo real menor que un alto en una ruta activa. Dos de los tres hallazgos de este proyecto
+        <em>son</em>
+ accesibles desde el código de la aplicación (
+        <code>LabelTemplateService</code>
+,
+        <code>FormularyLoader</code>
+); el tercero es un problema puro del gráfico de dependencia sin ningún sitio de llamada.
+      </p>
+      <p>
+El escáner informa
+        <strong>severidad</strong>
+. Sólo tú puedes juzgar
+        <strong>alcanzabilidad</strong>
+. Hacer esa distinción en voz alta, para cada uno de los tres, es lo que convierte esto de una tarea de cambio de versiones a una clasificación de seguridad.
+      </p>
+    </details>
+  </section>
+  <section class="lab-section" aria-labelledby="step-4-remediate">
+    <h2 class="cds--productive-heading-03" id="step-4-remediate">Paso 4: remediar</h2>
+    <h3 id="objective_2" class="cds--productive-heading-02 lab-step__title">Objetivo</h3>
+    <p>Aplique las correcciones propuestas por Bob a través del flujo de corrección interactivo.</p>
+    <h3 id="41-start-remediation" class="cds--productive-heading-02 lab-step__title">4.1 Iniciar la corrección</h3>
+    <p>Según el informe de hallazgos, dígale a Bob que continúe. Pasa por CVEs uno a la vez.</p>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/vulnerabilities-found-prompt.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/vulnerabilities-found-prompt.png" class="lab-figure__img" alt="Bob solicita corregir las vulnerabilidades detectadas" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — Bob solicita corregir las vulnerabilidades detectadas. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+    <h3 id="42-interactive-approval-flow" class="cds--productive-heading-02 lab-step__title">4.2 Flujo de aprobación interactivo</h3>
+    <p>Para cada hallazgo, Bob:</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">Explicar el CVE y su impacto.</li>
+      <li class="cds--list__item">
+Proponer un cambio
+        <code>pom.xml</code>
+ específico (aumento de versión, exclusión + dependencia directa, pin
+        <code>&lt;dependencyManagement&gt;</code>
+)
+      </li>
+      <li class="cds--list__item">Solicite aprobación antes de aplicar</li>
+    </ul>
+    <h3 id="43-preview-individual-edits" class="cds--productive-heading-02 lab-step__title">4.3 Vista previa de ediciones individuales</h3>
+    <p>
+Si no está seguro acerca de un cambio, elija la opción para ver primero las ediciones exactas de
+      <code>pom.xml</code>
+: Bob representa la diferencia para su revisión.
+    </p>
+    <h3 id="44-approve-iteratively" class="cds--productive-heading-02 lab-step__title">4.4 Aprobar iterativamente</h3>
+    <p>Trabaje en cada CVE en el orden en que Bob los presenta. Aplica cada edición y luego continúa.</p>
+    <h3 id="45-handle-knock-on-effects" class="cds--productive-heading-02 lab-step__title">4.5 Manejar los efectos en cadena</h3>
+    <p>Algunas correcciones desencadenan problemas secundarios: por ejemplo, una actualización de una versión importante que requiere un cambio de API en otro lugar. Bob los identifica y solicita aprobación para las correcciones adicionales.</p>
+    <div class="callout" data-tone="success">
+      <p class="callout__title">Punto de control: la versión esperada falla</p>
+      <table class="lab-table">
+        <thead>
+          <tr>
+            <th>dependencia</th>
+            <th>antes</th>
+            <th>después</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <code>commons-text</code>
+            </td>
+            <td>
+              <code>1.9</code>
+            </td>
+            <td>
+              <code>1.10.0</code>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>snakeyaml</code>
+            </td>
+            <td>
+              <code>1.30</code>
+            </td>
+            <td>
+              <code>2.0</code>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>commons-lang3</code>
+            </td>
+            <td>
+              <code>3.11</code>
+            </td>
+            <td>
+              <code>3.18.0</code>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Se confirma que las tres versiones de reparación están disponibles en Maven Central y resuelven todos los CVE detectados.</p>
+    </div>
+  </section>
+  <section class="lab-section" aria-labelledby="step-5-verify">
+    <h2 class="cds--productive-heading-03" id="step-5-verify">Paso 5: verificar</h2>
+    <h3 id="51-compile-check" class="cds--productive-heading-02 lab-step__title">5.1 Compilar verificación</h3>
+    <p>En la terminal de Bob:</p>
+    <div data-language="bash" class="code-block premium-code-block">
+      <pre>
+        <code>mvn clean compile</code>
+      </pre>
+    </div>
+    <p>
+Deberías ver
+      <code>BUILD SUCCESS</code>
+.
+    </p>
+    <details class="premium-details">
+      <summary>El salto de SnakeYAML 1.30 → 2.0 es una verdadera actualización de la versión principal: mire esta</summary>
+      <p>
+SnakeYAML 2.0 reforzó el comportamiento del constructor predeterminado, que es precisamente
+        <em>por qué</em>
+ corrige el RCE y precisamente por qué puede romper el código de llamada que dependía de la antigua permisividad.
+      </p>
+      <p>
+Si
+        <code>FormularyLoader</code>
+ deja de compilarse o se inicia en tiempo de ejecución, no es un error: es la solución de seguridad que está haciendo su trabajo. Pega el error en Bob y deja que concilie el cambio de API. La lección que vale la pena exponer claramente es que las actualizaciones de seguridad tienen un costo y "rompió algo" no es una razón para omitirlas.
+      </p>
+    </details>
+    <h3 id="52-re-run-the-workflow" class="cds--productive-heading-02 lab-step__title">5.2 Vuelva a ejecutar el flujo de trabajo</h3>
+    <p>
+Haga clic en
+      <strong>Inicio</strong>
+ en
+      <strong>Java Vulnerabilities Detection</strong>
+ nuevamente. Bob ahora debería informar
+      <strong>cero hallazgos</strong>
+, o una lista sustancialmente reducida.
+    </p>
+    <h3 id="53-optional-run-the-liberty-server" class="cds--productive-heading-02 lab-step__title">5.3 Opcional: ejecutar el servidor Liberty</h3>
+    <div data-language="bash" class="code-block premium-code-block">
+      <pre>
+        <code>mvn liberty:run</code>
+      </pre>
+    </div>
+    <p>Confirme que la API funcione correctamente y que las actualizaciones no introduzcan errores de tiempo de ejecución:</p>
+    <div data-language="text" class="code-block premium-code-block">
+      <pre>
+        <code>http://localhost:9081/simple-pharmacy/api/dashboard</code>
+      </pre>
+    </div>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/dashboard-api-response.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/dashboard-api-response.png" class="lab-figure__img" alt="API del panel de farmacia que responde con datos de prescripción" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — API del panel de farmacia que responde con datos de prescripción. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">Detenga el servidor antes de continuar</p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">
+          <strong>macOS / Linux:</strong>
+ presione
+          <span class="premium-keys">
+            <kbd class="key-control">Ctrl</kbd>
+            <span>+</span>
+            <kbd class="key-c">C</kbd>
+          </span>
+. Si el puerto 9081 permanece retenido:
+          <code>lsof -ti:9081 | xargs kill -9</code>
+.
+        </li>
+        <li class="cds--list__item">
+          <strong>Windows (PowerShell):</strong>
+ presione
+          <span class="premium-keys">
+            <kbd class="key-control">Ctrl</kbd>
+            <span>+</span>
+            <kbd class="key-c">C</kbd>
+          </span>
+; si permanece ocupado,
+          <code>mvn liberty:stop</code>
+ o
+          <code>netstat -ano | findstr :9081</code>
+ entonces
+          <code>taskkill /PID &lt;pid&gt; /F</code>
+.
+        </li>
+      </ul>
+    </div>
+  </section>
+  <section class="lab-section" aria-labelledby="troubleshooting">
+    <h2 class="cds--productive-heading-03" id="troubleshooting">Solución de problemas</h2>
+    <details class="premium-details">
+      <summary>El flujo de trabajo informa cero vulnerabilidades en el primer escaneo</summary>
+      <p>
+Ése es un resultado legítimo en un proyecto limpio, pero no en éste. Significa que
+        <code>pom.xml</code>
+ no contiene las versiones intencionalmente vulnerables que espera el laboratorio. Comprueba que abriste la instantánea inicial de
+        <code>snapE-*</code>
+ y no la has modificado.
+        <code>pom.xml</code>
+ debe declarar
+        <code>commons-text:1.9</code>
+,
+        <code>snakeyaml:1.30</code>
+ y
+        <code>commons-lang3:3.11</code>
+.
+      </p>
+    </details>
+    <details class="premium-details">
+      <summary>
+        <code>mvn compile</code>
+ falla después de un aumento de versión
+      </summary>
+      <p>Una solución actualizó una biblioteca a una versión con un cambio importante en la API. Pegue el error de compilación nuevamente en Bob y pídale que lo concilie; adaptará el código de llamada o propondrá una versión diferente y aún segura. La actualización SnakeYAML 2.0 es la culpable más probable.</p>
+    </details>
+    <details class="premium-details">
+      <summary>Una dependencia vulnerable es transitiva y no se actualizará limpiamente</summary>
+      <p>
+El CVE vive dentro de una dependencia transitiva que Bob no puede simplemente cambiar de versión, porque otra biblioteca requiere la versión anterior. Bob normalmente propone un bloque
+        <code>&lt;exclusions&gt;</code>
+ en la dependencia externa más una declaración directa de la versión fija. Aprobar cuando se le solicite.
+      </p>
+    </details>
+    <details class="premium-details">
+      <summary>La terminal de Bob muestra la versión de Java incorrecta</summary>
+      <p>
+        <code>sdk use</code>
+ tiene alcance de shell y no se aplica a través de pestañas de terminal ni al terminal que Bob abre por sí solo. Ejecútelo en la terminal de Bob específicamente:
+      </p>
+      <div data-language="bash" class="code-block premium-code-block">
+        <pre>
+          <code>sdk use java 21.0.11-zulu</code>
+        </pre>
+      </div>
+    </details>
+  </section>
+  <section class="lab-section" aria-labelledby="getting-help-during-the-lab">
+    <h2 class="cds--productive-heading-03" id="getting-help-during-the-lab">Obtén ayuda durante el laboratorio</h2>
+    <ol class="cds--list--ordered">
+      <li class="cds--list__item">
+        <strong>Consulte la sección de solución de problemas anterior</strong>
+: se tratan los problemas más comunes.
+      </li>
+      <li class="cds--list__item">
+        <strong>Pregúntale a Bob</strong>
+: Bob puede explicar cualquier CVE y sugerir soluciones.
+      </li>
+      <li class="cds--list__item">
+        <strong>Pregúntale a tu instructor</strong>
+; no dudes en levantar la mano.
+      </li>
+      <li class="cds--list__item">
+        <strong>Colaborar</strong>
+: discutir con compañeros de clase.
+      </li>
+    </ol>
+  </section>
+  <section class="lab-section" aria-labelledby="success-criteria">
+    <h2 class="cds--productive-heading-03" id="success-criteria">Criterios de éxito</h2>
+    <p>Ha completado con éxito esta práctica de laboratorio cuando:</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ Java 21 y Maven son instalados y detectados por Bob.
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ Bob está en modo
+        <strong>Agent</strong>
+ y se inicia el flujo de trabajo
+        <strong>Java Vulnerabilities Detection</strong>
+.
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ El escaneo informó los tres hallazgos plantados (Text4Shell, SnakeYAML RCE, recursión commons-lang3).
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ Puede explicar qué hallazgos son
+        <strong>direct</strong>
+ vs
+        <strong>transitive</strong>
+ y cuáles son accesibles desde el código de la aplicación.
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ Aprobó las correcciones a través del flujo interactivo.
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+        <code>mvn clean compile</code>
+ informa
+        <code>BUILD SUCCESS</code>
+ después de las actualizaciones.
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ Una
+        <strong>nueva exploración</strong>
+ informa cero (o sustancialmente menos) hallazgos.
+      </li>
+    </ul>
+  </section>
+  <section class="lab-section" aria-labelledby="key-takeaways">
+    <h2 class="cds--productive-heading-03" id="key-takeaways">Conclusiones clave</h2>
+    <ol class="cds--list--ordered">
+      <li class="cds--list__item">
+        <strong>Tus dependencias son tu superficie de ataque</strong>
+: la mayor parte del código de una aplicación Java no es código que tú escribiste. Text4Shell entró a través de una biblioteca en la que nadie pensó.
+      </li>
+      <li class="cds--list__item">
+        <strong>Recuentos transitivos</strong>
+ —
+        <code>commons-lang3</code>
+ llegaron a través de
+        <code>commons-text</code>
+. Escanear solo lo que se declara en
+        <code>pom.xml</code>
+ lo habría perdido por completo.
+      </li>
+      <li class="cds--list__item">
+        <strong>Severidad ≠ riesgo</strong>
+: la accesibilidad decide la exposición real. El escáner clasifica; tu clasificación.
+      </li>
+      <li class="cds--list__item">
+        <strong>Las correcciones tienen consecuencias</strong>
+: SnakeYAML 2.0 corrige el RCE
+        <em>by</em>
+ rompiendo el comportamiento permisivo en el que se basa algún código. Las actualizaciones de seguridad no son gratuitas y esa no es razón para omitirlas.
+      </li>
+      <li class="cds--list__item">
+        <strong>Vuelva a escanear para probarlo</strong>
+: la corrección no se realiza cuando llega la edición, se realiza cuando el escaneo está limpio.
+      </li>
+    </ol>
+  </section>
+  <section class="lab-section" aria-labelledby="next">
+    <h2 class="cds--productive-heading-03" id="next">Siguiente</h2>
+    <p>Ya ha completado los cinco laboratorios Java Modernization.</p>
+    <p>
+      <a href="#/lab/java-modernization-v2/overview" class="cds--btn cds--btn--primary">
+Volver al grupo de laboratorio
+        <span class="premium-button-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.75.75 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0"></path>
+          </svg>
+        </span>
+      </a>
+    </p>
+  </section>
+</div>

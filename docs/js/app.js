@@ -3,8 +3,8 @@ import { siteData, workshopGuides, findLab, getNextLab, getWorkshopStats, roadsh
 import { getHomeRoute, getLabRoute, parseRoute } from './router.js';
 import { initializeTheme, toggleTheme } from './theme.js';
 
-// Global audience mode state: 'client' | 'partner'
-let currentMode = 'client';
+const PREMIUM_STORAGE_KEY = 'labsBob.premiumAccess';
+let premiumAccess = readPremiumAccess();
 
 const HOME_SECTION_IDS = new Set(['roadshow-planner', 'available-workshops', 'nosotros', 'recursos', 'acerca-de', 'section-basic', 'section-integraciones', 'section-premium']);
 
@@ -20,6 +20,71 @@ const hamburgerBtn = document.querySelector('#hamburger-btn');
 const sideNav = document.querySelector('#side-nav');
 const sideNavOverlay = document.querySelector('#side-nav-overlay');
 const sideNavItemsMobile = document.querySelector('#side-nav-items-mobile');
+const premiumToggle = document.querySelector('#premium-toggle');
+const premiumToggleMobile = document.querySelector('#premium-toggle-mobile');
+
+function readPremiumAccess() {
+  try {
+    return window.localStorage.getItem(PREMIUM_STORAGE_KEY) === 'true';
+  } catch (error) {
+    return false;
+  }
+}
+
+function getAccessMode() {
+  return premiumAccess ? 'premium' : 'standard';
+}
+
+function persistPremiumAccess() {
+  try {
+    window.localStorage.setItem(PREMIUM_STORAGE_KEY, String(premiumAccess));
+  } catch (error) {
+    // Private browsing or blocked storage should not prevent the toggle from working.
+  }
+}
+
+function updatePremiumToggle() {
+  const label = premiumAccess ? 'Premium activo' : 'Sin premium';
+  const title = premiumAccess
+    ? 'Desactivar acceso a workflows premium'
+    : 'Activar acceso a workflows premium';
+
+  [premiumToggle, premiumToggleMobile].filter(Boolean).forEach((control) => {
+    control.setAttribute('aria-pressed', String(premiumAccess));
+    control.setAttribute('aria-label', title);
+    control.title = title;
+    const text = control.querySelector('[data-premium-toggle-label]');
+    if (text) text.textContent = label;
+  });
+
+  document.body.dataset.premiumAccess = String(premiumAccess);
+}
+
+function rerenderAfterPremiumChange() {
+  updatePremiumToggle();
+  renderPlatformNav();
+
+  const route = parseRoute(window.location.hash);
+  if (route.view !== 'lab') {
+    renderHome(siteSearch?.value || '');
+    return;
+  }
+
+  const result = findLab(route.labSlug, getAccessMode());
+  const stepExists = result?.lab.steps.some((step) => step.slug === route.stepSlug);
+  if (!stepExists) {
+    window.location.hash = getLabRoute(route.labSlug, 'overview');
+    return;
+  }
+
+  renderRoute();
+}
+
+function togglePremiumAccess() {
+  premiumAccess = !premiumAccess;
+  persistPremiumAccess();
+  rerenderAfterPremiumChange();
+}
 
 function getHashTarget() {
   const raw = window.location.hash.replace(/^#/, '');
@@ -187,6 +252,15 @@ function navigateHomeSectionFromLink(event, link) {
     scrollToHomeSection(sectionId);
   }
   return true;
+}
+
+function resetLabScroll() {
+  window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+}
+
+function settleLabScroll() {
+  resetLabScroll();
+  requestAnimationFrame(resetLabScroll);
 }
 
 //validate email addres
@@ -444,7 +518,7 @@ function renderPlatformNav() {
     .map((item) => `<li><a class="cds--side-nav__link hub-side-nav__top-link" href="${item.href}">${item.label}</a></li>`)
     .join('');
 
-  const labLinks = siteData.sections
+  const labLinks = getVisibleSections(getAccessMode())
     .map((section) => {
       const labItems = section.labs
         .map((lab) => `<li><a class="cds--side-nav__link cds--side-nav__link--sub" href="${getLabRoute(lab.slug)}">${lab.title}</a></li>`)
@@ -457,6 +531,26 @@ function renderPlatformNav() {
     .join('');
 
   sideNavItemsMobile.innerHTML = navLinks + labLinks;
+  updatePremiumToggle();
+  siteNavItems.querySelectorAll('.cds--header__menu-item').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      const target = (link.getAttribute('href') || '').replace(/^#\/?/, '');
+      const isHomeLink = target === '';
+      if (!isHomeLink && !HOME_SECTION_IDS.has(target)) return;
+      // Prevent the browser's default anchor animation from passing through
+      // intermediate sections before the SPA has rendered the target route.
+      event.preventDefault();
+      const sectionId = isHomeLink ? null : target;
+      const destination = sectionId ? `#${sectionId}` : getHomeRoute();
+      setNavActive(sectionId);
+      suppressScrollSpy(sectionId ? 500 : 250);
+      if (window.location.hash !== destination) {
+        window.location.hash = destination;
+      } else {
+        scrollToHomeSection(sectionId);
+      }
+    });
+  });
   updateNavCurrent();
 }
 
@@ -507,9 +601,13 @@ function buildLabBannerTags(section, lab, step) {
   const audienceTag = lab.audience && lab.audience.length === 1 && lab.audience[0] === 'partner'
     ? '<span class="cds--tag cds--tag--cyan">Solo Partners</span>'
     : '';
+  const accessBadge = lab.variants && lab.accessMode === 'premium'
+    ? '<span class="hub-premium-badge" aria-label="Contenido premium">Premium</span>'
+    : '';
 
   let html = `<span class="cds--tag ${sectionTag.cls}" data-workshop-route>${escapeHtml(section.label)}</span>`;
   html += `<span class="cds--tag ${sectionTag.cls}">${escapeHtml(lab.supporting)}</span>`;
+  html += accessBadge;
   stepTags.forEach((tag) => {
     html += `<span class="cds--tag cds--tag--cool-gray">${escapeHtml(tag)}</span>`;
   });
@@ -517,7 +615,35 @@ function buildLabBannerTags(section, lab, step) {
   return html;
 }
 
-function buildLabCard(lab, section) {
+function getTrackName(index) {
+  let value = index + 1;
+  let suffix = '';
+
+  while (value > 0) {
+    value -= 1;
+    suffix = String.fromCharCode(65 + (value % 26)) + suffix;
+    value = Math.floor(value / 26);
+  }
+
+  return `Track ${suffix}`;
+}
+
+function getFeaturedTracks(sections) {
+  const tracks = new Map();
+  let index = 0;
+
+  sections.forEach((section) => {
+    section.labs.forEach((lab) => {
+      if (!lab.featured) return;
+      tracks.set(lab.slug, getTrackName(index));
+      index += 1;
+    });
+  });
+
+  return tracks;
+}
+
+function buildLabCard(lab, section, featuredTrack = '') {
   const tag = SECTION_TAG[section.id] || { cls: 'cds--tag--gray', label: section.eyebrow };
   const trackMeta = getLabTrackMeta(lab.slug);
   const trackTag = trackMeta
@@ -526,8 +652,12 @@ function buildLabCard(lab, section) {
   const audienceTag = lab.audience && lab.audience.length === 1 && lab.audience[0] === 'partner'
     ? '<span class="cds--tag cds--tag--cyan hub-tag--partner">Solo Partners</span>'
     : '';
-  const featuredTag = !trackMeta && lab.featured
-    ? '<span class="cds--tag cds--tag--high-contrast hub-lab-card__tag--featured">Track principal</span>'
+  const featuredTag = lab.featured && featuredTrack
+    ? `<span class="cds--tag cds--tag--high-contrast hub-lab-card__tag--featured">${escapeHtml(featuredTrack)}</span>`
+    : '';
+  const isPremiumModernization = section.id === 'premium' && lab.variants && lab.accessMode === 'premium';
+  const premiumBadge = isPremiumModernization
+    ? '<span class="hub-lab-card__premium-badge" aria-label="Contenido premium">Premium</span>'
     : '';
   const imgPath = lab.banner || `./assets/images/labs/${lab.slug}/banner_bob.png`;
   const stats = getWorkshopStats(lab);
@@ -550,10 +680,11 @@ function buildLabCard(lab, section) {
     : '';
 
   return `
-    <a class="cds--tile cds--tile--clickable hub-lab-card hub-lab-card--${section.id}" href="${getLabRoute(lab.slug)}"
+    <a class="cds--tile cds--tile--clickable hub-lab-card hub-lab-card--${section.id}${isPremiumModernization ? ' hub-lab-card--premium-access' : ''}" href="${getLabRoute(lab.slug)}"
        aria-label="Abrir laboratorio ${escapeHtml(lab.title)}">
       <div class="hub-lab-card__media">
         <img src="${imgPath}" alt="Banner ${escapeHtml(lab.title)}" class="hub-lab-card__img" data-placeholder-path="${imgPath}" />
+        ${premiumBadge}
       </div>
       <div class="hub-lab-card__body">
         <div class="hub-lab-card__tags">
@@ -916,8 +1047,10 @@ function bindRoadshowEvents() {
 // ── Home page renderer ───────────────────────────────────────────
 function renderHome(searchTerm = '') {
   const normalizedTerm = searchTerm.trim().toLowerCase();
+  const visibleSections = getVisibleSections(getAccessMode());
+  const featuredTracks = getFeaturedTracks(visibleSections);
 
-  const sectionsMarkup = siteData.sections
+  const sectionsMarkup = visibleSections
     .map((section, idx) => {
       const labs = section.labs.filter((lab) => {
         if (!normalizedTerm) return true;
@@ -926,7 +1059,7 @@ function renderHome(searchTerm = '') {
       });
 
       const cardsMarkup = labs.length
-        ? labs.map((lab) => buildLabCard(lab, section)).join('')
+        ? labs.map((lab) => buildLabCard(lab, section, featuredTracks.get(lab.slug))).join('')
         : '<p class="cds--body-01 hub-empty-state">Ningún laboratorio coincide con esta búsqueda.</p>';
 
       const tag = SECTION_TAG[section.id] || { cls: 'cds--tag--gray', label: section.label };
@@ -971,7 +1104,7 @@ function renderHome(searchTerm = '') {
           <h1 class="hub-hero__title">${siteData.hero.title}</h1>
           <p class="cds--body-02 hub-hero__copy">${siteData.hero.description}</p>
           <div class="hub-hero__chips" aria-label="Secciones del hub">
-            ${siteData.sections.map((section) => `
+            ${visibleSections.map((section) => `
               <a class="hub-hero__chip" href="#available-workshops">${section.title}</a>
             `).join('')}
           </div>
@@ -1284,7 +1417,7 @@ function renderHome(searchTerm = '') {
             </div>
           </a>
 
-          <a class="hub-resource-card hub-resource-card--blue"
+          <a class="hub-resource-card hub-resource-card--purple"
              href="https://ibm-self-serve-assets.github.io/build-with-bob/"
              target="_blank" rel="noreferrer noopener"
              aria-label="Abrir Build with Bob — labs adicionales">
@@ -1569,28 +1702,66 @@ function bindImageFallbacks(container) {
       if (image.complete && image.naturalWidth === 0) replaceMissingImage(image);
     }
   });
-  enhanceLabFigures(container);
 }
 
-const LAB_FIGURE_MIN_WIDTH = 1400;
+function getImageCaption(image) {
+  return (image.getAttribute('alt') || '').trim();
+}
 
-function enhanceLabFigures(container) {
-  container.querySelectorAll('.lab-figure').forEach((figure) => {
-    const img = figure.querySelector(':scope > .lab-figure__img, :scope > .lab-figure__link > .lab-figure__img');
-    if (!img || img.dataset.labFigureEnhanced === 'true') return;
-    img.dataset.labFigureEnhanced = 'true';
+function isInstructionalImage(image) {
+  if (image.closest('.lab-banner, .hub-lab-card, .hub-team-card, .hub-resource-card')) {
+    return false;
+  }
 
-    const markLowResolution = () => {
-      if (img.naturalWidth > 0 && img.naturalWidth < LAB_FIGURE_MIN_WIDTH) {
-        figure.classList.add('lab-figure--lowres');
-      }
-    };
+  return Boolean(image.closest('.content-panel, .lab-section, .lab-step, .prose'));
+}
 
-    if (img.complete) {
-      markLowResolution();
-    } else {
-      img.addEventListener('load', markLowResolution, { once: true });
+function addFigureCaption(figure, image) {
+  if (figure.querySelector(':scope > figcaption')) return;
+  const caption = getImageCaption(image);
+  if (!caption) return;
+
+  const figcaption = document.createElement('figcaption');
+  figcaption.className = 'lab-figure__caption';
+  figcaption.textContent = caption;
+  figure.append(figcaption);
+}
+
+function normalizeInstructionalImages(container) {
+  container.querySelectorAll('img').forEach((image) => {
+    if (!isInstructionalImage(image) || image.dataset.instructionalImage === 'true') return;
+    image.dataset.instructionalImage = 'true';
+    image.loading = image.loading || 'lazy';
+    image.decoding = 'async';
+
+    const existingFigure = image.closest('figure');
+    if (existingFigure) {
+      existingFigure.classList.add('lab-figure');
+      image.classList.add('lab-figure__img');
+      addFigureCaption(existingFigure, image);
+      return;
     }
+
+    const linkedImage = image.parentElement?.matches('a')
+      && image.parentElement.children.length === 1
+      && !image.parentElement.textContent.trim()
+      ? image.parentElement
+      : image;
+    const parent = linkedImage.parentElement;
+    const figure = document.createElement('figure');
+    figure.className = 'lab-figure';
+    image.classList.add('lab-figure__img');
+
+    if (linkedImage !== image) linkedImage.classList.add('lab-figure__link');
+
+    if (parent?.matches('p') && parent.children.length === 1 && !parent.textContent.trim()) {
+      parent.replaceWith(figure);
+    } else {
+      linkedImage.replaceWith(figure);
+    }
+
+    figure.append(linkedImage);
+    addFigureCaption(figure, image);
   });
 }
 
@@ -1637,7 +1808,7 @@ function getAudienceLabel(audience = []) {
 }
 
 function getWorkshopGuide(lab) {
-  return workshopGuides[lab.slug] || {
+  return lab.guide || workshopGuides[lab.slug] || {
     duration: 'Por confirmar',
     outcome: lab.description,
     requirements: [['Preparación', 'Revisa los requisitos indicados por cada etapa antes de comenzar.']],
@@ -1697,6 +1868,182 @@ function buildOverviewLabsSection(section, lab) {
     </section>`;
 }
 
+const PREMIUM_SECTION_ORDER = {
+  context: 10,
+  materials: 20,
+  prerequisites: 30,
+  workflow: 40,
+  steps: 50,
+  checkpoint: 60,
+  troubleshooting: 70,
+  followup: 80
+};
+
+function getPremiumSectionKind(section) {
+  const heading = section.querySelector(':scope > h2')?.textContent
+    .trim()
+    .toLocaleLowerCase('es') || '';
+
+  if (/solución de problemas|obtén ayuda|consejos específicos/.test(heading)) return 'troubleshooting';
+  if (/criterios de éxito|resultados esperados|conclusiones clave|ideas clave|lo que has logrado|lo que construiste/.test(heading)) return 'checkpoint';
+  if (/siguiente|próximos pasos|pasos adicionales|extensiones|recursos|comentarios/.test(heading)) return 'followup';
+  if (/requisitos previos|requisitos del sistema|requisitos de la estación/.test(heading)) return 'prerequisites';
+  if (/obtén primero el código fuente|prepara el workspace|configuración de laboratorio|configuración del entorno|primera creación|desarrollo de plantillas|ejecución del libro/.test(heading)) return 'materials';
+  if (/^(paso|ejercicio|parte \d|\d+\.|opcional:)/.test(heading)) return 'steps';
+  if (/flujo de trabajo|cómo bob|controlando los permisos|modo personalizado/.test(heading)) return 'workflow';
+  if (/introducción|objetivo|contexto|caso de uso|qué se prueba|qué hay|qué se esconde|por qué esto importa|estado inicial/.test(heading)) return 'context';
+  return 'steps';
+}
+
+function normalizePremiumWorkflowStructure(proseEl, isOverview) {
+  if (isOverview || !proseEl.querySelector('.premium-workflow')) return;
+
+  const panel = proseEl.querySelector('.content-panel.premium-workflow');
+  if (!panel || panel.dataset.premiumStructure === 'true') return;
+
+  panel.dataset.premiumStructure = 'true';
+  panel.classList.add('premium-workflow--structured');
+  const sections = [...panel.querySelectorAll(':scope > .lab-section')];
+
+  sections
+    .map((section, index) => ({ section, index, kind: getPremiumSectionKind(section) }))
+    .sort((left, right) => {
+      const order = PREMIUM_SECTION_ORDER[left.kind] - PREMIUM_SECTION_ORDER[right.kind];
+      return order || left.index - right.index;
+    })
+    .forEach(({ section, kind }) => {
+      section.dataset.premiumSection = kind;
+      panel.append(section);
+    });
+}
+
+// Java Premium deliberately starts from the standard lesson shell. The only
+// imported material is the workflow execution itself; context and navigation
+// stay aligned with the non-premium version.
+const JAVA_PREMIUM_COMMON_SECTIONS = {
+  lab1: ['lab1-intro', 'lab1-checkpoint'],
+  lab2: ['lab2-contexto'],
+  lab3: ['lab3-contexto'],
+  lab4: ['lab4-caso'],
+  'lab-alt4': ['labalt4-que', 'labalt4-tdd', 'labalt4-estado', 'labalt4-setup'],
+  lab5: ['lab5-caso', 'lab5-vigilar']
+};
+
+const LAB_STEP_ICON_SVG = '<svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>';
+
+function getWorkflowSectionHeading(section) {
+  return section.querySelector(':scope > h2')?.textContent.trim().toLocaleLowerCase('es') || '';
+}
+
+function prepareJavaWorkflowSection(section) {
+  const heading = section.querySelector(':scope > h2');
+  if (heading && !heading.querySelector('.lab-section__icon')) {
+    heading.insertAdjacentHTML('afterbegin', LAB_STEP_ICON_SVG);
+  }
+
+  section.querySelectorAll('.premium-workflow__figure').forEach((figure) => {
+    figure.classList.remove('premium-workflow__figure');
+  });
+  section.querySelectorAll('.lab-figure__link').forEach((link) => {
+    const image = link.querySelector('img');
+    if (image) link.replaceWith(image);
+  });
+  return section;
+}
+
+function updateJavaPremiumWorkspace(panel, step) {
+  const workspace = panel.querySelector('.lab-workspace-setup');
+  if (!workspace) return;
+
+  // Keep the banner summary from the loaded content so standard and premium
+  // variants can share the same description for every Java lab.
+
+  const badge = workspace.querySelector('.lab-workspace-setup__badge');
+  if (badge) badge.textContent = 'Paso obligatorio — antes de ejecutar el workflow';
+
+  const lead = workspace.querySelector('.lab-workspace-setup__lead');
+  if (lead) {
+    lead.innerHTML = lead.innerHTML
+      .replace(/pega el prompt de Fase 1 de abajo\\.?/gi, 'abre la pestaña <strong>Workflows</strong> de Bob.')
+      .replace(/pega el prompt de Fase 1 de abajo/gi, 'abre la pestaña <strong>Workflows</strong> de Bob.');
+  }
+
+  if (step.slug === 'lab1') {
+    const intro = panel.querySelector('#lab1-intro')?.closest('.lab-section');
+    const introLead = intro?.querySelector('p');
+    if (introLead) {
+      introLead.innerHTML = 'Migrarás el Simple Pharmacy Management System de Traditional WebSphere Application Server (TWas) al runtime ligero Liberty usando el workflow <strong>Java Modernization</strong> de Bob V2 en tres fases: Analizar → Aplicar cambios → Validar. Bob explica cada cambio y solicita tu aprobación antes de tocar un archivo.';
+    }
+
+    const note = workspace.querySelector('.lab-workspace-setup__note');
+    if (note) {
+      note.innerHTML = '<strong>Confirma Workflows:</strong> en el panel de Bob verifica el modo <strong>Agent</strong>, abre la pestaña <strong>Workflows</strong> con el botón ▶ y comprueba que aparece <strong>Java Modernization</strong>.';
+    }
+  }
+
+  const premiumContext = panel.querySelector('#lab5-vigilar')?.closest('.lab-section');
+  premiumContext?.querySelectorAll('li').forEach((item) => {
+    if (/prompts en Agent Mode/i.test(item.textContent)) {
+      item.innerHTML = '<strong>Lab independiente</strong> — no depende de los Labs 1–3; ejecuta el workflow <strong>Vulnerabilities Detection</strong>.';
+    }
+    if (/prompt de aprobación/i.test(item.textContent)) {
+      item.innerHTML = '<strong>Flujo de remediación interactivo</strong> — cada CVE recibe un fix propuesto y una aprobación dentro del workflow.';
+    }
+  });
+
+  const tddContext = panel.querySelector('#labalt4-que')?.closest('.lab-section');
+  const tddAgentParagraph = [...(tddContext?.querySelectorAll('p') || [])]
+    .find((paragraph) => /Agent Mode/i.test(paragraph.textContent));
+  if (tddAgentParagraph) {
+    tddAgentParagraph.innerHTML = 'Cada ejercicio se ejecuta con el workflow <strong>TDD</strong> de Bob; el recorrido mantiene el ciclo Red → Green → Refactor.';
+  }
+}
+
+function replaceJavaPremiumActionSections(panel, step, workflowMarkup) {
+  const source = document.createElement('div');
+  source.innerHTML = workflowMarkup;
+  const sourcePanel = source.querySelector('.content-panel');
+  if (!sourcePanel) return;
+
+  const commonSectionIds = new Set(JAVA_PREMIUM_COMMON_SECTIONS[step.slug] || []);
+  [...panel.querySelectorAll(':scope > .lab-section')].forEach((section) => {
+    const id = section.querySelector(':scope > h2')?.id;
+    if (!commonSectionIds.has(id)) section.remove();
+  });
+
+  const ignoredHeadings = /^(introducción|¿qué es|obtén primero el código fuente|caso de uso|requisitos previos|configuración del entorno|vale la pena verlo|solución de problemas|obtén ayuda|criterios de éxito|conclusiones clave|siguiente|próximos pasos|pasos adicionales)/;
+  const workflowSections = [...sourcePanel.querySelectorAll(':scope > .lab-section')].filter((section) => {
+    const heading = getWorkflowSectionHeading(section);
+    if (ignoredHeadings.test(heading)) return false;
+    return !/^paso 1:\\s*(abre|abra)/.test(heading);
+  });
+
+  const checkpoint = panel.querySelector(':scope > .lab-section h2[id*="checkpoint"]')?.closest('.lab-section');
+  const insertionPoint = checkpoint || panel.querySelector(':scope > details, :scope > .lab-troubleshooting-full');
+  workflowSections
+    .map(prepareJavaWorkflowSection)
+    .forEach((section) => {
+      if (insertionPoint) insertionPoint.before(section);
+      else panel.append(section);
+    });
+}
+
+async function applyPremiumWorkflowVariant(proseEl, lab, step) {
+  if (
+    lab.accessMode !== 'premium'
+    || lab.slug !== 'java-modernization-v2'
+    || !step.workflowSourceFile
+  ) return;
+
+  const panel = proseEl.querySelector('.content-panel.lab-template');
+  if (!panel || panel.dataset.workflowVariantApplied === 'true') return;
+
+  const workflowMarkup = await loadContent(step.workflowSourceFile);
+  panel.dataset.workflowVariantApplied = 'true';
+  updateJavaPremiumWorkspace(panel, step);
+  replaceJavaPremiumActionSections(panel, step, workflowMarkup);
+}
+
 function shouldInjectOverviewFormat(proseEl, lab) {
   if (lab.customOverview) return false;
   if (proseEl.querySelector('.overview-journey, .journey-card')) return false;
@@ -1740,20 +2087,21 @@ const LAB_STEP_SEPARATOR = ' — ';
 
 function getLabNavPrefixes(lab) {
   const map = {};
+  const label = 'Lab';
   let n = 1;
   for (const step of lab.steps) {
     if (step.slug === 'overview') continue;
     if (step.slug === 'lab-alt4') {
-      map[step.slug] = 'Lab 4 alternativo';
+      map[step.slug] = `${label} 4 alternativo`;
       continue;
     }
     const numbered = step.slug.match(/^lab(\d+)$/);
     if (numbered) {
-      map[step.slug] = `Lab ${Number(numbered[1])}`;
+      map[step.slug] = `${label} ${Number(numbered[1])}`;
       n = Math.max(n, Number(numbered[1]) + 1);
       continue;
     }
-    map[step.slug] = `Lab ${n}`;
+    map[step.slug] = `${label} ${n}`;
     n += 1;
   }
   return map;
@@ -1848,6 +2196,28 @@ function buildStepClosure(lab, step) {
     </section>`;
 }
 
+function removeLegacyStepNavigation(proseEl) {
+  proseEl.querySelectorAll('.content-panel .lab-section').forEach((section) => {
+    const heading = section.querySelector(':scope > h2')?.textContent.trim().toLocaleLowerCase('es');
+    const isLegacyNext = heading === 'siguiente' || heading === 'next';
+    const routeLink = section.querySelector('a[href^="#/lab/"], a[href^="#lab/"]');
+
+    if (isLegacyNext && routeLink) section.remove();
+  });
+}
+
+function ensureStepClosure(proseEl, lab, step) {
+  proseEl.querySelectorAll(':scope > .lab-closure').forEach((closure) => closure.remove());
+  const contentPanel = proseEl.querySelector('.content-panel');
+  const closure = buildStepClosure(lab, step);
+
+  if (contentPanel) {
+    contentPanel.insertAdjacentHTML('afterend', closure);
+  } else {
+    proseEl.insertAdjacentHTML('beforeend', closure);
+  }
+}
+
 function normalizeVisibleCopy(container) {
   const replacements = new Map([
     ['Lab Complete', 'Lab completado'],
@@ -1863,9 +2233,11 @@ function normalizeVisibleCopy(container) {
     ['Rules and considerations', 'Reglas y consideraciones']
   ]);
 
-  container.querySelectorAll('h2, h3, .callout__title').forEach((element) => {
+  container.querySelectorAll('h1, h2, h3, .callout__title').forEach((element) => {
     const text = element.textContent.trim().replace(/^[\p{Extended_Pictographic}\uFE0F\u200D\s]+/u, '');
-    element.textContent = replacements.get(text) || text;
+    const replacement = replacements.get(text);
+    if (!replacement) return;
+    element.textContent = replacement;
   });
   container.querySelectorAll('.copy-button').forEach((button) => {
     if (button.textContent.trim().toLowerCase() === 'copy') button.textContent = 'Copiar';
@@ -2007,6 +2379,115 @@ function rewriteDownloadLinks(container) {
   });
 }
 
+function isPromptContext(element) {
+  const previous = element.previousElementSibling;
+  const label = previous?.textContent || '';
+  return /prompt\s+(?:para|de)\s+bob|pega este prompt|envía este prompt/i.test(label);
+}
+
+function getCodeBlockKind(code) {
+  const language = (code.className.match(/language-([\w-]+)/) || [])[1]?.toLocaleLowerCase('es');
+  if (language === 'yaml' || language === 'yml') return 'code-block--yaml';
+  if (language === 'json') return 'code-block--json';
+  return '';
+}
+
+function normalizeCodeSyntax(codeBlock) {
+  if (codeBlock.querySelector('span')) return;
+  const rawText = codeBlock.textContent;
+  const lang = (codeBlock.className.match(/language-(\w+)/) || [])[1] || '';
+
+  if (lang === 'sql') {
+    codeBlock.innerHTML = escapeHtml(rawText)
+      .replace(/\b(CREATE|STREAM|TABLE|WITH|AS|SELECT|FROM|GROUP BY|EMIT|CHANGES|VARCHAR|INT|KAFKA_TOPIC|KEY_FORMAT|VALUE_FORMAT|PARTITIONS|SUM)\b/g, '<span class="highlight-k">$1</span>')
+      .replace(/('[\s\S]*?')/g, '<span class="highlight-s">$1</span>');
+  } else if (lang === 'json') {
+    codeBlock.innerHTML = escapeHtml(rawText)
+      .replace(/("[\w_]+"\s*:)/g, '<span class="highlight-nt">$1</span>')
+      .replace(/(:\s*"[\s\S]*?")/g, ': <span class="highlight-s">$1</span>')
+      .replace(/(:\s*\d+)/g, ': <span class="highlight-m">$1</span>');
+  } else if (lang === 'bash' || lang === 'shell') {
+    codeBlock.innerHTML = escapeHtml(rawText)
+      .replace(/\b(cd|setup\.sh|npm|git|python|python3|pip|orchestrate|docker|kubectl|helm|curl|wget)\b/g, '<span class="highlight-k">$1</span>')
+      .replace(/(\s-[a-zA-Z0-9_-]+)/g, '<span class="highlight-na">$1</span>');
+  }
+}
+
+function prepareCopyButton(button, codeBlock) {
+  const isPrompt = codeBlock.classList.contains('code-block--prompt');
+  const label = isPrompt ? 'Copiar prompt' : 'Copiar código';
+
+  button.type = 'button';
+  button.className = 'copy-button';
+  button.removeAttribute('style');
+  button.removeAttribute('onclick');
+  button.removeAttribute('onmouseover');
+  button.removeAttribute('onmouseout');
+  button.setAttribute('aria-label', label);
+  button.dataset.copyLabel = label;
+  button.textContent = label;
+}
+
+function ensureCodeBlockCopyButton(codeBlock) {
+  if (codeBlock.classList.contains('code-block--tree')) return;
+  const button = codeBlock.querySelector(':scope > .copy-button') || document.createElement('button');
+  if (!button.parentElement) codeBlock.prepend(button);
+  prepareCopyButton(button, codeBlock);
+}
+
+function normalizePromptBlocks(container) {
+  container.querySelectorAll('.prompt-block').forEach((legacyPrompt) => {
+    const body = legacyPrompt.querySelector('.prompt-block__body');
+    if (!body) return;
+
+    const prompt = document.createElement('div');
+    prompt.className = 'code-block code-block--prompt';
+
+    const label = legacyPrompt.querySelector('.prompt-block__label')?.textContent
+      .trim()
+      .replace(/^🤖\s*/u, '') || 'Prompt para Bob';
+    const heading = document.createElement('p');
+    heading.className = 'code-block__label';
+    heading.textContent = label;
+
+    const pre = document.createElement('pre');
+    const code = document.createElement('code');
+    code.textContent = body.textContent;
+    pre.append(code);
+    prompt.append(heading, pre);
+    legacyPrompt.replaceWith(prompt);
+  });
+}
+
+function normalizeCodeBlocks(container) {
+  normalizePromptBlocks(container);
+
+  container.querySelectorAll('pre > code').forEach((code) => {
+    const pre = code.parentElement;
+    const existingBlock = pre.closest('.code-block');
+    if (existingBlock) {
+      normalizeCodeSyntax(code);
+      return;
+    }
+
+    const source = pre.parentElement?.classList.contains('highlight') ? pre.parentElement : pre;
+    const codeBlock = document.createElement('div');
+    const kind = getCodeBlockKind(code);
+    codeBlock.className = `code-block${kind ? ` ${kind}` : ''}`;
+    if (isPromptContext(source)) codeBlock.classList.add('code-block--prompt');
+    source.replaceWith(codeBlock);
+    codeBlock.append(pre);
+    normalizeCodeSyntax(code);
+  });
+
+  container.querySelectorAll('.code-block').forEach((codeBlock) => {
+    const code = codeBlock.querySelector('code');
+    if (!code) return;
+    normalizeCodeSyntax(code);
+    ensureCodeBlockCopyButton(codeBlock);
+  });
+}
+
 function enhanceLabContent(proseEl, section, lab, step, isOverview) {
   if (!proseEl || proseEl.dataset.workshopEnhanced === 'true') return;
   proseEl.dataset.workshopEnhanced = 'true';
@@ -2015,6 +2496,7 @@ function enhanceLabContent(proseEl, section, lab, step, isOverview) {
   rewriteDownloadLinks(proseEl);
 
   const banner = ensureLabBanner(proseEl, section, lab, step);
+  normalizePremiumWorkflowStructure(proseEl, isOverview);
 
   if (isOverview) {
     if (lab.overviewLabsOnly) {
@@ -2026,10 +2508,12 @@ function enhanceLabContent(proseEl, section, lab, step, isOverview) {
       const anchor = proseEl.querySelector('.bobcoin-cost--total') || banner;
       if (anchor) anchor.insertAdjacentHTML('afterend', buildOverviewFormat(section, lab));
     }
-    proseEl.insertAdjacentHTML('beforeend', buildStepClosure(lab, step));
-  } else {
-    proseEl.insertAdjacentHTML('beforeend', buildStepClosure(lab, step));
   }
+
+  removeLegacyStepNavigation(proseEl);
+  normalizeInstructionalImages(proseEl);
+  normalizeCodeBlocks(proseEl);
+  ensureStepClosure(proseEl, lab, step);
 
   proseEl.querySelectorAll('table').forEach((table) => {
     table.classList.add('lab-table');
@@ -2042,73 +2526,11 @@ function enhanceLabContent(proseEl, section, lab, step, isOverview) {
     }
   });
 
-  proseEl.querySelectorAll('pre > code').forEach((codeBlock) => {
-    const pre = codeBlock.parentElement;
-    if (pre.parentElement.classList.contains('cds--snippet-container')) return;
-    if (pre.closest('.code-block')) return;
-
-    // Apply basic syntax highlighting if codeBlock is plain text
-    if (!codeBlock.querySelector('span')) {
-      const rawText = codeBlock.textContent;
-      const lang = (codeBlock.className.match(/language-(\w+)/) || [])[1] || '';
-      
-      if (lang === 'sql') {
-        codeBlock.innerHTML = escapeHtml(rawText)
-          .replace(/\b(CREATE|STREAM|TABLE|WITH|AS|SELECT|FROM|GROUP BY|EMIT|CHANGES|VARCHAR|INT|KAFKA_TOPIC|KEY_FORMAT|VALUE_FORMAT|PARTITIONS|SUM)\b/g, '<span class="highlight-k">$1</span>')
-          .replace(/('[\s\S]*?')/g, '<span class="highlight-s">$1</span>');
-      } else if (lang === 'json') {
-        codeBlock.innerHTML = escapeHtml(rawText)
-          .replace(/("[\w_]+"\s*:)/g, '<span class="highlight-nt">$1</span>')
-          .replace(/(:\s*"[\s\S]*?")/g, ': <span class="highlight-s">$1</span>')
-          .replace(/(:\s*\d+)/g, ': <span class="highlight-m">$1</span>');
-      } else if (lang === 'bash' || lang === 'shell') {
-        codeBlock.innerHTML = escapeHtml(rawText)
-          .replace(/\b(cd|setup\.sh|npm|git|python|python3|pip|orchestrate|docker|kubectl|helm|curl|wget)\b/g, '<span class="highlight-k">$1</span>')
-          .replace(/(\s-[a-zA-Z0-9_-]+)/g, '<span class="highlight-na">$1</span>');
-      }
-    }
-
-    const wrapper = pre.parentElement.classList.contains('highlight') ? pre.parentElement : pre;
-    
-    const snippetDiv = document.createElement('div');
-    snippetDiv.className = 'cds--snippet cds--snippet--multi copy-snippet-block';
-    snippetDiv.dataset.category = section.id;
-    
-    const containerDiv = document.createElement('div');
-    containerDiv.className = 'cds--snippet-container';
-    
-    wrapper.replaceWith(snippetDiv);
-    snippetDiv.appendChild(containerDiv);
-    containerDiv.appendChild(wrapper);
-
-    const copyBtn = document.createElement('button');
-    copyBtn.className = 'cds--snippet-btn cds--copy-btn';
-    copyBtn.type = 'button';
-    copyBtn.setAttribute('aria-label', 'Copiar código');
-    copyBtn.innerHTML = `<svg class="cds--snippet__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor" width="16" height="16"><path d="M28,8H18V4a2,2,0,0,0-2-2H4A2,2,0,0,0,2,4V18a2,2,0,0,0,2,2H8v6a2.0023,2.0023,0,0,0,2,2H28a2.0023,2.0023,0,0,0,2-2V10A2.0023,2.0023,0,0,0,28,8ZM4,18V4H16l.0012,14ZM28,26H10V10H18v4a2,2,0,0,0,2,2h6v10Z"/><polygon points="21.586 14 18 10.414 18 14 21.586 14"/></svg>`;
-    
-    copyBtn.addEventListener('click', async () => {
-      const textToCopy = codeBlock.textContent || '';
-      const copyFn = window.copyToClipboard || copyToClipboard;
-      const success = await copyFn(textToCopy);
-      if (success) {
-        const originalHtml = copyBtn.innerHTML;
-        copyBtn.classList.add('copied');
-        copyBtn.innerHTML = `<svg class="cds--snippet__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor" width="16" height="16"><path d="M14 21.414L9 16.413 10.413 15 14 18.586 21.585 11 23 12.415 14 21.414z"></path></svg>`;
-        setTimeout(() => {
-          copyBtn.innerHTML = originalHtml;
-          copyBtn.classList.remove('copied');
-        }, 2000);
-      }
-    });
-
-    snippetDiv.appendChild(copyBtn);
-  });
 }
 
 // ── Lab renderer ─────────────────────────────────────────────────
 async function renderLab(route) {
-  const result = findLab(route.labSlug);
+  const result = findLab(route.labSlug, getAccessMode());
 
   if (!result) {
     window.location.hash = getHomeRoute();
@@ -2116,8 +2538,12 @@ async function renderLab(route) {
   }
 
   const { section, lab } = result;
-  const activeStep = lab.steps.find((step) => step.slug === route.stepSlug) || lab.steps[0];
-  const content = await loadContent(activeStep.file);
+  const activeStep = lab.steps.find((step) => step.slug === route.stepSlug);
+  if (!activeStep) {
+    window.location.hash = getLabRoute(route.labSlug, 'overview');
+    return;
+  }
+  const content = await loadContent(activeStep.baseFile || activeStep.file);
   const isOverview = activeStep.slug === 'overview';
 
   // Apply category to body for dynamic theming (TOC, nav, snippets)
@@ -2142,17 +2568,13 @@ async function renderLab(route) {
   const proseEl = labShell.querySelector('.prose');
 
   await appendSupplementalContent(proseEl, lab, activeStep);
+  await applyPremiumWorkflowVariant(proseEl, lab, activeStep);
   enhanceLabContent(proseEl, section, lab, activeStep, isOverview);
   buildLabToc(proseEl, lab, activeStep);
   bindImageFallbacks(labShell);
   // Restore persisted env choice for this page
   applyPersistedEnv(proseEl);
-
-  if (route.headingId) {
-    requestAnimationFrame(() => {
-      document.getElementById(route.headingId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  }
+  settleLabScroll();
 }
 
 /** Apply persisted env selection to all toggles in the given scope. */
@@ -2203,6 +2625,7 @@ async function renderRoute() {
   document.body.classList.remove('hub-view--home');
   scrollLabToTop();
   updateNavCurrent();
+  resetLabScroll();
   await renderLab(route);
   scrollLabToTop();
   requestAnimationFrame(scrollLabToTop);
@@ -2258,6 +2681,10 @@ function bindEvents() {
   });
 
   themeToggle.addEventListener('click', toggleTheme);
+
+  [premiumToggle, premiumToggleMobile].filter(Boolean).forEach((control) => {
+    control.addEventListener('click', togglePremiumAccess);
+  });
 
   if (siteSearch) {
     siteSearch.addEventListener('input', () => {
@@ -2374,6 +2801,20 @@ function bindEvents() {
   });
 
   document.addEventListener('click', async (event) => {
+    // Keep anchors inside imported premium documents inside the current SPA.
+    // Route links such as #/lab/... continue through the router.
+    const inPageLink = event.target.closest('.prose a[href^="#"]');
+    const inPageHref = inPageLink?.getAttribute('href') || '';
+    if (inPageLink && inPageHref && !inPageHref.startsWith('#/')) {
+      const target = document.getElementById(inPageHref.slice(1));
+      if (target) {
+        event.preventDefault();
+        history.replaceState(null, '', inPageHref);
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+    }
+
     // Copy button
     const copyButton = event.target.closest('.copy-button');
     if (copyButton) {
@@ -2384,8 +2825,9 @@ function bindEvents() {
       const text = code.textContent || '';
       const copied = await copyToClipboard(text);
       if (copied) {
+        const originalLabel = copyButton.dataset.copyLabel || 'Copiar';
         copyButton.textContent = 'Copiado';
-        window.setTimeout(() => { copyButton.textContent = 'Copiar'; }, 1200);
+        window.setTimeout(() => { copyButton.textContent = originalLabel; }, 1200);
       }
       return;
     }
@@ -2406,7 +2848,9 @@ function bindEvents() {
 
 bindRoadshowEvents();
 
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 initializeTheme();
+updatePremiumToggle();
 renderPlatformNav();
 bindEvents();
 renderRoute();

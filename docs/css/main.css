@@ -1727,15 +1727,22 @@ body {
 }
 
 .lab-figure--lowres {
+  --lab-figure-warning-bg: #fdf6dd;
+  --lab-figure-warning-text: #6f4f00;
   padding: 12px;
   border: 1px dashed var(--cds-support-warning, #f1c21b);
-  background: #fdf6dd;
+  background: var(--lab-figure-warning-bg);
 }
 
 .lab-figure--lowres .lab-figure__caption::after {
   content: ' — resolución baja: reemplaza con captura nativa (ver IMAGES.md)';
-  color: var(--cds-support-warning, #b28600);
+  color: var(--lab-figure-warning-text);
   font-style: normal;
+}
+
+body.cds--g100 .lab-figure--lowres {
+  --lab-figure-warning-bg: #332b00;
+  --lab-figure-warning-text: #f1c21b;
 }
 
 .lab-figure__img--half {

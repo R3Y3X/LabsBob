@@ -1,0 +1,1651 @@
+<div class="content-panel lab-template premium-workflow">
+  <div class="lab-banner">
+    <div class="lab-banner__tags">
+      <span class="cds--tag cds--tag--green">Premium</span>
+      <span class="cds--tag cds--tag--cool-gray">Actualización Java</span>
+    </div>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Laboratorio 2 — Actualización de Java 8 a Java 21</h1>
+    <p class="cds--body-02 lab-banner__summary" style="max-width:72ch;margin-top:var(--cds-spacing-04,0.75rem)">
+      Actualiza Simple Pharmacy de Java 8 a Java 21 y Jakarta EE 10: migración <code>javax.*</code> → <code>jakarta.*</code>,
+      salto de Struts 2.5 a 7.x y remediación de CVEs — el lab más exigente del grupo.
+    </p>
+    <div class="lab-banner__metrics">
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">Objetivo</span>
+        <span class="lab-banner__metric-label">Java 21</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">~20</span>
+        <span class="lab-banner__metric-label">minutos</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">8–9</span>
+        <span class="lab-banner__metric-label">BobCoins estimados</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">Premium</span>
+        <span class="lab-banner__metric-label">acceso requerido</span>
+      </div>
+    </div>
+  </div>
+  <section class="lab-section" aria-labelledby="lab2-introduccion">
+    <h2 class="cds--productive-heading-03" id="lab2-introduccion">Introducción</h2>
+    <p>
+Actualice el
+      <strong>Simple Pharmacy Management System</strong>
+ alojado en Liberty de
+      <strong>Java 8</strong>
+ a
+      <strong>Java 21</strong>
+ y
+      <strong>Jakarta EE 10</strong>
+: el mismo flujo de trabajo que Laboratorio 1, subtipo diferente.
+    </p>
+    <div class="callout" data-tone="note">
+      <p class="callout__title">Lo que lograrás</p>
+      <p>
+Configure y ejecute el subtipo
+        <strong>Java Upgrade</strong>
+: elija una distribución, versión de destino y nivel Jakarta EE; Observe a Bob instalar Java 21, aplicar las recetas de OpenRewrite, buscar CVEs en mitad del flujo de trabajo y refactorizar Struts 2.5 → 7 en todo el código base.
+      </p>
+    </div>
+  </section>
+  <section class="lab-section" aria-labelledby="get-the-source-code-first">
+    <h2 class="cds--productive-heading-03" id="get-the-source-code-first">Obtén primero el código fuente</h2>
+    <p>Si aún no lo has hecho, descarga el paquete del taller:</p>
+    <p>
+      <a download="simple-pharmacy-workshop-v2.zip" href="./downloads/simple-pharmacy-workshop-v2.zip" class="cds--btn cds--btn--primary">
+        <span class="premium-button-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M5 20h14v-2H5m14-9h-4V3H9v6H5l7 7z"></path>
+          </svg>
+        </span>
+ Paquete de taller (2,1 MB)
+      </a>
+    </p>
+    <p>Descomprímalo y luego abra la instantánea inicial del Laboratorio 2 en IBM Bob:</p>
+    <div data-language="text" class="code-block premium-code-block">
+      <pre>
+        <code>simple-pharmacy-workshop-v2/labs/lab2-java-upgrade/snapB-java-upgrade/</code>
+      </pre>
+    </div>
+    <p>Esta instantánea ya está en Liberty (el resultado del Laboratorio 1), por lo que puede ejecutar este laboratorio independientemente del Laboratorio 1.</p>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">
+Abra la carpeta
+        <code>snapB-*</code>
+, no su carpeta principal
+      </p>
+      <p>El flujo de trabajo Java Modernization solo aparece cuando se abre Bob en la carpeta de instantáneas.</p>
+    </div>
+  </section>
+  <section class="lab-section" aria-labelledby="use-case-upgrade-java-versions">
+    <h2 class="cds--productive-heading-03" id="use-case-upgrade-java-versions">Caso de uso: actualizar las versiones de Java</h2>
+    <p>La aplicación se ejecuta actualmente en:</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+        <strong>Tiempo de ejecución</strong>
+: Liberty,
+        <strong>Java 8</strong>
+      </li>
+      <li class="cds--list__item">
+        <strong>Interfaz</strong>
+: Struts 2.5.x
+      </li>
+      <li class="cds--list__item">
+        <strong>Espacio de nombres</strong>
+:
+        <code>javax.*</code>
+ (Java EE)
+      </li>
+    </ul>
+    <p>Lo modernizarás para:</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+        <strong>Tiempo de ejecución</strong>
+: Liberty,
+        <strong>Java 21</strong>
+ (IBM Semeru)
+      </li>
+      <li class="cds--list__item">
+        <strong>Interfaz</strong>
+: Struts 7.x
+      </li>
+      <li class="cds--list__item">
+        <strong>Espacio de nombres</strong>
+:
+        <code>jakarta.*</code>
+ (Jakarta EE 10)
+      </li>
+    </ul>
+    <h3 id="why-this-matters" class="cds--productive-heading-02 lab-step__title">Por qué esto importa</h3>
+    <p>
+Java 21 es la versión LTS actual. Más allá del rendimiento, desbloquea características del lenguaje (registros, tipos sellados, coincidencia de patrones, subprocesos virtuales) y líneas base de dependencia modernas. La medida también arrastra dos migraciones del mundo real que hacen que este laboratorio sea interesante: el cambio de nombre del espacio de nombres
+      <strong>
+        <code>javax</code>
+ →
+        <code>jakarta</code>
+      </strong>
+, y un salto de versión
+      <strong>principal Struts</strong>
+ que cambia el lugar donde vive
+      <code>ActionSupport</code>
+.
+    </p>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">Este es el laboratorio más largo y propenso a fallas del grupo.</p>
+      <p>
+El propio Bob califica esta migración como
+        <strong>Complejidad: Muy alta</strong>
+, y se lo merece. Tres cosas cambian a la vez (el JDK, el espacio de nombres de Yakarta y la versión principal Struts) y la aplicación no se ejecutará hasta que los tres se alineen,
+        <em>más</em>
+ la configuración del servidor Liberty que Bob no siempre actualiza por sí solo.
+      </p>
+      <p>
+Presuponga más tiempo que los laboratorios 1 y 3, espere pegar un par de errores nuevamente en el chat y trabaje en la sección
+        <a href="#troubleshooting">Solución de problemas</a>
+ en lugar de evitarla. Todo lo que golpearás está documentado allí.
+      </p>
+    </div>
+  </section>
+  <section class="lab-section" aria-labelledby="prerequisites">
+    <h2 class="cds--productive-heading-03" id="prerequisites">Requisitos previos</h2>
+    <h3 id="1-ibm-bob-ide-v2" class="cds--productive-heading-02 lab-step__title">1. IBM Bob IDE (V2)</h3>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+Última extensión IDE
+        <strong>Bob V2</strong>
+ instalada, iniciada sesión.
+      </li>
+      <li class="cds--list__item">
+Un plan que incluye el paquete de flujo de trabajo Java Modernization (el paquete
+        <strong>Premium</strong>
+).
+      </li>
+    </ul>
+    <h3 id="2-java-8-starting-state-and-maven" class="cds--productive-heading-02 lab-step__title">2. Java 8 (estado inicial) y Maven</h3>
+    <p>
+Necesitas
+      <strong>Java 8</strong>
+ para que Bob pueda compilar el estado inicial limpiamente.
+      <strong>No es necesario instalar Java 21</strong>
+: el flujo de trabajo instala la versión de destino (Semeru 21) a través del propio SDKMAN!.
+    </p>
+    <div data-tabs="1:3" class="premium-platform-options">
+      <input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" />
+      <input id="__tabbed_1_2" name="__tabbed_1" type="radio" />
+      <input id="__tabbed_1_3" name="__tabbed_1" type="radio" />
+      <div class="premium-platform-options__labels">
+        <label for="__tabbed_1_1">macOS</label>
+        <label for="__tabbed_1_2">Linux</label>
+        <label for="__tabbed_1_3">Windows</label>
+      </div>
+      <div class="premium-platform-options__content">
+        <div class="premium-platform-option">
+          <p>
+Usando
+            <strong>SDKMAN!</strong>
+. Si aún no lo tienes:
+          </p>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>curl -s "https://get.sdkman.io" | bash</code>
+            </pre>
+          </div>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>source "$HOME/.sdkman/bin/sdkman-init.sh"</code>
+            </pre>
+          </div>
+          <p>Active Java 8 para este shell:</p>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>sdk install java 8.0.492-zulu</code>
+            </pre>
+          </div>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>sdk use java 8.0.492-zulu</code>
+            </pre>
+          </div>
+          <p>Instale Maven (omita si ya lo hizo en el Laboratorio 1):</p>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>sdk install maven</code>
+            </pre>
+          </div>
+        </div>
+        <div class="premium-platform-option">
+          <p>
+Usando
+            <strong>SDKMAN!</strong>
+. Si aún no lo tienes:
+          </p>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>curl -s "https://get.sdkman.io" | bash</code>
+            </pre>
+          </div>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>source "$HOME/.sdkman/bin/sdkman-init.sh"</code>
+            </pre>
+          </div>
+          <p>Active Java 8 para este shell:</p>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>sdk install java 8.0.492-zulu</code>
+            </pre>
+          </div>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>sdk use java 8.0.492-zulu</code>
+            </pre>
+          </div>
+          <p>Instale Maven (omita si ya lo hizo en el Laboratorio 1):</p>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>sdk install maven</code>
+            </pre>
+          </div>
+        </div>
+        <div class="premium-platform-option">
+          <p>Dos opciones: elija una (SDKMAN! no se puede ejecutar en PowerShell).</p>
+          <p>
+            <strong>Opción A — Winget (permanece en PowerShell).</strong>
+ Ejecutar en
+            <strong>PowerShell</strong>
+:
+          </p>
+          <div data-language="powershell" class="code-block premium-code-block">
+            <pre>
+              <code>winget install EclipseAdoptium.Temurin.8.JDK</code>
+            </pre>
+          </div>
+          <div data-language="powershell" class="code-block premium-code-block">
+            <pre>
+              <code>winget install Apache.Maven</code>
+            </pre>
+          </div>
+          <p>
+Cierre y vuelva a abrir PowerShell. Bob instala Java 21 durante el flujo de trabajo; apunte
+            <code>JAVA_HOME</code>
+ en Temurin 8 por ahora para que la compilación del estado inicial lo use.
+          </p>
+          <p>
+            <strong>Opción B — SDKMAN! en Git Bash o WSL (idéntico a macOS/Linux).</strong>
+ Esta es la forma más fácil de moverse entre Java 8 y 21. Abra Git Bash (de
+            <a href="https://git-scm.com/download/win">Git para Windows</a>
+) o WSL (
+            <code>wsl --install</code>
+), luego ejecute los comandos
+            <strong>macOS/Linux</strong>
+ desde las otras pestañas.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="callout" data-tone="tip">
+      <p class="callout__title">
+Utilice
+        <code>sdk use</code>
+, no
+        <code>sdk default</code>
+, aquí
+      </p>
+      <p>
+Sólo necesita Java 8 activo para la compilación inicial. Bob cambia el valor predeterminado de SDKMAN a Java 21 una vez que se ejecuta el flujo de trabajo:
+        <code>sdk use</code>
+ mantiene limpia esa transición.
+      </p>
+    </div>
+    <p>Verificar: lo mismo en todos los sistemas operativos:</p>
+    <div data-language="bash" class="code-block premium-code-block">
+      <pre>
+        <code>java -version</code>
+      </pre>
+    </div>
+    <p>
+Deberías ver una versión que comienza con
+      <code>1.8.</code>
+.
+    </p>
+    <div data-language="bash" class="code-block premium-code-block">
+      <pre>
+        <code>mvn --version</code>
+      </pre>
+    </div>
+    <div class="callout" data-tone="note">
+      <p class="callout__title">
+        <code>mvn --version</code>
+ muestra el Java con el que Maven construirá
+      </p>
+      <p>
+Esto puede diferir del valor predeterminado de su shell
+        <code>java -version</code>
+: Maven sigue a
+        <code>JAVA_HOME</code>
+ (o, con SDKMAN!, la instalación activa). Debería informar
+        <strong>Java 8</strong>
+ al comienzo de esta práctica de laboratorio.
+      </p>
+    </div>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">Reinicie Bob después de instalar Maven</p>
+      <p>
+Después de instalar Maven,
+        <strong>debe</strong>
+ cerrar y reiniciar IBM Bob (o su IDE) para que elija el nuevo
+        <code>PATH</code>
+.
+      </p>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">Cierra tu IDE por completo.</li>
+        <li class="cds--list__item">Vuelva a abrir su IDE.</li>
+        <li class="cds--list__item">
+Verifique que se detecte Maven ejecutando
+          <code>mvn --version</code>
+ en la terminal de Bob.
+        </li>
+      </ol>
+    </div>
+  </section>
+  <section class="lab-section" aria-labelledby="worth-watching-for">
+    <h2 class="cds--productive-heading-03" id="worth-watching-for">Vale la pena verlo</h2>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+        <strong>Pantalla de configuración estructurada</strong>
+: distribución de Java, versión de Java de destino y versión Jakarta EE como menús desplegables, con la clasificación de complejidad y el recuento de vulnerabilidades de Bob antes de confirmar.
+      </li>
+      <li class="cds--list__item">
+        <strong>Instalación autónoma de Java</strong>
+: el flujo de trabajo instala Semeru 21 a través de SDKMAN! sin que usted haga nada.
+      </li>
+      <li class="cds--list__item">
+        <strong>Escaneo CVE en mitad del flujo de trabajo</strong>
+: después de ejecutar las recetas, Bob escanea cada dependencia en busca de CVEs conocida y se ofrece a solucionarlas.
+      </li>
+      <li class="cds--list__item">
+        <strong>Refactor automatizado a gran escala</strong>
+: el salto Struts 2.5 → 7 reescribe
+        <code>ActionSupport</code>
+ importaciones en todas las clases de acción; Bob lo hace automáticamente.
+      </li>
+      <li class="cds--list__item">
+        <strong>Desglose de costos por tarea + resumen de modernización visual</strong>
+ al final.
+      </li>
+    </ul>
+  </section>
+  <section class="lab-section" aria-labelledby="bobs-java-modernization-workflow-recap">
+    <h2 class="cds--productive-heading-03" id="bobs-java-modernization-workflow-recap">Flujo de trabajo Java Modernization de Bob (resumen)</h2>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+        <strong>Analizar</strong>
+: Bob inspecciona el proyecto; eliges un tipo de modernización.
+      </li>
+      <li class="cds--list__item">
+        <strong>Actualización</strong>
+: Bob realiza la actualización agente, un problema a la vez, con su aprobación.
+      </li>
+      <li class="cds--list__item">
+        <strong>Validar</strong>
+: Bob crea, valida y genera el resumen de modernización.
+      </li>
+    </ul>
+    <h3 id="controlling-bobs-permissions" class="cds--productive-heading-02 lab-step__title">Controlando los permisos de Bob</h3>
+    <p>
+      <strong>Read</strong>
+ /
+      <strong>Edit</strong>
+ /
+      <strong>Execute</strong>
+ /
+      <strong>MCP</strong>
+: alterna lo que Bob puede hacer sin preguntar.
+    </p>
+    <div class="callout" data-tone="tip">
+      <p class="callout__title">consejo</p>
+      <p>
+Comience solo con
+        <strong>Read</strong>
+ habilitado hasta que se sienta cómodo.
+      </p>
+    </div>
+  </section>
+  <section class="lab-section" aria-labelledby="step-1-open-the-project">
+    <h2 class="cds--productive-heading-03" id="step-1-open-the-project">Paso 1: abre el proyecto</h2>
+    <ol class="cds--list--ordered">
+      <li class="cds--list__item">Inicie su IDE con IBM Bob instalado.</li>
+      <li class="cds--list__item">
+Abra la carpeta
+        <code>snapB-java-upgrade</code>
+        <strong> como raíz del proyecto</strong>
+ (
+        <strong>Archivo &gt; Abrir carpeta</strong>
+).
+      </li>
+      <li class="cds--list__item">Si la ventana de chat de Bob aún no está abierta, haga clic en el ícono de Bob en la parte superior de su IDE.</li>
+      <li class="cds--list__item">
+Confirme que el indicador de modo en la parte inferior muestra
+        <strong>Agent</strong>
+.
+      </li>
+    </ol>
+    <h3 id="confirm-the-workflow-appears" class="cds--productive-heading-02 lab-step__title">Confirme que aparece el flujo de trabajo</h3>
+    <p>
+Haga clic en el botón de reproducción (
+      <strong>▶</strong>
+) para abrir la pestaña
+      <strong>Workflows</strong>
+ y busque
+      <strong>Java Modernization</strong>
+.
+    </p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+        <strong>¿El botón Flujo de trabajo no está disponible?</strong>
+ Asegúrese de que su instalación de Bob esté actualizada.
+      </li>
+      <li class="cds--list__item">
+        <strong>¿No encuentras el flujo de trabajo?</strong>
+ Verifica que hayas abierto la carpeta correcta y que estés en la cuenta correcta.
+      </li>
+    </ul>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/java-modernization-workflow-card.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/java-modernization-workflow-card.png" class="lab-figure__img" alt="Java Modernization tarjeta de flujo de trabajo en la pestaña Flujos de trabajo" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — Java Modernization tarjeta de flujo de trabajo en la pestaña Flujos de trabajo. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+  </section>
+  <section class="lab-section" aria-labelledby="step-2-run-the-java-upgrade-workflow">
+    <h2 class="cds--productive-heading-03" id="step-2-run-the-java-upgrade-workflow">Paso 2: ejecute el flujo de trabajo Java Upgrade</h2>
+    <h3 id="objective" class="cds--productive-heading-02 lab-step__title">Objetivo</h3>
+    <p>Haga que Bob actualice la aplicación a Java 21, la migre a Jakarta EE 10 y corrija la dependencia CVEs que encuentre en el camino.</p>
+    <h3 id="21-start-the-workflow" class="cds--productive-heading-02 lab-step__title">2.1 Iniciar el flujo de trabajo</h3>
+    <p>
+Haga clic en
+      <strong>Inicio</strong>
+ en la tarjeta de flujo de trabajo
+      <strong>Java Modernization</strong>
+.
+    </p>
+    <h3 id="22-analyze-analyze-java-project" class="cds--productive-heading-02 lab-step__title">2.2 Analizar - Analizar proyecto Java</h3>
+    <p>
+Confirme que
+      <strong>Project Path</strong>
+ apunta a su carpeta
+      <code>snapB-java-upgrade</code>
+, es decir, donde descomprimió el paquete, terminando con
+      <code>…/simple-pharmacy-workshop-v2/labs/lab2-java-upgrade/snapB-java-upgrade</code>
+ (esa cola es solo un ejemplo de cómo debe terminar su ruta). Deje
+      <strong>Comando de compilación personalizada</strong>
+ en blanco y haga clic en
+      <strong>Continuar</strong>
+.
+    </p>
+    <p>Bob escanea el proyecto, detecta que es una aplicación Java 8 y ejecuta una compilación inicial para confirmar las compilaciones básicas.</p>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/analyze-project-panel.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/analyze-project-panel.png" class="lab-figure__img" alt="Panel Analizar proyecto con la ruta del proyecto completada automáticamente" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — Panel Analizar proyecto con la ruta del proyecto completada automáticamente. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+    <h3 id="23-analyze-select-modernization-type" class="cds--productive-heading-02 lab-step__title">2.3 Analizar: seleccionar el tipo de modernización</h3>
+    <p>
+El panel
+      <strong>Tipo de modernización</strong>
+ ofrece cuatro subtipos. Elige:
+    </p>
+    <table class="lab-table">
+      <thead>
+        <tr>
+          <th>Configuración</th>
+          <th>Valor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <strong>Tipo de modernización</strong>
+          </td>
+          <td>
+            <strong>Java Upgrade</strong>
+ —
+            <em>"Actualice su aplicación Java a una versión más reciente"</em>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Habilitar Git Flow</strong>
+          </td>
+          <td>
+            <strong>Apagado</strong>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+Haga clic en
+      <strong>Continuar</strong>
+.
+    </p>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/select-java-upgrade.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/select-java-upgrade.png" class="lab-figure__img" alt="Seleccione el panel Tipo de modernización con Java Upgrade seleccionado y Git Flow desactivado" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — Seleccione el panel Tipo de modernización con Java Upgrade seleccionado y Git Flow desactivado. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+    <div class="callout" data-tone="note">
+      <p class="callout__title">Liberty El cambio de plataforma está atenuado aquí, eso es correcto</p>
+      <p>
+El panel lo desactiva con la nota
+        <em>"La aplicación ya está usando Liberty". </em>
+        <code>snapB</code>
+ es el estado posterior a Lab-1, por lo que no queda nada que cambiar de plataforma. Si
+        <strong>no</strong>
+ está atenuado, has abierto la instantánea incorrecta; comprueba que estás en
+        <code>snapB-java-upgrade</code>
+ y no en
+        <code>snapA</code>
+.
+      </p>
+    </div>
+    <h3 id="24-upgrade-check-java-prerequisites" class="cds--productive-heading-02 lab-step__title">2.4 Actualización: comprobar los requisitos previos de Java</h3>
+    <p>
+Bob primero muestra un panel
+      <strong>Comprobar requisitos previos de Java</strong>
+ que confirma
+      <strong>SDKMan instalado</strong>
+. Esta es la puerta que le permite a Bob instalar el JDK de destino por usted.
+    </p>
+    <p>
+Si informa que falta SDKMan, instálelo (consulte
+      <a href="#2-java-8-starting-state-and-maven">prerrequisitos</a>
+ más arriba), luego
+      <strong>reinicie completamente Bob</strong>
+; solo vuelve a detectar herramientas al inicio.
+    </p>
+    <h3 id="25-upgrade-java-upgrade-configuration" class="cds--productive-heading-02 lab-step__title">2.5 Actualización — Configuración Java Upgrade</h3>
+    <p>
+Ahora el panel
+      <strong>Java Upgrade Configuración</strong>
+. Los tres campos son obligatorios:
+    </p>
+    <table class="lab-table">
+      <thead>
+        <tr>
+          <th>campo</th>
+          <th>Valor a seleccionar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <strong>Distribución Java</strong>
+ *
+          </td>
+          <td>
+            <strong>Semeru (IBM)</strong>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Versión Java</strong>
+ *
+          </td>
+          <td>
+            <strong>Java 21</strong>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Jakarta EE Versión</strong>
+ *
+          </td>
+          <td>
+            <strong>Jakarta EE 10</strong>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/java-upgrade-configuration.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/java-upgrade-configuration.png" class="lab-figure__img" alt="Java Upgrade Panel de configuración con Semeru, Java 21 y Jakarta EE 10 seleccionados" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — Java Upgrade Panel de configuración con Semeru, Java 21 y Jakarta EE 10 seleccionados. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+    <p>
+El panel permanece en blanco hasta que usted elija; si ve
+      <em>"Seleccione la versión de Java para ver las recomendaciones de actualización"</em>
+, simplemente elija la versión de Java y el resto se completará.
+    </p>
+    <p>
+Una vez configurados los tres, Bob completa tres secciones de solo lectura.
+      <strong>Léelos antes de continuar:</strong>
+    </p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+        <strong>Descripción</strong>
+ —
+        <em>"Actualice Java 8 a 21 (LTS), migre a Jakarta EE 10, actualice Struts2 a 6.8.0+ con soporte de Jakarta, funciones Liberty jakartaee-10.0, migración completa del espacio de nombres javax a jakarta en todos archivos fuente, descriptores WAR y archivos de configuración."</em>
+      </li>
+      <li class="cds--list__item">
+        <strong>Desafíos técnicos clave</strong>
+ - etiquetado
+        <strong>Complejidad: Muy alta</strong>
+.
+        <em>"Triple complejidad: fuerte encapsulación de Java 21, migración completa del espacio de nombres de Yakarta y actualización de la versión principal Struts2 simultáneamente; la compatibilidad de expresiones OGNL bajo Jakarta EE 10 restricciones de seguridad necesita pruebas exhaustivas". </em>
+      </li>
+      <li class="cds--list__item">
+        <strong>Evaluación de vulnerabilidades</strong>
+ —
+        <em>"13 vulnerabilidades pueden resolverse potencialmente actualizando a Java 21."</em>
+      </li>
+    </ul>
+    <p>
+Haga clic en
+      <strong>Continuar</strong>
+.
+    </p>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">Elija Jakarta EE 10 - no 11</p>
+      <p>
+Java 21 es técnicamente compatible con Jakarta EE 11, por lo que el menú desplegable puede tentarte.
+        <strong>Permanezca en 10.</strong>
+ La configuración Liberty de este taller se basa en el conjunto de funciones
+        <code>webProfile-10.0</code>
+ /
+        <code>jakartaee-10.0</code>
+, y cada instantánea posterior lo asume. Elegir 11 significa depurar una característica que no coincide con Liberty en lugar de ejecutar el laboratorio.
+      </p>
+    </div>
+    <div class="callout" data-tone="tip">
+      <p class="callout__title">Si Bob se ofrece a instalar Java 21, déjelo</p>
+      <p>
+Si Semeru 21 no está en su máquina, Bob le indicará que lo instale. Haga clic en
+        <strong>Instalar</strong>
+; el flujo de trabajo lo instala a través de SDKMAN! y se reanuda automáticamente.
+        <strong>no</strong>
+ necesita instalar Java 21 a mano.
+      </p>
+    </div>
+    <details class="premium-details">
+      <summary>Esa línea 'Evaluación de vulnerabilidades: 13' es una vista previa, no una promesa</summary>
+      <p>
+Esos 13 CVEs son los mismos que Bob buscará y ofrecerá arreglar en el paso 2.7. El panel le dice desde el principio lo que le ofrece una actualización de Java 21 en términos de seguridad: un marco realmente útil cuando está presentando una modernización a alguien que controla el presupuesto. Tenga en cuenta la redacción:
+        <em>"potencialmente puede resolverse"</em>
+. La actualización habilita las correcciones; no los aplica. Esa es una subtarea separada que aprobará más adelante.
+      </p>
+    </details>
+    <p>Bob aplica las recetas de migración de OpenRewrite y luego ejecuta un pase de compilación agente para resolver lo que aún no se compila.</p>
+    <h3 id="26-upgrade-approve-the-pomxml-changes" class="cds--productive-heading-02 lab-step__title">
+2.6 Actualización: aprobar los cambios
+      <code>pom.xml</code>
+    </h3>
+    <p>Bob analiza los problemas que encuentra y explica cada uno de ellos antes de cambiar nada. El que todos ven:</p>
+    <blockquote>
+      <p>
+        <strong>Javassist POM advertencia.</strong>
+        <em>
+"La solución agrega una entrada
+          <code>&lt;dependencyManagement&gt;</code>
+ para fijar
+          <code>org.javassist:javassist</code>
+ a
+          <code>3.29.2-GA</code>
+ y elimina la declaración directa redundante
+          <code>&lt;dependency&gt;</code>
+. Esto suprime la advertencia al evitar que Maven evalúe la falla 3.20.0-GA POM durante la recolección."
+        </em>
+      </p>
+    </blockquote>
+    <p>
+      <strong>
+Haga clic en "Sí, aplique el cambio a
+        <code>pom.xml</code>
+".
+      </strong>
+ Confirme que la versión dice
+      <strong>
+        <code>3.29.2-GA</code>
+      </strong>
+, igual que Lab 1. Nada en la aplicación importa javassist directamente (es un Struts/OGNL interno), por lo que descartar la declaración directa es seguro.
+    </p>
+    <p>Apruebe cualquier anulación de dependencia adicional a medida que aparezca.</p>
+    <details class="premium-details">
+      <summary>
+Por qué mover el pin a
+        <code>&lt;dependencyManagement&gt;</code>
+ es la decisión correcta
+      </summary>
+      <p>
+Un
+        <code>&lt;dependency&gt;</code>
+ directo fuerza la versión, según la regla
+        <em>más cercana-victoria</em>
+ de Maven. Pero eso solo se aplica
+        <strong>después de</strong>
+ Maven ya recorrió el gráfico y analizó el
+        <code>3.20.0-GA</code>
+ POM roto, que es lo que emite la advertencia en primer lugar.
+      </p>
+      <p>
+        <code>&lt;dependencyManagement&gt;</code>
+ se aplica durante la dependencia
+        <strong>colección</strong>
+, antes de que se lea POM. El mismo classpath resultante, pero el POM malo nunca se toca. Esa es la diferencia entre suprimir un síntoma y eliminar la causa, y "fijarlo en la gestión de dependencias, no como una dependencia directa" es la lección transferible para cualquier código base Java real.
+      </p>
+    </details>
+    <h3 id="27-upgrade-mid-workflow-cve-scan" class="cds--productive-heading-02 lab-step__title">2.7 Actualización: escaneo CVE en mitad del flujo de trabajo</h3>
+    <p>Una vez que finalizan la actualización y la validación de la compilación, Bob escanea cada dependencia con la base de datos de vulnerabilidades OSV: los 13 hallazgos que se obtuvieron en la vista previa del panel de configuración.</p>
+    <p>
+Cuando se le pregunte
+      <em>"¿Desea iniciar una subtarea para corregir las vulnerabilidades detectadas?"</em>
+, haga clic en
+      <strong>Sí</strong>
+.
+    </p>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/cve-scan-prompt.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/cve-scan-prompt.png" class="lab-figure__img" alt="Mensaje de subtarea de escaneo CVE que solicita corregir las vulnerabilidades detectadas" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — Mensaje de subtarea de escaneo CVE que solicita corregir las vulnerabilidades detectadas. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+    <p>Bob entonces:</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+Actualice
+        <code>struts2-core</code>
+ de 2.5.x a
+        <strong>7.x</strong>
+      </li>
+      <li class="cds--list__item">
+Actualizar
+        <code>struts2-convention-plugin</code>
+      </li>
+      <li class="cds--list__item">
+Agregue anulaciones de
+        <code>commons-io</code>
+ y
+        <code>commons-lang3</code>
+      </li>
+      <li class="cds--list__item">
+Reescribir las importaciones
+        <code>ActionSupport</code>
+ en todas las clases de acción (
+        <code>com.opensymphony.xwork2</code>
+ →
+        <code>org.apache.struts2</code>
+)
+      </li>
+    </ul>
+    <details class="premium-details">
+      <summary>Este es el momento más instructivo en el laboratorio.</summary>
+      <p>
+El salto Struts 2.5 → 7 mueve
+        <code>ActionSupport</code>
+ a un paquete completamente diferente. En un proyecto real, eso implica buscar y reemplazar en cada clase de acción, además de una ronda de errores de compilación que perseguir.
+      </p>
+      <p>
+Observe la
+        <em>causalidad</em>
+, no solo la diferencia: la corrección
+        <strong>CVE es lo que fuerza el salto de versión</strong>
+, y la reescritura de importación
+        <strong> es lo que hace que se compile nuevamente</strong>
+. Nadie se propuso actualizar Struts hoy; la seguridad lo hizo. Así es como se priorizan las actualizaciones del marco en el mundo real, y es una demostración mucho más honesta que "actualicemos porque lo más nuevo es mejor".
+      </p>
+    </details>
+    <h3 id="28-validate-final-build-verification" class="cds--productive-heading-02 lab-step__title">2.8 Validar: verificación de compilación final</h3>
+    <p>
+Bob ejecuta
+      <code>mvn clean compile</code>
+ en Java 21. Esté atento a
+      <code>BUILD SUCCESS</code>
+ en el chat.
+    </p>
+    <p>
+Si la compilación falla aquí, Bob inicia una
+      <strong>subtarea de recuperación</strong>
+ y la corrige de forma agente: déjela ejecutar. Si finaliza y persisten errores, pegue el resultado completo nuevamente en el chat.
+    </p>
+    <h3 id="29-validate-modernization-summary" class="cds--productive-heading-02 lab-step__title">2.9 Validar: resumen de modernización</h3>
+    <p>
+Bob muestra el
+      <strong>resumen de modernización visual</strong>
+. Confirma que informa:
+    </p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+Versión de Java actualizada
+        <strong>1.8 → 21</strong>
+ (IBM Semeru)
+      </li>
+      <li class="cds--list__item">
+Jakarta EE
+        <strong>10</strong>
+ migración aplicada
+      </li>
+      <li class="cds--list__item">
+Pases de compilación con
+        <strong>sin errores</strong>
+      </li>
+      <li class="cds--list__item">
+Vulnerabilidades de seguridad
+        <strong>resueltas</strong>
+      </li>
+    </ul>
+    <p>
+Bob también imprime el
+      <strong>costo por tarea y el desglose de tokens</strong>
+, normalmente
+      <strong>~3–5 monedas Bob</strong>
+ para este laboratorio.
+    </p>
+    <div class="callout" data-tone="danger">
+      <p class="callout__title">Un resumen verde no significa que la aplicación se ejecuta</p>
+      <p>
+El resumen informa sobre
+        <strong>build</strong>
+, no sobre
+        <strong>runtime</strong>
+.
+        <code>mvn clean compile</code>
+ tener éxito le indica que el código Java y el cambio de nombre del espacio de nombres son consistentes; no dice nada sobre si Liberty realmente puede ofrecer el resultado.
+      </p>
+      <p>
+El panel de configuración prometía
+        <em>"Liberty características de jakartaee-10.0"</em>
+, pero el flujo de trabajo frecuentemente
+        <strong>
+ deja
+          <code>server.xml</code>
+ intacto
+        </strong>
+ en el antiguo conjunto de características de Java-EE. No lo sabrás hasta que inicies el servidor. El paso 3 es donde debes verificar, no te lo saltes.
+      </p>
+    </div>
+  </section>
+  <section class="lab-section" aria-labelledby="step-3-inspect-and-verify-the-upgrade">
+    <h2 class="cds--productive-heading-03" id="step-3-inspect-and-verify-the-upgrade">Paso 3: inspeccionar y verificar la actualización</h2>
+    <h3 id="inspect-the-diff" class="cds--productive-heading-02 lab-step__title">inspeccionar la diferencia</h3>
+    <p>
+Los cambios automatizados en el espacio de nombres de Bob son el momento clave de aprendizaje. Abra algunos archivos en
+      <code>src/main/java/com/pharmacy/action/</code>
+ y busque:
+    </p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+        <code>import com.opensymphony.xwork2.ActionSupport;</code>
+ →
+        <code>import org.apache.struts2.ActionSupport;</code>
+      </li>
+      <li class="cds--list__item">
+        <code>javax.*</code>
+ →
+        <code>jakarta.*</code>
+ importar swaps
+      </li>
+    </ul>
+    <h3 id="compile-check" class="cds--productive-heading-02 lab-step__title">Compilar cheque</h3>
+    <p>En la terminal de Bob, confirme que Java 21 esté activo:</p>
+    <div data-language="bash" class="code-block premium-code-block">
+      <pre>
+        <code>java -version</code>
+      </pre>
+    </div>
+    <div data-language="bash" class="code-block premium-code-block">
+      <pre>
+        <code>mvn clean compile</code>
+      </pre>
+    </div>
+    <p>
+Deberías ver
+      <code>BUILD SUCCESS</code>
+.
+    </p>
+    <div class="callout" data-tone="success">
+      <p class="callout__title">Punto de control: cómo se ve una actualización terminada</p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">
+          <code>pom.xml</code>
+ muestra
+          <code>21</code>
+ en cada marcador de versión de Java (
+          <code>maven.compiler.source</code>
+/
+          <code>target</code>
+ y el complemento del compilador maven
+          <code>&lt;source&gt;</code>
+/
+          <code>&lt;target&gt;</code>
+, o un solo
+          <code>&lt;release&gt;21</code>
+).
+        </li>
+        <li class="cds--list__item">
+El código importa
+          <code>jakarta.*</code>
+, no
+          <code>javax.*</code>
+.
+        </li>
+        <li class="cds--list__item">
+          <code>struts2-core</code>
+ está en
+          <strong>7.x</strong>
+ y las clases de acción importan
+          <code>org.apache.struts2.ActionSupport</code>
+.
+        </li>
+        <li class="cds--list__item">
+          <code>mvn clean compile</code>
+ →
+          <code>BUILD SUCCESS</code>
+, sin
+          <code>Unsupported class file major version</code>
+.
+        </li>
+      </ul>
+    </div>
+    <h3 id="run-the-application" class="cds--productive-heading-02 lab-step__title">Ejecute la aplicación</h3>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">Primero: asegúrese de que no se esté ejecutando ningún Liberty</p>
+      <p>
+Si un servidor del Laboratorio 1 (o un intento anterior) todavía mantiene el puerto, su nuevo servidor
+        <strong> no lo vinculará </strong>
+ y el anterior sigue respondiendo; cada corrección que realice parecerá no hacer nada. Borre los puertos antes de comenzar:
+      </p>
+      <div data-language="bash" class="code-block premium-code-block">
+        <pre>
+          <code>lsof -ti:9080,9081,9443 | xargs kill -9</code>
+        </pre>
+      </div>
+    </div>
+    <p>Inicio Liberty:</p>
+    <div data-language="bash" class="code-block premium-code-block">
+      <pre>
+        <code>mvn liberty:run</code>
+      </pre>
+    </div>
+    <p>Mire el registro de inicio para encontrar la línea que le indica la URL real:</p>
+    <div data-language="text" class="code-block premium-code-block">
+      <pre>
+        <code>CWWKT0016I: Aplicación web disponible (default_host): http://localhost:9081/simple-pharmacy/
+CWWKZ0001I: La aplicación simple-pharmacy se inició en 2.410 segundos.</code>
+      </pre>
+    </div>
+    <p>
+Abra esa URL con
+      <code>/dashboard</code>
+ al final:
+    </p>
+    <div data-language="text" class="code-block premium-code-block">
+      <pre>
+        <code>http://localhost:9081/simple-pharmacy/dashboard</code>
+      </pre>
+    </div>
+    <div class="callout" data-tone="danger">
+      <p class="callout__title">
+Verifique la raíz de contexto; probablemente NO sea
+        <code>/simple-pharmacy.war/</code>
+      </p>
+      <p>
+Bob generalmente reescribe
+        <code>server.xml</code>
+ para establecer un
+        <code>context-root="/simple-pharmacy"</code>
+ explícito, que
+        <strong> cambia la URL</strong>
+ de la que tiene el sufijo
+        <code>.war</code>
+ utilizada en el Laboratorio 1. Siempre tome la URL de la línea de registro
+        <code>CWWKT0016I</code>
+ en lugar de suponer que una suposición incorrecta le dará Liberty. Página
+        <em>Raíz de contexto no encontrada</em>
+, que parece exactamente un error de implementación, pero no lo es.
+      </p>
+    </div>
+    <div class="callout" data-tone="success">
+      <p class="callout__title">Checkpoint: la aplicación realmente sirve</p>
+      <p>Las cuatro páginas deberían devolver HTTP 200 y mostrar datos reales:</p>
+      <div data-language="bash" class="code-block premium-code-block">
+        <pre>
+          <code>curl -o /dev/null -w '%{http_code}\n' http://localhost:9081/simple-pharmacy/dashboard</code>
+        </pre>
+      </div>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">
+          <strong>Panel</strong>
+ muestra el total de recetas y el total de pedidos.
+        </li>
+        <li class="cds--list__item">
+          <strong>Medicinas</strong>
+ enumera 8 filas (
+          <code>MED001</code>
+–
+          <code>MED008</code>
+).
+        </li>
+        <li class="cds--list__item">
+          <code>prescription-list.action</code>
+,
+          <code>order-list.action</code>
+,
+          <code>medicine-list.action</code>
+ toda la carga.
+        </li>
+      </ul>
+      <p>
+Si obtiene
+        <em>Raíz de contexto no encontrada</em>
+ o un error de filtro Struts, vaya a
+        <a href="#troubleshooting">Solución de problemas</a>
+; ambos se esperan en esta práctica de laboratorio y se pueden solucionar en un par de minutos.
+      </p>
+    </div>
+    <div class="callout" data-tone="tip">
+      <p class="callout__title">Pega los errores directamente en el chat</p>
+      <p>
+Bob depurar su propia migración es exactamente para lo que sirve Agent mode, y es el flujo de trabajo previsto aquí, no un error. Corrige bien la falta de coincidencia de la función
+        <code>server.xml</code>
+ solo con el texto del error.
+      </p>
+    </div>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">Detenga el servidor antes de continuar</p>
+      <p>Libere el puerto para que el siguiente laboratorio no esté bloqueado.</p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">
+          <strong>macOS / Linux:</strong>
+ presione
+          <span class="premium-keys">
+            <kbd class="key-control">Ctrl</kbd>
+            <span>+</span>
+            <kbd class="key-c">C</kbd>
+          </span>
+. Si el puerto permanece retenido:
+          <code>lsof -ti:9081,9443 | xargs kill -9</code>
+.
+        </li>
+        <li class="cds--list__item">
+          <strong>Windows (PowerShell):</strong>
+ presione
+          <span class="premium-keys">
+            <kbd class="key-control">Ctrl</kbd>
+            <span>+</span>
+            <kbd class="key-c">C</kbd>
+          </span>
+; si permanece ocupado,
+          <code>mvn liberty:stop</code>
+ o
+          <code>netstat -ano | findstr :9081</code>
+ entonces
+          <code>taskkill /PID &lt;pid&gt; /F</code>
+.
+        </li>
+      </ul>
+    </div>
+  </section>
+  <section class="lab-section" aria-labelledby="troubleshooting">
+    <h2 class="cds--productive-heading-03" id="troubleshooting">Solución de problemas</h2>
+    <div class="callout" data-tone="tip">
+      <p class="callout__title">Comience aquí si la aplicación no aparece</p>
+      <p>Trabaja estos en orden: se apilan y cada uno puede enmascarar los que están debajo:</p>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">
+          <strong>Un Liberty obsoleto retiene el puerto</strong>
+ → cada corrección silenciosa no hace nada.
+        </li>
+        <li class="cds--list__item">
+          <strong>Liberty comenzó sin funciones</strong>
+ (
+          <code>CWWKF0001E</code>
+) → nada escucha en el puerto.
+        </li>
+        <li class="cds--list__item">
+          <strong>
+            <code>server.xml</code>
+ todavía tiene características Java-EE
+          </strong>
+ →
+          <em>Raíz de contexto no encontrada</em>
+.
+        </li>
+        <li class="cds--list__item">
+          <strong>
+            <code>struts.xml</code>
+ apunta a una DTD que no existe
+          </strong>
+ → Struts el filtro no se carga.
+        </li>
+      </ol>
+    </div>
+    <details class="premium-details">
+      <summary>
+        <code>CWWKF0001E: A feature definition could not be found for servlet-6.0</code>
+ (el servidor 'se inicia' pero nada responde)
+      </summary>
+      <p>
+El registro muestra que el servidor apareció –
+        <code>CWWKF0011I: ... started</code>
+ – pero un par de líneas arriba dice:
+      </p>
+      <div data-language="text" class="code-block premium-code-block">
+        <pre>
+          <code>CWWKF0001E: No se pudo encontrar una definición de característica para servlet-6.0
+CWWKF0011I: El servidor defaultServer instaló las siguientes funciones: [].</code>
+        </pre>
+      </div>
+      <p>
+Una lista de funciones
+        <strong>vacía</strong>
+. El Liberty que descargó la compilación es un
+        <strong>kernel</strong>
+ simple que no contiene
+        <code>servlet-6.0</code>
+/
+        <code>pages-3.1</code>
+, por lo que no se inicia ningún contenedor web y se rechazan todas las solicitudes (curl muestra
+        <code>000</code>
+) o 404. Esto es diferente de la falta de coincidencia
+        <code>server.xml</code>
+ a continuación: allí las funciones tienen nombres incorrectos; aquí están
+        <strong>ausentes del tiempo de ejecución por completo</strong>
+.
+      </p>
+      <p>
+        <strong>
+Esto ahora se evita en el
+          <code>pom.xml</code>
+,
+        </strong>
+ enviado, que fija un tiempo de ejecución completo en
+        <code>liberty-maven-plugin</code>
+:
+      </p>
+      <div data-language="xml" class="code-block premium-code-block">
+        <pre>
+          <code>&lt;runtimeArtifact&gt;
+    &lt;groupId&gt;io.openliberty&lt;/groupId&gt;
+    &lt;artifactId&gt;openliberty-runtime&lt;/artifactId&gt;
+    &lt;version&gt;26.0.0.5&lt;/version&gt;
+    &lt;type&gt;zip&lt;/type&gt;
+&lt;/runtimeArtifact&gt;</code>
+        </pre>
+      </div>
+      <p>Si aún lo presiona (por ejemplo, Bob reescribió el bloque del complemento durante la actualización), restaure ese bloque o instale las funciones en el servidor actual una vez:</p>
+      <div data-language="bash" class="code-block premium-code-block">
+        <pre>
+          <code>mvn liberty:install-feature</code>
+        </pre>
+      </div>
+      <p>
+Luego
+        <code>mvn liberty:run</code>
+ nuevamente.
+      </p>
+    </details>
+    <details class="premium-details">
+      <summary>
+        <strong>Raíz de contexto no encontrada</strong>
+ en el navegador (comience aquí)
+      </summary>
+      <p>Liberty se está ejecutando, pero su aplicación no está implementada en la URL que solicitó. Tres posibles causas, en el orden que vale la pena comprobar:</p>
+      <p>
+        <strong>1. Estás en la URL incorrecta. </strong>
+ Bob generalmente establece
+        <code>context-root="/simple-pharmacy"</code>
+, por lo que la URL del Laboratorio 1 (
+        <code>/simple-pharmacy.war/dashboard</code>
+) ya no funciona. Tome la URL del registro de inicio:
+      </p>
+      <div data-language="bash" class="code-block premium-code-block">
+        <pre>
+          <code>grep CWWKT0016I target/liberty/wlp/usr/servers/defaultServer/logs/messages.log</code>
+        </pre>
+      </div>
+      <p>
+        <strong>2. Un servidor obsoleto está respondiendo.</strong>
+ Busque esto en el registro:
+      </p>
+      <div data-language="text" class="code-block premium-code-block">
+        <pre>
+          <code>CWWKO0221E: La inicialización defaultHttpEndpoint del canal TCP no ha sido satisfactoria.
+La vinculación del socket no se realizó correctamente para el host * y el puerto 9081. Es posible que el puerto ya esté en uso.</code>
+        </pre>
+      </div>
+      <p>
+Eso significa que su nuevo servidor
+        <strong>nunca obtuvo el puerto</strong>
+; un Liberty más antiguo todavía sirve la versión antigua y defectuosa. Mátalo y reinicia:
+      </p>
+      <div data-language="bash" class="code-block premium-code-block">
+        <pre>
+          <code>lsof -ti:9081,9443 | xargs kill -9</code>
+        </pre>
+      </div>
+      <p>
+        <strong>3. La aplicación no pudo iniciarse.</strong>
+ Busque
+        <code>CWWKZ0002E</code>
+; consulte las dos entradas siguientes.
+      </p>
+    </details>
+    <details class="premium-details">
+      <summary>
+        <code>CWWKZ0002E</code>
+ /
+        <code>CWWKC2263E: ... specifies version 60, which is higher than the current provisioned version 31</code>
+      </summary>
+      <p>
+        <strong>La falla más común en esta práctica de laboratorio.</strong>
+ Bob migró la
+        <em>aplicación</em>
+ a Jakarta EE 10 pero dejó la configuración del servidor
+        <em>Liberty</em>
+ en el antiguo conjunto de características de Java EE.
+        <code>web.xml</code>
+ ahora declara Servlet 6.0;
+        <code>server.xml</code>
+ todavía proporciona Servlet 3.1. La aplicación no puede iniciarse, por lo que nunca se registra ninguna raíz de contexto, lo que aparece como
+        <em>Raíz de contexto no encontrada</em>
+.
+      </p>
+      <p>
+        <strong>Solución:</strong>
+ pega la línea
+        <code>CWWKC2263E</code>
+ en el chat de Bob. Resuelve esto bien por sí solo, reemplazando la lista de funciones en
+        <code>src/main/liberty/config/server.xml</code>
+ con los Jakarta EE 10 equivalentes.
+      </p>
+      <p>
+Si prefieres arreglarlo a mano, reemplaza todo el bloque
+        <code>&lt;featureManager&gt;</code>
+ con:
+      </p>
+      <div data-language="xml" class="code-block premium-code-block">
+        <pre>
+          <code>&lt;featureManager&gt;
+    &lt;feature&gt;servlet-6.0&lt;/feature&gt;
+    &lt;feature&gt;pages-3.1&lt;/feature&gt;
+&lt;/featureManager&gt;</code>
+        </pre>
+      </div>
+      <p>Luego reconstruya y reinicie.</p>
+      <div class="callout" data-tone="note">
+        <p class="callout__title">
+Elimina
+          <code>mpMetrics-1.1</code>
+ si está ahí
+        </p>
+        <p>
+El paquete de migración lo agrega, nada en esta aplicación lo usa y depende en gran medida de
+          <code>servlet-3.1</code>
+, por lo que
+          <strong> entrará en conflicto</strong>
+ con
+          <code>servlet-6.0</code>
+ y bloqueará el inicio.
+          <code>jdbc-4.1</code>
+ también puede funcionar; no hay
+          <code>dataSource</code>
+ (la aplicación usa repositorios en memoria).
+        </p>
+      </div>
+    </details>
+    <details class="premium-details">
+      <summary>
+        <code>Filter [struts2]: could not be initialized</code>
+ /
+        <code>FileNotFoundException: http://struts.apache.org/dtds/struts-7.0.dtd</code>
+      </summary>
+      <p>
+        <strong>
+Bob señaló
+          <code>struts.xml</code>
+ a una DTD que no existe.
+        </strong>
+ Habiendo actualizado Struts a 7.x, mejoró el DOCTYPE para que coincidiera, pero Apache nunca publicó una DTD 7.0.
+        <code>struts2-core</code>
+ incluye DTD solo hasta
+        <strong>6.5</strong>
+, por lo que Struts no puede resolverlo localmente, recurre a buscarlo a través de HTTP, obtiene un
+        <strong>404</strong>
+ y el filtro muere. Entonces la aplicación no sirve para nada.
+      </p>
+      <p>
+        <strong>Solución:</strong>
+ abra
+        <code>src/main/resources/struts.xml</code>
+ y configure DOCTYPE en una versión que realmente exista:
+      </p>
+      <div data-language="xml" class="code-block premium-code-block">
+        <pre>
+          <code>&lt;!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd"&gt;</code>
+        </pre>
+      </div>
+      <p>
+Luego reconstruya y reinicie.
+        <code>2.5</code>
+ está incluido dentro de
+        <code>struts2-core</code>
+ y es lo que utiliza el resto de este taller; Struts 7 lo lee felizmente.
+      </p>
+      <div class="callout" data-tone="warning">
+        <p class="callout__title">Bob no encontrará este por sí solo.</p>
+        <p>
+A diferencia de la falta de coincidencia
+          <code>server.xml</code>
+, pegar este error en el chat a menudo hace que Bob busque una clase faltante o un problema de ruta de clase. Aplique la corrección DOCTYPE directamente.
+        </p>
+      </div>
+      <details class="premium-details">
+        <summary>Por qué vale la pena mostrar este en la habitación</summary>
+        <p>
+El razonamiento fue perfecto:
+          <em>
+"Struts ahora es 7.x, por lo tanto, el DTD debe ser
+            <code>struts-7.0.dtd</code>
+."
+          </em>
+ Consistente, plausible y completamente ficticio: el artefacto simplemente no existe.
+        </p>
+        <p>
+Es un claro ejemplo de una respuesta incorrecta segura que
+          <strong>la compilación no puede detectar</strong>
+.
+          <code>mvn clean compile</code>
+ pasa, el resumen de modernización es verde y la falla solo aparece en tiempo de ejecución cuando Struts intenta resolver la DTD a través de la red. Esta es exactamente la razón por la que existe el paso ejecutar y por qué "compiló" nunca es lo mismo que "funciona".
+        </p>
+      </details>
+    </details>
+    <details class="premium-details">
+      <summary>
+        <code>JSPG0303W</code>
+ /
+        <code>JSPG0236E: failed to load the TagLibraryValidator class [javax.servlet.jsp.jstl.tlv.PermittedTaglibsTLV]</code>
+      </summary>
+      <p>
+        <strong>Inofensivo: estas son advertencias, no errores.</strong>
+ Un
+        <code>javax.servlet:jstl:1.2</code>
+ sobrante se encuentra en el classpath y el motor JSP de Jakarta no puede analizar su TLD de la era javax. Ninguno de los JSP de esta aplicación usa JSTL (solo usan
+        <code>/struts-tags</code>
+), por lo que nada se rompe.
+      </p>
+      <p>
+Para silenciarlo, elimine la dependencia
+        <code>javax.servlet:jstl</code>
+ de
+        <code>pom.xml</code>
+ o simplemente ignórelo.
+      </p>
+    </details>
+    <details class="premium-details">
+      <summary>La terminal de Bob todavía muestra Java 8 después de que el flujo de trabajo instaló Java 21</summary>
+      <p>Java 21 instalado en el flujo de trabajo se convierte en el SDKMAN predeterminado, pero los shells existentes mantienen la versión con la que comenzaron. Abra una terminal nueva o actívela en la actual:</p>
+      <div data-language="bash" class="code-block premium-code-block">
+        <pre>
+          <code>sdk use java 21.0.11-semeru</code>
+        </pre>
+      </div>
+    </details>
+    <details class="premium-details">
+      <summary>
+Bob no puede leer archivos de proyecto (
+        <code>I cannot access that file</code>
+ /
+        <code>File not found</code>
+)
+      </summary>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">
+Verifique que abrió la subcarpeta
+          <code>snapB-java-upgrade</code>
+ como raíz del proyecto, no la carpeta principal
+          <code>lab2-*</code>
+.
+        </li>
+        <li class="cds--list__item">
+Verifique los permisos del archivo:
+          <code>ls -la</code>
+.
+        </li>
+        <li class="cds--list__item">Asegúrese de que Bob tenga acceso de lectura al espacio de trabajo.</li>
+        <li class="cds--list__item">
+Intente hacer referencia a archivos con la sintaxis
+          <code>@filename</code>
+.
+        </li>
+      </ol>
+    </details>
+    <details class="premium-details">
+      <summary>Errores de compilación después de aplicar las recetas.</summary>
+      <p>Esperado: Bob lanza una subtarea para resolverlos de forma agente. Mira la subtarea en el chat. Si finaliza y persisten errores, pegue el resultado completo y pídale a Bob que investigue más a fondo.</p>
+    </details>
+    <details class="premium-details">
+      <summary>
+        <code>cannot find symbol</code>
+ para
+        <code>ActionSupport</code>
+ después de la actualización Struts
+      </summary>
+      <p>Bob normalmente reescribe cada importación, pero puede omitir alguna. Preguntar:</p>
+      <div data-language="text" class="code-block premium-code-block">
+        <pre>
+          <code>Verifique si hay importaciones com.opensymphony.xwork2 restantes y actualícelas a org.apache.struts2.</code>
+        </pre>
+      </div>
+    </details>
+    <details class="premium-details">
+      <summary>
+Errores de tiempo de ejecución por falta de
+        <code>javax.servlet.*</code>
+ (confusión entre Yakarta y Javax)
+      </summary>
+      <p>
+En Jakarta EE 10,
+        <code>javax.*</code>
+ se reemplaza por
+        <code>jakarta.*</code>
+. Bob los reescribe durante la actualización; si quedan referencias, pregunte:
+      </p>
+      <div data-language="text" class="code-block premium-code-block">
+        <pre>
+          <code>Audite todas las importaciones en busca de referencias javax.* restantes que deberían ser jakarta.*.</code>
+        </pre>
+      </div>
+    </details>
+    <details class="premium-details">
+      <summary>
+        <code>Unsupported class file major version</code>
+      </summary>
+      <p>
+Maven se basa en el JDK incorrecto. Confirme con
+        <code>mvn --version</code>
+; debería informar
+        <strong>21</strong>
+ después de la actualización. De lo contrario,
+        <code>sdk use java 21.0.11-semeru</code>
+ (o configure
+        <code>JAVA_HOME</code>
+ en Windows) y reconstruya.
+      </p>
+    </details>
+  </section>
+  <section class="lab-section" aria-labelledby="getting-help-during-the-lab">
+    <h2 class="cds--productive-heading-03" id="getting-help-during-the-lab">Obtén ayuda durante el laboratorio</h2>
+    <ol class="cds--list--ordered">
+      <li class="cds--list__item">
+        <strong>Consulte la sección de solución de problemas anterior</strong>
+: se tratan los problemas más comunes.
+      </li>
+      <li class="cds--list__item">
+        <strong>Pregúntale a Bob</strong>
+: Bob puede explicar errores y sugerir soluciones.
+      </li>
+      <li class="cds--list__item">
+        <strong>Pregúntale a tu instructor</strong>
+; no dudes en levantar la mano.
+      </li>
+      <li class="cds--list__item">
+        <strong>Colaborar</strong>
+: discutir con compañeros de clase.
+      </li>
+    </ol>
+  </section>
+  <section class="lab-section" aria-labelledby="success-criteria">
+    <h2 class="cds--productive-heading-03" id="success-criteria">Criterios de éxito</h2>
+    <p>Ha completado con éxito esta práctica de laboratorio cuando:</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ Java 8 y Maven son instalados y detectados por Bob al principio.
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ Bob está en modo
+        <strong>Agent</strong>
+ y se inicia el flujo de trabajo
+        <strong>Java Modernization</strong>
+.
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ Seleccionó
+        <strong>Java Upgrade</strong>
+ con Git Flow desactivado (
+        <strong>Liberty Replatforming</strong>
+ estaba correctamente atenuado).
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ Configuró
+        <strong>Semeru (IBM) / Java 21 / Jakarta EE 10</strong>
+ y leyó los paneles Complejidad y Vulnerabilidades antes de continuar.
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ Bob instaló Java 21 (o usó su instalación existente) y resolvió los problemas de compilación de manera agente.
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ Aprobó el pin javassist
+        <code>&lt;dependencyManagement&gt;</code>
+ en
+        <strong>
+          <code>3.29.2-GA</code>
+        </strong>
+.
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ El escaneo
+        <strong>CVE</strong>
+ de Bob se ejecutó y usted aprobó la subtarea de corrección (Struts → 7.x y amigos).
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+        <code>mvn clean compile</code>
+ informa
+        <code>BUILD SUCCESS</code>
+ en Java 21, con importaciones
+        <code>jakarta.*</code>
+ y
+        <code>org.apache.struts2.ActionSupport</code>
+.
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ Bob produjo el resumen de modernización visual y el desglose de costos por tarea.
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+        <strong>La aplicación realmente se ejecuta</strong>
+: las cuatro páginas devuelven HTTP 200 en la raíz de contexto desde la línea de registro
+        <code>CWWKT0016I</code>
+, con el tablero y 8 medicamentos renderizados.
+      </li>
+    </ul>
+  </section>
+  <section class="lab-section" aria-labelledby="key-takeaways">
+    <h2 class="cds--productive-heading-03" id="key-takeaways">Conclusiones clave</h2>
+    <ol class="cds--list--ordered">
+      <li class="cds--list__item">
+        <strong>Un flujo de trabajo, muchos subtipos</strong>
+: Lab 1 (Liberty) y Lab 2 (Java) son el mismo flujo de trabajo con una selección diferente; el panel oscurece lo que no corresponde.
+      </li>
+      <li class="cds--list__item">
+        <strong>Bob instala sus propias herramientas</strong>
+: el JDK de destino no es un requisito previo que deba satisfacer manualmente.
+      </li>
+      <li class="cds--list__item">
+        <strong>La seguridad impulsa las opciones de versión</strong>
+: el escaneo CVE es lo que obliga a Struts a 7.x; el espacio de nombres y las reescrituras de importación son consecuencias posteriores. Así es como se priorizan las actualizaciones reales.
+      </li>
+      <li class="cds--list__item">
+        <strong>Bob posee las partes aburridas</strong>
+: los cambios de nombre del espacio de nombres y las reescrituras de importación en toda una base de código se convierten en un bucle agente que usted aprueba, no en una tarea manual.
+      </li>
+      <li class="cds--list__item">
+        <strong>"Compiló" ≠ "funciona"</strong>
+: la compilación pasó y el resumen estaba en verde mientras la aplicación no se podía utilizar, porque
+        <code>server.xml</code>
+ y una DTD fantasma solo fallan en tiempo de ejecución. El hábito más valioso que enseña este laboratorio es ejecutarlo.
+      </li>
+      <li class="cds--list__item">
+        <strong>Las migraciones se filtran en los bordes</strong>
+: Bob manejó miles de líneas de reescritura de espacios de nombres sin problemas y luego tropezó con dos archivos de configuración. Espere que el código generado sea mejor que la configuración generada y revíselo en consecuencia.
+      </li>
+    </ol>
+  </section>
+  <section class="lab-section" aria-labelledby="next">
+    <h2 class="cds--productive-heading-03" id="next">Siguiente</h2>
+    <p>
+      <a href="#/lab/java-modernization-v2/lab3" class="cds--btn cds--btn--primary">
+Lab 3 — UI Modernization (Struts → React)
+        <span class="premium-button-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.75.75 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0"></path>
+          </svg>
+        </span>
+      </a>
+    </p>
+  </section>
+</div>

@@ -1,0 +1,170 @@
+<div class="content-panel lab-template premium-workflow" data-custom-overview="true">
+  <div class="lab-banner">
+    <div class="lab-banner__tags">
+      <span class="cds--tag cds--tag--green">Modernización de aplicaciones</span>
+      <span class="cds--tag cds--tag--cool-gray">Java legacy</span>
+    </div>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Moderniza Java a la velocidad del negocio</h1>
+    <div class="lab-hero-image">
+      <img class="lab-hero-image__img" src="./assets/images/labs/java-modernization-v2/premium/ibm-bob-java-banner.png" alt="Portada del laboratorio de modernización de Java con IBM Bob" />
+    </div>
+    <p class="cds--body-02 lab-banner__summary">
+      <strong>Simple Pharmacy Management System</strong> es una aplicación web de operaciones farmacéuticas
+      (recetas, pedidos, inventario de medicamentos, dashboards). Parte de Traditional WebSphere + Java 8 + Struts
+      y se moderniza progresivamente hacia Liberty + Java 21 + React, con tests y remediación de CVEs.
+    </p>
+    <div class="lab-banner__metrics">
+      <div class="lab-banner__metric"><span class="lab-banner__metric-value">5 + Alt-4</span><span class="lab-banner__metric-label">laboratorios</span></div>
+      <div class="lab-banner__metric"><span class="lab-banner__metric-value">~90</span><span class="lab-banner__metric-label">minutos</span></div>
+      <div class="lab-banner__metric"><span class="lab-banner__metric-value">40–48</span><span class="lab-banner__metric-label">BobCoins estimados</span></div>
+      <div class="lab-banner__metric"><span class="lab-banner__metric-value">Premium</span><span class="lab-banner__metric-label">acceso requerido</span></div>
+    </div>
+  </div>
+
+  <section class="lab-section" aria-labelledby="ov-intro">
+    <h2 class="cds--productive-heading-03" id="ov-intro">Cómo encajan los labs</h2>
+    <p class="cds--body-01">Los Labs 1–3 forman el recorrido principal y secuencial. El Lab 4, el Lab 4 alternativo y el Lab 5 pueden realizarse después en el orden que necesites. En esta variante Bob ejecuta los workflows nativos; revisa cada análisis, plan y aprobación antes de continuar.</p>
+    <div class="callout" data-tone="note">
+      <p class="callout__title">Qué cambia al tener Premium</p>
+      <p>En lugar de reproducir cada fase con prompts, seleccionarás el workflow adecuado en Bob y validarás sus resultados: <strong>Java Modernization</strong>, <strong>Java Upgrade</strong>, <strong>UI Modernization</strong>, <strong>Java Unit Testing</strong> y <strong>Vulnerabilities Detection</strong>.</p>
+    </div>
+  </section>
+
+  <section class="lab-section" aria-labelledby="ov-materials">
+    <h2 class="cds--productive-heading-03" id="ov-materials">Materiales del workshop</h2>
+    <div class="callout" data-tone="note">
+      <p class="callout__title">Descarga el árbol fuente del workshop</p>
+      <p>Descomprime el ZIP y abre la carpeta <code>snap*</code> correspondiente a cada lab en IBM Bob. Las instrucciones de este recorrido se encuentran en el portal.</p>
+      <a class="cds--btn cds--btn--primary" style="margin-top:1rem" download="simple-pharmacy-workshop-v2.zip" href="./downloads/simple-pharmacy-workshop-v2.zip">Descargar Simple Pharmacy workshop v2</a>
+    </div>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item"><code>labs/</code> contiene una carpeta y snapshot de inicio por laboratorio.</li>
+      <li class="cds--list__item"><code>snapshots/</code> incluye estados de inicio y resultados de referencia.</li>
+      <li class="cds--list__item">Los workflows consultan el proyecto abierto y muestran los cambios antes de aplicarlos.</li>
+    </ul>
+    <div class="callout" data-tone="tip">
+      <p class="callout__title">Materiales adicionales del Lab 1</p>
+      <p>El migration plan ya viene incluido dentro del ZIP del workshop, en la carpeta del Lab 1. Si aparece <code>Unable to access jarfile</code>, solicita ayuda al facilitador antes de continuar.</p>
+    </div>
+  </section>
+
+  <section class="lab-section" aria-labelledby="ov-que">
+    <h2 class="cds--productive-heading-03" id="ov-que">Qué vamos a modernizar</h2>
+    <div class="stack-compare">
+      <div class="stack-compare__col">
+        <p class="stack-compare__heading">Estado inicial</p>
+        <div class="stack-compare__item">Java 8 y Traditional WebSphere</div>
+        <div class="stack-compare__item">Struts y namespaces <code>javax.*</code></div>
+        <div class="stack-compare__item">JSP sin API REST moderna</div>
+        <div class="stack-compare__item">Cobertura limitada y dependencias vulnerables</div>
+      </div>
+      <div class="stack-compare__arrow" aria-hidden="true">→</div>
+      <div class="stack-compare__col stack-compare__col--after">
+        <p class="stack-compare__heading">Estado objetivo</p>
+        <div class="stack-compare__item stack-compare__item--new">Open Liberty y Java 21</div>
+        <div class="stack-compare__item stack-compare__item--new">Jakarta EE 10 y Struts actualizado</div>
+        <div class="stack-compare__item stack-compare__item--new">API JAX-RS y UI React</div>
+        <div class="stack-compare__item stack-compare__item--new">Tests, cobertura y CVEs remediados</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="lab-section" aria-labelledby="ov-como">
+    <h2 class="cds--productive-heading-03" id="ov-como">Cómo trabaja Bob en cada lab</h2>
+    <p class="cds--body-01">Los workflows premium guían análisis, planificación, implementación y validación. Confirma que tienes permisos <strong>Read</strong>, <strong>Edit</strong> y <strong>Execute</strong>; revisa el diff o la aprobación interactiva antes de permitir cualquier cambio.</p>
+    <div class="prereq-grid">
+      <div class="prereq-item"><div class="prereq-item__body"><p class="prereq-item__title">Analizar</p><p class="prereq-item__desc">El workflow inspecciona el proyecto y expone el estado inicial.</p></div></div>
+      <div class="prereq-item"><div class="prereq-item__body"><p class="prereq-item__title">Aprobar</p><p class="prereq-item__desc">Revisa el plan y los cambios sugeridos antes de aplicarlos.</p></div></div>
+      <div class="prereq-item"><div class="prereq-item__body"><p class="prereq-item__title">Validar</p><p class="prereq-item__desc">Comprueba build, tests, cobertura o resultados de seguridad al terminar.</p></div></div>
+    </div>
+  </section>
+
+  <section class="lab-section" aria-labelledby="ov-path">
+    <h2 class="cds--productive-heading-03" id="ov-path">Camino recomendado</h2>
+    <p class="cds--body-01">Completa Labs 1 → 2 → 3 para seguir la historia completa de Simple Pharmacy. Después, continúa con tests o la ruta TDD alternativa y termina con seguridad.</p>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/ibm-bob-java-roadmap.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/ibm-bob-java-roadmap.png" class="lab-figure__img" alt="Hoja de ruta de Java: Liberty, Java 21, React, pruebas, TDD y vulnerabilidades" />
+      </a>
+      <figcaption class="lab-figure__caption">Recorrido premium de modernización. Usa las tarjetas de etapas para abrir el workflow correspondiente.</figcaption>
+    </figure>
+  </section>
+
+  <section class="lab-section" aria-labelledby="ov-prereqs">
+    <h2 class="cds--productive-heading-03" id="ov-prereqs">Prerrequisitos</h2>
+    <p class="cds--body-01">Instala una sola vez el entorno compartido por todos los labs. La preparación se completa aquí, antes del Lab 1; después cada etapa solo te indicará qué snapshot abrir y qué workflow ejecutar.</p>
+    <section class="lab-workspace-setup" aria-labelledby="ov-workspace">
+      <div class="lab-workspace-setup__box">
+        <span class="lab-workspace-setup__badge">Regla del workshop — lee antes del Lab 1</span>
+        <h3 class="lab-workspace-setup__title" id="ov-workspace">Una carpeta <code>snap*</code> por lab</h3>
+        <p class="lab-workspace-setup__lead">Abre cada snapshot como workspace independiente en Bob. Así el workflow encuentra el <code>pom.xml</code> correcto y cada lab conserva su punto de partida.</p>
+        <div class="lab-workspace-setup__table-wrap">
+          <table class="lab-workspace-setup__table">
+            <caption class="visually-hidden">Carpeta de workspace por lab</caption>
+            <thead><tr><th scope="col">Lab</th><th scope="col">Abre esta carpeta en Bob</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Lab 1</th><td><code>labs/lab1-java-liberty-replatforming/snapA-java-liberty-replatforming/</code></td></tr>
+              <tr><th scope="row">Lab 2</th><td><code>labs/lab2-java-upgrade/snapB-java-upgrade/</code></td></tr>
+              <tr><th scope="row">Lab 3</th><td><code>labs/lab3-ui-modernization/snapC-ui-mod/</code></td></tr>
+              <tr><th scope="row">Lab 4</th><td><code>labs/lab4-unit-test-generation/snapD-unit-test-gen/</code></td></tr>
+              <tr><th scope="row">Lab 4 alternativo</th><td><code>labs/alt-lab4-test-driven-development/snapTDD/</code></td></tr>
+              <tr><th scope="row">Lab 5</th><td><code>labs/lab5-security-vulnerability-remediation/snapE-security-vulnerabilities/</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <h3 class="cds--productive-heading-02">1. IBM Bob IDE V2 con Workflows</h3>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">Instala la última extensión Bob V2 e inicia sesión.</li>
+      <li class="cds--list__item">Verifica que tienes acceso a <strong>Workflows</strong> y al paquete <strong>Java Modernization</strong>.</li>
+      <li class="cds--list__item">Revisa los permisos <strong>Read</strong>, <strong>Edit</strong> y <strong>Execute</strong> antes de ejecutar un workflow.</li>
+    </ul>
+    <h3 class="cds--productive-heading-02">2. Java + Maven</h3>
+    <p class="cds--body-01">El Lab 1 usa Java 8; desde el Lab 2 se usa Java 21. Instala ambas versiones y Maven ahora, y reinicia Bob tras instalar Maven para que detecte el <code>PATH</code> actualizado.</p>
+    <div class="os-setup-grid">
+      <div class="os-setup-card">
+        <div class="os-setup-card__header"><h4 class="os-setup-card__title">macOS</h4></div>
+        <div class="os-setup-card__body"><details><summary>Ver comandos con SDKMAN!</summary><div class="code-block"><button type="button" class="copy-button">Copiar</button><pre><code>curl -s "https://get.sdkman.io" | bash
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+sdk install java 8.0.492-zulu
+sdk default java 8.0.492-zulu
+sdk install java 21.0.7-zulu
+sdk install maven</code></pre></div></details></div>
+      </div>
+      <div class="os-setup-card">
+        <div class="os-setup-card__header"><h4 class="os-setup-card__title">Linux</h4></div>
+        <div class="os-setup-card__body"><details><summary>Ver comandos con SDKMAN!</summary><div class="code-block"><button type="button" class="copy-button">Copiar</button><pre><code>curl -s "https://get.sdkman.io" | bash
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+sdk install java 8.0.492-zulu
+sdk default java 8.0.492-zulu
+sdk install java 21.0.7-zulu
+sdk install maven</code></pre></div></details></div>
+      </div>
+      <div class="os-setup-card">
+        <div class="os-setup-card__header"><h4 class="os-setup-card__title">Windows</h4></div>
+        <div class="os-setup-card__body"><details><summary>Ver comandos en PowerShell</summary><div class="code-block"><button type="button" class="copy-button">Copiar</button><pre><code>winget install EclipseAdoptium.Temurin.8.JDK
+winget install EclipseAdoptium.Temurin.21.JDK
+winget install Apache.Maven</code></pre></div></details><p>También puedes usar SDKMAN! desde Git Bash o WSL.</p></div>
+      </div>
+    </div>
+    <div class="callout" data-tone="tip">
+      <p class="callout__title">Comprueba el entorno antes de abrir el Lab 1</p>
+      <div class="code-block"><button type="button" class="copy-button">Copiar</button><pre><code>java -version
+mvn --version</code></pre></div>
+      <p>Para el Lab 1, ambos comandos deben informar Java 8. Cambia a Java 21 antes de empezar el Lab 2.</p>
+    </div>
+    <h3 class="cds--productive-heading-02">3. Node.js LTS — solo Lab 3</h3>
+    <p class="cds--body-01">Instala Node.js 20 o 22 LTS desde <a href="https://nodejs.org" target="_blank" rel="noopener noreferrer">nodejs.org</a> o con <code>winget install OpenJS.NodeJS.LTS</code> en Windows.</p>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">Libera los puertos entre labs</p>
+      <p>Detén cualquier servidor Liberty antes de continuar. Si un puerto queda ocupado, el siguiente lab puede ejecutar una instancia anterior.</p>
+      <div class="code-block"><button type="button" class="copy-button">Copiar</button><pre><code>lsof -ti:9080,9081,9443 | xargs kill -9</code></pre></div>
+    </div>
+  </section>
+
+  <section class="lab-section" aria-labelledby="soporte-heading">
+    <h2 class="cds--productive-heading-03" id="soporte-heading">Soporte</h2>
+    <p class="cds--body-01">Si un workflow no aparece o requiere permisos adicionales, solicita ayuda al equipo facilitador antes de seguir con el lab.</p>
+  </section>
+</div>

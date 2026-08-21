@@ -1,0 +1,428 @@
+{
+  "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/",
+  "assets": [
+    {
+      "file": "./assets/images/labs/ibm-i-rpg-development/premium/PTF_report_filled.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/ibm-i-rpg-development/lab-05-ansible-ptf/assets/PTF_report_filled.png",
+      "sha256": "574b5d35526ec2914e920a20ba122d74ff664a7ed72c54ef3af26a8915564303",
+      "usedIn": [
+        "lab5"
+      ],
+      "width": 3436,
+      "height": 1724
+    },
+    {
+      "file": "./assets/images/labs/ibm-i-rpg-development/premium/PTF_report_unfilled.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/ibm-i-rpg-development/lab-05-ansible-ptf/assets/PTF_report_unfilled.png",
+      "sha256": "63d021096db1721da03ca29ef14c24e540a285dd16cccd4b80d65cd753735520",
+      "usedIn": [
+        "lab5"
+      ],
+      "width": 3444,
+      "height": 1728
+    },
+    {
+      "file": "./assets/images/labs/ibm-i-rpg-development/premium/bobshell.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/ibm-i-rpg-development/lab-04-ibmi-mcp/assets/bobshell.png",
+      "sha256": "b41fd6a297a1c1cd802f343edb9e80fe3a443a548903896cccd4f3f11b3c2b58",
+      "usedIn": [
+        "lab4"
+      ],
+      "width": 1520,
+      "height": 718
+    },
+    {
+      "file": "./assets/images/labs/ibm-i-rpg-development/premium/ibm-bob-ibmi-rpg-banner.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/images/solutions/ibm-bob-ibmi-rpg-banner.png",
+      "sha256": "4e3fef3e54afd5d4e749727978db12be07c6365c0d1e3cf5af9860e442c11ad1",
+      "usedIn": [
+        "overview"
+      ],
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "file": "./assets/images/labs/ibm-i-rpg-development/premium/ibm-bob-ibmi-rpg-roadmap.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/images/solutions/ibm-bob-ibmi-rpg-roadmap.png",
+      "sha256": "cfc0f91c48ddcde74272dbf1612b2873990ddbb7aeafb89ce4e027b0c8cc7cc7",
+      "usedIn": [
+        "overview"
+      ],
+      "width": 3344,
+      "height": 1882
+    },
+    {
+      "file": "./assets/images/labs/ibm-i-rpg-development/premium/select-ibmi-agent.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/ibm-i-rpg-development/lab-04-ibmi-mcp/assets/select-ibmi-agent.png",
+      "sha256": "1c7e15c4bf4ae33f6d036ca1d953850b13d6eeed5b8ad2f5366017bbdcf4f748",
+      "usedIn": [
+        "lab4"
+      ],
+      "width": 3434,
+      "height": 2000
+    },
+    {
+      "file": "./assets/images/labs/ibm-i-rpg-development/premium/wrksyssts-bob.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/ibm-i-rpg-development/lab-04-ibmi-mcp/assets/wrksyssts-bob.png",
+      "sha256": "f5e490aea54f0b9e6d75f9a6e822fa3620f1560fcffddd267610ff9721945ffd",
+      "usedIn": [
+        "lab4"
+      ],
+      "width": 1370,
+      "height": 1626
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/agent-mode-indicator.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-01-liberty-replatforming/assets/agent-mode-indicator.png",
+      "sha256": "bc7fb70937d7ac3fb8527c695421f516d33123a795116f068f84af8dea9fc538",
+      "usedIn": [
+        "lab1"
+      ],
+      "width": 588,
+      "height": 186
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/agent-mode.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-03-ui-modernization/assets/agent-mode.png",
+      "sha256": "cd90180132230ad1763c621504dfc037a9dbbcd4c572270e3fe3c57bfabdbfc3",
+      "usedIn": [
+        "lab3"
+      ],
+      "width": 1694,
+      "height": 2066
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/ama-migration-plan-input.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-01-liberty-replatforming/assets/ama-migration-plan-input.png",
+      "sha256": "ee3e8498c2348213b476d3c23dae69e9824398162f6a6a795a44e308dce2b815",
+      "usedIn": [
+        "lab1"
+      ],
+      "width": 564,
+      "height": 330
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/analyze-project-panel.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-01-liberty-replatforming/assets/analyze-project-panel.png",
+      "sha256": "a35d8f3a7779458f116c9e8492e31e4d9fc4ea3b06a4c154cb5d7ea9872ee7e7",
+      "usedIn": [
+        "lab1",
+        "lab2",
+        "lab3"
+      ],
+      "width": 590,
+      "height": 1036
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/backend-migration.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-03-ui-modernization/assets/backend-migration.png",
+      "sha256": "2190fad26aeabcd7775f38e5f9526692f24f4ed220307ef6dd6e5cfe77a89061",
+      "usedIn": [
+        "lab3"
+      ],
+      "width": 3438,
+      "height": 1998
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/containerization-done.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-03-ui-modernization/assets/containerization-done.png",
+      "sha256": "42de351c30b9f8f93224728667127349f580cd3c008f46aa8b618591fd55898b",
+      "usedIn": [
+        "lab3"
+      ],
+      "width": 2203,
+      "height": 1274
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/cve-scan-prompt.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-02-java-upgrade/assets/cve-scan-prompt.png",
+      "sha256": "f04b84eac5be9746484586ee3f57b3f6f52ace2aa65b722d72d5bd5504b0abe0",
+      "usedIn": [
+        "lab2"
+      ],
+      "width": 1026,
+      "height": 314
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/dashboard-api-response.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-05-vulnerabilities-detection/assets/dashboard-api-response.png",
+      "sha256": "e339c0fcbd2e5e840ef2fbd41d38d5d443a4977d23ffb003b82580eda706b81c",
+      "usedIn": [
+        "lab5"
+      ],
+      "width": 3024,
+      "height": 1964
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/diff-preview.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-01-liberty-replatforming/assets/diff-preview.png",
+      "sha256": "33bf3ce485c53b15cb9670bc1b618b8b27f1e25b8688c5c62390930ba5432d43",
+      "usedIn": [
+        "lab1"
+      ],
+      "width": 3456,
+      "height": 2176
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/frontend-migration.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-03-ui-modernization/assets/frontend-migration.png",
+      "sha256": "bec3f77760afcf3199dc6c4f7c58a651c4eda4d2786c363af4cee03bce1d5564",
+      "usedIn": [
+        "lab3"
+      ],
+      "width": 3450,
+      "height": 2000
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/frontend-scaffold.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-03-ui-modernization/assets/frontend-scaffold.png",
+      "sha256": "d2f45efae926d207d60a9d53f52397a2770962ed1e94dd5217bf969b67785aa1",
+      "usedIn": [
+        "lab3"
+      ],
+      "width": 3448,
+      "height": 1922
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/go-to-workflow.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-03-ui-modernization/assets/go-to-workflow.png",
+      "sha256": "b2c2162879bcfd53a0021eb62bc71ad1e0d3a04e9a3a31c73d82f078cc0cdf4e",
+      "usedIn": [
+        "lab3"
+      ],
+      "width": 3444,
+      "height": 1996
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/ibm-bob-java-banner.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/images/solutions/ibm-bob-java-banner.png",
+      "sha256": "da54b8d285a08884a43e564cb1a1e3ce6fc245db150c372d627af8ac4fdabdfa",
+      "usedIn": [
+        "overview"
+      ],
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/ibm-bob-java-roadmap.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/images/solutions/ibm-bob-java-roadmap.png",
+      "sha256": "b12ec6af9918a0acf5e4a7601d546c3e7c6b65f56524fbc8ef444b0fccf7993c",
+      "usedIn": [
+        "overview"
+      ],
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/interactive-approval-prompt.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-01-liberty-replatforming/assets/interactive-approval-prompt.png",
+      "sha256": "e8d062b69cfedf504f2b611118bcd3541ff7e97934fc4b850e2ba01fed0f99d0",
+      "usedIn": [
+        "lab1"
+      ],
+      "width": 596,
+      "height": 262
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/jacoco-coverage-report.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-04-unit-test-generation/assets/jacoco-coverage-report.png",
+      "sha256": "d9895f63548d124017f06f5dbd7b42484fab7c591b8ef6cd357323a42a05be80",
+      "usedIn": [
+        "lab4"
+      ],
+      "width": 3024,
+      "height": 1964
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/java-modernization-workflow-card.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-01-liberty-replatforming/assets/java-modernization-workflow-card.png",
+      "sha256": "3f73690b9d0c29230e3ab7af33bcb014c7dd3366670bae1c79d9054322370b8c",
+      "usedIn": [
+        "lab1",
+        "lab2"
+      ],
+      "width": 590,
+      "height": 622
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/java-upgrade-configuration.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-02-java-upgrade/assets/java-upgrade-configuration.png",
+      "sha256": "76297b4fbca4a936bfd34f338422cb0dd092548521482bd4d7192c25459a8525",
+      "usedIn": [
+        "lab2"
+      ],
+      "width": 1010,
+      "height": 980
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/modernization-summary.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-01-liberty-replatforming/assets/modernization-summary.png",
+      "sha256": "925a65a9bacfea737c40bc755387ee1a5c4549a0017a5bb152998bf132e342d9",
+      "usedIn": [
+        "lab1"
+      ],
+      "width": 570,
+      "height": 1566
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/modernized-ui.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-03-ui-modernization/assets/modernized-ui.png",
+      "sha256": "593f2daac4b394d6c98cc208ecffb81615f3fdaea73e3b191385ae07110f497c",
+      "usedIn": [
+        "lab3"
+      ],
+      "width": 3442,
+      "height": 1748
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/permissions-selector.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-01-liberty-replatforming/assets/permissions-selector.png",
+      "sha256": "f6a78f65b8a4601a8e34cb42e0b37c7540010691f4ee257cf5faa2a9a73a179d",
+      "usedIn": [
+        "lab1"
+      ],
+      "width": 498,
+      "height": 796
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/pharmacy-dashboard-liberty.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-01-liberty-replatforming/assets/pharmacy-dashboard-liberty.png",
+      "sha256": "4fab7cb254cc25e9314ec5f133cda628b5aef7659d1d8b1dfa53a7fea7d5b1f8",
+      "usedIn": [
+        "lab1"
+      ],
+      "width": 2744,
+      "height": 1398
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/prescription-list-page.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-01-liberty-replatforming/assets/prescription-list-page.png",
+      "sha256": "1900796a56a3b160a92bd85b9bbf737f455cb2b9044f38c0961cd92749a69a95",
+      "usedIn": [
+        "lab1"
+      ],
+      "width": 2506,
+      "height": 1124
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/run-backend.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-03-ui-modernization/assets/run-backend.png",
+      "sha256": "ebae2e5a96a6dd4ac49a051ed9c47ab74b414ee35d91f852cba1aa1ae18ba5c1",
+      "usedIn": [
+        "lab3"
+      ],
+      "width": 3440,
+      "height": 1988
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/select-java-upgrade.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-02-java-upgrade/assets/select-java-upgrade.png",
+      "sha256": "b66e58733b1db2db13ee18fa673fd193470d4560f7ad9edd2db028d83b412649",
+      "usedIn": [
+        "lab2"
+      ],
+      "width": 562,
+      "height": 1222
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/select-liberty-replatforming.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-01-liberty-replatforming/assets/select-liberty-replatforming.png",
+      "sha256": "f78f54e1346046500d64afb7efba0026235bb89312f749edbb79f75b2fca3c8a",
+      "usedIn": [
+        "lab1"
+      ],
+      "width": 576,
+      "height": 1292
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/select-stack.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-03-ui-modernization/assets/select-stack.png",
+      "sha256": "469f2bb15521456625540ff654b4de881f5971b46eb351744b029be6ec6d7465",
+      "usedIn": [
+        "lab3"
+      ],
+      "width": 3448,
+      "height": 1998
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/select-ui-modernization.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-03-ui-modernization/assets/select-ui-modernization.png",
+      "sha256": "40bb321d78cbaf3891dbe02184e717c30a1974cacd33c6030eb2ebfc1be1ca7f",
+      "usedIn": [
+        "lab3"
+      ],
+      "width": 3440,
+      "height": 1998
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/snapa-open-in-bob.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-01-liberty-replatforming/assets/snapa-open-in-bob.png",
+      "sha256": "3dd4b527a417b4f95e6a5436adabc12645b171e216fca15f17d48951e165d659",
+      "usedIn": [
+        "lab1"
+      ],
+      "width": 596,
+      "height": 706
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/target-state-options.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-03-ui-modernization/assets/target-state-options.png",
+      "sha256": "6344677187966f53b73bfcd58c8d77b998a22aa39944f6093dce8864d0c8e963",
+      "usedIn": [
+        "lab3"
+      ],
+      "width": 1120,
+      "height": 1566
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/task-selection-screen.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-04-unit-test-generation/assets/task-selection-screen.png",
+      "sha256": "6a5e11c962a67c4492bd703dc3215307f8fe0d6bffa7e820339b6ebab764e343",
+      "usedIn": [
+        "lab4"
+      ],
+      "width": 3024,
+      "height": 1964
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/ui-workflow-start.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-03-ui-modernization/assets/ui-workflow-start.png",
+      "sha256": "97e95a79b2caa999b27d34d3aabcf6187460373753f5e20500215422d45b2a12",
+      "usedIn": [
+        "lab3"
+      ],
+      "width": 1792,
+      "height": 2052
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/unit-testing-workflow-card.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-04-unit-test-generation/assets/unit-testing-workflow-card.png",
+      "sha256": "64ddbb36e55e912e14764c3eeb1002e9c9230db404d1653a0b653b37f79dc53e",
+      "usedIn": [
+        "lab4"
+      ],
+      "width": 3024,
+      "height": 1964
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/vulnerabilities-found-prompt.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-05-vulnerabilities-detection/assets/vulnerabilities-found-prompt.png",
+      "sha256": "e7d4562e1aa48bc98ba80a224bff9c7bd17aeaf10a78610cd4ff97e28333a1f4",
+      "usedIn": [
+        "lab5"
+      ],
+      "width": 3024,
+      "height": 1964
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/vulnerabilities-workflow-card.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-05-vulnerabilities-detection/assets/vulnerabilities-workflow-card.png",
+      "sha256": "686dd87805c6c83f713bba806fea34c4bb4d8621681f6a5adb2298e2b1cbee28",
+      "usedIn": [
+        "lab5"
+      ],
+      "width": 3024,
+      "height": 1960
+    }
+  ]
+}

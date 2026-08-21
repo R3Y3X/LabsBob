@@ -615,6 +615,49 @@ a.hub-lab-card {
   display: block;
 }
 
+/* Premium is an access state, not another verbose category tag. Keep the
+   signal attached to the modernisation cards where the participant chooses a lab. */
+.hub-lab-card--premium-access,
+a.hub-lab-card--premium-access {
+  border-color: var(--cds-support-success, #198038) !important;
+  box-shadow: inset 0 3px 0 var(--cds-support-success, #198038), 0 2px 8px rgba(25, 128, 56, 0.14) !important;
+}
+
+.hub-lab-card__premium-badge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.35rem 0.75rem;
+  background: var(--cds-support-success, #198038);
+  color: #ffffff;
+  font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.hub-premium-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.5rem;
+  padding: 0.2rem 0.5rem;
+  background: var(--cds-support-success, #198038);
+  color: #ffffff;
+  font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
 .hub-lab-card__body {
   display: flex;
   flex-direction: column;
@@ -703,6 +746,10 @@ a.hub-lab-card:focus-visible {
   box-shadow: 0 8px 24px rgba(25, 128, 56, 0.12) !important;
 }
 
+#section-premium a.hub-lab-card--premium-access:hover {
+  box-shadow: inset 0 3px 0 var(--cds-support-success, #198038), 0 10px 26px rgba(25, 128, 56, 0.2) !important;
+}
+
 .cds--g100 .hub-lab-card,
 .cds--g100 a.hub-lab-card {
   background: var(--cds-layer-01, #262626) !important;
@@ -712,6 +759,12 @@ a.hub-lab-card:focus-visible {
 .cds--g100 .hub-lab-card__media {
   background: #161616;
   border-bottom-color: #393939;
+}
+
+.cds--g100 .hub-lab-card--premium-access,
+.cds--g100 a.hub-lab-card--premium-access {
+  border-color: var(--cds-support-success, #42be65) !important;
+  box-shadow: inset 0 3px 0 var(--cds-support-success, #42be65), 0 2px 8px rgba(0, 0, 0, 0.28) !important;
 }
 
 /* ── Lab reading experience ────────────────────────────────────── */
@@ -1741,12 +1794,17 @@ body.cds--g100 .callout[data-tone="danger"] {
 }
 
 .lab-shell .code-block,
-.lab-shell .lab-step__media,
-.lab-shell .lab-step > .lab-figure,
-.lab-shell .lab-section > .lab-figure {
+.lab-shell .lab-step__media {
   width: 100%;
   max-width: var(--lab-media-max);
-  margin-inline: 0;
+  margin-inline: auto;
+}
+
+.lab-shell .lab-step > .lab-figure,
+.lab-shell .lab-section > .lab-figure {
+  width: fit-content;
+  max-width: min(100%, var(--lab-media-max));
+  margin-inline: auto;
 }
 
 .lab-shell .lab-step__media .lab-figure {
@@ -1760,13 +1818,17 @@ body.cds--g100 .callout[data-tone="danger"] {
 }
 
 .lab-shell .lab-figure__img {
-  width: 100%;
+  width: auto;
   max-width: 100%;
   max-height: min(36rem, 60vh);
-  margin-inline: 0;
+  margin-inline: auto;
   background: var(--hub-layer);
   object-fit: contain;
   object-position: center top;
+}
+
+.lab-shell .lab-figure--row {
+  width: 100%;
 }
 
 .lab-shell .lab-figure__caption {
@@ -1831,6 +1893,23 @@ body.cds--g100 .callout[data-tone="danger"] {
 
 .lab-shell .code-block--tree .copy-button {
   display: none;
+}
+
+.lab-shell .code-block__label {
+  margin: 0.75rem 5.5rem 0.25rem 1.25rem;
+  color: #f4f4f4;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.lab-shell .code-block__label + pre {
+  margin-top: 0.25rem !important;
+}
+
+.lab-shell .code-block .copy-button:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
 }
 
 .lab-response {

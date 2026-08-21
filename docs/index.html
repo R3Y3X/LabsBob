@@ -44,6 +44,18 @@
       <!-- Global actions: search + theme + hamburger (mobile) -->
       <div class="cds--header__global">
 
+        <label class="hub-header__search-wrap" for="site-search">
+          <svg class="hub-header__search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="18" height="18" aria-hidden="true" focusable="false" fill="currentColor">
+            <path d="m29 27.586-6.552-6.552A10.92 10.92 0 0 0 25 14c0-6.065-4.935-11-11-11S3 7.935 3 14s4.935 11 11 11a10.92 10.92 0 0 0 7.034-2.552L27.586 29 29 27.586zM5 14c0-4.963 4.037-9 9-9s9 4.037 9 9-4.037 9-9 9-9-4.037-9-9z"/>
+          </svg>
+          <input id="site-search" class="hub-header__search-input" type="search" placeholder="Buscar laboratorios" aria-label="Buscar laboratorios" autocomplete="off" />
+        </label>
+
+        <button id="premium-toggle" class="hub-premium-toggle" type="button" aria-pressed="false" aria-label="Activar acceso a workflows premium" title="Activar acceso a workflows premium">
+          <span class="hub-premium-toggle__dot" aria-hidden="true"></span>
+          <span data-premium-toggle-label>Sin premium</span>
+        </button>
+
         <!-- Theme toggle: moon in light mode → sun in dark mode (Carbon icons: asleep / sunny) -->
         <button id="theme-toggle" class="cds--header__action" type="button" aria-label="Cambiar a tema oscuro" aria-pressed="false" title="Cambiar a tema oscuro">
           <!-- Moon (Carbon "asleep"): visible in light mode -->
@@ -86,6 +98,10 @@
     <nav id="side-nav" class="cds--side-nav" aria-label="Navegación lateral" aria-hidden="true">
       <div class="hub-side-nav__header">
         <span class="hub-side-nav__title">IBM Workshop Hub</span>
+        <button id="premium-toggle-mobile" class="hub-premium-toggle hub-premium-toggle--mobile" type="button" aria-pressed="false" aria-label="Activar acceso a workflows premium" title="Activar acceso a workflows premium">
+          <span class="hub-premium-toggle__dot" aria-hidden="true"></span>
+          <span data-premium-toggle-label>Sin premium</span>
+        </button>
       </div>
       <ul class="cds--side-nav__items" id="side-nav-items-mobile"></ul>
     </nav>

@@ -1,5 +1,5 @@
 import { loadContent } from './content.js';
-import { siteData, workshopGuides, findLab, getNextLab, getWorkshopStats, roadshowConfig, getRoadshowPlan, getLabTrackMeta } from './data.js';
+import { siteData, workshopGuides, findLab, getNextLab, getWorkshopStats, getVisibleSections, roadshowConfig, getRoadshowPlan, getLabTrackMeta } from './data.js';
 import { getHomeRoute, getLabRoute, parseRoute } from './router.js';
 import { initializeTheme, toggleTheme } from './theme.js';
 
@@ -615,45 +615,14 @@ function buildLabBannerTags(section, lab, step) {
   return html;
 }
 
-function getTrackName(index) {
-  let value = index + 1;
-  let suffix = '';
-
-  while (value > 0) {
-    value -= 1;
-    suffix = String.fromCharCode(65 + (value % 26)) + suffix;
-    value = Math.floor(value / 26);
-  }
-
-  return `Track ${suffix}`;
-}
-
-function getFeaturedTracks(sections) {
-  const tracks = new Map();
-  let index = 0;
-
-  sections.forEach((section) => {
-    section.labs.forEach((lab) => {
-      if (!lab.featured) return;
-      tracks.set(lab.slug, getTrackName(index));
-      index += 1;
-    });
-  });
-
-  return tracks;
-}
-
-function buildLabCard(lab, section, featuredTrack = '') {
+function buildLabCard(lab, section) {
   const tag = SECTION_TAG[section.id] || { cls: 'cds--tag--gray', label: section.eyebrow };
   const trackMeta = getLabTrackMeta(lab.slug);
   const trackTag = trackMeta
-    ? `<span class="hub-lab-card__track-badge hub-lab-card__track-badge--${trackMeta.accent}">${escapeHtml(trackMeta.label)}</span>`
+    ? `<span class="cds--tag cds--tag--cool-gray">${escapeHtml(trackMeta.label)}</span>`
     : '';
   const audienceTag = lab.audience && lab.audience.length === 1 && lab.audience[0] === 'partner'
     ? '<span class="cds--tag cds--tag--cyan hub-tag--partner">Solo Partners</span>'
-    : '';
-  const featuredTag = lab.featured && featuredTrack
-    ? `<span class="cds--tag cds--tag--high-contrast hub-lab-card__tag--featured">${escapeHtml(featuredTrack)}</span>`
     : '';
   const isPremiumModernization = section.id === 'premium' && lab.variants && lab.accessMode === 'premium';
   const premiumBadge = isPremiumModernization
@@ -689,7 +658,6 @@ function buildLabCard(lab, section, featuredTrack = '') {
       <div class="hub-lab-card__body">
         <div class="hub-lab-card__tags">
           ${trackTag}
-          ${featuredTag}
           <span class="cds--tag ${tag.cls}">${tag.label}</span>
           <span class="cds--tag ${tag.cls}">${escapeHtml(lab.supporting)}</span>
           ${audienceTag}
@@ -1048,7 +1016,6 @@ function bindRoadshowEvents() {
 function renderHome(searchTerm = '') {
   const normalizedTerm = searchTerm.trim().toLowerCase();
   const visibleSections = getVisibleSections(getAccessMode());
-  const featuredTracks = getFeaturedTracks(visibleSections);
 
   const sectionsMarkup = visibleSections
     .map((section, idx) => {
@@ -1059,7 +1026,7 @@ function renderHome(searchTerm = '') {
       });
 
       const cardsMarkup = labs.length
-        ? labs.map((lab) => buildLabCard(lab, section, featuredTracks.get(lab.slug))).join('')
+        ? labs.map((lab) => buildLabCard(lab, section)).join('')
         : '<p class="cds--body-01 hub-empty-state">Ningún laboratorio coincide con esta búsqueda.</p>';
 
       const tag = SECTION_TAG[section.id] || { cls: 'cds--tag--gray', label: section.label };

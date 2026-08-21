@@ -50,7 +50,8 @@
   /* Sections: sin padding lateral */
   .hub-sections-stack,
   .hub-workshops__header,
-  .hub-mode-tabs {
+  .hub-mode-tabs,
+  .roadshow-planner__inner {
     padding-left: 1rem;
     padding-right: 1rem;
   }
@@ -72,6 +73,28 @@
   /* Cards: 1 columna */
   .hub-cards-grid {
     grid-template-columns: 1fr;
+  }
+
+  .roadshow-planner__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .roadshow-planner__roadmap-wrap {
+    position: static;
+  }
+
+  .roadshow-track-grid,
+  .roadshow-path-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .roadshow-timeline__card {
+    grid-template-columns: 1fr;
+  }
+
+  .hub-hero__cta-secondary {
+    margin-left: 0;
+    margin-top: 0.5rem;
   }
 
   /* Lab shell */
@@ -130,7 +153,7 @@
   }
 
   .hub-cards-grid {
-    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   }
 
   .hub-cards-grid:has(> :nth-child(2):last-child) {
@@ -146,6 +169,14 @@
 
   .cds--header__menu-toggle {
     display: inline-flex !important;
+  }
+
+  .roadshow-planner__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .roadshow-planner__roadmap-wrap {
+    position: static;
   }
 }
 

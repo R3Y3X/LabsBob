@@ -503,7 +503,7 @@ function renderHome(searchTerm = '') {
   const normalizedTerm = searchTerm.trim().toLowerCase();
 
   const sectionsMarkup = siteData.sections
-    .map((section) => {
+    .map((section, idx) => {
       const labs = section.labs.filter((lab) => {
         if (!normalizedTerm) return true;
         return [lab.title, lab.description, lab.supporting, section.title]
@@ -515,18 +515,35 @@ function renderHome(searchTerm = '') {
         : '<p class="cds--body-01 hub-empty-state">Ningún laboratorio coincide con esta búsqueda.</p>';
 
       const tag = SECTION_TAG[section.id] || { cls: 'cds--tag--gray', label: section.label };
+      // All sections start open; first one is the primary but all are open by default
+      const isOpen = true;
+      const panelId = `panel-section-${section.id}`;
 
       return `
-        <div class="hub-workshop-section" id="section-${section.id}">
-          <div class="cds--tile hub-level-banner" role="region" aria-label="${section.title}">
+        <div class="hub-workshop-section hub-workshop-section--accordion" id="section-${section.id}">
+          <button
+            class="hub-level-banner hub-level-banner--trigger cds--tile"
+            aria-expanded="${isOpen}"
+            aria-controls="${panelId}"
+            type="button"
+          >
             <div class="hub-level-banner__badges">
               <span class="cds--tag ${tag.cls}">${section.label}</span>
               <span class="cds--tag ${tag.cls}">${section.bobMode}</span>
             </div>
-            <h2 class="cds--productive-heading-04 hub-level-banner__title">${section.title}</h2>
-            <p class="cds--body-01 hub-level-banner__desc">${section.description}</p>
+            <div class="hub-level-banner__row">
+              <div class="hub-level-banner__content">
+                <h2 class="cds--productive-heading-04 hub-level-banner__title">${section.title}</h2>
+                <p class="hub-level-banner__desc">${section.description}</p>
+              </div>
+              <svg class="hub-level-banner__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="24" height="24" aria-hidden="true"><path d="M8 11L2 5h12z"/></svg>
+            </div>
+          </button>
+          <div class="hub-section-panel" id="${panelId}" aria-hidden="${!isOpen}">
+            <div class="hub-section-panel__inner">
+              <div class="hub-cards-grid">${cardsMarkup}</div>
+            </div>
           </div>
-          <div class="hub-cards-grid">${cardsMarkup}</div>
         </div>
       `;
     })
@@ -1837,7 +1854,7 @@ function bindEvents() {
     }
   });
 
-  // Accordion
+  // Lab step accordion (inside lab pages)
   document.addEventListener('click', (event) => {
     const trigger = event.target.closest('.lab-accordion__trigger');
     if (!trigger) return;
@@ -1847,6 +1864,50 @@ function bindEvents() {
     const isOpen = trigger.getAttribute('aria-expanded') === 'true';
     trigger.setAttribute('aria-expanded', String(!isOpen));
     panel.hidden = isOpen;
+  });
+
+  // Workshop section accordion (home page sections)
+  // Uses JS scrollHeight for pixel-perfect max-height animation —
+  // grid-template-rows:0fr is unreliable without a fixed parent height.
+  document.addEventListener('click', (event) => {
+    const trigger = event.target.closest('.hub-level-banner--trigger');
+    if (!trigger) return;
+    if (event.target.closest('a')) return;
+    const panelId = trigger.getAttribute('aria-controls');
+    const panel = panelId ? document.getElementById(panelId) : null;
+    if (!panel) return;
+
+    const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+    const willOpen = !isOpen;
+
+    if (panel._openEndHandler) {
+      panel.removeEventListener('transitionend', panel._openEndHandler);
+      panel._openEndHandler = null;
+    }
+
+    trigger.setAttribute('aria-expanded', String(willOpen));
+    panel.setAttribute('aria-hidden', String(!willOpen));
+
+    if (willOpen) {
+      panel.style.maxHeight = '0px';
+      panel.getBoundingClientRect();
+      panel.style.maxHeight = `${panel.scrollHeight}px`;
+      panel._openEndHandler = (transitionEvent) => {
+        if (transitionEvent.propertyName !== 'max-height') return;
+        if (trigger.getAttribute('aria-expanded') !== 'true') return;
+        panel.style.maxHeight = 'none';
+        panel.removeEventListener('transitionend', panel._openEndHandler);
+        panel._openEndHandler = null;
+      };
+      panel.addEventListener('transitionend', panel._openEndHandler);
+    } else {
+      const currentHeight = panel.style.maxHeight;
+      if (currentHeight === 'none' || currentHeight === '') {
+        panel.style.maxHeight = `${panel.scrollHeight}px`;
+      }
+      panel.getBoundingClientRect();
+      panel.style.maxHeight = '0px';
+    }
   });
 
   document.addEventListener('click', async (event) => {

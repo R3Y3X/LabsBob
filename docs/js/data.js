@@ -78,7 +78,7 @@ export const siteData = {
       eyebrow: 'Automatización',
       label: 'Integración de plataforma',
       bobMode: 'Eventos y agentes',
-      description: 'Construye un caso retail de extremo a extremo: streaming de inventario en Confluent Kafka, agentes de IA en watsonx Orchestrate y una tienda que consume datos en tiempo real.',
+      description: 'Kafka + watsonx Orchestrate + storefront React — un pipeline retail agéntico de extremo a extremo.',
       actionLabel: 'Explorar integración de plataforma',
       labs: [
         {
@@ -132,7 +132,7 @@ export const siteData = {
       eyebrow: 'Modernización',
       label: 'Modernización de aplicaciones',
       bobMode: 'Sistemas legacy',
-      description: 'Moderniza Simple Pharmacy (Java 8 → 21, Liberty y React) y SAMCO en IBM i (RPG Fixed-to-Free, UI Carbon y RLA a SQL) con Ask, Plan y Agent Mode.',
+      description: 'Java 8 → 21, Liberty, React y RPG Fixed-to-Free sobre IBM i — modernización guiada por IA de punta a punta.',
       actionLabel: 'Explorar Modernización de aplicaciones empresariales',
       labs: [
         {

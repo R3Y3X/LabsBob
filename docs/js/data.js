@@ -1,8 +1,10 @@
 export const siteData = {
   topNav: [
     { label: 'Inicio', href: '#/' },
+    { label: 'Tu recorrido', href: '#roadshow-planner' },
     { label: 'Laboratorios', href: '#available-workshops' },
     { label: 'Equipo', href: '#nosotros' },
+    { label: 'Recursos', href: '#recursos' },
     { label: 'Acerca de', href: '#acerca-de' }
   ],
   hero: {
@@ -102,6 +104,7 @@ export const siteData = {
           supporting: 'watsonx Orchestrate',
           featured: true,
           audience: ['client', 'partner'],
+          banner: './assets/images/labs/agentic-retail-wxo/banner_bob.png',
           steps: [
             { slug: 'overview', label: 'Introducción', file: './content/integraciones/agentic-retail-wxo/overview.html', tags: ['watsonx Orchestrate'] },
             { slug: 'create', label: 'Disponibilidad MCP', file: './content/integraciones/agentic-retail-wxo/create.html', tags: ['MCP'], bobcoinCost: { min: 3, max: 5 } },
@@ -238,6 +241,157 @@ export const siteData = {
     }
   ]
 };
+
+export const roadshowConfig = {
+  eyebrow: 'Roadshow · 3 bloques',
+  title: 'Planifica tu recorrido',
+  lead: 'Elige tu lab inicial y el camino que seguirás. Te armamos el plan completo del evento.',
+  storageKey: 'roadshow-plan',
+  blocks: [
+    { id: 1, label: 'Bloque 1', subtitle: 'Fundamentos' },
+    { id: 2, label: 'Bloque 2', subtitle: 'Especialización' },
+    { id: 3, label: 'Bloque 3', subtitle: 'Cierre del camino' }
+  ],
+  initialTracks: [
+    {
+      id: 'A',
+      slug: 'hands-on-inicial',
+      label: 'Track A',
+      title: 'De la idea al código',
+      summary: 'Planifica, valida y ejecuta con IBM Bob: Ask, Plan, Agent, modo personalizado y MCP.',
+      accent: 'core'
+    },
+    {
+      id: 'B',
+      slug: 'entendiendo-bob',
+      label: 'Track B',
+      title: '¿Tu código es seguro?',
+      summary: 'Detecta vulnerabilidades antes de producción con rules, skills ASVS y flujo actor-critic.',
+      accent: 'core'
+    }
+  ],
+  paths: [
+    {
+      id: 'integration',
+      label: 'Integración en tiempo real y agentes',
+      summary: 'Conecta agentes con datos en streaming y construye un sistema multiagente con watsonx Orchestrate.',
+      topics: ['Confluent Kafka y ksqlDB', 'Eventos en tiempo real', 'MCP sobre Kafka', 'RAG y sustitutos', 'Supervisor y asistente embebido'],
+      accent: 'integration',
+      tracks: [
+        {
+          id: 'D',
+          slug: 'agentic-retail-confluent',
+          block: 2,
+          label: 'Track D',
+          title: 'Conecta tus agentes con tus datos en tiempo real',
+          accent: 'integration'
+        },
+        {
+          id: 'F',
+          slug: 'agentic-retail-wxo',
+          block: 3,
+          label: 'Track F',
+          title: 'De agentes aislados a una fuerza de trabajo inteligente',
+          accent: 'integration'
+        }
+      ]
+    },
+    {
+      id: 'modernization',
+      label: 'Modernización de aplicaciones legacy',
+      summary: 'Moderniza stacks Java y RPG sobre IBM i con IA guiada: replatforming, UI React y código libre.',
+      topics: ['Open Liberty y Java 21', 'UI React sobre JAX-RS', 'Tests y remediación CVE', 'RPG Fixed-to-Free', 'SQL embebido en IBM i'],
+      accent: 'premium',
+      tracks: [
+        {
+          id: 'C',
+          slug: 'java-modernization-v2',
+          block: 2,
+          label: 'Track C',
+          title: 'Moderniza Java a la velocidad del negocio',
+          accent: 'premium'
+        },
+        {
+          id: 'E',
+          slug: 'ibm-i-rpg-development',
+          block: 3,
+          label: 'Track E',
+          title: 'Del RPG al futuro: moderniza IBM i',
+          accent: 'premium'
+        }
+      ]
+    }
+  ]
+};
+
+export function getLabTrackMeta(slug) {
+  for (const track of roadshowConfig.initialTracks) {
+    if (track.slug === slug) {
+      return { id: track.id, label: track.label, accent: track.accent };
+    }
+  }
+
+  for (const path of roadshowConfig.paths) {
+    for (const track of path.tracks) {
+      if (track.slug === slug) {
+        return { id: track.id, label: track.label, accent: track.accent };
+      }
+    }
+  }
+
+  return null;
+}
+
+export function getRoadshowPlan(initialId, pathId) {
+  const initialTrack = roadshowConfig.initialTracks.find((track) => track.id === initialId)
+    || roadshowConfig.initialTracks[0];
+  const path = roadshowConfig.paths.find((item) => item.id === pathId)
+    || roadshowConfig.paths[0];
+
+  const initialLab = findLab(initialTrack.slug);
+  const pathTracks = path.tracks.map((track) => {
+    const resolved = findLab(track.slug);
+    return {
+      ...track,
+      lab: resolved?.lab || null,
+      section: resolved?.section || null,
+      banner: resolved?.lab?.banner || `./assets/images/labs/${track.slug}/banner_bob.png`,
+      stats: resolved?.lab ? getWorkshopStats(resolved.lab) : null
+    };
+  });
+
+  return {
+    initial: {
+      ...initialTrack,
+      lab: initialLab?.lab || null,
+      section: initialLab?.section || null,
+      banner: initialLab?.lab?.banner || `./assets/images/labs/${initialTrack.slug}/banner_bob.png`,
+      stats: initialLab?.lab ? getWorkshopStats(initialLab.lab) : null
+    },
+    path: {
+      ...path,
+      tracks: pathTracks
+    },
+    blocks: [
+      {
+        ...roadshowConfig.blocks[0],
+        track: {
+          ...initialTrack,
+          lab: initialLab?.lab || null,
+          banner: initialLab?.lab?.banner || `./assets/images/labs/${initialTrack.slug}/banner_bob.png`
+        }
+      },
+      {
+        ...roadshowConfig.blocks[1],
+        track: pathTracks.find((track) => track.block === 2) || pathTracks[0]
+      },
+      {
+        ...roadshowConfig.blocks[2],
+        track: pathTracks.find((track) => track.block === 3) || pathTracks[1]
+      }
+    ]
+  };
+}
 
 export const workshopGuides = {
   'hands-on-inicial': {

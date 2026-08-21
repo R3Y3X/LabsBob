@@ -1,12 +1,12 @@
 import { loadContent } from './content.js';
-import { siteData, workshopGuides, findLab, getVisibleSections, getNextLab, getWorkshopStats } from './data.js';
+import { siteData, workshopGuides, findLab, getNextLab, getWorkshopStats, roadshowConfig, getRoadshowPlan, getLabTrackMeta } from './data.js';
 import { getHomeRoute, getLabRoute, parseRoute } from './router.js';
 import { initializeTheme, toggleTheme } from './theme.js';
 
 const PREMIUM_STORAGE_KEY = 'labsBob.premiumAccess';
 let premiumAccess = readPremiumAccess();
 
-const HOME_SECTION_IDS = new Set(['available-workshops', 'nosotros', 'acerca-de', 'section-basic', 'section-integraciones', 'section-premium']);
+const HOME_SECTION_IDS = new Set(['roadshow-planner', 'available-workshops', 'nosotros', 'recursos', 'acerca-de', 'section-basic', 'section-integraciones', 'section-premium']);
 
 const homeView = document.querySelector('#home-view');
 const labView = document.querySelector('#lab-view');
@@ -95,14 +95,16 @@ function getHashTarget() {
   return HOME_SECTION_IDS.has(id) ? id : null;
 }
 
-function scrollToHomeSection(sectionId) {
-  // Keep the selected navigation item stable while the newly rendered home
-  // section is positioned. The header navigation is a direct jump, not a
-  // progress indicator for every section crossed on the way there.
-  suppressScrollSpy(sectionId ? 500 : 250);
+function scrollLabToTop() {
+  window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+}
+
+function scrollToHomeSection(sectionId, { smooth = true } = {}) {
+  const behavior = smooth ? 'smooth' : 'auto';
+  suppressScrollSpy(smooth ? SMOOTH_SCROLL_MS : 250);
   if (!sectionId) {
     setNavActive(null);
-    window.scrollTo({ top: 0, behavior: 'auto' });
+    window.scrollTo({ top: 0, behavior });
     return;
   }
 
@@ -111,7 +113,145 @@ function scrollToHomeSection(sectionId) {
 
   const targetTop = Math.max(0, el.getBoundingClientRect().top + window.scrollY - HEADER_H);
   setNavActive(sectionId);
-  window.scrollTo({ top: targetTop, behavior: 'auto' });
+  window.scrollTo({ top: targetTop, behavior });
+}
+
+function saveHomeReturnTarget(link) {
+  if (homeView.hidden) return;
+
+  const payload = { scrollY: window.scrollY };
+  const sectionEl = link.closest('[id^="section-"]');
+
+  if (sectionEl) {
+    payload.openSection = sectionEl.id.replace('section-', '');
+    payload.offsetInSection = window.scrollY - sectionEl.offsetTop;
+  } else {
+    const anchorEl = link.closest('#roadshow-planner, #available-workshops');
+    if (anchorEl) {
+      payload.anchorId = anchorEl.id;
+      payload.offsetInAnchor = window.scrollY - anchorEl.offsetTop;
+    }
+  }
+
+  sessionStorage.setItem(HOME_RETURN_KEY, JSON.stringify(payload));
+}
+
+function getHomeReturnTarget() {
+  try {
+    return JSON.parse(sessionStorage.getItem(HOME_RETURN_KEY) || 'null');
+  } catch {
+    return null;
+  }
+}
+
+function getHomeBackHref() {
+  return getHomeRoute();
+}
+
+function openWorkshopSectionPanel(trigger, panel) {
+  if (!trigger || !panel) return Promise.resolve();
+
+  const maxHeight = panel.style.maxHeight;
+  const isFullyOpen = trigger.getAttribute('aria-expanded') === 'true'
+    && (maxHeight === 'none' || (maxHeight && maxHeight !== '0px'));
+  if (isFullyOpen) return Promise.resolve();
+
+  if (panel._openEndHandler) {
+    panel.removeEventListener('transitionend', panel._openEndHandler);
+    panel._openEndHandler = null;
+  }
+
+  return new Promise((resolve) => {
+    trigger.setAttribute('aria-expanded', 'true');
+    panel.setAttribute('aria-hidden', 'false');
+    panel.style.maxHeight = '0px';
+    panel.getBoundingClientRect();
+    panel.style.maxHeight = `${panel.scrollHeight}px`;
+    panel._openEndHandler = (transitionEvent) => {
+      if (transitionEvent.propertyName !== 'max-height') return;
+      if (trigger.getAttribute('aria-expanded') !== 'true') return;
+      panel.style.maxHeight = 'none';
+      panel.removeEventListener('transitionend', panel._openEndHandler);
+      panel._openEndHandler = null;
+      resolve();
+    };
+    panel.addEventListener('transitionend', panel._openEndHandler);
+  });
+}
+
+function restoreHomeScrollPosition(sectionId, saved = getHomeReturnTarget()) {
+  if (sectionId) {
+    scrollToHomeSection(sectionId);
+    return;
+  }
+
+  if (saved?.openSection != null && saved.offsetInSection != null) {
+    const sectionEl = document.getElementById(`section-${saved.openSection}`);
+    if (sectionEl) {
+      const targetTop = Math.max(0, sectionEl.offsetTop + saved.offsetInSection);
+      suppressScrollSpy(250);
+      window.scrollTo({ top: targetTop, behavior: 'auto' });
+      runScrollSpy();
+      return;
+    }
+  }
+
+  if (saved?.anchorId && saved.offsetInAnchor != null) {
+    const anchorEl = document.getElementById(saved.anchorId);
+    if (anchorEl) {
+      const targetTop = Math.max(0, anchorEl.offsetTop + saved.offsetInAnchor);
+      suppressScrollSpy(250);
+      window.scrollTo({ top: targetTop, behavior: 'auto' });
+      runScrollSpy();
+      return;
+    }
+  }
+
+  if (saved?.scrollY != null) {
+    suppressScrollSpy(250);
+    window.scrollTo({ top: saved.scrollY, behavior: 'auto' });
+    runScrollSpy();
+    return;
+  }
+
+  window.scrollTo({ top: 0, behavior: 'auto' });
+  setNavActive(null);
+}
+
+async function restoreHomeAfterRender(sectionId) {
+  const saved = getHomeReturnTarget();
+
+  if (saved?.openSection) {
+    const sectionEl = document.getElementById(`section-${saved.openSection}`);
+    if (sectionEl) {
+      await openWorkshopSectionPanel(
+        sectionEl.querySelector('.hub-level-banner--trigger'),
+        sectionEl.querySelector('.hub-section-panel')
+      );
+    }
+  }
+
+  await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  restoreHomeScrollPosition(sectionId, saved);
+  initScrollSpy();
+}
+
+function navigateHomeSectionFromLink(event, link) {
+  const href = link.getAttribute('href') || '';
+  const raw = href.replace(/^#\/?/, '').split('/')[0];
+  const isHomeTop = !raw;
+  const sectionId = isHomeTop ? null : (HOME_SECTION_IDS.has(raw) ? raw : null);
+  if (!isHomeTop && sectionId === null) return false;
+
+  event.preventDefault();
+  setNavActive(sectionId);
+  const destination = sectionId ? `#${sectionId}` : getHomeRoute();
+  if (window.location.hash !== destination) {
+    window.location.hash = destination;
+  } else {
+    scrollToHomeSection(sectionId);
+  }
+  return true;
 }
 
 function resetLabScroll() {
@@ -156,8 +296,10 @@ function updateNavCurrent() {
 // Uses a scroll listener instead of IntersectionObserver so it can
 // reliably detect "back to top = Inicio" with no threshold edge cases.
 
-const SPY_SECTIONS = ['available-workshops', 'nosotros', 'acerca-de'];
+const SPY_SECTIONS = ['roadshow-planner', 'available-workshops', 'nosotros', 'recursos', 'acerca-de'];
 const HEADER_H = 48; // fixed header height in px
+const SMOOTH_SCROLL_MS = 900;
+const HOME_RETURN_KEY = 'hub-home-return';
 let scrollSpyRaf = null;
 let scrollSpyBound = false;
 let scrollSpySuppressedUntil = 0;
@@ -373,7 +515,7 @@ function renderPlatformNav() {
     .join('');
 
   const navLinks = siteData.topNav
-    .map((item) => `<li><a class="cds--side-nav__link" href="${item.href}">${item.label}</a></li>`)
+    .map((item) => `<li><a class="cds--side-nav__link hub-side-nav__top-link" href="${item.href}">${item.label}</a></li>`)
     .join('');
 
   const labLinks = getVisibleSections(getAccessMode())
@@ -503,6 +645,10 @@ function getFeaturedTracks(sections) {
 
 function buildLabCard(lab, section, featuredTrack = '') {
   const tag = SECTION_TAG[section.id] || { cls: 'cds--tag--gray', label: section.eyebrow };
+  const trackMeta = getLabTrackMeta(lab.slug);
+  const trackTag = trackMeta
+    ? `<span class="hub-lab-card__track-badge hub-lab-card__track-badge--${trackMeta.accent}">${escapeHtml(trackMeta.label)}</span>`
+    : '';
   const audienceTag = lab.audience && lab.audience.length === 1 && lab.audience[0] === 'partner'
     ? '<span class="cds--tag cds--tag--cyan hub-tag--partner">Solo Partners</span>'
     : '';
@@ -542,6 +688,7 @@ function buildLabCard(lab, section, featuredTrack = '') {
       </div>
       <div class="hub-lab-card__body">
         <div class="hub-lab-card__tags">
+          ${trackTag}
           ${featuredTag}
           <span class="cds--tag ${tag.cls}">${tag.label}</span>
           <span class="cds--tag ${tag.cls}">${escapeHtml(lab.supporting)}</span>
@@ -610,6 +757,293 @@ const BOB_MODES = [
   }
 ];
 
+const ROADSHOW_ACCENT_CLASS = {
+  core: 'roadshow-accent--core',
+  integration: 'roadshow-accent--integration',
+  premium: 'roadshow-accent--premium',
+  road: 'roadshow-accent--road'
+};
+
+function getRoadshowSelection() {
+  try {
+    const stored = JSON.parse(localStorage.getItem(roadshowConfig.storageKey) || '{}');
+    const initial = roadshowConfig.initialTracks.some((track) => track.id === stored.initial)
+      ? stored.initial
+      : roadshowConfig.initialTracks[0].id;
+    const path = roadshowConfig.paths.some((item) => item.id === stored.path)
+      ? stored.path
+      : roadshowConfig.paths[0].id;
+    return { initial, path };
+  } catch {
+    return {
+      initial: roadshowConfig.initialTracks[0].id,
+      path: roadshowConfig.paths[0].id
+    };
+  }
+}
+
+function saveRoadshowSelection(selection) {
+  localStorage.setItem(roadshowConfig.storageKey, JSON.stringify(selection));
+}
+
+function buildRoadshowTrackNode(block, track) {
+  if (!track) return '';
+  const accent = track.accent || 'core';
+  const accentClass = ROADSHOW_ACCENT_CLASS[accent] || ROADSHOW_ACCENT_CLASS.core;
+  const slug = track.slug || track.lab?.slug;
+  const title = track.title || track.lab?.title || '';
+  const label = track.label || '';
+  const banner = track.banner || (slug ? `./assets/images/labs/${slug}/banner_bob.png` : '');
+  const duration = track.stats?.duration || (slug ? workshopGuides[slug]?.duration : '') || '';
+  const href = slug ? getLabRoute(slug) : '#';
+
+  return `
+    <li class="roadshow-timeline__item ${accentClass}">
+      <div class="roadshow-timeline__rail" aria-hidden="true">
+        <span class="roadshow-timeline__dot">${block.id}</span>
+      </div>
+      <a class="roadshow-timeline__card" href="${href}">
+        <div class="roadshow-timeline__card-media">
+          <img src="${banner}" alt="" class="roadshow-timeline__img" loading="lazy" />
+        </div>
+        <div class="roadshow-timeline__card-body">
+          <p class="roadshow-timeline__block-label">${escapeHtml(block.label)} · ${escapeHtml(block.subtitle)}</p>
+          <p class="roadshow-timeline__track-label">${escapeHtml(label)}</p>
+          <h3 class="roadshow-timeline__title">${escapeHtml(title)}</h3>
+          ${duration ? `<p class="roadshow-timeline__meta">${escapeHtml(duration)}</p>` : ''}
+          <span class="roadshow-timeline__link">Abrir laboratorio <span aria-hidden="true">→</span></span>
+        </div>
+      </a>
+    </li>
+  `;
+}
+
+function renderRoadshowRoadmap(selection) {
+  const plan = getRoadshowPlan(selection.initial, selection.path);
+
+  const timelineMarkup = plan.blocks
+    .map((block) => buildRoadshowTrackNode(block, block.track))
+    .join('');
+
+  return `
+    <div class="roadshow-roadmap roadshow-roadmap--animate" id="roadshow-roadmap-panel">
+      <div class="roadshow-roadmap__header">
+        <p class="roadshow-roadmap__eyebrow">Tu plan del roadshow</p>
+        <h3 class="roadshow-roadmap__title">3 bloques · 3 labs</h3>
+        <p class="roadshow-roadmap__lead">
+          ${escapeHtml(plan.initial.label)} en el Bloque 1, luego
+          ${escapeHtml(plan.path.tracks.map((track) => track.label).join(' y '))}.
+        </p>
+      </div>
+      <ol class="roadshow-timeline" aria-label="Recorrido del roadshow">
+        ${timelineMarkup}
+      </ol>
+    </div>
+  `;
+}
+
+function renderRoadshowInitialCards(selection) {
+  return roadshowConfig.initialTracks.map((track) => {
+    const isSelected = selection.initial === track.id;
+    const planTrack = getRoadshowPlan(track.id, selection.path).initial;
+    return `
+      <button
+        type="button"
+        class="roadshow-track-card ${ROADSHOW_ACCENT_CLASS.core}${isSelected ? ' roadshow-track-card--selected' : ''}"
+        data-roadshow-initial="${track.id}"
+        role="radio"
+        aria-checked="${isSelected}"
+      >
+        <span class="roadshow-track-card__badge">${escapeHtml(track.label)}</span>
+        <span class="roadshow-track-card__title">${escapeHtml(track.title)}</span>
+        <span class="roadshow-track-card__summary">${escapeHtml(track.summary)}</span>
+        ${planTrack.stats?.duration ? `<span class="roadshow-track-card__meta">${escapeHtml(planTrack.stats.duration)}</span>` : ''}
+        ${isSelected ? '<span class="roadshow-track-card__check" aria-hidden="true">✓</span>' : ''}
+      </button>
+    `;
+  }).join('');
+}
+
+function renderRoadshowPathDetail(path) {
+  const accentClass = ROADSHOW_ACCENT_CLASS[path.accent] || '';
+  return `
+    <div class="roadshow-path-detail ${accentClass}">
+      <p class="roadshow-path-detail__label">Qué vas a abordar</p>
+      <p class="roadshow-path-detail__summary">${escapeHtml(path.summary)}</p>
+      <div class="roadshow-path-detail__topics">
+        ${path.topics.map((topic) => `<span class="roadshow-path-detail__topic">${escapeHtml(topic)}</span>`).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function renderRoadshowPathCards(selection) {
+  return roadshowConfig.paths.map((path) => {
+    const isSelected = selection.path === path.id;
+    const accentClass = ROADSHOW_ACCENT_CLASS[path.accent] || '';
+    const routeLabel = path.tracks.map((track) => track.label).join(' → ');
+    return `
+      <button
+        type="button"
+        class="roadshow-path-card ${accentClass}${isSelected ? ' roadshow-path-card--selected' : ''}"
+        data-roadshow-path="${path.id}"
+        role="radio"
+        aria-checked="${isSelected}"
+      >
+        <span class="roadshow-path-card__badge">${escapeHtml(routeLabel)}</span>
+        <span class="roadshow-path-card__title">${escapeHtml(path.label)}</span>
+        <span class="roadshow-path-card__hint">Bloques 2 y 3 en secuencia</span>
+        ${isSelected ? '<span class="roadshow-path-card__check" aria-hidden="true">✓</span>' : ''}
+      </button>
+    `;
+  }).join('');
+}
+
+function renderRoadshowPlanner(selection = getRoadshowSelection()) {
+  const selectedPath = roadshowConfig.paths.find((item) => item.id === selection.path)
+    || roadshowConfig.paths[0];
+
+  return `
+    <section id="roadshow-planner" class="roadshow-planner">
+      <div class="roadshow-planner__inner">
+        <header class="roadshow-planner__header">
+          <p class="hub-section-eyebrow">${roadshowConfig.eyebrow}</p>
+          <h2 class="roadshow-planner__heading">${roadshowConfig.title}</h2>
+          <p class="roadshow-planner__lead">${roadshowConfig.lead}</p>
+        </header>
+
+        <div class="roadshow-planner__layout">
+          <div class="roadshow-planner__choices">
+            <div class="roadshow-step">
+              <h3 class="roadshow-step__title">
+                <span class="roadshow-step__number roadshow-accent--road">1</span>
+                Paso 1 · Bloque 1
+              </h3>
+              <p class="roadshow-step__hint">Elige con qué lab quieres empezar el evento.</p>
+              <div class="roadshow-track-grid" role="radiogroup" aria-label="Lab inicial del Bloque 1">
+                ${renderRoadshowInitialCards(selection)}
+              </div>
+            </div>
+
+            <div class="roadshow-step">
+              <h3 class="roadshow-step__title">
+                <span class="roadshow-step__number roadshow-accent--road">2</span>
+                Paso 2 · Elige tu camino
+              </h3>
+              <p class="roadshow-step__hint">Los Bloques 2 y 3 van en pareja — elige una especialización.</p>
+              <div class="roadshow-path-grid" role="radiogroup" aria-label="Camino del roadshow">
+                ${renderRoadshowPathCards(selection)}
+              </div>
+              <div class="roadshow-path-detail-wrap" id="roadshow-path-detail">
+                ${renderRoadshowPathDetail(selectedPath)}
+              </div>
+            </div>
+          </div>
+
+          <div class="roadshow-planner__roadmap-wrap" aria-live="polite" aria-atomic="true">
+            ${renderRoadshowRoadmap(selection)}
+          </div>
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+function updateRoadshowRoadmap(selection) {
+  const wrap = document.querySelector('.roadshow-planner__roadmap-wrap');
+  if (!wrap) return;
+  wrap.innerHTML = renderRoadshowRoadmap(selection);
+}
+
+function updateRoadshowChoicesUI(selection) {
+  document.querySelectorAll('[data-roadshow-initial]').forEach((btn) => {
+    const isSelected = btn.dataset.roadshowInitial === selection.initial;
+    btn.classList.toggle('roadshow-track-card--selected', isSelected);
+    btn.setAttribute('aria-checked', String(isSelected));
+    const check = btn.querySelector('.roadshow-track-card__check');
+    if (isSelected && !check) {
+      btn.insertAdjacentHTML('beforeend', '<span class="roadshow-track-card__check" aria-hidden="true">✓</span>');
+    } else if (!isSelected && check) {
+      check.remove();
+    }
+  });
+
+  document.querySelectorAll('[data-roadshow-path]').forEach((btn) => {
+    const isSelected = btn.dataset.roadshowPath === selection.path;
+    btn.classList.toggle('roadshow-path-card--selected', isSelected);
+    btn.setAttribute('aria-checked', String(isSelected));
+    const check = btn.querySelector('.roadshow-path-card__check');
+    if (isSelected && !check) {
+      btn.insertAdjacentHTML('beforeend', '<span class="roadshow-path-card__check" aria-hidden="true">✓</span>');
+    } else if (!isSelected && check) {
+      check.remove();
+    }
+  });
+
+  const path = roadshowConfig.paths.find((item) => item.id === selection.path);
+  const detailEl = document.getElementById('roadshow-path-detail');
+  if (path && detailEl) {
+    detailEl.innerHTML = renderRoadshowPathDetail(path);
+  }
+
+  document.querySelectorAll('[data-roadshow-initial]').forEach((btn) => {
+    const track = roadshowConfig.initialTracks.find((item) => item.id === btn.dataset.roadshowInitial);
+    if (!track) return;
+    const meta = getRoadshowPlan(track.id, selection.path).initial.stats?.duration || '';
+    let metaEl = btn.querySelector('.roadshow-track-card__meta');
+    if (meta) {
+      if (!metaEl) {
+        btn.insertAdjacentHTML('beforeend', `<span class="roadshow-track-card__meta">${escapeHtml(meta)}</span>`);
+      } else {
+        metaEl.textContent = meta;
+      }
+    } else if (metaEl) {
+      metaEl.remove();
+    }
+  });
+}
+
+function bindRoadshowEvents() {
+  document.addEventListener('click', (event) => {
+    const initialBtn = event.target.closest('[data-roadshow-initial]');
+    const pathBtn = event.target.closest('[data-roadshow-path]');
+    if (!initialBtn && !pathBtn) return;
+    if (!event.target.closest('#roadshow-planner')) return;
+
+    const selection = getRoadshowSelection();
+    if (initialBtn) {
+      selection.initial = initialBtn.dataset.roadshowInitial;
+    }
+    if (pathBtn) {
+      selection.path = pathBtn.dataset.roadshowPath;
+    }
+
+    saveRoadshowSelection(selection);
+    updateRoadshowChoicesUI(selection);
+    updateRoadshowRoadmap(selection);
+  });
+
+  document.addEventListener('keydown', (event) => {
+    const card = event.target.closest('[data-roadshow-initial], [data-roadshow-path]');
+    if (!card || !card.closest('#roadshow-planner')) return;
+    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+
+    event.preventDefault();
+    const selection = getRoadshowSelection();
+    const group = card.closest('[role="radiogroup"]');
+    if (!group) return;
+
+    const items = [...group.querySelectorAll('[role="radio"]')];
+    const index = items.indexOf(card);
+    if (index < 0) return;
+
+    const delta = event.key === 'ArrowRight' ? 1 : -1;
+    const next = items[(index + delta + items.length) % items.length];
+    next.focus();
+    next.click();
+  });
+}
+
 // ── Home page renderer ───────────────────────────────────────────
 function renderHome(searchTerm = '') {
   const normalizedTerm = searchTerm.trim().toLowerCase();
@@ -629,8 +1063,7 @@ function renderHome(searchTerm = '') {
         : '<p class="cds--body-01 hub-empty-state">Ningún laboratorio coincide con esta búsqueda.</p>';
 
       const tag = SECTION_TAG[section.id] || { cls: 'cds--tag--gray', label: section.label };
-      // All sections start open; first one is the primary but all are open by default
-      const isOpen = true;
+      const isOpen = false;
       const panelId = `panel-section-${section.id}`;
 
       return `
@@ -653,7 +1086,7 @@ function renderHome(searchTerm = '') {
               <svg class="hub-level-banner__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="24" height="24" aria-hidden="true"><path d="M8 11L2 5h12z"/></svg>
             </div>
           </button>
-          <div class="hub-section-panel" id="${panelId}" aria-hidden="${!isOpen}">
+          <div class="hub-section-panel" id="${panelId}" aria-hidden="true" style="max-height: 0">
             <div class="hub-section-panel__inner">
               <div class="hub-cards-grid">${cardsMarkup}</div>
             </div>
@@ -676,7 +1109,8 @@ function renderHome(searchTerm = '') {
             `).join('')}
           </div>
           <div class="hub-hero__actions">
-            <a class="cds--btn cds--btn--primary" href="#available-workshops">${siteData.hero.ctaLabel}</a>
+            <a class="cds--btn cds--btn--primary" href="#roadshow-planner">Planificar mi recorrido</a>
+            <a class="cds--btn cds--btn--ghost hub-hero__cta-secondary" href="#available-workshops">${siteData.hero.ctaLabel}</a>
           </div>
         </div>
         <div class="hub-hero__visual" aria-hidden="true">
@@ -802,6 +1236,8 @@ function renderHome(searchTerm = '') {
         </div>
       </div>
     </section>
+
+    ${renderRoadshowPlanner()}
 
     <section id="available-workshops" class="hub-workshops">
       <div class="hub-workshops__header">
@@ -1738,7 +2174,7 @@ function buildStepClosure(lab, step) {
   // "Back to all labs" — resolves to the section anchor of this lab's category
   const sectionResult = findLab(lab.slug);
   const sectionId = sectionResult?.section?.id || '';
-  const backToLabsHref = sectionId ? `#section-${sectionId}` : getHomeRoute();
+  const backToLabsHref = getHomeBackHref();
 
   const prevBtn = prevDestination
     ? `<a class="cds--btn cds--btn--ghost lab-closure__prev" href="${prevDestination}"><span aria-hidden="true">←</span> ${escapeHtml(prevLabel)}</a>`
@@ -1809,12 +2245,44 @@ function normalizeVisibleCopy(container) {
   });
 }
 
-function normalizeHandsOnPresentation(proseEl, lab) {
+function markLabChecklistItem(item) {
+  if (item.dataset.carbonChecked === 'true') return;
+  item.dataset.carbonChecked = 'true';
+  item.classList.add('lab-list__item--checked');
+  const list = item.closest('.cds--list--unordered');
+  if (list) list.classList.add('lab-checklist');
+  const inner = item.innerHTML.replace(/^\s*✅\s*/u, '');
+  item.innerHTML = `<span class="lab-list__icon" aria-hidden="true">${CHECKMARK_ICON}</span><span>${inner}</span>`;
+}
+
+function normalizeLabChecklists(proseEl) {
+  const checklistHeading = /objetivos de aprendizaje|lo que (acabas de )?lograste|resumen del lab|checklist de cierre/i;
+
+  proseEl.querySelectorAll('.lab-section').forEach((section) => {
+    const heading = section.querySelector(':scope > h2');
+    if (!heading || !checklistHeading.test(heading.textContent)) return;
+
+    const list = section.querySelector(':scope > .cds--list--unordered');
+    if (!list) return;
+
+    list.classList.add('lab-checklist');
+    list.querySelectorAll(':scope > .cds--list__item').forEach(markLabChecklistItem);
+  });
+
+  proseEl.querySelectorAll('.callout').forEach((callout) => {
+    const title = callout.querySelector('.callout__title');
+    if (!title || !checklistHeading.test(title.textContent)) return;
+
+    const list = callout.querySelector('.cds--list--unordered');
+    if (!list) return;
+
+    list.classList.add('lab-checklist');
+    list.querySelectorAll(':scope > .cds--list__item').forEach(markLabChecklistItem);
+  });
+
   proseEl.querySelectorAll('.cds--list__item').forEach((item) => {
-    if (!item.textContent.trim().startsWith('✅') || item.dataset.carbonChecked === 'true') return;
-    item.dataset.carbonChecked = 'true';
-    item.classList.add('lab-list__item--checked');
-    item.innerHTML = `<span class="lab-list__icon" aria-hidden="true">${CHECKMARK_ICON}</span><span>${item.innerHTML.replace(/^\s*✅\s*/u, '')}</span>`;
+    if (!item.textContent.trim().startsWith('✅')) return;
+    markLabChecklistItem(item);
   });
 }
 
@@ -2024,7 +2492,7 @@ function enhanceLabContent(proseEl, section, lab, step, isOverview) {
   if (!proseEl || proseEl.dataset.workshopEnhanced === 'true') return;
   proseEl.dataset.workshopEnhanced = 'true';
   normalizeVisibleCopy(proseEl);
-  normalizeHandsOnPresentation(proseEl, lab);
+  normalizeLabChecklists(proseEl);
   rewriteDownloadLinks(proseEl);
 
   const banner = ensureLabBanner(proseEl, section, lab, step);
@@ -2143,9 +2611,7 @@ async function renderRoute() {
     updateNavCurrent();
     // Allow layout to settle, then scroll past fixed header
     setTimeout(() => {
-      scrollToHomeSection(sectionId);
-      // Start scroll-spy after content is in the DOM
-      initScrollSpy();
+      restoreHomeAfterRender(sectionId);
     }, 50);
     return;
   }
@@ -2157,14 +2623,42 @@ async function renderRoute() {
   subnavEl.hidden = false;
   document.body.classList.add('hub-view--lab');
   document.body.classList.remove('hub-view--home');
+  scrollLabToTop();
   updateNavCurrent();
   resetLabScroll();
   await renderLab(route);
+  scrollLabToTop();
+  requestAnimationFrame(scrollLabToTop);
 }
 
 // ── Event bindings ───────────────────────────────────────────────
 function bindEvents() {
   window.addEventListener('hashchange', renderRoute);
+
+  document.addEventListener('click', (event) => {
+    const link = event.target.closest('a[href]');
+    if (!link) return;
+
+    const href = link.getAttribute('href') || '';
+    if (!href.startsWith('#')) return;
+
+    const route = parseRoute(href);
+
+    if (route.view === 'lab') {
+      if (!homeView.hidden) saveHomeReturnTarget(link);
+      return;
+    }
+
+    if (homeView.hidden) return;
+
+    const inHomeNav = link.closest('#home-view, .cds--header, #side-nav');
+    if (!inHomeNav) return;
+
+    const raw = href.replace(/^#\/?/, '').split('/')[0];
+    if (raw && !HOME_SECTION_IDS.has(raw)) return;
+
+    navigateHomeSectionFromLink(event, link);
+  });
 
   hamburgerBtn.addEventListener('click', () => {
     const isExpanded = hamburgerBtn.getAttribute('aria-expanded') === 'true';
@@ -2292,22 +2786,11 @@ function bindEvents() {
       panel._openEndHandler = null;
     }
 
-    trigger.setAttribute('aria-expanded', String(willOpen));
-    panel.setAttribute('aria-hidden', String(!willOpen));
-
     if (willOpen) {
-      panel.style.maxHeight = '0px';
-      panel.getBoundingClientRect();
-      panel.style.maxHeight = `${panel.scrollHeight}px`;
-      panel._openEndHandler = (transitionEvent) => {
-        if (transitionEvent.propertyName !== 'max-height') return;
-        if (trigger.getAttribute('aria-expanded') !== 'true') return;
-        panel.style.maxHeight = 'none';
-        panel.removeEventListener('transitionend', panel._openEndHandler);
-        panel._openEndHandler = null;
-      };
-      panel.addEventListener('transitionend', panel._openEndHandler);
+      openWorkshopSectionPanel(trigger, panel);
     } else {
+      trigger.setAttribute('aria-expanded', 'false');
+      panel.setAttribute('aria-hidden', 'true');
       const currentHeight = panel.style.maxHeight;
       if (currentHeight === 'none' || currentHeight === '') {
         panel.style.maxHeight = `${panel.scrollHeight}px`;
@@ -2362,6 +2845,8 @@ function bindEvents() {
     }
   });
 }
+
+bindRoadshowEvents();
 
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 initializeTheme();

@@ -273,6 +273,85 @@ a.cds--header__menu-item::after {
   outline-offset: -2px;
 }
 
+/* ── Premium access toggle ─────────────────────────────────────── */
+.hub-premium-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 32px;
+  margin-right: 0.35rem;
+  padding: 0 0.65rem;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 999px;
+  background: transparent;
+  color: #ffffff;
+  font: inherit;
+  font-size: 0.75rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.hub-premium-toggle:hover {
+  background: #2d2d2d;
+}
+
+.hub-premium-toggle:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+.hub-premium-toggle__dot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: #8d8d8d;
+}
+
+body[data-premium-access="true"] .hub-premium-toggle__dot {
+  background: #42be65;
+  box-shadow: 0 0 0 3px rgba(66, 190, 101, 0.2);
+}
+
+/* Keep the header usable when the mobile navigation replaces the desktop nav. */
+@media (max-width: 671px) {
+  #premium-toggle {
+    display: none;
+  }
+
+  .hub-header__search-wrap {
+    margin-right: 0;
+  }
+
+  .hub-header__search-input {
+    width: 78px;
+    padding-left: 28px;
+    padding-right: 4px;
+  }
+
+  .hub-header__search-icon {
+    left: 7px;
+    width: 14px;
+    height: 14px;
+  }
+}
+
+@media (max-width: 399px) {
+  .cds--header__name {
+    padding-inline: 0.5rem;
+  }
+
+  .hub-header__product-name {
+    margin-left: 6px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 340px) {
+  .hub-header__search-wrap {
+    display: none;
+  }
+}
+
 /* Hide hamburger on desktop when primary nav is visible */
 @media (min-width: 1056px) {
   .cds--header__menu-toggle {
@@ -312,6 +391,179 @@ a.cds--header__menu-item::after {
   padding: 0 var(--cds-spacing-05, 1rem);
   background: var(--cds-layer-01, #f4f4f4);
   border-bottom: 1px solid var(--cds-border-subtle-01, #c6c6c6);
+}
+
+.hub-premium-toggle--mobile {
+  margin: 0 0 0 auto;
+  border-color: var(--cds-border-subtle-01, #c6c6c6);
+  color: var(--cds-text-primary, #161616);
+}
+
+.hub-premium-toggle--mobile:hover {
+  background: var(--cds-layer-hover-01, #e8e8e8);
+}
+
+.hub-premium-toggle--mobile:focus-visible {
+  outline-color: var(--cds-focus, #0f62fe);
+}
+
+.cds--g100 .hub-premium-toggle--mobile {
+  border-color: var(--cds-border-subtle-01, #525252);
+  color: var(--cds-text-primary, #f4f4f4);
+}
+
+/* Premium workflow content uses the same components as local labs. These
+   scoped refinements keep source captures readable without affecting standard labs. */
+.premium-workflow .lab-hero-image {
+  margin: var(--cds-spacing-06, 1.5rem) 0 var(--cds-spacing-05, 1rem);
+}
+
+.premium-workflow .lab-figure {
+  width: fit-content;
+  max-width: min(100%, var(--lab-media-max, 60rem));
+  margin: var(--cds-spacing-07, 2rem) auto;
+}
+
+.lab-shell .premium-workflow .lab-section > .lab-figure {
+  margin-inline: auto;
+}
+
+.premium-workflow .lab-figure__link {
+  display: block;
+}
+
+.premium-workflow .lab-figure__img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  max-height: none;
+  height: auto;
+  margin-inline: auto;
+  object-fit: contain;
+}
+
+.lab-shell .premium-workflow .lab-figure__img {
+  width: auto;
+  max-width: 100%;
+  margin-inline: auto;
+}
+
+.premium-workflow .lab-figure__caption {
+  max-width: 72ch;
+  margin: var(--cds-spacing-03, 0.5rem) auto 0;
+  text-align: left;
+}
+
+.premium-workflow .premium-details {
+  margin: var(--cds-spacing-05, 1rem) 0;
+  padding: var(--cds-spacing-04, 0.75rem) var(--cds-spacing-05, 1rem);
+  border-left: 3px solid var(--hub-premium, #198038);
+  background: var(--cds-layer-01, #f4f4f4);
+}
+
+.premium-workflow .premium-details > summary {
+  color: var(--cds-text-primary, #161616);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.premium-workflow .premium-platform-options {
+  margin: var(--cds-spacing-06, 1.5rem) 0;
+  border: 1px solid var(--cds-border-subtle-01, #c6c6c6);
+  background: var(--cds-layer-01, #f4f4f4);
+}
+
+.premium-workflow .premium-platform-options > input {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  clip-path: inset(50%);
+}
+
+.premium-workflow .premium-platform-options__labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  border-bottom: 1px solid var(--cds-border-subtle-01, #c6c6c6);
+}
+
+.premium-workflow .premium-platform-options__labels label {
+  padding: var(--cds-spacing-04, 0.75rem) var(--cds-spacing-05, 1rem);
+  color: var(--cds-text-primary, #161616);
+  cursor: default;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.premium-workflow .premium-platform-options__content {
+  display: grid;
+  gap: var(--cds-spacing-05, 1rem);
+  padding: var(--cds-spacing-05, 1rem);
+}
+
+.premium-workflow .premium-platform-option + .premium-platform-option {
+  padding-top: var(--cds-spacing-05, 1rem);
+  border-top: 1px solid var(--cds-border-subtle-01, #c6c6c6);
+}
+
+.premium-workflow .premium-roadmap {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: var(--cds-spacing-04, 0.75rem);
+  margin: var(--cds-spacing-06, 1.5rem) 0;
+}
+
+.premium-workflow .premium-roadmap > div {
+  min-width: 0;
+  padding: var(--cds-spacing-05, 1rem);
+  border-top: 3px solid var(--hub-premium, #198038);
+  background: var(--cds-layer-01, #f4f4f4);
+}
+
+.premium-workflow .premium-roadmap strong,
+.premium-workflow .premium-roadmap span {
+  display: block;
+}
+
+.premium-workflow .premium-roadmap span {
+  margin-top: var(--cds-spacing-03, 0.5rem);
+  color: var(--cds-text-secondary, #525252);
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.premium-workflow .premium-keys,
+.premium-workflow .premium-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.premium-workflow .premium-key {
+  padding: 0.08rem 0.35rem;
+  border: 1px solid var(--cds-border-subtle-01, #c6c6c6);
+  background: var(--cds-layer-01, #f4f4f4);
+  font-family: var(--font-mono, monospace);
+  font-size: 0.8125rem;
+}
+
+.premium-workflow .premium-button-icon,
+.premium-workflow .premium-button-icon svg {
+  display: inline-flex;
+  inline-size: 1rem;
+  block-size: 1rem;
+  fill: currentColor;
+  flex: 0 0 auto;
+}
+
+@media (max-width: 671px) {
+  .premium-workflow .lab-figure {
+    margin-block: var(--cds-spacing-06, 1.5rem);
+  }
+
+  .premium-workflow .premium-platform-options__labels label {
+    flex: 1 1 100%;
+  }
 }
 
 .hub-side-nav__title {
@@ -1029,8 +1281,20 @@ body[data-category="premium"] .lab-workspace-setup__table th {
   background: var(--cds-layer-01, #262626);
 }
 
-.cds--g100 body[data-category="premium"] .lab-workspace-setup__table th {
-  background: #071908;
+body.cds--g100[data-category="premium"] .lab-workspace-setup__table th {
+  background: #0e2b16;
+  border-color: #3b6f49;
+  color: #f4f4f4;
+}
+
+body.cds--g100[data-category="premium"] .lab-workspace-setup__table td {
+  border-color: var(--cds-border-subtle-01, #525252);
+  color: var(--cds-text-primary, #f4f4f4);
+}
+
+body.cds--g100[data-category="premium"] .lab-workspace-setup__table code {
+  background: #161616;
+  color: #f4f4f4;
 }
 
 /* Hero image restriction: ONLY display images on Overview (Inicio) pages */
@@ -1335,7 +1599,7 @@ body[data-category="premium"] .lab-workspace-setup__table th {
 
 /* Accent top-bar colours */
 .hub-resource-card--primary::before { background: #0f62fe; }
-.hub-resource-card--blue::before    { background: #4589ff; }
+.hub-resource-card--purple::before { background: #8a3ffc; }
 .hub-resource-card--teal::before    { background: #08bdba; }
 .hub-resource-card--red::before     { background: #da1e28; }
 
@@ -1354,7 +1618,7 @@ body[data-category="premium"] .lab-workspace-setup__table th {
 }
 
 .hub-resource-card--primary .hub-resource-card__badge { color: #0f62fe; }
-.hub-resource-card--blue    .hub-resource-card__badge { color: #4589ff; }
+.hub-resource-card--purple .hub-resource-card__badge { color: #8a3ffc; }
 .hub-resource-card--teal    .hub-resource-card__badge { color: #007d79; }
 .hub-resource-card--red     .hub-resource-card__badge { color: #da1e28; }
 
@@ -2528,4 +2792,3 @@ body[data-category="premium"] .lab-workspace-setup__table th {
     grid-template-columns: 1fr;
   }
 }
-

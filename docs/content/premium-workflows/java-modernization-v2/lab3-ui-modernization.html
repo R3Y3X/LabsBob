@@ -1,0 +1,1165 @@
+<div class="content-panel lab-template premium-workflow">
+  <div class="lab-banner">
+    <div class="lab-banner__tags">
+      <span class="cds--tag cds--tag--green">Premium</span>
+      <span class="cds--tag cds--tag--cool-gray">Flujo de interfaz</span>
+    </div>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Laboratorio 3 — Modernización de interfaz: Struts a React</h1>
+    <p class="cds--body-02 lab-banner__summary" style="max-width:72ch;margin-top:var(--cds-spacing-04,0.75rem)">
+      Migra el frontend de Simple Pharmacy de Struts/JSP a una SPA React con Material UI,
+      respaldada por servicios REST Jakarta EE en Liberty — backend primero, frontend después, containerización al final.
+    </p>
+    <div class="lab-banner__metrics">
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">Objetivo</span>
+        <span class="lab-banner__metric-label">React + JAX-RS</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">~25</span>
+        <span class="lab-banner__metric-label">minutos</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">14–16</span>
+        <span class="lab-banner__metric-label">BobCoins estimados</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">Premium</span>
+        <span class="lab-banner__metric-label">acceso requerido</span>
+      </div>
+    </div>
+  </div>
+  <section class="lab-section" aria-labelledby="lab3-introduccion">
+    <h2 class="cds--productive-heading-03" id="lab3-introduccion">Introducción</h2>
+    <p>
+Migre la interfaz
+      <strong>Simple Pharmacy Management System</strong>
+ desde el legado
+      <strong>Struts/JSP</strong>
+ a una aplicación moderna de una sola página
+      <strong>React + Material UI</strong>
+ respaldada por Jakarta EE REST servicios, impulsados por el flujo de trabajo
+      <strong>UI Modernization</strong>
+ de Bob.
+    </p>
+    <div class="callout" data-tone="note">
+      <p class="callout__title">lo que construirás</p>
+      <p>Un React SPA (con andamiaje con Vite, diseñado con Material UI) que se comunica con un backend REST JAX-RS en Liberty y reemplaza las vistas JSP Struts existentes, con Bob haciendo el análisis, la descomposición del backend, la construcción del frontend y la contenedorización.</p>
+    </div>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">El laboratorio más largo del grupo.</p>
+      <p>
+Éste ejecuta una descomposición completa del backend
+        <em> y </em>
+ una compilación del frontend. Dale espacio y espera pegar algún error extraño en el chat; ese es el flujo de trabajo previsto aquí, no un error.
+      </p>
+    </div>
+  </section>
+  <section class="lab-section" aria-labelledby="get-the-source-code-first">
+    <h2 class="cds--productive-heading-03" id="get-the-source-code-first">Obtén primero el código fuente</h2>
+    <p>Si aún no lo has hecho, descarga el paquete del taller:</p>
+    <p>
+      <a download="simple-pharmacy-workshop-v2.zip" href="./downloads/simple-pharmacy-workshop-v2.zip" class="cds--btn cds--btn--primary">
+        <span class="premium-button-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M5 20h14v-2H5m14-9h-4V3H9v6H5l7 7z"></path>
+          </svg>
+        </span>
+ Paquete de taller (2,1 MB)
+      </a>
+    </p>
+    <p>Descomprímalo y luego abra la instantánea inicial del Laboratorio 3 en IBM Bob:</p>
+    <div data-language="text" class="code-block premium-code-block">
+      <pre>
+        <code>simple-pharmacy-workshop-v2/labs/lab3-ui-modernization/snapC-ui-mod/</code>
+      </pre>
+    </div>
+    <p>Esta instantánea ya está en Liberty + Java 21 (el resultado del Laboratorio 2). Puedes usarlo de forma independiente.</p>
+  </section>
+  <section class="lab-section" aria-labelledby="use-case-migrate-struts-to-react">
+    <h2 class="cds--productive-heading-03" id="use-case-migrate-struts-to-react">Caso de uso: migrar Struts a React</h2>
+    <p>La aplicación utiliza actualmente:</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+        <strong>Interfaz</strong>
+: Struts / Representación del lado del servidor JSP
+      </li>
+    </ul>
+    <p>Lo migrarás a:</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+        <strong>Interfaz</strong>
+: React SPA con
+        <strong>Material UI</strong>
+      </li>
+      <li class="cds--list__item">
+        <strong>Backend</strong>
+: servicios REST estilo
+        <strong>Jakarta EE</strong>
+ (JAX-RS), reemplazando la capa de acción Struts como fuente de datos de la interfaz de usuario
+      </li>
+    </ul>
+    <h3 id="why-this-matters" class="cds--productive-heading-02 lab-step__title">Por qué esto importa</h3>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+        <strong>Struts</strong>
+ es un marco MVC renderizado por servidor cuyo impulso empresarial se detuvo hace años. La presentación y la lógica empresarial están entrelazadas en acciones y JSP.
+      </li>
+      <li class="cds--list__item">
+        <strong>A React SPA en un backend REST</strong>
+ separa los dos claramente: la capa Java se convierte en una API y la interfaz de usuario se convierte en una interfaz implementable de forma independiente. Esa división es lo que hace posible el resto de la modernización (contenedores, escalamiento independiente, un sistema de diseño).
+      </li>
+    </ul>
+  </section>
+  <section class="lab-section" aria-labelledby="prerequisites">
+    <h2 class="cds--productive-heading-03" id="prerequisites">Requisitos previos</h2>
+    <h3 id="1-ibm-bob-ide-v2" class="cds--productive-heading-02 lab-step__title">1. IBM Bob IDE (V2)</h3>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+Última extensión IDE
+        <strong>Bob V2</strong>
+ instalada, iniciada sesión.
+      </li>
+      <li class="cds--list__item">
+Se requiere acceso
+        <strong>Agent mode</strong>
+ para iniciar el flujo de trabajo.
+      </li>
+      <li class="cds--list__item">
+Un plan que incluye el paquete de flujo de trabajo Java Modernization (el paquete
+        <strong>Premium</strong>
+).
+      </li>
+    </ul>
+    <h3 id="2-java-and-maven" class="cds--productive-heading-02 lab-step__title">2. Java y Maven</h3>
+    <p>
+El backend Liberty debe compilarse y ejecutarse para que la interfaz de usuario modernizada tenga datos a los que conectarse. Esta instantánea está en
+      <strong>Java 21</strong>
+ (del Laboratorio 2).
+    </p>
+    <div data-language="bash" class="code-block premium-code-block">
+      <pre>
+        <code>java -version</code>
+      </pre>
+    </div>
+    <div data-language="bash" class="code-block premium-code-block">
+      <pre>
+        <code>mvn --version</code>
+      </pre>
+    </div>
+    <p>
+Deberías ver
+      <strong>Java 21</strong>
+ y
+      <strong>Maven 3.x</strong>
+. Si Java no está configurado, consulte los requisitos previos de
+      <a href="#/lab/java-modernization-v2/lab2#prerequisites">Lab 2</a>
+: en macOS/Linux es
+      <code>sdk install java 21.0.11-zulu</code>
+ y luego
+      <code>sdk use java 21.0.11-zulu</code>
+.
+    </p>
+    <h3 id="3-nodejs" class="cds--productive-heading-02 lab-step__title">3. Node.js</h3>
+    <p>
+La interfaz React está estructurada con
+      <strong>Vite</strong>
+, que necesita Node. Instale
+      <strong>Nodo 20 o 22 LTS</strong>
+.
+    </p>
+    <div data-tabs="1:3" class="premium-platform-options">
+      <input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" />
+      <input id="__tabbed_1_2" name="__tabbed_1" type="radio" />
+      <input id="__tabbed_1_3" name="__tabbed_1" type="radio" />
+      <div class="premium-platform-options__labels">
+        <label for="__tabbed_1_1">macOS</label>
+        <label for="__tabbed_1_2">Linux</label>
+        <label for="__tabbed_1_3">Windows</label>
+      </div>
+      <div class="premium-platform-options__content">
+        <div class="premium-platform-option">
+          <p>
+Utilice
+            <strong>nvm</strong>
+ (un administrador de versiones de Node). Instalar nvm:
+          </p>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash</code>
+            </pre>
+          </div>
+          <p>Instale el Nodo 22 y actívelo:</p>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>nvm install 22</code>
+            </pre>
+          </div>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>nvm use 22</code>
+            </pre>
+          </div>
+          <p>
+(¿Prefiere un instalador GUI? Descargue
+            <strong>Node 22 LTS</strong>
+ desde
+            <a href="https://nodejs.org/">nodejs.org</a>
+).
+          </p>
+        </div>
+        <div class="premium-platform-option">
+          <p>
+Utilice
+            <strong>nvm</strong>
+ (un administrador de versiones de Node). Instalar nvm:
+          </p>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash</code>
+            </pre>
+          </div>
+          <p>Instale el Nodo 22 y actívelo:</p>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>nvm install 22</code>
+            </pre>
+          </div>
+          <div data-language="bash" class="code-block premium-code-block">
+            <pre>
+              <code>nvm use 22</code>
+            </pre>
+          </div>
+          <p>
+(¿Prefieres una descarga o el administrador de paquetes de tu distribución? Obtén
+            <strong>Node 22 LTS</strong>
+ de
+            <a href="https://nodejs.org/">nodejs.org</a>
+.)
+          </p>
+        </div>
+        <div class="premium-platform-option">
+          <p>
+Instale
+            <strong>Node 22 LTS</strong>
+ desde
+            <strong>PowerShell</strong>
+ con Winget:
+          </p>
+          <div data-language="powershell" class="code-block premium-code-block">
+            <pre>
+              <code>winget install OpenJS.NodeJS.LTS</code>
+            </pre>
+          </div>
+          <p>
+Luego cierre y vuelva a abrir PowerShell. (¿Prefieres un administrador de versiones? Usa
+            <a href="https://github.com/coreybutler/nvm-windows">nvm-windows</a>
+ con
+            <code>nvm install 22</code>
+ /
+            <code>nvm use 22</code>
+, o ejecuta nvm dentro de WSL).
+          </p>
+        </div>
+      </div>
+    </div>
+    <p>Verificar: lo mismo en todos los sistemas operativos:</p>
+    <div data-language="bash" class="code-block premium-code-block">
+      <pre>
+        <code>node --version</code>
+      </pre>
+    </div>
+    <div data-language="bash" class="code-block premium-code-block">
+      <pre>
+        <code>npm --version</code>
+      </pre>
+    </div>
+    <div class="callout" data-tone="note">
+      <p class="callout__title">Nada que instalar globalmente</p>
+      <p>Bob desarrolla la aplicación React con Vite e instala sus dependencias él mismo: Node es lo único que necesita en la máquina.</p>
+    </div>
+    <h3 id="4-extra-tools-for-your-chosen-target-state" class="cds--productive-heading-02 lab-step__title">4. Herramientas adicionales para el estado objetivo elegido</h3>
+    <p>El flujo de trabajo puede proponer un estado objetivo que necesita herramientas adicionales (por ejemplo, un backend de Quarkus). Instale lo que Bob diga que necesita para la opción que elija. Siguiendo la pila recomendada de esta práctica de laboratorio, Java + Maven + Node son suficientes.</p>
+  </section>
+  <section class="lab-section" aria-labelledby="step-1-open-the-project-and-confirm-agent-mode">
+    <h2 class="cds--productive-heading-03" id="step-1-open-the-project-and-confirm-agent-mode">Paso 1: abra el proyecto y confirme Agent mode</h2>
+    <ol class="cds--list--ordered">
+      <li class="cds--list__item">
+Abra la carpeta
+        <code>snapC-ui-mod</code>
+ en Bob como su espacio de trabajo activo.
+      </li>
+      <li class="cds--list__item">Abra la interfaz de chat de Bob.</li>
+      <li class="cds--list__item">
+Confirme que el indicador de modo en la parte inferior muestra
+        <strong>Agent</strong>
+. De lo contrario, haga clic en él y seleccione
+        <strong>Agent</strong>
+.
+      </li>
+    </ol>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/agent-mode.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/agent-mode.png" class="lab-figure__img" alt="Agent mode seleccionado en el panel de chat de Bob" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — Agent mode seleccionado en el panel de chat de Bob. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+  </section>
+  <section class="lab-section" aria-labelledby="step-2-start-the-ui-modernization-workflow">
+    <h2 class="cds--productive-heading-03" id="step-2-start-the-ui-modernization-workflow">Paso 2: inicie el flujo de trabajo UI Modernization</h2>
+    <p>
+Presione el botón de reproducción (
+      <strong>▶</strong>
+) en la parte superior del panel Bob, luego
+      <strong>Start</strong>
+ en el flujo de trabajo
+      <strong>Java Modernization</strong>
+.
+    </p>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/go-to-workflow.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/go-to-workflow.png" class="lab-figure__img" alt="Abrir la pestaña Flujos de trabajo desde el botón de reproducción" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — Abrir la pestaña Flujos de trabajo desde el botón de reproducción. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+    <p>Alternativamente, escribe esto en el chat:</p>
+    <div data-language="text" class="code-block premium-code-block">
+      <pre>
+        <code>Quiero modernizar la interfaz de usuario de esta aplicación Java. Ayúdame a ejecutar el flujo de trabajo Java UI Modernization.</code>
+      </pre>
+    </div>
+    <p>Bob comienza con la fase de análisis.</p>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/ui-workflow-start.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/ui-workflow-start.png" class="lab-figure__img" alt="Bob iniciando el flujo de trabajo UI Modernization" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — Bob iniciando el flujo de trabajo UI Modernization. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+    <h3 id="21-analyze-project" class="cds--productive-heading-02 lab-step__title">2.1 Analizar Proyecto</h3>
+    <p>
+Confirme que
+      <strong>Ruta del proyecto</strong>
+ apunta a su carpeta
+      <code>snapC-ui-mod</code>
+ y presione
+      <strong>Continuar</strong>
+. Bob ejecuta una compilación inicial para confirmar que el estado inicial es correcto.
+    </p>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/analyze-project-panel.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/analyze-project-panel.png" class="lab-figure__img" alt="Panel Analizar proyecto para el flujo de trabajo UI Modernization" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — Panel Analizar proyecto para el flujo de trabajo UI Modernization. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+    <h3 id="22-select-ui-modernization" class="cds--productive-heading-02 lab-step__title">2.2 Seleccione UI Modernization</h3>
+    <p>
+Seleccione
+      <strong>UI Modernization</strong>
+ como tipo y presione
+      <strong>Continue</strong>
+.
+    </p>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">Git Flow se compromete sobre la marcha</p>
+      <p>
+Si habilita
+        <strong>Git Flow</strong>
+, Bob crea una rama y
+        <strong>se confirma automáticamente</strong>
+ a medida que avanza en el flujo de trabajo. Esto es realmente útil en este caso: esta práctica de laboratorio cambia muchos archivos y las confirmaciones por paso los hacen revisables. Sólo sé que está sucediendo. Déjalo desactivado si prefieres administrar las sucursales tú mismo.
+      </p>
+    </div>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/select-ui-modernization.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/select-ui-modernization.png" class="lab-figure__img" alt="Seleccione el panel Tipo de modernización con UI Modernization seleccionado" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — Seleccione el panel Tipo de modernización con UI Modernization seleccionado. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+    <p>Luego, Bob analiza la arquitectura de la aplicación y redacta la documentación en una subtarea.</p>
+    <h3 id="23-review-the-target-state-options" class="cds--productive-heading-02 lab-step__title">2.3 Revisar las opciones del estado objetivo</h3>
+    <p>Bob propone varios estados objetivo, clasificados por riesgo, con los desafíos clave detallados para cada uno: React o Vue, en Liberty (Jakarta EE) o Quarkus, y así sucesivamente.</p>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/target-state-options.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/target-state-options.png" class="lab-figure__img" alt="Tabla de opciones de estado objetivo que compara las interfaces React y Vue en las backends Jakarta EE o Quarkus, con calificaciones de riesgo" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — Tabla de opciones de estado objetivo que compara las interfaces React y Vue en las backends Jakarta EE o Quarkus, con calificaciones de riesgo. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+    <details class="premium-details">
+      <summary>Lea esta tabla antes de hacer clic en ella: es la pantalla más instructiva del laboratorio.</summary>
+      <p>
+Las opciones de riesgo
+        <strong>Medio</strong>
+ mantienen la infraestructura Liberty existente y la lógica empresarial de Java, descomponiendo solo la capa de presentación. Las opciones de riesgo
+        <strong>High</strong>
+ cambian la plataforma del backend a Quarkus al mismo tiempo: inicio más rápido y un perfil nativo de la nube, pero estás cambiando dos cosas a la vez.
+      </p>
+      <p>Ese marco de riesgo es la verdadera lección; la elección de la pila es secundaria. Bob no solo ofrece tecnologías, sino que fija el precio de cada ruta, y "cambiamos el frontend y el backend en la misma versión" es cómo las modernizaciones se convierten en proyectos de 18 meses. Vale la pena detener la sala aquí.</p>
+    </details>
+    <h3 id="24-select-the-modernization-stack" class="cds--productive-heading-02 lab-step__title">2.4 Seleccionar la pila de modernización</h3>
+    <p>Para este laboratorio, elija:</p>
+    <table class="lab-table">
+      <thead>
+        <tr>
+          <th>Configuración</th>
+          <th>Valor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <strong>Marco de interfaz de usuario</strong>
+          </td>
+          <td>React</td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Sistema de diseño de interfaz</strong>
+          </td>
+          <td>Material UI</td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Ruta del proyecto frontend</strong>
+          </td>
+          <td>
+            <code>&lt;path_to_bundle&gt;/simple-pharmacy-workshop-v2/labs/lab3-ui-modernization/snapC-ui-mod/src/main/webapp</code>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Marco de backend</strong>
+          </td>
+          <td>Servicios de descanso estilo Jakarta EE</td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Ruta del proyecto backend</strong>
+          </td>
+          <td>
+            <code>&lt;path_to_bundle&gt;/simple-pharmacy-workshop-v2/labs/lab3-ui-modernization/snapC-ui-mod/src/main/java/com/pharmacy</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+Presione
+      <strong>Configurar proyecto</strong>
+.
+    </p>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/select-stack.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/select-stack.png" class="lab-figure__img" alt="Seleccione el panel de pila con los servicios REST React, Material UI y Jakarta EE seleccionados" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — Seleccione el panel de pila con los servicios REST React, Material UI y Jakarta EE seleccionados. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+  </section>
+  <section class="lab-section" aria-labelledby="step-3-backend-migration">
+    <h2 class="cds--productive-heading-03" id="step-3-backend-migration">Paso 3: migración de backend</h2>
+    <p>Bob inicia la migración de backend en una subtarea y realiza un seguimiento del progreso en una lista de tareas pendientes. Haga clic en la barra Todo en la parte superior de la ventana de Bob para expandirla o contraerla.</p>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/backend-migration.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/backend-migration.png" class="lab-figure__img" alt="Subtarea de migración de backend con la lista de tareas pendientes ampliada" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — Subtarea de migración de backend con la lista de tareas pendientes ampliada. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+    <p>
+Bob ejecuta
+      <code>mvn clean package</code>
+ para probar la compilación, identifica y depura errores, los corrige y repite hasta que la compilación esté verde.
+    </p>
+    <h3 id="31-test-the-new-jakarta-ee-backend" class="cds--productive-heading-02 lab-step__title">3.1 Pruebe el nuevo backend Jakarta EE</h3>
+    <p>Bob te pide que inicies Liberty. Ejecútalo en tu terminal:</p>
+    <div data-language="bash" class="code-block premium-code-block">
+      <pre>
+        <code>mvn liberty:run</code>
+      </pre>
+    </div>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/run-backend.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/run-backend.png" class="lab-figure__img" alt="Bob te pide que ejecutes el backend" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — Bob te pide que ejecutes el backend. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+    <p>Pegue cualquier error directamente en el chat de Bob para depurarlo. Por ejemplo, es normal ver esto en mitad de la migración mientras el filtro Struts y el nuevo filtro CORS están en proceso de cambio:</p>
+    <div data-language="text" class="code-block premium-code-block">
+      <pre>
+        <code>El servidor del servidor se inició en 6,397 segundos.
+[INFO] [ERROR] SRVE0321E: El filtro [struts2] no se cargó durante el inicio.
+[INFO] Filtro [struts2]: No se pudo encontrar la clase de filtro requerida - org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter.class
+[INFO] [ERROR] SRVE0321E: El filtro [com.pharmacy.rest.CorsFilter] no se cargó durante el inicio.
+[INFO] Filtro [com.pharmacy.rest.CorsFilter]: Se encontró com.pharmacy.rest.CorsFilter, pero falta otra clase requerida.</code>
+      </pre>
+    </div>
+    <div class="callout" data-tone="success">
+      <p class="callout__title">Punto de control: la capa REST funciona antes de tocar la interfaz</p>
+      <p>
+Una vez que se resuelvan los errores, abra la API directamente; debería recuperar
+        <strong>JSON</strong>
+:
+      </p>
+      <div data-language="text" class="code-block premium-code-block">
+        <pre>
+          <code>http://localhost:9081/simple-pharmacy/api/dashboard</code>
+        </pre>
+      </div>
+      <p>
+Hacer que el backend sea verde
+        <strong>antes</strong>
+ de construir la interfaz de usuario es el objetivo del orden de dos pasos: el frontend tiene un contrato real y en ejecución para construir.
+      </p>
+    </div>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">
+404 en
+        <code>/api/…</code>
+? Es la raíz del contexto, no una API rota
+      </p>
+      <p>
+Los pines
+        <code>server.xml</code>
+ enviados
+        <code>context-root="/simple-pharmacy"</code>
+, por lo que la URL anterior es correcta. Pero si Bob reescribió
+        <code>server.xml</code>
+ y dejó la aplicación implementada como
+        <code>simple-pharmacy.war</code>
+, Liberty la sirve en una raíz
+        <strong>diferente</strong>
+; siempre tome la raíz real del registro de inicio:
+      </p>
+      <div data-language="bash" class="code-block premium-code-block">
+        <pre>
+          <code>grep CWWKT0016I target/liberty/wlp/usr/servers/defaultServer/logs/messages.log</code>
+        </pre>
+      </div>
+      <p>
+Si esa línea dice
+        <code>.../simple-pharmacy.war/</code>
+, use
+        <code>http://localhost:9081/simple-pharmacy.war/api/dashboard</code>
+ o agregue
+        <code>context-root="/simple-pharmacy"</code>
+ al elemento
+        <code>&lt;application&gt;</code>
+ en
+        <code>src/main/liberty/config/server.xml</code>
+ y reinicie.
+      </p>
+    </div>
+    <div class="callout" data-tone="tip">
+      <p class="callout__title">
+Bonificación: la interfaz de usuario de Swagger en
+        <code>/openapi/ui/</code>
+: útil, pero es
+        <em>no</em>
+ la URL de backend
+      </p>
+      <p>
+Si Bob habilitó la función
+        <code>mpOpenAPI</code>
+ (normalmente lo hace), Liberty ofrece una
+        <strong>Swagger UI</strong>
+ interactiva en la
+        <strong>raíz del servidor</strong>
+. Nota: no hay ruta de contexto de la aplicación:
+      </p>
+      <div data-language="text" class="code-block premium-code-block">
+        <pre>
+          <code>http://localhost:9081/openapi/ui/</code>
+        </pre>
+      </div>
+      <p>
+Es fantástico para explorar y probar todos los puntos finales. Pero es la API
+        <em>documentación</em>
+, no el punto final de datos que consume su aplicación React; eso es
+        <code>/simple-pharmacy/api/…</code>
+. Y debido a que Liberty lo sirve (no su aplicación), devuelve
+        <strong>200 incluso cuando la API en sí es 404ing</strong>
+, así que no lo use como verificación de estado. Confirme el backend con el JSON
+        <code>/api/dashboard</code>
+ anterior.
+      </p>
+    </div>
+  </section>
+  <section class="lab-section" aria-labelledby="step-4-frontend-setup-and-scaffolding">
+    <h2 class="cds--productive-heading-03" id="step-4-frontend-setup-and-scaffolding">Paso 4: configuración y andamiaje del frontend</h2>
+    <p>Bob configura la nueva pila de interfaz: crea una aplicación Vite React e instala dependencias. Síguelo a través de la lista de tareas pendientes.</p>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/frontend-migration.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/frontend-migration.png" class="lab-figure__img" alt="Subtarea de migración frontend con la lista de tareas pendientes" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — Subtarea de migración frontend con la lista de tareas pendientes. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+    <p>Cuando Bob te lo solicite, inicia el servidor de desarrollo:</p>
+    <div data-language="bash" class="code-block premium-code-block">
+      <pre>
+        <code>npm run dev</code>
+      </pre>
+    </div>
+    <p>Luego abre:</p>
+    <div data-language="text" class="code-block premium-code-block">
+      <pre>
+        <code>http://localhost:3000/</code>
+      </pre>
+    </div>
+    <p>Deberías ver la aplicación con scaffolding:</p>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/frontend-scaffold.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/frontend-scaffold.png" class="lab-figure__img" alt="Interfaz scaffolded React ejecutándose en localhost:3000" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — Interfaz scaffolded React ejecutándose en localhost:3000. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+    <div class="callout" data-tone="note">
+      <p class="callout__title">El andamio está intencionalmente desnudo; aún no hay datos de farmacia</p>
+      <p>
+Este es un
+        <strong>shell inicial</strong>
+, no la aplicación terminada. Espere un genérico, casi vacío
+página con
+        <strong>sin tablero ni datos de farmacia</strong>
+: nada aquí llama al backend todavía. el
+Los componentes y páginas que recuperan y muestran datos se crean en el
+        <strong>siguiente paso (Paso 5)</strong>
+.
+      </p>
+      <p>
+Un andamio que parece vacío en este punto es el hito esperado
+        <strong>, no una API</strong>
+ rota, por lo que
+No comience a depurar la carga de datos aquí. (Lo único que vale la pena confirmar antes, en el paso
+3.1, es que la URL del servidor en sí es correcta; consulte ese punto de control).
+      </p>
+    </div>
+    <p>Informe cualquier error a Bob. Si parece correcto, dígaselo a Bob:</p>
+    <div data-language="text" class="code-block premium-code-block">
+      <pre>
+        <code>El andamio se ve bien</code>
+      </pre>
+    </div>
+  </section>
+  <section class="lab-section" aria-labelledby="step-5-frontend-components-and-pages">
+    <h2 class="cds--productive-heading-03" id="step-5-frontend-components-and-pages">Paso 5: componentes y páginas del frontend</h2>
+    <p>Bob ahora construye los componentes, luego las páginas, ejecutando comandos de compilación periódicamente para verificar. Cuando termine, le pedirá que ejecute la aplicación nuevamente:</p>
+    <div data-language="bash" class="code-block premium-code-block">
+      <pre>
+        <code>npm run dev</code>
+      </pre>
+    </div>
+    <p>
+Abra
+      <code>http://localhost:3000/</code>
+; el resultado debería verse así:
+    </p>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/modernized-ui.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/modernized-ui.png" class="lab-figure__img" alt="La interfaz de farmacia modernizada React + Material UI" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — La interfaz de farmacia modernizada React + Material UI. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+    <div class="callout" data-tone="success">
+      <p class="callout__title">Punto de control: aquí es donde deberían aparecer los datos reales</p>
+      <p>
+        <strong>Ahora</strong>
+ — no en el andamio del Paso 4 — el tablero, los medicamentos, las recetas y los pedidos
+debería renderizarse con
+        <strong>datos en vivo desde el backend</strong>
+. Si las páginas están construidas pero aparecen vacías
+
+        <em>aquí</em>
+, ese es el punto a investigar: casi siempre es la falta de coincidencia entre raíz de contexto y proxy
+del Paso 3.1. Consulte
+        <a href="#troubleshooting">Solución de problemas</a>
+.
+      </p>
+    </div>
+    <p>Pegue cualquier error en Bob para depurarlo.</p>
+  </section>
+  <section class="lab-section" aria-labelledby="step-6-containerization-and-validation">
+    <h2 class="cds--productive-heading-03" id="step-6-containerization-and-validation">Paso 6: Contenedorización y validación</h2>
+    <p>Bob contiene y valida el estado final de la modernización.</p>
+    <figure class="lab-figure premium-workflow__figure">
+      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/containerization-done.png" target="_blank" rel="noopener">
+        <img src="./assets/images/labs/java-modernization-v2/premium/containerization-done.png" class="lab-figure__img" alt="Bob informa sobre la modernización completa" />
+      </a>
+      <figcaption class="lab-figure__caption">Referencia visual — Bob informa sobre la modernización completa. Verifica este estado antes de continuar.</figcaption>
+    </figure>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">Detenga ambos servidores antes de continuar</p>
+      <p>
+Esta práctica de laboratorio ejecuta servidores
+        <strong>dos</strong>
+: libere ambos puertos para que la siguiente práctica de laboratorio no esté bloqueada:
+      </p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">
+          <strong>Servidor de desarrollo Vite (puerto 3000):</strong>
+ presione
+          <span class="premium-keys">
+            <kbd class="key-control">Ctrl</kbd>
+            <span>+</span>
+            <kbd class="key-c">C</kbd>
+          </span>
+.
+        </li>
+        <li class="cds--list__item">
+          <strong>Liberty (puerto 9081):</strong>
+ presione
+          <span class="premium-keys">
+            <kbd class="key-control">Ctrl</kbd>
+            <span>+</span>
+            <kbd class="key-c">C</kbd>
+          </span>
+. Si permanece retenido —
+          <code>lsof -ti:9081 | xargs kill -9</code>
+ (macOS/Linux);
+          <code>mvn liberty:stop</code>
+, o
+          <code>netstat -ano | findstr :9081</code>
+ y luego
+          <code>taskkill /PID &lt;pid&gt; /F</code>
+ (Windows PowerShell).
+        </li>
+      </ul>
+    </div>
+  </section>
+  <section class="lab-section" aria-labelledby="troubleshooting">
+    <h2 class="cds--productive-heading-03" id="troubleshooting">Solución de problemas</h2>
+    <details class="premium-details">
+      <summary>
+        <code>CWWKS9660E: The orb element ... requires a user registry</code>
+ al iniciar el backend
+      </summary>
+      <p>
+Bob configuró el servidor con la plataforma
+        <strong>
+completa
+          <code>jakartaee-10.0</code>
+        </strong>
+, que incorpora el
+Pila ORB/EJB. El ORB espera 10 segundos por un registro de usuarios, no encuentra ninguno y registra
+
+        <em>"no se iniciará ninguna aplicación".</em>
+ Esta aplicación es
+        <strong>REST + JSP solamente</strong>
+; nunca usa EJB ni ORB
+- Entonces, el conjunto de funciones correcto es
+        <strong>Web Profile</strong>
+. En
+        <code>src/main/liberty/config/server.xml</code>
+,
+reemplace la función de la plataforma con el perfil web:
+      </p>
+      <div data-language="xml" class="code-block premium-code-block">
+        <pre>
+          <code>&lt;feature&gt;webProfile-10.0&lt;/feature&gt;</code>
+        </pre>
+      </div>
+      <p>
+Mantenga todas las funciones
+        <code>mpOpenAPI-*</code>
+ /
+        <code>mpMetrics-*</code>
+: las funciones MicroProfile funcionan junto con ellas.
+Reiniciar Liberty; el error desapareció y el inicio es más rápido. La instantánea enviada ya utiliza
+
+        <code>webProfile-10.0</code>
+; esto solo reaparece si Bob lo cambió por
+        <code>jakartaee-10.0</code>
+.
+      </p>
+    </details>
+    <details class="premium-details">
+      <summary>
+La solicitud de API falló: el chat muestra
+        <code>{\"apiProtocol\":\"openai\"}</code>
+      </summary>
+      <p>
+Haga clic en
+        <strong>Reintentar</strong>
+ en la ventana de chat de Bob.
+      </p>
+    </details>
+    <details class="premium-details">
+      <summary>
+Cada llamada
+        <code>/api</code>
+ devuelve 404
+      </summary>
+      <p>Dos causas diferentes producen esto: verifique primero la raíz del contexto, es la más rápida:</p>
+      <p>
+        <strong>1. Raíz de contexto incorrecta (más común una vez que Struts desaparece). </strong>
+ Si Bob implementó la aplicación como
+        <code>simple-pharmacy.war</code>
+, la base real es
+        <code>/simple-pharmacy.war/api/…</code>
+, no
+        <code>/simple-pharmacy/api/…</code>
+; la línea de inicio
+        <code>CWWKT0016I</code>
+ le indica cuál. La multa por carga de la página Swagger
+        <code>/openapi/ui/</code>
+ es
+        <em>no</em>
+ tranquilizadora aquí: Liberty la sirve en la raíz del servidor, por lo que funciona incluso cuando cada
+        <code>/api</code>
+ enruta 404. Solucione fijando
+        <code>context-root="/simple-pharmacy"</code>
+ en el elemento
+        <code>&lt;application&gt;</code>
+ en
+        <code>src/main/liberty/config/server.xml</code>
+ (la instantánea enviada ya hace esto).
+      </p>
+      <p>
+        <strong>
+2. Struts está tragando
+          <code>/api</code>
+ (solo si Struts todavía está en
+          <code>web.xml</code>
+).
+        </strong>
+ El filtro Struts asignado a
+        <code>/*</code>
+ intercepta las solicitudes REST antes de que JAX-RS las vea. Pregúntale a Bob:
+      </p>
+      <div data-language="text" class="code-block premium-code-block">
+        <pre>
+          <code>Struts está interceptando /api antes de que JAX-RS lo vea. Agrega el struts.action.excludePattern
+constante para /api y confirme que existe la clase activadora @ApplicationPath("/api").</code>
+        </pre>
+      </div>
+      <p>
+        <strong>
+Struts 7 coincide con
+          <code>excludePattern</code>
+ con el URI de solicitud completo
+        </strong>
+ (incluida la ruta de contexto), por lo que el patrón necesita un
+        <code>.*</code>
+ —
+        <code>.*/api/.*</code>
+ inicial, un
+        <code>/api/.*</code>
+ simple no.
+      </p>
+    </details>
+    <details class="premium-details">
+      <summary>El frontend no puede comunicarse con el backend: conexión rechazada/error CORS</summary>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">
+Confirme que el backend esté realmente activo: abra
+          <code>http://localhost:9081/simple-pharmacy/api/dashboard</code>
+ en un navegador y verifique que obtenga JSON.
+        </li>
+        <li class="cds--list__item">
+Confirme que ambos servidores se estén ejecutando a la vez: Liberty en 9081
+          <strong> y </strong>
+ Vite en 3000.
+        </li>
+        <li class="cds--list__item">
+Si el navegador informa una falla de CORS, péguelo en Bob; el
+          <code>CorsFilter</code>
+ generado es el responsable y Bob lo conciliará.
+        </li>
+      </ol>
+    </details>
+    <details class="premium-details">
+      <summary>
+        <code>npm run dev</code>
+ falla o la página está en blanco
+      </summary>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">
+Confirma que estás en el Nodo 20 o 22 LTS:
+          <code>node --version</code>
+.
+        </li>
+        <li class="cds--list__item">
+Asegúrese de que las dependencias estén instaladas limpiamente, desde la carpeta frontend,
+          <code>npm install</code>
+.
+        </li>
+        <li class="cds--list__item">
+Pegue la salida de la consola (navegador
+          <strong> y terminal</strong>
+) en Bob.
+        </li>
+      </ol>
+    </details>
+    <details class="premium-details">
+      <summary>Después del Paso 5, las páginas se crean pero no muestran datos (tablas/tarjetas vacías)</summary>
+      <p>
+Primero, verifique
+        <em>en qué paso se encuentra</em>
+: en el
+        <strong>paso 4</strong>
+ aparece una página genérica vacía.
+esperado: las páginas de datos no existen hasta el Paso 5, por lo que no hay nada que depurar allí. esto
+la entrada es para cuando
+        <strong>Bob haya terminado de construir las páginas (Paso 5)</strong>
+ y estén
+        <em>todavía</em>
+ vacías.
+      </p>
+      <p>
+En ese momento, el shell React se procesa pero las llamadas a
+        <code>/api</code>
+ fallan silenciosamente. Abre tu
+
+        <strong>DevTools → pestaña Red</strong>
+ del navegador y vuelva a cargar; si las solicitudes
+        <code>/api/...</code>
+ son
+        <strong>404</strong>
+, es
+casi siempre es una falta de coincidencia de ruta, no un error de código. Un
+        <code>curl</code>
+ a través del servidor de desarrollo le dice cuál:
+      </p>
+      <div data-language="bash" class="code-block premium-code-block">
+        <pre>
+          <code>curl http://localhost:3000/api/dashboard</code>
+        </pre>
+      </div>
+      <p>
+        <strong>JSON atrás →</strong>
+ el proxy y el backend están de acuerdo; el problema es la deriva del nombre del campo (ver más abajo).
+
+        <strong>404 →</strong>
+ el proxy Vite y la raíz del contexto del backend no están de acuerdo.
+        <code>vite.config.ts</code>
+ reescribe
+
+        <code>/api/*</code>
+ →
+        <code>/simple-pharmacy/api/*</code>
+, por lo que la aplicación solo funciona cuando Liberty implementó WAR en
+raíz de contexto
+        <strong>
+          <code>/simple-pharmacy</code>
+        </strong>
+. Si Bob lo dejó como
+        <code>simple-pharmacy.war</code>
+ (verifique el
+
+        <code>CWWKT0016I</code>
+ línea de inicio), cada llamada al 404 y las páginas permanecen en blanco. Arreglar fijando
+
+        <code>context-root="/simple-pharmacy"</code>
+ en el elemento
+        <code>&lt;application&gt;</code>
+ en
+        <code>server.xml</code>
+ - el
+La instantánea enviada ya hace esto, por lo que coincide con el proxy, luego
+        <strong>reinicia Liberty</strong>
+.
+      </p>
+      <div class="callout" data-tone="warning">
+        <p class="callout__title">
+Una página
+          <code>/openapi/ui/</code>
+ que funcione no es prueba de que la API funcione
+        </p>
+        <p>
+Liberty sirve la interfaz de usuario de Swagger en la raíz del servidor, por lo que se carga incluso en cada ruta
+          <code>/api</code>
+
+404. Confirme siempre con el
+          <code>curl</code>
+ de arriba, no con la página Swagger.
+        </p>
+      </div>
+      <p>
+        <strong>
+Si las llamadas devuelven
+          <code>200</code>
+ pero las páginas aún están vacías, los nombres de los campos
+        </strong>
+ oscilan entre los dos
+mitades. Pregúntale a Bob:
+      </p>
+      <div data-language="text" class="code-block premium-code-block">
+        <pre>
+          <code>Las páginas se muestran pero no muestran datos. Compare los nombres de los campos JSON que devuelven los recursos REST
+contra lo que esperan los componentes React y conciliarlos.</code>
+        </pre>
+      </div>
+    </details>
+    <details class="premium-details">
+      <summary>La terminal de Bob muestra la versión de Java incorrecta</summary>
+      <p>
+        <code>sdk use</code>
+ tiene un alcance de shell y no se aplica a la terminal que Bob abre por sí solo. Ejecútelo en la terminal de Bob específicamente:
+      </p>
+      <div data-language="bash" class="code-block premium-code-block">
+        <pre>
+          <code>sdk use java 21.0.11-zulu</code>
+        </pre>
+      </div>
+    </details>
+  </section>
+  <section class="lab-section" aria-labelledby="getting-help-during-the-lab">
+    <h2 class="cds--productive-heading-03" id="getting-help-during-the-lab">Obtén ayuda durante el laboratorio</h2>
+    <ol class="cds--list--ordered">
+      <li class="cds--list__item">
+        <strong>Pregúntele a Bob</strong>
+: explique los errores en su totalidad y solicite orientación específica.
+      </li>
+      <li class="cds--list__item">
+        <strong>Pregúntale a tu instructor</strong>
+; no dudes en levantar la mano.
+      </li>
+      <li class="cds--list__item">
+        <strong>Colaborar</strong>
+: discutir con compañeros de clase.
+      </li>
+    </ol>
+    <h3 id="bob-specific-tips" class="cds--productive-heading-02 lab-step__title">Consejos específicos de Bob</h3>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">Sea específico en sus solicitudes a Bob.</li>
+      <li class="cds--list__item">Proporcione mensajes de error completos.</li>
+      <li class="cds--list__item">Pídale a Bob que explique su razonamiento.</li>
+      <li class="cds--list__item">Utilice Bob para revisar el código antes de realizar la prueba.</li>
+    </ul>
+  </section>
+  <section class="lab-section" aria-labelledby="success-criteria">
+    <h2 class="cds--productive-heading-03" id="success-criteria">Criterios de éxito</h2>
+    <p>Ha completado con éxito esta práctica de laboratorio cuando:</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ Node.js (20 o 22 LTS), Java 21 y Maven están instalados y verificados.
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ Bob está en modo
+        <strong>Agent</strong>
+ y el flujo de trabajo
+        <strong>UI Modernization</strong>
+ se está ejecutando.
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ Revisó las opciones de estado objetivo de
+        <strong></strong>
+ y seleccionó
+        <strong>React + Material UI</strong>
+ en
+        <strong>Jakarta EE Servicios DESCANSO</strong>
+.
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+        <strong>Punto de control de backend:</strong>
+        <code>mvn liberty:run</code>
+ comienza limpiamente y
+        <code>http://localhost:9081/simple-pharmacy/api/dashboard</code>
+ devuelve JSON.
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ El andamio Vite React se ejecuta en
+        <code>http://localhost:3000/</code>
+.
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ El SPA terminado carga datos reales de farmacia (panel de control, medicamentos, recetas, pedidos).
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ Bob colocó en contenedores y validó el estado final.
+      </li>
+    </ul>
+  </section>
+  <section class="lab-section" aria-labelledby="key-takeaways">
+    <h2 class="cds--productive-heading-03" id="key-takeaways">Conclusiones clave</h2>
+    <ol class="cds--list--ordered">
+      <li class="cds--list__item">
+        <strong>El flujo de trabajo realiza la planificación, no solo la escritura</strong>
+: analiza la aplicación Struts, documenta la arquitectura y propone estados objetivo antes de escribir una línea de código.
+      </li>
+      <li class="cds--list__item">
+        <strong>La elección del estado objetivo es una decisión de riesgo</strong>
+: la tabla de opciones enmarca cada camino por riesgo, no solo por tecnología. Cambiar el frontend
+        <em> y</em>
+ el backend a la vez es la columna de alto riesgo por una razón.
+      </li>
+      <li class="cds--list__item">
+        <strong>Primero el backend, luego el frontend</strong>
+: el flujo de trabajo descompone el monolito Struts en servicios REST y los vuelve verdes
+        <em>antes</em>
+ de construir la interfaz de usuario, por lo que el frontend tiene un contrato real sobre el cual construir.
+      </li>
+      <li class="cds--list__item">
+        <strong>Por fases y revisable</strong>
+ — Análisis → Planificación → Generación → Validación, con una lista de tareas pendientes que puede expandir en cualquier punto para ver exactamente dónde está Bob.
+      </li>
+      <li class="cds--list__item">
+        <strong>Guía iterativa</strong>
+: pegar errores nuevamente en el chat es el flujo de trabajo previsto, no un modo de falla.
+      </li>
+    </ol>
+  </section>
+  <section class="lab-section" aria-labelledby="next-steps-optional">
+    <h2 class="cds--productive-heading-03" id="next-steps-optional">Próximos pasos (opcional)</h2>
+    <blockquote>
+      <p>
+        <strong>Nota:</strong>
+ las siguientes actividades son opcionales y pueden explorarse si tiene tiempo adicional.
+      </p>
+    </blockquote>
+    <h3 id="1-optimize-the-generated-ui" class="cds--productive-heading-02 lab-step__title">1. Optimice la interfaz de usuario generada</h3>
+    <div data-language="text" class="code-block premium-code-block">
+      <pre>
+        <code>Optimice la interfaz de usuario generada para el estado objetivo seleccionado</code>
+      </pre>
+    </div>
+    <h3 id="2-review-code-quality" class="cds--productive-heading-02 lab-step__title">2. Revisar la calidad del código</h3>
+    <div data-language="text" class="code-block premium-code-block">
+      <pre>
+        <code>Revise el código migrado para comprobar la arquitectura, la mantenibilidad, el manejo de errores, la organización del código y la integridad de la documentación.</code>
+      </pre>
+    </div>
+    <h3 id="3-create-a-modernization-summary" class="cds--productive-heading-02 lab-step__title">3. Cree un resumen de modernización.</h3>
+    <div data-language="text" class="code-block premium-code-block">
+      <pre>
+        <code>Cree un documento MIGRATION_SUMMARY.md que incluya lo que se modernizó, el estado objetivo seleccionado, los cambios arquitectónicos clave, los problemas conocidos y los próximos pasos.</code>
+      </pre>
+    </div>
+  </section>
+  <section class="lab-section" aria-labelledby="next">
+    <h2 class="cds--productive-heading-03" id="next">Siguiente</h2>
+    <p>
+      <a href="#/lab/java-modernization-v2/lab4" class="cds--btn cds--btn--primary">
+Lab 4 — Generación de pruebas unitarias
+        <span class="premium-button-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.75.75 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0"></path>
+          </svg>
+        </span>
+      </a>
+    </p>
+  </section>
+</div>

@@ -152,7 +152,39 @@ export const siteData = {
             { slug: 'lab4', label: 'Tests unitarios', file: './content/premium/java-modernization-v2/lab4-unit-tests.html', description: 'UNITTEST.md, JaCoCo, JUnit 5 + Mockito + AssertJ en lotes por capa.', tags: ['JUnit 5'], bobcoinCost: { min: 10, max: 12 } },
             { slug: 'lab-alt4', label: 'Lab 4 alternativo', file: './content/premium/java-modernization-v2/lab-alt4-tdd.html', description: 'Ruta TDD OpenAPI-first: tests primero, implementación después (Red-Green-Refactor).', tags: ['TDD'], alternative: true, bobcoinCost: { min: 5, max: 7 } },
             { slug: 'lab5', label: 'Seguridad', file: './content/premium/java-modernization-v2/lab5-security.html', description: 'Detecta y remedia CVEs críticos en dependencias antes de la entrega.', tags: ['CVEs'], bobcoinCost: { min: 4, max: 6 } }
-          ]
+          ],
+          variants: {
+            premium: {
+              description: 'Ejecuta los flujos de trabajo nativos de Bob para replataformización, actualización de Java, interfaz, pruebas y vulnerabilidades.',
+              banner: './assets/images/labs/java-modernization-v2/premium/ibm-bob-java-banner.png',
+              steps: [
+                { slug: 'overview', label: 'Introducción', file: './content/premium-workflows/java-modernization-v2/overview.html', tags: ['Flujos premium'] },
+                { slug: 'lab1', label: 'Replataformización a Liberty', file: './content/premium-workflows/java-modernization-v2/lab1-replatforming.html', baseFile: './content/premium/java-modernization-v2/lab1-replatforming.html', workflowSourceFile: './content/premium-workflows/java-modernization-v2/lab1-replatforming.html', description: 'Usa el flujo “Java Modernization” para migrar Traditional WebSphere a Open Liberty.', tags: ['Flujo Liberty'], bobcoinCost: { min: 4, max: 5 } },
+                { slug: 'lab2', label: 'Actualización a Java 21', file: './content/premium-workflows/java-modernization-v2/lab2-java-upgrade.html', baseFile: './content/premium/java-modernization-v2/lab2-java-upgrade.html', workflowSourceFile: './content/premium-workflows/java-modernization-v2/lab2-java-upgrade.html', description: 'Ejecuta el flujo “Java Upgrade” con Jakarta EE 10 y validación de CVE integrada.', tags: ['Actualización Java'], bobcoinCost: { min: 8, max: 9 } },
+                { slug: 'lab3', label: 'Interfaz con React', file: './content/premium-workflows/java-modernization-v2/lab3-ui-modernization.html', baseFile: './content/premium/java-modernization-v2/lab3-ui-modernization.html', workflowSourceFile: './content/premium-workflows/java-modernization-v2/lab3-ui-modernization.html', description: 'Migra Struts/JSP a React + Material UI con el flujo “UI Modernization”.', tags: ['Flujo de interfaz'], bobcoinCost: { min: 14, max: 16 } },
+                { slug: 'lab4', label: 'Pruebas unitarias', file: './content/premium-workflows/java-modernization-v2/lab4-unit-tests.html', baseFile: './content/premium/java-modernization-v2/lab4-unit-tests.html', workflowSourceFile: './content/premium-workflows/java-modernization-v2/lab4-unit-tests.html', description: 'Genera pruebas por lotes y cobertura con el flujo “Java Unit Testing”.', tags: ['Flujo de pruebas'], bobcoinCost: { min: 10, max: 12 } },
+                { slug: 'lab-alt4', label: 'Lab 4 alternativo', file: './content/premium-workflows/java-modernization-v2/lab-alt4-tdd.html', baseFile: './content/premium/java-modernization-v2/lab-alt4-tdd.html', workflowSourceFile: './content/premium-workflows/java-modernization-v2/lab-alt4-tdd.html', description: 'Ruta TDD con OpenAPI: primero las pruebas y después la implementación.', tags: ['TDD'], alternative: true, bobcoinCost: { min: 5, max: 7 } },
+                { slug: 'lab5', label: 'Seguridad y vulnerabilidades', file: './content/premium-workflows/java-modernization-v2/lab5-security.html', baseFile: './content/premium/java-modernization-v2/lab5-security.html', workflowSourceFile: './content/premium-workflows/java-modernization-v2/lab5-security.html', description: 'Detecta y remedia CVE con el flujo “Vulnerabilities Detection”.', tags: ['Flujo de vulnerabilidades'], bobcoinCost: { min: 4, max: 6 } }
+              ],
+              guide: {
+                duration: '~90 min',
+                outcome: 'Modernizarás Simple Pharmacy con los flujos de trabajo premium de Bob para Liberty, Java 21, interfaz, pruebas unitarias y seguridad.',
+                requirements: [
+                  ['Entorno', 'IBM Bob IDE V2 con acceso a la pestaña “Workflows” y al paquete Java Modernization.'],
+                  ['Java', 'Java 8 para el Lab 1; Java 21 desde el Lab 2; Maven 3.8+ disponible.'],
+                  ['Node.js', 'Node.js LTS para el frontend React del Lab 3.'],
+                  ['Gobernanza', 'Permisos “Read”, “Edit”, “Execute” y MCP revisados antes de ejecutar cada flujo.']
+                ],
+                materials: ['Simple Pharmacy Workshop V2.', 'Capturas de los flujos y paneles de aprobación.', 'Plan de migración, resultados Maven, pruebas y reportes de CVE.'],
+                path: 'Sigue Liberty Replatforming, Java Upgrade, UI Modernization, Unit Testing y Vulnerabilities Detection. El Lab Alt-4 ofrece una ruta TDD alternativa.',
+                learning: [
+                  ['Flujos de trabajo', 'Seleccionar y ejecutar el flujo premium adecuado para cada transformación.'],
+                  ['Modernización', 'Revisar planes, cambios interactivos y resúmenes generados por Bob.'],
+                  ['Calidad y seguridad', 'Validar builds, cobertura y remediación de vulnerabilidades.']
+                ]
+              }
+            }
+          }
         },
         {
           slug: 'ibm-i-rpg-development',
@@ -168,7 +200,39 @@ export const siteData = {
             { slug: 'lab1', label: 'Fixed-to-Free RPG', file: './content/premium/ibm-i-rpg-development/lab1-fixed-to-free.html', description: 'Convierte una subrutina a formato libre con Dcl-Proc y constantes nombradas.', tags: ['RPGLE libre'], bobcoinCost: { min: 3, max: 6 } },
             { slug: 'lab2', label: 'React + Carbon UI', file: './content/premium/ibm-i-rpg-development/lab2-react-carbon-ui.html', description: 'Tabla web moderna con datos de muestra — sin sistema IBM i.', tags: ['React · Carbon'], bobcoinCost: { min: 4, max: 10 } },
             { slug: 'lab3', label: 'RLA a SQL', file: './content/premium/ibm-i-rpg-development/lab3-rla-to-sql.html', description: 'Reemplaza un CHAIN por SELECT y añade un JOIN.', tags: ['SQL embebido'], bobcoinCost: { min: 2, max: 4 } }
-          ]
+          ],
+          variants: {
+            premium: {
+              description: 'Recorre SAMCO y amplía la modernización RPG con IBM i Agent, MCP, Bob Shell y automatización Ansible para PTF.',
+              banner: './assets/images/labs/ibm-i-rpg-development/premium/ibm-bob-ibmi-rpg-banner.png',
+              steps: [
+                { slug: 'overview', label: 'Introducción', file: './content/premium-workflows/ibm-i-rpg-development/overview.html', tags: ['IBM i Premium'] },
+                { slug: 'lab0', label: 'Descubrir SAMCO', file: './content/premium-workflows/ibm-i-rpg-development/lab0-discover-samco.html', baseFile: './content/premium/ibm-i-rpg-development/lab0-discover-samco.html', description: 'Entiende la aplicación SAMCO, sus reglas de negocio y su flujo de pedidos.', tags: ['Ask Mode'], bobcoinCost: { min: 3, max: 8 } },
+                { slug: 'lab1', label: 'RPG de formato fijo a libre', file: './content/premium-workflows/ibm-i-rpg-development/lab1-fixed-to-free.html', baseFile: './content/premium/ibm-i-rpg-development/lab1-fixed-to-free.html', description: 'Convierte lógica RPG de formato fijo a formato libre con Bob.', tags: ['RPGLE libre'], bobcoinCost: { min: 3, max: 6 } },
+                { slug: 'lab2', label: 'Interfaz React + Carbon', file: './content/premium-workflows/ibm-i-rpg-development/lab2-react-carbon-ui.html', baseFile: './content/premium/ibm-i-rpg-development/lab2-react-carbon-ui.html', description: 'Construye una lista web con React y Carbon a partir de datos de artículos.', tags: ['React · Carbon'], bobcoinCost: { min: 4, max: 10 } },
+                { slug: 'lab3', label: 'Del acceso RLA a SQL', file: './content/premium-workflows/ibm-i-rpg-development/lab3-rla-to-sql.html', baseFile: './content/premium/ibm-i-rpg-development/lab3-rla-to-sql.html', description: 'Convierte una operación RLA a SQL y añade datos relacionados con JOIN.', tags: ['SQL embebido'], bobcoinCost: { min: 2, max: 4 } },
+                { slug: 'lab4', label: 'IBM i MCP (opcional)', file: './content/premium-workflows/ibm-i-rpg-development/lab4-ibmi-mcp.html', description: 'Conecta Bob con IBM i Agent, consulta el sistema y explora objetos mediante MCP.', tags: ['IBM i MCP'], bobcoinCost: { min: 5, max: 10 } },
+                { slug: 'lab5', label: 'Ansible PTF (opcional)', file: './content/premium-workflows/ibm-i-rpg-development/lab5-ansible-ptf.html', description: 'Crea un asistente Ansible para gestionar PTF y automatizar tareas operativas en IBM i.', tags: ['Ansible · PTF'], bobcoinCost: { min: 5, max: 10 } }
+              ],
+              guide: {
+                duration: '~120 min',
+                outcome: 'Descubrirás SAMCO, modernizarás RPG y conectarás Bob con IBM i para consultar el sistema y automatizar la gestión de PTFs.',
+                requirements: [
+                  ['Acceso', 'IBM Bob IDE con acceso al paquete IBM i, “IBM i Agent Mode” y MCP.'],
+                  ['Material', 'Bundle SAMCO descomprimido y abierto como carpeta raíz en Bob.'],
+                  ['Sistema IBM i', 'Conexión, credenciales y permisos autorizados para los Labs 4 y 5.'],
+                  ['Herramientas', 'Node.js 18+ para React + Carbon y Ansible para el asistente PTF.']
+                ],
+                materials: ['Bundle SAMCO.', 'Prompts de descubrimiento y modernización RPG.', 'Configuración IBM i MCP y plantilla Ansible PTF.'],
+                path: 'Sigue Lab 0 → 1 → 2 → 3 y continúa con IBM i MCP y Ansible PTF cuando tengas acceso al sistema IBM i.',
+                learning: [
+                  ['Descubrimiento', 'Explicar reglas de negocio, paneles, pedidos y acceso RLA/SQL.'],
+                  ['Modernización RPG', 'Convertir código legacy y construir una UI web moderna.'],
+                  ['Operaciones IBM i', 'Consultar IBM i con MCP y automatizar tareas PTF con Ansible.']
+                ]
+              }
+            }
+          }
         }
       ]
     }
@@ -302,11 +366,45 @@ export const workshopGuides = {
   }
 };
 
-export function findLab(slug) {
+export function resolveLabVariant(lab, accessMode = 'standard') {
+  const variant = accessMode === 'premium' ? lab.variants?.premium : null;
+  if (!variant) {
+    return {
+      ...lab,
+      accessMode: 'standard'
+    };
+  }
+
+  const standardStepsBySlug = new Map(lab.steps.map((step) => [step.slug, step]));
+  const steps = variant.steps.map((step) => {
+    const standardStep = standardStepsBySlug.get(step.slug);
+    return standardStep ? { ...step, label: standardStep.label } : step;
+  });
+
+  return {
+    ...lab,
+    ...variant,
+    // The standard variant owns every shared public name. Premium changes the
+    // exercise content and imagery, never the participant-facing lab names.
+    title: lab.title,
+    supporting: lab.supporting,
+    steps,
+    accessMode: 'premium'
+  };
+}
+
+export function getVisibleSections(accessMode = 'standard') {
+  return siteData.sections.map((section) => ({
+    ...section,
+    labs: section.labs.map((lab) => resolveLabVariant(lab, accessMode))
+  }));
+}
+
+export function findLab(slug, accessMode = 'standard') {
   for (const section of siteData.sections) {
     for (const lab of section.labs) {
       if (lab.slug === slug) {
-        return { section, lab };
+        return { section, lab: resolveLabVariant(lab, accessMode) };
       }
     }
   }
@@ -328,7 +426,7 @@ export function getWorkshopStats(lab) {
   const costs = (lab.steps || []).filter((step) => step.bobcoinCost && !step.alternative);
   const min = costs.reduce((sum, step) => sum + step.bobcoinCost.min, 0);
   const max = costs.reduce((sum, step) => sum + step.bobcoinCost.max, 0);
-  const duration = workshopGuides[lab.slug]?.duration || '';
+  const duration = lab.guide?.duration || workshopGuides[lab.slug]?.duration || '';
   return {
     duration,
     bobcoins: costs.length ? { min, max } : null

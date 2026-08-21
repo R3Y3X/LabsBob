@@ -1,0 +1,500 @@
+<div class="content-panel lab-template premium-workflow">
+  <div class="lab-banner">
+    <div class="lab-banner__tags">
+      <span class="cds--tag cds--tag--green">Premium</span>
+      <span class="cds--tag cds--tag--cool-gray">Descubrimiento</span>
+    </div>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Laboratorio 0 — Descubrir la aplicación SAMCO</h1>
+    <p class="cds--body-02 lab-banner__summary">Explora las reglas de negocio, los paneles y el flujo de pedidos de SAMCO antes de iniciar la modernización.</p>
+    <div class="lab-banner__metrics">
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">Modo</span>
+        <span class="lab-banner__metric-label">Ask</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">~30</span>
+        <span class="lab-banner__metric-label">minutos</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">3–8</span>
+        <span class="lab-banner__metric-label">BobCoins estimados</span>
+      </div>
+      <div class="lab-banner__metric">
+        <span class="lab-banner__metric-value">Premium</span>
+        <span class="lab-banner__metric-label">acceso requerido</span>
+      </div>
+    </div>
+  </div>
+  <section class="lab-section" aria-labelledby="lab0-introduccion">
+    <h2 class="cds--productive-heading-03" id="lab0-introduccion">Introducción</h2>
+    <p>
+Antes de escribir una sola línea de código, debe comprender
+      <strong>con qué</strong>
+ está trabajando. En esta práctica de laboratorio, utilizará IBM Bob para explorar la aplicación SAMCO: su propósito, sus reglas comerciales y cómo encaja todo.
+    </p>
+    <p>No escribirás ningún código. En su lugar, le hará a Bob una serie de preguntas sobre los archivos del proyecto y Bob le explicará todo en un inglés sencillo.</p>
+  </section>
+  <section class="lab-section" aria-labelledby="get-the-source-code-first">
+    <h2 class="cds--productive-heading-03" id="get-the-source-code-first">Obtén primero el código fuente</h2>
+    <p>
+Todas las referencias de
+      <code>@SAMCO/...</code>
+ a continuación suponen que tiene la fuente SAMCO abierta en
+      <a href="https://bob.ibm.com/">IBM Bob</a>
+. Descarga los materiales del taller, descomprímelos y abre la carpeta antes de continuar.
+    </p>
+    <p>
+      <a download="samco-workshop.zip" href="./downloads/samco-workshop.zip" class="cds--btn cds--btn--primary">
+        <span class="premium-button-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M5 20h14v-2H5m14-9h-4V3H9v6H5l7 7z"></path>
+          </svg>
+        </span>
+ Descargar taller SAMCO (7,5 MB)
+      </a>
+    </p>
+    <div class="callout" data-tone="note">
+      <p class="callout__title">Lo que lograrás</p>
+      <p>Conozca el objetivo, la lógica empresarial y el flujo de un extremo a otro de la aplicación RPG SAMCO utilizando Bob como herramienta de descubrimiento.</p>
+    </div>
+  </section>
+  <section class="lab-section" aria-labelledby="use-case-understand-a-legacy-application-before-modernizing-it">
+    <h2 class="cds--productive-heading-03" id="use-case-understand-a-legacy-application-before-modernizing-it">Caso de uso: comprender una aplicación heredada antes de modernizarla</h2>
+    <p>
+Un error común al modernizar sistemas heredados es comenzar a codificar antes de comprender completamente lo que hace el sistema. Esta práctica de laboratorio le enseñará a utilizar Bob como
+      <strong>herramienta de descubrimiento</strong>
+, una forma de construir rápidamente un modelo mental de un código base desconocido.
+    </p>
+  </section>
+  <section class="lab-section" aria-labelledby="step-0-put-bob-into-ask-mode">
+    <h2 class="cds--productive-heading-03" id="step-0-put-bob-into-ask-mode">
+Paso 0: Pon a Bob en modo
+      <code>ask</code>
+    </h2>
+    <p>Para esta práctica de laboratorio, Bob solo necesita leer y explicar la aplicación, no realizar ningún cambio.</p>
+  </section>
+  <section class="lab-section" aria-labelledby="step-1-ask-bob-about-the-overall-project-goal">
+    <h2 class="cds--productive-heading-03" id="step-1-ask-bob-about-the-overall-project-goal">Paso 1: Pregúntale a Bob sobre el objetivo general del proyecto.</h2>
+    <p>
+      <strong>Pregunta para Bob:</strong>
+    </p>
+    <div data-language="text" class="code-block premium-code-block">
+      <pre>
+        <code>@SAMCO/QPNLSRC/SAMMNU-Main_menu_application_SAMPLE.MENUSRC
+@SAMCO/QDDSSRC/ARTICLE-Article_File.PF
+@SAMCO/QDDSSRC/CUSTOMER.PF
+@SAMCO/QDDSSRC/ORDER.PF
+
+Mire estos archivos y explique:
+1. ¿Qué tipo de aplicación es SAMCO?
+2. ¿Cuáles son las principales áreas funcionales (grupos de menús)?
+3. ¿Quiénes son los principales usuarios de esta aplicación?
+4. ¿Cuál es el producto final que gestiona esta aplicación final-to-end?
+
+Mantenga la explicación simple: soy nuevo en este código base.</code>
+      </pre>
+    </div>
+    <div class="callout" data-tone="tip">
+      <p class="callout__title">que buscar</p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">Bob identifica SAMCO como un sistema de gestión de pedidos.</li>
+        <li class="cds--list__item">Bob enumera los tres grupos de menús: Archivos maestros, Informes y Utilidades.</li>
+        <li class="cds--list__item">Bob explica el ámbito empresarial: artículos, clientes, proveedores, pedidos.</li>
+        <li class="cds--list__item">Bob describe la interfaz de pantalla verde y la plataforma IBM i.</li>
+      </ul>
+    </div>
+  </section>
+  <section class="lab-section" aria-labelledby="step-2-ask-bob-to-explain-the-business-logic">
+    <h2 class="cds--productive-heading-03" id="step-2-ask-bob-to-explain-the-business-logic">Paso 2: Pídale a Bob que le explique la lógica empresarial</h2>
+    <h3 id="2a-article-and-vat-rules" class="cds--productive-heading-02 lab-step__title">2a — Artículo y normas del IVA</h3>
+    <p>
+      <strong>Pregunta para Bob:</strong>
+    </p>
+    <div data-language="text" class="code-block premium-code-block">
+      <pre>
+        <code>@SAMCO/QDDSSRC/ARTICLE-Article_File.PF
+@SAMCO/QDDSSRC/FAMILLY.PF
+@SAMCO/functionsVAT/vatdef.pf
+@SAMCO/functionsVAT/vat300.rpgle
+
+Explique las reglas comerciales de los artículos:
+1. ¿Qué campos tiene un artículo y qué significa cada uno?
+2. ¿Cómo se agrupan los artículos en familias?
+3. ¿Cómo se calcula el IVA de un artículo? Muéstrame la fórmula.
+4. ¿Qué hace el campo ARDEL y por qué se utiliza en lugar de eliminar el registro?
+
+Utilice diagramas de sirena cuando sea útil.</code>
+      </pre>
+    </div>
+    <div class="callout" data-tone="tip">
+      <p class="callout__title">que buscar</p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">Bob explica los campos del artículo (ID, descripción, precio de venta, precio de almacén, stock, código de IVA).</li>
+        <li class="cds--list__item">Bob explica la familia → código de IVA → cadena de tipos de IVA.</li>
+        <li class="cds--list__item">
+Bob muestra la fórmula del IVA:
+          <code>VAT = (net × rate) / 100</code>
+.
+        </li>
+        <li class="cds--list__item">
+Bob explica el patrón de eliminación temporal (
+          <code>ARDEL = 'X'</code>
+).
+        </li>
+      </ul>
+    </div>
+    <h3 id="2b-order-rules" class="cds--productive-heading-02 lab-step__title">2b - Reglas de orden</h3>
+    <p>
+      <strong>Pregunta para Bob:</strong>
+    </p>
+    <div data-language="text" class="code-block premium-code-block">
+      <pre>
+        <code>@SAMCO/QDDSSRC/ORDER.PF
+@SAMCO/QDDSSRC/DETORD.PF
+@SAMCO/QRPGLESRC/ORD100.PGM.RPGLE
+
+Explique las reglas comerciales para los pedidos:
+1. ¿Cuál es la diferencia entre un encabezado de pedido y una línea de pedido?
+2. ¿Cómo se calcula el total de una línea de pedido (con y sin IVA)?
+3. ¿Cuáles son los tres estados del ciclo de vida de un pedido (creado, entregado, cerrado)?
+4. ¿Cómo se genera un nuevo número de pedido y por qué se utiliza el bloqueo?
+
+Utilice diagramas de sirena cuando sea útil.</code>
+      </pre>
+    </div>
+    <div class="callout" data-tone="tip">
+      <p class="callout__title">que buscar</p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">
+Bob distingue el encabezado
+          <code>ORDER</code>
+ (cliente, fechas) de las líneas
+          <code>DETORD</code>
+ (artículo, cantidad, precio).
+        </li>
+        <li class="cds--list__item">
+Bob muestra la fórmula del total de la línea:
+          <code>ODTOT = ODQTY × ODPRICE</code>
+, luego
+          <code>ODTOTVAT = ODTOT + VAT</code>
+.
+        </li>
+        <li class="cds--list__item">
+Bob explica los tres campos de fecha:
+          <code>ORDATE</code>
+,
+          <code>ORDATDEL</code>
+,
+          <code>ORDATCLO</code>
+.
+        </li>
+        <li class="cds--list__item">
+Bob explica el patrón
+          <code>in *lock / out</code>
+ en el área de datos
+          <code>LASTORDNO</code>
+.
+        </li>
+      </ul>
+    </div>
+    <h3 id="2c-customer-and-provider-rules" class="cds--productive-heading-02 lab-step__title">2c — Reglas de clientes y proveedores</h3>
+    <p>
+      <strong>Pregunta para Bob:</strong>
+    </p>
+    <div data-language="text" class="code-block premium-code-block">
+      <pre>
+        <code>@SAMCO/QDDSSRC/CUSTOMER.PF
+@SAMCO/QDDSSRC/PROVIDER.PF
+@SAMCO/common/SAMREF.PF
+
+Explique:
+1. ¿Qué información se almacena para un cliente?
+2. ¿Qué es el campo CULIMCRE y cómo podría utilizarse?
+3. ¿En qué se parecen en estructura los clientes y proveedores?
+4. ¿Qué definiciones de campos compartidos provienen de SAMREF?</code>
+      </pre>
+    </div>
+    <div class="callout" data-tone="tip">
+      <p class="callout__title">que buscar</p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">Bob enumera los campos del cliente: nombre, teléfono, número de IVA, dirección, límite de crédito, fecha del último pedido.</li>
+        <li class="cds--list__item">
+Bob explica
+          <code>CULIMCRE</code>
+ como límite de crédito y
+          <code>CUCREDIT</code>
+ como saldo actual.
+        </li>
+        <li class="cds--list__item">Bob observa que los clientes y proveedores comparten la misma dirección y estructura de contacto.</li>
+        <li class="cds--list__item">
+Bob explica que
+          <code>SAMREF</code>
+ es un archivo de referencia que define tipos de campos compartidos (como
+          <code>UNITPRICE</code>
+,
+          <code>QUANTITY</code>
+,
+          <code>VATCODE</code>
+).
+        </li>
+      </ul>
+    </div>
+  </section>
+  <section class="lab-section" aria-labelledby="step-3-ask-bob-to-walk-through-the-system-end-to-end">
+    <h2 class="cds--productive-heading-03" id="step-3-ask-bob-to-walk-through-the-system-end-to-end">Paso 3: Pídale a Bob que recorra el sistema de un extremo a otro</h2>
+    <h3 id="3a-the-panel-step-pattern" class="cds--productive-heading-02 lab-step__title">3a - El patrón de pasos del panel</h3>
+    <p>
+      <strong>Pregunta para Bob:</strong>
+    </p>
+    <div data-language="text" class="code-block premium-code-block">
+      <pre>
+        <code>@SAMCO/QRPGLESRC/ART200-Work_with_article.PGM.SQLRPGLE
+
+Mire el bloque select/when principal y los nombres de las subrutinas (pnl01, s01prp, s01lod, s01dsp, s01key, s01chk, s01act).
+
+Explique:
+1. ¿Cuál es el propósito de cada paso (prp, lod, dsp, key, chk, act)?
+2. ¿En qué orden se ejecutan estos pasos durante una interacción normal del usuario?
+3. ¿Qué sucede cuando el usuario escribe un código de opción no válido?
+4. ¿Por qué se utiliza este patrón en lugar de un programa lineal simple?
+
+Utilice diagramas de sirena cuando sea útil.</code>
+      </pre>
+    </div>
+    <div class="callout" data-tone="tip">
+      <p class="callout__title">que buscar</p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">Bob explica el ciclo de seis pasos: preparar → cargar → mostrar → clave → verificar → actuar.</li>
+        <li class="cds--list__item">
+Bob rastrea el flujo normal:
+          <code>prp</code>
+ borra el subarchivo,
+          <code>lod</code>
+ lo llena,
+          <code>dsp</code>
+ lo muestra,
+          <code>key</code>
+ lee las teclas de función,
+          <code>chk</code>
+ valida la entrada,
+          <code>act</code>
+ realiza la acción.
+        </li>
+        <li class="cds--list__item">
+Bob explica que
+          <code>chk</code>
+ establece indicadores de error y vuelve a
+          <code>dsp</code>
+ en caso de una entrada no válida.
+        </li>
+        <li class="cds--list__item">Bob señala que este patrón se reutiliza en todos los programas interactivos en SAMCO.</li>
+      </ul>
+    </div>
+    <h3 id="3b-creating-an-order-end-to-end" class="cds--productive-heading-02 lab-step__title">3b: creación de un pedido de un extremo a otro</h3>
+    <p>
+      <strong>Pregunta para Bob:</strong>
+    </p>
+    <div data-language="text" class="code-block premium-code-block">
+      <pre>
+        <code>@SAMCO/QCLSRC/ORD100C2.PGM.CLLE
+@SAMCO/QRPGLESRC/ORD100.PGM.RPGLE
+
+Guíame a través del flujo completo de creación de un nuevo pedido de cliente:
+1. ¿Qué hace el programa CL ORD100C2 antes de llamar a ORD100?
+2. ¿Cómo selecciona el usuario un cliente?
+3. ¿Cómo agrega el usuario líneas de artículo al pedido?
+4. ¿Qué pasa cuando el usuario confirma el pedido (qué datos se escriben y dónde)?
+5. ¿Qué se imprime al final?
+
+Muéstrame las líneas clave de código para cada paso. Utilice diagramas de sirena cuando sea útil.</code>
+      </pre>
+    </div>
+    <div class="callout" data-tone="tip">
+      <p class="callout__title">que buscar</p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">
+Bob explica que
+          <code>ORD100C2</code>
+ anula
+          <code>DETORD</code>
+ con un archivo de trabajo temporal, por lo que nunca se confirman datos parciales.
+        </li>
+        <li class="cds--list__item">
+Bob muestra
+          <code>SltCustomer(0)</code>
+ para la selección de clientes y
+          <code>SltArticle(' ')</code>
+ para la selección de artículos.
+        </li>
+        <li class="cds--list__item">
+Bob traza el cálculo de la línea:
+          <code>odprice = GetArtRefSalPrice(odarid)</code>
+, luego
+          <code>odtot = odqty × odprice</code>
+, luego
+          <code>ClcVAT</code>
+.
+        </li>
+        <li class="cds--list__item">
+Bob muestra la secuencia de confirmación: bloquear
+          <code>LASTORDNO</code>
+, incrementar, escribir el encabezado
+          <code>ORDER</code>
+, copiar líneas del archivo temporal a
+          <code>DETORD</code>
+, llamar a
+          <code>ORD500</code>
+ para imprimir.
+        </li>
+      </ul>
+    </div>
+    <h3 id="3c-rla-vs-sql-data-access" class="cds--productive-heading-02 lab-step__title">3c - RLA frente a SQL acceso a datos</h3>
+    <p>
+      <strong>Pregunta para Bob:</strong>
+    </p>
+    <div data-language="text" class="code-block premium-code-block">
+      <pre>
+        <code>@SAMCO/QRPGLESRC/ORD100.PGM.RPGLE
+@SAMCO/QRPGLESRC/ORD200.PGM.SQLRPGLE
+@SAMCO/QRPGLESRC/ART400.SQLRPGLE
+
+Compare los dos estilos de acceso a datos utilizados en SAMCO:
+1. Muéstreme un ejemplo de acceso a nivel de registro (RLA) de ORD100
+2. Muéstrame el cursor SQL equivalente de ORD200
+3. ¿Qué hace ART400 de manera diferente? ¿Cómo utiliza SQL para ofrecer una API REST?
+4. ¿Cuáles son las ventajas prácticas de SQL sobre RLA para leer listas de datos?</code>
+      </pre>
+    </div>
+    <div class="callout" data-tone="tip">
+      <p class="callout__title">que buscar</p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">
+Bob muestra el patrón
+          <code>setll / read / dow not %eof</code>
+ RLA de
+          <code>ORD100</code>
+.
+        </li>
+        <li class="cds--list__item">
+Bob muestra el patrón
+          <code>DECLARE CURSOR / OPEN / FETCH / CLOSE</code>
+ SQL de
+          <code>ORD200</code>
+.
+        </li>
+        <li class="cds--list__item">
+Bob explica que
+          <code>ART400</code>
+ usa JOIN en
+          <code>ARTICLE</code>
+,
+          <code>FAMILLY</code>
+ y
+          <code>VATDEF</code>
+ en una consulta y devuelve una respuesta estructurada que IWS convierte a JSON.
+        </li>
+        <li class="cds--list__item">Bob enumera las ventajas de SQL: menos viajes de ida y vuelta a la base de datos, compatibilidad con JOIN, optimizador SQL, más fácil de leer.</li>
+      </ul>
+    </div>
+  </section>
+  <section class="lab-section" aria-labelledby="step-4-ask-bob-to-summarise-what-youve-learned">
+    <h2 class="cds--productive-heading-03" id="step-4-ask-bob-to-summarise-what-youve-learned">Paso 4: Pídele a Bob que resuma lo que has aprendido</h2>
+    <p>
+      <strong>Pregunta para Bob:</strong>
+    </p>
+    <div data-language="text" class="code-block premium-code-block">
+      <pre>
+        <code>Según todo lo que hemos discutido sobre SAMCO, dame:
+1. Un resumen de un párrafo de lo que hace la aplicación
+2. Una lista de las 5 reglas comerciales más importantes que no debo romper al modernizarlo
+3. Los 3 mayores desafíos técnicos que enfrentaré al modernizar este código base</code>
+      </pre>
+    </div>
+    <div class="callout" data-tone="tip">
+      <p class="callout__title">Resumen esperado</p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">Bob resume SAMCO como un sistema de gestión de pedidos de pantalla verde para artículos, clientes y pedidos.</li>
+        <li class="cds--list__item">Bob enumera reglas críticas: eliminaciones temporales, cálculo del IVA, bloqueo del número de pedido, ciclo de vida del pedido, fórmula del total de líneas.</li>
+        <li class="cds--list__item">Bob identifica los tres desafíos: RPG de formato fijo (Laboratorio 1), acceso a datos RLA (Laboratorio 3), UI de pantalla verde (Laboratorio 2).</li>
+      </ul>
+    </div>
+  </section>
+  <section class="lab-section" aria-labelledby="success-criteria">
+    <h2 class="cds--productive-heading-03" id="success-criteria">Criterios de éxito</h2>
+    <p>Ha completado con éxito esta práctica de laboratorio cuando:</p>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ Bob explicó el propósito y las áreas funcionales de SAMCO
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ Entiendes el patrón de eliminación temporal y por qué se utiliza
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ Puede describir la fórmula de cálculo del IVA
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ Entiendes los seis pasos de la máquina de estados de pasos del panel
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ Puede rastrear el flujo completo de creación de un pedido de cliente
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ Entiendes la diferencia entre el acceso a datos RLA y SQL
+      </li>
+    </ul>
+  </section>
+  <section class="lab-section" aria-labelledby="key-takeaways">
+    <h2 class="cds--productive-heading-03" id="key-takeaways">Conclusiones clave</h2>
+    <ol class="cds--list--ordered">
+      <li class="cds--list__item">
+        <strong>Bob es una herramienta de descubrimiento</strong>
+: úsala para comprender código desconocido antes de tocarlo.
+      </li>
+      <li class="cds--list__item">
+        <strong>Deben preservarse las reglas comerciales</strong>
+: la modernización cambia la tecnología, no el comportamiento.
+      </li>
+      <li class="cds--list__item">
+        <strong>Coexisten dos estilos de acceso a datos</strong>
+: RLA y SQL están presentes; las prácticas de laboratorio le mostrarán cómo migrar de uno a otro.
+      </li>
+    </ol>
+  </section>
+  <section class="lab-section" aria-labelledby="next">
+    <h2 class="cds--productive-heading-03" id="next">Siguiente</h2>
+    <p>
+      <a href="#/lab/ibm-i-rpg-development/lab1" class="cds--btn cds--btn--primary">
+Lab 1 — RPG de fijo a libre
+        <span class="premium-button-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.75.75 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0"></path>
+          </svg>
+        </span>
+      </a>
+    </p>
+  </section>
+</div>

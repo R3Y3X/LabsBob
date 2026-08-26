@@ -82,18 +82,22 @@
     </table>
   </section>
 
-  <!-- Setup -->
-  <section class="lab-section" aria-labelledby="lab1-setup">
-    <h2 class="cds--productive-heading-03" id="lab1-setup">
-      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
-      Configuración del lab
-    </h2>
-    <ol class="cds--list--ordered">
-      <li class="cds--list__item">Sigue en el workspace de Galaxium Travels del Lab 1 (Rules). Si partes de cero: descomprime <code>LabHandsOnBob.zip</code> y abre <code>lab-3-seguridad/galaxium-travels</code>, o clona <code>git clone -b bob-learning-path-branch https://github.com/IBM/galaxium-travels</code>.</li>
-      <li class="cds--list__item">En IBM Bob, ve a <strong>File → Open Folder</strong> si aún no tienes esa carpeta abierta.</li>
-      <li class="cds--list__item">Abre el chat de Bob con <kbd>Option + Command + B</kbd> (macOS) o <kbd>Ctrl + Alt + B</kbd> (Windows).</li>
-      <li class="cds--list__item">Si no lo ejecutaste en el Lab 1, en el chat ejecuta <code>/init</code> para inicializar el entorno y crear los archivos <code>AGENTS.md</code>. Haz clic en <strong>Approve todo tools for task</strong> si Bob lo solicita.</li>
-    </ol>
+  <!-- Workspace setup -->
+  <section class="lab-workspace-setup" aria-labelledby="lab1-setup">
+    <div class="lab-workspace-setup__box">
+      <span class="lab-workspace-setup__badge">Continúa el mismo workspace</span>
+      <h2 class="lab-workspace-setup__title" id="lab1-setup">Punto de partida</h2>
+      <p class="lab-workspace-setup__lead">Sigue en el workspace de Galaxium Travels del Lab 1 (Rules) — no abras una carpeta nueva. Si partes de cero, descomprime <code>LabHandsOnBob.zip</code> y abre <code>galaxium-travels</code> con <strong>File → Open Folder</strong>.</p>
+      <div class="lab-workspace-setup__path">
+        <p class="lab-workspace-setup__path-label">File → Open Folder (solo si partes de cero)</p>
+        <code class="lab-workspace-setup__path-value">LabHandsOnBob/galaxium-travels/</code>
+      </div>
+      <ul class="lab-workspace-setup__checks">
+        <li>El chat de Bob está abierto: <kbd>Option + Command + B</kbd> (macOS) o <kbd>Ctrl + Alt + B</kbd> (Windows)</li>
+        <li>Ya ejecutaste <code>/init</code> en este workspace (Lab 1) — si no, ejecútalo ahora en el chat para crear <code>AGENTS.md</code> y haz clic en <strong>Approve todo tools for task</strong> si Bob lo solicita</li>
+      </ul>
+      <p class="lab-workspace-setup__note">Alternativa sin el zip: clona <code>git clone -b bob-learning-path-branch https://github.com/IBM/galaxium-travels</code>.</p>
+    </div>
   </section>
 
   <!-- Ejercicio -->

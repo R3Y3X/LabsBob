@@ -9,6 +9,11 @@
     <p class="cds--body-02 lab-banner__summary">Anima la UI, revisa contra los mockups y documenta la tienda con MkDocs.</p>
   </div>
 
+  <div class="callout" data-tone="note">
+    <p class="callout__title">Punto de partida</p>
+    <p>Sigue en la carpeta <code>voltia-starter</code> — no abras una carpeta nueva. Continúa con la tienda que construiste y el asistente que embebiste en los labs anteriores.</p>
+  </div>
+
   <section class="lab-section" aria-labelledby="parte-6-animaciones">
 <h2 class="cds--productive-heading-04" id="parte-6-animaciones">
       <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
@@ -137,21 +142,31 @@
 </span><span id="__span-16-31"><a id="__codelineno-16-31" name="__codelineno-16-31" href="#__codelineno-16-31"></a>No modifiques src/. No agregues dependencias nuevas a requirements.txt.
 </span></code></pre></div>
 <h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="2-corre-el-sitio-de-docs">2. Ejecuta el sitio de docs</h3>
-<p class="cds--body-01"><strong>Abre una terminal nueva</strong> (deja <code>npm run dev</code> corriendo en la otra) y posiciónate en la carpeta <code>voltia-starter</code>. Después ejecuta los comandos <strong>uno por uno</strong>.</p>
+<p class="cds--body-01"><strong>Abre una terminal nueva</strong> (deja <code>npm run dev</code> corriendo en la otra) y posiciónate en la carpeta <code>voltia-starter</code>.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">macOS / Linux</label><label for="__tabbed_1_2">Windows</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
+<p class="cds--body-01" style="margin:0 0 4px;font-weight:600;">Crea y activa el entorno virtual — ejecuta ambas líneas juntas, en la misma terminal</p>
 <div class="language-bash highlight"><pre><code>python3 -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
-mkdocs serve
+</code></pre></div>
+<p class="cds--body-01" style="margin:0.75rem 0 4px;font-weight:600;">Con el entorno activado, instala las dependencias</p>
+<div class="language-bash highlight"><pre><code>pip install -r requirements.txt
+</code></pre></div>
+<p class="cds--body-01" style="margin:0.75rem 0 4px;font-weight:600;">Levanta el sitio</p>
+<div class="language-bash highlight"><pre><code>mkdocs serve
 </code></pre></div>
 </div>
 <div class="tabbed-block">
+<p class="cds--body-01" style="margin:0 0 4px;font-weight:600;">Crea y activa el entorno virtual — ejecuta ambas líneas juntas, en la misma terminal</p>
 <div class="language-powershell highlight"><pre><code>python -m venv .venv
 .venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-mkdocs serve
+</code></pre></div>
+<p class="cds--body-01" style="margin:0.75rem 0 4px;font-weight:600;">Con el entorno activado, instala las dependencias</p>
+<div class="language-powershell highlight"><pre><code>pip install -r requirements.txt
+</code></pre></div>
+<p class="cds--body-01" style="margin:0.75rem 0 4px;font-weight:600;">Levanta el sitio</p>
+<div class="language-powershell highlight"><pre><code>mkdocs serve
 </code></pre></div>
 </div>
 </div>

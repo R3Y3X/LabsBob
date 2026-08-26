@@ -57,6 +57,20 @@ Este laboratorio es
       </ul>
     </div>
   </section>
+  <!-- Workspace setup -->
+  <section class="lab-workspace-setup" aria-labelledby="lab5-workspace">
+    <div class="lab-workspace-setup__box">
+      <span class="lab-workspace-setup__badge">Paso obligatorio — antes de cualquier prompt</span>
+      <h2 class="lab-workspace-setup__title" id="lab5-workspace">Punto de partida</h2>
+      <p class="lab-workspace-setup__lead">Abre la carpeta <code>lab5</code> del bundle SAMCO en una nueva ventana de Bob — es el directorio de trabajo de este laboratorio, distinto de la carpeta <code>lab4-ibmi-mcp</code> del <a class="cds--link" href="#/lab/ibm-i-rpg-development/lab4">Lab 4</a>.</p>
+      <div class="lab-workspace-setup__path">
+        <p class="lab-workspace-setup__path-label">File → Open Folder</p>
+        <code class="lab-workspace-setup__path-value">bob-rpg-ibm-i-main/lab5/</code>
+      </div>
+      <p class="lab-workspace-setup__note">El modo personalizado <code>ansible-for-i</code> y los playbooks que crees en este lab se guardan en <code>.bob/custom_modes.yaml</code> dentro de esta carpeta.</p>
+    </div>
+  </section>
+
   <section class="lab-section" aria-labelledby="prerequisites">
     <h2 class="cds--productive-heading-03" id="prerequisites">Requisitos previos</h2>
     <h3 id="ibm-i-system-requirements" class="cds--productive-heading-02 lab-step__title">Requisitos del sistema IBM i</h3>
@@ -94,30 +108,27 @@ Ansible 2.9+ instalado (
         <code>ansible-galaxy collection install ibm.power_ibmi</code>
       </pre>
     </div>
-    <p>
-      <div data-language="bash" class="code-block premium-code-block">
-        <pre>
-          <code>ansible-galaxy collection install ibm.power_hmc</code>
-        </pre>
-      </div>
-
-- Autenticación basada en claves SSH configurada para el sistema IBM i (instrucciones incluidas en la guía de laboratorio).
-- Asistente Bob AI instalado y configurado.
-- Conectividad de red al sistema IBM i (puerto 22): consulte
-      <a href="#/lab/ibm-i-rpg-development/lab4">Lab 4</a>
-.
-    </p>
-    <h3 id="verify-setup" class="cds--productive-heading-02 lab-step__title">Verificar configuración</h3>
     <div data-language="bash" class="code-block premium-code-block">
       <pre>
-        <code># Verify Ansible installation
-ansible --version</code>
+        <code>ansible-galaxy collection install ibm.power_hmc</code>
       </pre>
     </div>
+    <ul class="cds--list--unordered">
+      <li class="cds--list__item">Autenticación basada en claves SSH configurada para el sistema IBM i (instrucciones incluidas en la guía de laboratorio).</li>
+      <li class="cds--list__item">Asistente Bob AI instalado y configurado.</li>
+      <li class="cds--list__item">Conectividad de red al sistema IBM i (puerto 22): consulte <a href="#/lab/ibm-i-rpg-development/lab4">Lab 4</a>.</li>
+    </ul>
+    <h3 id="verify-setup" class="cds--productive-heading-02 lab-step__title">Verificar configuración</h3>
+    <p>Verifica la instalación de Ansible:</p>
     <div data-language="bash" class="code-block premium-code-block">
       <pre>
-        <code># Check IBM i collection
-ansible-galaxy collection list | grep ibm.power_ibmi</code>
+        <code>ansible --version</code>
+      </pre>
+    </div>
+    <p>Verifica que la colección de IBM i esté instalada:</p>
+    <div data-language="bash" class="code-block premium-code-block">
+      <pre>
+        <code>ansible-galaxy collection list | grep ibm.power_ibmi</code>
       </pre>
     </div>
   </section>

@@ -23,9 +23,22 @@
   <section class="lab-section" aria-labelledby="walkthrough-intro">
     <h2 class="cds--productive-heading-03" id="walkthrough-intro">¿Cuándo usar este recorrido?</h2>
     <p class="cds--body-01">Si ya conoces el flujo del lab o quieres completarlo en una sola sesión intensiva, este walkthrough te da los 6 prompts clave — uno por fase — para recorrer el ciclo completo de la Payment API sin detenerte en cada paso de verificación.</p>
-    <div class="callout" data-tone="info">
-      <p class="callout__title">Requisito previo</p>
-      <p>Ten el proyecto descargado y con <code>npm install</code> completado. El servidor puede arrancar con <code>npm start</code>. Necesitas <code>.env</code> con <code>API_SECRET_KEY</code> definida.</p>
+  </section>
+
+  <!-- Workspace setup -->
+  <section class="lab-workspace-setup" aria-labelledby="walkthrough-workspace">
+    <div class="lab-workspace-setup__box">
+      <span class="lab-workspace-setup__badge">Paso obligatorio — antes de cualquier prompt</span>
+      <h2 class="lab-workspace-setup__title" id="walkthrough-workspace">Punto de partida</h2>
+      <p class="lab-workspace-setup__lead">Este recorrido usa un proyecto distinto al de Bob's Beans: la Payment API base. Descarga <code>sdlc-lab-payment-api.zip</code>, descomprímelo y abre la carpeta en IBM Bob con <strong>File → Open Folder</strong>.</p>
+      <div class="lab-workspace-setup__path">
+        <p class="lab-workspace-setup__path-label">File → Open Folder</p>
+        <code class="lab-workspace-setup__path-value">sdlc-lab-payment-api/</code>
+      </div>
+      <ul class="lab-workspace-setup__checks">
+        <li>En el explorador deben verse <code>src/</code>, <code>__tests__/</code> y <code>package.json</code></li>
+      </ul>
+      <p class="lab-workspace-setup__note">Ejecuta <code>npm install</code> en la terminal integrada. Duplica <code>.env.example</code> a <code>.env</code> (con <code>API_SECRET_KEY</code> definida) si el proyecto lo trae; revisa el <code>README.md</code> del proyecto para el detalle. El servidor arranca con <code>npm start</code>.</p>
     </div>
   </section>
 
@@ -115,15 +128,16 @@ Muéstrame el diff completo antes de aplicar.</code></pre>
   <section class="lab-section lab-step" aria-labelledby="wt-step5">
     <h2 class="cds--productive-heading-03" id="wt-step5">Paso 5 — Test y Deploy: verde y contenedor</h2>
     <p class="cds--body-01"><span class="cds--tag cds--tag--green" style="margin-right:0.5rem;">Agent Mode</span> Ejecuta los tests y optimiza el Dockerfile en el mismo contexto:</p>
-    <div class="code-block">
-      <button class="copy-button" aria-label="Copiar comandos">Copiar</button>
-      <pre><code># Ejecutar la suite completa
-npm test
-
-# Si todos pasan, optimizar el Dockerfile
-# Envía este prompt a Bob en Agent Mode:
-# "Optimiza el Dockerfile: cambia node:18 por node:18-alpine,
-#  agrega usuario no-root appuser y una instrucción HEALTHCHECK a /health"</code></pre>
+    <p class="cds--body-01">Primero, ejecuta la suite completa en la terminal:</p>
+    <div class="code-block code-block--terminal">
+      <button class="copy-button" aria-label="Copiar comando">Copiar</button>
+      <pre><code>npm test</code></pre>
+    </div>
+    <p class="cds--body-01">Si todos los tests pasan, envía este prompt a Bob en Agent Mode para optimizar el Dockerfile:</p>
+    <div class="code-block code-block--prompt">
+      <button class="copy-button" aria-label="Copiar prompt">Copiar</button>
+      <pre><code>Optimiza el Dockerfile: cambia node:18 por node:18-alpine,
+agrega usuario no-root appuser y una instrucción HEALTHCHECK a /health</code></pre>
     </div>
     <div class="callout" data-tone="tip">
       <p class="callout__title">Resultado esperado</p>

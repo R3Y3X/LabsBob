@@ -125,7 +125,7 @@
     <div class="os-setup-grid">
       <div class="os-setup-card">
         <div class="os-setup-card__header"><h4 class="os-setup-card__title">macOS</h4></div>
-        <div class="os-setup-card__body"><details><summary>Ver comandos con SDKMAN!</summary><div class="code-block"><button type="button" class="copy-button">Copiar</button><pre><code>curl -s "https://get.sdkman.io" | bash
+        <div class="os-setup-card__body"><details><summary>Ver comandos con SDKMAN!</summary><p class="cds--body-01" style="font-size:0.8125rem;margin-top:0.75rem">Instala SDKMAN!, Java 8, Java 21 y Maven. Pega todo el bloque de una vez:</p><div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>curl -s "https://get.sdkman.io" | bash
 source "$HOME/.sdkman/bin/sdkman-init.sh"
 sdk install java 8.0.492-zulu
 sdk default java 8.0.492-zulu
@@ -134,7 +134,7 @@ sdk install maven</code></pre></div></details></div>
       </div>
       <div class="os-setup-card">
         <div class="os-setup-card__header"><h4 class="os-setup-card__title">Linux</h4></div>
-        <div class="os-setup-card__body"><details><summary>Ver comandos con SDKMAN!</summary><div class="code-block"><button type="button" class="copy-button">Copiar</button><pre><code>curl -s "https://get.sdkman.io" | bash
+        <div class="os-setup-card__body"><details><summary>Ver comandos con SDKMAN!</summary><p class="cds--body-01" style="font-size:0.8125rem;margin-top:0.75rem">Instala SDKMAN!, Java 8, Java 21 y Maven. Pega todo el bloque de una vez:</p><div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>curl -s "https://get.sdkman.io" | bash
 source "$HOME/.sdkman/bin/sdkman-init.sh"
 sdk install java 8.0.492-zulu
 sdk default java 8.0.492-zulu
@@ -143,15 +143,12 @@ sdk install maven</code></pre></div></details></div>
       </div>
       <div class="os-setup-card">
         <div class="os-setup-card__header"><h4 class="os-setup-card__title">Windows</h4></div>
-        <div class="os-setup-card__body"><details><summary>Ver comandos en PowerShell</summary><div class="code-block"><button type="button" class="copy-button">Copiar</button><pre><code>winget install EclipseAdoptium.Temurin.8.JDK
-winget install EclipseAdoptium.Temurin.21.JDK
-winget install Apache.Maven</code></pre></div></details><p>También puedes usar SDKMAN! desde Git Bash o WSL.</p></div>
+        <div class="os-setup-card__body"><details><summary>Ver comandos en PowerShell</summary><div class="code-block code-block--terminal" style="margin-top:0.75rem"><button type="button" class="copy-button">Copiar</button><pre><code>winget install EclipseAdoptium.Temurin.8.JDK</code></pre></div><div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>winget install EclipseAdoptium.Temurin.21.JDK</code></pre></div><div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>winget install Apache.Maven</code></pre></div></details><p>También puedes usar SDKMAN! desde Git Bash o WSL.</p></div>
       </div>
     </div>
     <div class="callout" data-tone="tip">
       <p class="callout__title">Comprueba el entorno antes de abrir el Lab 1</p>
-      <div class="code-block"><button type="button" class="copy-button">Copiar</button><pre><code>java -version
-mvn --version</code></pre></div>
+      <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>java -version</code></pre></div><div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>mvn --version</code></pre></div>
       <p>Para el Lab 1, ambos comandos deben informar Java 8. Cambia a Java 21 antes de empezar el Lab 2.</p>
     </div>
     <h3 class="cds--productive-heading-02">3. Node.js LTS — solo Lab 3</h3>

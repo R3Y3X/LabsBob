@@ -45,17 +45,32 @@
     <p>Las instrucciones y los prompts están en español, pero la aplicación se construye en <strong>inglés</strong>: mockups, nombres de archivo, funciones y todos los textos visibles de la interfaz. Cada prompt se lo pide a Bob explícitamente. Si Bob genera la UI en español, las pantallas dejan de coincidir con los mockups y el Lab 06 marcará diferencias en todos lados.</p>
   </div>
 
+  <!-- Workspace setup -->
+  <section class="lab-workspace-setup" aria-labelledby="lab1-plan-workspace">
+    <div class="lab-workspace-setup__box">
+      <span class="lab-workspace-setup__badge">Paso obligatorio — antes de cualquier prompt</span>
+      <h2 class="lab-workspace-setup__title" id="lab1-plan-workspace">Paso 1 — Consigue el starter y ábrelo en Bob</h2>
+      <p class="lab-workspace-setup__lead">Descarga y descomprime el starter desde el <a class="cds--link" href="#/lab/software-development-lifecycle/overview">Inicio del laboratorio</a>, después abre la carpeta <code>bobs-beans-starter</code> en IBM Bob con <strong>File → Open Folder</strong>.</p>
+      <div class="lab-workspace-setup__path">
+        <p class="lab-workspace-setup__path-label">File → Open Folder</p>
+        <code class="lab-workspace-setup__path-value">bobs-beans-starter/</code>
+      </div>
+      <ul class="lab-workspace-setup__checks">
+        <li>En el explorador de Bob deben verse <code>src/</code>, <code>mockups/</code> y <code>package.json</code></li>
+        <li>La terminal integrada del IDE ya apunta a esta carpeta al abrirla — no hace falta <code>cd</code></li>
+      </ul>
+    </div>
+  </section>
+
   <section class="lab-section" aria-labelledby="lab1-ejercicio">
     <h2 class="cds--productive-heading-03" id="lab1-ejercicio">
       <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
       Ejercicio
     </h2>
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Consigue el starter y ábrelo en Bob</h3>
-<p class="cds--body-01">Descarga y descomprime el starter, después abre la carpeta <code>bobs-beans-starter</code> en IBM Bob. El archivo está en el <a class="cds--link" href="#/lab/software-development-lifecycle/overview">Inicio del laboratorio</a>.</p>
+      <h3 class="cds--productive-heading-02 lab-step__title">Mira la estructura del proyecto</h3>
     <p class="cds--body-01">Tómate un momento para mirar la estructura: fíjate cuánto ya está hecho, así puedes concentrarte en las pantallas.</p>
-    <div class="code-block">
-      <button class="copy-button" type="button" aria-label="Copiar estructura">Copiar</button>
+    <div class="code-block code-block--tree" style="--code-label: 'bobs-beans-starter'">
       <pre><code>bobs-beans-starter/
 ├── mockups/                  ← las 3 capturas + el HTML de especificación de diseño
 ├── src/
@@ -65,35 +80,46 @@
 │   ├── components/
 │   │   ├── Header.jsx        ← HECHO  — con un badge de carrito en vivo
 │   │   ├── Footer.jsx        ← HECHO
-│   │   └── ProductCard.jsx   ← stub   — lo construyes en el Lab 02
+│   │   └── ProductCard.jsx   ← marcador de posición — lo reemplazas en el Lab 02
 │   └── pages/
-│       ├── Home.jsx          ← stub   — Lab 02
-│       ├── Product.jsx       ← stub   — Lab 03
-│       └── Cart.jsx          ← stub   — Lab 04
+│       ├── Home.jsx          ← marcador de posición — Lab 02
+│       ├── Product.jsx       ← marcador de posición — Lab 03
+│       └── Cart.jsx          ← marcador de posición — Lab 04
 └── tailwind.config.js        ← los tokens de diseño de café, listos para usar</code></pre>
     </div>
+    <p class="cds--body-01">Cada página marcada como "marcador de posición" renderiza un panel "🚧 build me" en vez de contenido real — es intencional, lo vas a comprobar en el Paso 3 y reemplazar en los próximos labs.</p>
     </div>
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — La aplicación ya está conectada a la API</h3>
-<p class="cds--body-01">No hay nada que configurar. El starter viene con un <code>.env</code> listo para usar que apunta a la API de Bob's Beans hospedada:</p>
-    <div class="code-block">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Configura la variable de entorno</h3>
+<p class="cds--body-01">El starter trae <code>.env.example</code>, no <code>.env</code> — por convención, ese archivo nunca se edita directamente: es la plantilla versionada, y <code>.env</code> (con los valores reales) está en <code>.gitignore</code>.</p>
+    <p class="code-block__label" style="margin:0 0 4px;">Ejecuta en la terminal integrada, en la raíz de <code>bobs-beans-starter</code></p>
+    <div class="code-block code-block--terminal">
+      <button class="copy-button" type="button" aria-label="Copiar comando">Copiar</button>
+      <pre><code>cp .env.example .env</code></pre>
+    </div>
+    <p class="cds--body-01"><code>.env.example</code> ya apunta a la API de Bob's Beans hospedada, así que no necesitas cambiar nada más:</p>
+    <div class="code-block code-block--file" style="--code-label: '.env.example'">
       <button class="copy-button" type="button" aria-label="Copiar variable">Copiar</button>
       <pre><code>VITE_API_BASE_URL=https://bobs-beans-api.2akfv5yaq586.us-south.codeengine.appdomain.cloud</code></pre>
     </div>
     <p class="cds--body-01">Pasa directamente a ejecutar la aplicación.</p>
     <div class="callout" data-tone="note">
       <p class="callout__title">Si tu instructor te da otra URL de API</p>
-      <p>Abre <code>.env</code>, reemplaza el valor de <code>VITE_API_BASE_URL</code> y reinicia <code>npm run dev</code>: Vite lee <code>.env</code> solo al arrancar. Lo mismo aplica si prefieres correr la API tú mismo: pon <code>VITE_API_BASE_URL=http://localhost:8080</code> y levántala localmente (ver el <code>README.md</code> de la API).</p>
+      <p>Abre <code>.env</code> (no <code>.env.example</code>), reemplaza el valor de <code>VITE_API_BASE_URL</code> y reinicia <code>npm run dev</code>: Vite lee <code>.env</code> solo al arrancar. Lo mismo aplica si prefieres correr la API tú mismo: pon <code>VITE_API_BASE_URL=http://localhost:8080</code> y levántala localmente (ver el <code>README.md</code> de la API).</p>
     </div>
     </div>
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Ejecuta el starter</h3>
-<div class="code-block">
-      <button class="copy-button" type="button" aria-label="Copiar comandos">Copiar</button>
-      <pre><code>npm install
-npm run dev</code></pre>
+<p class="code-block__label" style="margin:0 0 4px;">Ejecuta en la terminal integrada</p>
+<div class="code-block code-block--terminal">
+      <button class="copy-button" type="button" aria-label="Copiar comando">Copiar</button>
+      <pre><code>npm install</code></pre>
     </div>
-    <p class="cds--body-01">El navegador abre <code>http://localhost:5173</code>. Deberías ver el header y el footer de Bob's Beans, y tres páginas de marcador de posición "🚧 build me" en <code>/</code>, <code>/product/anything</code> y <code>/cart</code>.</p>
+    <div class="code-block code-block--terminal">
+      <button class="copy-button" type="button" aria-label="Copiar comando">Copiar</button>
+      <pre><code>npm run dev</code></pre>
+    </div>
+    <p class="cds--body-01">El navegador abre <code>http://localhost:5173</code>. Deberías ver el header y el footer de Bob's Beans, y tres páginas de marcador de posición "🚧 build me" en <code>/</code>, <code>/product/anything</code> y <code>/cart</code> — son las mismas páginas que el árbol de arriba marca como pendientes.</p>
     <div class="callout" data-tone="tip">
       <p class="callout__title">Checkpoint</p>
       <p>Si se renderizan el header, el footer y los marcadores de posición, tu entorno está listo. Los marcadores son intencionales: los vas a reemplazar en los próximos tres labs.</p>
@@ -116,11 +142,14 @@ npm run dev</code></pre>
         </tbody>
       </table>
     </div>
-    <p class="cds--body-01">Ábrelas en el navegador:</p>
+    <p class="cds--body-01">Ábrelas en el navegador, una por una:</p>
     <div class="code-block">
-      <button class="copy-button" type="button" aria-label="Copiar URLs">Copiar</button>
-      <pre><code>https://bobs-beans-api.2akfv5yaq586.us-south.codeengine.appdomain.cloud/api/products
-https://bobs-beans-api.2akfv5yaq586.us-south.codeengine.appdomain.cloud/api/products/ethiopia-yirgacheffe</code></pre>
+      <button class="copy-button" type="button" aria-label="Copiar URL">Copiar</button>
+      <pre><code>https://bobs-beans-api.2akfv5yaq586.us-south.codeengine.appdomain.cloud/api/products</code></pre>
+    </div>
+    <div class="code-block">
+      <button class="copy-button" type="button" aria-label="Copiar URL">Copiar</button>
+      <pre><code>https://bobs-beans-api.2akfv5yaq586.us-south.codeengine.appdomain.cloud/api/products/ethiopia-yirgacheffe</code></pre>
     </div>
     <p class="cds--body-01">Un producto se ve así:</p>
     <div class="code-block">
@@ -166,8 +195,8 @@ https://bobs-beans-api.2akfv5yaq586.us-south.codeengine.appdomain.cloud/api/prod
     </div>
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 6 — Pide a Bob el plan de construcción</h3>
-<p class="cds--body-01">Ahora convierte el diseño en un plan antes de construir. Cambia Bob a <strong>Plan Mode</strong>: analiza y propone un plan sin modificar ningún archivo todavía.</p>
-    <div class="code-block">
+<p class="cds--body-01">Ahora convierte el diseño en un plan antes de construir. Cambia Bob a <strong>Plan Mode</strong>: analiza y propone un plan sin modificar ningún archivo todavía. Pega este prompt como un solo mensaje.</p>
+    <div class="code-block code-block--prompt">
       <button class="copy-button" type="button" aria-label="Copiar prompt">Copiar</button>
       <pre><code>Estoy construyendo una tienda de 3 pantallas en este proyecto. El shell de la aplicación,
 el ruteo, el carrito (src/cart/CartContext.jsx) y el cliente de API (src/api/client.js)
@@ -190,8 +219,12 @@ en el mockup. No traduzcas la interfaz.
 No escribas código todavía. No agregues dependencias ni modifiques el cliente de API.</code></pre>
     </div>
     <div class="callout" data-tone="tip">
-      <p class="callout__title">Cómo se ve un buen plan</p>
-      <p>Bob debería responder con un plan que use los nombres reales de las funciones del cliente (<code>getProducts</code>, <code>getProduct</code>, <code>createOrder</code>, <code>imageUrl</code>, <code>useCart</code>) y que divida cada pantalla en secciones que se correspondan con los mockups. Si inventa endpoints o propone un backend, devuélvelo a <code>src/api/client.js</code> y al alcance de abajo.</p>
+      <p class="callout__title">Qué deberías ver</p>
+      <p>El plan <strong>debe cubrir las tres pantallas</strong> — Home, Product y Cart — no solo una. Es intencional: este plan es la hoja de ruta que vas a seguir en los Labs 02, 03 y 04, cada uno construyendo la pantalla que le corresponde. Bob debería responder con nombres reales de las funciones del cliente (<code>getProducts</code>, <code>getProduct</code>, <code>createOrder</code>, <code>imageUrl</code>, <code>useCart</code>) y dividir cada pantalla en secciones que se correspondan con los mockups. Si inventa endpoints o propone un backend, devuélvelo a <code>src/api/client.js</code> y al alcance de abajo.</p>
+    </div>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">Señal de alarma</p>
+      <p>Si Bob empieza a crear o editar archivos en este paso, no está en Plan Mode. Detén la tarea, confirma el selector de modos y vuelve a enviar el prompt — Plan Mode nunca escribe código, solo lo propone.</p>
     </div>
     </div>
   </section>

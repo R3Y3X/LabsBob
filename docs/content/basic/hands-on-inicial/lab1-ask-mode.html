@@ -83,6 +83,24 @@
     </div>
   </section>
 
+  <!-- Workspace setup -->
+  <section class="lab-workspace-setup" aria-labelledby="lab1-ask-workspace">
+    <div class="lab-workspace-setup__box">
+      <span class="lab-workspace-setup__badge">Paso obligatorio — antes de cualquier prompt</span>
+      <h2 class="lab-workspace-setup__title" id="lab1-ask-workspace">Punto de partida</h2>
+      <p class="lab-workspace-setup__lead">Vamos a analizar una aplicación de e-commerce simple. Descarga <code>LabHandsOnBob.zip</code> desde la pestaña <strong>Introducción</strong> del workshop y descomprímelo. Después abre IBM Bob y usa <strong>File → Open Folder</strong> para abrir la carpeta del lab — no la carpeta raíz del zip.</p>
+      <div class="lab-workspace-setup__path">
+        <p class="lab-workspace-setup__path-label">File → Open Folder</p>
+        <code class="lab-workspace-setup__path-value">LabHandsOnBob/lab-1-ask-mode/</code>
+      </div>
+      <ul class="lab-workspace-setup__checks">
+        <li>En el explorador de Bob deben verse <code>package.json</code> y <code>src/</code> en la raíz</li>
+        <li>La terminal integrada del IDE ya apunta a esta carpeta — no hace falta <code>cd</code></li>
+      </ul>
+      <p class="lab-workspace-setup__note">Esta carpeta es autocontenida: no depende de ningún otro lab del bundle.</p>
+    </div>
+  </section>
+
   <!-- Ejercicio práctico -->
   <section class="lab-section" aria-labelledby="lab1-ejercicio">
     <h2 class="cds--productive-heading-03" id="lab1-ejercicio">
@@ -92,16 +110,11 @@
 
     <!-- Paso 1 -->
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Preparar el proyecto de ejemplo</h3>
-      <p class="cds--body-01">Vamos a analizar una aplicación de e-commerce simple incluida en este laboratorio.</p>
-      <div class="callout" data-tone="info">
-        <p class="callout__title">Workspace</p>
-        <p>Descarga <code>LabHandsOnBob.zip</code> desde la pestaña <strong>Introducción</strong> del workshop, descomprímelo y en IBM Bob abre la carpeta <code>lab-1-ask-mode</code> con <strong>File → Open Folder</strong>. Abrir la carpeta en el IDE es equivalente a navegar a ese directorio — si ya la abriste, estás dentro directamente.</p>
-      </div>
-      <div class="code-block">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Confirma la estructura del proyecto</h3>
+      <p class="code-block__label" style="margin:0 0 4px;">Ejecuta en la terminal integrada</p>
+      <div class="code-block code-block--terminal">
         <button type="button" class="copy-button">Copiar</button>
-        <pre><code># Verifica que estás en el directorio correcto (la terminal ya apunta aquí si abriste la carpeta en el IDE)
-ls -la</code></pre>
+        <pre><code>ls -la</code></pre>
       </div>
       <p class="cds--body-01">Deberías ver la siguiente estructura:</p>
       <div class="code-block code-block--tree" style="--code-label: 'lab-1-ask-mode'">

@@ -39,10 +39,21 @@
     </ul>
   </div>
 
-  <div class="callout" data-tone="note">
-    <p class="callout__title">Antes de empezar</p>
-    <p>Labs 02–05 completos: las tres pantallas están construidas y animadas, y la aplicación corre.</p>
-  </div>
+  <!-- Workspace setup -->
+  <section class="lab-workspace-setup" aria-labelledby="lab6-review-workspace">
+    <div class="lab-workspace-setup__box">
+      <span class="lab-workspace-setup__badge">Continúa el mismo workspace</span>
+      <h2 class="lab-workspace-setup__title" id="lab6-review-workspace">Punto de partida</h2>
+      <p class="lab-workspace-setup__lead">Sigue en <code>bobs-beans-starter/</code> — no abras una carpeta nueva. Necesitas los Labs 02–05 completos: las tres pantallas están construidas y animadas, y la aplicación corre.</p>
+      <div class="lab-workspace-setup__path">
+        <p class="lab-workspace-setup__path-label">Ya deberías tener esta carpeta abierta</p>
+        <code class="lab-workspace-setup__path-value">bobs-beans-starter/</code>
+      </div>
+      <ul class="lab-workspace-setup__checks">
+        <li><code>npm run dev</code> sigue corriendo en la terminal integrada</li>
+      </ul>
+    </div>
+  </section>
 
   <section class="lab-section" aria-labelledby="lab6-ejercicio">
     <h2 class="cds--productive-heading-03" id="lab6-ejercicio">
@@ -128,10 +139,15 @@ Mantén todos los textos de la UI en inglés.</code></pre>
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 5 — (Opcional) Compila para producción</h3>
 <p class="cds--body-01">Confirma que la aplicación compila sin errores:</p>
-    <div class="code-block">
-      <button class="copy-button" type="button" aria-label="Copiar comandos">Copiar</button>
-      <pre><code>npm run build
-npm run preview</code></pre>
+    <p class="code-block__label" style="margin:0 0 4px;">Ejecuta en la terminal integrada</p>
+    <div class="code-block code-block--terminal">
+      <button class="copy-button" type="button" aria-label="Copiar comando">Copiar</button>
+      <pre><code>npm run build</code></pre>
+    </div>
+    <p class="cds--body-01">Cuando termine, revisa el resultado con una vista previa local:</p>
+    <div class="code-block code-block--terminal">
+      <button class="copy-button" type="button" aria-label="Copiar comando">Copiar</button>
+      <pre><code>npm run preview</code></pre>
     </div>
     <p class="cds--body-01"><code>npm run build</code> debería terminar sin errores, y la vista previa debería comportarse igual que el servidor de desarrollo. Este es el artefacto que desplegarías en cualquier hosting estático.</p>
     </div>

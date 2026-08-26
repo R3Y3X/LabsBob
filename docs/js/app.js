@@ -1012,6 +1012,84 @@ function bindRoadshowEvents() {
   });
 }
 
+// ── Shared "Bob para cualquier perfil" strip ───────────────────────
+const PROFILE_CARDS = [
+  {
+    accent: 'blue',
+    role: 'Product Manager',
+    icon: './assets/images/modosbob/bob_productor.png',
+    tool: { logo: './assets/images/logos/logo_jira.png', name: 'Jira' },
+    tasks: ['Estimaciones y planificación', 'Identificación de riesgos']
+  },
+  {
+    accent: 'blue-mid',
+    role: 'Diseñador',
+    icon: './assets/images/modosbob/bob_diseñador.png',
+    tool: { logo: './assets/images/logos/logo_figma.png', name: 'Figma' },
+    tasks: ['Diseño de UX y UI', 'Prototipos a código']
+  },
+  {
+    accent: 'periwinkle',
+    role: 'Arquitecto / Analista',
+    icon: './assets/images/modosbob/bob_analista.png',
+    tool: { logo: './assets/images/logos/logo_instana.png', name: 'Instana' },
+    tasks: ['Comprensión de sistemas', 'Visualización de sistemas']
+  },
+  {
+    accent: 'lavender',
+    role: 'Desarrollador',
+    icon: './assets/images/modosbob/bob_desarrollador.png',
+    tool: { logo: './assets/images/logos/logo_github.png', name: 'GitHub' },
+    tasks: ['Generación y refactor', 'Modernización coordinada']
+  },
+  {
+    accent: 'violet',
+    role: 'DevOps',
+    icon: './assets/images/modosbob/bob_devops.png',
+    tool: { logo: './assets/images/logos/logo_terraform.png', name: 'Terraform' },
+    tasks: ['Gobernanza de PR', 'Pipeline de despliegue']
+  },
+  {
+    accent: 'purple',
+    role: 'Seguridad',
+    icon: './assets/images/modosbob/bob_seguridad.png',
+    tool: { logo: './assets/images/logos/logo_vault.png', name: 'Vault' },
+    tasks: ['Detección de vulnerabilidades', 'Detección de secretos']
+  }
+];
+
+function renderProfilesStrip() {
+  const cardsMarkup = PROFILE_CARDS.map((card) => `
+            <div class="hub-profile-card hub-profile-card--${card.accent}">
+              <div class="hub-profile-card__arrow" aria-hidden="true"></div>
+              <div class="hub-profile-card__content">
+                <p class="hub-profile-card__role">${card.role}</p>
+                <div class="hub-profile-card__icon-wrap" aria-hidden="true">
+                  <img src="${card.icon}" alt="${card.role}" style="width:96px;height:96px;object-fit:contain;" />
+                </div>
+                <div class="hub-profile-card__tool">
+                  <img src="${card.tool.logo}" alt="${card.tool.name}" style="width:18px;height:18px;object-fit:contain;" aria-hidden="true" />
+                  <span><em class="hub-profile-card__ej">ej:</em> ${card.tool.name}</span>
+                </div>
+                <ul class="hub-profile-card__tasks">
+                  ${card.tasks.map((task) => `<li>${task}</li>`).join('')}
+                </ul>
+              </div>
+            </div>`).join('');
+
+  return `
+      <div class="hub-profiles" aria-label="Bob para cualquier perfil">
+        <div class="hub-profiles__inner">
+          <h2 class="hub-profiles__heading">
+            Bob es el <span class="hub-profiles__highlight">compañero perfecto</span> para <span class="hub-profiles__highlight">cualquier perfil</span>
+          </h2>
+          <div class="hub-profiles__track">
+${cardsMarkup}
+          </div>
+        </div>
+      </div>`;
+}
+
 // ── Home page renderer ───────────────────────────────────────────
 function renderHome(searchTerm = '') {
   const normalizedTerm = searchTerm.trim().toLowerCase();
@@ -1085,123 +1163,7 @@ function renderHome(searchTerm = '') {
         </div>
       </div>
 
-      <div class="hub-profiles" aria-label="Bob para cualquier perfil">
-        <div class="hub-profiles__inner">
-          <h2 class="hub-profiles__heading">
-            Bob es el <span class="hub-profiles__highlight">compañero perfecto</span> para <span class="hub-profiles__highlight">cualquier perfil</span>
-          </h2>
-          <div class="hub-profiles__track">
-
-            <div class="hub-profile-card hub-profile-card--blue">
-              <div class="hub-profile-card__arrow" aria-hidden="true"></div>
-              <div class="hub-profile-card__content">
-                <p class="hub-profile-card__role">Product Manager</p>
-                <div class="hub-profile-card__icon-wrap" aria-hidden="true">
-                  <img src="./assets/images/modosbob/bob_productor.png" alt="Product Manager" style="width:96px;height:96px;object-fit:contain;" />
-                </div>
-                <div class="hub-profile-card__tool">
-                  <img src="./assets/images/logos/logo_jira.png" alt="Jira" style="width:18px;height:18px;object-fit:contain;" aria-hidden="true" />
-                  <span><em class="hub-profile-card__ej">ej:</em> Jira</span>
-                </div>
-                <ul class="hub-profile-card__tasks">
-                  <li>Estimaciones y planificación</li>
-                  <li>Identificación de riesgos</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="hub-profile-card hub-profile-card--blue-mid">
-              <div class="hub-profile-card__arrow" aria-hidden="true"></div>
-              <div class="hub-profile-card__content">
-                <p class="hub-profile-card__role">Diseñador</p>
-                <div class="hub-profile-card__icon-wrap" aria-hidden="true">
-                  <img src="./assets/images/modosbob/bob_diseñador.png" alt="Diseñador" style="width:96px;height:96px;object-fit:contain;" />
-                </div>
-                <div class="hub-profile-card__tool">
-                  <img src="./assets/images/logos/logo_figma.png" alt="Figma" style="width:18px;height:18px;object-fit:contain;" aria-hidden="true" />
-                  <span><em class="hub-profile-card__ej">ej:</em> Figma</span>
-                </div>
-                <ul class="hub-profile-card__tasks">
-                  <li>Diseño de UX y UI</li>
-                  <li>Prototipos a código</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="hub-profile-card hub-profile-card--periwinkle">
-              <div class="hub-profile-card__arrow" aria-hidden="true"></div>
-              <div class="hub-profile-card__content">
-                <p class="hub-profile-card__role">Arquitecto / Analista</p>
-                <div class="hub-profile-card__icon-wrap" aria-hidden="true">
-                  <img src="./assets/images/modosbob/bob_analista.png" alt="Arquitecto / Analista" style="width:96px;height:96px;object-fit:contain;" />
-                </div>
-                <div class="hub-profile-card__tool">
-                  <img src="./assets/images/logos/logo_instana.png" alt="Instana" style="width:18px;height:18px;object-fit:contain;" aria-hidden="true" />
-                  <span><em class="hub-profile-card__ej">ej:</em> Instana</span>
-                </div>
-                <ul class="hub-profile-card__tasks">
-                  <li>Comprensión de sistemas</li>
-                  <li>Visualización de sistemas</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="hub-profile-card hub-profile-card--lavender">
-              <div class="hub-profile-card__arrow" aria-hidden="true"></div>
-              <div class="hub-profile-card__content">
-                <p class="hub-profile-card__role">Desarrollador</p>
-                <div class="hub-profile-card__icon-wrap" aria-hidden="true">
-                  <img src="./assets/images/modosbob/bob_desarrollador.png" alt="Desarrollador" style="width:96px;height:96px;object-fit:contain;" />
-                </div>
-                <div class="hub-profile-card__tool">
-                  <img src="./assets/images/logos/logo_github.png" alt="GitHub" style="width:18px;height:18px;object-fit:contain;" aria-hidden="true" />
-                  <span><em class="hub-profile-card__ej">ej:</em> GitHub</span>
-                </div>
-                <ul class="hub-profile-card__tasks">
-                  <li>Generación y refactor</li>
-                  <li>Modernización coordinada</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="hub-profile-card hub-profile-card--violet">
-              <div class="hub-profile-card__arrow" aria-hidden="true"></div>
-              <div class="hub-profile-card__content">
-                <p class="hub-profile-card__role">DevOps</p>
-                <div class="hub-profile-card__icon-wrap" aria-hidden="true">
-                  <img src="./assets/images/modosbob/bob_devops.png" alt="DevOps" style="width:96px;height:96px;object-fit:contain;" />
-                </div>
-                <div class="hub-profile-card__tool">
-                  <img src="./assets/images/logos/logo_terraform.png" alt="Terraform" style="width:18px;height:18px;object-fit:contain;" aria-hidden="true" />
-                  <span><em class="hub-profile-card__ej">ej:</em> Terraform</span>
-                </div>
-                <ul class="hub-profile-card__tasks">
-                  <li>Gobernanza de PR</li>
-                  <li>Pipeline de despliegue</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="hub-profile-card hub-profile-card--purple">
-              <div class="hub-profile-card__content">
-                <p class="hub-profile-card__role">Seguridad</p>
-                <div class="hub-profile-card__icon-wrap" aria-hidden="true">
-                  <img src="./assets/images/modosbob/bob_seguridad.png" alt="Seguridad" style="width:96px;height:96px;object-fit:contain;" />
-                </div>
-                <div class="hub-profile-card__tool">
-                  <img src="./assets/images/logos/logo_vault.png" alt="Vault" style="width:18px;height:18px;object-fit:contain;" aria-hidden="true" />
-                  <span><em class="hub-profile-card__ej">ej:</em> Vault</span>
-                </div>
-                <ul class="hub-profile-card__tasks">
-                  <li>Detección de vulnerabilidades</li>
-                  <li>Detección de secretos</li>
-                </ul>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
+      ${renderProfilesStrip()}
     </section>
 
     ${renderRoadshowPlanner()}
@@ -1676,7 +1638,7 @@ function getImageCaption(image) {
 }
 
 function isInstructionalImage(image) {
-  if (image.closest('.lab-banner, .hub-lab-card, .hub-team-card, .hub-resource-card')) {
+  if (image.closest('.lab-banner, .hub-lab-card, .hub-team-card, .hub-resource-card, .hub-profiles, [data-no-figure]')) {
     return false;
   }
 
@@ -2352,10 +2314,17 @@ function isPromptContext(element) {
   return /prompt\s+(?:para|de)\s+bob|pega este prompt|envía este prompt/i.test(label);
 }
 
+function isTerminalContext(element) {
+  const previous = element.previousElementSibling;
+  const label = previous?.textContent || '';
+  return /en la terminal|terminal integrada|ejecuta (?:el|los|este|estos|la|las) comando/i.test(label);
+}
+
 function getCodeBlockKind(code) {
   const language = (code.className.match(/language-([\w-]+)/) || [])[1]?.toLocaleLowerCase('es');
   if (language === 'yaml' || language === 'yml') return 'code-block--yaml';
   if (language === 'json') return 'code-block--json';
+  if (language === 'bash' || language === 'shell' || language === 'sh') return 'code-block--terminal';
   return '';
 }
 
@@ -2381,8 +2350,14 @@ function normalizeCodeSyntax(codeBlock) {
 }
 
 function prepareCopyButton(button, codeBlock) {
-  const isPrompt = codeBlock.classList.contains('code-block--prompt');
-  const label = isPrompt ? 'Copiar prompt' : 'Copiar código';
+  let label = 'Copiar código';
+  if (codeBlock.classList.contains('code-block--prompt')) {
+    label = 'Copiar prompt';
+  } else if (codeBlock.classList.contains('code-block--terminal')) {
+    label = 'Copiar comando';
+  } else if (codeBlock.classList.contains('code-block--file')) {
+    label = 'Copiar contenido';
+  }
 
   button.type = 'button';
   button.className = 'copy-button';
@@ -2441,7 +2416,11 @@ function normalizeCodeBlocks(container) {
     const codeBlock = document.createElement('div');
     const kind = getCodeBlockKind(code);
     codeBlock.className = `code-block${kind ? ` ${kind}` : ''}`;
-    if (isPromptContext(source)) codeBlock.classList.add('code-block--prompt');
+    if (isPromptContext(source)) {
+      codeBlock.classList.add('code-block--prompt');
+    } else if (!kind && isTerminalContext(source)) {
+      codeBlock.classList.add('code-block--terminal');
+    }
     source.replaceWith(codeBlock);
     codeBlock.append(pre);
     normalizeCodeSyntax(code);
@@ -2478,6 +2457,9 @@ function enhanceLabContent(proseEl, section, lab, step, isOverview) {
   }
 
   removeLegacyStepNavigation(proseEl);
+  proseEl.querySelectorAll('[data-profiles-strip]').forEach((placeholder) => {
+    placeholder.outerHTML = renderProfilesStrip();
+  });
   normalizeInstructionalImages(proseEl);
   normalizeCodeBlocks(proseEl);
   ensureStepClosure(proseEl, lab, step);

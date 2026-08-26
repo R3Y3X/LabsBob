@@ -5,33 +5,48 @@
     <p class="cds--body-02 lab-banner__summary">Activa la instancia, verifica el toolkit MCP compartido e importa el primer agente retail.</p>
   </div>
 
+  <!-- Workspace setup -->
+  <section class="lab-workspace-setup" aria-labelledby="wxo-create-workspace">
+    <div class="lab-workspace-setup__box">
+      <span class="lab-workspace-setup__badge">Paso obligatorio — antes de cualquier comando</span>
+      <h2 class="lab-workspace-setup__title" id="wxo-create-workspace">Dónde estar parado</h2>
+      <p class="lab-workspace-setup__lead">Abre una terminal en <code>Lab2/confluent_agents</code>. El MCP corre en la VM del workshop; tu laptop solo necesita la CLI y los YAML.</p>
+      <div class="lab-workspace-setup__path">
+        <p class="lab-workspace-setup__path-label">Terminal — cd a esta carpeta</p>
+        <code class="lab-workspace-setup__path-value">Lab2/confluent_agents/</code>
+      </div>
+    </div>
+  </section>
+
   <section class="lab-section" aria-labelledby="preparar-cli">
     <h2 class="cds--productive-heading-04" id="preparar-cli">Paso 1 — Preparar la CLI de watsonx Orchestrate</h2>
-    <p class="cds--body-01">Abre una terminal en <code>Lab2/confluent_agents</code>. El MCP corre en la VM del workshop; tu laptop solo necesita la CLI y los YAML.</p>
     <h3 class="cds--productive-heading-03" style="margin-top: 2rem;">1.1. Crear el ambiente virtual</h3>
-    <pre><code class="language-bash">python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-pip install ibm-watsonx-orchestrate
-orchestrate --version</code></pre>
-    <p class="cds--body-01">En Windows PowerShell, activa el ambiente con <code>.venv\Scripts\Activate.ps1</code>. Continúa solo cuando <code>orchestrate --version</code> termine sin errores.</p>
+    <p class="code-block__label" style="margin:0 0 4px;">Crea y activa el entorno virtual — ejecuta ambas líneas juntas, en la misma terminal</p>
+    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">python3 -m venv .venv
+source .venv/bin/activate</code></pre></div>
+    <p class="cds--body-01">En Windows PowerShell, activa el ambiente con <code>.venv\Scripts\Activate.ps1</code> en vez de la segunda línea de arriba.</p>
+    <p class="code-block__label" style="margin:0 0 4px;">Con el entorno activado, instala la CLI</p>
+    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">python -m pip install --upgrade pip</code></pre></div>
+    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">pip install ibm-watsonx-orchestrate</code></pre></div>
+    <p class="cds--body-01">Verifica la instalación — continúa solo cuando termine sin errores:</p>
+    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">orchestrate --version</code></pre></div>
     <h3 class="cds--productive-heading-03" style="margin-top: 2rem;">1.2. Cargar la configuración sin secretos</h3>
-    <pre><code class="language-bash">cp workshop-config.env.example workshop-config.env
-source workshop-config.env</code></pre>
-    <p class="cds--body-01">Completa únicamente la URL SSE del MCP y la URL de tu instancia de Orchestrate. La API key no se guarda en este archivo ni en los YAML.</p>
+    <p class="cds--body-01">Duplica la plantilla y renómbrala — <code>workshop-config.env.example</code> nunca se edita directamente:</p>
+    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">cp workshop-config.env.example workshop-config.env</code></pre></div>
+    <p class="cds--body-01">Completa únicamente la URL SSE del MCP y la URL de tu instancia de Orchestrate en <code>workshop-config.env</code>. La API key no se guarda en este archivo ni en los YAML. Después cárgalo en la sesión:</p>
+    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">source workshop-config.env</code></pre></div>
     <div class="callout" data-tone="info"><p class="callout__title">Configuración centralizada</p><p><code>RETAIL_MCP_SSE_URL</code> identifica el MCP remoto y <code>RETAIL_MCP_TOOLKIT_NAME</code> identifica el toolkit compartido. El valor predeterminado del toolkit es <code>retail_availability_mcp</code>.</p></div>
   </section>
 
   <section class="lab-section" aria-labelledby="activar-instancia">
     <h2 class="cds--productive-heading-04" id="activar-instancia">Paso 2 — Activar la instancia de Orchestrate</h2>
     <p class="cds--body-01">Usa la URL que te entregó el facilitador y activa un ambiente local llamado <code>workshop</code>.</p>
-    <pre><code class="language-bash">orchestrate env add \
+    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">orchestrate env add \
   --name workshop \
-  --url "$ORCHESTRATE_URL"
-
-orchestrate env activate workshop \
-  --api-key &lt;Orchestrate API Key&gt;</code></pre>
-    <p class="cds--body-01">Si <code>workshop</code> ya existe, ejecuta solamente <code>orchestrate env activate workshop --api-key &lt;Orchestrate API Key&gt;</code>.</p>
+  --url "$ORCHESTRATE_URL"</code></pre></div>
+    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">orchestrate env activate workshop \
+  --api-key &lt;Orchestrate API Key&gt;</code></pre></div>
+    <p class="cds--body-01">Si <code>workshop</code> ya existe, ejecuta solamente el segundo comando (<code>orchestrate env activate workshop --api-key &lt;Orchestrate API Key&gt;</code>).</p>
     <div class="callout" data-tone="warning"><p class="callout__title">Protege la API key</p><p>No la pegues en el YAML, en <code>workshop-config.env</code>, en el repositorio ni en una captura de pantalla.</p></div>
   </section>
 
@@ -45,8 +60,8 @@ orchestrate env activate workshop \
   <section class="lab-section" aria-labelledby="importar-disponibilidad">
     <h2 class="cds--productive-heading-04" id="importar-disponibilidad">Paso 4 — Importar el SKU Availability Agent</h2>
     <p class="cds--body-01">El YAML conserva la lógica retail y referencia la tool del toolkit remoto compartido. Ejecuta:</p>
-    <div class="code-block code-block--prompt"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">orchestrate agents import --file SKU_Availability_Agent.yaml
-orchestrate agents list</code></pre></div>
+    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">orchestrate agents import --file SKU_Availability_Agent.yaml</code></pre></div>
+    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">orchestrate agents list</code></pre></div>
     <p class="cds--body-01">Confirma que aparece <code>SKU_Availability_Agent</code>. Todavía no pruebes el supervisor: primero importa el agente RAG en el siguiente paso.</p>
   </section>
 </div>

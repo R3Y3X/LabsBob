@@ -1872,7 +1872,17 @@ body.cds--g100 .callout[data-tone="danger"] {
 }
 
 .lab-shell .code-block--prompt {
-  --code-label: 'prompt';
+  --code-label: 'prompt para Bob';
+  border-left-color: var(--cds-purple-60, #8a3ffc);
+}
+
+.lab-shell .code-block--terminal {
+  --code-label: 'terminal';
+  border-left-color: var(--cds-support-success, #24a148);
+}
+
+.lab-shell .code-block--file {
+  border-left-color: var(--cds-support-info, #0f62fe);
 }
 
 .lab-shell .code-block--yaml {

@@ -52,12 +52,29 @@
     <p class="cds--body-01">Las rules de proyecto viven en <code>.bob/rules/</code> y se versionan con el código: todo el equipo las hereda al clonar el repositorio.</p>
   </section>
 
+  <!-- Workspace setup -->
+  <section class="lab-workspace-setup" aria-labelledby="lab2-rules-workspace">
+    <div class="lab-workspace-setup__box">
+      <span class="lab-workspace-setup__badge">Paso obligatorio — antes de cualquier prompt</span>
+      <h2 class="lab-workspace-setup__title" id="lab2-rules-workspace">Punto de partida</h2>
+      <p class="lab-workspace-setup__lead">Descarga <code>LabHandsOnBob.zip</code> desde la pestaña <strong>Introducción</strong> del workshop y descomprímelo. En IBM Bob, abre la carpeta <code>galaxium-travels</code> con <strong>File → Open Folder</strong> — no la carpeta raíz del zip.</p>
+      <div class="lab-workspace-setup__path">
+        <p class="lab-workspace-setup__path-label">File → Open Folder</p>
+        <code class="lab-workspace-setup__path-value">LabHandsOnBob/galaxium-travels/</code>
+      </div>
+      <ul class="lab-workspace-setup__checks">
+        <li>En el explorador deben verse <code>booking_system_backend/</code> y <code>booking_system_frontend/</code></li>
+        <li>Si no existe <code>.bob/</code> todavía, ejecuta <code>/init</code> en Agent Mode antes del Paso 1</li>
+      </ul>
+      <p class="lab-workspace-setup__note">Alternativa sin el zip: clona <code>git clone -b bob-learning-path-branch https://github.com/IBM/galaxium-travels</code>. Esta carpeta es la base de los tres labs de este workshop (Rules, Auditoría y Código seguro) — ábrela una sola vez y sigue en ella.</p>
+    </div>
+  </section>
+
   <section class="lab-section" aria-labelledby="lab2-crear">
     <h2 class="cds--productive-heading-03" id="lab2-crear">
       <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
       Crear las rules del proyecto
     </h2>
-    <p class="cds--body-01">Abre Galaxium Travels: <code>lab-3-seguridad/galaxium-travels</code> del zip del workshop, o clona <code>git clone -b bob-learning-path-branch https://github.com/IBM/galaxium-travels</code>. Si no existe <code>.bob</code>, ejecuta <code>/init</code> en Agent Mode.</p>
 
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Carpeta y archivo</h3>

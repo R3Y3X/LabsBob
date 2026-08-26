@@ -652,7 +652,7 @@ function buildLabCard(lab, section) {
     <a class="cds--tile cds--tile--clickable hub-lab-card hub-lab-card--${section.id}${isPremiumModernization ? ' hub-lab-card--premium-access' : ''}" href="${getLabRoute(lab.slug)}"
        aria-label="Abrir laboratorio ${escapeHtml(lab.title)}">
       <div class="hub-lab-card__media">
-        <img src="${imgPath}" alt="Banner ${escapeHtml(lab.title)}" class="hub-lab-card__img" data-placeholder-path="${imgPath}" />
+        <img src="${imgPath}" alt="Banner ${escapeHtml(lab.title)}" class="hub-lab-card__img" data-placeholder-path="${imgPath}" loading="lazy" decoding="async" />
         ${premiumBadge}
       </div>
       <div class="hub-lab-card__body">
@@ -1030,7 +1030,7 @@ const PROFILE_CARDS = [
   },
   {
     accent: 'periwinkle',
-    role: 'Arquitecto / Analista',
+    role: 'Arquitecto',
     icon: './assets/images/modosbob/bob_analista.png',
     tool: { logo: './assets/images/logos/logo_instana.png', name: 'Instana' },
     tasks: ['Comprensión de sistemas', 'Visualización de sistemas']
@@ -1065,10 +1065,10 @@ function renderProfilesStrip() {
               <div class="hub-profile-card__content">
                 <p class="hub-profile-card__role">${card.role}</p>
                 <div class="hub-profile-card__icon-wrap" aria-hidden="true">
-                  <img src="${card.icon}" alt="${card.role}" style="width:96px;height:96px;object-fit:contain;" />
+                  <img src="${card.icon}" alt="${card.role}" style="width:96px;height:96px;object-fit:contain;" loading="lazy" decoding="async" />
                 </div>
                 <div class="hub-profile-card__tool">
-                  <img src="${card.tool.logo}" alt="${card.tool.name}" style="width:18px;height:18px;object-fit:contain;" aria-hidden="true" />
+                  <img src="${card.tool.logo}" alt="${card.tool.name}" style="width:18px;height:18px;object-fit:contain;" aria-hidden="true" loading="lazy" decoding="async" />
                   <span><em class="hub-profile-card__ej">ej:</em> ${card.tool.name}</span>
                 </div>
                 <ul class="hub-profile-card__tasks">
@@ -1159,7 +1159,7 @@ function renderHome(searchTerm = '') {
           </div>
         </div>
         <div class="hub-hero__visual" aria-hidden="true">
-          <img src="./assets/images/bobinicial.jpeg" alt="IBM Bob — tu copiloto de IA" class="hub-hero__img" loading="eager" />
+          <img src="./assets/images/bobinicial.jpeg" alt="IBM Bob — tu copiloto de IA" class="hub-hero__img" loading="eager" fetchpriority="high" />
         </div>
       </div>
 
@@ -1407,7 +1407,7 @@ function renderHome(searchTerm = '') {
 
         <div class="yt-overlay__header">
           <div class="yt-overlay__avatar">
-            <img src="./assets/images/bobinicial.jpeg" alt="IBM Bob" />
+            <img src="./assets/images/bobinicial.jpeg" alt="IBM Bob" loading="lazy" decoding="async" />
           </div>
           <div class="yt-overlay__header-text">
             <p class="yt-overlay__eyebrow">

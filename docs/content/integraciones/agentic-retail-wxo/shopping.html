@@ -10,7 +10,7 @@
     <p class="cds--body-01">Sigue en la misma conversación de Bob, con los tres agentes anteriores importados y desplegados, y la base de conocimiento <code>enterprise_documents</code> ya indexada.</p>
   </div>
 
-  <!-- ── Paso 12 ────────────────────────────────────────────────── -->
+  <!-- ── Paso 1 ────────────────────────────────────────────────── -->
   <section class="lab-section" aria-labelledby="importar-asistente">
     <div class="step-header">
       <div class="step-header__meta">
@@ -18,7 +18,7 @@
         <span class="ctx-badge ctx-badge--orchestrate">watsonx Orchestrate</span>
       </div>
     </div>
-    <h2 class="cds--productive-heading-04" id="importar-asistente">Paso 12 — Importar el Customer Shopping Assistant</h2>
+    <h2 class="cds--productive-heading-04" id="importar-asistente">Paso 1 — Importar el Customer Shopping Assistant</h2>
     <p class="step-header__why">A diferencia del supervisor, este agente habla directamente con el cliente final. Combina las dos capacidades del laboratorio en un solo agente: el catálogo para recomendar y la tool MCP para verificar que lo recomendado exista en la sucursal.</p>
 
     <div class="code-block code-block--prompt">
@@ -49,7 +49,7 @@ muéstrame el error y detente.</code></pre>
     </div>
   </section>
 
-  <!-- ── Paso 13 ────────────────────────────────────────────────── -->
+  <!-- ── Paso 2 ────────────────────────────────────────────────── -->
   <section class="lab-section" aria-labelledby="vincular-asistente">
     <div class="step-header">
       <div class="step-header__meta">
@@ -57,7 +57,7 @@ muéstrame el error y detente.</code></pre>
         <span class="ctx-badge ctx-badge--orchestrate">watsonx Orchestrate</span>
       </div>
     </div>
-    <h2 class="cds--productive-heading-04" id="vincular-asistente">Paso 13 — Vincular conocimiento y herramienta</h2>
+    <h2 class="cds--productive-heading-04" id="vincular-asistente">Paso 2 — Vincular conocimiento y herramienta</h2>
     <p class="step-header__why">Este agente necesita las dos fuentes a la vez. Reutiliza la base de conocimiento que ya creaste — no subas el catálogo de nuevo — y confirma que tenga vinculada la tool del MCP compartido.</p>
 
     <ol class="cds--list--ordered">
@@ -73,7 +73,7 @@ muéstrame el error y detente.</code></pre>
     </div>
   </section>
 
-  <!-- ── Paso 14 — Verificación en la UI ─────────────────────────── -->
+  <!-- ── Paso 3 — Verificación en la UI ─────────────────────────── -->
   <section class="lab-section" aria-labelledby="probar-asistente">
     <div class="step-header">
       <div class="step-header__meta">
@@ -81,7 +81,7 @@ muéstrame el error y detente.</code></pre>
         <span class="ctx-badge ctx-badge--orchestrate">watsonx Orchestrate</span>
       </div>
     </div>
-    <h2 class="cds--productive-heading-04" id="probar-asistente">Paso 14 — Probar el asistente en watsonx Orchestrate</h2>
+    <h2 class="cds--productive-heading-04" id="probar-asistente">Paso 3 — Probar el asistente en watsonx Orchestrate</h2>
     <p class="step-header__why">La consulta de prueba es deliberadamente vaga — habla de necesidades, no de SKUs. Es como pregunta un cliente real, y obliga al agente a recomendar desde el catálogo y después verificar stock.</p>
 
     <ol class="cds--list--ordered">
@@ -114,7 +114,7 @@ recomiendas con stock?</code></pre>
     </div>
   </section>
 
-  <!-- ── Paso 15 ────────────────────────────────────────────────── -->
+  <!-- ── Paso 4 ────────────────────────────────────────────────── -->
   <section class="lab-section" aria-labelledby="snippet-embebible">
     <div class="step-header">
       <div class="step-header__meta">
@@ -122,7 +122,7 @@ recomiendas con stock?</code></pre>
         <span class="ctx-badge ctx-badge--orchestrate">watsonx Orchestrate</span>
       </div>
     </div>
-    <h2 class="cds--productive-heading-04" id="snippet-embebible">Paso 15 — Obtener el snippet embebible</h2>
+    <h2 class="cds--productive-heading-04" id="snippet-embebible">Paso 4 — Obtener el snippet embebible</h2>
     <p class="step-header__why">Un agente que solo vive en la consola de Orchestrate no le sirve al cliente. El canal <strong>Embedded agent</strong> genera un snippet que lo publica dentro de la tienda web — lo usarás en el laboratorio de Voltia.</p>
 
     <ol class="cds--list--ordered">
@@ -138,5 +138,22 @@ recomiendas con stock?</code></pre>
            class="lab-figure__img" />
       <figcaption class="lab-figure__caption">Channels → Embedded agent → Live: el snippet que integra el asistente en la tienda.</figcaption>
     </figure>
+  </section>
+
+  <!-- Criterios de exito -->
+  <section class="lab-section" aria-labelledby="criterios-exito">
+    <h2 class="cds--productive-heading-04" id="criterios-exito">Criterios de éxito</h2>
+    <p class="cds--body-01">Este es el cierre del laboratorio. Confirma que el sistema completo responde de punta a punta.</p>
+    <ul class="checklist">
+      <li class="checklist__item"><code>Customer_Shopping_Assistant</code> está importado y desplegado.</li>
+      <li class="checklist__item">Tiene vinculadas la fuente <code>enterprise_documents</code> y la tool <code>retail_availability_mcp:get_sku_availability</code>.</li>
+      <li class="checklist__item">Recomienda desde el catálogo y confirma stock en la sucursal que pidió el cliente.</li>
+      <li class="checklist__item">Los cuatro agentes del laboratorio aparecen en <code>orchestrate agents list</code>.</li>
+      <li class="checklist__item">El snippet del canal Embedded agent está guardado para el laboratorio de Voltia.</li>
+    </ul>
+    <div class="callout" data-tone="tip" style="margin-top: 2rem;">
+      <p class="callout__title">Laboratorio completado</p>
+      <p class="cds--body-01">Terminaste cuando el flujo completo responde desde Orchestrate y el snippet del asistente está listo para integrarse en Voltia. Bob ejecutó cada comando del laboratorio; tú validaste cada agente en la instancia.</p>
+    </div>
   </section>
 </div>

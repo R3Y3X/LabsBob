@@ -281,4 +281,17 @@ error completo y no reintentes con parámetros distintos.</code></pre>
       <p class="cds--body-01">Vuelve al Paso 3 y revisa la salida de <code>orchestrate toolkits list</code>. Si el toolkit compartido no está, avisa al facilitador — no lo registres desde tu equipo.</p>
     </div>
   </section>
+
+  <!-- Criterios de exito -->
+  <section class="lab-section" aria-labelledby="criterios-exito">
+    <h2 class="cds--productive-heading-04" id="criterios-exito">Criterios de éxito</h2>
+    <p class="cds--body-01">Antes de pasar al siguiente laboratorio, confirma que la base quedó bien puesta: todo lo que sigue se apoya en esta CLI y en este toolkit.</p>
+    <ul class="checklist">
+      <li class="checklist__item">La CLI de Orchestrate quedó instalada dentro del entorno virtual <code>.venv</code>.</li>
+      <li class="checklist__item">El toolkit <code>retail_availability_mcp</code> aparece con la tool <code>get_sku_availability</code>.</li>
+      <li class="checklist__item"><code>SKU_Availability_Agent</code> está importado y desplegado en tu instancia.</li>
+      <li class="checklist__item">La disponibilidad proviene de <code>get_sku_availability</code> y muestra la sucursal solicitada.</li>
+      <li class="checklist__item">Tu API key vive solo en <code>workshop-config.env</code> y nunca apareció en el chat de Bob.</li>
+    </ul>
+  </section>
 </div>

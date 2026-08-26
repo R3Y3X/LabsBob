@@ -10,7 +10,7 @@
     <p class="cds--body-01">Sigue en la misma conversación de Bob, con <code>SKU_Availability_Agent</code> y <code>Substitute_Finder_Agent</code> ya importados y desplegados. El supervisor los declara como colaboradores: si faltan, el import falla.</p>
   </div>
 
-  <!-- ── Paso 9 ─────────────────────────────────────────────────── -->
+  <!-- ── Paso 1 ─────────────────────────────────────────────────── -->
   <section class="lab-section" aria-labelledby="importar-supervisor">
     <div class="step-header">
       <div class="step-header__meta">
@@ -18,7 +18,7 @@
         <span class="ctx-badge ctx-badge--orchestrate">watsonx Orchestrate</span>
       </div>
     </div>
-    <h2 class="cds--productive-heading-04" id="importar-supervisor">Paso 9 — Importar el Store Associate Agent</h2>
+    <h2 class="cds--productive-heading-04" id="importar-supervisor">Paso 1 — Importar el Store Associate Agent</h2>
     <p class="step-header__why">Un agente supervisor no resuelve la consulta por sí mismo: decide a quién delegarla. Este coordina disponibilidad y sustitutos para atender a un asociado de tienda, así que ambos colaboradores deben existir antes.</p>
 
     <div class="code-block code-block--prompt">
@@ -50,7 +50,7 @@ Si falta algún colaborador, NO importes: dime cuál falta y detente.</code></pr
     </div>
   </section>
 
-  <!-- ── Paso 10 ────────────────────────────────────────────────── -->
+  <!-- ── Paso 2 ────────────────────────────────────────────────── -->
   <section class="lab-section" aria-labelledby="revisar-colaboradores">
     <div class="step-header">
       <div class="step-header__meta">
@@ -58,7 +58,7 @@ Si falta algún colaborador, NO importes: dime cuál falta y detente.</code></pr
         <span class="ctx-badge ctx-badge--orchestrate">watsonx Orchestrate</span>
       </div>
     </div>
-    <h2 class="cds--productive-heading-04" id="revisar-colaboradores">Paso 10 — Revisar colaboradores y desplegar</h2>
+    <h2 class="cds--productive-heading-04" id="revisar-colaboradores">Paso 2 — Revisar colaboradores y desplegar</h2>
     <p class="step-header__why">Antes de probarlo conviene mirar cómo quedó armado: qué agentes tiene disponibles para delegar. Es la parte del laboratorio donde se ve la topología del sistema multiagente.</p>
 
     <ol class="cds--list--ordered">
@@ -69,7 +69,7 @@ Si falta algún colaborador, NO importes: dime cuál falta y detente.</code></pr
     </ol>
   </section>
 
-  <!-- ── Paso 11 — Verificación en la UI ─────────────────────────── -->
+  <!-- ── Paso 3 — Verificación en la UI ─────────────────────────── -->
   <section class="lab-section" aria-labelledby="probar-supervisor">
     <div class="step-header">
       <div class="step-header__meta">
@@ -77,7 +77,7 @@ Si falta algún colaborador, NO importes: dime cuál falta y detente.</code></pr
         <span class="ctx-badge ctx-badge--orchestrate">watsonx Orchestrate</span>
       </div>
     </div>
-    <h2 class="cds--productive-heading-04" id="probar-supervisor">Paso 11 — Probar el supervisor en watsonx Orchestrate</h2>
+    <h2 class="cds--productive-heading-04" id="probar-supervisor">Paso 3 — Probar el supervisor en watsonx Orchestrate</h2>
     <p class="step-header__why">Aquí se prueba la delegación, no una respuesta aislada. La consulta pide un producto que puede no tener stock: el supervisor debe detectarlo y pedirle alternativas al agente RAG por su cuenta, sin que tú se lo indiques.</p>
 
     <ol class="cds--list--ordered">
@@ -112,5 +112,17 @@ Si falta algún colaborador, NO importes: dime cuál falta y detente.</code></pr
       <p class="callout__title">Si el supervisor no delega</p>
       <p class="cds--body-01">Revisa que ambos colaboradores estén <strong>desplegados</strong>, no solo importados. Un colaborador sin desplegar aparece en la lista pero no puede recibir la delegación.</p>
     </div>
+  </section>
+
+  <!-- Criterios de exito -->
+  <section class="lab-section" aria-labelledby="criterios-exito">
+    <h2 class="cds--productive-heading-04" id="criterios-exito">Criterios de éxito</h2>
+    <p class="cds--body-01">Antes de pasar al asistente de cliente, confirma que la delegación funciona: es lo que convierte cuatro agentes sueltos en un sistema.</p>
+    <ul class="checklist">
+      <li class="checklist__item"><code>Store_Associate_Agent</code> está importado y desplegado.</li>
+      <li class="checklist__item">Sus colaboradores son <code>SKU_Availability_Agent</code> y <code>Substitute_Finder_Agent</code>, ambos desplegados.</li>
+      <li class="checklist__item">El supervisor consulta disponibilidad y, cuando no hay stock, delega la búsqueda de alternativas.</li>
+      <li class="checklist__item">Las respuestas no exponen credenciales, nombres de agentes ni detalles internos de infraestructura.</li>
+    </ul>
   </section>
 </div>

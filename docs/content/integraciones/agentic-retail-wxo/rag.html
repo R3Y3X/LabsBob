@@ -10,7 +10,7 @@
     <p class="cds--body-01">Sigue en la misma conversación de Bob del paso anterior, con el ambiente <code>workshop</code> activo y <code>SKU_Availability_Agent</code> ya importado. No abras una terminal nueva ni una conversación nueva.</p>
   </div>
 
-  <!-- ── Paso 6 ─────────────────────────────────────────────────── -->
+  <!-- ── Paso 1 ─────────────────────────────────────────────────── -->
   <section class="lab-section" aria-labelledby="importar-rag">
     <div class="step-header">
       <div class="step-header__meta">
@@ -18,7 +18,7 @@
         <span class="ctx-badge ctx-badge--orchestrate">watsonx Orchestrate</span>
       </div>
     </div>
-    <h2 class="cds--productive-heading-04" id="importar-rag">Paso 6 — Importar el Substitute Finder Agent</h2>
+    <h2 class="cds--productive-heading-04" id="importar-rag">Paso 1 — Importar el Substitute Finder Agent</h2>
     <p class="step-header__why">El <strong>Substitute Finder Agent</strong> no consulta inventario en tiempo real: razona sobre el catálogo interno para encontrar alternativas cuando un SKU no está disponible. Por eso no necesita el toolkit MCP, sino una base de conocimiento — que crearás en el paso siguiente.</p>
 
     <div class="code-block code-block--prompt">
@@ -48,7 +48,7 @@ Si el import falla, muéstrame el error completo y detente.</code></pre>
     </div>
   </section>
 
-  <!-- ── Paso 7 ─────────────────────────────────────────────────── -->
+  <!-- ── Paso 2 ─────────────────────────────────────────────────── -->
   <section class="lab-section" aria-labelledby="knowledge-rag">
     <div class="step-header">
       <div class="step-header__meta">
@@ -56,7 +56,7 @@ Si el import falla, muéstrame el error completo y detente.</code></pre>
         <span class="ctx-badge ctx-badge--orchestrate">watsonx Orchestrate</span>
       </div>
     </div>
-    <h2 class="cds--productive-heading-04" id="knowledge-rag">Paso 7 — Crear la base de conocimiento</h2>
+    <h2 class="cds--productive-heading-04" id="knowledge-rag">Paso 2 — Crear la base de conocimiento</h2>
     <p class="step-header__why">El archivo <code>product-catalog.docx</code> es el catálogo interno de la tienda. Al indexarlo como base de conocimiento, el agente puede citar atributos reales de producto en vez de inventar recomendaciones.</p>
 
     <ol class="cds--list--ordered">
@@ -73,7 +73,7 @@ Si el import falla, muéstrame el error completo y detente.</code></pre>
     </div>
   </section>
 
-  <!-- ── Paso 8 — Verificación en la UI ──────────────────────────── -->
+  <!-- ── Paso 3 — Verificación en la UI ──────────────────────────── -->
   <section class="lab-section" aria-labelledby="probar-rag">
     <div class="step-header">
       <div class="step-header__meta">
@@ -81,7 +81,7 @@ Si el import falla, muéstrame el error completo y detente.</code></pre>
         <span class="ctx-badge ctx-badge--orchestrate">watsonx Orchestrate</span>
       </div>
     </div>
-    <h2 class="cds--productive-heading-04" id="probar-rag">Paso 8 — Probar el agente en watsonx Orchestrate</h2>
+    <h2 class="cds--productive-heading-04" id="probar-rag">Paso 3 — Probar el agente en watsonx Orchestrate</h2>
     <p class="step-header__why">La prueba real de un agente RAG no es que responda, sino que su respuesta salga del documento. Comprueba que recomienda con criterios del catálogo y que no se mete a hablar de stock — eso es trabajo de otro agente.</p>
 
     <ol class="cds--list--ordered">
@@ -112,5 +112,17 @@ catálogo de productos.</code></pre>
         <li class="checklist__item">La respuesta no afirma disponibilidad de stock.</li>
       </ul>
     </div>
+  </section>
+
+  <!-- Criterios de exito -->
+  <section class="lab-section" aria-labelledby="criterios-exito">
+    <h2 class="cds--productive-heading-04" id="criterios-exito">Criterios de éxito</h2>
+    <p class="cds--body-01">Antes de pasar al supervisor, confirma que el agente razona sobre el catálogo y no sobre el conocimiento general del modelo.</p>
+    <ul class="checklist">
+      <li class="checklist__item"><code>Substitute_Finder_Agent</code> está importado y desplegado.</li>
+      <li class="checklist__item">La base de conocimiento <code>enterprise_documents</code> quedó indexada con <code>product-catalog.docx</code>.</li>
+      <li class="checklist__item">Las alternativas citan atributos concretos del catálogo, no recomendaciones genéricas.</li>
+      <li class="checklist__item">La respuesta no afirma disponibilidad de stock: ese dato no le corresponde a este agente.</li>
+    </ul>
   </section>
 </div>

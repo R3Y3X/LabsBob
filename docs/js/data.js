@@ -110,7 +110,8 @@ export const siteData = {
             { slug: 'create', label: 'Disponibilidad MCP', file: './content/integraciones/agentic-retail-wxo/create.html', tags: ['MCP'], bobcoinCost: { min: 3, max: 5 } },
             { slug: 'rag', label: 'Sustitutos RAG', file: './content/integraciones/agentic-retail-wxo/rag.html', tags: ['RAG'], bobcoinCost: { min: 2, max: 5 } },
             { slug: 'integration', label: 'Supervisor', file: './content/integraciones/agentic-retail-wxo/integration.html', tags: ['Supervisor'], bobcoinCost: { min: 2, max: 4 } },
-            { slug: 'shopping', label: 'Asistente cliente', file: './content/integraciones/agentic-retail-wxo/shopping.html', tags: ['Embedded'], bobcoinCost: { min: 2, max: 4 } }
+            { slug: 'shopping', label: 'Asistente cliente', file: './content/integraciones/agentic-retail-wxo/shopping.html', tags: ['Embedded'], bobcoinCost: { min: 2, max: 4 } },
+            { slug: 'delivery', label: 'Prueba E2E', file: './content/integraciones/agentic-retail-wxo/delivery.html', tags: ['Verificación'], bobcoinCost: { min: 1, max: 3 } }
           ]
         },
         {
@@ -447,15 +448,15 @@ export const workshopGuides = {
     ]
   },
   'agentic-retail-wxo': {
-    duration: '60–90 min',
-    outcome: 'Desplegarás un sistema multiagente en watsonx Orchestrate conectado a herramientas MCP con Bob.',
+    duration: '75–95 min',
+    outcome: 'Desplegarás un sistema multiagente en watsonx Orchestrate conectado a herramientas MCP, con Bob ejecutando cada comando por ti.',
     requirements: [
-      ['Acceso', 'IBM Bob IDE e instancia activa de watsonx Orchestrate.'],
-      ['Herramientas', 'Python 3.10+ y MCP Server configurado.'],
+      ['Acceso', 'IBM Bob IDE en Agent Mode e instancia activa de watsonx Orchestrate.'],
+      ['Herramientas', 'Python 3.10+ en tu equipo. El MCP corre en la VM del workshop.'],
       ['Conocimiento', 'Modelado de agentes, intenciones y herramientas MCP.']
     ],
-    materials: ['Prompts de configuración para watsonx Orchestrate.', 'Esquema MCP en JSON/YAML.', 'Capturas de flujo agéntico.'],
-    path: 'Disponibilidad MCP → sustitutos RAG → supervisor de tienda → asistente embebible para el cliente.',
+    materials: ['Prompts listos para copiar en cada paso — no escribes comandos.', 'YAML de los cuatro agentes y catálogo RAG.', 'Preguntas de prueba para validar cada agente en la instancia.'],
+    path: 'Disponibilidad MCP → sustitutos RAG → supervisor de tienda → asistente embebible para el cliente → prueba E2E.',
     learning: [
       ['Orquestación', 'Definir flujos multiagente autónomos.'],
       ['MCP Integración', 'Vincular herramientas externas a watsonx Orchestrate.'],

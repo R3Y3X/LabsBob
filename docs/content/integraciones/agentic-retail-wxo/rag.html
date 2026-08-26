@@ -2,28 +2,115 @@
   <div class="lab-banner">
     <div class="lab-banner__tags"><span class="cds--tag cds--tag--purple">Agente RAG</span><span class="cds--tag cds--tag--cool-gray">~15 min</span><span class="cds--tag cds--tag--teal">Sustitutos</span></div>
     <h1 class="cds--productive-heading-05 lab-banner__title">Importar el agente RAG de sustitutos</h1>
-    <p class="cds--body-02 lab-banner__summary">Importa el segundo agente y conéctalo al catálogo de productos.</p>
+    <p class="cds--body-02 lab-banner__summary">Bob importa el segundo agente; tú lo conectas al catálogo de productos y lo pruebas en Orchestrate.</p>
   </div>
 
+  <div class="callout" data-tone="note">
+    <p class="callout__title">Punto de partida</p>
+    <p class="cds--body-01">Sigue en la misma conversación de Bob del paso anterior, con el ambiente <code>workshop</code> activo y <code>SKU_Availability_Agent</code> ya importado. No abras una terminal nueva ni una conversación nueva.</p>
+  </div>
+
+  <!-- ── Paso 6 ─────────────────────────────────────────────────── -->
   <section class="lab-section" aria-labelledby="importar-rag">
-    <h2 class="cds--productive-heading-04" id="importar-rag">Paso 5 — Importar el Substitute Finder Agent</h2>
-    <p class="cds--body-01">El <strong>Substitute Finder Agent</strong> no consulta inventario en tiempo real: razona sobre el catálogo para encontrar alternativas cuando un SKU no está disponible.</p>
-    <p class="cds--body-01">Desde la misma terminal donde activaste el ambiente y después de importar el agente de disponibilidad, ejecuta:</p>
-    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">orchestrate agents import --file Substitute_Finder_Agent.yaml</code></pre></div>
-    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">orchestrate agents list</code></pre></div>
-    <p class="cds--body-01">Confirma que aparecen ambos agentes antes de continuar con el supervisor.</p>
+    <div class="step-header">
+      <div class="step-header__meta">
+        <span class="ctx-badge ctx-badge--bob">🤖 Bob (Agent Mode)</span>
+        <span class="ctx-badge ctx-badge--orchestrate">watsonx Orchestrate</span>
+      </div>
+    </div>
+    <h2 class="cds--productive-heading-04" id="importar-rag">Paso 6 — Importar el Substitute Finder Agent</h2>
+    <p class="step-header__why">El <strong>Substitute Finder Agent</strong> no consulta inventario en tiempo real: razona sobre el catálogo interno para encontrar alternativas cuando un SKU no está disponible. Por eso no necesita el toolkit MCP, sino una base de conocimiento — que crearás en el paso siguiente.</p>
+
+    <div class="code-block code-block--prompt">
+      <p class="code-block__label">Prompt para Bob — importar el agente de sustitutos</p>
+      <pre><code>Sigue en la misma terminal, con el ambiente workshop activo.
+
+Importa el segundo agente del laboratorio:
+
+orchestrate agents import --file Substitute_Finder_Agent.yaml
+
+Después ejecuta "orchestrate agents list" y confirma que ahora aparecen dos
+agentes: SKU_Availability_Agent y Substitute_Finder_Agent.
+
+Todavía no importes Store_Associate_Agent ni Customer_Shopping_Assistant.
+Si el import falla, muéstrame el error completo y detente.</code></pre>
+    </div>
+
+    <div class="lab-accordion" style="margin-top:1rem;">
+      <button class="lab-accordion__trigger" aria-expanded="false" aria-controls="acc-wxo-import-rag">
+        Si Bob falla — ejecutar los comandos a mano
+        <svg class="lab-accordion__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="16" height="16"><path d="M8 11L2 5h12z"/></svg>
+      </button>
+      <div class="lab-accordion__panel" id="acc-wxo-import-rag" hidden>
+        <div class="code-block code-block--terminal"><pre><code class="language-bash">orchestrate agents import --file Substitute_Finder_Agent.yaml</code></pre></div>
+        <div class="code-block code-block--terminal"><pre><code class="language-bash">orchestrate agents list</code></pre></div>
+      </div>
+    </div>
   </section>
 
+  <!-- ── Paso 7 ─────────────────────────────────────────────────── -->
   <section class="lab-section" aria-labelledby="knowledge-rag">
-    <h2 class="cds--productive-heading-04" id="knowledge-rag">Paso 6 — Crear la base de conocimiento</h2>
-    <p class="cds--body-01">El archivo <code>product-catalog.docx</code> es el catálogo interno que el agente usa como fuente para recomendar sustitutos.</p>
+    <div class="step-header">
+      <div class="step-header__meta">
+        <span class="ctx-badge ctx-badge--browser">🌐 Navegador</span>
+        <span class="ctx-badge ctx-badge--orchestrate">watsonx Orchestrate</span>
+      </div>
+    </div>
+    <h2 class="cds--productive-heading-04" id="knowledge-rag">Paso 7 — Crear la base de conocimiento</h2>
+    <p class="step-header__why">El archivo <code>product-catalog.docx</code> es el catálogo interno de la tienda. Al indexarlo como base de conocimiento, el agente puede citar atributos reales de producto en vez de inventar recomendaciones.</p>
+
     <ol class="cds--list--ordered">
       <li class="cds--list__item">Abre <code>Substitute_Finder_Agent</code> en la UI de watsonx Orchestrate.</li>
       <li class="cds--list__item">Entra a <strong>Knowledge</strong> y haz clic en <strong>Add source</strong>.</li>
       <li class="cds--list__item">Crea una base de conocimiento nueva y usa <strong>Upload files</strong>.</li>
-      <li class="cds--list__item">Sube <code>product-catalog.docx</code>, nómbrala <code>enterprise_documents</code> y espera a que termine la indexación.</li>
-      <li class="cds--list__item">Haz clic en <strong>Deploy</strong> y confirma que el agente quede disponible.</li>
+      <li class="cds--list__item">Sube <code>product-catalog.docx</code> desde <code>Lab2/confluent_agents</code>, nómbrala <code>enterprise_documents</code> y espera a que termine la indexación.</li>
+      <li class="cds--list__item">Haz clic en <strong>Deploy</strong> y confirma.</li>
     </ol>
-    <div class="callout" data-tone="info" style="margin-top: 2rem;"><p class="callout__title">Probar el agente RAG</p><p>En el chat del agente pregunta:</p><p><em>"LAPTOP-DELL-XPS-15 no está disponible. Sugiere una laptop similar usando el catálogo de productos."</em></p><p>La respuesta debe basarse en atributos del documento y no inventar disponibilidad.</p></div>
+
+    <div class="callout" data-tone="info" style="margin-top: 1.25rem;">
+      <p class="callout__title">El nombre importa</p>
+      <p class="cds--body-01">Llámala exactamente <code>enterprise_documents</code>. El Customer Shopping Assistant reutilizará esta misma fuente más adelante, en vez de subir el catálogo dos veces.</p>
+    </div>
+  </section>
+
+  <!-- ── Paso 8 — Verificación en la UI ──────────────────────────── -->
+  <section class="lab-section" aria-labelledby="probar-rag">
+    <div class="step-header">
+      <div class="step-header__meta">
+        <span class="ctx-badge ctx-badge--browser">🌐 Navegador</span>
+        <span class="ctx-badge ctx-badge--orchestrate">watsonx Orchestrate</span>
+      </div>
+    </div>
+    <h2 class="cds--productive-heading-04" id="probar-rag">Paso 8 — Probar el agente en watsonx Orchestrate</h2>
+    <p class="step-header__why">La prueba real de un agente RAG no es que responda, sino que su respuesta salga del documento. Comprueba que recomienda con criterios del catálogo y que no se mete a hablar de stock — eso es trabajo de otro agente.</p>
+
+    <ol class="cds--list--ordered">
+      <li class="cds--list__item">Con <code>Substitute_Finder_Agent</code> abierto y desplegado, abre su <strong>chat de prueba</strong>.</li>
+      <li class="cds--list__item">Envía la consulta de abajo.</li>
+    </ol>
+
+    <div class="code-block code-block--prompt">
+      <p class="code-block__label">Pregunta de prueba — pégala en el chat del agente</p>
+      <pre><code>LAPTOP-DELL-XPS-15 no está disponible. Sugiere una laptop similar usando el
+catálogo de productos.</code></pre>
+    </div>
+
+    <p class="cds--body-01"><strong>Qué debes ver:</strong> una o más alternativas justificadas con atributos que están en <code>product-catalog.docx</code> — procesador, memoria, pantalla, rango de precio. <strong>Qué no debe pasar:</strong> el agente no debe afirmar que un producto tiene stock; no tiene forma de saberlo.</p>
+
+    <figure class="lab-figure">
+      <img src="./assets/images/labs/agentic-retail-wxo/substitute-finder-chat.png"
+           alt="Chat del Substitute Finder Agent en watsonx Orchestrate recomendando laptops alternativas con atributos tomados del catálogo de productos"
+           class="lab-figure__img" />
+      <figcaption class="lab-figure__caption">El Substitute Finder Agent justifica cada alternativa con atributos del catálogo indexado.</figcaption>
+    </figure>
+
+    <div class="callout" data-tone="success" style="margin-top: 1.25rem;">
+      <p class="callout__title">✓ Checkpoint — no avances sin esto</p>
+      <ul class="checklist">
+        <li class="checklist__item">La base de conocimiento <code>enterprise_documents</code> aparece indexada y sin errores.</li>
+        <li class="checklist__item">El agente responde con alternativas concretas del catálogo, no genéricas.</li>
+        <li class="checklist__item">La respuesta no afirma disponibilidad de stock.</li>
+      </ul>
+    </div>
   </section>
 </div>

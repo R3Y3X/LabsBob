@@ -1,67 +1,284 @@
 <div class="content-panel lab-template prose--full">
   <div class="lab-banner">
-    <div class="lab-banner__tags"><span class="cds--tag cds--tag--purple">Creación de Agentes</span><span class="cds--tag cds--tag--cool-gray">~30 min</span><span class="cds--tag cds--tag--teal">MCP & Orchestrate</span></div>
+    <div class="lab-banner__tags"><span class="cds--tag cds--tag--purple">Creación de Agentes</span><span class="cds--tag cds--tag--cool-gray">~30 min</span><span class="cds--tag cds--tag--teal">MCP &amp; Orchestrate</span></div>
     <h1 class="cds--productive-heading-05 lab-banner__title">Preparar la CLI e importar el agente de disponibilidad</h1>
-    <p class="cds--body-02 lab-banner__summary">Activa la instancia, verifica el toolkit MCP compartido e importa el primer agente retail.</p>
+    <p class="cds--body-02 lab-banner__summary">Bob prepara el entorno, activa la instancia y verifica el toolkit MCP compartido. Tú solo copias prompts y pruebas el agente en Orchestrate.</p>
   </div>
 
   <!-- Workspace setup -->
   <section class="lab-workspace-setup" aria-labelledby="wxo-create-workspace">
     <div class="lab-workspace-setup__box">
-      <span class="lab-workspace-setup__badge">Paso obligatorio — antes de cualquier comando</span>
-      <h2 class="lab-workspace-setup__title" id="wxo-create-workspace">Dónde estar parado</h2>
-      <p class="lab-workspace-setup__lead">Abre una terminal en <code>Lab2/confluent_agents</code>. El MCP corre en la VM del workshop; tu laptop solo necesita la CLI y los YAML.</p>
+      <span class="lab-workspace-setup__badge">Paso obligatorio — antes de cualquier prompt</span>
+      <h2 class="lab-workspace-setup__title" id="wxo-create-workspace">Abre la carpeta en IBM Bob</h2>
+      <p class="lab-workspace-setup__lead">Descomprime el bundle del workshop y abre la carpeta <code>Lab2/confluent_agents</code> en IBM Bob con <strong>File → Open Folder</strong>. En este laboratorio <strong>no vas a escribir comandos</strong>: Bob los ejecuta por ti desde su terminal integrada.</p>
       <div class="lab-workspace-setup__path">
-        <p class="lab-workspace-setup__path-label">Terminal — cd a esta carpeta</p>
+        <p class="lab-workspace-setup__path-label">File → Open Folder</p>
         <code class="lab-workspace-setup__path-value">Lab2/confluent_agents/</code>
+      </div>
+      <ul class="lab-workspace-setup__checks">
+        <li>En el explorador de Bob deben verse los cuatro <code>.yaml</code>, <code>product-catalog.docx</code> y <code>workshop-config.env.example</code></li>
+        <li>Pon a Bob en <strong>🤖 Agent Mode</strong> — es el modo con acceso a la terminal integrada</li>
+        <li>El MCP corre en la VM del workshop; tu equipo solo necesita la CLI y los YAML</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="callout" data-tone="info">
+    <p class="callout__title">Una sola conversación con Bob, de principio a fin</p>
+    <p class="cds--body-01">Todos los prompts de este laboratorio — incluidos los de las páginas siguientes — van en la <strong>misma conversación</strong>. Así Bob conserva el entorno virtual activo, el ambiente de Orchestrate y el contexto de lo que ya importó.</p>
+  </div>
+
+  <!-- ── Paso 1 ─────────────────────────────────────────────────── -->
+  <section class="lab-section" aria-labelledby="preparar-cli">
+    <div class="step-header">
+      <div class="step-header__meta">
+        <span class="ctx-badge ctx-badge--bob">🤖 Bob (Agent Mode)</span>
+        <span class="ctx-badge ctx-badge--terminal">⬛ Terminal integrada</span>
+      </div>
+    </div>
+    <h2 class="cds--productive-heading-04" id="preparar-cli">Paso 1 — Preparar la CLI de watsonx Orchestrate</h2>
+    <p class="step-header__why">La CLI de Orchestrate es un paquete de Python. Aislarla en un entorno virtual evita que choque con otras versiones instaladas en tu equipo. Bob crea el entorno, instala la CLI y confirma la versión.</p>
+
+    <div class="code-block code-block--prompt">
+      <p class="code-block__label">Prompt para Bob — crear el entorno e instalar la CLI</p>
+      <pre><code>Estoy en la carpeta Lab2/confluent_agents de un workshop de watsonx Orchestrate.
+Prepara mi entorno de trabajo usando la terminal integrada:
+
+1. Crea un entorno virtual de Python llamado .venv en esta carpeta.
+2. Actívalo. Si estoy en Windows, usa .venv\Scripts\Activate.ps1 en vez de source.
+3. Con el entorno activo, actualiza pip.
+4. Instala el paquete ibm-watsonx-orchestrate.
+5. Ejecuta "orchestrate --version" y dime qué versión quedó instalada.
+
+Reglas:
+- Mantén esta misma terminal para todo el laboratorio; no abras una nueva.
+- Si algún paso falla, detente ahí y explícame el error. No improvises
+  soluciones alternativas ni instales paquetes que no te pedí.</code></pre>
+    </div>
+
+    <div class="lab-accordion" style="margin-top:1rem;">
+      <button class="lab-accordion__trigger" aria-expanded="false" aria-controls="acc-wxo-cli">
+        Si Bob falla — ejecutar los comandos a mano
+        <svg class="lab-accordion__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="16" height="16"><path d="M8 11L2 5h12z"/></svg>
+      </button>
+      <div class="lab-accordion__panel" id="acc-wxo-cli" hidden>
+        <p class="cds--body-01">Desde una terminal abierta en <code>Lab2/confluent_agents</code>, en este orden:</p>
+        <div class="code-block code-block--terminal"><pre><code class="language-bash">python3 -m venv .venv</code></pre></div>
+        <p class="cds--body-01">Actívalo — en Windows PowerShell usa <code>.venv\Scripts\Activate.ps1</code>:</p>
+        <div class="code-block code-block--terminal"><pre><code class="language-bash">source .venv/bin/activate</code></pre></div>
+        <div class="code-block code-block--terminal"><pre><code class="language-bash">python -m pip install --upgrade pip</code></pre></div>
+        <div class="code-block code-block--terminal"><pre><code class="language-bash">pip install ibm-watsonx-orchestrate</code></pre></div>
+        <div class="code-block code-block--terminal"><pre><code class="language-bash">orchestrate --version</code></pre></div>
+      </div>
+    </div>
+
+    <div class="callout" data-tone="success" style="margin-top:1.25rem;">
+      <p class="callout__title">✓ Checkpoint</p>
+      <ul class="checklist">
+        <li class="checklist__item">Bob reporta una versión concreta de <code>orchestrate</code>, sin errores.</li>
+        <li class="checklist__item">El prompt de la terminal muestra el prefijo <code>(.venv)</code>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── Paso 2 ─────────────────────────────────────────────────── -->
+  <section class="lab-section" aria-labelledby="cargar-config">
+    <div class="step-header">
+      <div class="step-header__meta">
+        <span class="ctx-badge ctx-badge--bob">🤖 Bob (Agent Mode)</span>
+        <span class="ctx-badge ctx-badge--config">⚙ Config</span>
+      </div>
+    </div>
+    <h2 class="cds--productive-heading-04" id="cargar-config">Paso 2 — Preparar el archivo de configuración</h2>
+    <p class="step-header__why">El laboratorio centraliza en un solo archivo la URL de tu instancia, el endpoint del MCP compartido y tu API key. Ese archivo vive únicamente en tu equipo: no se versiona ni se comparte.</p>
+
+    <div class="code-block code-block--prompt">
+      <p class="code-block__label">Prompt para Bob — crear workshop-config.env</p>
+      <pre><code>Sigue en la misma terminal.
+
+Copia workshop-config.env.example a workshop-config.env. No edites el .example.
+
+Después muéstrame el contenido de workshop-config.env y dime exactamente qué
+variables tengo que completar yo.
+
+Importante: no inventes URLs, hosts ni claves, y no rellenes ningún valor por
+tu cuenta. Espera a que yo complete el archivo con los datos del facilitador.</code></pre>
+    </div>
+
+    <div class="lab-accordion" style="margin-top:1rem;">
+      <button class="lab-accordion__trigger" aria-expanded="false" aria-controls="acc-wxo-config">
+        Si Bob falla — ejecutar el comando a mano
+        <svg class="lab-accordion__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="16" height="16"><path d="M8 11L2 5h12z"/></svg>
+      </button>
+      <div class="lab-accordion__panel" id="acc-wxo-config" hidden>
+        <div class="code-block code-block--terminal"><pre><code class="language-bash">cp workshop-config.env.example workshop-config.env</code></pre></div>
+      </div>
+    </div>
+
+    <h3 class="cds--productive-heading-03" style="margin-top: 2rem;">Completa el archivo tú mismo</h3>
+    <p class="cds--body-01">Abre <code>workshop-config.env</code> en el editor de Bob y rellena estas tres variables con los datos que te entregó el facilitador:</p>
+    <div class="lab-table-wrap"><table class="lab-table">
+      <thead><tr><th>Variable</th><th>Qué va ahí</th></tr></thead>
+      <tbody>
+        <tr><td><code>ORCHESTRATE_URL</code></td><td>URL de tu instancia de watsonx Orchestrate.</td></tr>
+        <tr><td><code>RETAIL_MCP_SSE_URL</code></td><td>Endpoint SSE del MCP retail compartido en la VM del workshop.</td></tr>
+        <tr><td><code>ORCHESTRATE_API_KEY</code></td><td>Tu API key de Orchestrate. Se queda en este archivo local.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="cds--body-01"><code>RETAIL_MCP_TOOLKIT_NAME</code> ya viene con el valor correcto (<code>retail_availability_mcp</code>) y debe coincidir con el nombre usado en los YAML de los agentes. No lo cambies.</p>
+
+    <div class="callout" data-tone="warning" style="margin-top: 1.5rem;">
+      <p class="callout__title">Protege tu API key</p>
+      <p class="cds--body-01">La key vive <strong>solo</strong> en <code>workshop-config.env</code>, que no se versiona. Nunca la escribas en un YAML de agente, no la subas al repositorio, no la muestres en una captura de pantalla y <strong>no la pegues en el chat de Bob</strong>. En el paso siguiente Bob la lee de la variable de entorno, sin verla nunca en la conversación.</p>
+    </div>
+  </section>
+
+  <!-- ── Paso 3 ─────────────────────────────────────────────────── -->
+  <section class="lab-section" aria-labelledby="activar-instancia">
+    <div class="step-header">
+      <div class="step-header__meta">
+        <span class="ctx-badge ctx-badge--bob">🤖 Bob (Agent Mode)</span>
+        <span class="ctx-badge ctx-badge--orchestrate">watsonx Orchestrate</span>
+      </div>
+    </div>
+    <h2 class="cds--productive-heading-04" id="activar-instancia">Paso 3 — Activar la instancia y verificar el toolkit MCP</h2>
+    <p class="step-header__why">Activar el ambiente apunta la CLI a tu instancia. Acto seguido conviene comprobar que el toolkit MCP compartido esté registrado: sin él, los agentes se importan pero no pueden consultar inventario.</p>
+
+    <div class="code-block code-block--prompt">
+      <p class="code-block__label">Prompt para Bob — activar el ambiente y listar el toolkit</p>
+      <pre><code>Ya completé workshop-config.env con la URL de mi instancia, el endpoint del MCP
+y mi API key. Sigue en la misma terminal:
+
+1. Carga las variables con: source workshop-config.env
+2. Registra el ambiente:
+   orchestrate env add --name workshop --url "$ORCHESTRATE_URL"
+   Si el ambiente "workshop" ya existe, salta este comando y sigue.
+3. Actívalo usando la variable de entorno, nunca el valor literal:
+   orchestrate env activate workshop --api-key "$ORCHESTRATE_API_KEY"
+4. Ejecuta: orchestrate toolkits list
+
+Reglas importantes:
+- No imprimas el valor de ORCHESTRATE_API_KEY en pantalla, ni con echo, ni en
+  tu resumen. Refiérete a ella siempre como $ORCHESTRATE_API_KEY.
+- Dime si aparece el toolkit "retail_availability_mcp" con la tool
+  "get_sku_availability".
+- Si NO aparece, detente y avísame. No ejecutes "orchestrate toolkits add"
+  bajo ninguna circunstancia.</code></pre>
+    </div>
+
+    <div class="lab-accordion" style="margin-top:1rem;">
+      <button class="lab-accordion__trigger" aria-expanded="false" aria-controls="acc-wxo-env">
+        Si Bob falla — ejecutar los comandos a mano
+        <svg class="lab-accordion__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="16" height="16"><path d="M8 11L2 5h12z"/></svg>
+      </button>
+      <div class="lab-accordion__panel" id="acc-wxo-env" hidden>
+        <div class="code-block code-block--terminal"><pre><code class="language-bash">source workshop-config.env</code></pre></div>
+        <p class="cds--body-01">Si el ambiente <code>workshop</code> ya existe, salta el siguiente comando:</p>
+        <div class="code-block code-block--terminal"><pre><code class="language-bash">orchestrate env add --name workshop --url "$ORCHESTRATE_URL"</code></pre></div>
+        <div class="code-block code-block--terminal"><pre><code class="language-bash">orchestrate env activate workshop --api-key "$ORCHESTRATE_API_KEY"</code></pre></div>
+        <div class="code-block code-block--terminal"><pre><code class="language-bash">orchestrate toolkits list</code></pre></div>
+      </div>
+    </div>
+
+    <div class="callout" data-tone="warning" style="margin-top: 1.25rem;">
+      <p class="callout__title">El toolkit no se registra desde tu equipo</p>
+      <p class="cds--body-01">El facilitador registra el MCP compartido una sola vez por instancia. Si <code>retail_availability_mcp</code> no aparece en la lista, detente y avísale. Registrarlo por tu cuenta con credenciales locales rompe el ambiente para el resto del grupo.</p>
+    </div>
+
+    <div class="callout" data-tone="success" style="margin-top: 1.25rem;">
+      <p class="callout__title">✓ Checkpoint</p>
+      <ul class="checklist">
+        <li class="checklist__item">El ambiente <code>workshop</code> queda activo, sin errores de autenticación.</li>
+        <li class="checklist__item">Aparece <code>retail_availability_mcp</code> con la tool <code>get_sku_availability</code>.</li>
+        <li class="checklist__item">Tu API key nunca apareció impresa en la conversación con Bob.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── Paso 4 ─────────────────────────────────────────────────── -->
+  <section class="lab-section" aria-labelledby="importar-disponibilidad">
+    <div class="step-header">
+      <div class="step-header__meta">
+        <span class="ctx-badge ctx-badge--bob">🤖 Bob (Agent Mode)</span>
+        <span class="ctx-badge ctx-badge--orchestrate">watsonx Orchestrate</span>
+      </div>
+    </div>
+    <h2 class="cds--productive-heading-04" id="importar-disponibilidad">Paso 4 — Importar el SKU Availability Agent</h2>
+    <p class="step-header__why">Este es el primero de los cuatro agentes. Su YAML conserva la lógica retail y referencia la tool <code>get_sku_availability</code> del toolkit remoto compartido — por eso el paso anterior tenía que confirmarse primero.</p>
+
+    <div class="code-block code-block--prompt">
+      <p class="code-block__label">Prompt para Bob — importar el agente de disponibilidad</p>
+      <pre><code>Sigue en la misma terminal, con el ambiente workshop activo.
+
+Importa el primer agente del laboratorio:
+
+orchestrate agents import --file SKU_Availability_Agent.yaml
+
+Después ejecuta "orchestrate agents list" y confirma que aparece
+SKU_Availability_Agent.
+
+No importes todavía ningún otro YAML de esta carpeta: el orden importa y los
+demás agentes vienen en los pasos siguientes. Si el import falla, muéstrame el
+error completo y no reintentes con parámetros distintos.</code></pre>
+    </div>
+
+    <div class="lab-accordion" style="margin-top:1rem;">
+      <button class="lab-accordion__trigger" aria-expanded="false" aria-controls="acc-wxo-import-sku">
+        Si Bob falla — ejecutar los comandos a mano
+        <svg class="lab-accordion__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="16" height="16"><path d="M8 11L2 5h12z"/></svg>
+      </button>
+      <div class="lab-accordion__panel" id="acc-wxo-import-sku" hidden>
+        <div class="code-block code-block--terminal"><pre><code class="language-bash">orchestrate agents import --file SKU_Availability_Agent.yaml</code></pre></div>
+        <div class="code-block code-block--terminal"><pre><code class="language-bash">orchestrate agents list</code></pre></div>
       </div>
     </div>
   </section>
 
-  <section class="lab-section" aria-labelledby="preparar-cli">
-    <h2 class="cds--productive-heading-04" id="preparar-cli">Paso 1 — Preparar la CLI de watsonx Orchestrate</h2>
-    <h3 class="cds--productive-heading-03" style="margin-top: 2rem;">1.1. Crear el ambiente virtual</h3>
-    <p class="code-block__label" style="margin:0 0 4px;">Crea y activa el entorno virtual — ejecuta ambas líneas juntas, en la misma terminal</p>
-    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">python3 -m venv .venv
-source .venv/bin/activate</code></pre></div>
-    <p class="cds--body-01">En Windows PowerShell, activa el ambiente con <code>.venv\Scripts\Activate.ps1</code> en vez de la segunda línea de arriba.</p>
-    <p class="code-block__label" style="margin:0 0 4px;">Con el entorno activado, instala la CLI</p>
-    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">python -m pip install --upgrade pip</code></pre></div>
-    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">pip install ibm-watsonx-orchestrate</code></pre></div>
-    <p class="cds--body-01">Verifica la instalación — continúa solo cuando termine sin errores:</p>
-    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">orchestrate --version</code></pre></div>
-    <h3 class="cds--productive-heading-03" style="margin-top: 2rem;">1.2. Cargar la configuración sin secretos</h3>
-    <p class="cds--body-01">Duplica la plantilla y renómbrala — <code>workshop-config.env.example</code> nunca se edita directamente:</p>
-    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">cp workshop-config.env.example workshop-config.env</code></pre></div>
-    <p class="cds--body-01">Completa únicamente la URL SSE del MCP y la URL de tu instancia de Orchestrate en <code>workshop-config.env</code>. La API key no se guarda en este archivo ni en los YAML. Después cárgalo en la sesión:</p>
-    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">source workshop-config.env</code></pre></div>
-    <div class="callout" data-tone="info"><p class="callout__title">Configuración centralizada</p><p><code>RETAIL_MCP_SSE_URL</code> identifica el MCP remoto y <code>RETAIL_MCP_TOOLKIT_NAME</code> identifica el toolkit compartido. El valor predeterminado del toolkit es <code>retail_availability_mcp</code>.</p></div>
-  </section>
+  <!-- ── Paso 5 — Verificación en la UI ──────────────────────────── -->
+  <section class="lab-section" aria-labelledby="probar-disponibilidad">
+    <div class="step-header">
+      <div class="step-header__meta">
+        <span class="ctx-badge ctx-badge--browser">🌐 Navegador</span>
+        <span class="ctx-badge ctx-badge--orchestrate">watsonx Orchestrate</span>
+      </div>
+    </div>
+    <h2 class="cds--productive-heading-04" id="probar-disponibilidad">Paso 5 — Probar el agente en watsonx Orchestrate</h2>
+    <p class="step-header__why">Importar no es lo mismo que funcionar. Antes de seguir, entra a tu instancia y comprueba con tus propios ojos que el agente consulta inventario real a través del MCP.</p>
 
-  <section class="lab-section" aria-labelledby="activar-instancia">
-    <h2 class="cds--productive-heading-04" id="activar-instancia">Paso 2 — Activar la instancia de Orchestrate</h2>
-    <p class="cds--body-01">Usa la URL que te entregó el facilitador y activa un ambiente local llamado <code>workshop</code>.</p>
-    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">orchestrate env add \
-  --name workshop \
-  --url "$ORCHESTRATE_URL"</code></pre></div>
-    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">orchestrate env activate workshop \
-  --api-key &lt;Orchestrate API Key&gt;</code></pre></div>
-    <p class="cds--body-01">Si <code>workshop</code> ya existe, ejecuta solamente el segundo comando (<code>orchestrate env activate workshop --api-key &lt;Orchestrate API Key&gt;</code>).</p>
-    <div class="callout" data-tone="warning"><p class="callout__title">Protege la API key</p><p>No la pegues en el YAML, en <code>workshop-config.env</code>, en el repositorio ni en una captura de pantalla.</p></div>
-  </section>
+    <ol class="cds--list--ordered">
+      <li class="cds--list__item">Abre tu instancia de watsonx Orchestrate en el navegador (la URL de <code>ORCHESTRATE_URL</code>).</li>
+      <li class="cds--list__item">Ve a <strong>Agents</strong> y abre <code>SKU_Availability_Agent</code>.</li>
+      <li class="cds--list__item">En <strong>Toolset</strong>, confirma que <code>retail_availability_mcp:get_sku_availability</code> esté vinculada.</li>
+      <li class="cds--list__item">Haz clic en <strong>Deploy</strong> y confirma.</li>
+      <li class="cds--list__item">Abre el <strong>chat de prueba</strong> del agente y envía la consulta de abajo.</li>
+    </ol>
 
-  <section class="lab-section" aria-labelledby="verificar-toolkit">
-    <h2 class="cds--productive-heading-04" id="verificar-toolkit">Paso 3 — Verificar el toolkit MCP compartido</h2>
-    <p class="cds--body-01">El facilitador registra el toolkit una sola vez por instancia. Tú solo debes comprobar que está disponible:</p>
-    <pre><code class="language-bash">orchestrate toolkits list</code></pre>
-    <p class="cds--body-01">Debe aparecer <code>retail_availability_mcp</code> con la tool <code>get_sku_availability</code>. Si no aparece, avisa al facilitador; no ejecutes <code>toolkits add</code> desde tu laptop.</p>
-  </section>
+    <div class="code-block code-block--prompt">
+      <p class="code-block__label">Pregunta de prueba — pégala en el chat del agente</p>
+      <pre><code>¿Cuánto stock hay de LAPTOP-DELL-XPS-15 en DOT Shopping?</code></pre>
+    </div>
 
-  <section class="lab-section" aria-labelledby="importar-disponibilidad">
-    <h2 class="cds--productive-heading-04" id="importar-disponibilidad">Paso 4 — Importar el SKU Availability Agent</h2>
-    <p class="cds--body-01">El YAML conserva la lógica retail y referencia la tool del toolkit remoto compartido. Ejecuta:</p>
-    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">orchestrate agents import --file SKU_Availability_Agent.yaml</code></pre></div>
-    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">orchestrate agents list</code></pre></div>
-    <p class="cds--body-01">Confirma que aparece <code>SKU_Availability_Agent</code>. Todavía no pruebes el supervisor: primero importa el agente RAG en el siguiente paso.</p>
+    <p class="cds--body-01"><strong>Qué debes ver:</strong> una cantidad concreta para la sucursal que pediste, obtenida en tiempo real desde la tool <code>get_sku_availability</code>. <strong>Qué no debe pasar:</strong> el agente no debe inventar un número, ni mencionar Kafka, MCP o nombres internos de infraestructura.</p>
+
+    <figure class="lab-figure">
+      <img src="./assets/images/labs/agentic-retail-wxo/sku-availability-chat.png"
+           alt="Chat del SKU Availability Agent en watsonx Orchestrate devolviendo el stock de LAPTOP-DELL-XPS-15 en la sucursal DOT Shopping"
+           class="lab-figure__img" />
+      <figcaption class="lab-figure__caption">El SKU Availability Agent responde con stock real por sucursal, usando la tool del MCP compartido.</figcaption>
+    </figure>
+
+    <div class="callout" data-tone="success" style="margin-top: 1.25rem;">
+      <p class="callout__title">✓ Checkpoint — no avances sin esto</p>
+      <ul class="checklist">
+        <li class="checklist__item"><code>SKU_Availability_Agent</code> aparece desplegado en la UI.</li>
+        <li class="checklist__item">La respuesta incluye una cantidad y la sucursal <strong>DOT Shopping</strong>.</li>
+        <li class="checklist__item">En el detalle de la ejecución se ve la llamada a <code>get_sku_availability</code>.</li>
+      </ul>
+    </div>
+
+    <div class="callout" data-tone="info" style="margin-top: 1rem;">
+      <p class="callout__title">Si el agente no encuentra la tool</p>
+      <p class="cds--body-01">Vuelve al Paso 3 y revisa la salida de <code>orchestrate toolkits list</code>. Si el toolkit compartido no está, avisa al facilitador — no lo registres desde tu equipo.</p>
+    </div>
   </section>
 </div>

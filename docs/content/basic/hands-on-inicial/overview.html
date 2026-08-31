@@ -1,360 +1,121 @@
 <div class="content-panel lab-template prose--full">
-
-  <!-- ── Banner ─────────────────────────────────────────────────── -->
   <div class="lab-banner">
-    <div class="lab-banner__tags">
-      <span class="cds--tag cds--tag--blue">Habilitación Core</span>
-      <span class="cds--tag cds--tag--cool-gray">~50 min</span>
-      <span class="cds--tag cds--tag--teal">Ask · Plan · Agent · MCP</span>
+    <div class="hands-on-meta" aria-label="Información del workshop">
+      <span class="hands-on-meta__item"><span class="hands-on-meta__label">Track</span><span class="hands-on-meta__value">Primeros Pasos</span></span>
+      <span class="hands-on-meta__item"><span class="hands-on-meta__label">Duración</span><span class="hands-on-meta__value">~50 min</span></span>
+      <span class="hands-on-meta__item"><span class="hands-on-meta__label">Recorrido</span><span class="hands-on-meta__value">Ask · Plan · Agent · Personalización · MCP</span></span>
     </div>
     <h1 class="cds--productive-heading-05 lab-banner__title">De la idea al código: planifica, valida y ejecuta con IBM Bob</h1>
+    <p class="lab-banner__summary">Aprende a elegir el modo correcto, revisar lo que Bob propone y extenderlo con una configuración de proyecto y una herramienta externa.</p>
 
-    <!-- ── Hero image ──────────────────────────────────────────────── -->
     <div class="lab-hero-image">
-      <img src="./assets/images/labs/hands-on-inicial/banner_bob.png" alt="IBM Bob Hands-On Lab — banner principal"
-        class="lab-hero-image__img" />
+      <img src="./assets/images/labs/hands-on-inicial/banner_bob.png" alt="IBM Bob acompañando el recorrido de primeros pasos" class="lab-hero-image__img" />
     </div>
 
-    <div class="lab-banner__metrics">
-      <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">4</span>
-        <span class="lab-banner__metric-label">laboratorios</span>
-      </div>
-      <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">50 min</span>
-        <span class="lab-banner__metric-label">minutos</span>
-      </div>
-      <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">10–21</span>
-        <span class="lab-banner__metric-label">BobCoins estimados</span>
-      </div>
+    <div class="lab-banner__metrics" aria-label="Resumen del workshop">
+      <div class="lab-banner__metric"><span class="lab-banner__metric-value">4</span><span class="lab-banner__metric-label">laboratorios</span></div>
+      <div class="lab-banner__metric"><span class="lab-banner__metric-value">50</span><span class="lab-banner__metric-label">minutos estimados</span></div>
+      <div class="lab-banner__metric"><span class="lab-banner__metric-value">4</span><span class="lab-banner__metric-label">resultados verificables</span></div>
     </div>
   </div>
 
-  <!-- ── Descarga del workshop ────────────────────────────────────── -->
-  <section class="lab-section" aria-labelledby="descarga-heading">
-    <h2 class="cds--productive-heading-03" id="descarga-heading">
-      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor">
-        <path d="M26 24v4H6v-4H4v4a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2v-4z"/>
-        <path d="M26 14l-1.41-1.41L17 20.17V2h-2v18.17l-7.59-7.58L6 14l10 10 10-10z"/>
-      </svg>
-      Descarga los materiales del workshop
-    </h2>
-    <p class="cds--body-01">Descarga el bundle del workshop y descomprímelo en tu equipo. Encontrarás el código de ejemplo para Ask, Plan y Agent Mode, los archivos del modo personalizado y el JSON de Tavily para MCP.</p>
-
-    <a class="cds--btn cds--btn--primary" style="margin-top: 1rem; margin-bottom: 2rem;" download="LabHandsOnBob.zip" href="./downloads/LabHandsOnBob.zip">
-      Descargar materiales del workshop (26 MB)
-    </a>
-
-    <div class="callout" data-tone="info">
-      <p class="callout__title">Antes de comenzar</p>
-      <p>Descomprime el zip. En IBM Bob abre la carpeta de cada lab con <strong>File → Open Folder</strong> — el IDE apuntará automáticamente al directorio correcto. Para el Lab 1 ejecuta <code>npm install</code> en la terminal integrada. Necesitarás Node.js 18+ y, para el Lab 4 (MCP), una API key gratuita de Tavily.</p>
+  <section class="lab-section" aria-labelledby="materiales-heading">
+    <h2 class="cds--productive-heading-03" id="materiales-heading">Antes de comenzar</h2>
+    <p class="cds--body-01">Descarga y descomprime el bundle. Cada laboratorio tiene una carpeta propia: abre <strong>solo</strong> la carpeta del lab actual con <strong>File → Open Folder</strong>; no abras la raíz del zip.</p>
+    <a class="cds--btn cds--btn--primary" download="LabHandsOnBob.zip" href="./downloads/LabHandsOnBob.zip">Descargar materiales del workshop (26 MB)</a>
+    <div class="hands-on-checkpoint">
+      <p class="hands-on-checkpoint__title">Prepara el recorrido</p>
+      <ul class="checklist">
+        <li class="checklist__item">IBM Bob IDE con acceso a Ask, Plan y Agent.</li>
+        <li class="checklist__item">Node.js 18+ para el Lab 2 y el servidor MCP del Lab 4.</li>
+        <li class="checklist__item">Una API key de Tavily para el Lab 4; créala solo cuando llegues a ese lab.</li>
+      </ul>
     </div>
   </section>
 
-  <!-- ── 3 propuestas de valor clave ─────────────────────────────── -->
-  <div class="bob-value-strip">
-
-    <div class="bob-value-tile bob-value-tile--govern">
-      <div class="bob-value-tile__icon">
-        <!-- Carbon: Locked (padlock) — governance/approval -->
-        <svg aria-hidden="true" width="28" height="28" viewBox="0 0 32 32" fill="currentColor"
-          xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M24 14h-2v-4a6 6 0 0 0-12 0v4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V16a2 2 0 0 0-2-2ZM12 10a4 4 0 0 1 8 0v4h-8Zm12 20H8V16h16Z" />
-          <path d="M16 18a2 2 0 1 0 2 2 2 2 0 0 0-2-2Z" />
-        </svg>
-      </div>
-      <p class="bob-value-tile__value">Gobernado</p>
-      <p class="bob-value-tile__label">Desarrollo seguro por diseño</p>
-      <p class="bob-value-tile__desc">Toda acción sobre archivos, comandos y herramientas externas requiere aprobación
-        explícita. Bob documenta cada cambio y ofrece rollback granular por tarea, turno o llamada.</p>
+  <section class="lab-section lab-section--band" aria-labelledby="recorrido-heading">
+    <h2 class="cds--productive-heading-03" id="recorrido-heading">Tu recorrido de cuatro labs</h2>
+    <p class="cds--body-01">Cada etapa es independiente. El orden recomendado construye una historia clara: entender, diseñar e implementar, especializar y conectar.</p>
+    <div class="hands-on-journey">
+      <article class="hands-on-journey__item">
+        <span class="hands-on-journey__step">01 · IBM Bob · Ask</span>
+        <h3 class="hands-on-journey__title">Entender un proyecto</h3>
+        <p class="hands-on-journey__desc">Analiza la arquitectura y genera documentación sin modificar la aplicación.</p>
+        <p class="hands-on-journey__path"><code>lab-1-ask-mode/</code> → explicación y README propuesto.</p>
+      </article>
+      <article class="hands-on-journey__item">
+        <span class="hands-on-journey__step">02 · Plan → Agent → Ask</span>
+        <h3 class="hands-on-journey__title">Diseñar y completar un carrito</h3>
+        <p class="hands-on-journey__desc">Transforma stubs con TODOs en una implementación revisada.</p>
+        <p class="hands-on-journey__path"><code>lab-2-plan-agent/</code> → modelo, controlador y rutas.</p>
+      </article>
+      <article class="hands-on-journey__item">
+        <span class="hands-on-journey__step">03 · Configuración de proyecto</span>
+        <h3 class="hands-on-journey__title">Crear un Product Manager</h3>
+        <p class="hands-on-journey__desc">Define un modo especializado que convierte un brief en decisiones de producto.</p>
+        <p class="hands-on-journey__path"><code>lab-3-modo-personalizado/</code> → <code>.bob/custom_modes.yaml</code>.</p>
+      </article>
+      <article class="hands-on-journey__item">
+        <span class="hands-on-journey__step">04 · IBM Bob · MCP</span>
+        <h3 class="hands-on-journey__title">Consultar la web con Tavily</h3>
+        <p class="hands-on-journey__desc">Configura un servidor MCP de proyecto y valida que Bob usa fuentes actuales.</p>
+        <p class="hands-on-journey__path"><code>lab-4-mcp-tavily/</code> → Tavily activo y una respuesta citada.</p>
+      </article>
     </div>
+  </section>
 
-    <div class="bob-value-tile bob-value-tile--persona">
-      <div class="bob-value-tile__icon">
-        <!-- Carbon: Settings (gear) — customizable modes -->
-        <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 16 16" fill="currentColor"
-          xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M13.5 8.4v-.8l1-.8c.4-.3.4-.9.2-1.3l-1.2-2c-.2-.3-.5-.5-.9-.5-.1 0-.2 0-.3.1l-1.2.4c-.2-.1-.4-.3-.7-.4l-.3-1.3C10.1 1.3 9.7 1 9.2 1H6.8c-.5 0-.9.3-1 .8L5.6 3.1c-.3.1-.5.2-.7.3L3.7 3c-.1 0-.2-.1-.3-.1-.4 0-.7.2-.9.5l-1.2 2c-.2.4-.1.9.3 1.3l.9.9v.8l-.9.8c-.4.3-.5.9-.2 1.3l1.2 2c.2.3.5.5.9.5.1 0 .2 0 .3-.1l1.2-.4c.2.1.4.3.7.4l.3 1.3c.1.5.5.8 1 .8h2.4c.5 0 .9-.3 1-.8l.3-1.3c.2-.1.4-.2.7-.4l1.2.4c.1 0 .2.1.3.1.4 0 .7-.2.9-.5l1.1-2c.2-.4.2-.9-.2-1.3l-1.4-1.2ZM12.6 12l-1.7-.6c-.4.3-.9.6-1.4.8L9.2 14H6.8l-.4-1.8c-.5-.2-.9-.5-1.4-.8L3.4 12l-1.2-2 1.4-1.2c-.1-.5-.1-1.1 0-1.6L2.2 6l1.2-2 1.7.6c.4-.3.9-.6 1.4-.8L6.8 2h2.4l.4 1.8c.5.2.9.5 1.4.8l1.7-.6 1.2 2-1.4 1.2c.1.5.1 1.1 0 1.6l1.4 1.2-1.3 2Z" />
-          <path
-            d="M8 11C6.3 11 5 9.7 5 8s1.3-3 3-3 3 1.3 3 3-1.3 3-3 3Zm0-5C6.9 6 6 6.9 6 8s.9 2 2 2 2-.9 2-2-.9-2-2-2Z" />
-        </svg>
-      </div>
-      <p class="bob-value-tile__value">Personalizable</p>
-      <p class="bob-value-tile__label">Especializado para tu organización</p>
-      <p class="bob-value-tile__desc">Skills, MCP servers y modos personalizados en YAML configuran a Bob como experto
-        en tus estándares: PCI-DSS, HIPAA, arquitecturas de IBM Cloud o cualquier dominio propio.</p>
-    </div>
-
-    <div class="bob-value-tile bob-value-tile--speed">
-      <div class="bob-value-tile__icon">
-        <!-- Carbon: Dashboard (speedometer) — 3x faster -->
-        <svg aria-hidden="true" width="28" height="28" viewBox="0 0 32 32" fill="currentColor"
-          xmlns="http://www.w3.org/2000/svg">
-          <path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z" />
-          <path
-            d="M9.17 23.17a1 1 0 0 1-.71-.29 1 1 0 0 1 0-1.41l5.64-5.64a3 3 0 1 1 1.41 1.41l-5.63 5.64a1 1 0 0 1-.71.29ZM16 15a1 1 0 1 0 1 1 1 1 0 0 0-1-1Z" />
-          <rect x="15" y="5" width="2" height="3" />
-          <rect x="22.58" y="8.11" width="3" height="2" transform="rotate(-45 24.08 9.11)" />
-          <rect x="25" y="15" width="3" height="2" />
-        </svg>
-      </div>
-      <p class="bob-value-tile__value">3× más rápido</p>
-      <p class="bob-value-tile__label">Ejecución paralela de herramientas</p>
-      <p class="bob-value-tile__desc">Múltiples herramientas corren simultáneamente. Tareas que tomaban 30 segundos
-        ahora duran menos de 10. Subagentes con contexto aislado procesan subtareas sin inflar el agente principal.</p>
-    </div>
-
-  </div>
-
-  
-
-  <!-- ── Los 3 modos ───────────────────────────────────────────────── -->
-  <section class="lab-section lab-section--band" aria-labelledby="modos-heading">
-    <h2 class="cds--productive-heading-03" id="modos-heading">
-      <!-- Carbon: Code -->
-      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32"
-        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <polygon points="31 16 24 23 22.59 21.59 28.17 16 22.59 10.41 24 9 31 16" />
-        <polygon points="1 16 8 9 9.41 10.41 3.83 16 9.41 21.59 8 23 1 16" />
-        <rect x="5.91" y="15" width="20.17" height="2" transform="translate(-3.6 27.31) rotate(-75)" />
-      </svg>
-      Los 3 modos especializados
-    </h2>
-
+  <section class="lab-section" aria-labelledby="modos-heading">
+    <h2 class="cds--productive-heading-03" id="modos-heading">Elige el modo según la tarea</h2>
     <div class="bob-modes">
-
-      <div class="bob-mode bob-mode--ask">
-        <div class="bob-mode__icon" aria-hidden="true">
-          <!-- Carbon: Information -->
-          <svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 32 32" fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg">
-            <path d="M17 22h-2V13h2zm0-11h-2V9h2z" />
-            <path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z" />
-          </svg>
-        </div>
+      <article class="bob-mode bob-mode--ask">
+        <div class="bob-mode__icon" aria-hidden="true">?</div>
         <p class="bob-mode__name">Ask Mode</p>
-        <p class="bob-mode__role">El Consultor — Solo lectura</p>
-        <p class="bob-mode__desc">Analiza código, explica arquitecturas, genera documentación y detecta problemas sin
-          modificar ningún archivo. Lectura auto-aprobada con 270k tokens de contexto.</p>
-        <ul class="bob-mode__capabilities">
-          <li class="bob-mode__cap-item">
-            <!-- Carbon: Checkmark -->
-            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg">
-              <polygon points="13 24 4 15 5.414 13.586 13 21.171 26.586 7.586 28 9 13 24" />
-            </svg>
-            Arquitectura y diagramas Mermaid
-          </li>
-          <li class="bob-mode__cap-item">
-            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg">
-              <polygon points="13 24 4 15 5.414 13.586 13 21.171 26.586 7.586 28 9 13 24" />
-            </svg>
-            Auditoría de seguridad (read-only)
-          </li>
-          <li class="bob-mode__cap-item">
-            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg">
-              <polygon points="13 24 4 15 5.414 13.586 13 21.171 26.586 7.586 28 9 13 24" />
-            </svg>
-            README y documentación técnica
-          </li>
-        </ul>
-      </div>
-
-      <div class="bob-mode bob-mode--plan">
-        <div class="bob-mode__icon" aria-hidden="true">
-          <!-- Carbon: Task (clipboard) -->
-          <svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 32 32" fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M25 5h-.17A3 3 0 0 0 22 3H10a3 3 0 0 0-2.83 2H7a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h18a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4ZM10 5h12a1 1 0 0 1 0 2H10a1 1 0 0 1 0-2Zm15 22H7a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h.17A3 3 0 0 0 10 9h12a3 3 0 0 0 2.83-2H25a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2Z" />
-            <path d="M10 13h12v2H10zm0 5h12v2H10zm0 5h8v2h-8z" />
-          </svg>
-        </div>
+        <p class="bob-mode__role">Entender y explicar</p>
+        <p class="bob-mode__desc">Úsalo para explorar código, pedir explicaciones y documentar lo que encuentres sin hacer cambios de implementación.</p>
+      </article>
+      <article class="bob-mode bob-mode--plan">
+        <div class="bob-mode__icon" aria-hidden="true">↗</div>
         <p class="bob-mode__name">Plan Mode</p>
-        <p class="bob-mode__role">El Arquitecto — Diseño primero</p>
-        <p class="bob-mode__desc">Propone arquitecturas, evalúa alternativas, genera diagramas Mermaid y valida
-          requisitos antes de escribir una sola línea de código. Seguridad y escalabilidad en el diseño, no al final.
-        </p>
-        <ul class="bob-mode__capabilities">
-          <li class="bob-mode__cap-item">
-            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg">
-              <polygon points="13 24 4 15 5.414 13.586 13 21.171 26.586 7.586 28 9 13 24" />
-            </svg>
-            Diseño arquitectónico guiado
-          </li>
-          <li class="bob-mode__cap-item">
-            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg">
-              <polygon points="13 24 4 15 5.414 13.586 13 21.171 26.586 7.586 28 9 13 24" />
-            </svg>
-            Análisis de edge cases y riesgos
-          </li>
-          <li class="bob-mode__cap-item">
-            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg">
-              <polygon points="13 24 4 15 5.414 13.586 13 21.171 26.586 7.586 28 9 13 24" />
-            </svg>
-            Sin edición de archivos
-          </li>
-        </ul>
-      </div>
-
-      <div class="bob-mode bob-mode--agent">
-        <div class="bob-mode__icon" aria-hidden="true">
-          <!-- Carbon: Code -->
-          <svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 32 32" fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg">
-            <polygon points="31 16 24 23 22.59 21.59 28.17 16 22.59 10.41 24 9 31 16" />
-            <polygon points="1 16 8 9 9.41 10.41 3.83 16 9.41 21.59 8 23 1 16" />
-            <rect x="5.91" y="15" width="20.17" height="2" transform="translate(-3.6 27.31) rotate(-75)" />
-          </svg>
-        </div>
+        <p class="bob-mode__role">Diseñar antes de actuar</p>
+        <p class="bob-mode__desc">Úsalo para convertir requisitos en un plan, alternativas, riesgos y criterios de aceptación que puedas revisar.</p>
+      </article>
+      <article class="bob-mode bob-mode--agent">
+        <div class="bob-mode__icon" aria-hidden="true">&lt;/&gt;</div>
         <p class="bob-mode__name">Agent Mode</p>
-        <p class="bob-mode__role">El Implementador — Acción completa</p>
-        <p class="bob-mode__desc">Escribe, refactoriza y ejecuta código. Accede a MCP, browser y skills. Delega a
-          subagentes, corre tareas en paralelo y en segundo plano. Edición de comandos antes de ejecutar.</p>
-        <ul class="bob-mode__capabilities">
-          <li class="bob-mode__cap-item">
-            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg">
-              <polygon points="13 24 4 15 5.414 13.586 13 21.171 26.586 7.586 28 9 13 24" />
-            </svg>
-            MCP + Browser + Skills nativo
-          </li>
-          <li class="bob-mode__cap-item">
-            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg">
-              <polygon points="13 24 4 15 5.414 13.586 13 21.171 26.586 7.586 28 9 13 24" />
-            </svg>
-            Subagentes + tareas paralelas
-          </li>
-          <li class="bob-mode__cap-item">
-            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg">
-              <polygon points="13 24 4 15 5.414 13.586 13 21.171 26.586 7.586 28 9 13 24" />
-            </svg>
-            Aprobación requerida para escrituras
-          </li>
-        </ul>
-      </div>
-
+        <p class="bob-mode__role">Implementar y validar</p>
+        <p class="bob-mode__desc">Úsalo cuando necesites modificar archivos, ejecutar comandos o utilizar herramientas MCP con las aprobaciones configuradas.</p>
+      </article>
+    </div>
+    <div class="callout" data-tone="info">
+      <p class="callout__title">Gobernanza durante el workshop</p>
+      <p>Revisa siempre el modo activo, el alcance de la acción y las solicitudes de permiso que muestre tu instalación. Las opciones de autoaprobación pueden variar según la versión y la política de tu organización.</p>
     </div>
   </section>
 
-  <!-- ── Cronograma ──────────────────────────────────────────────── -->
-  <section class="lab-section lab-section--band" aria-labelledby="cronograma-heading">
-    <h2 class="cds--productive-heading-03" id="cronograma-heading">
-      <!-- Carbon: Time (clock) -->
-      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32"
-        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path d="M16 30a14 14 0 1 1 14-14 14 14 0 0 1-14 14Zm0-26a12 12 0 1 0 12 12A12 12 0 0 0 16 4Z" />
-        <path d="M20.59 22 15 16.41V7h2v8.58l5 5.01z" />
-      </svg>
-      Agenda de los modos (~50 min)
-    </h2>
+  <section class="lab-section lab-section--band" aria-labelledby="agenda-heading">
+    <h2 class="cds--productive-heading-03" id="agenda-heading">Agenda estimada</h2>
     <div class="lab-timeline">
-      <div class="lab-timeline__item lab-timeline__item--active">
-        <span class="lab-timeline__time">00–08 min</span>
-        <span class="lab-timeline__label">Lab 1 — Ask Mode: análisis de arquitectura y documentación</span>
-      </div>
-      <div class="lab-timeline__item">
-        <span class="lab-timeline__time">08–28 min</span>
-        <span class="lab-timeline__label">Lab 2 — Plan y Agent: diseñar, implementar y revisar el carrito</span>
-      </div>
-      <div class="lab-timeline__item">
-        <span class="lab-timeline__time">28–40 min</span>
-        <span class="lab-timeline__label">Lab 3 — Modo personalizado: crea un Product Manager</span>
-      </div>
-      <div class="lab-timeline__item">
-        <span class="lab-timeline__time">40–50 min</span>
-        <span class="lab-timeline__label">Lab 4 — MCP: búsqueda web en tiempo real con Tavily</span>
-      </div>
+      <div class="lab-timeline__item lab-timeline__item--active"><span class="lab-timeline__time">00–08 min</span><span class="lab-timeline__label">Lab 1 · Ask Mode: arquitectura, seguridad y documentación.</span></div>
+      <div class="lab-timeline__item"><span class="lab-timeline__time">08–28 min</span><span class="lab-timeline__label">Lab 2 · Plan y Agent: diseño, implementación y revisión del carrito.</span></div>
+      <div class="lab-timeline__item"><span class="lab-timeline__time">28–40 min</span><span class="lab-timeline__label">Lab 3 · Modo personalizado: Product Manager de proyecto.</span></div>
+      <div class="lab-timeline__item"><span class="lab-timeline__time">40–50 min</span><span class="lab-timeline__label">Lab 4 · MCP: búsqueda web de Tavily con fuentes.</span></div>
     </div>
   </section>
 
-  <!-- ── Requisitos Previos ──────────────────────────────────────── -->
-  <section class="lab-section" aria-labelledby="prereqs-heading">
-    <h2 class="cds--productive-heading-03" id="prereqs-heading">
-      <!-- Carbon: Checkmark (circle) -->
-      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32"
-        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <polygon points="13 24 4 15 5.414 13.586 13 21.171 26.586 7.586 28 9 13 24" />
-        <path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z" />
-      </svg>
-      Requisitos Previos
-    </h2>
-    <div class="prereq-grid">
-      <div class="prereq-item">
-        <div class="prereq-item__icon">
-          <!-- Carbon: Application (app window) -->
-          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 6h2v2h-2zm4 0h2v2h-2zm4 0h2v2h-2z" />
-            <path d="M28 4H4a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 22H4V10h24Z" />
-          </svg>
-        </div>
-        <div class="prereq-item__body">
-          <p class="prereq-item__title">IDE de IBM Bob</p>
-          <p class="prereq-item__desc">Acceso al IDE de IBM Bob. <a class="cds--link" href="https://bob.ibm.com/trial/"
-              target="_blank" rel="noreferrer">Solicitar acceso →</a></p>
-        </div>
-      </div>
-      <div class="prereq-item">
-        <div class="prereq-item__icon">
-          <!-- Carbon: Code -->
-          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg">
-            <polygon points="31 16 24 23 22.59 21.59 28.17 16 22.59 10.41 24 9 31 16" />
-            <polygon points="1 16 8 9 9.41 10.41 3.83 16 9.41 21.59 8 23 1 16" />
-            <rect x="5.91" y="15" width="20.17" height="2" transform="translate(-3.6 27.31) rotate(-75)" />
-          </svg>
-        </div>
-        <div class="prereq-item__body">
-          <p class="prereq-item__title">Node.js 18+</p>
-          <p class="prereq-item__desc">Para los Labs 1, 2 y 4 (MCP).</p>
-        </div>
-      </div>
-      <div class="prereq-item">
-        <div class="prereq-item__icon">
-          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg">
-            <path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z" />
-            <path d="M15 8h2v10h-2zm0 12h2v2h-2z" />
-          </svg>
-        </div>
-        <div class="prereq-item__body">
-          <p class="prereq-item__title">API Key de Tavily</p>
-          <p class="prereq-item__desc">Para el Lab 4. Registro en <a class="cds--link" href="https://tavily.com" target="_blank" rel="noreferrer">tavily.com</a> — 1 000 búsquedas/mes gratuitas.</p>
-        </div>
-      </div>
+  <section class="lab-section" aria-labelledby="lectura-heading">
+    <h2 class="cds--productive-heading-03" id="lectura-heading">Cómo leer los pasos</h2>
+    <p class="cds--body-01">Todos los labs usan la misma secuencia: el contexto te dice dónde actuar; el propósito explica para qué; el bloque copiable contiene solo lo que debes pegar o ejecutar; el checkpoint confirma que puedes continuar.</p>
+    <div class="hands-on-checkpoint">
+      <p class="hands-on-checkpoint__title">Las capturas son una referencia</p>
+      <ul class="checklist">
+        <li class="checklist__item">Los nombres de los menús, rutas y paneles pueden variar entre versiones de IBM Bob.</li>
+        <li class="checklist__item">Las respuestas generadas por IA no serán idénticas a las capturas; valida los criterios del paso, no el texto exacto.</li>
+      </ul>
     </div>
   </section>
 
-  <!-- ── Soporte ─────────────────────────────────────────────────── -->
   <section class="lab-section" aria-labelledby="soporte-heading">
-    <h2 class="cds--productive-heading-03" id="soporte-heading">
-      <!-- Carbon: Chat (speech bubble) -->
-      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32"
-        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M28 2H4a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h7v4l6-4h11a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2Zm0 22H16.33L11 27.2V24H4V4h24Z" />
-        <path d="M15 20h2v2h-2zm0-12h2v10h-2z" />
-      </svg>
-      Soporte y Contacto
-    </h2>
-    <p class="cds--body-01">¿Necesitas ayuda durante los laboratorios? Contacta al equipo IBM facilitador del workshop.
-    </p>
-    <div class="callout callout--support" data-tone="tip">
-      <p class="callout__title">Feedback de la Sesión</p>
-      <p>Tu opinión mejora estos laboratorios. Al finalizar, pide el enlace de la encuesta al facilitador de tu sesión.
-      </p>
-    </div>
+    <h2 class="cds--productive-heading-03" id="soporte-heading">Soporte</h2>
+    <p class="cds--body-01">Si un checkpoint no coincide con lo que ves, conserva el mensaje o captura relevante y consulta al equipo facilitador antes de pasar al siguiente lab.</p>
   </section>
-
 </div>

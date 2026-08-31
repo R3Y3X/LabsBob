@@ -1,9 +1,7 @@
 <div class="content-panel lab-template prose--full">
   <div class="lab-banner">
-    <div class="lab-banner__tags">
-      <span class="cds--tag cds--tag--blue">Integración</span>
-      <span class="cds--tag cds--tag--cool-gray">~45 min</span>
-      <span class="cds--tag cds--tag--teal">Bob + Confluent</span>
+    <div class="integration-meta" aria-label="Información del Track D">
+      <span><b>Track</b> D · Confluent</span><span><b>Duración</b> ~45 min</span><span><b>Resultado</b> Eventos de inventario listos para agentes</span>
     </div>
     <h1 class="cds--productive-heading-05 lab-banner__title">Conecta tus agentes con tus datos en tiempo real</h1>
 
@@ -23,14 +21,14 @@
         <span class="lab-banner__metric-label">minutos</span>
       </div>
       <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">10–13</span>
+        <span class="lab-banner__metric-value">6–13</span>
         <span class="lab-banner__metric-label">BobCoins estimados</span>
       </div>
     </div>
   </div>
 
   <!-- ── Selector de entorno ── -->
-  <div class="bobcoin-cost--total" style="padding:1rem 1.25rem; background:var(--cds-layer-02,#f4f4f4); border:1px solid var(--cds-border-subtle,#e0e0e0); border-radius:6px;">
+  <div class="bobcoin-cost--total integration-context-card">
     <p style="font-size:0.75rem; font-weight:600; color:var(--cds-text-secondary,#525252); text-transform:uppercase; letter-spacing:0.04em; margin:0 0 0.5rem;">¿Con qué entorno trabajas?</p>
     <div class="env-toggle" data-env-scope="global">
       <button class="env-toggle__btn env-toggle__btn--active" data-env-tab="platform">
@@ -51,16 +49,23 @@
       <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M26 24v4H6v-4H4v4a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2v-4z"/><path d="M26 14l-1.41-1.41L17 20.17V2h-2v18.17l-7.59-7.58L6 14l10 10 10-10z"/></svg>
       Descarga los materiales del workshop
     </h2>
-    <p class="cds--body-01">El bundle contiene todos los scripts necesarios para los tres labs de este track. Descomprímelo y abre la carpeta en IBM Bob IDE.</p>
-    <a class="cds--btn cds--btn--primary" style="margin-top:1rem; margin-bottom:2rem;" download="agentic-retail-workshop.zip" href="./downloads/agentic-retail-workshop.zip">
-      Descargar bundle del workshop (4.9 MB)
-    </a>
+    <p class="cds--body-01">Primero selecciona la mesa y el número que te asignó el facilitador. El bundle completo se genera con ese identificador y contiene el pipeline de Confluent, los agentes y la configuración de Orchestrate. Descomprímelo y abre la carpeta <code>RoadShowBobStreamingIntegration</code> en IBM Bob con <strong>File → Open Folder</strong>.</p>
+
+    <div style="display: flex; gap: 1rem; margin-top: 1rem; margin-bottom: 2rem;">
+      <a class="cds--btn cds--btn--primary" download href="./downloads/agentic-retail-workshop.zip" data-participant-download="true">
+        Descargar bundle del Track 1 — Confluent
+      </a>
+      <a class="cds--btn cds--btn--tertiary" download="cp-ibm-demo-es.pdf" href="./assets/downloads/cp-ibm-demo-es.pdf" target="_blank" rel="noopener">
+        Descargar Presentación (PDF)
+      </a>
+    </div>
+
     <div class="callout" data-tone="info">
-      <p class="callout__title">Contenido del bundle</p>
+      <p class="callout__title">Contenido del Toolkit</p>
       <ul class="cds--list--unordered">
-        <li class="cds--list__item"><code>Lab1/inventory-pipeline/</code> — scripts Python para crear tópicos, publicar eventos y gestionar schemas.</li>
-        <li class="cds--list__item"><code>Lab2/confluent_agents/</code> — agentes de watsonx Orchestrate y herramientas MCP.</li>
-        <li class="cds--list__item"><code>Lab3/voltia-starter/</code> — starter React + TailwindCSS de la tienda Voltia.</li>
+        <li class="cds--list__item"><code>trackD/inventory-pipeline/</code> — scripts Python para crear tópicos, registrar JSON Schema, publicar eventos JSON_SR y gestionar el pipeline.</li>
+        <li class="cds--list__item"><code>trackF/confluent_agents/</code> — agentes Voltia y configuración del toolkit MCP.</li>
+        <li class="cds--list__item"><code>participant-config.env</code> — nombres aislados para tu workspace; nunca contiene credenciales reales.</li>
       </ul>
     </div>
   </section>
@@ -74,7 +79,7 @@
       <ul class="cds--list--unordered">
         <li class="cds--list__item">Tópico <code>inventory.transactions</code> — fuente única de eventos.</li>
         <li class="cds--list__item">Tópico derivado <code>inventory.availability</code> — disponibilidad por SKU y sucursal calculada en tiempo real.</li>
-        <li class="cds--list__item">20 mensajes de ejemplo listos para que los consuman los agentes del Lab 2.</li>
+        <li class="cds--list__item">20 mensajes de ejemplo listos para que los consuman los agentes del Track F.</li>
       </ul>
     </div>
   </section>
@@ -185,25 +190,25 @@
     <h2 class="cds--productive-heading-03">Prerrequisitos</h2>
 
     <div data-env-panel="platform" class="env-panel--active">
-      <p class="cds--body-01">Abre Bob en <strong>Agent Mode</strong>, reemplaza los 3 valores marcados y pega el prompt. Bob crea la clave SSH, verifica la conexión, genera el <code>.env</code> completo y deja el entorno listo para los labs.</p>
+      <p class="cds--body-01">Abre Bob en <strong>Agent Mode</strong>, guarda la clave PEM localmente y completa los valores marcados en <code>participant-config.env</code>. Bob verifica la conexión y ejecuta el bootstrap sin exponer secretos en la conversación.</p>
 
       <!-- Callout explicando los placeholders -->
       <div class="callout" data-tone="warning" style="margin-top:1rem; margin-bottom:1rem;">
         <p class="callout__title">
           <span class="ctx-badge ctx-badge--config" style="margin-right:0.5rem;">⚙ Config</span>
-          Reemplaza estos 3 valores antes de copiar
+          Completa estos valores antes de ejecutar el bootstrap
         </p>
         <ul class="cds--list--unordered" style="margin-top:0.5rem;">
           <li class="cds--list__item"><code>[IP_PUBLICA_VM]</code> — IP pública de tu VM en TechZone (ej. <code>163.66.95.196</code>).</li>
           <li class="cds--list__item"><code>[PASSWORD_ADMIN]</code> — contraseña del usuario <code>admin</code> (aparece en los outputs de TechZone).</li>
           <li class="cds--list__item"><code>[PASSWORD_KAFKA_ADMIN]</code> — contraseña del usuario <code>kafka-admin</code> (aparece en los outputs de TechZone).</li>
-          <li class="cds--list__item"><code>[PEGA_AQUI_CLAVE_PRIVADA_PEM]</code> — contenido completo de tu archivo <code>.pem</code>, incluyendo las líneas <code>-----BEGIN-----</code> y <code>-----END-----</code>.</li>
+          <li class="cds--list__item">La clave PEM se conserva únicamente en tu equipo; no la pegues en Bob ni en el repositorio.</li>
         </ul>
       </div>
 
       <div class="prompt-block" style="margin-top:0;">
         <div class="prompt-block__header" style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
-          <span class="prompt-block__label" style="flex:1; min-width:0;">🤖 Prompt para Bob — SSH + .env completo</span>
+          <span class="prompt-block__label" style="flex:1; min-width:0;">🤖 Prompt para Bob — SSH + bootstrap seguro</span>
           <button
             style="display:inline-flex; align-items:center; gap:0.4rem; padding:0.4rem 1rem; background:#0f62fe; color:#fff; border:none; border-radius:4px; font-size:0.8125rem; font-weight:600; cursor:pointer; white-space:nowrap; transition:background 0.15s;"
             onmouseover="this.style.background='#0353e9'"
@@ -218,30 +223,16 @@
 Aquí tienes mis accesos y parámetros:
 - IP del Host: [IP_PUBLICA_VM]
 - Usuario SSH: root
-- Contenido de la Clave Privada (guardar como cflt-vsi-key.pem):
------BEGIN OPENSSH PRIVATE KEY-----
-[PEGA_AQUI_CLAVE_PRIVADA_PEM]
------END OPENSSH PRIVATE KEY-----
+- La clave privada PEM ya está guardada localmente como cflt-vsi-key.pem (no la pegues en el chat).
 
-Instrucciones para ti:
-1. Crea el archivo 'Lab1/inventory-pipeline/cflt-vsi-key.pem' con la clave provista.
-2. Aplica `chmod 600 Lab1/inventory-pipeline/cflt-vsi-key.pem`.
-3. Verifica la conexión SSH: ssh -i Lab1/inventory-pipeline/cflt-vsi-key.pem root@[IP_PUBLICA_VM] 'echo ok'
-4. Crea el archivo 'Lab1/inventory-pipeline/.env' con exactamente este contenido:
-   SSH_HOST=root@[IP_PUBLICA_VM]
-   SSH_KEY=Lab1/inventory-pipeline/cflt-vsi-key.pem
-   BOOTSTRAP_SERVERS=[IP_PUBLICA_VM]:9094,[IP_PUBLICA_VM]:9095,[IP_PUBLICA_VM]:9096
-   KAFKA_SASL_USERNAME=kafka-admin
-   KAFKA_SASL_PASSWORD=[PASSWORD_KAFKA_ADMIN]
-   KAFKA_SECURITY_PROTOCOL=SASL_SSL
-   KAFKA_SASL_MECHANISM=PLAIN
-   KSQLDB_ENDPOINT_EXTERNAL=https://[IP_PUBLICA_VM]/ksqldb
-   KSQLDB_USERNAME=admin
-   KSQLDB_PASSWORD=[PASSWORD_ADMIN]
-   SCHEMA_REGISTRY_URL=https://[IP_PUBLICA_VM]/sr
-   SCHEMA_REGISTRY_USER=admin
-   SCHEMA_REGISTRY_PASSWORD=[PASSWORD_ADMIN]
-5. Confirma con "listo" cuando la conexión SSH funcione y el .env esté creado.</div>
+Instrucciones para ti (no imprimas ni vuelvas a mostrar la clave):
+1. Guarda el archivo PEM como 'cflt-vsi-key.pem' en la raíz de 'RoadShowBobStreamingIntegration' y aplica `chmod 600 cflt-vsi-key.pem`.
+2. Verifica la conexión SSH: ssh -i cflt-vsi-key.pem root@[IP_PUBLICA_VM] 'echo ok'
+3. Completa los placeholders de 'participant-config.env' con la IP, credenciales y URL que te entregó el facilitador.
+4. Ejecuta './participant-bootstrap.sh check' y no crees otro .env manual: el bootstrap lo copia a las carpetas correctas.
+5. No muestres secretos en la conversación ni los pegues en un YAML:
+   El bundle ya incluye los nombres de variables; completa solo los valores marcados en participant-config.env.
+Confirma con "listo" cuando la conexión SSH funcione y la configuración quede lista.</div>
       </div>
 
       <img src="./assets/images/labs/agentic-retail-confluent/bobSSHConfirmation.png"
@@ -252,8 +243,8 @@ Instrucciones para ti:
       <div class="callout" data-tone="success" style="margin-top:0.75rem;">
         <p class="callout__title">✓ Checkpoint</p>
         <ul class="checklist">
-          <li class="checklist__item">Bob responde <strong>"listo"</strong> — SSH activo, <code>cflt-vsi-key.pem</code> con permisos <code>600</code> y <code>.env</code> generado.</li>
-          <li class="checklist__item">No avances al Lab 1 hasta ver esta confirmación — el <code>setup.sh</code> la necesita para funcionar.</li>
+          <li class="checklist__item">Bob responde <strong>"listo"</strong> — SSH activo, <code>cflt-vsi-key.pem</code> con permisos <code>600</code> y <code>participant-config.env</code> preparado.</li>
+          <li class="checklist__item">No avances al Track D hasta ver esta confirmación — el <code>setup.sh</code> la necesita para funcionar.</li>
         </ul>
       </div>
     </div>
@@ -266,7 +257,7 @@ Instrucciones para ti:
         </p>
         <ol class="cds--list--ordered" style="margin-top:0.75rem;">
           <li class="cds--list__item">Recibe de tu instructor el archivo <code>.env</code> con <code>BOOTSTRAP_SERVERS</code>, <code>KAFKA_API_KEY</code> y <code>KAFKA_API_SECRET</code>.</li>
-          <li class="cds--list__item">Cópialo a la raíz de <code>Labs-tech-summit/</code>.</li>
+          <li class="cds--list__item">Cópialo a la raíz de <code>RoadShowBobStreamingIntegration/</code>.</li>
           <li class="cds--list__item">Inicia sesión en <a href="https://confluent.cloud" target="_blank" rel="noopener">confluent.cloud</a> y selecciona el cluster que indicó el instructor.</li>
         </ol>
       </div>
@@ -310,7 +301,7 @@ Instrucciones para ti:
           </li>
         </ul>
         <div class="callout" data-tone="success" style="margin-top:1rem;">
-          <p class="callout__title">✅ Checkpoint</p>
+          <p class="callout__title">Checkpoint</p>
           <p class="cds--body-01" style="margin-top:0.25rem;">Criterio de validación al final de cada paso — confirma que todo funciona correctamente antes de avanzar al siguiente. No continúes si el checkpoint no pasa.</p>
         </div>
       </div>

@@ -1,271 +1,134 @@
 <div class="content-panel lab-template">
-
   <div class="lab-banner">
-    <div class="lab-banner__tags">
-      <span class="cds--tag cds--tag--blue">Ask · Plan · Agent</span>
-      <span class="cds--tag cds--tag--cool-gray">20 min</span>
+    <div class="hands-on-meta" aria-label="Información del Lab 2">
+      <span class="hands-on-meta__item"><span class="hands-on-meta__label">Lab</span><span class="hands-on-meta__value">02 · Plan y Agent</span></span>
+      <span class="hands-on-meta__item"><span class="hands-on-meta__label">Duración</span><span class="hands-on-meta__value">~20 min</span></span>
+      <span class="hands-on-meta__item"><span class="hands-on-meta__label">Resultado</span><span class="hands-on-meta__value">Carrito revisado y con sintaxis válida</span></span>
     </div>
     <h1 class="cds--productive-heading-05 lab-banner__title">Lab 2 — Plan y Agent</h1>
-
-    <!-- ── Hero image ──────────────────────────────────────────────── -->
-    <div class="lab-hero-image">
-      <img src="./assets/images/labs/hands-on-inicial/lab2_bob.png"
-           alt="Banner del Lab 2 — Plan y Agent de IBM Bob"
-           class="lab-hero-image__img" />
-    </div>
-
+    <p class="lab-banner__summary">Diseña un carrito, completa los stubs del ejercicio, revisa el resultado y aplica una mejora consciente.</p>
+    <div class="lab-hero-image"><img src="./assets/images/labs/hands-on-inicial/lab2_bob.png" alt="Banner del Lab 2 de Plan y Agent" class="lab-hero-image__img" /></div>
     <div class="lab-banner__metrics">
-      <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">3</span>
-        <span class="lab-banner__metric-label">modos especializados</span>
-      </div>
-      <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">1</span>
-        <span class="lab-banner__metric-label">sistema completo</span>
-      </div>
-      <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">4–8</span>
-        <span class="lab-banner__metric-label">BobCoins estimados</span>
-      </div>
-      <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">3</span>
-        <span class="lab-banner__metric-label">pasos</span>
-      </div>
+      <div class="lab-banner__metric"><span class="lab-banner__metric-value">4</span><span class="lab-banner__metric-label">cambios de modo</span></div>
+      <div class="lab-banner__metric"><span class="lab-banner__metric-value">3</span><span class="lab-banner__metric-label">archivos a completar</span></div>
+      <div class="lab-banner__metric"><span class="lab-banner__metric-value">1</span><span class="lab-banner__metric-label">revisión en Ask</span></div>
     </div>
   </div>
 
-  <section class="lab-section" aria-labelledby="lab2-obj">
-    <h2 class="cds--productive-heading-03" id="lab2-obj">
-      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
-      Objetivos de aprendizaje
-    </h2>
-    <ul class="cds--list--unordered">
-      <li class="cds--list__item">✅ Diseñar una solución con Plan Mode antes de tocar código</li>
-      <li class="cds--list__item">✅ Implementar el carrito con Agent Mode y revisar cada diff</li>
-      <li class="cds--list__item">✅ Analizar el resultado con Ask Mode y aplicar mejoras</li>
+  <section class="lab-section" aria-labelledby="lab2-objetivo">
+    <h2 class="cds--productive-heading-03" id="lab2-objetivo">Qué vas a lograr</h2>
+    <ul class="checklist">
+      <li class="checklist__item">Diseñar la solución antes de pedir que se modifiquen archivos.</li>
+      <li class="checklist__item">Completar un modelo, un controlador y rutas que ya existen como stubs.</li>
+      <li class="checklist__item">Validar la sintaxis y revisar una mejora desde Ask Mode antes de aplicarla.</li>
     </ul>
   </section>
 
-  <!-- Los 3 modos -->
-  <section class="lab-section" aria-labelledby="lab2-modos">
-    <h2 class="cds--productive-heading-03" id="lab2-modos">
-      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M27 16.76V16h-2v.76a11 11 0 0 1-9.24 9.24H15v2h.76a13 13 0 0 0 11.24-11.24ZM16 5a11 11 0 0 1 9.25 9.25V15h2v-.76A13 13 0 0 0 16 3v2ZM5 16a11 11 0 0 1 9.25-9.25V5A13 13 0 0 0 3 16.25V17h2v-.76-.24ZM14.75 27A11 11 0 0 1 5 17.75V17H3v.76A13 13 0 0 0 14.75 29V27Z"/><circle cx="16" cy="16" r="3"/></svg>
-      Qué son Plan y Agent
-    </h2>
-    <p class="cds--body-01">Imagina que IBM Bob es como tener 3 expertos diferentes en tu equipo, cada uno especializado en un tipo de tarea:</p>
-
-    <div class="lab-modes-grid">
-      <div class="lab-mode-card lab-mode-card--ask">
-        <div class="lab-mode-card__icon">
-          <svg aria-hidden="true" width="28" height="28" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
-        </div>
-        <div class="lab-mode-card__body">
-          <h3 class="cds--productive-heading-02">Ask Mode — El Consultor</h3>
-          <p class="cds--body-01">Responder preguntas y <strong>explicar código sin modificarlo</strong>. Ideal para entender código legacy, revisar lógica de negocio o buscar explicaciones.</p>
-          <p class="cds--label-01" style="margin-top:8px;color:var(--cds-text-helper)">Herramientas: lectura auto-aprobada de archivos, análisis de código</p>
-        </div>
-      </div>
-      <div class="lab-mode-card lab-mode-card--plan">
-        <div class="lab-mode-card__icon">
-          <svg aria-hidden="true" width="28" height="28" viewBox="0 0 32 32" fill="currentColor"><path d="M25 5h-.17A3 3 0 0 0 22 3H10a3 3 0 0 0-2.83 2H7a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h18a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4ZM10 5h12a1 1 0 0 1 0 2H10a1 1 0 0 1 0-2Zm15 22H7a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h.17A3 3 0 0 0 10 9h12a3 3 0 0 0 2.83-2H25a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2Z"/><path d="M10 13h12v2H10zm0 5h12v2H10zm0 5h8v2h-8z"/></svg>
-        </div>
-        <div class="lab-mode-card__body">
-          <h3 class="cds--productive-heading-02">Plan Mode — El Arquitecto</h3>
-          <p class="cds--body-01">Diseñar soluciones <strong>antes de implementarlas</strong>. Crea diagramas, analiza requisitos, propone alternativas considerando seguridad y escalabilidad.</p>
-          <p class="cds--label-01" style="margin-top:8px;color:var(--cds-text-helper)">Herramientas: diagramas Mermaid, análisis de requisitos, sin edición</p>
-        </div>
-      </div>
-      <div class="lab-mode-card lab-mode-card--agent">
-        <div class="lab-mode-card__icon">
-          <svg aria-hidden="true" width="28" height="28" viewBox="0 0 32 32" fill="currentColor"><path d="M31 16l-7 7-1.41-1.41L28.17 16l-5.58-5.59L24 9l7 7zM1 16l7-7 1.41 1.41L3.83 16l5.58 5.59L8 23l-7-7zm11.42 9.484-1.932-.517 8.099-30.252 1.932.517z"/></svg>
-        </div>
-        <div class="lab-mode-card__body">
-          <h3 class="cds--productive-heading-02">Agent Mode — El Implementador</h3>
-          <p class="cds--body-01">Escribir, modificar y refactorizar código, <strong>más herramientas externas</strong>: MCP, Browser, Skills. Puede lanzar subagentes para tareas aisladas y ejecutar en paralelo.</p>
-          <p class="cds--label-01" style="margin-top:8px;color:var(--cds-text-helper)">Herramientas: leer/escribir archivos, comandos, MCP, Browser, Skills, subagentes</p>
-        </div>
-      </div>
+  <section class="lab-section" aria-labelledby="lab2-flujo">
+    <h2 class="cds--productive-heading-03" id="lab2-flujo">Flujo de trabajo del lab</h2>
+    <div class="hands-on-journey" aria-label="Flujo de modos">
+      <article class="hands-on-journey__item"><span class="hands-on-journey__step">01 · Plan</span><h3 class="hands-on-journey__title">Diseñar</h3><p class="hands-on-journey__desc">Define estructura, rutas, riesgos y criterio de terminado.</p></article>
+      <article class="hands-on-journey__item"><span class="hands-on-journey__step">02 · Agent</span><h3 class="hands-on-journey__title">Completar</h3><p class="hands-on-journey__desc">Convierte los TODOs existentes en código y revisa los cambios.</p></article>
+      <article class="hands-on-journey__item"><span class="hands-on-journey__step">03 · Ask</span><h3 class="hands-on-journey__title">Revisar</h3><p class="hands-on-journey__desc">Entiende el cálculo y busca validaciones faltantes.</p></article>
+      <article class="hands-on-journey__item"><span class="hands-on-journey__step">04 · Agent</span><h3 class="hands-on-journey__title">Ajustar</h3><p class="hands-on-journey__desc">Aplica solo las correcciones que hayas revisado.</p></article>
     </div>
-
-    <div class="callout" data-tone="note">
-      <p class="callout__title">Regla de Oro</p>
-      <p>Cambia de modo según lo que necesites hacer. <strong>No uses un solo modo para todo.</strong> Puedes cambiar de modo en cualquier momento, incluso a mitad de una tarea.</p>
-    </div>
-
   </section>
 
-  <!-- Ejercicio Práctico -->
-  <section class="lab-section" aria-labelledby="lab2-ejercicio">
-    <h2 class="cds--productive-heading-03" id="lab2-ejercicio">
-      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
-      Ejercicio: carrito de compras
-    </h2>
-    <p class="cds--body-01">Vamos a implementar un carrito de compras usando <strong>3 modos diferentes</strong> para cada fase del desarrollo.</p>
-  </section>
-
-  <!-- Workspace setup -->
   <section class="lab-workspace-setup" aria-labelledby="lab2-workspace">
     <div class="lab-workspace-setup__box">
-      <span class="lab-workspace-setup__badge">Paso obligatorio — antes de cualquier prompt</span>
-      <h2 class="lab-workspace-setup__title" id="lab2-workspace">Punto de partida</h2>
-      <p class="lab-workspace-setup__lead">Este lab usa su propia copia de la API de e-commerce — no reutiliza la carpeta del Lab 1. Descomprime <code>LabHandsOnBob.zip</code> (si no lo hiciste ya) y abre esta carpeta con <strong>File → Open Folder</strong>.</p>
-      <div class="lab-workspace-setup__path">
-        <p class="lab-workspace-setup__path-label">File → Open Folder</p>
-        <code class="lab-workspace-setup__path-value">LabHandsOnBob/lab-2-plan-agent/</code>
-      </div>
+      <span class="lab-workspace-setup__badge">Punto de partida</span>
+      <h2 class="lab-workspace-setup__title" id="lab2-workspace">Abre el ejercicio de carrito</h2>
+      <p class="lab-workspace-setup__lead">Este lab es independiente del Lab 1. Abre la carpeta del ejercicio: incluye una copia de la API y los archivos de carrito con TODOs preparados para completar.</p>
+      <div class="lab-workspace-setup__path"><p class="lab-workspace-setup__path-label">File → Open Folder</p><code class="lab-workspace-setup__path-value">LabHandsOnBob/lab-2-plan-agent/</code></div>
       <ul class="lab-workspace-setup__checks">
-        <li>En el explorador deben verse <code>src/models/User.js</code> y <code>src/models/Product.js</code></li>
-        <li><strong>No</strong> debe existir todavía <code>src/models/Cart.js</code> con lógica implementada — lo vas a construir en este lab</li>
-        <li>La terminal integrada ya apunta aquí — no hace falta <code>cd</code></li>
+        <li>Ves <code>src/models/Cart.js</code> y <code>src/controllers/cartController.js</code>.</li>
+        <li>Ambos archivos contienen comentarios TODO o respuestas <code>501</code>: son stubs, no una implementación terminada.</li>
+        <li><code>src/routes/api.js</code> ya contiene el punto donde debes completar las rutas de carrito.</li>
       </ul>
-      <p class="lab-workspace-setup__note">No es la carpeta del Lab 1 ni de Galaxium Travels: es un proyecto independiente, puedes empezar aquí aunque no hayas hecho el Lab 1.</p>
     </div>
   </section>
 
-  <section class="lab-section" aria-labelledby="lab2-ejercicio-pasos">
-    <h2 class="cds--productive-heading-03" id="lab2-ejercicio-pasos">
-      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
-      Pasos
-    </h2>
-    <!-- Paso 1: Plan Mode -->
+  <section class="lab-section" aria-labelledby="lab2-pasos">
+    <h2 class="cds--productive-heading-03" id="lab2-pasos">Diseña, implementa y valida</h2>
+
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Plan Mode: diseñar la solución</h3>
-      <p class="cds--body-01">Primero usa <strong>Plan Mode</strong> para diseñar la arquitectura — sin escribir código.</p>
-      <ol class="cds--list--ordered">
-        <li class="cds--list__item">Abre el selector de modos → elige <strong>Plan</strong></li>
-        <li class="cds--list__item">Envía el prompt de diseño del carrito</li>
-      </ol>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Diseña con Plan Mode</h3>
+      <div class="hands-on-action">
+        <span class="hands-on-context">IBM Bob · Plan Mode</span>
+        <p class="hands-on-action__purpose">Acordar qué deben resolver los stubs antes de solicitar una implementación.</p>
+        <ol class="cds--list--ordered"><li class="cds--list__item">Selecciona <strong>Plan</strong> en el selector de modos.</li><li class="cds--list__item">Envía el siguiente prompt.</li></ol>
+        <div class="code-block code-block--prompt"><p class="code-block__label">Pega en el chat de Bob</p><button type="button" class="copy-button">Copiar</button><pre><code>Revisa los stubs existentes de Cart, cartController y las rutas de api.
 
-      <!-- 1b. Prompt -->
-      <p class="cds--body-01" style="margin-top:16px;">Una vez en Plan Mode, envía este prompt:</p>
-      <div class="code-block code-block--prompt">
-        <button type="button" class="copy-button">Copiar</button>
-        <pre><code>Necesito diseñar un sistema de carrito de compras para nuestra API de e-commerce.
+Propón un plan para completar un carrito de compras que incluya:
+1. Estructura de datos e invariantes del modelo.
+2. Endpoints y responsabilidades del controlador.
+3. Autenticación, validación de producto, stock y límites de cantidad.
+4. Casos borde y criterio de terminado.
 
-Requisitos:
-- Los usuarios deben poder agregar/eliminar productos
-- Calcular el total con descuentos
-- Persistir el carrito en la base de datos
-- Validar stock antes de agregar
-
-Por favor, diseña:
-1. La estructura de datos del carrito
-2. Los endpoints necesarios
-3. El flujo de datos
-4. Consideraciones de seguridad
-5. Un diagrama de arquitectura</code></pre>
+No modifiques archivos todavía.</code></pre></div>
       </div>
-
-      <div class="callout" data-tone="tip">
-        <p class="callout__title">Qué debes ver</p>
-        <ul class="cds--list--unordered">
-          <li class="cds--list__item">Diseño sin archivos creados aún</li>
-          <li class="cds--list__item">Diagramas Mermaid y alternativas</li>
-        </ul>
-      </div>
+      <div class="hands-on-checkpoint"><p class="hands-on-checkpoint__title">Qué debes revisar</p><ul class="checklist"><li class="checklist__item">El plan se refiere a los tres archivos existentes y no propone crear un proyecto nuevo.</li><li class="checklist__item">Incluye decisiones para stock, autenticación y cantidades antes de implementar.</li></ul></div>
     </div>
 
-    <!-- Paso 2: Agent Mode -->
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Agent Mode: implementar la solución</h3>
-      <p class="cds--body-01">Con el plan listo, cambia al selector de modos → elige <strong>Agent</strong>.</p>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Completa los stubs con Agent Mode</h3>
+      <div class="hands-on-action">
+        <span class="hands-on-context">IBM Bob · Agent Mode</span>
+        <p class="hands-on-action__purpose">Convierte el plan revisado en código dentro de los archivos de este ejercicio.</p>
+        <ol class="cds--list--ordered"><li class="cds--list__item">Cambia el selector a <strong>Agent</strong>.</li><li class="cds--list__item">Revisa cada propuesta de cambio y aprueba solo lo que corresponda al plan.</li></ol>
+        <div class="code-block code-block--prompt"><p class="code-block__label">Pega en el chat de Bob</p><button type="button" class="copy-button">Copiar</button><pre><code>Implementa el plan del carrito en los stubs existentes.
 
-      <!-- 2b. Prompt único de implementación completa -->
-      <p class="cds--body-01" style="margin-top:16px;">Envía <strong>un solo prompt</strong> — Bob decide qué construir en paralelo y en qué orden:</p>
-      <div class="code-block code-block--prompt">
-        <button type="button" class="copy-button">Copiar</button>
-        <pre><code>Basándote en el plan del carrito de compras que acabamos de diseñar, implementa el sistema completo:
+Completa únicamente:
+- src/models/Cart.js
+- src/controllers/cartController.js
+- src/routes/api.js
 
-1. Modelo Cart en src/models/Cart.js
-   - Referencia al usuario
-   - Array de items (producto, cantidad, precio al momento de agregar)
-   - Métodos para calcular el total
-   - Validación de stock
-   - Timestamps
-
-2. Controlador CartController en src/controllers/cartController.js
-   - addToCart: Agregar producto al carrito
-   - removeFromCart: Eliminar producto del carrito
-   - getCart: Obtener carrito del usuario
-   - clearCart: Vaciar el carrito
-   - updateQuantity: Actualizar cantidad de un producto
-
-3. Rutas en src/routes/api.js
-   POST   /api/cart/add
-   DELETE /api/cart/remove/:productId
-   GET    /api/cart
-   DELETE /api/cart/clear
-   PUT    /api/cart/update/:productId
-   Todas las rutas deben requerir autenticación.</code></pre>
+Conserva el estilo del proyecto. Antes de cada edición, explica qué archivo cambiarás y por qué. Implementa autenticación, validación de producto y stock, límite de 10 unidades por producto, cálculo de total y las rutas de agregar, quitar, consultar, vaciar y actualizar cantidad.</code></pre></div>
       </div>
-      <div class="callout" data-tone="tip">
-        <p class="callout__title">Aquí se ve el poder de Agent Mode</p>
-        <p>Bob analiza las dependencias entre archivos, decide qué puede crear en paralelo y qué debe ir en orden, y ejecuta todo de forma asíncrona. Revisa cada <em>diff</em> antes de confirmar — las escrituras siempre requieren aprobación explícita.</p>
-      </div>
+      <div class="hands-on-checkpoint"><p class="hands-on-checkpoint__title">Checkpoint</p><ul class="checklist"><li class="checklist__item">Los TODOs relevantes y respuestas <code>501</code> del carrito fueron reemplazados por lógica coherente.</li><li class="checklist__item">Revisaste los diffs de los tres archivos antes de aprobarlos.</li></ul></div>
     </div>
 
-    <!-- Paso 3: Ask Mode -->
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Ask Mode: entender y mejorar el código</h3>
-      <p class="cds--body-01">Con el código implementado, cambia al selector de modos → elige <strong>Ask</strong> para analizar sin modificar nada.</p>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Revisa con Ask Mode</h3>
+      <div class="hands-on-action">
+        <span class="hands-on-context">IBM Bob · Ask Mode</span>
+        <p class="hands-on-action__purpose">Comprueba que puedes explicar el código generado antes de pedir otra modificación.</p>
+        <div class="code-block code-block--prompt"><p class="code-block__label">Pega en el chat de Bob</p><button type="button" class="copy-button">Copiar</button><pre><code>Analiza la implementación actual del carrito.
 
-      <!-- 3b. Prompt de análisis -->
-      <p class="cds--body-01" style="margin-top:16px;">Envía este prompt para analizar el código recién implementado:</p>
-      <div class="code-block code-block--prompt">
-        <button type="button" class="copy-button">Copiar</button>
-        <pre><code>Explícame cómo funciona el método calculateTotal() en el modelo Cart.
-
-¿Qué validaciones de seguridad tiene el controlador addToCart?
-
-¿Cómo se maneja la concurrencia cuando dos usuarios intentan
-comprar el último producto en stock?</code></pre>
+Explícame cómo se calcula el total, cómo se valida el producto y el stock, y qué riesgo queda si dos solicitudes intentan comprar el último artículo al mismo tiempo. No modifiques archivos.</code></pre></div>
       </div>
+      <div class="hands-on-checkpoint"><p class="hands-on-checkpoint__title">Qué debes revisar</p><ul class="checklist"><li class="checklist__item">La respuesta relaciona sus conclusiones con el código que acabas de aprobar.</li><li class="checklist__item">Distingue la validación actual de los riesgos de concurrencia que exigirían una decisión adicional.</li></ul></div>
+    </div>
 
-      <!-- 3c. Output esperado -->
-      <div class="callout" data-tone="tip">
-        <p class="callout__title">Respuesta esperada de IBM Bob</p>
-        <div class="lab-response">
-          <p><strong>El método <code>calculateTotal()</code> debería:</strong></p>
-          <ol class="lab-response__list">
-            <li>Iterar sobre cada ítem del carrito.</li>
-            <li>Multiplicar cantidad por precio.</li>
-            <li>Aplicar descuentos cuando corresponda.</li>
-            <li>Sumar el total final.</li>
-          </ol>
-          <p><strong>En <code>addToCart</code>, verifica:</strong></p>
-          <ul class="lab-response__list">
-            <li>La autenticación del usuario.</li>
-            <li>La validez del <code>productId</code>.</li>
-            <li>La disponibilidad de stock.</li>
-            <li>Que el producto exista.</li>
-            <li>Un límite de cantidad por producto.</li>
-          </ul>
-        </div>
-      </div>
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 4 — Aplica una mejora acotada</h3>
+      <div class="hands-on-action">
+        <span class="hands-on-context">IBM Bob · Agent Mode</span>
+        <p class="hands-on-action__purpose">Usa una observación de la revisión para hacer un cambio pequeño y verificable.</p>
+        <div class="code-block code-block--prompt"><p class="code-block__label">Pega en el chat de Bob</p><button type="button" class="copy-button">Copiar</button><pre><code>Aplica únicamente estas mejoras al controlador del carrito:
+- Validar que el producto existe antes de modificar el carrito.
+- Rechazar cantidades mayores a 10 por producto.
 
-      <!-- 3d. Volver a Agent para aplicar mejoras -->
-      <p class="cds--body-01" style="margin-top:16px;">Vuelve a <strong>Agent Mode</strong> y aplica las mejoras sugeridas:</p>
-      <div class="code-block code-block--prompt">
-        <button type="button" class="copy-button">Copiar</button>
-        <pre><code>Basándote en el análisis de Ask Mode, agrega las validaciones
-faltantes en el controlador addToCart:
-- Validar que el producto existe
-- Limitar cantidad máxima a 10 unidades por producto</code></pre>
+Muestra el diff y espera mi aprobación antes de editar.</code></pre></div>
       </div>
+      <div class="hands-on-checkpoint"><p class="hands-on-checkpoint__title">Checkpoint</p><ul class="checklist"><li class="checklist__item">El diff está limitado a la validación solicitada y conserva el comportamiento acordado.</li></ul></div>
+    </div>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 5 — Verifica la sintaxis</h3>
+      <div class="hands-on-action">
+        <span class="hands-on-context">Terminal integrada</span>
+        <p class="hands-on-action__purpose">Confirma que los tres archivos modificados pueden ser interpretados por Node. Este bundle no trae una suite <code>npm test</code> funcional, por lo que no la ejecutes como validación del lab.</p>
+        <div class="code-block code-block--terminal"><p class="code-block__label">Ejecuta en la terminal integrada</p><button type="button" class="copy-button">Copiar</button><pre><code>node --check src/models/Cart.js</code></pre></div>
+        <div class="code-block code-block--terminal"><p class="code-block__label">Ejecuta en la terminal integrada</p><button type="button" class="copy-button">Copiar</button><pre><code>node --check src/controllers/cartController.js</code></pre></div>
+        <div class="code-block code-block--terminal"><p class="code-block__label">Ejecuta en la terminal integrada</p><button type="button" class="copy-button">Copiar</button><pre><code>node --check src/routes/api.js</code></pre></div>
+      </div>
+      <div class="hands-on-checkpoint"><p class="hands-on-checkpoint__title">Checkpoint final</p><ul class="checklist"><li class="checklist__item">Los tres comandos terminan sin errores de sintaxis.</li><li class="checklist__item">Puedes explicar por qué el flujo alterna entre Plan, Agent y Ask.</li></ul></div>
     </div>
   </section>
 
-  <!-- Resumen del poder -->
-  
-
-  <div class="callout" data-tone="tip">
-    <p class="callout__title">Lo que acabas de lograr</p>
-    <ul class="cds--list--unordered">
-      <li class="cds--list__item">✅ Diseñaste una solución con Plan Mode antes de tocar código</li>
-      <li class="cds--list__item">✅ Implementaste un sistema completo con Agent Mode</li>
-      <li class="cds--list__item">✅ Detectaste y corregiste problemas con Ask Mode</li>
-      <li class="cds--list__item">✅ Entendiste el flujo de los 3 modos especializados de IBM Bob trabajando en conjunto</li>
-    </ul>
-  </div>
-
+  <details class="lab-troubleshooting-full">
+    <summary>Si la validación no pasa</summary>
+    <p class="cds--body-01">Vuelve a Ask Mode y pide que explique el error de sintaxis mostrando el archivo y la línea; luego usa Agent Mode para proponer una corrección acotada. No des por hecho que <code>npm test</code> es una señal válida: el script del material es un placeholder de demostración.</p>
+  </details>
 </div>

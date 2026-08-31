@@ -1,0 +1,103 @@
+<div class="content-panel lab-template prose--full">
+  <div class="lab-banner">
+    <div class="integration-meta" aria-label="Información de la referencia">
+      <span><b>Referencia</b> Cheatsheet VM</span><span><b>Uso</b> Consulta opcional</span><span><b>BobCoins</b> Sin consumo estimado</span>
+    </div>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Cheatsheet - Techzone Confluent VM</h1>
+    <p class="cds--body-02 lab-banner__summary">Guía rápida de comandos para interactuar con cada componente de la plataforma Confluent desplegada en tu VM de TechZone.</p>
+  </div>
+
+  <section class="lab-section">
+    <p class="cds--body-01">Todos los ejemplos asumen que configuraste estas variables en tu terminal:</p>
+    <p class="cds--body-01">Continúa desde el bundle personalizado del track de Confluent y usa siempre el <code>WORKSHOP_ID</code> de tu mesa y número.</p>
+    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">HOST=&lt;tu IP pública o hostname&gt;      # ej. 163.66.89.122
+ADMIN_PW=&lt;password de admin&gt;         # en /var/lib/confluent-access/credentials.json
+KAFKA_PW=&lt;password de kafka-admin&gt;   # en el mismo json, bajo .kafka.password</code></pre></div>
+    
+    <p class="cds--body-01" style="margin-top:1rem;">Para obtener ambos passwords de una sola vez ejecutando desde tu máquina local:</p>
+    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">ssh -i cflt-vsi-key.pem root@$HOST 'sudo jq "{admin: .password, kafka: .kafka.password}" /var/lib/confluent-access/credentials.json'</code></pre></div>
+  </section>
+
+  <section class="lab-section" style="margin-top:3rem;">
+    <h2 class="cds--productive-heading-04">Resumen de Componentes</h2>
+    <div style="overflow-x:auto;">
+    <table style="width:100%; border-collapse: collapse; margin-top:1rem;">
+      <thead style="background:var(--cds-layer-02,#f4f4f4); border-bottom: 2px solid var(--cds-border-subtle,#e0e0e0);">
+        <tr>
+          <th style="padding:0.75rem; text-align:left; font-weight:600;">Componente</th>
+          <th style="padding:0.75rem; text-align:left; font-weight:600;">URL</th>
+          <th style="padding:0.75rem; text-align:left; font-weight:600;">Auth</th>
+        </tr>
+      </thead>
+      <tbody style="border-bottom: 1px solid var(--cds-border-subtle,#e0e0e0);">
+        <tr><td style="padding:0.75rem; border-bottom: 1px solid var(--cds-border-subtle,#e0e0e0);">Control Center (web)</td><td style="padding:0.75rem; border-bottom: 1px solid var(--cds-border-subtle,#e0e0e0);"><code>https://&lt;host&gt;/</code></td><td style="padding:0.75rem; border-bottom: 1px solid var(--cds-border-subtle,#e0e0e0);">Basic (C3)</td></tr>
+        <tr><td style="padding:0.75rem; border-bottom: 1px solid var(--cds-border-subtle,#e0e0e0);">Schema Registry</td><td style="padding:0.75rem; border-bottom: 1px solid var(--cds-border-subtle,#e0e0e0);"><code>https://&lt;host&gt;/sr/</code></td><td style="padding:0.75rem; border-bottom: 1px solid var(--cds-border-subtle,#e0e0e0);">HTTP Basic</td></tr>
+        <tr><td style="padding:0.75rem; border-bottom: 1px solid var(--cds-border-subtle,#e0e0e0);">ksqlDB REST</td><td style="padding:0.75rem; border-bottom: 1px solid var(--cds-border-subtle,#e0e0e0);"><code>https://&lt;host&gt;/ksqldb/</code></td><td style="padding:0.75rem; border-bottom: 1px solid var(--cds-border-subtle,#e0e0e0);">HTTP Basic</td></tr>
+        <tr><td style="padding:0.75rem; border-bottom: 1px solid var(--cds-border-subtle,#e0e0e0);">Kafka Connect</td><td style="padding:0.75rem; border-bottom: 1px solid var(--cds-border-subtle,#e0e0e0);"><code>https://&lt;host&gt;/connect/</code></td><td style="padding:0.75rem; border-bottom: 1px solid var(--cds-border-subtle,#e0e0e0);">HTTP Basic</td></tr>
+        <tr><td style="padding:0.75rem; border-bottom: 1px solid var(--cds-border-subtle,#e0e0e0);">CMF REST (Flink)</td><td style="padding:0.75rem; border-bottom: 1px solid var(--cds-border-subtle,#e0e0e0);"><code>https://&lt;host&gt;/cmf/</code></td><td style="padding:0.75rem; border-bottom: 1px solid var(--cds-border-subtle,#e0e0e0);">HTTP Basic</td></tr>
+        <tr><td style="padding:0.75rem; border-bottom: 1px solid var(--cds-border-subtle,#e0e0e0);">Kafka brokers</td><td style="padding:0.75rem; border-bottom: 1px solid var(--cds-border-subtle,#e0e0e0);"><code>&lt;host&gt;:9094...</code></td><td style="padding:0.75rem; border-bottom: 1px solid var(--cds-border-subtle,#e0e0e0);">SASL_SSL / PLAIN</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <section class="lab-section" style="margin-top:3rem;">
+    <h2 class="cds--productive-heading-04">1. Schema Registry</h2>
+    <p class="cds--body-01">Listar todos los subjects (esquemas) registrados:</p>
+    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">curl -sk -u admin:$ADMIN_PW https://$HOST/sr/subjects</code></pre></div>
+    
+    <p class="cds--body-01" style="margin-top:1rem;">Ver la última versión de un schema específico (ej. <code>inventory.transactions-value</code>):</p>
+    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">curl -sk -u admin:$ADMIN_PW https://$HOST/sr/subjects/inventory.transactions-value/versions/latest</code></pre></div>
+  </section>
+
+  <section class="lab-section" style="margin-top:3rem;">
+    <h2 class="cds--productive-heading-04">2. ksqlDB</h2>
+    <p class="cds--body-01">Ejecutar una consulta SQL (ej. listar streams):</p>
+    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">curl -sk -u admin:$ADMIN_PW -X POST -H "Content-Type: application/vnd.ksql.v1+json" \
+     https://$HOST/ksqldb/ksql \
+     -d '{"ksql":"SHOW STREAMS;","streamsProperties":{}}'</code></pre></div>
+     <p class="cds--body-01" style="margin-top:0.5rem; font-size:0.875rem; color:var(--cds-text-secondary,#525252);">Reemplaza <code>SHOW STREAMS;</code> con <code>SHOW TABLES;</code>, <code>SHOW TOPICS;</code> o cualquier query válida.</p>
+  </section>
+
+  <section class="lab-section" style="margin-top:3rem;">
+    <h2 class="cds--productive-heading-04">3. Kafka Connect</h2>
+    <p class="cds--body-01">Listar los conectores desplegados actualmente:</p>
+    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">curl -sk -u admin:$ADMIN_PW https://$HOST/connect/connectors</code></pre></div>
+    
+    <p class="cds--body-01" style="margin-top:1rem;">Listar datagens y conectores de prueba disponibles en el clúster:</p>
+    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">ssh -i cflt-vsi-key.pem root@$HOST 'bash /opt/confluent-installer/scripts/deploy-datagen-connector.sh list'</code></pre></div>
+  </section>
+
+  <section class="lab-section" style="margin-top:3rem;">
+    <h2 class="cds--productive-heading-04">4. CMF (Apache Flink)</h2>
+    <p class="cds--body-01">Listar Flink environments configurados:</p>
+    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">curl -sk -u admin:$ADMIN_PW https://$HOST/cmf/api/v1/environments</code></pre></div>
+    
+    <p class="cds--body-01" style="margin-top:1rem;">Ver los compute pools (recursos asignados a Flink):</p>
+    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">curl -sk -u admin:$ADMIN_PW https://$HOST/cmf/api/v1/environments/flink-env/compute-pools</code></pre></div>
+  </section>
+
+  <section class="lab-section" style="margin-top:3rem;">
+    <h2 class="cds--productive-heading-04">5. Kafka Brokers (Native Protocol)</h2>
+    <p class="cds--body-01">Para usar librerías nativas como Python <code>confluent_kafka</code> o herramientas como <code>kcat</code>, necesitas copiar el certificado root de la VM a tu equipo:</p>
+    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">scp -i cflt-vsi-key.pem root@$HOST:/var/lib/confluent-access/kafka-ca.crt ./kafka-ca.crt</code></pre></div>
+    
+    <h3 class="cds--productive-heading-03" style="margin-top:1.5rem;">Configuración del cliente (Python / kcat)</h3>
+    <div class="code-block code-block--file" style="margin-top:0.5rem;"><p class="code-block__label">Archivo de configuración · cliente Kafka</p><button type="button" class="copy-button">Copiar contenido</button><pre><code class="language-ini">bootstrap.servers=&lt;host&gt;:9094,&lt;host&gt;:9095,&lt;host&gt;:9096
+security.protocol=SASL_SSL
+sasl.mechanism=PLAIN
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="kafka-admin" password="&lt;kafka pw&gt;";
+ssl.endpoint.identification.algorithm=https
+ssl.ca.location=./kafka-ca.crt</code></pre></div>
+
+    <h3 class="cds--productive-heading-03" style="margin-top:1.5rem;">Usar kcat</h3>
+    <p class="cds--body-01">Listar tópicos y brokers con <code>kcat</code>:</p>
+    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">kcat -L \
+  -b $HOST:9094,$HOST:9095,$HOST:9096 \
+  -X security.protocol=SASL_SSL \
+  -X sasl.mechanism=PLAIN \
+  -X sasl.username=kafka-admin \
+  -X sasl.password=$KAFKA_PW \
+  -X ssl.ca.location=./kafka-ca.crt</code></pre></div>
+  </section>
+</div>

@@ -33,10 +33,10 @@ export const siteData = {
           audience: ['client', 'partner'],
           steps: [
             { slug: 'overview', label: 'Introducción', file: './content/basic/hands-on-inicial/overview.html', tags: ['Modos agénticos'] },
-            { slug: 'lab1', label: 'Ask Mode', file: './content/basic/hands-on-inicial/lab1-ask-mode.html', tags: ['Ask Mode'], bobcoinCost: { min: 1, max: 2 } },
-            { slug: 'lab2', label: 'Plan y Agent', file: './content/basic/hands-on-inicial/lab2-modos.html', tags: ['Plan · Agent'], bobcoinCost: { min: 4, max: 8 } },
-            { slug: 'lab3', label: 'Modo personalizado', file: './content/basic/hands-on-inicial/lab4-modo-personalizado.html', tags: ['Modo personalizado'], bobcoinCost: { min: 2, max: 5 } },
-            { slug: 'lab4', label: 'MCP', file: './content/basic/hands-on-inicial/lab4-mcp-tavily.html', tags: ['MCP · Tavily'], bobcoinCost: { min: 3, max: 6 } }
+            { slug: 'lab1', label: 'Ask Mode', file: './content/basic/hands-on-inicial/lab1-ask-mode.html', tags: ['Ask Mode'] },
+            { slug: 'lab2', label: 'Plan y Agent', file: './content/basic/hands-on-inicial/lab2-modos.html', tags: ['Plan · Agent'] },
+            { slug: 'lab3', label: 'Modo personalizado', file: './content/basic/hands-on-inicial/lab4-modo-personalizado.html', tags: ['Modo personalizado'] },
+            { slug: 'lab4', label: 'MCP', file: './content/basic/hands-on-inicial/lab4-mcp-tavily.html', tags: ['MCP · Tavily'] }
           ]
         },
         {
@@ -94,7 +94,8 @@ export const siteData = {
             { slug: 'overview', label: 'Introducción', file: './content/integraciones/agentic-retail-confluent/overview.html', tags: ['Confluent Kafka'] },
             { slug: 'topics', label: 'Tópico Kafka', file: './content/integraciones/agentic-retail-confluent/topics.html', tags: ['Topics'], bobcoinCost: { min: 2, max: 4 } },
             { slug: 'ksqldb', label: 'ksqlDB', file: './content/integraciones/agentic-retail-confluent/ksqldb.html', tags: ['ksqlDB'], bobcoinCost: { min: 2, max: 4 } },
-            { slug: 'publish', label: 'Publicar eventos', file: './content/integraciones/agentic-retail-confluent/publish.html', tags: ['Productores'], bobcoinCost: { min: 2, max: 5 } }
+            { slug: 'publish', label: 'Publicar eventos', file: './content/integraciones/agentic-retail-confluent/publish.html', tags: ['Productores'], bobcoinCost: { min: 2, max: 5 } },
+            { slug: 'cheatsheet', label: 'Cheatsheet VM', file: './content/integraciones/agentic-retail-confluent/cheatsheet.html', tags: ['Referencia'] }
           ]
         },
         {
@@ -108,6 +109,7 @@ export const siteData = {
           steps: [
             { slug: 'overview', label: 'Introducción', file: './content/integraciones/agentic-retail-wxo/overview.html', tags: ['watsonx Orchestrate'] },
             { slug: 'create', label: 'Disponibilidad MCP', file: './content/integraciones/agentic-retail-wxo/create.html', tags: ['MCP'], bobcoinCost: { min: 3, max: 5 } },
+            { slug: 'ui-access', label: 'Interfaz WxO', file: './content/integraciones/agentic-retail-wxo/ui-access.html', tags: ['UI'], bobcoinCost: { min: 2, max: 4 } },
             { slug: 'rag', label: 'Sustitutos RAG', file: './content/integraciones/agentic-retail-wxo/rag.html', tags: ['RAG'], bobcoinCost: { min: 2, max: 5 } },
             { slug: 'integration', label: 'Supervisor', file: './content/integraciones/agentic-retail-wxo/integration.html', tags: ['Supervisor'], bobcoinCost: { min: 2, max: 4 } },
             { slug: 'shopping', label: 'Asistente cliente', file: './content/integraciones/agentic-retail-wxo/shopping.html', tags: ['Embedded'], bobcoinCost: { min: 2, max: 4 } }
@@ -396,20 +398,20 @@ export function getRoadshowPlan(initialId, pathId) {
 export const workshopGuides = {
   'hands-on-inicial': {
     duration: '~50 min',
-    outcome: 'Usarás Ask, Plan y Agent Mode, crearás un modo personalizado y conectarás un servidor MCP.',
+    outcome: 'Usarás Ask, Plan y Agent, crearás un modo personalizado de proyecto y conectarás un servidor MCP con una configuración local.',
     requirements: [
       ['Acceso', 'IBM Bob IDE v2.x o posterior con una cuenta habilitada.'],
       ['Entorno', 'Un workspace local donde puedas crear y revisar archivos.'],
-      ['Herramientas', 'Node.js 18+ para los Labs 1, 2 y 4. Una API key de Tavily para MCP.'],
+      ['Herramientas', 'Node.js 18+ para los Labs 2 y 4. Una API key de Tavily para el Lab 4 (MCP).'],
       ['Conocimiento', 'Manejo básico de editor, terminal y control de cambios.']
     ],
-    materials: ['Bundle LabHandsOnBob.zip (carpetas de Ask, Plan y Agent).', 'Los prompts y capturas incluidos en cada etapa.', 'Cuenta gratuita en tavily.com para el Lab 4 (MCP).'],
-    path: 'Completa los cuatro labs en orden: Ask → Plan y Agent → modo personalizado → MCP.',
+    materials: ['Bundle LabHandsOnBob.zip con cuatro carpetas independientes.', 'Prompts, checkpoints y capturas de referencia en cada lab.', 'Una cuenta de Tavily para el Lab 4 (MCP).'],
+    path: 'Completa los cuatro labs en orden: Ask → Plan y Agent → modo personalizado de proyecto → MCP de proyecto.',
     learning: [
       ['Modos de Bob', 'Elegir Ask, Plan o Agent según el tipo de tarea.'],
-      ['Gobernanza', 'Revisar cambios, comandos y aprobaciones antes de ejecutarlos.'],
+      ['Gobernanza', 'Confirmar el modo, revisar el cambio propuesto y verificar el resultado antes de avanzar.'],
       ['Personalización', 'Crear un modo con rol, instrucciones y herramientas propias.'],
-      ['MCP', 'Conectar una herramienta externa y usarla desde Agent Mode.']
+      ['MCP', 'Conectar una herramienta externa en el proyecto y comprobar una respuesta con fuentes.']
     ]
   },
   'entendiendo-bob': {

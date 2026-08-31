@@ -327,15 +327,30 @@ Empieza de nuevo mostrando el diff del Cambio que corresponda (sin aplicar nada 
           <p style="font-size:0.8125rem;color:var(--cds-text-secondary,#525252);margin:0">SDKMAN! — instala y cambia entre versiones de Java.</p>
           <details>
             <summary>Ver comandos</summary>
-            <p class="cds--body-01" style="font-size:0.8125rem;margin-top:0.75rem">Instala SDKMAN! e instala Java 8 (Lab 1) y Java 21 (Labs 2+) y Maven. Para Apple Silicon usa Azul Zulu — Temurin no tiene build de Java 8 para arm64. Pega todo el bloque de una vez:</p>
+            <p class="cds--body-01" style="font-size:0.8125rem;margin-top:0.75rem">Instala SDKMAN! y luego Java 8 (Lab 1), Java 21 (Labs 2+) y Maven. Para Apple Silicon usa Azul Zulu — Temurin no tiene build de Java 8 para arm64. Ejecuta cada comando en orden:</p>
             <div class="code-block code-block--terminal">
               <button type="button" class="copy-button">Copiar</button>
-              <pre><code>curl -s "https://get.sdkman.io" | bash
-source "$HOME/.sdkman/bin/sdkman-init.sh"
-sdk install java 8.0.492-zulu
-sdk default java 8.0.492-zulu
-sdk install java 21.0.7-zulu
-sdk install maven</code></pre>
+              <pre><code>curl -s "https://get.sdkman.io" | bash</code></pre>
+            </div>
+            <div class="code-block code-block--terminal">
+              <button type="button" class="copy-button">Copiar</button>
+              <pre><code>source "$HOME/.sdkman/bin/sdkman-init.sh"</code></pre>
+            </div>
+            <div class="code-block code-block--terminal">
+              <button type="button" class="copy-button">Copiar</button>
+              <pre><code>sdk install java 8.0.492-zulu</code></pre>
+            </div>
+            <div class="code-block code-block--terminal">
+              <button type="button" class="copy-button">Copiar</button>
+              <pre><code>sdk default java 8.0.492-zulu</code></pre>
+            </div>
+            <div class="code-block code-block--terminal">
+              <button type="button" class="copy-button">Copiar</button>
+              <pre><code>sdk install java 21.0.7-zulu</code></pre>
+            </div>
+            <div class="code-block code-block--terminal">
+              <button type="button" class="copy-button">Copiar</button>
+              <pre><code>sdk install maven</code></pre>
             </div>
             <div class="callout" data-tone="note" style="margin-top:0.75rem">
               <p class="callout__title">Gotcha Apple Silicon (serie M)</p>
@@ -357,15 +372,30 @@ sdk install maven</code></pre>
           <p style="font-size:0.8125rem;color:var(--cds-text-secondary,#525252);margin:0">SDKMAN! — igual que macOS.</p>
           <details>
             <summary>Ver comandos</summary>
-            <p class="cds--body-01" style="font-size:0.8125rem;margin-top:0.75rem">Instala SDKMAN! e instala Java 8 (Lab 1), Java 21 (Labs 2+) y Maven. Pega todo el bloque de una vez:</p>
+            <p class="cds--body-01" style="font-size:0.8125rem;margin-top:0.75rem">Instala SDKMAN!, Java 8 (Lab 1), Java 21 (Labs 2+) y Maven. Ejecuta cada comando en orden:</p>
             <div class="code-block code-block--terminal">
               <button type="button" class="copy-button">Copiar</button>
-              <pre><code>curl -s "https://get.sdkman.io" | bash
-source "$HOME/.sdkman/bin/sdkman-init.sh"
-sdk install java 8.0.492-zulu
-sdk default java 8.0.492-zulu
-sdk install java 21.0.7-zulu
-sdk install maven</code></pre>
+              <pre><code>curl -s "https://get.sdkman.io" | bash</code></pre>
+            </div>
+            <div class="code-block code-block--terminal">
+              <button type="button" class="copy-button">Copiar</button>
+              <pre><code>source "$HOME/.sdkman/bin/sdkman-init.sh"</code></pre>
+            </div>
+            <div class="code-block code-block--terminal">
+              <button type="button" class="copy-button">Copiar</button>
+              <pre><code>sdk install java 8.0.492-zulu</code></pre>
+            </div>
+            <div class="code-block code-block--terminal">
+              <button type="button" class="copy-button">Copiar</button>
+              <pre><code>sdk default java 8.0.492-zulu</code></pre>
+            </div>
+            <div class="code-block code-block--terminal">
+              <button type="button" class="copy-button">Copiar</button>
+              <pre><code>sdk install java 21.0.7-zulu</code></pre>
+            </div>
+            <div class="code-block code-block--terminal">
+              <button type="button" class="copy-button">Copiar</button>
+              <pre><code>sdk install maven</code></pre>
             </div>
             <p style="font-size:0.8125rem;color:var(--cds-text-secondary,#525252);margin-top:0.75rem">Ubuntu/Debian alternativo: <code>sudo apt install openjdk-21-jdk maven</code></p>
           </details>

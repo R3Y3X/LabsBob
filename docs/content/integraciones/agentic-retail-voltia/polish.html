@@ -1,12 +1,11 @@
 <div class="content-panel lab-template prose--full">
   <div class="lab-banner">
-    <div class="lab-banner__tags">
-      <span class="cds--tag cds--tag--purple">Cierre</span>
-      <span class="cds--tag cds--tag--cool-gray">~15 min</span>
-      <span class="cds--tag cds--tag--teal">Animar · Revisar · Docs</span>
+    <div class="integration-meta" aria-label="Información del Lab Pulir y documentar">
+      <span><b>Lab</b> Pulir y documentar</span><span><b>Duración</b> ~15 min</span><span><b>Resultado</b> UI revisada y documentada</span>
     </div>
     <h1 class="cds--productive-heading-05 lab-banner__title">Pulir, revisar y documentar</h1>
     <p class="cds--body-02 lab-banner__summary">Anima la UI, revisa contra los mockups y documenta la tienda con MkDocs.</p>
+    <div class="lab-banner__metrics"><div class="lab-banner__metric"><span class="lab-banner__metric-value">3–6</span><span class="lab-banner__metric-label">BobCoins estimados</span></div></div>
   </div>
 
   <div class="callout" data-tone="note">
@@ -39,7 +38,7 @@
 </span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>   haz que cada toast sea un motion.div que entra desde abajo con un spring
 </span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>   (initial { opacity: 0, y: 20, scale: 0.9 } -&gt; animate completo; exit de vuelta).
 </span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>2. En src/components/Header.jsx, haz que el badge del carrito &quot;salte&quot; cuando cambia
-</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>   el número: dale key={count} y un pequeño rebote de escala al montarse.
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>   el número: asigna key={count} y un pequeño rebote de escala al montarse.
 </span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>3. En el botón &quot;+&quot; de la tarjeta, agrega un whileTap que lo achique al presionar.
 </span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>Mantenlo rápido y elástico, sin rebotes de más.
 </span></code></pre></div>
@@ -54,7 +53,7 @@
 </span></code></pre></div>
 <div class="callout" data-tone="warning">
 <p class="callout__title">Que el movimiento guíe, no que pelee por atención</p>
-<p class="cds--body-01">Rápido (~150–300ms) y sutil. Pedile a Bob que respete <code>prefers-reduced-motion</code> para suavizar/desactivar el movimiento no esencial.</p>
+<p class="cds--body-01">Rápido (~150–300ms) y sutil. Pídele a Bob que respete <code>prefers-reduced-motion</code> para suavizar/desactivar el movimiento no esencial.</p>
 </div>
 <div class="callout" data-tone="success">
 <p class="callout__title">Criterios de éxito</p>
@@ -71,10 +70,10 @@
     </h2>
 <p class="cds--body-01">Tienes una tienda funcionando, animada y con asistente. La fase de revisión se asegura de que la app aguante más allá del camino feliz: que sea <strong>responsive</strong>, <strong>accesible</strong> y que los casos borde no la rompan.</p>
 <h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="responsive-y-accesibilidad">Responsive y accesibilidad</h3>
-<p class="cds--body-01">Achicá el navegador a ancho de teléfono.</p>
+<p class="cds--body-01">Reduce el navegador a ancho de teléfono.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>Asegúrate de que las tres pantallas sean responsive: la grilla colapsa a menos
 </span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>columnas, el detalle de producto pasa de dos columnas a apilado, y la reserva apila
-</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>el resumen debajo de las líneas en pantallas chicas. Arreglá cualquier layout que
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>el resumen debajo de las líneas en pantallas chicas. Corrige cualquier layout que
 </span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>se desborde o superponga.
 </span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>
 </span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>Después una pasada rápida de accesibilidad: cada thumbnail con texto alternativo
@@ -108,7 +107,7 @@
 <p class="cds--body-01">El software no termina cuando funciona, termina cuando la próxima persona lo entiende. En esta parte vas a hacer que Bob genere un sitio de documentación con <strong>MkDocs</strong>.</p>
 <p class="cds--body-01">Para ahorrar tiempo, <strong>el esqueleto ya está armado en el starter</strong>: <code>requirements.txt</code> (con <code>mkdocs-material</code>), la carpeta <code>docs/</code> con una página por sección, y <code>docs/images/</code> con los tres mockups ya copiados. Bob solo tiene que escribir el <strong>tema</strong> (<code>mkdocs.yml</code>) y <strong>completar el contenido</strong> de cada página.</p>
 <h3 class="cds--productive-heading-03" style="margin-top: 2rem;" id="1-genera-la-documentacion">1. Genera la documentación</h3>
-<p class="cds--body-01">En <strong>💻 Modo Código</strong>, mandale este prompt a Bob:</p>
+<p class="cds--body-01">En <strong>💻 Modo Código</strong>, envíale este prompt a Bob:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>Documenta este proyecto (Voltia) para un desarrollador nuevo como un sitio MkDocs.
 </span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>El esqueleto YA EXISTE en el proyecto: requirements.txt (con mkdocs-material), la
 </span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>carpeta docs/ con las páginas stub de abajo, y docs/images/ con home.png,
@@ -135,7 +134,7 @@
 </span><span id="__span-16-24"><a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a>   - docs/assistant.md        : cómo está embebido el agente (el &lt;script&gt; en
 </span><span id="__span-16-25"><a id="__codelineno-16-25" name="__codelineno-16-25" href="#__codelineno-16-25"></a>                                index.html, el div #wxo-root, rootElementID)
 </span><span id="__span-16-26"><a id="__codelineno-16-26" name="__codelineno-16-26" href="#__codelineno-16-26"></a>   - docs/screens/storefront.md, docs/screens/product.md, docs/screens/cart.md :
-</span><span id="__span-16-27"><a id="__codelineno-16-27" name="__codelineno-16-27" href="#__codelineno-16-27"></a>                                una página por pantalla. En cada una embebé arriba la
+</span><span id="__span-16-27"><a id="__codelineno-16-27" name="__codelineno-16-27" href="#__codelineno-16-27"></a>                                una página por pantalla. En cada una inserta arriba la
 </span><span id="__span-16-28"><a id="__codelineno-16-28" name="__codelineno-16-28" href="#__codelineno-16-28"></a>                                captura correspondiente desde ../images/ (home.png,
 </span><span id="__span-16-29"><a id="__codelineno-16-29" name="__codelineno-16-29" href="#__codelineno-16-29"></a>                                product.png, cart.png respectivamente).
 </span><span id="__span-16-30"><a id="__codelineno-16-30" name="__codelineno-16-30" href="#__codelineno-16-30"></a>
@@ -146,9 +145,10 @@
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">macOS / Linux</label><label for="__tabbed_1_2">Windows</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p class="cds--body-01" style="margin:0 0 4px;font-weight:600;">Crea y activa el entorno virtual — ejecuta ambas líneas juntas, en la misma terminal</p>
+<p class="cds--body-01" style="margin:0 0 4px;font-weight:600;">Crea y activa el entorno virtual en esta terminal, en este orden</p>
 <div class="language-bash highlight"><pre><code>python3 -m venv .venv
-source .venv/bin/activate
+</code></pre></div>
+<div class="language-bash highlight"><pre><code>source .venv/bin/activate
 </code></pre></div>
 <p class="cds--body-01" style="margin:0.75rem 0 4px;font-weight:600;">Con el entorno activado, instala las dependencias</p>
 <div class="language-bash highlight"><pre><code>pip install -r requirements.txt
@@ -158,9 +158,10 @@ source .venv/bin/activate
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<p class="cds--body-01" style="margin:0 0 4px;font-weight:600;">Crea y activa el entorno virtual — ejecuta ambas líneas juntas, en la misma terminal</p>
+<p class="cds--body-01" style="margin:0 0 4px;font-weight:600;">Crea y activa el entorno virtual en esta terminal, en este orden</p>
 <div class="language-powershell highlight"><pre><code>python -m venv .venv
-.venv\Scripts\Activate.ps1
+</code></pre></div>
+<div class="language-powershell highlight"><pre><code>.venv\Scripts\Activate.ps1
 </code></pre></div>
 <p class="cds--body-01" style="margin:0.75rem 0 4px;font-weight:600;">Con el entorno activado, instala las dependencias</p>
 <div class="language-powershell highlight"><pre><code>pip install -r requirements.txt
@@ -176,10 +177,10 @@ source .venv/bin/activate
       <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
       🎉 ¡Listo!
     </h2>
-<p class="cds--body-01">Llevaste <strong>Voltia</strong> por todo el ciclo: <strong>planificar → construir (pantalla por pantalla) → embeber el asistente de IA → animar → revisar → documentar</strong>, todo guiado por <strong>IBM Bob</strong>. Y, sobre todo, <strong>conectaste los tres labs</strong>: el frontend que acabas de construir es la cara visible del sistema de agentes del Lab 2, que a su vez razona sobre el inventario en tiempo real del Lab 1.</p>
+<p class="cds--body-01">Llevaste <strong>Voltia</strong> por todo el ciclo: <strong>planificar → construir (pantalla por pantalla) → embeber el asistente de IA → animar → revisar → documentar</strong>, todo guiado por <strong>IBM Bob</strong>. Y, sobre todo, <strong>conectaste los tres tracks</strong>: el frontend que acabas de construir es la cara visible del sistema de agentes del Track F, que a su vez razona sobre el inventario en tiempo real del Track D.</p>
 <div class="callout" data-tone="info">
 <p class="callout__title">El rol de IBM Bob</p>
-<p class="cds--body-01">A lo largo del lab, Bob convirtió instrucciones en lenguaje natural y mockups en componentes React funcionales, te ayudó a embeber el agente sin pelearte con la integración y revisó el diseño en una sola pasada. La ingeniería de software asistida por IA te dejó enfocarte en la experiencia del cliente y la arquitectura, no en el plumbing.</p>
+<p class="cds--body-01">A lo largo del track, Bob convirtió instrucciones en lenguaje natural y mockups en componentes React funcionales, te ayudó a embeber el agente sin pelearte con la integración y revisó el diseño en una sola pasada. La ingeniería de software asistida por IA te dejó enfocarte en la experiencia del cliente y la arquitectura, no en el plumbing.</p>
 </div>
 
 

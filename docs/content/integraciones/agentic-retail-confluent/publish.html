@@ -1,12 +1,11 @@
 <div class="content-panel lab-template prose--full">
   <div class="lab-banner">
-    <div class="lab-banner__tags">
-      <span class="cds--tag cds--tag--purple">Mensajes de Ejemplo</span>
-      <span class="cds--tag cds--tag--cool-gray">~15 min</span>
-      <span class="cds--tag cds--tag--teal">Publicación</span>
+    <div class="integration-meta" aria-label="Información del Lab Publicar eventos">
+      <span><b>Lab</b> Publicar eventos</span><span><b>Duración</b> ~15 min</span><span><b>Resultado</b> 20 eventos procesados</span>
     </div>
     <h1 class="cds--productive-heading-05 lab-banner__title">Publicar eventos de inventario</h1>
     <p class="cds--body-02 lab-banner__summary">Publica 20 transacciones de ejemplo al tópico y verifica que ksqlDB las procesa en tiempo real.</p>
+    <div class="lab-banner__metrics"><div class="lab-banner__metric"><span class="lab-banner__metric-value">2–5</span><span class="lab-banner__metric-label">BobCoins estimados</span></div></div>
   </div>
 
   <!-- ── Context ────────────────────────────────────────────────── -->
@@ -30,16 +29,16 @@
       </div>
     </div>
     <h2 class="cds--productive-heading-04">Step 3. Publicar 20 mensajes de ejemplo</h2>
-    <p class="step-header__why">Los 20 mensajes simulan ventas y reposiciones reales de Voltia, para que los agentes del Lab 2 encuentren datos desde el primer momento.</p>
+    <p class="step-header__why">Los 20 mensajes simulan ventas y reposiciones reales de Voltia, para que los agentes del Track F encuentren datos desde el primer momento.</p>
 
     <!-- PLATFORM -->
     <div data-env-panel="platform" class="env-panel--active">
 
       <div class="callout" data-tone="info" style="margin-bottom:1rem;">
         <p class="callout__title">¿Qué hace <code>run_in_cluster.sh produce_messages</code> internamente?</p>
-        <p class="cds--body-01" style="margin-top:0.25rem;">Empaqueta <code>produce_messages.py</code> y el <code>.env</code> en un ConfigMap, lanza un Job de Kubernetes en el namespace <code>confluent</code> y el pod produce 20 mensajes al tópico <code>inventory.transactions</code> usando las credenciales SASL del <code>.env</code>. Cada mensaje incluye:</p>
+        <p class="cds--body-01" style="margin-top:0.25rem;">Empaqueta <code>produce_messages.py</code> y el <code>.env</code> en un ConfigMap, lanza un Job de Kubernetes en el namespace <code>confluent</code> y el pod produce 20 mensajes JSON_SR al tópico <code>inventory.transactions</code> usando las credenciales SASL del <code>.env</code>. Cada mensaje incluye:</p>
         <ul class="cds--list--unordered" style="margin-top:0.5rem;">
-          <li class="cds--list__item">Campos <code>sku</code>, <code>branch</code>, <code>quantity</code>, <code>transaction_type</code>, <code>timestamp</code>, <code>source</code> y <code>reference</code> — alineados con el schema Protobuf registrado en Step 1b.</li>
+          <li class="cds--list__item">Campos <code>sku</code>, <code>branch</code>, <code>quantity</code>, <code>transaction_type</code>, <code>timestamp</code>, <code>source</code> y <code>reference</code> — validados por el JSON Schema registrado en Step 1b.</li>
           <li class="cds--list__item">Variedad de tipos: <code>ADDITION</code>, <code>SALE</code> y <code>ADJUSTMENT</code> — para que ksqlDB calcule disponibilidades reales.</li>
           <li class="cds--list__item">En cuanto llega el primer mensaje, <code>INVENTORY_AVAILABILITY</code> empieza a actualizar su tabla en tiempo real.</li>
         </ul>
@@ -110,7 +109,7 @@ Dime el output completo del comando. El resultado exitoso debe terminar con:
     <!-- CLOUD -->
     <div data-env-panel="cloud">
       <h3 class="cds--productive-heading-03">Opción A — Script desde terminal</h3>
-      <p class="cds--body-01">Asegúrate de tener el <code>.env</code> configurado con las credenciales del cluster. Abre una terminal en <code>Labs-tech-summit/Lab1/inventory-pipeline</code> y ejecuta:</p>
+      <p class="cds--body-01">Asegúrate de tener el <code>.env</code> configurado con las credenciales del cluster. Abre una terminal en <code>inventory-pipeline</code> y ejecuta:</p>
 <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">./setup.sh -s 3</code></pre></div>
 
       <h3 class="cds--productive-heading-03" style="margin-top:1.5rem;">Opción B — Publicar un mensaje manual (verificación)</h3>
@@ -208,7 +207,7 @@ Indícame cuando termines de emitir los 5 mensajes e infórmame los offsets gene
       </div>
     </div>
     <h2 class="cds--productive-heading-04">Step 4b. Inspeccionar payloads, timestamps y offsets en la consola web</h2>
-    <p class="step-header__why">Verificar visualmente los mensajes en la plataforma web confirma que el pipeline completo funciona: el productor emitió correctamente, Kafka almacenó respetando el schema y ksqlDB procesó los datos hacia <code>inventory.availability</code>.</p>
+    <p class="step-header__why">Verificar visualmente los mensajes en la plataforma web confirma que el pipeline completo funciona: el productor emitió JSON_SR, Kafka validó el schema y ksqlDB procesó los datos hacia <code>inventory.availability</code>.</p>
 
     <ol class="cds--list--ordered" style="margin-top:0.75rem;">
       <li class="cds--list__item">
@@ -240,7 +239,7 @@ Indícame cuando termines de emitir los 5 mensajes e infórmame los offsets gene
       <p class="callout__title">✓ Checkpoint 4b (Final)</p>
       <ul class="checklist">
         <li class="checklist__item">Se visualizan los mensajes en la pestaña <strong>Messages</strong> con sus <strong>timestamps</strong> y <strong>offsets</strong> correctos.</li>
-        <li class="checklist__item">El JSON del payload coincide con la estructura del schema Protobuf registrado en Step 1b (campos <code>sku</code>, <code>branch</code>, <code>quantity</code>, <code>transaction_type</code>, <code>timestamp</code>, <code>source</code>, <code>reference</code>).</li>
+          <li class="checklist__item">El payload cumple el JSON Schema registrado en Step 1b (campos <code>sku</code>, <code>branch</code>, <code>quantity</code>, <code>transaction_type</code>, <code>timestamp</code>, <code>source</code>, <code>reference</code>).</li>
         <li class="checklist__item">El tópico <code>inventory.availability</code> muestra disponibilidad calculada por SKU y sucursal con <code>available_quantity</code> actualizada.</li>
         <li class="checklist__item">El subject <code>inventory.transactions-value</code> en Schema Registry sigue mostrando versión <strong>v1</strong> sin errores de validación.</li>
       </ul>
@@ -250,7 +249,7 @@ Indícame cuando termines de emitir los 5 mensajes e infórmame los offsets gene
   <!-- ── Success summary ───────────────────────────────────────── -->
   <section class="lab-section" style="margin-top:3rem;">
     <div class="callout" data-tone="success">
-      <p class="callout__title">Lab 1 completo — Criterios de éxito</p>
+      <p class="callout__title">Track D completo — Criterios de éxito</p>
       <ul class="checklist">
         <li class="checklist__item">Tópico <code>inventory.transactions</code> — 1 partición, retention infinita.</li>
         <li class="checklist__item">Stream <code>INVENTORY_TRANSACTIONS</code> y tabla <code>INVENTORY_AVAILABILITY</code> creados en ksqlDB.</li>
@@ -301,7 +300,7 @@ Indícame cuando termines de emitir los 5 mensajes e infórmame los offsets gene
         </tr>
         <tr>
           <td style="padding:0.875rem 1rem; vertical-align:top;"><code>Schema validation failed</code> <span style="display:inline-block; margin-left:0.2rem;">en Schema Registry</span></td>
-          <td style="padding:0.875rem 1rem; vertical-align:top;">El payload JSON no respeta los tipos Protobuf: un campo numérico (<code>quantity</code>) llega como <em>string</em>, o falta un campo requerido.</td>
+          <td style="padding:0.875rem 1rem; vertical-align:top;">El payload JSON no respeta el JSON Schema: un campo numérico (<code>quantity</code>) llega como <em>string</em>, o falta un campo requerido.</td>
           <td style="padding:0.875rem 1rem; vertical-align:top;">Verifica que <code>quantity</code> sea entero (no <code>"50"</code> sino <code>50</code>), que <code>transaction_type</code> sea uno de <code>ADDITION</code>, <code>SALE</code>, <code>ADJUSTMENT</code> y que todos los campos del schema estén presentes. Consulta el subject registrado con: <code>curl -sk -u admin:[PASSWORD] https://[IP]/sr/subjects/inventory.transactions-value/versions/latest</code></td>
         </tr>
       </tbody>

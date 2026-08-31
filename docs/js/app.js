@@ -2,6 +2,7 @@ import { loadContent } from './content.js';
 import { siteData, workshopGuides, findLab, getNextLab, getWorkshopStats, getVisibleSections, roadshowConfig, getRoadshowPlan, getLabTrackMeta } from './data.js';
 import { getHomeRoute, getLabRoute, parseRoute } from './router.js';
 import { initializeTheme, toggleTheme } from './theme.js';
+import { ensureParticipantAssignment, isParticipantLab, personalizeContent, participantBanner, readParticipantContext } from './participant.js?v=2';
 
 const PREMIUM_STORAGE_KEY = 'labsBob.premiumAccess';
 let premiumAccess = readPremiumAccess();
@@ -2219,7 +2220,7 @@ async function appendSupplementalContent(proseEl, lab, step) {
   const supplemental = SUPPLEMENTAL_CONTENT[lab.slug]?.[step.slug];
   if (!supplemental) return;
 
-  const source = await loadContent(supplemental.file);
+  const source = personalizeContent(await loadContent(supplemental.file), readParticipantContext());
   const buffer = document.createElement('div');
   buffer.innerHTML = source;
   const content = buffer.querySelector('.content-panel') || buffer;
@@ -2302,7 +2303,7 @@ function rewriteDownloadLinks(container) {
   container.querySelectorAll('a[download][href], a[href$=".zip"]').forEach((link) => {
     let href = link.getAttribute('href') || '';
     if (!href || /^(https?:|mailto:|#)/i.test(href)) return;
-    const downloadsMatch = href.match(/(?:^|\/)downloads\/([^/?#]+)$/);
+    const downloadsMatch = href.match(/^\.\/downloads\/([^/?#]+)$/);
     if (downloadsMatch) href = `./downloads/${downloadsMatch[1]}`;
     link.setAttribute('href', new URL(href, siteDirectoryUrl()).href);
   });
@@ -2311,7 +2312,7 @@ function rewriteDownloadLinks(container) {
 function isPromptContext(element) {
   const previous = element.previousElementSibling;
   const label = previous?.textContent || '';
-  return /prompt\s+(?:para|de)\s+bob|pega este prompt|envía este prompt/i.test(label);
+  return /(?:prompt|pregunta)\s+(?:para|de)\s+bob|pega este prompt|envía este prompt/i.test(label);
 }
 
 function isTerminalContext(element) {
@@ -2326,6 +2327,65 @@ function getCodeBlockKind(code) {
   if (language === 'json') return 'code-block--json';
   if (language === 'bash' || language === 'shell' || language === 'sh') return 'code-block--terminal';
   return '';
+}
+
+function classifyModernizationCodeBlock(codeBlock, code) {
+  if (codeBlock.matches('.code-block--prompt, .code-block--terminal, .code-block--file, .code-block--yaml, .code-block--json')) return;
+
+  const text = code.textContent.trim();
+  if (!text) return;
+
+  // In the modernization workshops, old content often used a plain <pre> for
+  // every kind of instruction. Classify it by what the learner must do, not by
+  // its typography: executable input goes to the terminal; artifacts and
+  // output stay neutral; everything else is a request for Bob.
+  const declaredLanguage = `${codeBlock.dataset.language || ''} ${code.className || ''}`.toLowerCase();
+  if (isPromptContext(codeBlock)) {
+    codeBlock.classList.add('code-block--prompt');
+  } else if (/\b(?:bash|shell|sh)\b/.test(declaredLanguage)
+    || /^(?:[$#]\s*)?(?:mvn|sdk|java|npm|npx|node|git|curl|wget|grep|lsof|winget|powershell|docker|podman|kubectl|helm|ansible(?:-playbook)?|ssh|scp|chmod|cd|export|source|runsqlstm|crtsqlrpgi|strsql|sbmjob|qsh|system)\b/im.test(text)) {
+    codeBlock.classList.add('code-block--terminal');
+  } else if (/\b(?:yaml|yml|json|sql)\b/.test(declaredLanguage)
+    || /^(?:<|@\w+\/|https?:\/\/|\[INFO\]|\[ERROR\]|Error:|Exception:|[├└│]|Date\s+\w+\s*=|(?:\/\/|Dcl-|ctl-opt|free\b|Exec SQL|SELECT\b|CREATE\b|import\b|export\b|const\b|function\b|class\b)|[\w.-]+\.(?:xml|json|yaml|yml|java|jsx|tsx|properties)\b)/im.test(text)) {
+    codeBlock.classList.add('code-block--file');
+  } else {
+    codeBlock.classList.add('code-block--prompt');
+  }
+}
+
+function ensureModernizationContextLabel(codeBlock, code) {
+  if (codeBlock.querySelector(':scope > .code-block__label')) return;
+
+  const label = document.createElement('p');
+  label.className = 'code-block__label';
+  if (codeBlock.classList.contains('code-block--terminal')) {
+    label.textContent = '$ Terminal integrada';
+  } else if (codeBlock.classList.contains('code-block--prompt')) {
+    label.textContent = 'Pega en el chat de Bob';
+  } else if (/^https?:\/\//im.test(code.textContent.trim())) {
+    label.textContent = 'Referencia';
+  } else {
+    label.textContent = 'Archivo o configuración';
+  }
+  codeBlock.prepend(label);
+}
+
+function enforceModernizationDarkBlockContrast(codeBlock) {
+  const isDarkSurface = codeBlock.matches('.code-block--prompt, .code-block--terminal');
+  const isNeutralSurface = codeBlock.matches('.code-block--file, .code-block--json, .code-block--yaml');
+  if (!isDarkSurface && !isNeutralSurface) return;
+
+  // Imported Carbon styles occasionally set an important ink token on nested
+  // syntax spans. Set the intended token at render time, as in the blue track,
+  // so both standard and Premium workflows remain readable on every surface.
+  // Neutral references use a CSS variable rather than a fixed inline colour:
+  // the theme switch can then update them without reloading the lesson.
+  const ink = isDarkSurface ? '#f4f4f4' : 'var(--modernization-file-ink, #161616)';
+  if (isDarkSurface) codeBlock.style.setProperty('background-color', '#161616', 'important');
+  codeBlock.querySelectorAll(':scope > pre, :scope > pre *, .prompt-block__body, .prompt-block__body *').forEach((node) => {
+    node.style.setProperty('color', ink, 'important');
+    node.style.setProperty('-webkit-text-fill-color', ink, 'important');
+  });
 }
 
 function normalizeCodeSyntax(codeBlock) {
@@ -2390,7 +2450,9 @@ function normalizePromptBlocks(container) {
       .replace(/^🤖\s*/u, '') || 'Prompt para Bob';
     const heading = document.createElement('p');
     heading.className = 'code-block__label';
-    heading.textContent = label;
+    heading.textContent = container.closest('.lab-shell--agentic-retail-confluent')
+      ? 'Pega en el chat de Bob'
+      : label;
 
     const pre = document.createElement('pre');
     const code = document.createElement('code');
@@ -2401,8 +2463,28 @@ function normalizePromptBlocks(container) {
   });
 }
 
+function normalizeConfluentLegacyUi(container) {
+  if (!container.closest('.lab-shell--agentic-retail-confluent')) return;
+
+  // These badges were the old color-only context system. The nearby action
+  // copy and the labelled blocks now convey context without duplicate chips.
+  container.querySelectorAll('.ctx-badge').forEach((badge) => badge.remove());
+
+  // A semantic checklist provides the status icon. Do not leave a second
+  // literal check or an emoji at the start of a callout heading.
+  container.querySelectorAll('.callout__title').forEach((title) => {
+    title.textContent = title.textContent
+      .replace(/^[✓✅❌🎯]\s*/u, '')
+      .replace(/^Propósito\s*[—–-]\s*/iu, '')
+      .trim();
+  });
+}
+
 function normalizeCodeBlocks(container) {
   normalizePromptBlocks(container);
+  normalizeConfluentLegacyUi(container);
+  const isConfluentTrack = Boolean(container.closest('.lab-shell--agentic-retail-confluent'));
+  const isModernizationTrack = Boolean(container.closest(':is(.lab-shell--java-modernization-v2, .lab-shell--ibm-i-rpg-development)'));
 
   container.querySelectorAll('pre > code').forEach((code) => {
     const pre = code.parentElement;
@@ -2421,6 +2503,16 @@ function normalizeCodeBlocks(container) {
     } else if (!kind && isTerminalContext(source)) {
       codeBlock.classList.add('code-block--terminal');
     }
+    // In the Confluent workshop, SQL is pasted into the ksqlDB editor and a
+    // .proto declaration is a file reference. Neither is a shell command.
+    const rawCode = code.textContent.trim();
+    if (isConfluentTrack && (/\blanguage-sql\b/.test(code.className) || /^syntax\s*=\s*["']proto3["'];?/m.test(rawCode))) {
+      codeBlock.classList.remove('code-block--terminal');
+      codeBlock.classList.add('code-block--file');
+    }
+    if (isConfluentTrack && /\blanguage-json\b/.test(code.className)) {
+      codeBlock.classList.add('code-block--file');
+    }
     source.replaceWith(codeBlock);
     codeBlock.append(pre);
     normalizeCodeSyntax(code);
@@ -2430,6 +2522,50 @@ function normalizeCodeBlocks(container) {
     const code = codeBlock.querySelector('code');
     if (!code) return;
     normalizeCodeSyntax(code);
+
+    // Track D may contain terminal examples authored before the contextual
+    // component existed. Give those blocks a real label so the instruction is
+    // accessible and does not rely on a decorative CSS-generated header.
+    const isTerminal = codeBlock.classList.contains('code-block--terminal');
+    const isFileReference = codeBlock.classList.contains('code-block--file');
+    if (isConfluentTrack && isTerminal && !codeBlock.querySelector(':scope > .code-block__label')) {
+      const label = document.createElement('p');
+      label.className = 'code-block__label';
+      label.textContent = '$ Terminal integrada';
+      codeBlock.prepend(label);
+    }
+    if (isConfluentTrack && isFileReference && !codeBlock.querySelector(':scope > .code-block__label')) {
+      const label = document.createElement('p');
+      label.className = 'code-block__label';
+      if (/\blanguage-sql\b/.test(code.className)) {
+        label.textContent = 'Editor ksqlDB · SQL';
+      } else if (/^syntax\s*=\s*["']proto3["'];?/m.test(code.textContent.trim())) {
+        label.textContent = 'Archivo de esquema · Protobuf';
+      } else if (/\blanguage-json\b/.test(code.className)) {
+        label.textContent = 'JSON de referencia';
+      } else {
+        label.textContent = 'Archivo de configuración';
+      }
+      codeBlock.prepend(label);
+    }
+
+    // Carbon's imported stylesheet can assign an important dark text token to
+    // <pre>/<code> after the Confluent surface turns dark. Apply the same
+    // inverse text token used by the blue track at component normalization so
+    // the prompt body remains readable regardless of that external cascade.
+    if (isConfluentTrack && codeBlock.classList.contains('code-block--prompt')) {
+      codeBlock.style.setProperty('background-color', '#161616', 'important');
+      codeBlock.querySelectorAll(':scope > pre, :scope > pre *, .prompt-block__body, .prompt-block__body *').forEach((node) => {
+        node.style.setProperty('color', '#f4f4f4', 'important');
+        node.style.setProperty('-webkit-text-fill-color', '#f4f4f4', 'important');
+      });
+    }
+
+    if (isModernizationTrack) {
+      classifyModernizationCodeBlock(codeBlock, code);
+      ensureModernizationContextLabel(codeBlock, code);
+      enforceModernizationDarkBlockContrast(codeBlock);
+    }
     ensureCodeBlockCopyButton(codeBlock);
   });
 }
@@ -2492,7 +2628,9 @@ async function renderLab(route) {
     window.location.hash = getLabRoute(route.labSlug, 'overview');
     return;
   }
-  const content = await loadContent(activeStep.baseFile || activeStep.file);
+  const participant = readParticipantContext();
+  const rawContent = await loadContent(activeStep.baseFile || activeStep.file);
+  const content = personalizeContent(rawContent, participant);
   const isOverview = activeStep.slug === 'overview';
 
   // Apply category to body for dynamic theming (TOC, nav, snippets)
@@ -2515,6 +2653,10 @@ async function renderLab(route) {
   `;
 
   const proseEl = labShell.querySelector('.prose');
+
+  if (participant && isParticipantLab(route.labSlug)) {
+    proseEl.insertAdjacentHTML('afterbegin', participantBanner(participant));
+  }
 
   await appendSupplementalContent(proseEl, lab, activeStep);
   await applyPremiumWorkflowVariant(proseEl, lab, activeStep);
@@ -2575,7 +2717,17 @@ async function renderRoute() {
   scrollLabToTop();
   updateNavCurrent();
   resetLabScroll();
+  // Render the track first so the assignment dialog is an overlay over real
+  // content instead of leaving the lab shell empty on the first visit.
+  const participantRequired = isParticipantLab(route.labSlug);
+  const hasParticipant = Boolean(readParticipantContext());
   await renderLab(route);
+  if (participantRequired && !hasParticipant) {
+    const participant = await ensureParticipantAssignment(route.labSlug);
+    if (!participant) return;
+    // Re-render once with the selected namespace and personalized names.
+    await renderLab(route);
+  }
   scrollLabToTop();
   requestAnimationFrame(scrollLabToTop);
 }

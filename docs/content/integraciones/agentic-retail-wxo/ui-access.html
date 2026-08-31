@@ -1,0 +1,153 @@
+<div class="content-panel lab-template prose--full">
+  <div class="lab-banner">
+    <div class="integration-meta" aria-label="Información del Lab Interfaz"><span><b>Lab</b> Interfaz watsonx Orchestrate</span><span><b>Duración</b> ~15 min</span><span><b>Resultado</b> Agente probado</span></div>
+    <h1 class="cds--productive-heading-05 lab-banner__title">Acceder a la plataforma y probar el agente</h1>
+    <p class="cds--body-02 lab-banner__summary">Ingresa a la interfaz web de watsonx Orchestrate, verifica que el agente y sus dependencias estén correctamente vinculados y pruébalo en tiempo real.</p>
+    <div class="lab-banner__metrics"><div class="lab-banner__metric"><span class="lab-banner__metric-value">2–4</span><span class="lab-banner__metric-label">BobCoins estimados</span></div></div>
+    <p class="cds--body-01">Continúa con el mismo workspace personalizado y el agente con sufijo de tu mesa+número.</p>
+  </div>
+
+  <!-- ── Paso 1 ─────────────────────────────────────────────────── -->
+  <section class="lab-section" aria-labelledby="acceso-plataforma">
+    <div class="step-header">
+      <div class="step-header__meta">
+        <span class="ctx-badge ctx-badge--browser">🌐 Navegador</span>
+        <span class="ctx-badge ctx-badge--orchestrate">watsonx Orchestrate</span>
+      </div>
+    </div>
+    <h2 class="cds--productive-heading-04" id="acceso-plataforma">Paso 1 — Acceder a watsonx Orchestrate</h2>
+    <p class="step-header__why">Para interactuar con el agente que acabas de importar con la CLI, debes acceder a la interfaz gráfica de watsonx Orchestrate desde IBM Cloud.</p>
+
+    <ol class="cds--list--ordered">
+      <li class="cds--list__item">Accede al dashboard de IBM Cloud: <a href="https://cloud.ibm.com" target="_blank" rel="noopener">https://cloud.ibm.com</a></li>
+      <li class="cds--list__item">En la esquina superior derecha, haz clic en la campana de <strong>Notificaciones</strong>.
+        <figure class="lab-figure">
+          <img src="./assets/images/labs/agentic-retail-wxo/notificaciones.png"
+               alt="Campana de notificaciones en la esquina superior derecha de IBM Cloud"
+               class="lab-figure__img" />
+          <figcaption class="lab-figure__caption">Abre la campana de notificaciones para localizar la invitación a tu instancia.</figcaption>
+        </figure>
+      </li>
+      <li class="cds--list__item">En el panel de notificaciones, presiona la frase azul <strong>Join now</strong> para unirte a la instancia de watsonx Orchestrate.
+        <figure class="lab-figure">
+          <img src="./assets/images/labs/agentic-retail-wxo/joinnow.png"
+               alt="Enlace azul Join now dentro de una notificación de IBM Cloud"
+               class="lab-figure__img" />
+          <figcaption class="lab-figure__caption">Presiona <strong>Join now</strong> (el enlace azul) y espera a que se habilite el acceso.</figcaption>
+        </figure>
+      </li>
+      <li class="cds--list__item">Abre el menú de hamburguesa en la esquina superior izquierda.</li>
+      <li class="cds--list__item">Selecciona <strong>Lista de recursos</strong>.
+        <figure class="lab-figure">
+          <img src="./assets/images/labs/agentic-retail-wxo/listarecursos.png"
+               alt="Opción Lista de recursos en el menú de IBM Cloud"
+               class="lab-figure__img" />
+          <figcaption class="lab-figure__caption">Selecciona <strong>Lista de recursos</strong> para ver las instancias disponibles.</figcaption>
+        </figure>
+      </li>
+      <li class="cds--list__item">Selecciona tu instancia de <strong>watsonx Orchestrate</strong> (suele estar bajo la categoría "IA / Aprendizaje automático").</li>
+      <li class="cds--list__item">Haz clic en el botón <strong>Iniciar watsonx Orchestrate</strong>.</li>
+    </ol>
+
+    <figure class="lab-figure">
+      <img src="./assets/images/labs/agentic-retail-wxo/launch_wxo.png"
+           alt="Iniciar watsonx Orchestrate desde IBM Cloud"
+           class="lab-figure__img" />
+      <figcaption class="lab-figure__caption">Botón para iniciar la plataforma desde el panel de IBM Cloud.</figcaption>
+    </figure>
+
+    <p class="cds--body-01" style="margin-top: 1rem;">Una vez dentro de la plataforma, ingresa a la sección <strong>Build</strong> usando el menú de navegación.</p>
+
+    <figure class="lab-figure">
+      <img src="./assets/images/labs/agentic-retail-wxo/wxo_ui.png"
+           alt="UI de watsonx Orchestrate en la sección Build"
+           class="lab-figure__img" />
+      <figcaption class="lab-figure__caption">Interfaz principal de watsonx Orchestrate (modo Build).</figcaption>
+    </figure>
+  </section>
+
+  <!-- ── Paso 2 ─────────────────────────────────────────────────── -->
+  <section class="lab-section" aria-labelledby="desplegar-agente">
+    <div class="step-header">
+      <div class="step-header__meta">
+        <span class="ctx-badge ctx-badge--browser">🌐 Navegador</span>
+        <span class="ctx-badge ctx-badge--orchestrate">watsonx Orchestrate</span>
+      </div>
+    </div>
+    <h2 class="cds--productive-heading-04" id="desplegar-agente">Paso 2 — Desplegar el agente</h2>
+    <p class="step-header__why">El agente fue importado, pero para poder interactuar con él debe estar desplegado. Además, es un buen momento para verificar que las herramientas externas (como el MCP de inventario) estén conectadas.</p>
+
+    <ol class="cds--list--ordered">
+      <li class="cds--list__item">En la sección <strong>Agents</strong>, busca el agente <code>SKU_Availability_Agent</code>.</li>
+      <li class="cds--list__item">Ábrelo haciendo clic sobre su nombre en la lista.</li>
+    </ol>
+
+    <figure class="lab-figure">
+      <img src="./assets/images/labs/agentic-retail-wxo/seleccionar_agente.png"
+           alt="Seleccionar agente SKU_Availability_Agent en la lista"
+           class="lab-figure__img" />
+      <figcaption class="lab-figure__caption">Búsqueda y selección del agente en la sección Agents.</figcaption>
+    </figure>
+
+    <ol class="cds--list--ordered" start="3">
+      <li class="cds--list__item">En la pestaña <strong>Toolset</strong>, confirma que la herramienta <code>retail_availability_mcp:get_sku_availability</code> esté vinculada.</li>
+      <li class="cds--list__item">En la esquina superior derecha, haz clic en el botón <strong>Deploy</strong>.</li>
+    </ol>
+
+    <figure class="lab-figure">
+      <img src="./assets/images/labs/agentic-retail-wxo/desplegar_agente.png"
+           alt="Botón Deploy en la esquina superior derecha"
+           class="lab-figure__img" />
+      <figcaption class="lab-figure__caption">Botón para desplegar el agente y dejarlo listo para pruebas.</figcaption>
+    </figure>
+
+    <ol class="cds--list--ordered" start="5">
+      <li class="cds--list__item">Confirma el despliegue en la ventana modal de resumen haciendo clic nuevamente en <strong>Deploy</strong>.</li>
+    </ol>
+
+    <figure class="lab-figure">
+      <img src="./assets/images/labs/agentic-retail-wxo/deploy_resumen.png"
+           alt="Confirmar despliegue en la ventana de resumen"
+           class="lab-figure__img" />
+      <figcaption class="lab-figure__caption">Ventana de confirmación final del despliegue.</figcaption>
+    </figure>
+
+    <div class="callout" data-tone="info" style="margin-top: 1rem;">
+      <p class="callout__title">Si el agente no encuentra la herramienta MCP</p>
+      <p class="cds--body-01">Si en la pestaña Toolset no ves la herramienta <code>get_sku_availability</code>, significa que el toolkit compartido no estaba registrado cuando corriste el import en la CLI. Vuelve al paso de preparación y avisa al facilitador.</p>
+    </div>
+  </section>
+
+  <!-- ── Paso 3 ─────────────────────────────────────────────────── -->
+  <section class="lab-section" aria-labelledby="probar-interaccion">
+    <div class="step-header">
+      <div class="step-header__meta">
+        <span class="ctx-badge ctx-badge--browser">🌐 Navegador</span>
+        <span class="ctx-badge ctx-badge--orchestrate">watsonx Orchestrate</span>
+      </div>
+    </div>
+    <h2 class="cds--productive-heading-04" id="probar-interaccion">Paso 3 — Interactuar con el agente</h2>
+    <p class="step-header__why">La prueba de fuego: chatear con el agente desde la plataforma y confirmar que es capaz de ir a buscar datos en tiempo real al inventario y responder con fluidez.</p>
+
+    <ol class="cds--list--ordered">
+      <li class="cds--list__item">Haz clic en <strong>Test in chat</strong> para abrir la ventana de simulación del agente.</li>
+      <li class="cds--list__item">Copia y pega la siguiente pregunta para probar su conexión al inventario:</li>
+    </ol>
+
+    <div class="code-block code-block--prompt">
+      <p class="code-block__label">Pregunta de prueba — pégala en el chat del agente</p>
+      <pre><code>¿Cuánto stock hay de LAPTOP-DELL-XPS-15 en DOT Shopping?</code></pre>
+    </div>
+
+    <p class="cds--body-01"><strong>Qué debes ver:</strong> el agente responde con una cantidad concreta y específica para la sucursal que pediste. En el detalle de la ejecución, notarás que llamó a la herramienta <code>get_sku_availability</code> de forma transparente.</p>
+
+    <div class="callout" data-tone="success" style="margin-top: 1.25rem;">
+      <p class="callout__title">✓ Checkpoint</p>
+      <ul class="checklist">
+        <li class="checklist__item">Iniciaste la plataforma correctamente desde IBM Cloud.</li>
+        <li class="checklist__item">Desplegaste el agente <code>SKU_Availability_Agent</code>.</li>
+        <li class="checklist__item">Al preguntar por un producto, el agente responde con el stock consultando el toolkit.</li>
+      </ul>
+    </div>
+  </section>
+</div>

@@ -1770,10 +1770,1184 @@ body.cds--g100 .callout[data-tone="danger"] {
 /* ── Hands-on Inicial: lectura limpia en todos los tamaños ─────── */
 
 .lab-shell--hands-on-inicial :where(.lab-banner__title, .lab-step__title,
-  .lab-mode-card__body, .lab-case-tile, .lab-compare__col, .lab-figure__caption,
+  .lab-mode-card__body, .lab-case-tile, .lab-compare__col, .lab-compare__card, .lab-figure__caption,
   .cds--list__item) {
   min-width: 0;
   overflow-wrap: anywhere;
+}
+
+/* Track A uses one visual grammar: IBM blue identifies the learning path and
+   actions; neutral surfaces identify metadata and terminal/file contexts.
+   These rules are intentionally scoped so Seguridad and SDLC keep their own
+   authoring language. */
+.lab-shell--hands-on-inicial {
+  --hands-on-blue: var(--cds-blue-60, #0f62fe);
+  --hands-on-blue-dark: #0043ce;
+  --hands-on-blue-tint: #edf5ff;
+  --hands-on-border: var(--cds-border-subtle-01, #c6c6c6);
+}
+
+.lab-shell--hands-on-inicial .hands-on-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin: 0 0 1rem;
+  color: var(--cds-text-secondary, #525252);
+  font-size: 0.8125rem;
+}
+
+/* app.js normally injects shared badge tags into every banner. Track A uses
+   the readable metadata row above instead, so the injected labels stay out
+   of the visual and accessibility tree for this track only. */
+.lab-shell--hands-on-inicial .lab-banner__tags {
+  display: none;
+}
+
+.lab-shell--hands-on-inicial .hands-on-meta__item {
+  display: inline-flex;
+  gap: 0.375rem;
+  align-items: baseline;
+}
+
+.lab-shell--hands-on-inicial .hands-on-meta__label {
+  color: var(--cds-text-helper, #6f6f6f);
+  font-weight: 600;
+}
+
+.lab-shell--hands-on-inicial .hands-on-meta__value {
+  color: var(--cds-text-primary, #161616);
+}
+
+.lab-shell--hands-on-inicial .hands-on-journey {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  margin: 1.5rem 0 0;
+  border: 1px solid var(--hands-on-border);
+  background: var(--hands-on-border);
+}
+
+.lab-shell--hands-on-inicial .hands-on-journey__item {
+  min-width: 0;
+  padding: 1rem;
+  background: var(--cds-background, #ffffff);
+  border-top: 3px solid var(--hands-on-blue);
+}
+
+.lab-shell--hands-on-inicial .hands-on-journey__step,
+.lab-shell--hands-on-inicial .hands-on-context {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: var(--hands-on-blue-dark);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.lab-shell--hands-on-inicial .hands-on-journey__title {
+  margin: 0.5rem 0 0.25rem;
+  color: var(--cds-text-primary, #161616);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.lab-shell--hands-on-inicial .hands-on-journey__desc,
+.lab-shell--hands-on-inicial .hands-on-journey__path {
+  margin: 0.25rem 0 0;
+  color: var(--cds-text-secondary, #525252);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.lab-shell--hands-on-inicial .hands-on-action {
+  margin-top: 1.25rem;
+}
+
+.lab-shell--hands-on-inicial .hands-on-action__purpose {
+  margin: 0.375rem 0 0;
+  color: var(--cds-text-secondary, #525252);
+  font-size: 0.875rem;
+}
+
+.lab-shell--hands-on-inicial .lab-compare {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 1.5rem 0;
+  border: 1px solid var(--hands-on-border);
+  background: var(--hands-on-border);
+}
+
+.lab-shell--hands-on-inicial .lab-compare__card {
+  padding: 1rem;
+  background: var(--cds-layer-01, #f4f4f4);
+  border-top: 3px solid #8d8d8d;
+}
+
+.lab-shell--hands-on-inicial .lab-compare__card--recommended {
+  border-top-color: var(--hands-on-blue);
+}
+
+.lab-shell--hands-on-inicial .lab-compare__card h3,
+.lab-shell--hands-on-inicial .lab-compare__card p {
+  margin: 0;
+}
+
+.lab-shell--hands-on-inicial .lab-compare__card p {
+  margin-top: 0.5rem;
+}
+
+.lab-shell--hands-on-inicial .hands-on-checkpoint {
+  margin-top: 1rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid #a6c8ff;
+  border-left: 3px solid var(--hands-on-blue);
+  background: var(--hands-on-blue-tint);
+}
+
+.lab-shell--hands-on-inicial .hands-on-checkpoint__title {
+  margin: 0;
+  color: var(--cds-text-primary, #161616);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.lab-shell--hands-on-inicial .hands-on-checkpoint .checklist {
+  margin-top: 0.625rem;
+}
+
+.lab-shell--hands-on-inicial .checklist__item::before {
+  border-color: var(--hands-on-blue);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6l3 3 5-5' stroke='%230f62fe' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
+}
+
+.lab-shell--hands-on-inicial .bob-mode,
+.lab-shell--hands-on-inicial .bob-mode--ask,
+.lab-shell--hands-on-inicial .bob-mode--plan,
+.lab-shell--hands-on-inicial .bob-mode--agent,
+.lab-shell--hands-on-inicial .bob-value-tile,
+.lab-shell--hands-on-inicial .bob-value-tile--speed,
+.lab-shell--hands-on-inicial .lab-mode-card,
+.lab-shell--hands-on-inicial .lab-mode-card--ask,
+.lab-shell--hands-on-inicial .lab-mode-card--plan,
+.lab-shell--hands-on-inicial .lab-mode-card--agent {
+  border-color: var(--hands-on-blue);
+}
+
+.lab-shell--hands-on-inicial .bob-mode__icon,
+.lab-shell--hands-on-inicial .bob-mode--ask .bob-mode__icon,
+.lab-shell--hands-on-inicial .bob-mode--plan .bob-mode__icon,
+.lab-shell--hands-on-inicial .bob-mode--agent .bob-mode__icon,
+.lab-shell--hands-on-inicial .bob-value-tile__icon,
+.lab-shell--hands-on-inicial .bob-value-tile__value,
+.lab-shell--hands-on-inicial .bob-mode__cap-item svg,
+.lab-shell--hands-on-inicial .lab-mode-card__icon {
+  background: var(--hands-on-blue);
+  color: #ffffff;
+}
+
+.lab-shell--hands-on-inicial .bob-value-tile__icon,
+.lab-shell--hands-on-inicial .lab-mode-card__icon {
+  background: transparent;
+  color: var(--hands-on-blue);
+}
+
+/* Keep the mode symbol attached to its title. It no longer reads as an
+   unaligned, independent column on long cards. */
+.lab-shell--hands-on-inicial .lab-mode-card__body > .cds--productive-heading-02 {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.lab-shell--hands-on-inicial .lab-mode-card__body > .cds--productive-heading-02 .lab-mode-card__icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  font-size: 1.375rem;
+  line-height: 1;
+}
+
+.lab-shell--hands-on-inicial .bob-value-tile__value {
+  background: transparent;
+  color: var(--hands-on-blue-dark);
+}
+
+.lab-shell--hands-on-inicial .code-block::before {
+  display: none;
+}
+
+.lab-shell--hands-on-inicial .code-block {
+  border-left-color: var(--hands-on-blue);
+  box-shadow: none;
+}
+
+.lab-shell--hands-on-inicial .code-block__label {
+  margin: 1rem 1.25rem 0.25rem;
+}
+
+.lab-shell--hands-on-inicial .code-block--prompt {
+  position: relative;
+  margin-top: 2.75rem;
+  background: var(--hands-on-blue-tint);
+  border: 1px solid #a6c8ff;
+  border-left: 4px solid var(--hands-on-blue);
+}
+
+.lab-shell--hands-on-inicial .code-block--prompt .code-block__label,
+.lab-shell--hands-on-inicial .code-block--prompt pre,
+.lab-shell--hands-on-inicial .code-block--prompt pre code {
+  color: var(--cds-text-primary, #161616) !important;
+}
+
+.lab-shell--hands-on-inicial .code-block--prompt .code-block__label {
+  position: absolute;
+  top: -2.125rem;
+  left: -1px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.125rem;
+  max-width: calc(100% - 0.5rem);
+  margin: 0;
+  padding: 0.375rem 1rem 0.375rem 0.875rem;
+  border: 1px solid #a6c8ff;
+  border-bottom: 0;
+  background: var(--hands-on-blue-tint);
+  clip-path: polygon(0 0, calc(100% - 0.625rem) 0, 100% 100%, 0 100%);
+  color: var(--hands-on-blue-dark) !important;
+  font-size: 0.8125rem;
+  line-height: 1.25;
+}
+
+.lab-shell--hands-on-inicial .code-block--prompt .copy-button {
+  border-color: var(--hands-on-blue);
+  background: transparent;
+  color: var(--hands-on-blue-dark);
+}
+
+.lab-shell--hands-on-inicial .code-block--prompt .copy-button:hover {
+  background: #d0e2ff;
+  color: #002d9c;
+}
+
+.lab-shell--hands-on-inicial .code-block--terminal {
+  background: #161616 !important;
+  border-left-color: #8d8d8d;
+  border-right: 4px solid var(--hands-on-blue);
+}
+
+.lab-shell--hands-on-inicial .code-block--terminal .code-block__label::before {
+  content: '$ ';
+  color: #a6c8ff;
+}
+
+.lab-shell--hands-on-inicial .code-block--terminal .copy-button {
+  border-color: #a6c8ff;
+  background: #262626;
+  color: #f4f4f4;
+}
+
+.lab-shell--hands-on-inicial .code-block--terminal .copy-button:hover {
+  border-color: #78a9ff;
+  background: var(--hands-on-blue);
+  color: #ffffff;
+}
+
+.lab-shell--hands-on-inicial .code-block--file,
+.lab-shell--hands-on-inicial .code-block--yaml,
+.lab-shell--hands-on-inicial .code-block--json {
+  background: var(--cds-layer-01, #f4f4f4);
+  border: 1px solid var(--hands-on-border);
+  border-left: 4px solid var(--hands-on-blue);
+}
+
+.lab-shell--hands-on-inicial .code-block--file .code-block__label,
+.lab-shell--hands-on-inicial .code-block--yaml .code-block__label,
+.lab-shell--hands-on-inicial .code-block--json .code-block__label,
+.lab-shell--hands-on-inicial .code-block--file pre,
+.lab-shell--hands-on-inicial .code-block--yaml pre,
+.lab-shell--hands-on-inicial .code-block--json pre,
+.lab-shell--hands-on-inicial .code-block--file pre code,
+.lab-shell--hands-on-inicial .code-block--yaml pre code,
+.lab-shell--hands-on-inicial .code-block--json pre code {
+  color: var(--cds-text-primary, #161616) !important;
+}
+
+.lab-shell--hands-on-inicial .code-block--file .copy-button,
+.lab-shell--hands-on-inicial .code-block--yaml .copy-button,
+.lab-shell--hands-on-inicial .code-block--json .copy-button {
+  border-color: #6f6f6f;
+  color: var(--cds-text-primary, #161616);
+}
+
+.cds--g100 .lab-shell--hands-on-inicial .hands-on-journey__item {
+  background: var(--cds-layer-01, #262626);
+}
+
+.cds--g100 .lab-shell--hands-on-inicial .hands-on-meta__value,
+.cds--g100 .lab-shell--hands-on-inicial .hands-on-journey__title,
+.cds--g100 .lab-shell--hands-on-inicial .hands-on-checkpoint__title {
+  color: #f4f4f4;
+}
+
+.cds--g100 .lab-shell--hands-on-inicial .hands-on-checkpoint,
+.cds--g100 .lab-shell--hands-on-inicial .code-block--prompt {
+  border-color: #0043ce;
+  background: #001d6c;
+}
+
+.cds--g100 .lab-shell--hands-on-inicial .code-block--terminal {
+  background: #000000 !important;
+  border-right-color: #4589ff;
+}
+
+.cds--g100 .lab-shell--hands-on-inicial .code-block--prompt .code-block__label {
+  border-color: #0043ce;
+  background: #001d6c;
+}
+
+.cds--g100 .lab-shell--hands-on-inicial .code-block--prompt .code-block__label,
+.cds--g100 .lab-shell--hands-on-inicial .code-block--prompt pre,
+.cds--g100 .lab-shell--hands-on-inicial .code-block--prompt pre code {
+  color: #f4f4f4 !important;
+}
+
+.cds--g100 .lab-shell--hands-on-inicial .code-block--prompt .copy-button {
+  border-color: #a6c8ff;
+  color: #d0e2ff;
+}
+
+.cds--g100 .lab-shell--hands-on-inicial .code-block--file,
+.cds--g100 .lab-shell--hands-on-inicial .code-block--yaml,
+.cds--g100 .lab-shell--hands-on-inicial .code-block--json {
+  background: #262626;
+  border-color: #525252;
+}
+
+.cds--g100 .lab-shell--hands-on-inicial .code-block--file .code-block__label,
+.cds--g100 .lab-shell--hands-on-inicial .code-block--yaml .code-block__label,
+.cds--g100 .lab-shell--hands-on-inicial .code-block--json .code-block__label,
+.cds--g100 .lab-shell--hands-on-inicial .code-block--file pre,
+.cds--g100 .lab-shell--hands-on-inicial .code-block--yaml pre,
+.cds--g100 .lab-shell--hands-on-inicial .code-block--json pre,
+.cds--g100 .lab-shell--hands-on-inicial .code-block--file pre code,
+.cds--g100 .lab-shell--hands-on-inicial .code-block--yaml pre code,
+.cds--g100 .lab-shell--hands-on-inicial .code-block--json pre code {
+  color: #f4f4f4 !important;
+}
+
+.cds--g100 .lab-shell--hands-on-inicial .lab-compare__card {
+  background: #262626;
+}
+
+.lab-shell--hands-on-inicial .lab-troubleshooting-full > summary:focus-visible {
+  outline: 2px solid var(--hands-on-blue);
+  outline-offset: 2px;
+}
+
+@media (max-width: 500px) {
+  .lab-shell--hands-on-inicial .code-block--prompt {
+    margin-top: 1rem;
+  }
+
+  .lab-shell--hands-on-inicial .code-block--prompt .code-block__label {
+    position: static;
+    max-width: none;
+    margin: 0.75rem 0 0 0.75rem;
+    border-bottom: 1px solid #a6c8ff;
+    clip-path: none;
+  }
+
+  .lab-shell--hands-on-inicial .lab-mode-card__body > .cds--productive-heading-02 {
+    align-items: flex-start;
+  }
+}
+
+/* Track C readability fixes: neutral blocks must never inherit terminal text. */
+.lab-shell.lab-shell--software-development-lifecycle .code-block--file pre,
+.lab-shell.lab-shell--software-development-lifecycle .code-block--file pre code,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="URL"]) pre,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="URL"]) pre code,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="JSON"]) pre,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="JSON"]) pre code,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="custom instructions"]) pre,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="custom instructions"]) pre code,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="role definition"]) pre,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="role definition"]) pre code,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="requirements"]) pre,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="requirements"]) pre code,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="variable"]) pre,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="variable"]) pre code {
+  color: #161616 !important;
+}
+
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block--file pre,
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block--file pre code,
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="URL"]) pre,
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="URL"]) pre code,
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="JSON"]) pre,
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="JSON"]) pre code,
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="custom instructions"]) pre,
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="custom instructions"]) pre code,
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="role definition"]) pre,
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="role definition"]) pre code,
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="requirements"]) pre,
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="requirements"]) pre code,
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="variable"]) pre,
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="variable"]) pre code {
+  color: #f4f4f4 !important;
+}
+
+.lab-shell.lab-shell--software-development-lifecycle .callout[data-tone="info"] > .cds--list--unordered > .cds--list__item {
+  display: grid;
+  grid-template-columns: 1.125rem minmax(0, 1fr);
+  column-gap: 0.625rem;
+  align-items: start;
+  padding-left: 0;
+  line-height: 1.5;
+}
+
+.lab-shell.lab-shell--software-development-lifecycle .callout[data-tone="info"] > .cds--list--unordered > .cds--list__item::before {
+  position: static;
+  box-sizing: border-box;
+  margin-top: 0.1875rem;
+  line-height: 1;
+}
+
+/* Keep inline code and prose in one normal text flow; only the icon is positioned. */
+.lab-shell.lab-shell--software-development-lifecycle .callout[data-tone="info"] > .cds--list--unordered > .cds--list__item {
+  display: block;
+  position: relative;
+  margin: 0.5rem 0;
+  padding-left: 1.75rem;
+  line-height: 1.5;
+}
+
+.lab-shell.lab-shell--software-development-lifecycle .callout[data-tone="info"] > .cds--list--unordered > .cds--list__item::before {
+  position: absolute;
+  top: 0.1875rem;
+  left: 0;
+  margin: 0;
+  line-height: 1;
+}
+
+/* Integraciones: purple instructional system, isolated to the three integration tracks. */
+.lab-shell.lab-shell--agentic-retail-confluent,
+.lab-shell.lab-shell--agentic-retail-wxo,
+.lab-shell.lab-shell--agentic-retail-voltia {
+  --integration-purple: #8a3ffc;
+  --integration-purple-dark: #6929c4;
+  --integration-purple-light: #f6f2ff;
+}
+
+.lab-shell.lab-shell--agentic-retail-confluent .lab-banner__tags,
+.lab-shell.lab-shell--agentic-retail-wxo .lab-banner__tags,
+.lab-shell.lab-shell--agentic-retail-voltia .lab-banner__tags { display: none; }
+
+.lab-shell.lab-shell--agentic-retail-confluent .integration-meta,
+.lab-shell.lab-shell--agentic-retail-wxo .integration-meta,
+.lab-shell.lab-shell--agentic-retail-voltia .integration-meta {
+  display: flex; flex-wrap: wrap; gap: .5rem 1rem; margin: 0 0 1rem;
+  color: var(--cds-text-secondary, #525252); font-size: .8125rem;
+}
+
+.lab-shell.lab-shell--agentic-retail-confluent .integration-meta b,
+.lab-shell.lab-shell--agentic-retail-wxo .integration-meta b,
+.lab-shell.lab-shell--agentic-retail-voltia .integration-meta b { color: var(--cds-text-helper, #6f6f6f); margin-right: .35rem; }
+
+.lab-shell.lab-shell--agentic-retail-confluent .lab-section > :is(.cds--productive-heading-03, .cds--productive-heading-04),
+.lab-shell.lab-shell--agentic-retail-wxo .lab-section > :is(.cds--productive-heading-03, .cds--productive-heading-04),
+.lab-shell.lab-shell--agentic-retail-voltia .lab-section > :is(.cds--productive-heading-03, .cds--productive-heading-04) { display: flex; align-items: center; gap: .5rem; }
+
+.lab-shell.lab-shell--agentic-retail-confluent .lab-section__icon,
+.lab-shell.lab-shell--agentic-retail-wxo .lab-section__icon,
+.lab-shell.lab-shell--agentic-retail-voltia .lab-section__icon { flex: 0 0 auto; margin: 0 !important; color: var(--integration-purple) !important; }
+
+.lab-shell.lab-shell--agentic-retail-confluent .prompt-block,
+.lab-shell.lab-shell--agentic-retail-wxo .code-block--prompt,
+.lab-shell.lab-shell--agentic-retail-voltia .code-block--prompt {
+  position: relative; margin: 4.5rem 0 1.5rem; border: 1px solid #d4bbff; border-left: 4px solid var(--integration-purple); background: #161616 !important; color: #f4f4f4;
+}
+
+.lab-shell.lab-shell--agentic-retail-confluent .prompt-block__header,
+.lab-shell.lab-shell--agentic-retail-wxo .code-block--prompt::before,
+.lab-shell.lab-shell--agentic-retail-voltia .code-block--prompt::before {
+  position: absolute; top: -2.125rem; left: -1px; display: inline-flex; align-items: center; min-height: 2.125rem; max-width: calc(100% - .5rem); margin: 0; padding: .375rem 1rem .375rem .875rem; border: 1px solid #d4bbff; border-bottom: 0; background: var(--integration-purple-light); color: #6929c4; clip-path: polygon(0 0,calc(100% - .625rem) 0,100% 100%,0 100%); font-size: .8125rem; font-weight: 600;
+}
+
+.lab-shell.lab-shell--agentic-retail-wxo .code-block--prompt::before,
+.lab-shell.lab-shell--agentic-retail-voltia .code-block--prompt::before { content: 'Pega en el chat de Bob'; }
+
+.lab-shell.lab-shell--agentic-retail-confluent .prompt-block__body,
+.lab-shell.lab-shell--agentic-retail-wxo .code-block--prompt :is(pre, pre code),
+.lab-shell.lab-shell--agentic-retail-voltia .code-block--prompt :is(pre, pre code) { color: #f4f4f4 !important; }
+
+.lab-shell.lab-shell--agentic-retail-confluent .prompt-block button,
+.lab-shell.lab-shell--agentic-retail-wxo .code-block--prompt .copy-button,
+.lab-shell.lab-shell--agentic-retail-voltia .code-block--prompt .copy-button { border: 1px solid #d4bbff !important; background: #262626 !important; color: #f4f4f4 !important; }
+
+.lab-shell.lab-shell--agentic-retail-confluent .prompt-block button:hover,
+.lab-shell.lab-shell--agentic-retail-wxo .code-block--prompt .copy-button:hover,
+.lab-shell.lab-shell--agentic-retail-voltia .code-block--prompt .copy-button:hover { background: var(--integration-purple) !important; border-color: #e8daff !important; color: #fff !important; }
+
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--terminal,
+.lab-shell.lab-shell--agentic-retail-wxo .code-block--terminal,
+.lab-shell.lab-shell--agentic-retail-voltia .code-block--terminal { position: relative; margin: 4.5rem 0 1.5rem; background: #161616 !important; border-top-color: #393939; border-bottom-color: #393939; border-left: 4px solid #8d8d8d; border-right: 4px solid var(--integration-purple); }
+
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--terminal::before,
+.lab-shell.lab-shell--agentic-retail-wxo .code-block--terminal::before,
+.lab-shell.lab-shell--agentic-retail-voltia .code-block--terminal::before { content: '$ Terminal integrada'; position: absolute; top: -2.125rem; left: -1px; display: inline-flex; align-items: center; min-height: 2.125rem; padding: .375rem 1rem .375rem .875rem; border: 1px solid #525252; border-bottom: 0; background: #161616; color: #f4f4f4; clip-path: polygon(0 0,calc(100% - .625rem) 0,100% 100%,0 100%); font-size: .8125rem; font-weight: 600; }
+
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--terminal :is(pre,pre code),
+.lab-shell.lab-shell--agentic-retail-wxo .code-block--terminal :is(pre,pre code),
+.lab-shell.lab-shell--agentic-retail-voltia .code-block--terminal :is(pre,pre code) { color: #f4f4f4 !important; }
+
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--terminal .copy-button,
+.lab-shell.lab-shell--agentic-retail-wxo .code-block--terminal .copy-button,
+.lab-shell.lab-shell--agentic-retail-voltia .code-block--terminal .copy-button { border-color: #d4bbff; background: #262626; color: #f4f4f4; }
+
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--terminal .copy-button:hover,
+.lab-shell.lab-shell--agentic-retail-wxo .code-block--terminal .copy-button:hover,
+.lab-shell.lab-shell--agentic-retail-voltia .code-block--terminal .copy-button:hover { background: var(--integration-purple); border-color: #e8daff; color: #fff; }
+
+.lab-shell.lab-shell--agentic-retail-confluent .code-block:not(.code-block--terminal),
+.lab-shell.lab-shell--agentic-retail-wxo .code-block:not(.code-block--terminal):not(.code-block--prompt),
+.lab-shell.lab-shell--agentic-retail-voltia .code-block:not(.code-block--terminal):not(.code-block--prompt) { border-left: 4px solid #6f6f6f; background: #f4f4f4 !important; }
+
+.lab-shell.lab-shell--agentic-retail-confluent .code-block:not(.code-block--terminal) :is(pre,pre code),
+.lab-shell.lab-shell--agentic-retail-wxo .code-block:not(.code-block--terminal):not(.code-block--prompt) :is(pre,pre code),
+.lab-shell.lab-shell--agentic-retail-voltia .code-block:not(.code-block--terminal):not(.code-block--prompt) :is(pre,pre code) { color: #161616 !important; }
+
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent .code-block--terminal,
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-wxo .code-block--terminal,
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-voltia .code-block--terminal,
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent .code-block--terminal::before,
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-wxo .code-block--terminal::before,
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-voltia .code-block--terminal::before { background: #000 !important; }
+
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent .code-block:not(.code-block--terminal),
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-wxo .code-block:not(.code-block--terminal):not(.code-block--prompt),
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-voltia .code-block:not(.code-block--terminal):not(.code-block--prompt) { background: #262626 !important; border-color: #525252; border-left-color: #8d8d8d; }
+
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent .code-block:not(.code-block--terminal) :is(pre,pre code),
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-wxo .code-block:not(.code-block--terminal):not(.code-block--prompt) :is(pre,pre code),
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-voltia .code-block:not(.code-block--terminal):not(.code-block--prompt) :is(pre,pre code) { color: #f4f4f4 !important; }
+
+.lab-shell.lab-shell--agentic-retail-wxo .code-block--prompt:has(.code-block__label)::before { content: none; display: none; }
+.lab-shell.lab-shell--agentic-retail-wxo .code-block--prompt .code-block__label { position: absolute; top: -2.125rem; left: -1px; display: inline-flex; align-items: center; min-height: 2.125rem; max-width: calc(100% - .5rem); margin: 0; padding: .375rem 1rem .375rem .875rem; border: 1px solid #d4bbff; border-bottom: 0; background: var(--integration-purple-light); color: #6929c4 !important; clip-path: polygon(0 0,calc(100% - .625rem) 0,100% 100%,0 100%); font-size: .8125rem; font-weight: 600; line-height: 1.25; }
+
+@media (max-width: 500px) {
+  .lab-shell.lab-shell--agentic-retail-confluent :is(.prompt-block,.code-block--terminal),
+  .lab-shell.lab-shell--agentic-retail-wxo :is(.code-block--prompt,.code-block--terminal),
+  .lab-shell.lab-shell--agentic-retail-voltia :is(.code-block--prompt,.code-block--terminal) { margin-top: 1.5rem; }
+  .lab-shell.lab-shell--agentic-retail-wxo .code-block--prompt .code-block__label { position: static; max-width: none; margin: .75rem 0 0 .75rem; border-bottom-width: 1px; clip-path: none; }
+}
+
+/* Integration steps communicate context in prose; remove decorative context badges. */
+.lab-shell.lab-shell--agentic-retail-confluent .step-header__meta,
+.lab-shell.lab-shell--agentic-retail-wxo .step-header__meta,
+.lab-shell.lab-shell--agentic-retail-voltia .step-header__meta,
+.lab-shell.lab-shell--agentic-retail-confluent .ctx-badge,
+.lab-shell.lab-shell--agentic-retail-wxo .ctx-badge,
+.lab-shell.lab-shell--agentic-retail-voltia .ctx-badge {
+  display: none !important;
+}
+
+/* Prefer the authored terminal tab when a block supplies one. */
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--terminal:has(.code-block__label)::before,
+.lab-shell.lab-shell--agentic-retail-wxo .code-block--terminal:has(.code-block__label)::before,
+.lab-shell.lab-shell--agentic-retail-voltia .code-block--terminal:has(.code-block__label)::before {
+  content: none;
+  display: none;
+}
+
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--terminal .code-block__label,
+.lab-shell.lab-shell--agentic-retail-wxo .code-block--terminal .code-block__label,
+.lab-shell.lab-shell--agentic-retail-voltia .code-block--terminal .code-block__label {
+  position: absolute;
+  top: -2.125rem;
+  left: -1px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.125rem;
+  max-width: calc(100% - .5rem);
+  margin: 0;
+  padding: .375rem 1rem .375rem .875rem;
+  border: 1px solid #525252;
+  border-bottom: 0;
+  background: #161616;
+  color: #f4f4f4 !important;
+  clip-path: polygon(0 0,calc(100% - .625rem) 0,100% 100%,0 100%);
+  font-size: .8125rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent .code-block--terminal .code-block__label,
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-wxo .code-block--terminal .code-block__label,
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-voltia .code-block--terminal .code-block__label { background: #000; }
+
+/* Confluent legacy prompts are normalized by app.js into real prompt blocks. */
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--prompt {
+  position: relative;
+  margin: 4.5rem 0 1.5rem;
+  border: 1px solid #d4bbff;
+  border-left: 4px solid var(--integration-purple);
+  background: #161616 !important;
+}
+
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--prompt .code-block__label {
+  position: absolute;
+  top: -2.125rem;
+  left: -1px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.125rem;
+  max-width: calc(100% - .5rem);
+  margin: 0;
+  padding: .375rem 1rem .375rem .875rem;
+  border: 1px solid #d4bbff;
+  border-bottom: 0;
+  background: var(--integration-purple-light);
+  color: var(--integration-purple-dark) !important;
+  clip-path: polygon(0 0,calc(100% - .625rem) 0,100% 100%,0 100%);
+  font-size: .8125rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--prompt :is(pre, pre code) { color: #f4f4f4 !important; }
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--prompt .copy-button { border-color: #d4bbff; background: #262626; color: #f4f4f4; }
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--prompt .copy-button:hover { border-color: #e8daff; background: var(--integration-purple); color: #fff; }
+
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent .code-block--prompt { background: #000 !important; }
+
+@media (max-width: 500px) {
+  .lab-shell.lab-shell--agentic-retail-confluent .code-block--prompt { margin-top: 1.5rem; }
+  .lab-shell.lab-shell--agentic-retail-confluent .code-block--prompt .code-block__label { position: static; max-width: none; margin: .75rem 0 0 .75rem; border-bottom-width: 1px; clip-path: none; }
+}
+
+/* Track C follow-up: external terminal captions are replaced by the terminal tab. */
+.lab-shell.lab-shell--software-development-lifecycle p.code-block__label:has(+ .code-block--terminal) {
+  display: none;
+}
+
+.lab-shell.lab-shell--software-development-lifecycle .callout[data-tone="info"] > .cds--list--unordered {
+  margin: 0.75rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lab-shell.lab-shell--software-development-lifecycle .callout[data-tone="info"] > .cds--list--unordered > .cds--list__item {
+  position: relative;
+  margin: 0.5rem 0;
+  padding-left: 1.75rem;
+}
+
+.lab-shell.lab-shell--software-development-lifecycle .callout[data-tone="info"] > .cds--list--unordered > .cds--list__item::before {
+  content: '✓';
+  position: absolute;
+  top: 0.1rem;
+  left: 0;
+  display: grid;
+  width: 1.125rem;
+  height: 1.125rem;
+  place-items: center;
+  border: 2px solid #0f62fe;
+  border-radius: 50%;
+  color: #0f62fe;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+/* ── Track B: explicit code contexts, kept isolated from the other tracks ── */
+.lab-shell.lab-shell--entendiendo-bob .code-block::before {
+  content: none;
+  display: none;
+}
+
+.lab-shell.lab-shell--entendiendo-bob .hands-on-journey {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin: 1.5rem 0 0;
+  border: 1px solid #a6c8ff;
+  background: #a6c8ff;
+}
+
+.lab-shell.lab-shell--entendiendo-bob .hands-on-journey__item {
+  min-width: 0;
+  padding: 1rem;
+  border-top: 3px solid #0f62fe;
+  background: var(--cds-background, #ffffff);
+}
+
+.lab-shell.lab-shell--entendiendo-bob .hands-on-journey__number {
+  color: #0043ce;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.lab-shell.lab-shell--entendiendo-bob .hands-on-journey__item h3 {
+  margin: 0.5rem 0 0.375rem;
+  color: var(--cds-text-primary, #161616);
+  font-size: 1rem;
+}
+
+.lab-shell.lab-shell--entendiendo-bob .hands-on-journey__item p {
+  margin: 0.25rem 0;
+  color: var(--cds-text-secondary, #525252);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--prompt,
+.lab-shell.lab-shell--entendiendo-bob .code-block--terminal,
+.lab-shell.lab-shell--entendiendo-bob .code-block--file,
+.lab-shell.lab-shell--entendiendo-bob .code-block--yaml,
+.lab-shell.lab-shell--entendiendo-bob .code-block--json {
+  position: relative;
+  margin: 4.5rem 0 1.5rem;
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--prompt,
+.lab-shell.lab-shell--entendiendo-bob .code-block--terminal {
+  background: #161616 !important;
+  color: #f4f4f4;
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--prompt {
+  border: 1px solid #a6c8ff;
+  border-left: 4px solid #0f62fe;
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--terminal {
+  border-top-color: #393939;
+  border-bottom-color: #393939;
+  border-left: 4px solid #8d8d8d;
+  border-right: 4px solid #0f62fe;
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--prompt .code-block__label,
+.lab-shell.lab-shell--entendiendo-bob .code-block--terminal .code-block__label,
+.lab-shell.lab-shell--entendiendo-bob .code-block--file .code-block__label,
+.lab-shell.lab-shell--entendiendo-bob .code-block--yaml .code-block__label,
+.lab-shell.lab-shell--entendiendo-bob .code-block--json .code-block__label {
+  position: absolute;
+  top: -2.125rem;
+  left: -1px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.125rem;
+  max-width: calc(100% - 0.5rem);
+  margin: 0;
+  padding: 0.375rem 1rem 0.375rem 0.875rem;
+  border-bottom: 0;
+  clip-path: polygon(0 0, calc(100% - 0.625rem) 0, 100% 100%, 0 100%);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--prompt .code-block__label {
+  border: 1px solid #a6c8ff;
+  background: #edf5ff;
+  color: #0043ce !important;
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--terminal .code-block__label {
+  border: 1px solid #525252;
+  background: #161616;
+  color: #f4f4f4 !important;
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--terminal .code-block__label::before {
+  content: '$ ';
+  color: #a6c8ff;
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--prompt pre,
+.lab-shell.lab-shell--entendiendo-bob .code-block--prompt pre code,
+.lab-shell.lab-shell--entendiendo-bob .code-block--terminal pre,
+.lab-shell.lab-shell--entendiendo-bob .code-block--terminal pre code {
+  color: #f4f4f4 !important;
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--file,
+.lab-shell.lab-shell--entendiendo-bob .code-block--yaml,
+.lab-shell.lab-shell--entendiendo-bob .code-block--json {
+  border: 1px solid #c6c6c6;
+  border-left: 4px solid #6f6f6f;
+  background: #f4f4f4 !important;
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--file .code-block__label,
+.lab-shell.lab-shell--entendiendo-bob .code-block--yaml .code-block__label,
+.lab-shell.lab-shell--entendiendo-bob .code-block--json .code-block__label {
+  border: 1px solid #c6c6c6;
+  background: #f4f4f4;
+  color: #393939 !important;
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--prompt .copy-button,
+.lab-shell.lab-shell--entendiendo-bob .code-block--terminal .copy-button {
+  border-color: #78a9ff;
+  background: #262626;
+  color: #f4f4f4;
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--prompt .copy-button:hover,
+.lab-shell.lab-shell--entendiendo-bob .code-block--terminal .copy-button:hover {
+  border-color: #a6c8ff;
+  background: #0f62fe;
+  color: #ffffff;
+}
+
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .hands-on-journey__item {
+  background: #262626;
+}
+
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .hands-on-journey__item h3 {
+  color: #f4f4f4;
+}
+
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .hands-on-journey__item p {
+  color: #c6c6c6;
+}
+
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--prompt,
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--terminal,
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--terminal .code-block__label {
+  background: #000000 !important;
+}
+
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--prompt {
+  border-color: #0043ce;
+}
+
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--prompt .code-block__label {
+  border-color: #0043ce;
+  background: #edf5ff;
+  color: #0043ce !important;
+}
+
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--terminal {
+  border-top-color: #393939;
+  border-bottom-color: #393939;
+  border-left-color: #525252;
+  border-right-color: #4589ff;
+}
+
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--file,
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--yaml,
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--json {
+  border-color: #525252;
+  border-left-color: #8d8d8d;
+  background: #262626 !important;
+}
+
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--file .code-block__label,
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--yaml .code-block__label,
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--json .code-block__label {
+  border-color: #525252;
+  background: #262626;
+  color: #f4f4f4 !important;
+}
+
+@media (max-width: 767px) {
+  .lab-shell.lab-shell--entendiendo-bob .hands-on-journey {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 500px) {
+  .lab-shell.lab-shell--entendiendo-bob .code-block--prompt,
+  .lab-shell.lab-shell--entendiendo-bob .code-block--terminal,
+  .lab-shell.lab-shell--entendiendo-bob .code-block--file,
+  .lab-shell.lab-shell--entendiendo-bob .code-block--yaml,
+  .lab-shell.lab-shell--entendiendo-bob .code-block--json {
+    margin-top: 1.5rem;
+  }
+
+  .lab-shell.lab-shell--entendiendo-bob .code-block__label {
+    position: static;
+    max-width: none;
+    margin: 0.75rem 0 0 0.75rem;
+    border-bottom-width: 1px !important;
+    clip-path: none;
+  }
+}
+
+/* ── Track B: the same readable interaction grammar as Track A ──────── */
+.lab-shell.lab-shell--entendiendo-bob {
+  --track-b-blue: var(--cds-blue-60, #0f62fe);
+  --track-b-blue-dark: #0043ce;
+  --track-b-blue-tint: #edf5ff;
+  --track-b-border: var(--cds-border-subtle-01, #c6c6c6);
+}
+
+.lab-shell--entendiendo-bob .lab-banner__tags {
+  display: none;
+}
+
+.lab-shell--entendiendo-bob .hands-on-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin: 0 0 1rem;
+  color: var(--cds-text-secondary, #525252);
+  font-size: 0.8125rem;
+}
+
+.lab-shell--entendiendo-bob .hands-on-meta__item {
+  display: inline-flex;
+  gap: 0.375rem;
+  align-items: baseline;
+}
+
+.lab-shell--entendiendo-bob .hands-on-meta__label {
+  color: var(--cds-text-helper, #6f6f6f);
+  font-weight: 600;
+}
+
+.lab-shell--entendiendo-bob .hands-on-meta__value {
+  color: var(--cds-text-primary, #161616);
+}
+
+.lab-shell--entendiendo-bob .lab-section > .cds--productive-heading-03 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lab-shell--entendiendo-bob .lab-section__icon {
+  flex: 0 0 auto;
+  margin: 0 !important;
+  vertical-align: middle;
+  color: var(--track-b-blue) !important;
+}
+
+.lab-shell--entendiendo-bob .lab-section > .cds--btn--primary {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.lab-shell--entendiendo-bob .bob-mode,
+.lab-shell--entendiendo-bob .bob-mode--ask,
+.lab-shell--entendiendo-bob .bob-mode--plan,
+.lab-shell--entendiendo-bob .bob-mode--agent {
+  border-color: var(--track-b-blue);
+}
+
+.lab-shell--entendiendo-bob .checklist__item::before {
+  border-color: var(--track-b-blue);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6l3 3 5-5' stroke='%230f62fe' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--prompt,
+.lab-shell.lab-shell--entendiendo-bob .code-block--terminal,
+.lab-shell.lab-shell--entendiendo-bob .code-block--file,
+.lab-shell.lab-shell--entendiendo-bob .code-block--yaml,
+.lab-shell.lab-shell--entendiendo-bob .code-block--json {
+  position: relative;
+  margin: 4.5rem 0 1.5rem;
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--prompt {
+  background: #161616 !important;
+  border: 1px solid #a6c8ff;
+  border-left: 4px solid var(--track-b-blue);
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--prompt::before,
+.lab-shell.lab-shell--entendiendo-bob .code-block--terminal::before,
+.lab-shell.lab-shell--entendiendo-bob .code-block--file::before,
+.lab-shell.lab-shell--entendiendo-bob .code-block--yaml::before,
+.lab-shell.lab-shell--entendiendo-bob .code-block--json::before {
+  position: absolute;
+  top: -2.125rem;
+  left: -1px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.125rem;
+  max-width: calc(100% - 0.5rem);
+  padding: 0.375rem 1rem 0.375rem 0.875rem;
+  border-bottom: 0;
+  clip-path: polygon(0 0, calc(100% - 0.625rem) 0, 100% 100%, 0 100%);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--prompt::before {
+  content: 'Pega en el chat de Bob';
+  border: 1px solid #a6c8ff;
+  border-bottom: 0;
+  background: var(--track-b-blue-tint);
+  color: var(--track-b-blue-dark);
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--prompt pre,
+.lab-shell.lab-shell--entendiendo-bob .code-block--prompt pre code {
+  color: #f4f4f4 !important;
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--prompt .copy-button {
+  border-color: #78a9ff;
+  background: #262626;
+  color: #f4f4f4;
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--prompt .copy-button:hover {
+  border-color: #a6c8ff;
+  background: var(--track-b-blue);
+  color: #ffffff;
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--terminal {
+  background: #161616 !important;
+  border-left: 4px solid #8d8d8d;
+  border-right: 4px solid var(--track-b-blue);
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--terminal::before {
+  content: 'Terminal integrada · ejecutable';
+  border: 1px solid #525252;
+  border-bottom: 0;
+  background: #161616;
+  color: #f4f4f4;
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--terminal pre,
+.lab-shell.lab-shell--entendiendo-bob .code-block--terminal pre code {
+  color: #f4f4f4 !important;
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--terminal .copy-button {
+  border-color: #a6c8ff;
+  background: #262626;
+  color: #f4f4f4;
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--terminal .copy-button:hover {
+  border-color: #78a9ff;
+  background: var(--track-b-blue);
+  color: #ffffff;
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--file,
+.lab-shell.lab-shell--entendiendo-bob .code-block--yaml,
+.lab-shell.lab-shell--entendiendo-bob .code-block--json {
+  background: var(--cds-layer-01, #f4f4f4) !important;
+  border: 1px solid var(--track-b-border);
+  border-left: 4px solid var(--track-b-blue);
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--file::before {
+  content: 'Archivo de configuración';
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--yaml::before {
+  content: 'Archivo · instrucciones YAML';
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--json::before {
+  content: 'Archivo JSON';
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--file::before,
+.lab-shell.lab-shell--entendiendo-bob .code-block--yaml::before,
+.lab-shell.lab-shell--entendiendo-bob .code-block--json::before {
+  border: 1px solid var(--track-b-border);
+  border-bottom: 0;
+  background: var(--cds-layer-01, #f4f4f4);
+  color: var(--cds-text-primary, #161616);
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--file pre,
+.lab-shell.lab-shell--entendiendo-bob .code-block--yaml pre,
+.lab-shell.lab-shell--entendiendo-bob .code-block--json pre,
+.lab-shell.lab-shell--entendiendo-bob .code-block--file pre code,
+.lab-shell.lab-shell--entendiendo-bob .code-block--yaml pre code,
+.lab-shell.lab-shell--entendiendo-bob .code-block--json pre code {
+  background: transparent !important;
+  color: var(--cds-text-primary, #161616) !important;
+}
+
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .hands-on-meta__value {
+  color: #f4f4f4;
+}
+
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--prompt,
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--terminal {
+  background: #000000 !important;
+}
+
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--prompt::before {
+  background: var(--track-b-blue-tint);
+  color: var(--track-b-blue-dark);
+}
+
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--terminal::before {
+  background: #000000;
+  color: #f4f4f4;
+}
+
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--file,
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--yaml,
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--json {
+  background: #262626 !important;
+  border-color: #525252;
+}
+
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--file::before,
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--yaml::before,
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--json::before {
+  background: #262626;
+  color: #f4f4f4;
+}
+
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--file pre,
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--yaml pre,
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--json pre,
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--file pre code,
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--yaml pre code,
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--json pre code {
+  color: #f4f4f4 !important;
+}
+
+@media (max-width: 500px) {
+  .lab-shell.lab-shell--entendiendo-bob .code-block--prompt,
+  .lab-shell.lab-shell--entendiendo-bob .code-block--terminal,
+  .lab-shell.lab-shell--entendiendo-bob .code-block--file,
+  .lab-shell.lab-shell--entendiendo-bob .code-block--yaml,
+  .lab-shell.lab-shell--entendiendo-bob .code-block--json {
+    margin-top: 1.5rem;
+  }
+
+  .lab-shell.lab-shell--entendiendo-bob .code-block--prompt::before,
+  .lab-shell.lab-shell--entendiendo-bob .code-block--terminal::before,
+  .lab-shell.lab-shell--entendiendo-bob .code-block--file::before,
+  .lab-shell.lab-shell--entendiendo-bob .code-block--yaml::before,
+  .lab-shell.lab-shell--entendiendo-bob .code-block--json::before {
+    position: static;
+    max-width: none;
+    margin: 0.75rem 0 0 0.75rem;
+    border-bottom-width: 1px;
+    clip-path: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .lab-shell--hands-on-inicial .hands-on-journey {
+    grid-template-columns: 1fr;
+  }
 }
 
 .lab-shell .lab-step__title {
@@ -2607,15 +3781,15 @@ body[data-category="premium"] .prose .code-block pre code {
 }
 
 /* Fix syntax highlighting colors for light background */
-.copy-snippet-block .highlight .k, 
+.copy-snippet-block .highlight .k,
 .copy-snippet-block .highlight .kd,
 .copy-snippet-block .highlight .kn { color: #0043ce !important; font-weight: bold; }
-.copy-snippet-block .highlight .s, 
-.copy-snippet-block .highlight .s2, 
+.copy-snippet-block .highlight .s,
+.copy-snippet-block .highlight .s2,
 .copy-snippet-block .highlight .se { color: #198038 !important; }
-.copy-snippet-block .highlight .c, 
+.copy-snippet-block .highlight .c,
 .copy-snippet-block .highlight .c1 { color: #6f6f6f !important; font-style: italic; }
-.copy-snippet-block .highlight .nf, 
+.copy-snippet-block .highlight .nf,
 .copy-snippet-block .highlight .nx { color: #8a3ffc !important; }
 
 .copy-snippet-block[data-category="basic"] {
@@ -2720,24 +3894,24 @@ body[data-category="premium"] .prose .code-block pre code {
 }
 
 /* Ensure our syntax highlighting overrides the generic reset */
-.copy-snippet-block .highlight .k, 
+.copy-snippet-block .highlight .k,
 .copy-snippet-block .highlight .kd,
 .copy-snippet-block .highlight .kn,
 .copy-snippet-block .highlight .kc,
 .copy-snippet-block .highlight .kr,
 .copy-snippet-block .highlight-k { color: #0043ce !important; font-weight: bold; }
 
-.copy-snippet-block .highlight .s, 
-.copy-snippet-block .highlight .s2, 
+.copy-snippet-block .highlight .s,
+.copy-snippet-block .highlight .s2,
 .copy-snippet-block .highlight .se,
 .copy-snippet-block .highlight .s1,
 .copy-snippet-block .highlight-s { color: #198038 !important; font-weight: 500; }
 
-.copy-snippet-block .highlight .c, 
+.copy-snippet-block .highlight .c,
 .copy-snippet-block .highlight .c1,
 .copy-snippet-block .highlight-c { color: #6f6f6f !important; font-style: italic; }
 
-.copy-snippet-block .highlight .nf, 
+.copy-snippet-block .highlight .nf,
 .copy-snippet-block .highlight .nx,
 .copy-snippet-block .highlight .nb,
 .copy-snippet-block .highlight .nt,
@@ -2790,4 +3964,1026 @@ body.cds--g100 .copy-snippet-block .highlight-m { color: #78a9ff !important; }
   border: none !important;
   box-shadow: none !important;
   margin: 0 !important;
+}
+
+/* ── Track A code contexts: final overrides after shared code rules ─────
+   Shared lab styles are declared earlier and intentionally use generic
+   accents. Keep these variants last so a Track A prompt never inherits the
+   terminal surface and a terminal never inherits purple or blue fills. */
+.lab-shell.lab-shell--hands-on-inicial .code-block--prompt,
+.lab-shell.lab-shell--hands-on-inicial .code-block--terminal {
+  position: relative;
+  margin: 4.5rem 0 1.5rem;
+}
+
+.lab-shell.lab-shell--hands-on-inicial .code-block--prompt {
+  background: #161616 !important;
+  border: 1px solid #a6c8ff;
+  border-left: 4px solid #0f62fe;
+}
+
+.lab-shell.lab-shell--hands-on-inicial .code-block--prompt .code-block__label,
+.lab-shell.lab-shell--hands-on-inicial .code-block--terminal .code-block__label {
+  position: absolute;
+  top: -2.125rem;
+  left: -1px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.125rem;
+  max-width: calc(100% - 0.5rem);
+  margin: 0;
+  padding: 0.375rem 1rem 0.375rem 0.875rem;
+  border-bottom: 0;
+  clip-path: polygon(0 0, calc(100% - 0.625rem) 0, 100% 100%, 0 100%);
+  font-size: 0.8125rem;
+  line-height: 1.25;
+}
+
+.lab-shell.lab-shell--hands-on-inicial .code-block--prompt .code-block__label {
+  border: 1px solid #a6c8ff;
+  border-bottom: 0;
+  background: #edf5ff;
+  color: #0043ce !important;
+}
+
+.lab-shell.lab-shell--hands-on-inicial .code-block--prompt pre,
+.lab-shell.lab-shell--hands-on-inicial .code-block--prompt pre code {
+  color: #f4f4f4 !important;
+}
+
+.lab-shell.lab-shell--hands-on-inicial .code-block--prompt .copy-button {
+  border-color: #78a9ff;
+  background: #262626;
+  color: #f4f4f4;
+}
+
+.lab-shell.lab-shell--hands-on-inicial .code-block--prompt .copy-button:hover {
+  border-color: #a6c8ff;
+  background: #0f62fe;
+  color: #ffffff;
+}
+
+.lab-shell.lab-shell--hands-on-inicial .code-block--terminal {
+  background: #161616 !important;
+  border-top-color: #393939;
+  border-bottom-color: #393939;
+  border-left: 4px solid #8d8d8d;
+  border-right: 4px solid #0f62fe;
+}
+
+.lab-shell.lab-shell--hands-on-inicial .code-block--terminal .code-block__label {
+  border: 1px solid #525252;
+  border-bottom: 0;
+  background: #161616;
+  color: #f4f4f4 !important;
+}
+
+.lab-shell.lab-shell--hands-on-inicial .code-block--terminal .code-block__label::before {
+  content: '$ ';
+  color: #a6c8ff;
+}
+
+.lab-shell.lab-shell--hands-on-inicial .code-block--terminal .copy-button {
+  border-color: #a6c8ff;
+  background: #262626;
+  color: #f4f4f4;
+}
+
+.lab-shell.lab-shell--hands-on-inicial .code-block--terminal .copy-button:hover {
+  border-color: #78a9ff;
+  background: #0f62fe;
+  color: #ffffff;
+}
+
+body.cds--g100 .lab-shell.lab-shell--hands-on-inicial .code-block--prompt {
+  background: #000000 !important;
+  border-color: #0043ce;
+}
+
+body.cds--g100 .lab-shell.lab-shell--hands-on-inicial .code-block--prompt .code-block__label {
+  border-color: #0043ce;
+  background: #edf5ff;
+  color: #0043ce !important;
+}
+
+body.cds--g100 .lab-shell.lab-shell--hands-on-inicial .code-block--prompt pre,
+body.cds--g100 .lab-shell.lab-shell--hands-on-inicial .code-block--prompt pre code {
+  color: #f4f4f4 !important;
+}
+
+body.cds--g100 .lab-shell.lab-shell--hands-on-inicial .code-block--terminal,
+body.cds--g100 .lab-shell.lab-shell--hands-on-inicial .code-block--terminal .code-block__label {
+  background: #000000 !important;
+}
+
+body.cds--g100 .lab-shell.lab-shell--hands-on-inicial .code-block--terminal {
+  border-top-color: #393939;
+  border-bottom-color: #393939;
+  border-left-color: #525252;
+  border-right-color: #4589ff;
+}
+
+@media (max-width: 500px) {
+  .lab-shell.lab-shell--hands-on-inicial .code-block--prompt,
+  .lab-shell.lab-shell--hands-on-inicial .code-block--terminal {
+    margin-top: 1.5rem;
+  }
+
+  .lab-shell.lab-shell--hands-on-inicial .code-block--prompt .code-block__label,
+  .lab-shell.lab-shell--hands-on-inicial .code-block--terminal .code-block__label {
+    position: static;
+    max-width: none;
+    margin: 0.75rem 0 0 0.75rem;
+    border-bottom-width: 1px;
+    clip-path: none;
+  }
+}
+
+/* Track B: buttons on light configuration/file surfaces need their own contrast. */
+.lab-shell.lab-shell--entendiendo-bob .code-block--file .copy-button,
+.lab-shell.lab-shell--entendiendo-bob .code-block--yaml .copy-button,
+.lab-shell.lab-shell--entendiendo-bob .code-block--json .copy-button {
+  border-color: #525252;
+  background: #ffffff;
+  color: #161616 !important;
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--file .copy-button:hover,
+.lab-shell.lab-shell--entendiendo-bob .code-block--yaml .copy-button:hover,
+.lab-shell.lab-shell--entendiendo-bob .code-block--json .copy-button:hover {
+  border-color: #0043ce;
+  background: #0f62fe;
+  color: #ffffff !important;
+}
+
+.lab-shell.lab-shell--entendiendo-bob .code-block--file .copy-button:focus-visible,
+.lab-shell.lab-shell--entendiendo-bob .code-block--yaml .copy-button:focus-visible,
+.lab-shell.lab-shell--entendiendo-bob .code-block--json .copy-button:focus-visible {
+  outline-color: #0f62fe;
+}
+
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--file .copy-button,
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--yaml .copy-button,
+body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--json .copy-button {
+  border-color: #8d8d8d;
+  background: #393939;
+  color: #f4f4f4 !important;
+}
+
+/* Track C — SDLC: reuse the blue instructional system without leaking into other tracks. */
+.lab-shell.lab-shell--software-development-lifecycle .lab-banner__tags {
+  display: none;
+}
+
+.lab-shell.lab-shell--software-development-lifecycle .hands-on-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin: 0 0 1rem;
+  color: var(--cds-text-secondary, #525252);
+  font-size: 0.8125rem;
+}
+
+.lab-shell.lab-shell--software-development-lifecycle .hands-on-meta__item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.375rem;
+}
+
+.lab-shell.lab-shell--software-development-lifecycle .hands-on-meta__label {
+  color: var(--cds-text-helper, #6f6f6f);
+  font-weight: 600;
+}
+
+.lab-shell.lab-shell--software-development-lifecycle .hands-on-meta__value {
+  color: var(--cds-text-primary, #161616);
+}
+
+.lab-shell.lab-shell--software-development-lifecycle .lab-section > .cds--productive-heading-03 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lab-shell.lab-shell--software-development-lifecycle .lab-section__icon {
+  flex: 0 0 auto;
+  margin: 0 !important;
+  color: #0f62fe !important;
+}
+
+.lab-shell.lab-shell--software-development-lifecycle .code-block--prompt,
+.lab-shell.lab-shell--software-development-lifecycle .code-block--terminal,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="prompt"]) {
+  position: relative;
+  margin: 4.5rem 0 1.5rem;
+  border: 1px solid #a6c8ff;
+  border-left: 4px solid #0f62fe;
+  background: #161616 !important;
+}
+
+.lab-shell.lab-shell--software-development-lifecycle .code-block--terminal {
+  border-top-color: #393939;
+  border-bottom-color: #393939;
+  border-left-color: #8d8d8d;
+  border-right: 4px solid #0f62fe;
+}
+
+.lab-shell.lab-shell--software-development-lifecycle .code-block--prompt::before,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="prompt"])::before,
+.lab-shell.lab-shell--software-development-lifecycle .code-block--terminal::before,
+.lab-shell.lab-shell--software-development-lifecycle .code-block--file::before,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="URL"])::before,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="JSON"])::before {
+  position: absolute;
+  top: -2.125rem;
+  left: -1px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.125rem;
+  max-width: calc(100% - 0.5rem);
+  padding: 0.375rem 1rem 0.375rem 0.875rem;
+  border: 1px solid #a6c8ff;
+  border-bottom: 0;
+  background: #edf5ff;
+  color: #0043ce;
+  clip-path: polygon(0 0, calc(100% - 0.625rem) 0, 100% 100%, 0 100%);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.lab-shell.lab-shell--software-development-lifecycle .code-block--prompt::before,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="prompt"])::before {
+  content: 'Pega en el chat de Bob';
+}
+
+.lab-shell.lab-shell--software-development-lifecycle .code-block--terminal::before {
+  content: '$ Terminal integrada';
+  border-color: #525252;
+  background: #161616;
+  color: #f4f4f4;
+}
+
+.lab-shell.lab-shell--software-development-lifecycle .code-block--file::before {
+  content: 'Archivo de configuración';
+}
+
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="URL"])::before,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="JSON"])::before {
+  content: 'Referencia de API';
+}
+
+.lab-shell.lab-shell--software-development-lifecycle .code-block--prompt pre,
+.lab-shell.lab-shell--software-development-lifecycle .code-block--prompt pre code,
+.lab-shell.lab-shell--software-development-lifecycle .code-block--terminal pre,
+.lab-shell.lab-shell--software-development-lifecycle .code-block--terminal pre code,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="prompt"]) pre,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="prompt"]) pre code {
+  color: #f4f4f4 !important;
+}
+
+.lab-shell.lab-shell--software-development-lifecycle .code-block--prompt .copy-button,
+.lab-shell.lab-shell--software-development-lifecycle .code-block--terminal .copy-button,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="prompt"]) .copy-button {
+  border-color: #78a9ff;
+  background: #262626;
+  color: #f4f4f4;
+}
+
+.lab-shell.lab-shell--software-development-lifecycle .code-block--prompt .copy-button:hover,
+.lab-shell.lab-shell--software-development-lifecycle .code-block--terminal .copy-button:hover,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="prompt"]) .copy-button:hover {
+  border-color: #a6c8ff;
+  background: #0f62fe;
+  color: #ffffff;
+}
+
+.lab-shell.lab-shell--software-development-lifecycle .code-block--file,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="URL"]),
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="JSON"]) {
+  position: relative;
+  margin: 4.5rem 0 1.5rem;
+  border: 1px solid #c6c6c6;
+  border-left: 4px solid #6f6f6f;
+  background: #f4f4f4 !important;
+}
+
+.lab-shell.lab-shell--software-development-lifecycle .code-block--file .copy-button,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="URL"]) .copy-button,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="JSON"]) .copy-button {
+  border-color: #525252;
+  background: #ffffff;
+  color: #161616 !important;
+}
+
+.lab-shell.lab-shell--software-development-lifecycle .code-block--file .copy-button:hover,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="URL"]) .copy-button:hover,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="JSON"]) .copy-button:hover {
+  border-color: #0043ce;
+  background: #0f62fe;
+  color: #ffffff !important;
+}
+
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .hands-on-meta__value { color: #f4f4f4; }
+
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block--prompt,
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block--terminal,
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="prompt"]) {
+  background: #000000 !important;
+}
+
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block--terminal::before { background: #000000; }
+
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block--file,
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="URL"]),
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="JSON"]) {
+  border-color: #525252;
+  border-left-color: #8d8d8d;
+  background: #262626 !important;
+}
+
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block--file::before,
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="URL"])::before,
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="JSON"])::before {
+  border-color: #525252;
+  background: #262626;
+  color: #f4f4f4;
+}
+
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block--file .copy-button,
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="URL"]) .copy-button,
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="JSON"]) .copy-button {
+  border-color: #8d8d8d;
+  background: #393939;
+  color: #f4f4f4 !important;
+}
+
+/* Fields copied into Bob settings and project files use the neutral file surface. */
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="custom instructions"]),
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="role definition"]),
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="requirements"]),
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="variable"]) {
+  position: relative;
+  margin: 4.5rem 0 1.5rem;
+  border: 1px solid #c6c6c6;
+  border-left: 4px solid #6f6f6f;
+  background: #f4f4f4 !important;
+}
+
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="custom instructions"])::before,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="role definition"])::before,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="requirements"])::before,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="variable"])::before {
+  content: 'Contenido de configuración';
+  position: absolute;
+  top: -2.125rem;
+  left: -1px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.125rem;
+  max-width: calc(100% - 0.5rem);
+  padding: 0.375rem 1rem 0.375rem 0.875rem;
+  border: 1px solid #c6c6c6;
+  border-bottom: 0;
+  background: #f4f4f4;
+  color: #393939;
+  clip-path: polygon(0 0, calc(100% - 0.625rem) 0, 100% 100%, 0 100%);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="custom instructions"]) .copy-button,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="role definition"]) .copy-button,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="requirements"]) .copy-button,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="variable"]) .copy-button {
+  border-color: #525252;
+  background: #ffffff;
+  color: #161616 !important;
+}
+
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="custom instructions"]) .copy-button:hover,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="role definition"]) .copy-button:hover,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="requirements"]) .copy-button:hover,
+.lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="variable"]) .copy-button:hover {
+  border-color: #0043ce;
+  background: #0f62fe;
+  color: #ffffff !important;
+}
+
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="custom instructions"]),
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="role definition"]),
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="requirements"]),
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="variable"]) {
+  border-color: #525252;
+  border-left-color: #8d8d8d;
+  background: #262626 !important;
+}
+
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="custom instructions"])::before,
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="role definition"])::before,
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="requirements"])::before,
+body.cds--g100 .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="variable"])::before {
+  border-color: #525252;
+  background: #262626;
+  color: #f4f4f4;
+}
+
+@media (max-width: 500px) {
+  .lab-shell.lab-shell--software-development-lifecycle .code-block--prompt,
+  .lab-shell.lab-shell--software-development-lifecycle .code-block--terminal,
+  .lab-shell.lab-shell--software-development-lifecycle .code-block--file,
+  .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="prompt"]),
+  .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="URL"]),
+  .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="JSON"]) {
+    margin-top: 1.5rem;
+  }
+
+  .lab-shell.lab-shell--software-development-lifecycle .code-block--prompt::before,
+  .lab-shell.lab-shell--software-development-lifecycle .code-block--terminal::before,
+  .lab-shell.lab-shell--software-development-lifecycle .code-block--file::before,
+  .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="prompt"])::before,
+  .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="URL"])::before,
+  .lab-shell.lab-shell--software-development-lifecycle .code-block:has(.copy-button[aria-label*="JSON"])::before {
+    position: static;
+    max-width: none;
+    margin: 0.75rem 0 0 0.75rem;
+    border-bottom-width: 1px;
+    clip-path: none;
+  }
+}
+
+/* Keep inline code and prose in one normal text flow; only the icon is positioned. */
+.lab-shell.lab-shell--software-development-lifecycle .callout[data-tone="info"] > .cds--list--unordered > .cds--list__item {
+  display: block;
+  position: relative;
+  margin: 0.5rem 0;
+  padding-left: 1.75rem;
+  line-height: 1.5;
+}
+
+.lab-shell.lab-shell--software-development-lifecycle .callout[data-tone="info"] > .cds--list--unordered > .cds--list__item::before {
+  position: absolute;
+  box-sizing: border-box;
+  top: 0.1875rem;
+  left: 0;
+  margin: 0;
+  line-height: 1;
+}
+
+/*
+ * Track D / Confluent — final contextual-block contract.
+ * This must remain after the shared code-block rules. Legacy pages are
+ * normalized by app.js, but shared styles previously reintroduced a light
+ * surface, a generic "prompt para Bob" bar and an accent on the wrong side.
+ */
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--prompt,
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--terminal {
+  position: relative !important;
+  overflow: visible !important;
+  margin: 3.25rem 0 1.5rem !important;
+  background: #161616 !important;
+  border: 1px solid #525252 !important;
+  border-right: 1px solid #525252 !important;
+  border-left: 4px solid #8a3ffc !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: #f4f4f4 !important;
+}
+
+/* The context comes from .code-block__label; never show the old pseudo bar. */
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--prompt::before,
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--terminal::before {
+  content: none !important;
+  display: none !important;
+}
+
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--prompt > .code-block__label,
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--terminal > .code-block__label {
+  position: absolute !important;
+  z-index: 2;
+  top: -2.85rem !important;
+  left: -4px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  min-height: 2.85rem !important;
+  max-width: calc(100% + 4px) !important;
+  margin: 0 !important;
+  padding: 0.625rem 1.25rem !important;
+  overflow-wrap: anywhere;
+  border: 1px solid #d4bbff !important;
+  border-bottom: 0 !important;
+  border-radius: 0 !important;
+  background: #f6f2ff !important;
+  color: #6929c4 !important;
+  font-family: var(--cds-code-01-font-family, ui-monospace, SFMono-Regular, Menlo, monospace) !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  line-height: 1.25rem !important;
+}
+
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--terminal > .code-block__label {
+  border-color: #393939 !important;
+  background: #161616 !important;
+  color: #f4f4f4 !important;
+}
+
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--prompt pre,
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--terminal pre {
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 4.25rem 1.25rem 1.25rem !important;
+  overflow-x: auto !important;
+  background: transparent !important;
+  color: #f4f4f4 !important;
+}
+
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--prompt code,
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--terminal code,
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--prompt code *,
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--terminal code * {
+  background: transparent !important;
+  color: #f4f4f4 !important;
+}
+
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--prompt > .copy-button,
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--terminal > .copy-button {
+  position: absolute !important;
+  z-index: 1;
+  top: 1rem !important;
+  right: 1rem !important;
+  margin: 0 !important;
+  border: 1px solid #d4bbff !important;
+  border-radius: 0 !important;
+  background: #262626 !important;
+  color: #f4f4f4 !important;
+  box-shadow: none !important;
+}
+
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--prompt > .copy-button:hover,
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--terminal > .copy-button:hover {
+  border-color: #be95ff !important;
+  background: #8a3ffc !important;
+  color: #ffffff !important;
+}
+
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--prompt > .copy-button:focus-visible,
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--terminal > .copy-button:focus-visible {
+  outline: 2px solid #be95ff !important;
+  outline-offset: 2px !important;
+}
+
+/* Configuration stays neutral, but follows the same left-edge hierarchy. */
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--file,
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--json,
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--yaml {
+  position: relative !important;
+  overflow: visible !important;
+  margin: 3.25rem 0 1.5rem !important;
+  border: 1px solid #c6c6c6 !important;
+  border-right-color: #c6c6c6 !important;
+  border-left: 4px solid #6f6f6f !important;
+  border-radius: 0 !important;
+  background: #f4f4f4 !important;
+  color: #161616 !important;
+}
+
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--file::before,
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--json::before,
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--yaml::before {
+  content: none !important;
+  display: none !important;
+}
+
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--file > .code-block__label,
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--json > .code-block__label,
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--yaml > .code-block__label {
+  position: absolute !important;
+  z-index: 2;
+  top: -2.85rem !important;
+  left: -4px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  min-height: 2.85rem !important;
+  max-width: calc(100% + 4px) !important;
+  margin: 0 !important;
+  padding: 0.625rem 1.25rem !important;
+  overflow-wrap: anywhere;
+  border: 1px solid #c6c6c6 !important;
+  border-bottom: 0 !important;
+  border-radius: 0 !important;
+  background: #f4f4f4 !important;
+  color: #393939 !important;
+  font-family: var(--cds-code-01-font-family, ui-monospace, SFMono-Regular, Menlo, monospace) !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  line-height: 1.25rem !important;
+}
+
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--file pre,
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--json pre,
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--yaml pre {
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 4.25rem 1.25rem 1.25rem !important;
+  overflow-x: auto !important;
+  background: transparent !important;
+  color: #161616 !important;
+}
+
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--file code,
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--json code,
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--yaml code {
+  background: transparent !important;
+  color: #161616 !important;
+}
+
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--file > .copy-button,
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--json > .copy-button,
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--yaml > .copy-button {
+  position: absolute !important;
+  z-index: 1;
+  top: 1rem !important;
+  right: 1rem !important;
+  margin: 0 !important;
+  border: 1px solid #525252 !important;
+  border-radius: 0 !important;
+  background: #ffffff !important;
+  color: #161616 !important;
+  box-shadow: none !important;
+}
+
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--file > .copy-button:hover,
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--json > .copy-button:hover,
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--yaml > .copy-button:hover {
+  border-color: #6929c4 !important;
+  background: #8a3ffc !important;
+  color: #ffffff !important;
+}
+
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent .code-block--file,
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent .code-block--json,
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent .code-block--yaml {
+  border-color: #525252 !important;
+  border-left-color: #8d8d8d !important;
+  background: #262626 !important;
+  color: #f4f4f4 !important;
+}
+
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent .code-block--file > .code-block__label,
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent .code-block--json > .code-block__label,
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent .code-block--yaml > .code-block__label {
+  border-color: #525252 !important;
+  background: #262626 !important;
+  color: #f4f4f4 !important;
+}
+
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent .code-block--file pre,
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent .code-block--json pre,
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent .code-block--yaml pre,
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent .code-block--file code,
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent .code-block--json code,
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent .code-block--yaml code {
+  color: #f4f4f4 !important;
+}
+
+@media (max-width: 500px) {
+  .lab-shell.lab-shell--agentic-retail-confluent .code-block--prompt,
+  .lab-shell.lab-shell--agentic-retail-confluent .code-block--terminal {
+    margin-top: 3.25rem !important;
+  }
+
+  .lab-shell.lab-shell--agentic-retail-confluent .code-block--prompt > .code-block__label,
+  .lab-shell.lab-shell--agentic-retail-confluent .code-block--terminal > .code-block__label {
+    max-width: calc(100% + 4px) !important;
+    padding-right: 0.875rem !important;
+    padding-left: 0.875rem !important;
+  }
+
+  .lab-shell.lab-shell--agentic-retail-confluent .code-block--prompt pre,
+  .lab-shell.lab-shell--agentic-retail-confluent .code-block--terminal pre {
+    padding: 4.5rem 1rem 1rem !important;
+  }
+}
+
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent .code-block--prompt,
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent .code-block--terminal {
+  background: #000000 !important;
+  border-color: #393939 !important;
+  border-left-color: #8a3ffc !important;
+}
+
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent .code-block--terminal > .code-block__label {
+  background: #000000 !important;
+}
+
+/* Defensive fallback for cached/legacy Confluent prompt markup. The prompt
+   surface is never a light card: its container and every rendered code layer
+   share the terminal's dark canvas. */
+.lab-shell.lab-shell--agentic-retail-confluent :is(.code-block--prompt, .prompt-block),
+.lab-shell.lab-shell--agentic-retail-confluent :is(.code-block--prompt, .prompt-block) :is(.prompt-block__body, .highlight, pre, code) {
+  background-color: #161616 !important;
+  background-image: none !important;
+  color: #f4f4f4 !important;
+}
+
+.lab-shell.lab-shell--agentic-retail-confluent .prompt-block {
+  position: relative !important;
+  overflow: visible !important;
+  border: 1px solid #525252 !important;
+  border-right-color: #525252 !important;
+  border-left: 4px solid #8a3ffc !important;
+  border-radius: 0 !important;
+}
+
+.lab-shell.lab-shell--agentic-retail-confluent .prompt-block__header {
+  position: absolute !important;
+  z-index: 2;
+  top: -2.85rem !important;
+  left: -4px !important;
+  display: inline-flex !important;
+  min-height: 2.85rem !important;
+  margin: 0 !important;
+  padding: 0.625rem 1.25rem !important;
+  border: 1px solid #d4bbff !important;
+  border-bottom: 0 !important;
+  background: #f6f2ff !important;
+  color: #6929c4 !important;
+}
+
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent :is(.code-block--prompt, .prompt-block),
+body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent :is(.code-block--prompt, .prompt-block) :is(.prompt-block__body, .highlight, pre, code) {
+  background-color: #000000 !important;
+}
+
+/* Some legacy prompt bodies arrive with token spans whose light-theme colour
+   has higher specificity. Keep every content node readable on the dark prompt
+   canvas; the tab and copy button have their own explicit colours above. */
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--prompt > pre,
+.lab-shell.lab-shell--agentic-retail-confluent .code-block--prompt > pre *,
+.lab-shell.lab-shell--agentic-retail-confluent .prompt-block__body,
+.lab-shell.lab-shell--agentic-retail-confluent .prompt-block__body * {
+  color: #f4f4f4 !important;
+  text-shadow: none !important;
+}
+
+/*
+ * Track C / Java modernization — contextual block contract.
+ * Keep this at the end of the stylesheet: older Premium rules use a grid
+ * layout and a generic dark card, which made file references ambiguous and
+ * could squeeze checklist text into a narrow column. The three contexts here
+ * are intentional: Bob prompt, executable terminal, and neutral artifact.
+ */
+:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) {
+  --modernization-accent: #198038;
+  --modernization-accent-strong: #0e6027;
+  --modernization-tab: #defbe6;
+  --modernization-file-ink: #161616;
+}
+
+:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) .lab-section > h2,
+:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) .lab-step__title {
+  border-left-color: var(--modernization-accent) !important;
+}
+
+:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.lab-section > h2, .lab-step__title) > svg {
+  display: inline-block !important;
+  width: 1.25rem !important;
+  height: 1.25rem !important;
+  margin-inline-end: 0.5rem !important;
+  vertical-align: -0.18em !important;
+  color: var(--modernization-accent) !important;
+}
+
+/* Icons never take part in the text width calculation. */
+:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) .lab-checklist > .cds--list__item {
+  display: block !important;
+  position: relative !important;
+  min-width: 0 !important;
+  margin: 0.5rem 0 !important;
+  padding-left: 1.9rem !important;
+  overflow-wrap: break-word;
+  line-height: 1.5 !important;
+}
+
+:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) .lab-checklist > .cds--list__item::before {
+  position: absolute !important;
+  top: 0.17rem !important;
+  left: 0 !important;
+  margin: 0 !important;
+  color: var(--modernization-accent) !important;
+  line-height: 1 !important;
+}
+
+:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) .lab-checklist > .lab-list__item--checked {
+  display: block !important;
+  position: relative !important;
+  padding-left: 1.9rem !important;
+}
+
+:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) .lab-checklist > .lab-list__item--checked > .lab-list__icon {
+  position: absolute !important;
+  top: 0.17rem !important;
+  left: 0 !important;
+  width: 1rem !important;
+  height: 1rem !important;
+  color: var(--modernization-accent) !important;
+}
+
+:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--prompt, .code-block--terminal),
+:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--file, .code-block--json, .code-block--yaml) {
+  display: block !important;
+  position: relative !important;
+  min-width: 0 !important;
+  overflow: visible !important;
+  margin: 3.25rem 0 1.5rem !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--prompt, .code-block--terminal) {
+  background: #161616 !important;
+  border: 1px solid #525252 !important;
+  border-left: 4px solid var(--modernization-accent) !important;
+  color: #f4f4f4 !important;
+}
+
+/* Old pages may carry a generic pseudo heading. Labels are real DOM content. */
+:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--prompt, .code-block--terminal)::before,
+:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--file, .code-block--json, .code-block--yaml)::before {
+  content: none !important;
+  display: none !important;
+}
+
+:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--prompt, .code-block--terminal) > .code-block__label,
+:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--file, .code-block--json, .code-block--yaml) > .code-block__label {
+  position: absolute !important;
+  z-index: 2 !important;
+  top: -2.85rem !important;
+  left: -4px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  min-height: 2.85rem !important;
+  max-width: calc(100% + 4px) !important;
+  margin: 0 !important;
+  padding: 0.625rem 1.25rem !important;
+  overflow-wrap: anywhere !important;
+  border-radius: 0 !important;
+  font-family: var(--cds-code-01-font-family, ui-monospace, SFMono-Regular, Menlo, monospace) !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  line-height: 1.25rem !important;
+}
+
+:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) .code-block--prompt > .code-block__label {
+  border: 1px solid #a7f0ba !important;
+  border-bottom: 0 !important;
+  background: var(--modernization-tab) !important;
+  color: var(--modernization-accent-strong) !important;
+}
+
+:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) .code-block--terminal > .code-block__label {
+  border: 1px solid #393939 !important;
+  border-bottom: 0 !important;
+  background: #161616 !important;
+  color: #f4f4f4 !important;
+}
+
+:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--prompt, .code-block--terminal) pre {
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 4.25rem 1.25rem 1.25rem !important;
+  overflow-x: auto !important;
+  background: transparent !important;
+  color: #f4f4f4 !important;
+}
+
+:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--prompt, .code-block--terminal) :is(code, code *) {
+  background: transparent !important;
+  color: #f4f4f4 !important;
+  -webkit-text-fill-color: #f4f4f4 !important;
+}
+
+:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--prompt, .code-block--terminal) > .copy-button {
+  position: absolute !important;
+  z-index: 1 !important;
+  top: 1rem !important;
+  right: 1rem !important;
+  margin: 0 !important;
+  border: 1px solid #a7f0ba !important;
+  border-radius: 0 !important;
+  background: #262626 !important;
+  color: #f4f4f4 !important;
+  box-shadow: none !important;
+}
+
+:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--prompt, .code-block--terminal) > .copy-button:hover {
+  border-color: #42be65 !important;
+  background: var(--modernization-accent) !important;
+  color: #ffffff !important;
+}
+
+:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) .copy-button:focus-visible {
+  outline: 2px solid #42be65 !important;
+  outline-offset: 2px !important;
+}
+
+:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--file, .code-block--json, .code-block--yaml) {
+  border: 1px solid #c6c6c6 !important;
+  border-left: 4px solid #6f6f6f !important;
+  background: #f4f4f4 !important;
+  color: #161616 !important;
+}
+
+:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--file, .code-block--json, .code-block--yaml) > .code-block__label {
+  border: 1px solid #c6c6c6 !important;
+  border-bottom: 0 !important;
+  background: #f4f4f4 !important;
+  color: #393939 !important;
+}
+
+:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--file, .code-block--json, .code-block--yaml) pre {
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 4.25rem 1.25rem 1.25rem !important;
+  overflow-x: auto !important;
+  background: transparent !important;
+  color: #161616 !important;
+}
+
+:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--file, .code-block--json, .code-block--yaml) :is(code, code *) {
+  background: transparent !important;
+  color: #161616 !important;
+}
+
+:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--file, .code-block--json, .code-block--yaml) > .copy-button {
+  position: absolute !important;
+  z-index: 1 !important;
+  top: 1rem !important;
+  right: 1rem !important;
+  margin: 0 !important;
+  border: 1px solid #525252 !important;
+  border-radius: 0 !important;
+  background: #ffffff !important;
+  color: #161616 !important;
+  box-shadow: none !important;
+}
+
+:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--file, .code-block--json, .code-block--yaml) > .copy-button:hover {
+  border-color: var(--modernization-accent-strong) !important;
+  background: var(--modernization-accent) !important;
+  color: #ffffff !important;
+}
+
+body.cds--g100 :is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--prompt, .code-block--terminal) {
+  background: #000000 !important;
+  border-color: #393939 !important;
+  border-left-color: var(--modernization-accent) !important;
+}
+
+body.cds--g100 :is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) .code-block--terminal > .code-block__label {
+  background: #000000 !important;
+}
+
+body.cds--g100 :is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--file, .code-block--json, .code-block--yaml) {
+  border-color: #525252 !important;
+  border-left-color: #8d8d8d !important;
+  background: #262626 !important;
+  color: #f4f4f4 !important;
+}
+
+body.cds--g100 :is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) {
+  --modernization-file-ink: #f4f4f4;
+}
+
+body.cds--g100 :is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--file, .code-block--json, .code-block--yaml) > .code-block__label {
+  border-color: #525252 !important;
+  background: #262626 !important;
+  color: #f4f4f4 !important;
+}
+
+body.cds--g100 :is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--file, .code-block--json, .code-block--yaml) > .copy-button {
+  border-color: #8d8d8d !important;
+  background: #393939 !important;
+  color: #f4f4f4 !important;
+}
+
+body.cds--g100 :is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--file, .code-block--json, .code-block--yaml) :is(pre, code, code *) {
+  color: #f4f4f4 !important;
+}
+
+@media (max-width: 500px) {
+  :is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--prompt, .code-block--terminal, .code-block--file, .code-block--json, .code-block--yaml) {
+    margin-top: 3.25rem !important;
+  }
+
+  :is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--prompt, .code-block--terminal, .code-block--file, .code-block--json, .code-block--yaml) > .code-block__label {
+    max-width: calc(100% + 4px) !important;
+    padding-right: 0.875rem !important;
+    padding-left: 0.875rem !important;
+  }
+
+  :is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--prompt, .code-block--terminal, .code-block--file, .code-block--json, .code-block--yaml) pre {
+    padding: 4.5rem 1rem 1rem !important;
+  }
 }

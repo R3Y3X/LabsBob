@@ -7,6 +7,8 @@ promt1.md
 # Environment / secrets
 .env
 .env.*
+participant-config.env
+workshop-config.env
 *.pem
 *.key
 id_rsa

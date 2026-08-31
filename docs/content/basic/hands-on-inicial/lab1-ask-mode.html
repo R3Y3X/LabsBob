@@ -1,300 +1,141 @@
 <div class="content-panel lab-template">
-
   <div class="lab-banner">
-    <div class="lab-banner__tags">
-      <span class="cds--tag cds--tag--blue">Ask Mode</span>
-      <span class="cds--tag cds--tag--cool-gray">8 min</span>
+    <div class="hands-on-meta" aria-label="Información del Lab 1">
+      <span class="hands-on-meta__item"><span class="hands-on-meta__label">Lab</span><span class="hands-on-meta__value">01 · Ask Mode</span></span>
+      <span class="hands-on-meta__item"><span class="hands-on-meta__label">Duración</span><span class="hands-on-meta__value">~8 min</span></span>
+      <span class="hands-on-meta__item"><span class="hands-on-meta__label">Resultado</span><span class="hands-on-meta__value">Análisis y documentación propuesta</span></span>
     </div>
     <h1 class="cds--productive-heading-05 lab-banner__title">Lab 1 — Ask Mode</h1>
-
-    <!-- ── Hero image ──────────────────────────────────────────────── -->
-    <div class="lab-hero-image">
-      <img src="./assets/images/labs/hands-on-inicial/lab1_bob.png"
-           alt="Banner del Lab 1 — Ask Mode de IBM Bob"
-           class="lab-hero-image__img" />
-    </div>
-
+    <p class="lab-banner__summary">Usa Ask para entender un proyecto de e-commerce y obtener explicaciones antes de decidir cualquier cambio.</p>
+    <div class="lab-hero-image"><img src="./assets/images/labs/hands-on-inicial/lab1_bob.png" alt="Banner del Lab 1 de Ask Mode" class="lab-hero-image__img" /></div>
     <div class="lab-banner__metrics">
-      <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">270k</span>
-        <span class="lab-banner__metric-label">tokens de contexto</span>
-      </div>
-      <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">0</span>
-        <span class="lab-banner__metric-label">archivos modificados</span>
-      </div>
-      <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">1–2</span>
-        <span class="lab-banner__metric-label">BobCoins estimados</span>
-      </div>
-      <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">6</span>
-        <span class="lab-banner__metric-label">pasos</span>
-      </div>
+      <div class="lab-banner__metric"><span class="lab-banner__metric-value">0</span><span class="lab-banner__metric-label">cambios de implementación</span></div>
+      <div class="lab-banner__metric"><span class="lab-banner__metric-value">4</span><span class="lab-banner__metric-label">consultas guiadas</span></div>
+      <div class="lab-banner__metric"><span class="lab-banner__metric-value">1</span><span class="lab-banner__metric-label">propuesta de README</span></div>
     </div>
   </div>
 
-  <!-- Objetivos -->
-  <section class="lab-section" aria-labelledby="lab1-obj">
-    <h2 class="cds--productive-heading-03" id="lab1-obj">
-      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
-      Objetivos de aprendizaje
-    </h2>
-    <ul class="cds--list--unordered">
-      <li class="cds--list__item">✅ Activar y usar el modo Ask de IBM Bob</li>
-      <li class="cds--list__item">✅ Analizar la arquitectura de un proyecto automáticamente</li>
-      <li class="cds--list__item">✅ Hacer preguntas inteligentes sobre código existente</li>
-      <li class="cds--list__item">✅ Generar documentación profesional con diagramas</li>
-      <li class="cds--list__item">✅ Entender cómo Bob mantiene contexto en la conversación (270k tokens)</li>
+  <section class="lab-section" aria-labelledby="lab1-objetivo">
+    <h2 class="cds--productive-heading-03" id="lab1-objetivo">Qué vas a lograr</h2>
+    <ul class="checklist">
+      <li class="checklist__item">Seleccionar Ask Mode para analizar código existente.</li>
+      <li class="checklist__item">Identificar la arquitectura y los riesgos de un controlador.</li>
+      <li class="checklist__item">Pedir una propuesta de README y comprobar que la respuesta tiene el alcance solicitado.</li>
     </ul>
   </section>
 
-  <!-- ¿Qué es Ask Mode? -->
-  <section class="lab-section" aria-labelledby="lab1-que">
-    <h2 class="cds--productive-heading-03" id="lab1-que">
-      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
-      ¿Qué es Ask Mode?
-    </h2>
+  <section class="lab-section" aria-labelledby="lab1-ask-explica">
+    <h2 class="cds--productive-heading-03" id="lab1-ask-explica">Cuándo usar Ask Mode</h2>
     <div class="lab-mode-card lab-mode-card--ask">
-      <div class="lab-mode-card__icon">
-        <svg aria-hidden="true" width="28" height="28" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
-      </div>
+      <div class="lab-mode-card__icon" aria-hidden="true">?</div>
       <div class="lab-mode-card__body">
-        <h3 class="cds--productive-heading-02">Ask Mode — El Consultor</h3>
-        <p class="cds--body-01">Modo especializado en <strong>análisis y comprensión</strong> de código. <em>No modifica ningún archivo por sí solo.</em></p>
-        <ul class="cds--list--unordered" style="margin-top:8px">
-          <li class="cds--list__item">Analiza múltiples archivos simultáneamente</li>
-          <li class="cds--list__item">Mantiene <strong>270 000 tokens de contexto</strong> en la conversación</li>
-          <li class="cds--list__item">Genera visualizaciones y diagramas (Mermaid)</li>
-          <li class="cds--list__item">Las lecturas se <strong>aprueban automáticamente</strong> — solo escrituras requieren confirmación</li>
-          <li class="cds--list__item">Crea documentación estructurada</li>
-          <li class="cds--list__item">Si necesita escribir un archivo, <strong>pide permiso para cambiar a Agent Mode</strong> — si aceptas, lo hace desde ahí</li>
-        </ul>
+        <h3 class="cds--productive-heading-02">Entender antes de cambiar</h3>
+        <p class="cds--body-01">Ask Mode sirve para preguntas, análisis, recomendaciones y documentación sobre tu workspace. Úsalo cuando necesitas comprender el código sin iniciar una tarea de implementación.</p>
       </div>
     </div>
-    <div class="callout" data-tone="note">
-      <p class="callout__title">Casos de Uso de Ask Mode</p>
-      <ul class="cds--list--unordered">
-        <li class="cds--list__item"><strong>Onboarding de nuevos devs:</strong> "Explícame cómo funciona el sistema de autenticación"</li>
-        <li class="cds--list__item"><strong>Code Review:</strong> "¿Qué patrones de diseño se usan en este módulo?"</li>
-        <li class="cds--list__item"><strong>Refactoring:</strong> "¿Dónde se usa esta función y cuál es su impacto?"</li>
-        <li class="cds--list__item"><strong>Documentación:</strong> "Genera un README para este microservicio"</li>
-      </ul>
+    <div class="callout" data-tone="info">
+      <p class="callout__title">Permisos y cambios</p>
+      <p>Confirma siempre el modo que aparece en tu chat y las solicitudes de permiso de tu instalación. Si decides convertir una recomendación en una edición, cambia conscientemente a Agent Mode y revisa el diff antes de aprobarlo.</p>
     </div>
   </section>
 
-  <!-- Workspace setup -->
-  <section class="lab-workspace-setup" aria-labelledby="lab1-ask-workspace">
+  <section class="lab-workspace-setup" aria-labelledby="lab1-workspace">
     <div class="lab-workspace-setup__box">
-      <span class="lab-workspace-setup__badge">Paso obligatorio — antes de cualquier prompt</span>
-      <h2 class="lab-workspace-setup__title" id="lab1-ask-workspace">Punto de partida</h2>
-      <p class="lab-workspace-setup__lead">Vamos a analizar una aplicación de e-commerce simple. Descarga <code>LabHandsOnBob.zip</code> desde la pestaña <strong>Introducción</strong> del workshop y descomprímelo. Después abre IBM Bob y usa <strong>File → Open Folder</strong> para abrir la carpeta del lab — no la carpeta raíz del zip.</p>
-      <div class="lab-workspace-setup__path">
-        <p class="lab-workspace-setup__path-label">File → Open Folder</p>
-        <code class="lab-workspace-setup__path-value">LabHandsOnBob/lab-1-ask-mode/</code>
-      </div>
+      <span class="lab-workspace-setup__badge">Punto de partida</span>
+      <h2 class="lab-workspace-setup__title" id="lab1-workspace">Abre el proyecto del Lab 1</h2>
+      <p class="lab-workspace-setup__lead">Desde la introducción, descarga y descomprime <code>LabHandsOnBob.zip</code>. En IBM Bob abre esta carpeta con <strong>File → Open Folder</strong>; no abras la carpeta raíz del bundle.</p>
+      <div class="lab-workspace-setup__path"><p class="lab-workspace-setup__path-label">File → Open Folder</p><code class="lab-workspace-setup__path-value">LabHandsOnBob/lab-1-ask-mode/</code></div>
       <ul class="lab-workspace-setup__checks">
-        <li>En el explorador de Bob deben verse <code>package.json</code> y <code>src/</code> en la raíz</li>
-        <li>La terminal integrada del IDE ya apunta a esta carpeta — no hace falta <code>cd</code></li>
+        <li>El explorador muestra <code>package.json</code> y <code>src/</code> en la raíz.</li>
+        <li>La terminal integrada apunta a esta carpeta; no necesitas ejecutar <code>cd</code>.</li>
       </ul>
-      <p class="lab-workspace-setup__note">Esta carpeta es autocontenida: no depende de ningún otro lab del bundle.</p>
     </div>
   </section>
 
-  <!-- Ejercicio práctico -->
-  <section class="lab-section" aria-labelledby="lab1-ejercicio">
-    <h2 class="cds--productive-heading-03" id="lab1-ejercicio">
-      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
-      Ejercicio
-    </h2>
+  <section class="lab-section" aria-labelledby="lab1-pasos">
+    <h2 class="cds--productive-heading-03" id="lab1-pasos">Analiza el proyecto</h2>
 
-    <!-- Paso 1 -->
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Confirma la estructura del proyecto</h3>
-      <p class="code-block__label" style="margin:0 0 4px;">Ejecuta en la terminal integrada</p>
-      <div class="code-block code-block--terminal">
-        <button type="button" class="copy-button">Copiar</button>
-        <pre><code>ls -la</code></pre>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Confirma la carpeta</h3>
+      <div class="hands-on-action">
+        <span class="hands-on-context">Terminal integrada</span>
+        <p class="hands-on-action__purpose">Comprueba que Bob tiene abierto el proyecto que vas a analizar.</p>
+        <div class="code-block code-block--terminal"><p class="code-block__label">Ejecuta en la terminal integrada</p><button type="button" class="copy-button">Copiar</button><pre><code>ls -la</code></pre></div>
       </div>
-      <p class="cds--body-01">Deberías ver la siguiente estructura:</p>
-      <div class="code-block code-block--tree" style="--code-label: 'lab-1-ask-mode'">
-        <pre><code>├── README.md
-├── src/
-│   ├── app.js
-│   ├── models/
-│   │   ├── User.js
-│   │   └── Product.js
-│   ├── controllers/
-│   │   ├── authController.js
-│   │   └── productController.js
-│   └── routes/
-│       └── api.js
-└── package.json</code></pre>
-      </div>
+      <div class="hands-on-checkpoint"><p class="hands-on-checkpoint__title">Checkpoint</p><ul class="checklist"><li class="checklist__item">Ves <code>README.md</code>, <code>package.json</code> y la carpeta <code>src/</code>.</li></ul></div>
     </div>
 
-    <!-- Paso 2 -->
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Activar Ask Mode</h3>
-      <p class="cds--body-01">Cambia el modo de Bob a Ask antes de analizar el proyecto.</p>
-      <ol class="cds--list--ordered">
-        <li class="cds--list__item">Haz clic en el <strong>selector de modos</strong> (parte superior del chat)</li>
-        <li class="cds--list__item">Selecciona <strong>Ask</strong></li>
-        <li class="cds--list__item">Verifica en la barra de estado: debe aparecer <code>Ask</code> activo</li>
-      </ol>
-      <figure class="lab-figure">
-        <img src="./assets/images/labs/hands-on-inicial/lab1-activate-ask.png"
-             alt="Selector de modos de IBM Bob mostrando Ask Mode seleccionado"
-             class="lab-figure__img" />
-        <figcaption class="lab-figure__caption">Verifica: el selector muestra Ask Mode seleccionado</figcaption>
-      </figure>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Activa Ask Mode</h3>
+      <div class="hands-on-action">
+        <span class="hands-on-context">IBM Bob · selector de modos</span>
+        <p class="hands-on-action__purpose">Selecciona el modo de análisis antes de enviar cualquier consulta.</p>
+        <ol class="cds--list--ordered"><li class="cds--list__item">Abre el selector de modos junto al chat.</li><li class="cds--list__item">Elige <strong>Ask</strong>.</li><li class="cds--list__item">Comprueba que el nombre Ask queda visible junto al campo de entrada.</li></ol>
+      </div>
+      <figure class="lab-figure"><img src="./assets/images/labs/hands-on-inicial/lab1-activate-ask.png" alt="Referencia del selector de modos de IBM Bob con Ask seleccionado" class="lab-figure__img" /><figcaption class="lab-figure__caption">Referencia: la ubicación visual puede variar entre versiones.</figcaption></figure>
+      <div class="hands-on-checkpoint"><p class="hands-on-checkpoint__title">Checkpoint</p><ul class="checklist"><li class="checklist__item">El chat indica que Ask Mode es el modo activo.</li></ul></div>
     </div>
 
-    <!-- Paso 3 -->
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Análisis de arquitectura</h3>
-      <p class="cds--body-01">Abre el chat (<kbd>Cmd/Ctrl + Shift + I</kbd>) y pega este prompt:</p>
-      <div class="code-block code-block--prompt">
-        <button type="button" class="copy-button">Copiar</button>
-        <pre><code>Analiza la arquitectura de este proyecto de e-commerce.
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Pregunta por la arquitectura</h3>
+      <div class="hands-on-action">
+        <span class="hands-on-context">IBM Bob · Ask Mode</span>
+        <p class="hands-on-action__purpose">Obtén un mapa de alto nivel antes de inspeccionar un archivo concreto.</p>
+        <div class="code-block code-block--prompt"><p class="code-block__label">Pega en el chat de Bob</p><button type="button" class="copy-button">Copiar</button><pre><code>Analiza la arquitectura de este proyecto de e-commerce.
 Explícame:
-1. ¿Qué patrón arquitectónico se está usando?
-2. ¿Cuáles son los componentes principales?
-3. ¿Cómo fluyen los datos entre capas?</code></pre>
+1. Qué patrón arquitectónico se está usando.
+2. Cuáles son los componentes principales.
+3. Cómo fluyen los datos entre las capas.</code></pre></div>
       </div>
-      <div class="callout" data-tone="tip">
-        <p class="callout__title">Qué debes ver</p>
-        <ul class="cds--list--unordered">
-          <li class="cds--list__item">Lecturas auto-aprobadas de archivos</li>
-          <li class="cds--list__item">Identificación del patrón MVC</li>
-          <li class="cds--list__item">Relaciones entre capas y sugerencias</li>
-        </ul>
-      </div>
-      <figure class="lab-figure">
-        <img src="./assets/images/labs/hands-on-inicial/lab1-architecture-analysis.png"
-             alt="IBM Bob analizando la arquitectura del proyecto y mostrando el diagrama MVC"
-             class="lab-figure__img" />
-        <figcaption class="lab-figure__caption">Referencia: Bob explica MVC y el flujo entre componentes</figcaption>
-      </figure>
+      <div class="hands-on-checkpoint"><p class="hands-on-checkpoint__title">Qué debes revisar</p><ul class="checklist"><li class="checklist__item">La respuesta identifica archivos o capas concretas del proyecto.</li><li class="checklist__item">La explicación conecta modelos, controladores y rutas en lugar de dar una descripción genérica.</li></ul></div>
+      <figure class="lab-figure"><img src="./assets/images/labs/hands-on-inicial/lab1-architecture-analysis.png" alt="Referencia de una respuesta de Ask Mode sobre arquitectura MVC" class="lab-figure__img" /><figcaption class="lab-figure__caption">Referencia: valida las capas y archivos, no el texto exacto de la respuesta.</figcaption></figure>
     </div>
 
-    <!-- Paso 4 -->
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 4 — Análisis profundo de código</h3>
-      <p class="cds--body-01">Profundiza en un componente específico:</p>
-      <div class="code-block code-block--prompt">
-        <button type="button" class="copy-button">Copiar</button>
-        <pre><code>Analiza el archivo authController.js y explícame:
-1. ¿Qué vulnerabilidades de seguridad tiene?
-2. ¿Qué mejores prácticas no se están siguiendo?
-3. ¿Cómo podría mejorarse el manejo de errores?</code></pre>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 4 — Profundiza en un controlador</h3>
+      <div class="hands-on-action">
+        <span class="hands-on-context">IBM Bob · Ask Mode</span>
+        <p class="hands-on-action__purpose">Convierte una revisión amplia en hallazgos accionables sobre autenticación y errores.</p>
+        <div class="code-block code-block--prompt"><p class="code-block__label">Pega en el chat de Bob</p><button type="button" class="copy-button">Copiar</button><pre><code>Analiza el archivo src/controllers/authController.js y explícame:
+1. Qué validaciones de entrada y manejo de errores tiene.
+2. Qué riesgos o buenas prácticas faltan.
+3. Qué cambios priorizarías y por qué.</code></pre></div>
       </div>
-      <figure class="lab-figure">
-        <img src="./assets/images/labs/hands-on-inicial/lab1-analisis-profundo.png"
-             alt="IBM Bob realizando análisis profundo de código en authController.js"
-             class="lab-figure__img" />
-        <figcaption class="lab-figure__caption">Referencia: Bob detecta vulnerabilidades y sugiere mejoras en el código</figcaption>
-      </figure>
-      <div class="callout" data-tone="note">
-        <p class="callout__title">Tip Pro</p>
-        <p>IBM Bob puede leer archivos completos en un solo paso. Si necesitas más contexto puedes decir: <em>"Lee también User.js y api.js"</em> — con 270k tokens de contexto, Bob mantiene todo en mente.</p>
-      </div>
+      <div class="hands-on-checkpoint"><p class="hands-on-checkpoint__title">Qué debes revisar</p><ul class="checklist"><li class="checklist__item">La respuesta cita <code>authController.js</code> y distingue observaciones de recomendaciones.</li><li class="checklist__item">Tienes una prioridad clara para discutir antes de implementar cualquier cambio.</li></ul></div>
     </div>
 
-    <!-- Paso 5 -->
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 5 — Generar documentación</h3>
-      <p class="cds--body-01">Pide un README profesional. Ask Mode genera el contenido en el chat — no escribe archivos por sí solo. Si quieres guardarlo, puedes copiar el resultado o aceptar cuando Bob te pida cambiar a Agent Mode para escribirlo directamente.</p>
-      <div class="code-block code-block--prompt">
-        <button type="button" class="copy-button">Copiar</button>
-        <pre><code>Genera un README.md completo para este proyecto que incluya:
-1. Descripción del proyecto
-2. Arquitectura y componentes
-3. Instrucciones de instalación
-4. Endpoints de la API con ejemplos
-5. Diagrama de flujo de autenticación</code></pre>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 5 — Pide documentación</h3>
+      <div class="hands-on-action">
+        <span class="hands-on-context">IBM Bob · Ask Mode</span>
+        <p class="hands-on-action__purpose">Usa el contexto ya analizado para pedir una propuesta de documentación completa.</p>
+        <div class="code-block code-block--prompt"><p class="code-block__label">Pega en el chat de Bob</p><button type="button" class="copy-button">Copiar</button><pre><code>Propón un README.md para este proyecto que incluya:
+1. Propósito y arquitectura.
+2. Instrucciones de instalación.
+3. Endpoints de la API con ejemplos.
+4. Un diagrama de flujo de autenticación.
+
+No modifiques archivos; muestra primero el contenido propuesto.</code></pre></div>
       </div>
-      <figure class="lab-figure">
-        <img src="./assets/images/labs/hands-on-inicial/lab1-documentation.png"
-             alt="IBM Bob generando documentación estructurada con diagramas Mermaid automáticamente"
-             class="lab-figure__img" />
-        <figcaption class="lab-figure__caption">Verifica: README con secciones claras y diagrama Mermaid</figcaption>
-      </figure>
+      <div class="hands-on-checkpoint"><p class="hands-on-checkpoint__title">Checkpoint</p><ul class="checklist"><li class="checklist__item">El resultado cubre las cuatro secciones solicitadas.</li><li class="checklist__item">Sigues en una conversación de análisis; todavía no has aprobado una edición.</li></ul></div>
+      <figure class="lab-figure"><img src="./assets/images/labs/hands-on-inicial/lab1-documentation.png" alt="Referencia de una propuesta de README generada en Ask Mode" class="lab-figure__img" /><figcaption class="lab-figure__caption">Referencia: revisa que el contenido refleje el proyecto abierto.</figcaption></figure>
     </div>
 
-    <!-- Paso 6 -->
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 6 — Preguntas de seguimiento</h3>
-      <p class="cds--body-01">IBM Bob <strong>recuerda toda la conversación</strong>. Aprovecha el contexto acumulado con preguntas de seguimiento:</p>
-      <div class="code-block code-block--prompt">
-        <button type="button" class="copy-button">Copiar</button>
-        <pre><code>¿Dónde se validan los datos de entrada del usuario?</code></pre>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 6 — Haz una pregunta de seguimiento</h3>
+      <div class="hands-on-action">
+        <span class="hands-on-context">IBM Bob · Ask Mode</span>
+        <p class="hands-on-action__purpose">Comprueba que la siguiente pregunta aprovecha el contexto de la conversación.</p>
+        <div class="code-block code-block--prompt"><p class="code-block__label">Pega en el chat de Bob</p><button type="button" class="copy-button">Copiar</button><pre><code>¿Dónde se validan los datos de entrada del usuario y qué ocurre cuando la validación falla?</code></pre></div>
       </div>
-      <div class="code-block code-block--prompt">
-        <button type="button" class="copy-button">Copiar</button>
-        <pre><code>¿Qué pasa si un usuario intenta acceder a un producto que no existe?</code></pre>
-      </div>
-      <div class="code-block code-block--prompt">
-        <button type="button" class="copy-button">Copiar</button>
-        <pre><code>¿Cómo se manejan las sesiones de usuario?</code></pre>
-      </div>
+      <div class="hands-on-checkpoint"><p class="hands-on-checkpoint__title">Checkpoint final</p><ul class="checklist"><li class="checklist__item">La respuesta se apoya en el código y análisis que ya hiciste.</li><li class="checklist__item">Puedes explicar cuándo usar Ask antes de cambiar a un modo de implementación.</li></ul></div>
     </div>
   </section>
 
-  <!-- Desafíos opcionales -->
-  <section class="lab-section" aria-labelledby="lab1-desafios">
-    <h2 class="cds--productive-heading-03" id="lab1-desafios">
-      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 4a5 5 0 1 1-5 5 5 5 0 0 1 5-5m0-2a7 7 0 1 0 7 7 7 7 0 0 0-7-7ZM26 30h-2v-5a5 5 0 0 0-5-5h-6a5 5 0 0 0-5 5v5H6v-5a7 7 0 0 1 7-7h6a7 7 0 0 1 7 7Z"/></svg>
-      Desafíos opcionales
-    </h2>
-    <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Desafío 1 — Análisis de dependencias</h3>
-      <div class="code-block code-block--prompt">
-        <button type="button" class="copy-button">Copiar</button>
-        <pre><code>Analiza el package.json y dime:
-1. ¿Qué dependencias tienen vulnerabilidades conocidas?
-2. ¿Hay dependencias obsoletas?
-3. ¿Qué alternativas más modernas existen?</code></pre>
-      </div>
-    </div>
-    <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Desafío 2 — Diagrama de secuencia</h3>
-      <div class="code-block code-block--prompt">
-        <button type="button" class="copy-button">Copiar</button>
-        <pre><code>Genera un diagrama de secuencia en Mermaid que muestre
-el flujo completo de una petición de login desde que
-llega al servidor hasta que se devuelve el token JWT.</code></pre>
-      </div>
-      <figure class="lab-figure">
-        <img src="./assets/images/labs/hands-on-inicial/lab1-diagramaaltonivel.png"
-             alt="Diagrama de secuencia a alto nivel generado por IBM Bob para el flujo de login JWT"
-             class="lab-figure__img" />
-        <figcaption class="lab-figure__caption">Diagrama de alto nivel — flujo completo de login</figcaption>
-      </figure>
-      <figure class="lab-figure">
-        <img src="./assets/images/labs/hands-on-inicial/lab1-diagramaresumen.png"
-             alt="Diagrama resumen del flujo de login JWT generado por IBM Bob"
-             class="lab-figure__img" />
-        <figcaption class="lab-figure__caption">Diagrama resumen — vista consolidada del flujo</figcaption>
-      </figure>
-      <figure class="lab-figure">
-        <img src="./assets/images/labs/hands-on-inicial/lab1-diagramadetallado.png"
-             alt="Diagrama de secuencia detallado generado por IBM Bob mostrando cada paso del flujo JWT"
-             class="lab-figure__img" />
-        <figcaption class="lab-figure__caption">Diagrama detallado — cada paso del flujo JWT</figcaption>
-      </figure>
-    </div>
-  </section>
-
-  <!-- Logro -->
-  <div class="callout" data-tone="tip">
-    <p class="callout__title">Lo que acabas de lograr</p>
-    <ul class="cds--list--unordered">
-      <li class="cds--list__item">✅ Analizaste una aplicación completa <strong>sin leer código manualmente</strong></li>
-      <li class="cds--list__item">✅ Identificaste patrones arquitectónicos automáticamente</li>
-      <li class="cds--list__item">✅ Detectaste problemas de seguridad potenciales</li>
-      <li class="cds--list__item">✅ Generaste documentación profesional con diagramas</li>
-    </ul>
-  </div>
-
+  <details class="lab-troubleshooting-full">
+    <summary>Profundizar: preguntas opcionales</summary>
+    <p class="cds--body-01">Prueba una de estas consultas si quieres practicar más. No son necesarias para completar el lab.</p>
+    <div class="code-block code-block--prompt"><p class="code-block__label">IBM Bob · Ask Mode · prompt opcional</p><button type="button" class="copy-button">Copiar</button><pre><code>Analiza package.json e identifica dependencias que conviene revisar, explicando qué evidencia usaste.</code></pre></div>
+    <div class="code-block code-block--prompt"><p class="code-block__label">IBM Bob · Ask Mode · prompt opcional</p><button type="button" class="copy-button">Copiar</button><pre><code>Genera un diagrama Mermaid del flujo de login, indicando validación, autenticación y respuesta.</code></pre></div>
+  </details>
 </div>

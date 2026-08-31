@@ -94,3 +94,20 @@ body[data-category] .cds--list--ordered > .cds--list__item::marker {
   color: var(--dynamic-primary) !important;
   font-weight: 700;
 }
+
+/* Integration cards and banners share the category's purple accent. */
+body[data-category="integraciones"] .lab-banner,
+body[data-category="integraciones"] .lab-workspace-setup__box,
+body[data-category="integraciones"] .env-selector-banner,
+body[data-category="integraciones"] .bobcoin-cost {
+  border-left-color: var(--dynamic-primary) !important;
+}
+
+body[data-category="integraciones"] .lab-workspace-setup__badge {
+  background-color: var(--dynamic-primary) !important;
+}
+
+body[data-category="integraciones"] .lab-shell .lab-section > h2 > svg,
+body[data-category="integraciones"] .lab-shell .lab-section__icon {
+  color: var(--dynamic-primary) !important;
+}

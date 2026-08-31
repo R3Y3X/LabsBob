@@ -28,7 +28,7 @@ no abras esta carpeta raíz.
 
 | Lab en el sitio | Carpeta a abrir | Necesita |
 |---|---|---|
-| Lab 1 — Ask Mode | `lab-1-ask-mode/` | Node.js 18+ |
+| Lab 1 — Ask Mode | `lab-1-ask-mode/` | — |
 | Lab 2 — Plan y Agent | `lab-2-plan-agent/` | Node.js 18+ |
 | Lab 3 — Modo personalizado | `lab-3-modo-personalizado/` | — |
 | Lab 4 — MCP | `lab-4-mcp-tavily/` | API key de Tavily (gratis) |
@@ -106,12 +106,14 @@ LAB4_README = """# Lab 4 — MCP con Tavily
 Sigue las instrucciones en el sitio del workshop: **De la idea al código →
 Lab 4 — MCP**.
 
-1. Consigue tu API key gratuita en [tavily.com](https://tavily.com).
-2. Duplica `.bob/mcp.json.example`, renombra la copia a `.bob/mcp.json` y
+1. Consigue tu API key en [tavily.com](https://tavily.com).
+2. Abre esta carpeta en IBM Bob y, en Settings → MCP, elige el alcance
+   **Project**.
+3. Duplica `.bob/mcp.json.example`, renombra la copia a `.bob/mcp.json` y
    pega tu API key ahí — nunca la pegues directamente en `mcp.json.example`,
-   ese archivo es la plantilla versionada.
-3. Abre esta carpeta en IBM Bob, recarga los servidores MCP y prueba una
-   búsqueda web desde Agent Mode.
+   que es la plantilla versionada. El archivo real está ignorado por Git.
+4. Recarga los servidores MCP, confirma que `tavily` está activo y prueba una
+   búsqueda desde Agent Mode que pida fuentes y fechas.
 """
 
 LAB4_MCP_EXAMPLE = """{
@@ -181,55 +183,60 @@ def build(source_zip: Path, out_zip: Path) -> None:
     (out_dir / "README.md").write_text(ROOT_README, encoding="utf-8")
 
     gitignore_text = (src_root / ".gitignore").read_text(encoding="utf-8")
-    if "mcp.json" not in gitignore_text:
+    if ".bob/mcp.json" not in gitignore_text:
         gitignore_text += (
             "\n# MCP server config with real API keys (Lab 4) — the .example file"
-            "\n# stays tracked, the real one never does\nmcp.json\n"
+            "\n# stays tracked, the real one never does\n**/.bob/mcp.json\n"
         )
     (out_dir / ".gitignore").write_text(gitignore_text, encoding="utf-8")
 
     # ── Lab 1 — Ask Mode (unchanged, already self-contained) ────────
     shutil.copytree(src_root / "lab-1-ask-mode", out_dir / "lab-1-ask-mode")
 
-    # ── Lab 2 — Plan y Agent (new: full copy of Lab 1's app + cart stubs) ─
-    lab2 = out_dir / "lab-2-plan-agent"
-    shutil.copytree(src_root / "lab-1-ask-mode" / "src", lab2 / "src")
-    shutil.copy2(src_root / "lab-1-ask-mode" / "package.json", lab2 / "package.json")
-
+    # ── Lab 2 — Plan y Agent ────────────────────────────────────────
+    # Older source archives held the cart stubs in a separate legacy folder.
+    # The current bundle already contains a standalone lab-2 folder, so the
+    # builder accepts both archive layouts without recreating its stubs.
     old_cart = src_root / "lab-2-modos-existentes" / "ejercicio-carrito"
-    shutil.copy2(old_cart / "models" / "Cart.js", lab2 / "src" / "models" / "Cart.js")
+    lab2 = out_dir / "lab-2-plan-agent"
+    if not old_cart.exists():
+        shutil.copytree(src_root / "lab-2-plan-agent", lab2)
+    else:
+        shutil.copytree(src_root / "lab-1-ask-mode" / "src", lab2 / "src")
+        shutil.copy2(src_root / "lab-1-ask-mode" / "package.json", lab2 / "package.json")
+        shutil.copy2(old_cart / "models" / "Cart.js", lab2 / "src" / "models" / "Cart.js")
 
-    cart_controller_text = (old_cart / "controllers" / "cartController.js").read_text(encoding="utf-8")
-    (lab2 / "src" / "controllers" / "cartController.js").write_text(
-        rewrite_cart_controller(cart_controller_text), encoding="utf-8"
-    )
+        cart_controller_text = (old_cart / "controllers" / "cartController.js").read_text(encoding="utf-8")
+        (lab2 / "src" / "controllers" / "cartController.js").write_text(
+            rewrite_cart_controller(cart_controller_text), encoding="utf-8"
+        )
 
-    cart_routes_stub = rewrite_cart_routes(
-        (old_cart / "routes" / "api.js").read_text(encoding="utf-8")
-    )
-    # Strip the stub's own module.exports/header noise — we append its TODO
-    # block onto the real api.js copied from Lab 1, right before that
-    # file's module.exports, so participants extend one real router.
-    todo_block = cart_routes_stub.split("module.exports = router;")[0]
-    todo_block = todo_block.split("const cartController = require('../controllers/cartController');", 1)[-1]
-    api_js_path = lab2 / "src" / "routes" / "api.js"
-    api_js_text = api_js_path.read_text(encoding="utf-8")
-    api_js_text = api_js_text.replace(
-        "const productController = require('../controllers/productController');",
-        "const productController = require('../controllers/productController');\n"
-        "const cartController = require('../controllers/cartController');",
-    )
-    cart_section = (
-        "\n// ============================================\n"
-        "// Cart Routes — implement in this lab\n"
-        "// ============================================\n"
-        + todo_block.strip("\n")
-        + "\n"
-    )
-    api_js_text = api_js_text.replace(
-        "module.exports = router;", cart_section + "\nmodule.exports = router;"
-    )
-    api_js_path.write_text(api_js_text, encoding="utf-8")
+        cart_routes_stub = rewrite_cart_routes(
+            (old_cart / "routes" / "api.js").read_text(encoding="utf-8")
+        )
+        # Strip the stub's own module.exports/header noise — we append its TODO
+        # block onto the real api.js copied from Lab 1, right before that
+        # file's module.exports, so participants extend one real router.
+        todo_block = cart_routes_stub.split("module.exports = router;")[0]
+        todo_block = todo_block.split("const cartController = require('../controllers/cartController');", 1)[-1]
+        api_js_path = lab2 / "src" / "routes" / "api.js"
+        api_js_text = api_js_path.read_text(encoding="utf-8")
+        api_js_text = api_js_text.replace(
+            "const productController = require('../controllers/productController');",
+            "const productController = require('../controllers/productController');\n"
+            "const cartController = require('../controllers/cartController');",
+        )
+        cart_section = (
+            "\n// ============================================\n"
+            "// Cart Routes — implement in this lab\n"
+            "// ============================================\n"
+            + todo_block.strip("\n")
+            + "\n"
+        )
+        api_js_text = api_js_text.replace(
+            "module.exports = router;", cart_section + "\nmodule.exports = router;"
+        )
+        api_js_path.write_text(api_js_text, encoding="utf-8")
     (lab2 / "README.md").write_text(LAB2_README, encoding="utf-8")
 
     # ── Lab 3 — Modo personalizado (renamed from lab-4) ──────────────
@@ -243,12 +250,18 @@ def build(source_zip: Path, out_zip: Path) -> None:
     lab4.mkdir(parents=True)
     (lab4 / "README.md").write_text(LAB4_README, encoding="utf-8")
     (lab4 / ".bob").mkdir()
+    (lab4 / ".bob" / ".gitignore").write_text(
+        "# Local MCP configuration containing API keys\nmcp.json\n", encoding="utf-8"
+    )
     (lab4 / ".bob" / "mcp.json.example").write_text(LAB4_MCP_EXAMPLE, encoding="utf-8")
 
-    # ── galaxium-travels moved to top level (security workshop) ──────
-    shutil.copytree(
-        src_root / "lab-3-seguridad" / "galaxium-travels", out_dir / "galaxium-travels"
-    )
+    # ── galaxium-travels (security workshop) ─────────────────────────
+    # It was nested in the legacy archive and is top-level in the current
+    # one. Preserve either source layout when rebuilding this shared bundle.
+    galaxium_source = src_root / "galaxium-travels"
+    if not galaxium_source.exists():
+        galaxium_source = src_root / "lab-3-seguridad" / "galaxium-travels"
+    shutil.copytree(galaxium_source, out_dir / "galaxium-travels")
     (out_dir / "galaxium-travels" / "WORKSHOP-LAB.md").write_text(
         GALAXIUM_WORKSHOP_NOTE, encoding="utf-8"
     )

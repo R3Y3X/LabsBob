@@ -1,165 +1,79 @@
 <div class="content-panel lab-template">
-
   <div class="lab-banner">
-    <div class="lab-banner__tags">
-      <span class="cds--tag cds--tag--teal">MCP</span>
-      <span class="cds--tag cds--tag--cool-gray">10 min</span>
-      <span class="cds--tag cds--tag--blue">Agent Mode</span>
+    <div class="hands-on-meta" aria-label="Información del Lab 4">
+      <span class="hands-on-meta__item"><span class="hands-on-meta__label">Lab</span><span class="hands-on-meta__value">04 · MCP con Tavily</span></span>
+      <span class="hands-on-meta__item"><span class="hands-on-meta__label">Duración</span><span class="hands-on-meta__value">~10 min</span></span>
+      <span class="hands-on-meta__item"><span class="hands-on-meta__label">Resultado</span><span class="hands-on-meta__value">Búsqueda de proyecto con fuentes</span></span>
     </div>
-    <h1 class="cds--productive-heading-05 lab-banner__title">Lab 4 — MCP</h1>
-
-    <!-- ── Hero image ──────────────────────────────────────────────── -->
-    <div class="lab-hero-image">
-      <img src="./assets/images/labs/hands-on-inicial/lab5_bob.png"
-           alt="Banner del Lab 4 — MCP con Tavily en IBM Bob"
-           class="lab-hero-image__img" />
-    </div>
-
+    <h1 class="cds--productive-heading-05 lab-banner__title">Lab 4 — MCP con Tavily</h1>
+    <p class="lab-banner__summary">Conecta una herramienta externa al proyecto, mantén su secreto local y pide una respuesta verificable con fuentes.</p>
+    <div class="lab-hero-image"><img src="./assets/images/labs/hands-on-inicial/lab5_bob.png" alt="Banner del Lab 4 de MCP con Tavily en IBM Bob" class="lab-hero-image__img" /></div>
     <div class="lab-banner__metrics">
-      <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">1000</span>
-        <span class="lab-banner__metric-label">búsquedas/mes gratis</span>
-      </div>
-      <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">∞</span>
-        <span class="lab-banner__metric-label">integraciones posibles</span>
-      </div>
-      <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">3–6</span>
-        <span class="lab-banner__metric-label">BobCoins estimados</span>
-      </div>
-      <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">5</span>
-        <span class="lab-banner__metric-label">pasos</span>
-      </div>
+      <div class="lab-banner__metric"><span class="lab-banner__metric-value">1</span><span class="lab-banner__metric-label">servidor MCP</span></div>
+      <div class="lab-banner__metric"><span class="lab-banner__metric-value">1</span><span class="lab-banner__metric-label">configuración local</span></div>
+      <div class="lab-banner__metric"><span class="lab-banner__metric-value">3</span><span class="lab-banner__metric-label">validaciones</span></div>
     </div>
   </div>
 
-  <!-- Objetivos -->
-  <section class="lab-section" aria-labelledby="lab3-obj">
-    <h2 class="cds--productive-heading-03" id="lab3-obj">
-      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
-      Objetivos de Aprendizaje
-    </h2>
-    <ul class="cds--list--unordered">
-      <li class="cds--list__item">✅ Entender qué es MCP en palabras simples</li>
-      <li class="cds--list__item">✅ Configurar Tavily Search API en IBM Bob</li>
-      <li class="cds--list__item">✅ Conectar IBM Bob con herramientas externas</li>
-      <li class="cds--list__item">✅ Realizar búsquedas web en tiempo real desde <strong>Agent Mode</strong></li>
+  <section class="lab-section" aria-labelledby="lab4-objetivo">
+    <h2 class="cds--productive-heading-03" id="lab4-objetivo">Qué vas a lograr</h2>
+    <ul class="checklist">
+      <li class="checklist__item">Entender cuándo una conexión MCP debe ser global o de proyecto.</li>
+      <li class="checklist__item">Configurar Tavily con una clave que no se versiona.</li>
+      <li class="checklist__item">Confirmar que IBM Bob ve las herramientas y devuelve fuentes.</li>
     </ul>
   </section>
 
-  <!-- ¿Qué es MCP? -->
-  <section class="lab-section" aria-labelledby="lab3-que">
-    <h2 class="cds--productive-heading-03" id="lab3-que">
-      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
-      ¿Qué es MCP?
-    </h2>
-    <div class="callout" data-tone="note">
-      <p class="callout__title">La Analogía Simple</p>
-      <p>Imagina que IBM Bob es un experto que solo habla español, y Tavily (búsqueda web) solo habla inglés.</p>
-      <ul class="cds--list--unordered" style="margin-top:8px">
-        <li class="cds--list__item"><strong>Sin MCP:</strong> IBM Bob no puede buscar en la web ("no habla ese idioma")</li>
-        <li class="cds--list__item"><strong>Con MCP:</strong> El protocolo actúa como traductor — IBM Bob ahora accede al mundo exterior</li>
-      </ul>
-    </div>
-
-    <p class="cds--body-01"><strong>MCP (Model Context Protocol)</strong> es un <em>adaptador universal</em> que conecta IBM Bob con herramientas externas. En este lab:</p>
-    <ul class="cds--list--unordered">
-      <li class="cds--list__item"><strong>IBM Bob</strong> = Tu asistente de IA</li>
-      <li class="cds--list__item"><strong>MCP</strong> = El conector / traductor</li>
-      <li class="cds--list__item"><strong>Tavily</strong> = La herramienta externa de búsqueda web</li>
-    </ul>
-
-    <div class="callout" data-tone="note">
-      <p class="callout__title">MCP en IBM Bob: Agent Mode lo hace todo</p>
-      <p><strong>Agent Mode</strong> tiene acceso nativo a MCP. Ya no es necesario un modo especial separado (como el anterior Advanced Mode). Simplemente activa Agent Mode y los servidores MCP configurados estarán disponibles.</p>
-    </div>
-
-    <div class="lab-modes-grid" style="margin-top:16px">
-      <div class="cds--tile lab-case-tile">
-        <h3 class="cds--productive-heading-02 lab-case-tile__title">Búsqueda Web</h3>
-        <p class="cds--body-01">Tavily, Google — información actualizada en tiempo real</p>
-      </div>
-      <div class="cds--tile lab-case-tile">
-        <h3 class="cds--productive-heading-02 lab-case-tile__title">Comunicación</h3>
-        <p class="cds--body-01">Slack, Teams — enviar mensajes y notificaciones</p>
-      </div>
-      <div class="cds--tile lab-case-tile">
-        <h3 class="cds--productive-heading-02 lab-case-tile__title">Bases de Datos</h3>
-        <p class="cds--body-01">PostgreSQL, MongoDB — consultas directas</p>
-      </div>
-      <div class="cds--tile lab-case-tile">
-        <h3 class="cds--productive-heading-02 lab-case-tile__title">APIs y Herramientas</h3>
-        <p class="cds--body-01">GitHub, Jira, cualquier API REST o servicio externo</p>
+  <section class="lab-section" aria-labelledby="lab4-concepto">
+    <h2 class="cds--productive-heading-03" id="lab4-concepto">Qué es MCP y por qué el alcance importa</h2>
+    <div class="lab-mode-card lab-mode-card--agent">
+      <div class="lab-mode-card__body">
+        <h3 class="cds--productive-heading-02"><span class="lab-mode-card__icon" aria-hidden="true">⇄</span>Un protocolo para usar herramientas</h3>
+        <p class="cds--body-01">MCP conecta IBM Bob con herramientas externas. En este lab, Tavily permite buscar información actual; IBM Bob decide cuándo usar la herramienta desde una conversación en Agent.</p>
       </div>
     </div>
+    <div class="lab-compare">
+      <div class="lab-compare__card"><h3 class="cds--productive-heading-02">Global</h3><p class="cds--body-01">Disponible en tus proyectos locales. Úsalo solo cuando la conexión y su acceso deban acompañarte fuera de este workshop.</p></div>
+      <div class="lab-compare__card lab-compare__card--recommended"><h3 class="cds--productive-heading-02">Project · elegido aquí</h3><p class="cds--body-01">Queda ligado a esta carpeta. Hace visible el contexto del workshop y reduce el alcance de la configuración.</p></div>
+    </div>
+    <div class="callout" data-tone="note"><p class="callout__title">La interfaz puede variar</p><p>Los nombres exactos de los paneles cambian entre versiones. Busca la sección <strong>MCP</strong> de Settings y selecciona la opción de proyecto antes de añadir o abrir la configuración.</p></div>
   </section>
 
-  <!-- Workspace setup -->
-  <section class="lab-workspace-setup" aria-labelledby="lab4-mcp-workspace">
+  <section class="lab-workspace-setup" aria-labelledby="lab4-workspace">
     <div class="lab-workspace-setup__box">
       <span class="lab-workspace-setup__badge">Punto de partida</span>
-      <h2 class="lab-workspace-setup__title" id="lab4-mcp-workspace">Paso 1 — Dónde vive esta configuración</h2>
-      <p class="lab-workspace-setup__lead">Los servidores MCP de IBM Bob se configuran en <strong>Ajustes → MCP Servers</strong> (alcance global, sin importar la carpeta abierta). Si prefieres editar el JSON como archivo de proyecto en vez de la UI, abre esta carpeta:</p>
-      <div class="lab-workspace-setup__path">
-        <p class="lab-workspace-setup__path-label">File → Open Folder (opcional, solo si editas el JSON como archivo)</p>
-        <code class="lab-workspace-setup__path-value">LabHandsOnBob/lab-4-mcp-tavily/</code>
-      </div>
-      <ul class="lab-workspace-setup__checks">
-        <li>En el explorador debe verse <code>.bob/mcp.json.example</code></li>
-        <li>El chat de Bob está abierto (<kbd>Cmd/Ctrl + Shift + I</kbd>)</li>
-      </ul>
-      <p class="lab-workspace-setup__note"><code>.bob/mcp.json.example</code> es la plantilla versionada. Duplícala, renombra la copia a <code>.bob/mcp.json</code> y pega ahí tu API key real — nunca la pegues en el archivo <code>.example</code>.</p>
+      <h2 class="lab-workspace-setup__title" id="lab4-workspace">Abre el proyecto de MCP</h2>
+      <p class="lab-workspace-setup__lead">Necesitas una carpeta abierta para crear una configuración de alcance Project y comprobar que el secreto no entra al repositorio.</p>
+      <div class="lab-workspace-setup__path"><p class="lab-workspace-setup__path-label">File → Open Folder</p><code class="lab-workspace-setup__path-value">LabHandsOnBob/lab-4-mcp-tavily/</code></div>
+      <ul class="lab-workspace-setup__checks"><li>El explorador muestra <code>.bob/mcp.json.example</code>.</li><li>Tienes Node.js 18 o posterior disponible para iniciar el servidor MCP.</li><li>El chat de IBM Bob está abierto.</li></ul>
     </div>
   </section>
 
-  <!-- Configuración -->
-  <section class="lab-section" aria-labelledby="lab3-config">
-    <h2 class="cds--productive-heading-03" id="lab3-config">
-      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
-      Configuración Paso a Paso
-    </h2>
+  <section class="lab-section" aria-labelledby="lab4-pasos">
+    <h2 class="cds--productive-heading-03" id="lab4-pasos">Configura, verifica y usa Tavily</h2>
 
-    <!-- Paso 1: API Key -->
     <div class="lab-step lab-step--split">
       <div class="lab-step__body">
-        <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Obtener tu API Key de Tavily (gratis)</h3>
-        <ol class="cds--list--ordered">
-          <li class="cds--list__item">Visita <a class="cds--link" href="https://www.tavily.com" target="_blank" rel="noreferrer">tavily.com</a></li>
-          <li class="cds--list__item">Crea una cuenta gratuita y verifica el email</li>
-          <li class="cds--list__item">En el Dashboard, copia tu <strong>API Key</strong></li>
-        </ol>
-        <div class="callout" data-tone="note">
-          <p class="callout__title">Plan gratuito</p>
-          <p><strong>1,000 búsquedas/mes</strong> — suficiente para el lab y experimentos.</p>
-        </div>
+        <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Obtén una clave de Tavily</h3>
+        <div class="hands-on-action"><span class="hands-on-context">Navegador · Tavily</span><p class="hands-on-action__purpose">La clave autoriza al servidor de búsqueda; trátala como un secreto de desarrollo.</p><ol class="cds--list--ordered"><li class="cds--list__item">Entra a <a class="cds--link" href="https://www.tavily.com" target="_blank" rel="noreferrer">tavily.com</a> y crea o inicia sesión en tu cuenta.</li><li class="cds--list__item">Crea una API key desde el dashboard y cópiala temporalmente.</li></ol></div>
+        <div class="hands-on-checkpoint"><p class="hands-on-checkpoint__title">Checkpoint</p><ul class="checklist"><li class="checklist__item">Tienes una clave disponible, pero todavía no la has pegado en un archivo versionado.</li></ul></div>
       </div>
-      <div class="lab-step__media">
-        <figure class="lab-figure lab-figure--row">
-          <img src="./assets/images/labs/hands-on-inicial/lab5-tavily-signup.png"
-               alt="Página de registro de Tavily para crear una cuenta gratuita"
-               class="lab-figure__img lab-figure__img--half" />
-          <img src="./assets/images/labs/hands-on-inicial/lab5-tavily-apikey.png"
-               alt="Dashboard de Tavily mostrando la API Key para copiar"
-               class="lab-figure__img lab-figure__img--half" />
-          <figcaption class="lab-figure__caption">Registro (izq.) y API Key en el dashboard (der.)</figcaption>
-        </figure>
-      </div>
+      <div class="lab-step__media"><figure class="lab-figure lab-figure--row"><img src="./assets/images/labs/hands-on-inicial/lab5-tavily-signup.png" alt="Referencia del registro de Tavily" class="lab-figure__img lab-figure__img--half" /><img src="./assets/images/labs/hands-on-inicial/lab5-tavily-apikey.png" alt="Referencia de una API key en el dashboard de Tavily" class="lab-figure__img lab-figure__img--half" /><figcaption class="lab-figure__caption">Referencia visual: la ubicación de la clave puede variar en Tavily.</figcaption></figure></div>
     </div>
 
-    <!-- Paso 2: Configurar MCP -->
     <div class="lab-step lab-step--split">
       <div class="lab-step__body">
-        <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Configurar MCP en IBM Bob</h3>
-        <ol class="cds--list--ordered">
-          <li class="cds--list__item">Ajustes → pestaña <strong>MCP Servers</strong> → <strong>Add Server</strong>, o</li>
-          <li class="cds--list__item">Edición directa del JSON — duplica <code>.bob/mcp.json.example</code>, renombra la copia a <code>.bob/mcp.json</code></li>
-        </ol>
-        <p class="cds--body-01"><strong>JSON de ejemplo</strong> (ya está en <code>.bob/mcp.json.example</code>):</p>
-        <div class="code-block code-block--json">
-          <button type="button" class="copy-button">Copiar</button>
-          <pre><code>{
+        <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Elige Project y abre la configuración</h3>
+        <div class="hands-on-action"><span class="hands-on-context">IBM Bob · Settings · MCP · Project</span><p class="hands-on-action__purpose">Asocia el servidor al workshop en vez de dejarlo disponible globalmente.</p><ol class="cds--list--ordered"><li class="cds--list__item">Abre <strong>Settings</strong> y localiza <strong>MCP</strong>.</li><li class="cds--list__item">Selecciona la configuración de <strong>Project</strong>; crea o abre el archivo de configuración del proyecto.</li><li class="cds--list__item">Si la interfaz ofrece un editor JSON, úsalo para abrir el mismo archivo local.</li></ol></div>
+        <div class="hands-on-checkpoint"><p class="hands-on-checkpoint__title">Checkpoint</p><ul class="checklist"><li class="checklist__item">Estás configurando el alcance Project para la carpeta <code>lab-4-mcp-tavily</code>.</li></ul></div>
+      </div>
+      <div class="lab-step__media"><figure class="lab-figure"><img src="./assets/images/labs/hands-on-inicial/MCP_Ajustes.png" alt="Referencia de la sección MCP en la configuración de IBM Bob" class="lab-figure__img" /><figcaption class="lab-figure__caption">Referencia visual: busca MCP y selecciona el alcance Project.</figcaption></figure></div>
+    </div>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Crea el archivo local con la clave</h3>
+      <div class="hands-on-action"><span class="hands-on-context">Archivo de configuración · .bob/mcp.json.example</span><p class="hands-on-action__purpose">La plantilla se comparte sin secretos; el archivo real solo vive en tu copia local.</p><ol class="cds--list--ordered"><li class="cds--list__item">Duplica <code>.bob/mcp.json.example</code> como <code>.bob/mcp.json</code>.</li><li class="cds--list__item">Reemplaza únicamente el placeholder por tu API key.</li><li class="cds--list__item">Guarda el archivo local.</li></ol></div>
+      <div class="code-block code-block--json"><p class="code-block__label">Archivo: .bob/mcp.json.example</p><button type="button" class="copy-button">Copiar contenido</button><pre><code>{
   "mcpServers": {
     "tavily": {
       "command": "npx",
@@ -169,80 +83,32 @@
       }
     }
   }
-}</code></pre>
-        </div>
-        <div class="callout" data-tone="warning">
-          <p class="callout__title">No subas la API key a Git</p>
-          <p>Pega tu key real solo en <code>.bob/mcp.json</code> (ignorado por git). <code>.bob/mcp.json.example</code> se queda con el placeholder — nunca hagas commit del secreto.</p>
-        </div>
-      </div>
-      <div class="lab-step__media">
-        <figure class="lab-figure">
-          <img src="./assets/images/labs/hands-on-inicial/MCP_Ajustes.png"
-               alt="Pestaña MCP Servers en la configuración de IBM Bob"
-               class="lab-figure__img" />
-          <figcaption class="lab-figure__caption">Pestaña MCP Servers en Ajustes</figcaption>
-        </figure>
-      </div>
+}</code></pre></div>
+      <div class="callout" data-tone="warning"><p class="callout__title">La clave no se sube a Git</p><p>El bundle ignora explícitamente <code>.bob/mcp.json</code>. Conserva el placeholder en <code>.bob/mcp.json.example</code>, no compartas el archivo real y revoca la clave si la expones.</p></div>
+      <div class="hands-on-checkpoint"><p class="hands-on-checkpoint__title">Checkpoint</p><ul class="checklist"><li class="checklist__item">Existen la plantilla <code>.bob/mcp.json.example</code> y tu copia local <code>.bob/mcp.json</code>.</li><li class="checklist__item">La clave real aparece solo en <code>.bob/mcp.json</code>.</li></ul></div>
     </div>
 
-    <!-- Paso 3: Activar -->
     <div class="lab-step lab-step--split">
       <div class="lab-step__body">
-        <h3 class="cds--productive-heading-02 lab-step__title">Paso 4 — Guardar y Recargar</h3>
-        <ol class="cds--list--ordered">
-          <li class="cds--list__item">Guarda la configuración</li>
-          <li class="cds--list__item">Pulsa recargar (⟳) en MCP Servers</li>
-          <li class="cds--list__item">Confirma que <strong>Tavily</strong> aparece activo</li>
-        </ol>
+        <h3 class="cds--productive-heading-02 lab-step__title">Paso 4 — Confirma que el servidor está activo</h3>
+        <div class="hands-on-action"><span class="hands-on-context">IBM Bob · Settings · MCP · Project</span><p class="hands-on-action__purpose">IBM Bob debe iniciar el servidor y exponer sus herramientas antes de poder usarlas en el chat.</p><ol class="cds--list--ordered"><li class="cds--list__item">Guarda la configuración y usa la acción de recarga si aparece.</li><li class="cds--list__item">Busca <strong>tavily</strong> en la lista de servidores de proyecto.</li><li class="cds--list__item">Comprueba que sus herramientas están visibles y no hay un error de inicio.</li></ol></div>
+        <div class="hands-on-checkpoint"><p class="hands-on-checkpoint__title">Checkpoint</p><ul class="checklist"><li class="checklist__item">El servidor <code>tavily</code> está activo y muestra herramientas disponibles.</li></ul></div>
       </div>
-      <div class="lab-step__media">
-        <figure class="lab-figure">
-          <img src="./assets/images/labs/hands-on-inicial/Tavily_Activado.png"
-               alt="IBM Bob mostrando Tavily activado y disponible como herramienta MCP"
-               class="lab-figure__img" />
-          <figcaption class="lab-figure__caption">Verifica: Tavily activo en herramientas MCP</figcaption>
-        </figure>
-      </div>
+      <div class="lab-step__media"><figure class="lab-figure"><img src="./assets/images/labs/hands-on-inicial/Tavily_Activado.png" alt="Referencia de Tavily activo como servidor MCP en IBM Bob" class="lab-figure__img" /><figcaption class="lab-figure__caption">Referencia visual: confirma el estado activo y las herramientas, no solo el nombre del servidor.</figcaption></figure></div>
     </div>
 
-    <!-- Paso 4: Probar -->
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 5 — Probar la Búsqueda Web en Tiempo Real</h3>
-      <p class="cds--body-01">Cambia a <strong>Agent Mode</strong> y prueba la búsqueda web:</p>
-      <div class="callout" data-tone="note">
-        <p class="callout__title">Agent Mode es el modo correcto para MCP</p>
-        <p><strong>Agent Mode</strong> tiene acceso nativo a todas las herramientas MCP. A diferencia de las versiones anteriores donde se requería Advanced Mode, ahora Agent Mode unifica todo.</p>
-      </div>
-      <div class="code-block code-block--prompt">
-        <button type="button" class="copy-button">Copiar</button>
-        <pre><code>Busca en la web la información más reciente sobre
-los precios de GitHub Copilot Enterprise.
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 5 — Solicita una búsqueda verificable</h3>
+      <div class="hands-on-action"><span class="hands-on-context">IBM Bob · Agent</span><p class="hands-on-action__purpose">Pide una respuesta que permita comprobar que Bob usó la herramienta y no solo conocimiento previo.</p><ol class="cds--list--ordered"><li class="cds--list__item">Selecciona <strong>Agent</strong>.</li><li class="cds--list__item">Envía el prompt y revisa la llamada de herramienta antes de aceptar cualquier acción adicional.</li></ol><div class="code-block code-block--prompt"><p class="code-block__label">Pega en el chat de Bob</p><button type="button" class="copy-button">Copiar prompt</button><pre><code>Busca en la web información actual sobre los precios de GitHub Copilot Enterprise.
 
-Necesito:
-1. Precio por usuario/mes
-2. Características incluidas
-3. Límites de uso
-4. Fecha de la información</code></pre>
-      </div>
-      <div class="code-block code-block--prompt">
-        <button type="button" class="copy-button">Copiar</button>
-        <pre><code>¿Cuáles son las últimas vulnerabilidades de seguridad
-en Node.js 20.x?</code></pre>
-      </div>
-      <div class="callout" data-tone="tip">
-        <p class="callout__title">Observa la diferencia clave</p>
-        <p>IBM Bob ahora devuelve <strong>información actualizada con fecha</strong> y citas de fuentes reales — no solo información de su entrenamiento (que puede tener meses o años de antigüedad).</p>
-      </div>
+Devuelve una respuesta breve con:
+1. el precio por usuario/mes;
+2. la fecha de la información o de cada fuente;
+3. enlaces a las fuentes que usaste;
+4. cualquier diferencia entre planes que afecte la comparación.</code></pre></div></div>
+      <div class="hands-on-checkpoint"><p class="hands-on-checkpoint__title">Checkpoint final</p><ul class="checklist"><li class="checklist__item">Viste que Agent puede usar Tavily o sus herramientas MCP.</li><li class="checklist__item">La respuesta incluye fuentes enlazadas y fechas o una indicación clara de la actualidad de la información.</li></ul></div>
     </div>
+
+    <details class="lab-troubleshooting-full"><summary>Si Tavily no aparece o no inicia</summary><div><ul class="checklist"><li class="checklist__item">Confirma que el JSON es válido y que la clave quedó en <code>.bob/mcp.json</code>, no en la plantilla.</li><li class="checklist__item">Revisa que Node.js 18 o posterior esté disponible y recarga la configuración MCP del proyecto.</li><li class="checklist__item">Lee el mensaje de error del servidor antes de cambiar comandos o volver a crear la clave.</li></ul></div></details>
   </section>
-
-  <div class="callout" data-tone="tip">
-    <p class="callout__title">Lo que acabas de lograr</p>
-    <ul class="cds--list--unordered">
-      <li class="cds--list__item">Configuraste un servidor MCP y lo usaste desde Agent Mode</li>
-      <li class="cds--list__item">IBM Bob devolvió información actualizada con fuentes reales</li>
-    </ul>
-  </div>
-
 </div>

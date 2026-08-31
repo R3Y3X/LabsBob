@@ -1,0 +1,21 @@
+[Unit]
+Description=Voltia participant inventory MCP server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=retail-mcp
+Group=retail-mcp
+WorkingDirectory=/opt/retail-mcp
+EnvironmentFile=/etc/retail-mcp/retail-mcp.env
+ExecStart=/opt/retail-mcp/.venv/bin/python /opt/retail-mcp/server.py
+Restart=always
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=/opt/retail-mcp
+
+[Install]
+WantedBy=multi-user.target

@@ -1,299 +1,122 @@
 <div class="content-panel lab-template">
-
   <div class="lab-banner">
-    <div class="lab-banner__tags">
-      <span class="cds--tag cds--tag--green">Modo Personalizado</span>
-      <span class="cds--tag cds--tag--cool-gray">12 min</span>
+    <div class="hands-on-meta" aria-label="Información del Lab 3">
+      <span class="hands-on-meta__item"><span class="hands-on-meta__label">Lab</span><span class="hands-on-meta__value">03 · Modo personalizado</span></span>
+      <span class="hands-on-meta__item"><span class="hands-on-meta__label">Duración</span><span class="hands-on-meta__value">~12 min</span></span>
+      <span class="hands-on-meta__item"><span class="hands-on-meta__label">Resultado</span><span class="hands-on-meta__value">Modo <code>product-manager</code> de proyecto</span></span>
     </div>
     <h1 class="cds--productive-heading-05 lab-banner__title">Lab 3 — Modo personalizado</h1>
-
-    <div class="lab-hero-image">
-      <img src="./assets/images/labs/hands-on-inicial/lab4_bob.png"
-           alt="Banner del Lab 3 — Crear un modo personalizado de IBM Bob"
-           class="lab-hero-image__img" />
-    </div>
-
+    <p class="lab-banner__summary">Configura una persona de Product Manager que use un brief de producto para priorizar el siguiente paso del equipo.</p>
+    <div class="lab-hero-image"><img src="./assets/images/labs/hands-on-inicial/lab4_bob.png" alt="Banner del Lab 3 de modo personalizado" class="lab-hero-image__img" /></div>
     <div class="lab-banner__metrics">
-      <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">1</span>
-        <span class="lab-banner__metric-label">modo Product Manager</span>
-      </div>
-      <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">0</span>
-        <span class="lab-banner__metric-label">código a escribir</span>
-      </div>
-      <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">2–5</span>
-        <span class="lab-banner__metric-label">BobCoins estimados</span>
-      </div>
-      <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">7</span>
-        <span class="lab-banner__metric-label">pasos</span>
-      </div>
+      <div class="lab-banner__metric"><span class="lab-banner__metric-value">1</span><span class="lab-banner__metric-label">modo de proyecto</span></div>
+      <div class="lab-banner__metric"><span class="lab-banner__metric-value">1</span><span class="lab-banner__metric-label">archivo YAML resultante</span></div>
+      <div class="lab-banner__metric"><span class="lab-banner__metric-value">1</span><span class="lab-banner__metric-label">brief para probar</span></div>
     </div>
   </div>
 
-  <section class="lab-section" aria-labelledby="lab3-obj">
-    <h2 class="cds--productive-heading-03" id="lab3-obj">
-      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>
-      Objetivos de aprendizaje
-    </h2>
-    <ul class="cds--list--unordered">
-      <li class="cds--list__item">✅ Crear un modo personalizado desde la UI de IBM Bob</li>
-      <li class="cds--list__item">✅ Definir rol, instrucciones y herramientas del modo <strong>product-manager</strong></li>
-      <li class="cds--list__item">✅ Revisar el YAML que Bob escribe en <code>.bob/custom_modes.yaml</code></li>
-      <li class="cds--list__item">✅ Probar el modo pidiendo qué funcionalidad construir después</li>
+  <section class="lab-section" aria-labelledby="lab3-objetivo">
+    <h2 class="cds--productive-heading-03" id="lab3-objetivo">Qué vas a lograr</h2>
+    <ul class="checklist">
+      <li class="checklist__item">Crear un modo especializado desde la configuración de IBM Bob.</li>
+      <li class="checklist__item">Definir rol, momento de uso, herramientas e instrucciones del Product Manager.</li>
+      <li class="checklist__item">Validar el YAML de proyecto y probar una recomendación a partir de un brief real.</li>
     </ul>
   </section>
 
-  <section class="lab-section" aria-labelledby="lab3-para-que">
-    <h2 class="cds--productive-heading-03" id="lab3-para-que">
-      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
-      Qué es un modo personalizado
-    </h2>
-    <p class="cds--body-01">Ask, Plan y Agent cubren el flujo de desarrollo. Un <strong>modo personalizado</strong> añade una persona especializada: rol, instrucciones de comportamiento y un conjunto fijo de herramientas. En este lab entrenas a Bob para actuar como Product Manager: clarifica el problema del usuario, propone un MVP, prioriza, define métricas y produce un roadmap.</p>
-
-    <div class="callout" data-tone="note">
-      <p class="callout__title">Rules vs modo personalizado</p>
-      <p>Las <strong>rules</strong> se aplican a todas las conversaciones y a todos los modos. Un modo personalizado no las anula. Si configuraste un monólogo interno como rule global, seguirá generando resúmenes aunque uses este modo. Usa rules para estándares de equipo (tono, JSDoc, auditoría) y el modo para una persona especializada (product manager, pricing, compliance).</p>
+  <section class="lab-section" aria-labelledby="lab3-concepto">
+    <h2 class="cds--productive-heading-03" id="lab3-concepto">Qué configura un modo personalizado</h2>
+    <div class="lab-mode-card lab-mode-card--plan">
+      <div class="lab-mode-card__body">
+        <h3 class="cds--productive-heading-02"><span class="lab-mode-card__icon" aria-hidden="true">↗</span>Una persona, no una regla global</h3>
+        <p class="cds--body-01">Un modo combina una identidad, instrucciones y grupos de herramientas para una tarea concreta. Las rules de tu proyecto siguen aplicando; usa rules para estándares transversales y el modo para un trabajo especializado como producto, documentación o seguridad.</p>
+      </div>
     </div>
   </section>
 
-  <!-- Workspace setup -->
   <section class="lab-workspace-setup" aria-labelledby="lab3-workspace">
     <div class="lab-workspace-setup__box">
-      <span class="lab-workspace-setup__badge">Paso obligatorio — antes de crear el modo</span>
-      <h2 class="lab-workspace-setup__title" id="lab3-workspace">Paso 1 — Abre el proyecto</h2>
-      <p class="lab-workspace-setup__lead">Abre esta carpeta en IBM Bob con <strong>File → Open Folder</strong> <em>antes</em> de crear el modo. La tabla del Paso 4 usa <code>Scope: Project</code>, y sin una carpeta abierta Bob no tiene dónde escribir <code>.bob/custom_modes.yaml</code> — el Paso 7 (probar el modo) no funciona si te lo saltas.</p>
-      <div class="lab-workspace-setup__path">
-        <p class="lab-workspace-setup__path-label">File → Open Folder</p>
-        <code class="lab-workspace-setup__path-value">LabHandsOnBob/lab-3-modo-personalizado/</code>
-      </div>
-      <ul class="lab-workspace-setup__checks">
-        <li>En el explorador de Bob debe verse <code>PRODUCT-BRIEF.md</code></li>
-        <li>El chat de Bob está abierto (<kbd>Cmd/Ctrl + Shift + I</kbd>)</li>
-      </ul>
-      <p class="lab-workspace-setup__note">Este brief le da al modo <code>product-manager</code> contexto de producto real para el Paso 7 — sin él, Bob no tiene de qué hablar cuando le preguntes qué construir después.</p>
+      <span class="lab-workspace-setup__badge">Punto de partida</span>
+      <h2 class="lab-workspace-setup__title" id="lab3-workspace">Abre el proyecto del modo</h2>
+      <p class="lab-workspace-setup__lead">El modo será de alcance Project, por lo que necesitas una carpeta abierta antes de guardarlo. Esta carpeta también contiene el brief que usarás para probar la respuesta.</p>
+      <div class="lab-workspace-setup__path"><p class="lab-workspace-setup__path-label">File → Open Folder</p><code class="lab-workspace-setup__path-value">LabHandsOnBob/lab-3-modo-personalizado/</code></div>
+      <ul class="lab-workspace-setup__checks"><li>El explorador muestra <code>PRODUCT-BRIEF.md</code>.</li><li>El chat de IBM Bob está abierto.</li></ul>
     </div>
   </section>
 
-  <section class="lab-section" aria-labelledby="lab3-ejercicio">
-    <h2 class="cds--productive-heading-03" id="lab3-ejercicio">
-      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
-      Crear el modo product-manager
-    </h2>
+  <section class="lab-section" aria-labelledby="lab3-pasos">
+    <h2 class="cds--productive-heading-03" id="lab3-pasos">Crea y prueba el Product Manager</h2>
 
     <div class="lab-step lab-step--split">
       <div class="lab-step__body">
-        <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Abrir la configuración de modos</h3>
-        <ol class="cds--list--ordered">
-          <li class="cds--list__item">En IBM Bob, abre el selector de modos del chat</li>
-          <li class="cds--list__item">Pulsa el <strong>engranaje</strong> para abrir la configuración de modos</li>
-        </ol>
+        <h3 class="cds--productive-heading-02 lab-step__title">Paso 1 — Abre Modes y crea un modo</h3>
+        <div class="hands-on-action"><span class="hands-on-context">IBM Bob · Settings · Modes</span><p class="hands-on-action__purpose">Abre el formulario donde se guarda la definición del modo.</p><ol class="cds--list--ordered"><li class="cds--list__item">Abre el selector de modos del chat.</li><li class="cds--list__item">Selecciona el engranaje de configuración.</li><li class="cds--list__item">En la sección <strong>Modes</strong>, crea un modo nuevo con el botón <strong>+</strong>.</li></ol></div>
+        <div class="hands-on-checkpoint"><p class="hands-on-checkpoint__title">Checkpoint</p><ul class="checklist"><li class="checklist__item">Ves el formulario de un nuevo modo y una opción de alcance global o de proyecto.</li></ul></div>
       </div>
-      <div class="lab-step__media">
-        <figure class="lab-figure">
-          <img src="./assets/images/labs/hands-on-inicial/ibm-custom-mode-settings.png"
-               alt="Selector de modos de IBM Bob con el icono de engranaje para abrir la configuración"
-               class="lab-figure__img" />
-          <figcaption class="lab-figure__caption">Abre el selector de modos y pulsa el engranaje</figcaption>
-        </figure>
-      </div>
-    </div>
-
-    <div class="lab-step lab-step--split">
-      <div class="lab-step__body">
-        <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Crear un modo nuevo</h3>
-        <p class="cds--body-01">Pulsa el icono <strong>+</strong> para crear un modo nuevo. Se abre el formulario de detalle.</p>
-      </div>
-      <div class="lab-step__media">
-        <figure class="lab-figure">
-          <img src="./assets/images/labs/hands-on-inicial/ibm-add-mode.png"
-               alt="Diálogo de IBM Bob para añadir un modo personalizado con el botón +"
-               class="lab-figure__img" />
-          <figcaption class="lab-figure__caption">Pulsa + para crear un modo nuevo</figcaption>
-        </figure>
-      </div>
+      <div class="lab-step__media"><figure class="lab-figure"><img src="./assets/images/labs/hands-on-inicial/ibm-custom-mode-settings.png" alt="Referencia de la configuración de modos en IBM Bob" class="lab-figure__img" /><figcaption class="lab-figure__caption">Referencia: la etiqueta del menú puede cambiar según la versión.</figcaption></figure></div>
     </div>
 
     <div class="lab-step">
-      <h3 class="cds--productive-heading-02 lab-step__title">Paso 4 — Completar los campos del modo</h3>
-      <p class="cds--body-01">En el mismo formulario de detalle que se abrió en el Paso 3, rellena slug, nombre, alcance, definición de rol, cuándo usarlo y herramientas con estos valores. El slug técnico se deja en inglés; el resto va en español para que Bob responda en el idioma del workshop. Deja el campo de <strong>instrucciones personalizadas</strong> para el Paso 5.</p>
-      <div class="lab-table-wrap">
-        <table class="lab-table">
-          <thead><tr><th>Campo</th><th>Valor</th></tr></thead>
-          <tbody>
-            <tr><th scope="row">Slug</th><td><code>product-management</code></td></tr>
-            <tr><th scope="row">Name</th><td><code>product-manager</code></td></tr>
-            <tr><th scope="row">Description</th><td>Convierte ideas vagas en un plan de producto simple y priorizado, con resultados claros. Define el alcance del MVP, user stories, métricas de éxito y un roadmap ligero que el equipo puede ejecutar.</td></tr>
-            <tr><th scope="row">Scope</th><td>Project</td></tr>
-            <tr><th scope="row">Role definition</th><td>Eres un Product Manager. Ayudas a definir qué construir y por qué. Clarificas el problema del usuario, propones un MVP, priorizas el trabajo, defines métricas de éxito y produces artefactos simples y compartibles (tarjeta MVP, roadmap, user stories, riesgos). Lo mantienes práctico y cercano para demos: jerga mínima, decisiones rápidas y tradeoffs explícitos.</td></tr>
-            <tr><th scope="row">When to use</th><td>Usa este modo cuando necesites decidir qué construir (o qué construir después), definir un MVP, crear un roadmap simple, escribir user stories y criterios de aceptación, o definir métricas de éxito. No es para programar ni para arquitectura técnica profunda.</td></tr>
-            <tr><th scope="row">Available tools</th><td>Read files, Edit files, Use MCP</td></tr>
-          </tbody>
-        </table>
-      </div>
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 2 — Completa los datos del modo</h3>
+      <div class="hands-on-action"><span class="hands-on-context">IBM Bob · Settings · Modes</span><p class="hands-on-action__purpose">Define qué hace el modo, cuándo conviene usarlo y dónde se guardará.</p></div>
+      <div class="lab-table-wrap"><table class="lab-table"><thead><tr><th>Campo</th><th>Valor</th></tr></thead><tbody>
+        <tr><th scope="row">Slug</th><td><code>product-management</code></td></tr>
+        <tr><th scope="row">Name</th><td><code>product-manager</code></td></tr>
+        <tr><th scope="row">Description</th><td>Convierte ideas vagas en un plan de producto simple, priorizado y con resultados claros.</td></tr>
+        <tr><th scope="row">Scope</th><td><strong>Project</strong> — la definición se guarda para esta carpeta.</td></tr>
+        <tr><th scope="row">Role definition</th><td>Eres un Product Manager. Ayudas a definir qué construir y por qué, aclaras el problema, propones un MVP, priorizas y haces explícitos los tradeoffs.</td></tr>
+        <tr><th scope="row">When to use</th><td>Cuando necesites definir un MVP, priorizar funcionalidades, escribir user stories, métricas de éxito o un roadmap simple.</td></tr>
+        <tr><th scope="row">Available tools</th><td>Read files, Edit files y Use MCP.</td></tr>
+      </tbody></table></div>
+      <div class="hands-on-checkpoint"><p class="hands-on-checkpoint__title">Checkpoint</p><ul class="checklist"><li class="checklist__item">El slug usa solo letras minúsculas y guiones, y el alcance seleccionado es Project.</li></ul></div>
     </div>
 
     <div class="lab-step lab-step--split">
       <div class="lab-step__body">
-        <h3 class="cds--productive-heading-02 lab-step__title">Paso 5 — Instrucciones personalizadas del modo</h3>
-        <p class="cds--body-01">Es el mismo formulario del Paso 4 — bájalo hasta el campo <strong>Custom instructions</strong> (instrucciones personalizadas) y pega este texto:</p>
+        <h3 class="cds--productive-heading-02 lab-step__title">Paso 3 — Pega las instrucciones del modo</h3>
+        <div class="hands-on-action"><span class="hands-on-context">Campo “Custom instructions”</span><p class="hands-on-action__purpose">Esto no es un prompt para enviar: pégalo en el campo de instrucciones del formulario y luego guarda el modo.</p></div>
       </div>
-      <div class="lab-step__media">
-        <figure class="lab-figure">
-          <img src="./assets/images/labs/hands-on-inicial/ibm-custom-mode-filled.png"
-               alt="Formulario de modo personalizado de IBM Bob relleno con los datos de product-manager"
-               class="lab-figure__img" />
-          <figcaption class="lab-figure__caption">Formulario relleno: slug, rol, herramientas y alcance Project</figcaption>
-        </figure>
-      </div>
-      <div class="code-block code-block--prompt">
-        <button type="button" class="copy-button">Copiar</button>
-        <pre><code>1. Empieza resumiendo la petición en 2-3 líneas y extrae:
-    a. Usuario objetivo
-    b. Problema / dolor
-    c. Resultado deseado
-    d. Restricciones (tiempo, alcance, dependencias)
+      <div class="lab-step__media"><figure class="lab-figure"><img src="./assets/images/labs/hands-on-inicial/ibm-custom-mode-filled.png" alt="Referencia de un formulario de modo personalizado completo" class="lab-figure__img" /><figcaption class="lab-figure__caption">Referencia: revisa los valores, no el proyecto mostrado en la captura.</figcaption></figure></div>
+      <div class="code-block code-block--file"><p class="code-block__label">Campo: Custom instructions</p><button type="button" class="copy-button">Copiar</button><pre><code>1. Resume la petición en 2–3 líneas e identifica usuario, problema, resultado y restricciones.
 
-2. Haz como máximo 5 preguntas de aclaración. Si faltan respuestas, asume con criterio y márcalas claramente como supuestos.
+2. Haz hasta 5 preguntas de aclaración. Si falta información, declara los supuestos.
 
-3. Produce siempre estos artefactos, cortos y fáciles de presentar:
-    a. Tarjeta MVP: Objetivo, Usuario, Dolor, En alcance (3-6 viñetas), Fuera de alcance (2-4 viñetas)
-    b. Roadmap Ahora / Después / Más adelante (3-5 viñetas por columna)
-    c. Top 5 user stories con “Hecho cuando…” (2-3 criterios de aceptación cada una)
-    d. Métricas de éxito: 1 primaria, 1-2 secundarias, 1 guardrail
-    e. Riesgos y preguntas abiertas (2-4)
+3. Produce siempre:
+   - Tarjeta MVP: objetivo, usuario, dolor, dentro y fuera de alcance.
+   - Roadmap Ahora / Después / Más adelante.
+   - Cinco user stories con criterios de aceptación.
+   - Una métrica primaria, una o dos secundarias y un guardrail.
+   - Riesgos y preguntas abiertas.
 
-4. Haz los tradeoffs explícitos. Si algo entra al MVP, otra cosa debe pasar a Después o Más adelante.
+4. Haz explícitos los tradeoffs: si algo entra al MVP, otra cosa debe salir.
 
-5. Termina con una sola decisión recomendada para que la persona apruebe, por ejemplo confirmar el alcance del MVP o elegir entre dos opciones.
+5. Termina con una decisión recomendada para aprobar.
 
-6. Usa un lenguaje simple y cercano. Evita nombres de frameworks salvo que te lo pidan (nada de jerga RICE/PRD por defecto).
-
-7. Si ayuda, incluye un diagrama pequeño (opcional), por ejemplo un flujo corto del journey del usuario.</code></pre>
-      </div>
-      <p class="cds--body-01" style="margin-top:12px">Guarda el modo.</p>
+6. Usa lenguaje simple y evita jerga de frameworks salvo que la pidan.</code></pre></div>
     </div>
 
-    <div class="lab-step lab-step--split">
-      <div class="lab-step__body">
-        <h3 class="cds--productive-heading-02 lab-step__title">Paso 6 — Revisar <code>.bob/custom_modes.yaml</code></h3>
-        <p class="cds--body-01">Al guardar en el Paso 5, Bob escribe <code>.bob/custom_modes.yaml</code> dentro de la carpeta que abriste en el Paso 1 (<code>lab-3-modo-personalizado/</code>). Puedes editar ese archivo directamente para ajustar el comportamiento. Debe verse exactamente así — es el resultado de los campos del Paso 4 y el texto del Paso 5, sin resumir:</p>
-      </div>
-      <div class="lab-step__media">
-        <figure class="lab-figure">
-          <img src="./assets/images/labs/hands-on-inicial/ibm-custom-modes-yaml.png"
-               alt="Archivo custom_modes.yaml generado por IBM Bob con el modo product-manager"
-               class="lab-figure__img" />
-          <figcaption class="lab-figure__caption">Bob escribe el modo en .bob/custom_modes.yaml</figcaption>
-        </figure>
-      </div>
-      <div class="code-block code-block--yaml">
-        <button type="button" class="copy-button">Copiar</button>
-        <pre><code>customModes:
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 4 — Verifica el YAML de proyecto</h3>
+      <div class="hands-on-action"><span class="hands-on-context">Explorador de archivos · proyecto abierto</span><p class="hands-on-action__purpose">Comprueba que al guardar se creó la configuración del proyecto, no una definición global distinta.</p></div>
+      <div class="code-block code-block--yaml"><p class="code-block__label">Archivo: .bob/custom_modes.yaml</p><button type="button" class="copy-button">Copiar</button><pre><code>customModes:
   - slug: product-management
     name: product-manager
-    description: Convierte ideas vagas en un plan de producto simple y priorizado, con resultados claros. Define el alcance del MVP, user stories, métricas de éxito y un roadmap ligero que el equipo puede ejecutar.
-    scope: project
-
-    roleDefinition: |
-      Eres un Product Manager. Ayudas a definir qué construir y por qué.
-      Clarificas el problema del usuario, propones un MVP, priorizas el
-      trabajo, defines métricas de éxito y produces artefactos simples y
-      compartibles (tarjeta MVP, roadmap, user stories, riesgos). Lo
-      mantienes práctico y cercano para demos: jerga mínima, decisiones
-      rápidas y tradeoffs explícitos.
-
-    whenToUse: |
-      Usa este modo cuando necesites decidir qué construir (o qué construir
-      después), definir un MVP, crear un roadmap simple, escribir user
-      stories y criterios de aceptación, o definir métricas de éxito. No es
-      para programar ni para arquitectura técnica profunda.
-
+    description: Convierte ideas vagas en un plan de producto simple, priorizado y con resultados claros.
+    roleDefinition: Eres un Product Manager. Ayudas a definir qué construir y por qué.
+    whenToUse: Usa este modo para definir y priorizar trabajo de producto.
     customInstructions: |
-      1. Empieza resumiendo la petición en 2-3 líneas y extrae:
-          a. Usuario objetivo
-          b. Problema / dolor
-          c. Resultado deseado
-          d. Restricciones (tiempo, alcance, dependencias)
-
-      2. Haz como máximo 5 preguntas de aclaración. Si faltan respuestas,
-         asume con criterio y márcalas claramente como supuestos.
-
-      3. Produce siempre estos artefactos, cortos y fáciles de presentar:
-          a. Tarjeta MVP: Objetivo, Usuario, Dolor, En alcance (3-6
-             viñetas), Fuera de alcance (2-4 viñetas)
-          b. Roadmap Ahora / Después / Más adelante (3-5 viñetas por
-             columna)
-          c. Top 5 user stories con "Hecho cuando…" (2-3 criterios de
-             aceptación cada una)
-          d. Métricas de éxito: 1 primaria, 1-2 secundarias, 1 guardrail
-          e. Riesgos y preguntas abiertas (2-4)
-
-      4. Haz los tradeoffs explícitos. Si algo entra al MVP, otra cosa debe
-         pasar a Después o Más adelante.
-
-      5. Termina con una sola decisión recomendada para que la persona
-         apruebe, por ejemplo confirmar el alcance del MVP o elegir entre
-         dos opciones.
-
-      6. Usa un lenguaje simple y cercano. Evita nombres de frameworks
-         salvo que te lo pidan (nada de jerga RICE/PRD por defecto).
-
-      7. Si ayuda, incluye un diagrama pequeño (opcional), por ejemplo un
-         flujo corto del journey del usuario.
-
+      [las instrucciones que acabas de pegar]
     groups:
       - read
       - edit
-      - mcp</code></pre>
-      </div>
+      - mcp</code></pre></div>
+      <div class="hands-on-checkpoint"><p class="hands-on-checkpoint__title">Checkpoint</p><ul class="checklist"><li class="checklist__item">Existe <code>.bob/custom_modes.yaml</code> dentro de <code>lab-3-modo-personalizado/</code>.</li><li class="checklist__item">El selector de modos muestra <code>product-manager</code>.</li></ul></div>
+    </div>
+
+    <div class="lab-step">
+      <h3 class="cds--productive-heading-02 lab-step__title">Paso 5 — Prueba la recomendación</h3>
+      <div class="hands-on-action"><span class="hands-on-context">IBM Bob · product-manager</span><p class="hands-on-action__purpose">Usa el brief incluido para verificar que el modo entrega artefactos de producto y no una respuesta técnica genérica.</p><ol class="cds--list--ordered"><li class="cds--list__item">Selecciona <strong>product-manager</strong> en el chat.</li><li class="cds--list__item">Envía el prompt de prueba.</li></ol><div class="code-block code-block--prompt"><p class="code-block__label">Pega en el chat de Bob</p><button type="button" class="copy-button">Copiar</button><pre><code>Lee PRODUCT-BRIEF.md antes de responder. ¿Qué funcionalidad deberíamos construir después y cuál recomiendas para el MVP?</code></pre></div></div>
+      <div class="hands-on-checkpoint"><p class="hands-on-checkpoint__title">Checkpoint final</p><ul class="checklist"><li class="checklist__item">La respuesta usa el brief y explicita supuestos o preguntas pendientes.</li><li class="checklist__item">Incluye una recomendación priorizada, criterios de aceptación y una decisión siguiente.</li></ul></div>
     </div>
   </section>
-
-  <section class="lab-section" aria-labelledby="lab3-probar">
-    <h2 class="cds--productive-heading-03" id="lab3-probar">
-      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
-      Probar el modo product-manager
-    </h2>
-
-    <div class="lab-step lab-step--split">
-      <div class="lab-step__body">
-        <h3 class="cds--productive-heading-02 lab-step__title">Paso 7 — Cambiar de modo y preguntar</h3>
-        <div class="callout" data-tone="note">
-          <p class="callout__title">Antes de este paso</p>
-          <p>Confirma dos cosas: sigues con <code>lab-3-modo-personalizado/</code> abierta como raíz (Paso 1) y ya guardaste el modo (Paso 5). Sin la carpeta abierta, el selector de modos no tiene dónde buscar <code>product-manager</code>.</p>
-        </div>
-        <ol class="cds--list--ordered">
-          <li class="cds--list__item">En el selector de modos, elige <strong>product-manager</strong></li>
-          <li class="cds--list__item">Envía este prompt:</li>
-        </ol>
-        <div class="code-block code-block--prompt">
-          <button type="button" class="copy-button">Copiar</button>
-          <pre><code>Lee PRODUCT-BRIEF.md antes de responder. ¿Qué funcionalidad deberíamos construir después?</code></pre>
-        </div>
-        <p class="cds--body-01" style="margin-top:12px">Bob debería listar funcionalidades posibles a partir del brief (checkout, historial de pedidos, búsqueda, recomendaciones) y puede hacer preguntas de aclaración sobre el producto y las necesidades de las personas usuarias. Respóndelas; el modo está diseñado para extraer usuario, problema, resultado y restricciones antes de proponer un MVP.</p>
-      </div>
-      <div class="lab-step__media">
-        <figure class="lab-figure">
-          <img src="./assets/images/labs/hands-on-inicial/ibm-product-manager-mode.png"
-               alt="IBM Bob con el modo product-manager seleccionado en el chat"
-               class="lab-figure__img" />
-          <figcaption class="lab-figure__caption">Cambia al modo product-manager y envía el prompt de prueba</figcaption>
-        </figure>
-      </div>
-    </div>
-  </section>
-
-  <div class="callout" data-tone="tip">
-    <p class="callout__title">Lo que acabas de lograr</p>
-    <ul class="cds--list--unordered">
-      <li class="cds--list__item">✅ Creaste un modo con rol, instrucciones y herramientas propias</li>
-      <li class="cds--list__item">✅ Revisaste el YAML en <code>.bob/custom_modes.yaml</code></li>
-      <li class="cds--list__item">✅ Probaste el modo Product Manager pidiendo la siguiente funcionalidad</li>
-    </ul>
-    <p style="margin-top:12px">Prueba otras personas (diseño UX, analista de datos, DevOps) cambiando el <code>roleDefinition</code> y las herramientas. Si versionas <code>.bob/custom_modes.yaml</code> con el código, todo el equipo hereda el modo.</p>
-  </div>
-
 </div>

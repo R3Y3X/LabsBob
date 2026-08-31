@@ -56,7 +56,7 @@ Migre la interfaz
   </section>
   <section class="lab-section" aria-labelledby="get-the-source-code-first">
     <h2 class="cds--productive-heading-03" id="get-the-source-code-first">Obtén primero el código fuente</h2>
-    <p>Si aún no lo has hecho, descarga el paquete del taller:</p>
+    <p>Si aún no lo has hecho, descarga el paquete del taller. Sigue en la misma carpeta <code>simple-pharmacy-workshop-v2</code> abierta en el overview — no hace falta volver a usar <strong>File → Open Folder</strong>.</p>
     <p>
       <a download="simple-pharmacy-workshop-v2.zip" href="./downloads/simple-pharmacy-workshop-v2.zip" class="cds--btn cds--btn--primary">
         <span class="premium-button-icon">
@@ -67,13 +67,18 @@ Migre la interfaz
  Paquete de taller (2,1 MB)
       </a>
     </p>
-    <p>Descomprímalo y luego abra la instantánea inicial del Laboratorio 3 en IBM Bob:</p>
-    <div data-language="text" class="code-block premium-code-block code-block--file">
-      <pre>
-        <code>simple-pharmacy-workshop-v2/labs/lab3-ui-modernization/snapC-ui-mod/</code>
-      </pre>
-    </div>
-    <p>Esta instantánea ya está en Liberty + Java 21 (el resultado del Laboratorio 2). Puedes usarlo de forma independiente.</p>
+    <p>Esta instantánea ya está en Liberty + Java 21 (el resultado del Laboratorio 2). Puedes usarla de forma independiente.</p>
+    <section class="lab-workspace-setup" aria-labelledby="lab3-workspace">
+      <div class="lab-workspace-setup__box">
+        <span class="lab-workspace-setup__badge">Sigue en el mismo workspace</span>
+        <h3 class="lab-workspace-setup__title" id="lab3-workspace">Misma carpeta del workshop</h3>
+        <p class="lab-workspace-setup__lead">No cambies de workspace. En el campo <strong>Project path</strong> del workflow, apunta al snapshot de este lab:</p>
+        <div class="lab-workspace-setup__path">
+          <p class="lab-workspace-setup__path-label">Ruta a poner en el workflow</p>
+          <code class="lab-workspace-setup__path-value">…/simple-pharmacy-workshop-v2/labs/lab3-ui-modernization/snapC-ui-mod/</code>
+        </div>
+      </div>
+    </section>
   </section>
   <section class="lab-section" aria-labelledby="use-case-migrate-struts-to-react">
     <h2 class="cds--productive-heading-03" id="use-case-migrate-struts-to-react">Caso de uso: migrar Struts a React</h2>
@@ -283,11 +288,7 @@ Luego cierre y vuelva a abrir PowerShell. (¿Prefieres un administrador de versi
   <section class="lab-section" aria-labelledby="step-1-open-the-project-and-confirm-agent-mode">
     <h2 class="cds--productive-heading-03" id="step-1-open-the-project-and-confirm-agent-mode">Paso 1: abra el proyecto y confirme Agent mode</h2>
     <ol class="cds--list--ordered">
-      <li class="cds--list__item">
-Abra la carpeta
-        <code>snapC-ui-mod</code>
- en Bob como su espacio de trabajo activo.
-      </li>
+      <li class="cds--list__item">Confirma que Bob sigue abierto en <code>simple-pharmacy-workshop-v2</code>. No cambies de workspace.</li>
       <li class="cds--list__item">Abra la interfaz de chat de Bob.</li>
       <li class="cds--list__item">
 Confirme que el indicador de modo en la parte inferior muestra
@@ -334,11 +335,13 @@ Presione el botón de reproducción (
     </figure>
     <h3 id="21-analyze-project" class="cds--productive-heading-02 lab-step__title">2.1 Analizar Proyecto</h3>
     <p>
-Confirme que
+Como la raíz del workspace es el workshop completo, corrige
       <strong>Ruta del proyecto</strong>
- apunta a su carpeta
+ para que apunte a
       <code>snapC-ui-mod</code>
- y presione
+ (
+      <code>…/simple-pharmacy-workshop-v2/labs/lab3-ui-modernization/snapC-ui-mod</code>
+) y presione
       <strong>Continuar</strong>
 . Bob ejecuta una compilación inicial para confirmar que el estado inicial es correcto.
     </p>
@@ -346,7 +349,7 @@ Confirme que
       <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/analyze-project-panel.png" target="_blank" rel="noopener">
         <img src="./assets/images/labs/java-modernization-v2/premium/analyze-project-panel.png" class="lab-figure__img" alt="Panel Analizar proyecto para el flujo de trabajo UI Modernization" />
       </a>
-      <figcaption class="lab-figure__caption">Referencia visual — Panel Analizar proyecto para el flujo de trabajo UI Modernization. Verifica este estado antes de continuar.</figcaption>
+      <figcaption class="lab-figure__caption">Referencia visual — Panel Analizar proyecto. Corrige <strong>Project path</strong> para que termine en <code>snapC-ui-mod</code> antes de continuar.</figcaption>
     </figure>
     <h3 id="22-select-ui-modernization" class="cds--productive-heading-02 lab-step__title">2.2 Seleccione UI Modernization</h3>
     <p>

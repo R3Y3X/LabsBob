@@ -52,7 +52,7 @@ Configure y ejecute el subtipo
   </section>
   <section class="lab-section" aria-labelledby="get-the-source-code-first">
     <h2 class="cds--productive-heading-03" id="get-the-source-code-first">Obtén primero el código fuente</h2>
-    <p>Si aún no lo has hecho, descarga el paquete del taller:</p>
+    <p>Si aún no lo has hecho, descarga el paquete del taller. Sigue en la misma carpeta <code>simple-pharmacy-workshop-v2</code> abierta en el overview — no hace falta volver a usar <strong>File → Open Folder</strong>.</p>
     <p>
       <a download="simple-pharmacy-workshop-v2.zip" href="./downloads/simple-pharmacy-workshop-v2.zip" class="cds--btn cds--btn--primary">
         <span class="premium-button-icon">
@@ -63,21 +63,18 @@ Configure y ejecute el subtipo
  Paquete de taller (2,1 MB)
       </a>
     </p>
-    <p>Descomprímalo y luego abra la instantánea inicial del Laboratorio 2 en IBM Bob:</p>
-    <div data-language="text" class="code-block premium-code-block code-block--file">
-      <pre>
-        <code>simple-pharmacy-workshop-v2/labs/lab2-java-upgrade/snapB-java-upgrade/</code>
-      </pre>
-    </div>
-    <p>Esta instantánea ya está en Liberty (el resultado del Laboratorio 1), por lo que puede ejecutar este laboratorio independientemente del Laboratorio 1.</p>
-    <div class="callout" data-tone="warning">
-      <p class="callout__title">
-Abra la carpeta
-        <code>snapB-*</code>
-, no su carpeta principal
-      </p>
-      <p>El flujo de trabajo Java Modernization solo aparece cuando se abre Bob en la carpeta de instantáneas.</p>
-    </div>
+    <p>Esta instantánea ya está en Liberty (el resultado del Laboratorio 1), por lo que puedes ejecutar este laboratorio independientemente del Laboratorio 1.</p>
+    <section class="lab-workspace-setup" aria-labelledby="lab2-workspace">
+      <div class="lab-workspace-setup__box">
+        <span class="lab-workspace-setup__badge">Sigue en el mismo workspace</span>
+        <h3 class="lab-workspace-setup__title" id="lab2-workspace">Misma carpeta del workshop</h3>
+        <p class="lab-workspace-setup__lead">No cambies de workspace. En el campo <strong>Project path</strong> del workflow, apunta al snapshot de este lab:</p>
+        <div class="lab-workspace-setup__path">
+          <p class="lab-workspace-setup__path-label">Ruta a poner en el workflow</p>
+          <code class="lab-workspace-setup__path-value">…/simple-pharmacy-workshop-v2/labs/lab2-java-upgrade/snapB-java-upgrade/</code>
+        </div>
+      </div>
+    </section>
   </section>
   <section class="lab-section" aria-labelledby="use-case-upgrade-java-versions">
     <h2 class="cds--productive-heading-03" id="use-case-upgrade-java-versions">Caso de uso: actualizar las versiones de Java</h2>
@@ -416,15 +413,7 @@ Comience solo con
   <section class="lab-section" aria-labelledby="step-1-open-the-project">
     <h2 class="cds--productive-heading-03" id="step-1-open-the-project">Paso 1: abre el proyecto</h2>
     <ol class="cds--list--ordered">
-      <li class="cds--list__item">Inicie su IDE con IBM Bob instalado.</li>
-      <li class="cds--list__item">
-Abra la carpeta
-        <code>snapB-java-upgrade</code>
-        <strong> como raíz del proyecto</strong>
- (
-        <strong>Archivo &gt; Abrir carpeta</strong>
-).
-      </li>
+      <li class="cds--list__item">Confirma que Bob sigue abierto en <code>simple-pharmacy-workshop-v2</code>. No cambies de workspace.</li>
       <li class="cds--list__item">Si la ventana de chat de Bob aún no está abierta, haga clic en el ícono de Bob en la parte superior de su IDE.</li>
       <li class="cds--list__item">
 Confirme que el indicador de modo en la parte inferior muestra
@@ -449,7 +438,7 @@ Haga clic en el botón de reproducción (
       </li>
       <li class="cds--list__item">
         <strong>¿No encuentras el flujo de trabajo?</strong>
- Verifica que hayas abierto la carpeta correcta y que estés en la cuenta correcta.
+ Verifica que tu plan incluye el paquete <strong>Premium</strong> / Java Modernization y que estás en la cuenta correcta.
       </li>
     </ul>
     <figure class="lab-figure premium-workflow__figure">
@@ -473,11 +462,11 @@ Haga clic en
     </p>
     <h3 id="22-analyze-analyze-java-project" class="cds--productive-heading-02 lab-step__title">2.2 Analizar - Analizar proyecto Java</h3>
     <p>
-Confirme que
+Como la raíz del workspace es el workshop completo, corrige
       <strong>Project Path</strong>
- apunta a su carpeta
+ para que apunte a
       <code>snapB-java-upgrade</code>
-, es decir, donde descomprimió el paquete, terminando con
+. Debe terminar con
       <code>…/simple-pharmacy-workshop-v2/labs/lab2-java-upgrade/snapB-java-upgrade</code>
  (esa cola es solo un ejemplo de cómo debe terminar su ruta). Deje
       <strong>Comando de compilación personalizada</strong>
@@ -488,9 +477,9 @@ Confirme que
     <p>Bob escanea el proyecto, detecta que es una aplicación Java 8 y ejecuta una compilación inicial para confirmar las compilaciones básicas.</p>
     <figure class="lab-figure premium-workflow__figure">
       <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/analyze-project-panel.png" target="_blank" rel="noopener">
-        <img src="./assets/images/labs/java-modernization-v2/premium/analyze-project-panel.png" class="lab-figure__img" alt="Panel Analizar proyecto con la ruta del proyecto completada automáticamente" />
+        <img src="./assets/images/labs/java-modernization-v2/premium/analyze-project-panel.png" class="lab-figure__img" alt="Panel Analizar proyecto con el campo Project path" />
       </a>
-      <figcaption class="lab-figure__caption">Referencia visual — Panel Analizar proyecto con la ruta del proyecto completada automáticamente. Verifica este estado antes de continuar.</figcaption>
+      <figcaption class="lab-figure__caption">Referencia visual — Panel Analizar proyecto. Corrige <strong>Project path</strong> para que termine en <code>snapB-java-upgrade</code> antes de continuar.</figcaption>
     </figure>
     <h3 id="23-analyze-select-modernization-type" class="cds--productive-heading-02 lab-step__title">2.3 Analizar: seleccionar el tipo de modernización</h3>
     <p>
@@ -545,7 +534,7 @@ El panel lo desactiva con la nota
         <code>snapB</code>
  es el estado posterior a Lab-1, por lo que no queda nada que cambiar de plataforma. Si
         <strong>no</strong>
- está atenuado, has abierto la instantánea incorrecta; comprueba que estás en
+ está atenuado, el <strong>Project path</strong> apunta al snapshot incorrecto; comprueba que termina en
         <code>snapB-java-upgrade</code>
  y no en
         <code>snapA</code>
@@ -1405,11 +1394,11 @@ Bob no puede leer archivos de proyecto (
       </summary>
       <ol class="cds--list--ordered">
         <li class="cds--list__item">
-Verifique que abrió la subcarpeta
+Verifica que el campo <strong>Project path</strong> del workflow apunta a
           <code>snapB-java-upgrade</code>
- como raíz del proyecto, no la carpeta principal
+ (no a la carpeta general del workshop ni a
           <code>lab2-*</code>
-.
+).
         </li>
         <li class="cds--list__item">
 Verifique los permisos del archivo:

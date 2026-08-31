@@ -56,7 +56,7 @@ El análisis en sí tarda unos segundos: este flujo de trabajo es una búsqueda 
   </section>
   <section class="lab-section" aria-labelledby="get-the-source-code-first">
     <h2 class="cds--productive-heading-03" id="get-the-source-code-first">Obtén primero el código fuente</h2>
-    <p>Si aún no lo has hecho, descarga el paquete del taller:</p>
+    <p>Si aún no lo has hecho, descarga el paquete del taller. Sigue en la misma carpeta <code>simple-pharmacy-workshop-v2</code> abierta en el overview — no hace falta volver a usar <strong>File → Open Folder</strong>.</p>
     <p>
       <a download="simple-pharmacy-workshop-v2.zip" href="./downloads/simple-pharmacy-workshop-v2.zip" class="cds--btn cds--btn--primary">
         <span class="premium-button-icon">
@@ -67,25 +67,18 @@ El análisis en sí tarda unos segundos: este flujo de trabajo es una búsqueda 
  Paquete de taller (2,1 MB)
       </a>
     </p>
-    <p>Descomprímalo y luego abra la instantánea inicial de Lab 5 en IBM Bob:</p>
-    <div data-language="text" class="code-block premium-code-block code-block--file">
-      <pre>
-        <code>simple-pharmacy-workshop-v2/labs/lab5-security-vulnerability-remediation/snapE-security-vulnerabilities/</code>
-      </pre>
-    </div>
-    <p>Esta es la aplicación modernizada con versiones de dependencia vulnerables integradas. Puede usarla independientemente de los otros laboratorios.</p>
-    <div class="callout" data-tone="warning">
-      <p class="callout__title">
-Abra la carpeta
-        <code>snapE-*</code>
-, no su carpeta principal
-      </p>
-      <p>
-El flujo de trabajo solo aparece en el nivel de instantánea, no en la carpeta principal
-        <code>lab5-*</code>
-.
-      </p>
-    </div>
+    <p>Esta es la aplicación modernizada con versiones de dependencia vulnerables integradas. Puedes usarla independientemente de los otros laboratorios.</p>
+    <section class="lab-workspace-setup" aria-labelledby="lab5-workspace">
+      <div class="lab-workspace-setup__box">
+        <span class="lab-workspace-setup__badge">Sigue en el mismo workspace</span>
+        <h3 class="lab-workspace-setup__title" id="lab5-workspace">Misma carpeta del workshop</h3>
+        <p class="lab-workspace-setup__lead">No cambies de workspace. Si el workflow muestra un campo de ruta de proyecto, apunta al snapshot de este lab. Si arranca el análisis al momento, comprueba que trabaja sobre <code>snapE-security-vulnerabilities</code>:</p>
+        <div class="lab-workspace-setup__path">
+          <p class="lab-workspace-setup__path-label">Ruta a poner en el workflow</p>
+          <code class="lab-workspace-setup__path-value">…/simple-pharmacy-workshop-v2/labs/lab5-security-vulnerability-remediation/snapE-security-vulnerabilities/</code>
+        </div>
+      </div>
+    </section>
   </section>
   <section class="lab-section" aria-labelledby="use-case-find-and-fix-vulnerable-dependencies">
     <h2 class="cds--productive-heading-03" id="use-case-find-and-fix-vulnerable-dependencies">Caso de uso: buscar y corregir dependencias vulnerables</h2>
@@ -417,12 +410,7 @@ Cierre y vuelva a abrir PowerShell para encontrar
   <section class="lab-section" aria-labelledby="step-1-open-the-project">
     <h2 class="cds--productive-heading-03" id="step-1-open-the-project">Paso 1: abre el proyecto</h2>
     <ol class="cds--list--ordered">
-      <li class="cds--list__item">
-Abra la carpeta
-        <code>snapE-security-vulnerabilities</code>
-        <strong> como raíz del proyecto </strong>
-.
-      </li>
+      <li class="cds--list__item">Confirma que Bob sigue abierto en <code>simple-pharmacy-workshop-v2</code>. No cambies de workspace.</li>
       <li class="cds--list__item">
 Confirme que el indicador de modo en la parte inferior del chat muestra
         <strong>Agent</strong>
@@ -453,7 +441,9 @@ Haga clic en
       <strong>Inicio</strong>
  en el flujo de trabajo
       <strong>Java Vulnerabilities Detection</strong>
-.
+. Si el workflow muestra un campo de ruta de proyecto, corrígelo para que apunte a
+      <code>…/simple-pharmacy-workshop-v2/labs/lab5-security-vulnerability-remediation/snapE-security-vulnerabilities</code>
+. Si Bob empieza a escanear al momento, comprueba que el <code>pom.xml</code> que lee es el de <code>snapE</code> y no el de otro lab.
     </p>
     <h3 id="22-dependency-detection" class="cds--productive-heading-02 lab-step__title">2.2 Detección de dependencia</h3>
     <p>
@@ -725,7 +715,7 @@ Haga clic en
       <p>
 Ése es un resultado legítimo en un proyecto limpio, pero no en éste. Significa que
         <code>pom.xml</code>
- no contiene las versiones intencionalmente vulnerables que espera el laboratorio. Comprueba que abriste la instantánea inicial de
+ no contiene las versiones intencionalmente vulnerables que espera el laboratorio. Comprueba que el workflow está apuntando a la instantánea inicial de
         <code>snapE-*</code>
  y no la has modificado.
         <code>pom.xml</code>

@@ -34,13 +34,13 @@
     <h2 class="cds--productive-heading-03" id="ov-materials">Materiales del workshop</h2>
     <div class="callout" data-tone="note">
       <p class="callout__title">Descarga el árbol fuente del workshop</p>
-      <p>Descomprime el ZIP y abre la carpeta <code>snap*</code> correspondiente a cada lab en IBM Bob. Las instrucciones de este recorrido se encuentran en el portal.</p>
+      <p>Descomprime el ZIP y abre <strong>una sola vez</strong> la carpeta <code>simple-pharmacy-workshop-v2</code> en IBM Bob (<strong>File → Open Folder</strong>). No vuelvas a cambiar de workspace: cada lab indica la ruta del snapshot en el campo <strong>Project path</strong> del workflow. Las instrucciones de este recorrido se encuentran en el portal.</p>
       <a class="cds--btn cds--btn--primary" style="margin-top:1rem" download="simple-pharmacy-workshop-v2.zip" href="./downloads/simple-pharmacy-workshop-v2.zip">Descargar Simple Pharmacy workshop v2</a>
     </div>
     <ul class="cds--list--unordered">
       <li class="cds--list__item"><code>labs/</code> contiene una carpeta y snapshot de inicio por laboratorio.</li>
       <li class="cds--list__item"><code>snapshots/</code> incluye estados de inicio y resultados de referencia.</li>
-      <li class="cds--list__item">Los workflows consultan el proyecto abierto y muestran los cambios antes de aplicarlos.</li>
+      <li class="cds--list__item">Los workflows reciben la ruta del snapshot en <strong>Project path</strong> y muestran los cambios antes de aplicarlos.</li>
     </ul>
     <div class="callout" data-tone="tip">
       <p class="callout__title">Materiales adicionales del Lab 1</p>
@@ -93,16 +93,20 @@
 
   <section class="lab-section" aria-labelledby="ov-prereqs">
     <h2 class="cds--productive-heading-03" id="ov-prereqs">Prerrequisitos</h2>
-    <p class="cds--body-01">Instala una sola vez el entorno compartido por todos los labs. La preparación se completa aquí, antes del Lab 1; después cada etapa solo te indicará qué snapshot abrir y qué workflow ejecutar.</p>
+    <p class="cds--body-01">Instala una sola vez el entorno compartido por todos los labs. La preparación se completa aquí, antes del Lab 1; después cada etapa solo te indicará qué workflow ejecutar y qué ruta de snapshot poner en <strong>Project path</strong>.</p>
     <section class="lab-workspace-setup" aria-labelledby="ov-workspace">
       <div class="lab-workspace-setup__box">
         <span class="lab-workspace-setup__badge">Regla del workshop — lee antes del Lab 1</span>
-        <h3 class="lab-workspace-setup__title" id="ov-workspace">Una carpeta <code>snap*</code> por lab</h3>
-        <p class="lab-workspace-setup__lead">Abre cada snapshot como workspace independiente en Bob. Así el workflow encuentra el <code>pom.xml</code> correcto y cada lab conserva su punto de partida.</p>
+        <h3 class="lab-workspace-setup__title" id="ov-workspace">Una carpeta para todo el workshop</h3>
+        <p class="lab-workspace-setup__lead">Abre <code>simple-pharmacy-workshop-v2</code> como workspace en Bob y no lo cambies entre labs. El snapshot de cada etapa se indica en el campo <strong>Project path</strong> del workflow (en el Lab Alt-4, los prompts apuntan a <code>snapTDD</code> dentro de esta misma carpeta).</p>
+        <div class="lab-workspace-setup__path">
+          <p class="lab-workspace-setup__path-label">File → Open Folder</p>
+          <code class="lab-workspace-setup__path-value">…/simple-pharmacy-workshop-v2/</code>
+        </div>
         <div class="lab-workspace-setup__table-wrap">
           <table class="lab-workspace-setup__table">
-            <caption class="visually-hidden">Carpeta de workspace por lab</caption>
-            <thead><tr><th scope="col">Lab</th><th scope="col">Abre esta carpeta en Bob</th></tr></thead>
+            <caption class="visually-hidden">Ruta de snapshot a poner en el workflow por lab</caption>
+            <thead><tr><th scope="col">Lab</th><th scope="col">Ruta a poner en el workflow</th></tr></thead>
             <tbody>
               <tr><th scope="row">Lab 1</th><td><code>labs/lab1-java-liberty-replatforming/snapA-java-liberty-replatforming/</code></td></tr>
               <tr><th scope="row">Lab 2</th><td><code>labs/lab2-java-upgrade/snapB-java-upgrade/</code></td></tr>

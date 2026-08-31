@@ -122,12 +122,18 @@ Descargue el paquete del taller (solo se necesita
  Paquete de taller (2,1 MB)
       </a>
     </p>
-    <p>Descomprímalo, luego abra la instantánea inicial de Lab Alt-4 en IBM Bob:</p>
-    <div data-language="text" class="code-block premium-code-block code-block--file">
-      <pre>
-        <code>simple-pharmacy-workshop-v2/labs/alt-lab4-test-driven-development/snapTDD/</code>
-      </pre>
-    </div>
+    <p>Si aún no lo has hecho, descomprime el paquete. Sigue en la misma carpeta <code>simple-pharmacy-workshop-v2</code> abierta en el overview — no hace falta volver a usar <strong>File → Open Folder</strong>.</p>
+    <section class="lab-workspace-setup" aria-labelledby="lab-alt4-workspace">
+      <div class="lab-workspace-setup__box">
+        <span class="lab-workspace-setup__badge">Sigue en el mismo workspace</span>
+        <h3 class="lab-workspace-setup__title" id="lab-alt4-workspace">Misma carpeta del workshop</h3>
+        <p class="lab-workspace-setup__lead">Este lab no tiene workflow: se hace en Agent Mode. Quédate en <code>simple-pharmacy-workshop-v2</code> y trabaja dentro de <code>snapTDD</code> (prompts y comandos <code>mvn</code> deben apuntar a ese subdirectorio):</p>
+        <div class="lab-workspace-setup__path">
+          <p class="lab-workspace-setup__path-label">Subdirectorio de trabajo</p>
+          <code class="lab-workspace-setup__path-value">…/simple-pharmacy-workshop-v2/labs/alt-lab4-test-driven-development/snapTDD/</code>
+        </div>
+      </div>
+    </section>
     <h3 id="starting-state" class="cds--productive-heading-02 lab-step__title">Estado inicial</h3>
     <p>
 La instantánea incluye la especificación OpenAPI, un
@@ -360,12 +366,12 @@ Deberías ver la versión de Java
   </section>
   <section class="lab-section" aria-labelledby="environment-setup">
     <h2 class="cds--productive-heading-03" id="environment-setup">Configuración del entorno</h2>
-    <h3 id="step-1-open-the-tdd-folder" class="cds--productive-heading-02 lab-step__title">Paso 1: abre la carpeta TDD</h3>
+    <h3 id="step-1-open-the-tdd-folder" class="cds--productive-heading-02 lab-step__title">Paso 1: confirma el workspace y localiza snapTDD</h3>
     <ol class="cds--list--ordered">
-      <li class="cds--list__item">Inicie su IDE con IBM Bob instalado.</li>
+      <li class="cds--list__item">Confirma que Bob sigue abierto en <code>simple-pharmacy-workshop-v2</code>. No cambies de workspace.</li>
       <li class="cds--list__item">
-Abra
-        <code>simple-pharmacy-workshop-v2/labs/alt-lab4-test-driven-development/snapTDD</code>
+En el explorador, entra en
+        <code>labs/alt-lab4-test-driven-development/snapTDD</code>
 .
       </li>
       <li class="cds--list__item">
@@ -463,12 +469,12 @@ Gestión de estado (
 .
       </li>
       <li class="cds--list__item">
-        <strong>Asegúrese de que la carpeta TDD esté abierta</strong>
-: verifique que la carpeta
-        <code>snapTDD</code>
- esté en su espacio de trabajo y que
+        <strong>Asegúrate de trabajar dentro de snapTDD</strong>
+: en el explorador debe verse
+        <code>labs/alt-lab4-test-driven-development/snapTDD</code>
+ y
         <code>prescription-api-spec.yaml</code>
- esté visible.
+ debe estar visible. No hace falta reabrir esa carpeta como raíz.
       </li>
       <li class="cds--list__item">
         <p>

@@ -55,7 +55,7 @@ Ejecute el flujo de trabajo Java Unit Testing de un extremo a otro: Bob instala 
   </section>
   <section class="lab-section" aria-labelledby="get-the-source-code-first">
     <h2 class="cds--productive-heading-03" id="get-the-source-code-first">Obtén primero el código fuente</h2>
-    <p>Si aún no lo has hecho, descarga el paquete del taller:</p>
+    <p>Si aún no lo has hecho, descarga el paquete del taller. Sigue en la misma carpeta <code>simple-pharmacy-workshop-v2</code> abierta en el overview — no hace falta volver a usar <strong>File → Open Folder</strong>.</p>
     <p>
       <a download="simple-pharmacy-workshop-v2.zip" href="./downloads/simple-pharmacy-workshop-v2.zip" class="cds--btn cds--btn--primary">
         <span class="premium-button-icon">
@@ -66,29 +66,22 @@ Ejecute el flujo de trabajo Java Unit Testing de un extremo a otro: Bob instala 
  Paquete de taller (2,1 MB)
       </a>
     </p>
-    <p>Descomprímalo y luego abra la instantánea inicial de Lab 4 en IBM Bob:</p>
-    <div data-language="text" class="code-block premium-code-block code-block--file">
-      <pre>
-        <code>simple-pharmacy-workshop-v2/labs/lab4-unit-test-generation/snapD-unit-test-gen/</code>
-      </pre>
-    </div>
     <p>
 Esta instantánea es la aplicación modernizada (Liberty + Java 21 + API REST) con
       <strong>sin pruebas</strong>
-. Puede usarlo independientemente de los laboratorios 1 a 3.
+. Puedes usarla independientemente de los laboratorios 1 a 3.
     </p>
-    <div class="callout" data-tone="warning">
-      <p class="callout__title">
-Abra la carpeta
-        <code>snapD-*</code>
-, no su carpeta principal
-      </p>
-      <p>
-Utilice la carpeta de instantáneas como raíz de su proyecto, no la carpeta principal
-        <code>lab4-*</code>
-.
-      </p>
-    </div>
+    <section class="lab-workspace-setup" aria-labelledby="lab4-workspace">
+      <div class="lab-workspace-setup__box">
+        <span class="lab-workspace-setup__badge">Sigue en el mismo workspace</span>
+        <h3 class="lab-workspace-setup__title" id="lab4-workspace">Misma carpeta del workshop</h3>
+        <p class="lab-workspace-setup__lead">No cambies de workspace. Si el workflow muestra un campo de ruta de proyecto, apunta al snapshot de este lab. Si arranca el análisis al momento, comprueba que trabaja sobre <code>snapD-unit-test-gen</code>:</p>
+        <div class="lab-workspace-setup__path">
+          <p class="lab-workspace-setup__path-label">Ruta a poner en el workflow</p>
+          <code class="lab-workspace-setup__path-value">…/simple-pharmacy-workshop-v2/labs/lab4-unit-test-generation/snapD-unit-test-gen/</code>
+        </div>
+      </div>
+    </section>
   </section>
   <section class="lab-section" aria-labelledby="use-case-no-tests-a-measured-suite">
     <h2 class="cds--productive-heading-03" id="use-case-no-tests-a-measured-suite">Caso de uso: sin pruebas → un conjunto medido</h2>
@@ -430,15 +423,7 @@ Comience solo con
   <section class="lab-section" aria-labelledby="step-1-open-the-project">
     <h2 class="cds--productive-heading-03" id="step-1-open-the-project">Paso 1: abre el proyecto</h2>
     <ol class="cds--list--ordered">
-      <li class="cds--list__item">Inicie IBM Bob.</li>
-      <li class="cds--list__item">
-        <strong>Archivo &gt; Abrir carpeta</strong>
- → navegue hasta
-        <code>snapD-unit-test-gen/</code>
- →
-        <strong>Abrir</strong>
-.
-      </li>
+      <li class="cds--list__item">Confirma que Bob sigue abierto en <code>simple-pharmacy-workshop-v2</code>. No cambies de workspace.</li>
       <li class="cds--list__item">
 Confirme que el indicador de modo en la parte inferior del chat muestra
         <strong>Agent</strong>
@@ -470,6 +455,7 @@ Seleccione
 .
     </p>
     <h3 id="22-automatic-setup" class="cds--productive-heading-02 lab-step__title">2.2 Configuración automática</h3>
+    <p>Si el workflow muestra un campo de ruta de proyecto, corrígelo para que apunte a <code>…/simple-pharmacy-workshop-v2/labs/lab4-unit-test-generation/snapD-unit-test-gen</code>. Si Bob empieza a explorar el repositorio al momento, comprueba que el <code>pom.xml</code> que lee es el de <code>snapD-unit-test-gen</code> y no el de otro lab.</p>
     <p>Bob inmediatamente explora el repositorio sin avisarte. Lo hará:</p>
     <ul class="cds--list--unordered">
       <li class="cds--list__item">Detectar que no hay ninguna herramienta de cobertura de código configurada</li>

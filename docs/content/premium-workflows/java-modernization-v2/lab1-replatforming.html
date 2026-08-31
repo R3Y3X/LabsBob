@@ -66,26 +66,18 @@ Recorra el flujo de trabajo Java Modernization de Bob de principio a fin:
  Plan de migración ZIP (168 KB)
       </a>
     </p>
-    <p>Descomprima el paquete del taller, luego abra la instantánea inicial del Laboratorio 1 en IBM Bob:</p>
-    <div data-language="text" class="code-block premium-code-block code-block--file">
-      <pre>
-        <code>simple-pharmacy-workshop-v2/labs/lab1-java-liberty-replatforming/snapA-java-liberty-replatforming/</code>
-      </pre>
-    </div>
-    <div class="callout" data-tone="warning">
-      <p class="callout__title">
-Abra la carpeta
-        <code>snapA-*</code>
-, no su carpeta principal
-      </p>
-      <p>
-El flujo de trabajo Java Modernization solo aparece cuando se abre Bob
-        <strong> en la carpeta de instantáneas</strong>
-. Si abre la carpeta principal
-        <code>lab1-*</code>
-, el flujo de trabajo no aparecerá en la lista.
-      </p>
-    </div>
+    <p>Si aún no lo has hecho, descomprime el paquete. Sigue en la misma carpeta <code>simple-pharmacy-workshop-v2</code> abierta en el overview — no hace falta volver a usar <strong>File → Open Folder</strong>.</p>
+    <section class="lab-workspace-setup" aria-labelledby="lab1-workspace">
+      <div class="lab-workspace-setup__box">
+        <span class="lab-workspace-setup__badge">Sigue en el mismo workspace</span>
+        <h3 class="lab-workspace-setup__title" id="lab1-workspace">Misma carpeta del workshop</h3>
+        <p class="lab-workspace-setup__lead">El workspace de Bob sigue siendo <code>simple-pharmacy-workshop-v2</code>. En el campo <strong>Project path</strong> del workflow, apunta al snapshot de este lab:</p>
+        <div class="lab-workspace-setup__path">
+          <p class="lab-workspace-setup__path-label">Ruta a poner en el workflow</p>
+          <code class="lab-workspace-setup__path-value">…/simple-pharmacy-workshop-v2/labs/lab1-java-liberty-replatforming/snapA-java-liberty-replatforming/</code>
+        </div>
+      </div>
+    </section>
   </section>
   <section class="lab-section" aria-labelledby="use-case-migrate-from-traditional-websphere-to-liberty">
     <h2 class="cds--productive-heading-03" id="use-case-migrate-from-traditional-websphere-to-liberty">Caso de uso: migrar de Traditional WebSphere a Liberty</h2>
@@ -496,20 +488,14 @@ Comience solo con
   <section class="lab-section" aria-labelledby="step-1-open-the-project">
     <h2 class="cds--productive-heading-03" id="step-1-open-the-project">Paso 1: abre el proyecto</h2>
     <ol class="cds--list--ordered">
-      <li class="cds--list__item">Inicie su IDE con IBM Bob instalado.</li>
-      <li class="cds--list__item">
-Abra la carpeta
-        <code>snapA-java-liberty-replatforming</code>
-        <strong> como raíz del proyecto </strong>
-.
-      </li>
+      <li class="cds--list__item">Confirma que Bob sigue abierto en <code>simple-pharmacy-workshop-v2</code> (la carpeta general del workshop). No cambies de workspace.</li>
       <li class="cds--list__item">Si la ventana de chat de Bob aún no está abierta, haga clic en el ícono de Bob en la parte superior de su IDE.</li>
     </ol>
     <figure class="lab-figure premium-workflow__figure">
       <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/snapa-open-in-bob.png" target="_blank" rel="noopener">
-        <img src="./assets/images/labs/java-modernization-v2/premium/snapa-open-in-bob.png" class="lab-figure__img" alt="Bob IDE con la carpeta snapA abierta en el explorador de archivos" />
+        <img src="./assets/images/labs/java-modernization-v2/premium/snapa-open-in-bob.png" class="lab-figure__img" alt="Bob IDE con el paquete del workshop abierto; snapA aparece como subcarpeta bajo labs/" />
       </a>
-      <figcaption class="lab-figure__caption">Referencia visual — Bob IDE con la carpeta snapA abierta en el explorador de archivos. Verifica este estado antes de continuar.</figcaption>
+      <figcaption class="lab-figure__caption">Referencia visual — Bob con el workshop completo abierto. <code>snapA</code> es una subcarpeta bajo <code>labs/</code>, no la raíz del workspace. Verifica este estado antes de continuar.</figcaption>
     </figure>
     <h3 id="confirm-agent-mode" class="cds--productive-heading-02 lab-step__title">Confirmar Agent mode</h3>
     <p>
@@ -540,9 +526,7 @@ Haga clic en el botón de reproducción (
       </li>
       <li class="cds--list__item">
         <strong>¿No encuentras el flujo de trabajo?</strong>
- Verifica que abriste la carpeta
-        <code>snapA-*</code>
- como raíz y verifica la membresía/plan de tu equipo en la configuración de Bob.
+ Verifica que tu plan incluye el paquete <strong>Premium</strong> / Java Modernization. Los workflows no dependen de qué subcarpeta esté abierta.
       </li>
     </ul>
     <figure class="lab-figure premium-workflow__figure">
@@ -566,11 +550,11 @@ Seleccione
     </p>
     <h3 id="22-analyze-analyze-java-project" class="cds--productive-heading-02 lab-step__title">2.2 Analizar - Analizar proyecto Java</h3>
     <p>
-La
+Como la raíz del workspace es el workshop completo, el campo
       <strong>Ruta del proyecto</strong>
- debería completarse automáticamente en la carpeta
-      <code>snapA</code>
-. Confirma que termina con:
+ /
+      <strong>Project path</strong>
+ se rellena con esa carpeta general. <strong>Corrígelo</strong> para que apunte al snapshot de este lab. Debe terminar con:
     </p>
     <div data-block-label="Campo del workflow" data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
@@ -590,9 +574,9 @@ Esa cola es solo un
     </p>
     <figure class="lab-figure premium-workflow__figure">
       <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/analyze-project-panel.png" target="_blank" rel="noopener">
-        <img src="./assets/images/labs/java-modernization-v2/premium/analyze-project-panel.png" class="lab-figure__img" alt="Panel Analizar proyecto con la ruta del proyecto completada automáticamente" />
+        <img src="./assets/images/labs/java-modernization-v2/premium/analyze-project-panel.png" class="lab-figure__img" alt="Panel Analizar proyecto con el campo Project path" />
       </a>
-      <figcaption class="lab-figure__caption">Referencia visual — Panel Analizar proyecto con la ruta del proyecto completada automáticamente. Verifica este estado antes de continuar.</figcaption>
+      <figcaption class="lab-figure__caption">Referencia visual — Panel Analizar proyecto. Corrige <strong>Project path</strong> para que termine en <code>snapA-java-liberty-replatforming</code> antes de continuar.</figcaption>
     </figure>
     <h3 id="23-analyze-select-modernization-type" class="cds--productive-heading-02 lab-step__title">2.3 Analizar: seleccionar el tipo de modernización</h3>
     <p>
@@ -1034,13 +1018,11 @@ Bob no puede leer archivos de proyecto (
       </summary>
       <ol class="cds--list--ordered">
         <li class="cds--list__item">
-Verifique que abrió la subcarpeta
+Verifica que el campo <strong>Project path</strong> del workflow apunta a
           <code>snapA-java-liberty-replatforming</code>
- como raíz del proyecto:
-          <strong>no</strong>
- la carpeta principal
+ (no a la carpeta general del workshop ni a
           <code>lab1-*</code>
-.
+).
         </li>
         <li class="cds--list__item">
 Verifique los permisos del archivo:

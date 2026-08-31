@@ -68,7 +68,7 @@ Migre la interfaz
       </a>
     </p>
     <p>Descomprímalo y luego abra la instantánea inicial del Laboratorio 3 en IBM Bob:</p>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>simple-pharmacy-workshop-v2/labs/lab3-ui-modernization/snapC-ui-mod/</code>
       </pre>
@@ -136,12 +136,12 @@ El backend Liberty debe compilarse y ejecutarse para que la interfaz de usuario 
       <strong>Java 21</strong>
  (del Laboratorio 2).
     </p>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>java -version</code>
       </pre>
     </div>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>mvn --version</code>
       </pre>
@@ -183,18 +183,18 @@ Utilice
             <strong>nvm</strong>
  (un administrador de versiones de Node). Instalar nvm:
           </p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash</code>
             </pre>
           </div>
           <p>Instale el Nodo 22 y actívelo:</p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>nvm install 22</code>
             </pre>
           </div>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>nvm use 22</code>
             </pre>
@@ -213,18 +213,18 @@ Utilice
             <strong>nvm</strong>
  (un administrador de versiones de Node). Instalar nvm:
           </p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash</code>
             </pre>
           </div>
           <p>Instale el Nodo 22 y actívelo:</p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>nvm install 22</code>
             </pre>
           </div>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>nvm use 22</code>
             </pre>
@@ -245,7 +245,7 @@ Instale
             <strong>PowerShell</strong>
  con Winget:
           </p>
-          <div data-language="powershell" class="code-block premium-code-block">
+          <div data-language="powershell" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>winget install OpenJS.NodeJS.LTS</code>
             </pre>
@@ -263,12 +263,12 @@ Luego cierre y vuelva a abrir PowerShell. (¿Prefieres un administrador de versi
       </div>
     </div>
     <p>Verificar: lo mismo en todos los sistemas operativos:</p>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>node --version</code>
       </pre>
     </div>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>npm --version</code>
       </pre>
@@ -466,7 +466,7 @@ Bob ejecuta
     </p>
     <h3 id="31-test-the-new-jakarta-ee-backend" class="cds--productive-heading-02 lab-step__title">3.1 Pruebe el nuevo backend Jakarta EE</h3>
     <p>Bob te pide que inicies Liberty. Ejecútalo en tu terminal:</p>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>mvn liberty:run</code>
       </pre>
@@ -478,7 +478,7 @@ Bob ejecuta
       <figcaption class="lab-figure__caption">Referencia visual — Bob te pide que ejecutes el backend. Verifica este estado antes de continuar.</figcaption>
     </figure>
     <p>Pegue cualquier error directamente en el chat de Bob para depurarlo. Por ejemplo, es normal ver esto en mitad de la migración mientras el filtro Struts y el nuevo filtro CORS están en proceso de cambio:</p>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>El servidor del servidor se inició en 6,397 segundos.
 [INFO] [ERROR] SRVE0321E: El filtro [struts2] no se cargó durante el inicio.
@@ -494,7 +494,7 @@ Una vez que se resuelvan los errores, abra la API directamente; debería recuper
         <strong>JSON</strong>
 :
       </p>
-      <div data-language="text" class="code-block premium-code-block">
+      <div data-language="text" class="code-block premium-code-block code-block--file">
         <pre>
           <code>http://localhost:9081/simple-pharmacy/api/dashboard</code>
         </pre>
@@ -524,7 +524,7 @@ Los pines
         <strong>diferente</strong>
 ; siempre tome la raíz real del registro de inicio:
       </p>
-      <div data-language="bash" class="code-block premium-code-block">
+      <div data-language="bash" class="code-block premium-code-block code-block--terminal">
         <pre>
           <code>grep CWWKT0016I target/liberty/wlp/usr/servers/defaultServer/logs/messages.log</code>
         </pre>
@@ -560,7 +560,7 @@ Si Bob habilitó la función
         <strong>raíz del servidor</strong>
 . Nota: no hay ruta de contexto de la aplicación:
       </p>
-      <div data-language="text" class="code-block premium-code-block">
+      <div data-language="text" class="code-block premium-code-block code-block--file">
         <pre>
           <code>http://localhost:9081/openapi/ui/</code>
         </pre>
@@ -588,13 +588,13 @@ Es fantástico para explorar y probar todos los puntos finales. Pero es la API
       <figcaption class="lab-figure__caption">Referencia visual — Subtarea de migración frontend con la lista de tareas pendientes. Verifica este estado antes de continuar.</figcaption>
     </figure>
     <p>Cuando Bob te lo solicite, inicia el servidor de desarrollo:</p>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>npm run dev</code>
       </pre>
     </div>
     <p>Luego abre:</p>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>http://localhost:3000/</code>
       </pre>
@@ -628,7 +628,7 @@ No comience a depurar la carga de datos aquí. (Lo único que vale la pena confi
       </p>
     </div>
     <p>Informe cualquier error a Bob. Si parece correcto, dígaselo a Bob:</p>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>El andamio se ve bien</code>
       </pre>
@@ -637,7 +637,7 @@ No comience a depurar la carga de datos aquí. (Lo único que vale la pena confi
   <section class="lab-section" aria-labelledby="step-5-frontend-components-and-pages">
     <h2 class="cds--productive-heading-03" id="step-5-frontend-components-and-pages">Paso 5: componentes y páginas del frontend</h2>
     <p>Bob ahora construye los componentes, luego las páginas, ejecutando comandos de compilación periódicamente para verificar. Cuando termine, le pedirá que ejecute la aplicación nuevamente:</p>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>npm run dev</code>
       </pre>
@@ -746,7 +746,7 @@ Pila ORB/EJB. El ORB espera 10 segundos por un registro de usuarios, no encuentr
 ,
 reemplace la función de la plataforma con el perfil web:
       </p>
-      <div data-language="xml" class="code-block premium-code-block">
+      <div data-language="xml" class="code-block premium-code-block code-block--file">
         <pre>
           <code>&lt;feature&gt;webProfile-10.0&lt;/feature&gt;</code>
         </pre>
@@ -819,7 +819,7 @@ Cada llamada
         <code>/*</code>
  intercepta las solicitudes REST antes de que JAX-RS las vea. Pregúntale a Bob:
       </p>
-      <div data-language="text" class="code-block premium-code-block">
+      <div data-language="text" class="code-block premium-code-block code-block--file">
         <pre>
           <code>Struts está interceptando /api antes de que JAX-RS lo vea. Agrega el struts.action.excludePattern
 constante para /api y confirme que existe la clase activadora @ApplicationPath("/api").</code>
@@ -913,7 +913,7 @@ casi siempre es una falta de coincidencia de ruta, no un error de código. Un
         <code>curl</code>
  a través del servidor de desarrollo le dice cuál:
       </p>
-      <div data-language="bash" class="code-block premium-code-block">
+      <div data-language="bash" class="code-block premium-code-block code-block--terminal">
         <pre>
           <code>curl http://localhost:3000/api/dashboard</code>
         </pre>
@@ -976,7 +976,7 @@ Si las llamadas devuelven
  oscilan entre los dos
 mitades. Pregúntale a Bob:
       </p>
-      <div data-language="text" class="code-block premium-code-block">
+      <div data-language="text" class="code-block premium-code-block code-block--prompt">
         <pre>
           <code>Las páginas se muestran pero no muestran datos. Compare los nombres de los campos JSON que devuelven los recursos REST
 contra lo que esperan los componentes React y conciliarlos.</code>
@@ -989,7 +989,7 @@ contra lo que esperan los componentes React y conciliarlos.</code>
         <code>sdk use</code>
  tiene un alcance de shell y no se aplica a la terminal que Bob abre por sí solo. Ejecútelo en la terminal de Bob específicamente:
       </p>
-      <div data-language="bash" class="code-block premium-code-block">
+      <div data-language="bash" class="code-block premium-code-block code-block--terminal">
         <pre>
           <code>sdk use java 21.0.11-zulu</code>
         </pre>
@@ -1127,19 +1127,19 @@ contra lo que esperan los componentes React y conciliarlos.</code>
       </p>
     </blockquote>
     <h3 id="1-optimize-the-generated-ui" class="cds--productive-heading-02 lab-step__title">1. Optimice la interfaz de usuario generada</h3>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>Optimice la interfaz de usuario generada para el estado objetivo seleccionado</code>
       </pre>
     </div>
     <h3 id="2-review-code-quality" class="cds--productive-heading-02 lab-step__title">2. Revisar la calidad del código</h3>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>Revise el código migrado para comprobar la arquitectura, la mantenibilidad, el manejo de errores, la organización del código y la integridad de la documentación.</code>
       </pre>
     </div>
     <h3 id="3-create-a-modernization-summary" class="cds--productive-heading-02 lab-step__title">3. Cree un resumen de modernización.</h3>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>Cree un documento MIGRATION_SUMMARY.md que incluya lo que se modernizó, el estado objetivo seleccionado, los cambios arquitectónicos clave, los problemas conocidos y los próximos pasos.</code>
       </pre>

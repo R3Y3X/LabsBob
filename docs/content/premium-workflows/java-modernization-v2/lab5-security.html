@@ -68,7 +68,7 @@ El análisis en sí tarda unos segundos: este flujo de trabajo es una búsqueda 
       </a>
     </p>
     <p>Descomprímalo y luego abra la instantánea inicial de Lab 5 en IBM Bob:</p>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>simple-pharmacy-workshop-v2/labs/lab5-security-vulnerability-remediation/snapE-security-vulnerabilities/</code>
       </pre>
@@ -271,29 +271,29 @@ Usando
             <strong>SDKMAN!</strong>
 . Si aún no lo tienes:
           </p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>curl -s "https://get.sdkman.io" | bash</code>
             </pre>
           </div>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>source "$HOME/.sdkman/bin/sdkman-init.sh"</code>
             </pre>
           </div>
           <p>Instale Java 21 y actívelo:</p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>sdk install java 21.0.11-zulu</code>
             </pre>
           </div>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>sdk use java 21.0.11-zulu</code>
             </pre>
           </div>
           <p>Instalar Maven:</p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>sdk install maven</code>
             </pre>
@@ -305,29 +305,29 @@ Usando
             <strong>SDKMAN!</strong>
 . Si aún no lo tienes:
           </p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>curl -s "https://get.sdkman.io" | bash</code>
             </pre>
           </div>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>source "$HOME/.sdkman/bin/sdkman-init.sh"</code>
             </pre>
           </div>
           <p>Instale Java 21 y actívelo:</p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>sdk install java 21.0.11-zulu</code>
             </pre>
           </div>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>sdk use java 21.0.11-zulu</code>
             </pre>
           </div>
           <p>Instalar Maven:</p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>sdk install maven</code>
             </pre>
@@ -341,12 +341,12 @@ Usando
             <strong>PowerShell</strong>
 :
           </p>
-          <div data-language="powershell" class="code-block premium-code-block">
+          <div data-language="powershell" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>winget install EclipseAdoptium.Temurin.21.JDK</code>
             </pre>
           </div>
-          <div data-language="powershell" class="code-block premium-code-block">
+          <div data-language="powershell" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>winget install Apache.Maven</code>
             </pre>
@@ -372,12 +372,12 @@ Cierre y vuelva a abrir PowerShell para encontrar
       </div>
     </div>
     <p>Verificar: lo mismo en todos los sistemas operativos:</p>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>java -version</code>
       </pre>
     </div>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>mvn --version</code>
       </pre>
@@ -520,7 +520,7 @@ Bob debe informar como mínimo
     </ul>
     <h3 id="33-confirm-you-understand-each-cve-before-remediating" class="cds--productive-heading-02 lab-step__title">3.3 Confirme que comprende cada CVE antes de corregirlo</h3>
     <p>Si tienes algo que no te resulte familiar, pregúntale directamente a Bob:</p>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--prompt">
       <pre>
         <code>Explique CVE-2022-42889 en términos sencillos y cómo podría afectar esta aplicación.</code>
       </pre>
@@ -633,7 +633,7 @@ Si no está seguro acerca de un cambio, elija la opción para ver primero las ed
     <h2 class="cds--productive-heading-03" id="step-5-verify">Paso 5: verificar</h2>
     <h3 id="51-compile-check" class="cds--productive-heading-02 lab-step__title">5.1 Compilar verificación</h3>
     <p>En la terminal de Bob:</p>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>mvn clean compile</code>
       </pre>
@@ -667,13 +667,13 @@ Haga clic en
 , o una lista sustancialmente reducida.
     </p>
     <h3 id="53-optional-run-the-liberty-server" class="cds--productive-heading-02 lab-step__title">5.3 Opcional: ejecutar el servidor Liberty</h3>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>mvn liberty:run</code>
       </pre>
     </div>
     <p>Confirme que la API funcione correctamente y que las actualizaciones no introduzcan errores de tiempo de ejecución:</p>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>http://localhost:9081/simple-pharmacy/api/dashboard</code>
       </pre>
@@ -759,7 +759,7 @@ El CVE vive dentro de una dependencia transitiva que Bob no puede simplemente ca
         <code>sdk use</code>
  tiene alcance de shell y no se aplica a través de pestañas de terminal ni al terminal que Bob abre por sí solo. Ejecútelo en la terminal de Bob específicamente:
       </p>
-      <div data-language="bash" class="code-block premium-code-block">
+      <div data-language="bash" class="code-block premium-code-block code-block--terminal">
         <pre>
           <code>sdk use java 21.0.11-zulu</code>
         </pre>

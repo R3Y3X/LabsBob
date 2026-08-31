@@ -64,7 +64,7 @@ Configure y ejecute el subtipo
       </a>
     </p>
     <p>Descomprímalo y luego abra la instantánea inicial del Laboratorio 2 en IBM Bob:</p>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>simple-pharmacy-workshop-v2/labs/lab2-java-upgrade/snapB-java-upgrade/</code>
       </pre>
@@ -187,29 +187,29 @@ Usando
             <strong>SDKMAN!</strong>
 . Si aún no lo tienes:
           </p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>curl -s "https://get.sdkman.io" | bash</code>
             </pre>
           </div>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>source "$HOME/.sdkman/bin/sdkman-init.sh"</code>
             </pre>
           </div>
           <p>Active Java 8 para este shell:</p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>sdk install java 8.0.492-zulu</code>
             </pre>
           </div>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>sdk use java 8.0.492-zulu</code>
             </pre>
           </div>
           <p>Instale Maven (omita si ya lo hizo en el Laboratorio 1):</p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>sdk install maven</code>
             </pre>
@@ -221,29 +221,29 @@ Usando
             <strong>SDKMAN!</strong>
 . Si aún no lo tienes:
           </p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>curl -s "https://get.sdkman.io" | bash</code>
             </pre>
           </div>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>source "$HOME/.sdkman/bin/sdkman-init.sh"</code>
             </pre>
           </div>
           <p>Active Java 8 para este shell:</p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>sdk install java 8.0.492-zulu</code>
             </pre>
           </div>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>sdk use java 8.0.492-zulu</code>
             </pre>
           </div>
           <p>Instale Maven (omita si ya lo hizo en el Laboratorio 1):</p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>sdk install maven</code>
             </pre>
@@ -257,12 +257,12 @@ Usando
             <strong>PowerShell</strong>
 :
           </p>
-          <div data-language="powershell" class="code-block premium-code-block">
+          <div data-language="powershell" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>winget install EclipseAdoptium.Temurin.8.JDK</code>
             </pre>
           </div>
-          <div data-language="powershell" class="code-block premium-code-block">
+          <div data-language="powershell" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>winget install Apache.Maven</code>
             </pre>
@@ -300,7 +300,7 @@ Sólo necesita Java 8 activo para la compilación inicial. Bob cambia el valor p
       </p>
     </div>
     <p>Verificar: lo mismo en todos los sistemas operativos:</p>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>java -version</code>
       </pre>
@@ -310,7 +310,7 @@ Deberías ver una versión que comienza con
       <code>1.8.</code>
 .
     </p>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>mvn --version</code>
       </pre>
@@ -891,12 +891,12 @@ Los cambios automatizados en el espacio de nombres de Bob son el momento clave d
     </ul>
     <h3 id="compile-check" class="cds--productive-heading-02 lab-step__title">Compilar cheque</h3>
     <p>En la terminal de Bob, confirme que Java 21 esté activo:</p>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>java -version</code>
       </pre>
     </div>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>mvn clean compile</code>
       </pre>
@@ -958,20 +958,20 @@ Si un servidor del Laboratorio 1 (o un intento anterior) todavía mantiene el pu
         <strong> no lo vinculará </strong>
  y el anterior sigue respondiendo; cada corrección que realice parecerá no hacer nada. Borre los puertos antes de comenzar:
       </p>
-      <div data-language="bash" class="code-block premium-code-block">
+      <div data-language="bash" class="code-block premium-code-block code-block--terminal">
         <pre>
           <code>lsof -ti:9080,9081,9443 | xargs kill -9</code>
         </pre>
       </div>
     </div>
     <p>Inicio Liberty:</p>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>mvn liberty:run</code>
       </pre>
     </div>
     <p>Mire el registro de inicio para encontrar la línea que le indica la URL real:</p>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>CWWKT0016I: Aplicación web disponible (default_host): http://localhost:9081/simple-pharmacy/
 CWWKZ0001I: La aplicación simple-pharmacy se inició en 2.410 segundos.</code>
@@ -982,7 +982,7 @@ Abra esa URL con
       <code>/dashboard</code>
  al final:
     </p>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>http://localhost:9081/simple-pharmacy/dashboard</code>
       </pre>
@@ -1011,7 +1011,7 @@ Bob generalmente reescribe
     <div class="callout" data-tone="success">
       <p class="callout__title">Checkpoint: la aplicación realmente sirve</p>
       <p>Las cuatro páginas deberían devolver HTTP 200 y mostrar datos reales:</p>
-      <div data-language="bash" class="code-block premium-code-block">
+      <div data-language="bash" class="code-block premium-code-block code-block--terminal">
         <pre>
           <code>curl -o /dev/null -w '%{http_code}\n' http://localhost:9081/simple-pharmacy/dashboard</code>
         </pre>
@@ -1132,7 +1132,7 @@ El registro muestra que el servidor apareció –
         <code>CWWKF0011I: ... started</code>
  – pero un par de líneas arriba dice:
       </p>
-      <div data-language="text" class="code-block premium-code-block">
+      <div data-language="text" class="code-block premium-code-block code-block--file">
         <pre>
           <code>CWWKF0001E: No se pudo encontrar una definición de característica para servlet-6.0
 CWWKF0011I: El servidor defaultServer instaló las siguientes funciones: [].</code>
@@ -1165,7 +1165,7 @@ Esto ahora se evita en el
         <code>liberty-maven-plugin</code>
 :
       </p>
-      <div data-language="xml" class="code-block premium-code-block">
+      <div data-language="xml" class="code-block premium-code-block code-block--file">
         <pre>
           <code>&lt;runtimeArtifact&gt;
     &lt;groupId&gt;io.openliberty&lt;/groupId&gt;
@@ -1176,7 +1176,7 @@ Esto ahora se evita en el
         </pre>
       </div>
       <p>Si aún lo presiona (por ejemplo, Bob reescribió el bloque del complemento durante la actualización), restaure ese bloque o instale las funciones en el servidor actual una vez:</p>
-      <div data-language="bash" class="code-block premium-code-block">
+      <div data-language="bash" class="code-block premium-code-block code-block--terminal">
         <pre>
           <code>mvn liberty:install-feature</code>
         </pre>
@@ -1201,7 +1201,7 @@ Luego
         <code>/simple-pharmacy.war/dashboard</code>
 ) ya no funciona. Tome la URL del registro de inicio:
       </p>
-      <div data-language="bash" class="code-block premium-code-block">
+      <div data-language="bash" class="code-block premium-code-block code-block--terminal">
         <pre>
           <code>grep CWWKT0016I target/liberty/wlp/usr/servers/defaultServer/logs/messages.log</code>
         </pre>
@@ -1210,7 +1210,7 @@ Luego
         <strong>2. Un servidor obsoleto está respondiendo.</strong>
  Busque esto en el registro:
       </p>
-      <div data-language="text" class="code-block premium-code-block">
+      <div data-language="text" class="code-block premium-code-block code-block--file">
         <pre>
           <code>CWWKO0221E: La inicialización defaultHttpEndpoint del canal TCP no ha sido satisfactoria.
 La vinculación del socket no se realizó correctamente para el host * y el puerto 9081. Es posible que el puerto ya esté en uso.</code>
@@ -1221,7 +1221,7 @@ Eso significa que su nuevo servidor
         <strong>nunca obtuvo el puerto</strong>
 ; un Liberty más antiguo todavía sirve la versión antigua y defectuosa. Mátalo y reinicia:
       </p>
-      <div data-language="bash" class="code-block premium-code-block">
+      <div data-language="bash" class="code-block premium-code-block code-block--terminal">
         <pre>
           <code>lsof -ti:9081,9443 | xargs kill -9</code>
         </pre>
@@ -1266,7 +1266,7 @@ Si prefieres arreglarlo a mano, reemplaza todo el bloque
         <code>&lt;featureManager&gt;</code>
  con:
       </p>
-      <div data-language="xml" class="code-block premium-code-block">
+      <div data-language="xml" class="code-block premium-code-block code-block--file">
         <pre>
           <code>&lt;featureManager&gt;
     &lt;feature&gt;servlet-6.0&lt;/feature&gt;
@@ -1322,7 +1322,7 @@ Bob señaló
         <code>src/main/resources/struts.xml</code>
  y configure DOCTYPE en una versión que realmente exista:
       </p>
-      <div data-language="xml" class="code-block premium-code-block">
+      <div data-language="xml" class="code-block premium-code-block code-block--file">
         <pre>
           <code>&lt;!DOCTYPE struts PUBLIC
     "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
@@ -1389,7 +1389,7 @@ Para silenciarlo, elimine la dependencia
     <details class="premium-details">
       <summary>La terminal de Bob todavía muestra Java 8 después de que el flujo de trabajo instaló Java 21</summary>
       <p>Java 21 instalado en el flujo de trabajo se convierte en el SDKMAN predeterminado, pero los shells existentes mantienen la versión con la que comenzaron. Abra una terminal nueva o actívela en la actual:</p>
-      <div data-language="bash" class="code-block premium-code-block">
+      <div data-language="bash" class="code-block premium-code-block code-block--terminal">
         <pre>
           <code>sdk use java 21.0.11-semeru</code>
         </pre>
@@ -1436,7 +1436,7 @@ Intente hacer referencia a archivos con la sintaxis
  después de la actualización Struts
       </summary>
       <p>Bob normalmente reescribe cada importación, pero puede omitir alguna. Preguntar:</p>
-      <div data-language="text" class="code-block premium-code-block">
+      <div data-language="text" class="code-block premium-code-block code-block--prompt">
         <pre>
           <code>Verifique si hay importaciones com.opensymphony.xwork2 restantes y actualícelas a org.apache.struts2.</code>
         </pre>
@@ -1455,7 +1455,7 @@ En Jakarta EE 10,
         <code>jakarta.*</code>
 . Bob los reescribe durante la actualización; si quedan referencias, pregunte:
       </p>
-      <div data-language="text" class="code-block premium-code-block">
+      <div data-language="text" class="code-block premium-code-block code-block--prompt">
         <pre>
           <code>Audite todas las importaciones en busca de referencias javax.* restantes que deberían ser jakarta.*.</code>
         </pre>

@@ -98,7 +98,7 @@
     </h2>
       <p class="lab-workspace-setup__lead">
         Descarga el bundle del workshop (solo necesitas <code>prescription-api-spec.yaml</code> para este lab).
-        Al abrir <code>snapTDD</code>, Bob inicia un chat nuevo.
+        Al abrir <code>snapTDD</code>, Bob inicia un chat nuevo — pega el prompt del Ejercicio 1.
       </p>
       <div class="lab-workspace-setup__path">
         <p class="lab-workspace-setup__path-label">File → Open Folder</p>
@@ -123,7 +123,7 @@
       puedes compilar y ejecutar tests desde el primer turno (el verdadero inicio de Red-Green-Refactor).
       Solo generas los tests y la implementación:
     </p>
-    <div class="code-block">
+    <div class="code-block code-block--file">
       <button type="button" class="copy-button">Copiar</button>
       <pre><code>alt-lab4-test-driven-development/
 └── snapTDD/
@@ -134,7 +134,7 @@
         └── test/java/com/pharmacy/api/                      ← vacío, listo para tus tests</code></pre>
     </div>
     <p class="cds--body-01" style="max-width:72ch;margin-top:var(--cds-spacing-05,1rem)">Rellenarás con Bob:</p>
-    <div class="code-block">
+    <div class="code-block code-block--file">
       <button type="button" class="copy-button">Copiar</button>
       <pre><code>        ├── main/java/com/pharmacy/api/
         │       ├── PrescriptionResource.java       (generas, Ejercicio 2)
@@ -210,7 +210,7 @@
         <p class="callout__title">Tu acción — pega esto en el chat (Agent Mode)</p>
         <p>Confirma que estás en Agent Mode. Copia el bloque y pégalo como un solo mensaje.</p>
       </div>
-      <div class="code-block">
+      <div class="code-block code-block--prompt">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>Genera un conjunto completo de unit tests JUnit 5 + Mockito (Java, NO JavaScript/Jest) siguiendo
 la metodología TDD para 'prescription-api-spec.yaml'. Coloca el archivo de test en
@@ -251,7 +251,7 @@ tiene PENDING y VALIDATED — no introduzcas FULFILLED ni EXPIRED.</code></pre>
     <div class="callout" data-tone="warning" style="margin-top:var(--cds-spacing-05,1rem)">
       <p class="callout__title">Checkpoint RED — ejecuta esto en la terminal</p>
       <p>No es un prompt para Bob. Este es el Red de Red-Green-Refactor. Con los tests escritos pero sin implementación, ejecuta en la <strong>terminal de Bob</strong>:</p>
-      <div class="code-block">
+      <div class="code-block code-block--terminal">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>mvn test</code></pre>
       </div>
@@ -281,7 +281,7 @@ tiene PENDING y VALIDATED — no introduzcas FULFILLED ni EXPIRED.</code></pre>
         <p class="callout__title">Tu acción — pega esto ahora</p>
         <p>Un mensaje nuevo en el mismo chat.</p>
       </div>
-      <div class="code-block">
+      <div class="code-block code-block--prompt">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>Crea PrescriptionResource.java desde 'PrescriptionResourceTest.java' siguiendo la estructura de directorios estándar de Maven. Colócalo en snapTDD/src/main/java/com/pharmacy/api/. También crea las clases de modelo requeridas (Prescription.java, Medicine.java) y las clases de repositorio (PrescriptionRepository.java, MedicineRepository.java).
 
@@ -339,7 +339,7 @@ Usa el namespace jakarta.ws.rs (NO javax). @Path("/prescriptions"), con @GET get
         <li class="cds--list__item">Renómbralo a <code>traditional_PrescriptionResource.java</code></li>
       </ol>
       <p class="cds--body-01" style="margin-top:var(--cds-spacing-05,1rem)"><strong>Prompt para Bob:</strong></p>
-      <div class="code-block" style="margin-top:var(--cds-spacing-04,0.75rem)">
+      <div class="code-block code-block--prompt" style="margin-top:var(--cds-spacing-04,0.75rem)">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>Compara el original traditional_PrescriptionResource.java con la versión TDD en snapTDD/src/main/java/com/pharmacy/api/PrescriptionResource.java y resume las diferencias</code></pre>
       </div>
@@ -392,12 +392,12 @@ Usa el namespace jakarta.ws.rs (NO javax). @Path("/prescriptions"), con @GET get
         <p class="callout__title">Tu acción — ejecuta esto en la terminal</p>
         <p>No es un prompt para Bob. Corre Maven y confirma GREEN.</p>
       </div>
-      <div class="code-block">
+      <div class="code-block code-block--terminal">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>mvn clean test</code></pre>
       </div>
       <p class="cds--body-01" style="margin-top:var(--cds-spacing-04,0.75rem)">Para ejecutar una suite específica:</p>
-      <div class="code-block">
+      <div class="code-block code-block--terminal">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>mvn test -Dtest=PrescriptionResourceTest</code></pre>
       </div>
@@ -411,7 +411,7 @@ Usa el namespace jakarta.ws.rs (NO javax). @Path("/prescriptions"), con @GET get
 
     <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
       <p class="callout__title">Resultado esperado</p>
-      <div class="code-block">
+      <div class="code-block code-block--file">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>[INFO]  T E S T S
 [INFO] Running com.pharmacy.api.PrescriptionResourceTest
@@ -440,7 +440,7 @@ Usa el namespace jakarta.ws.rs (NO javax). @Path("/prescriptions"), con @GET get
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 5a — Identificar oportunidades de mejora</h3>
       <p class="cds--body-01"><strong>Prompt para Bob:</strong></p>
-      <div class="code-block">
+      <div class="code-block code-block--prompt">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>Revisa la implementación de PrescriptionResource.java y sugiere mejoras de refactorización manteniendo todos los tests en verde</code></pre>
       </div>
@@ -461,7 +461,7 @@ Usa el namespace jakarta.ws.rs (NO javax). @Path("/prescriptions"), con @GET get
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 5b — Aplicar el refactor</h3>
       <p class="cds--body-01"><strong>Prompt para Bob:</strong></p>
-      <div class="code-block">
+      <div class="code-block code-block--prompt">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>Aplica las mejoras de refactorización que sugeriste en PrescriptionResource.java. Empieza extrayendo constantes para valores mágicos y usando createErrorResponse() de forma consistente.</code></pre>
       </div>
@@ -470,7 +470,7 @@ Usa el namespace jakarta.ws.rs (NO javax). @Path("/prescriptions"), con @GET get
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 5c — Añadir logging</h3>
       <p class="cds--body-01"><strong>Prompt para Bob:</strong></p>
-      <div class="code-block">
+      <div class="code-block code-block--prompt">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>Añade declaraciones de logging para operaciones clave como creación y validación de prescripciones</code></pre>
       </div>
@@ -482,7 +482,7 @@ Usa el namespace jakarta.ws.rs (NO javax). @Path("/prescriptions"), con @GET get
         <p class="callout__title">Tu acción — ejecuta esto en la terminal</p>
         <p>No es un prompt para Bob.</p>
       </div>
-      <div class="code-block">
+      <div class="code-block code-block--terminal">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>mvn test</code></pre>
       </div>
@@ -490,7 +490,7 @@ Usa el namespace jakarta.ws.rs (NO javax). @Path("/prescriptions"), con @GET get
 
     <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">Ejemplo de refactor</h3>
     <p class="cds--body-01"><strong>Antes:</strong></p>
-    <div class="code-block">
+    <div class="code-block code-block--file">
       <button type="button" class="copy-button">Copiar</button>
       <pre><code>Date prescriptionDate = new Date();
 Calendar cal = Calendar.getInstance();
@@ -499,7 +499,7 @@ cal.add(Calendar.DAY_OF_MONTH, 30);
 Date expiryDate = cal.getTime();</code></pre>
     </div>
     <p class="cds--body-01" style="margin-top:var(--cds-spacing-04,0.75rem)"><strong>Después:</strong></p>
-    <div class="code-block">
+    <div class="code-block code-block--file">
       <button type="button" class="copy-button">Copiar</button>
       <pre><code>Date prescriptionDate = new Date();
 Date expiryDate = calculateExpiryDate(prescriptionDate);
@@ -529,7 +529,7 @@ private Date calculateExpiryDate(Date startDate) {
     <ul class="cds--list--unordered">
       <li class="cds--list__item">Verifica que la especificación OpenAPI esté completa</li>
       <li class="cds--list__item">Pide a Bob tests para escenarios faltantes:
-        <div class="code-block" style="margin-top:var(--cds-spacing-03,0.5rem)">
+        <div class="code-block code-block--prompt" style="margin-top:var(--cds-spacing-03,0.5rem)">
           <button type="button" class="copy-button">Copiar</button>
           <pre><code>Genera tests adicionales para los escenarios de error del endpoint createPrescription</code></pre>
         </div>
@@ -537,7 +537,7 @@ private Date calculateExpiryDate(Date startDate) {
     </ul>
 
     <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">La implementación no coincide con los tests</h3>
-    <div class="code-block">
+    <div class="code-block code-block--prompt">
       <button type="button" class="copy-button">Copiar</button>
       <pre><code>El test de medicine ID inválido está fallando. Por favor actualiza la implementación para devolver un estado 400 con el mensaje de error "Invalid medicine ID"</code></pre>
     </div>
@@ -549,7 +549,7 @@ private Date calculateExpiryDate(Date startDate) {
     </p>
 
     <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">Dependencias faltantes — <code>Cannot resolve symbol 'Prescription'</code></h3>
-    <div class="code-block">
+    <div class="code-block code-block--prompt">
       <button type="button" class="copy-button">Copiar</button>
       <pre><code>Genera la clase modelo Prescription y PrescriptionRepository basándote en la especificación API</code></pre>
     </div>
@@ -563,7 +563,7 @@ private Date calculateExpiryDate(Date startDate) {
 
     <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">La terminal de Bob muestra la versión incorrecta de Java</h3>
     <p class="cds--body-01"><code>sdk use</code> es por sesión de shell — no se aplica entre pestañas ni a la terminal que Bob abre por su cuenta. Ejecútalo en la terminal de Bob (macOS/Linux):</p>
-    <div class="code-block">
+    <div class="code-block code-block--terminal">
       <button type="button" class="copy-button">Copiar</button>
       <pre><code>sdk use java 21.0.7-zulu</code></pre>
     </div>

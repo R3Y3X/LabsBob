@@ -211,7 +211,7 @@
     <div class="callout" data-tone="warning" style="margin-top:var(--cds-spacing-05,1rem)">
       <p class="callout__title">Si Bob aplica todo de golpe</p>
       <p>Cada prompt de cambios pide diff + <code>ok</code> por cambio. Si Bob encadena cambios o salta a validación, interrumpe con:</p>
-      <div class="code-block">
+      <div class="code-block code-block--prompt">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>STOP. Vuelve al protocolo del workshop:
 - Un solo Cambio N por mensaje.
@@ -453,7 +453,7 @@ Empieza de nuevo mostrando el diff del Cambio que corresponda (sin aplicar nada 
       <p class="callout__title">Libera los puertos entre labs</p>
       <p>Un servidor Liberty dejado corriendo bloqueará el siguiente lab silenciosamente. Detén Liberty (Ctrl+C) antes de continuar.</p>
       <p>Lab 1 usa el puerto <strong>9080</strong>. Labs 2–5 usan <strong>9081</strong> (y a veces 9443). Si dudas, libera todos:</p>
-      <div class="code-block">
+      <div class="code-block code-block--terminal">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>lsof -ti:9080,9081,9443 | xargs kill -9</code></pre>
       </div>

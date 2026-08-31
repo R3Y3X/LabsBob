@@ -67,7 +67,7 @@ Recorra el flujo de trabajo Java Modernization de Bob de principio a fin:
       </a>
     </p>
     <p>Descomprima el paquete del taller, luego abra la instantánea inicial del Laboratorio 1 en IBM Bob:</p>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>simple-pharmacy-workshop-v2/labs/lab1-java-liberty-replatforming/snapA-java-liberty-replatforming/</code>
       </pre>
@@ -182,13 +182,13 @@ La forma más sencilla es
 , una herramienta que instala y cambia entre versiones de Java por usted.
           </p>
           <p>Instalar SDKMAN!:</p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>curl -s "https://get.sdkman.io" | bash</code>
             </pre>
           </div>
           <p>Cárgalo en tu terminal (necesario una vez en cada nueva terminal):</p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>source "$HOME/.sdkman/bin/sdkman-init.sh"</code>
             </pre>
@@ -198,18 +198,18 @@ Instale Java 8 (Azul
             <strong>Zulu</strong>
 : Temurin/Adoptium no tiene una compilación de Java 8 para Apple Silicon, y Zulu funciona tanto en Intel como en Mac de la serie M) y conviértalo en el predeterminado:
           </p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>sdk install java 8.0.492-zulu</code>
             </pre>
           </div>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>sdk default java 8.0.492-zulu</code>
             </pre>
           </div>
           <p>Instalar Maven:</p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>sdk install maven</code>
             </pre>
@@ -222,13 +222,13 @@ La forma más sencilla es
 , una herramienta que instala y cambia entre versiones de Java por usted.
           </p>
           <p>Instalar SDKMAN!:</p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>curl -s "https://get.sdkman.io" | bash</code>
             </pre>
           </div>
           <p>Cárgalo en tu terminal (necesario una vez en cada nueva terminal):</p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>source "$HOME/.sdkman/bin/sdkman-init.sh"</code>
             </pre>
@@ -238,18 +238,18 @@ Instale Java 8 (Azul
             <strong>Zulu</strong>
 : Temurin/Adoptium no tiene una compilación de Java 8 para Apple Silicon, y Zulu funciona tanto en Intel como en Mac de la serie M) y conviértalo en el predeterminado:
           </p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>sdk install java 8.0.492-zulu</code>
             </pre>
           </div>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>sdk default java 8.0.492-zulu</code>
             </pre>
           </div>
           <p>Instalar Maven:</p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>sdk install maven</code>
             </pre>
@@ -268,12 +268,12 @@ SDKMAN! (usado en macOS/Linux) no se puede ejecutar en PowerShell, por lo que Wi
             <strong>PowerShell</strong>
 :
           </p>
-          <div data-language="powershell" class="code-block premium-code-block">
+          <div data-language="powershell" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>winget install EclipseAdoptium.Temurin.8.JDK</code>
             </pre>
           </div>
-          <div data-language="powershell" class="code-block premium-code-block">
+          <div data-language="powershell" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>winget install Apache.Maven</code>
             </pre>
@@ -320,7 +320,7 @@ Abra Git Bash o WSL y ejecute los comandos
       </div>
     </div>
     <p>Ahora verifique: estas comprobaciones son las mismas en todos los sistemas operativos:</p>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>java -version</code>
       </pre>
@@ -334,7 +334,7 @@ Debería ver una versión que comience con
       <strong>1.8</strong>
  = Java 8).
     </p>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>mvn --version</code>
       </pre>
@@ -572,7 +572,7 @@ La
       <code>snapA</code>
 . Confirma que termina con:
     </p>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-block-label="Campo del workflow" data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>…/simple-pharmacy-workshop-v2/labs/lab1-java-liberty-replatforming/snapA-java-liberty-replatforming</code>
       </pre>
@@ -661,7 +661,7 @@ En el <strong>campo del panel del workflow</strong> (no en el chat), introduce l
  Bob analiza el plan y elabora una lista de tareas pendientes.
     </p>
     <p class="cds--body-01">Ruta de referencia — cópiala en el <strong>campo del panel</strong> de la captura de abajo, no en el chat:</p>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-block-label="Campo del workflow" data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>[tu ruta local]/simple-pharmacy-workshop-v2/labs/lab1-java-liberty-replatforming/simple-pharmacy.war_migrationPlan.zip</code>
       </pre>
@@ -770,7 +770,7 @@ Bob a menudo propone un javassist
         <em>segundo</em>
 , redactado como un rechazo:
       </p>
-      <div data-language="text" class="code-block premium-code-block">
+      <div data-language="text" class="code-block premium-code-block code-block--file">
         <pre>
           <code>Sí, actualice javassist a 3.30.2-GA
 No, usa 3.29.2-GA en lugar de &lt;-- elige este
@@ -859,7 +859,7 @@ Confirme los informes de flujo de trabajo
   <section class="lab-section" aria-labelledby="step-3-verify-the-migrated-application">
     <h2 class="cds--productive-heading-03" id="step-3-verify-the-migrated-application">Paso 3: verificar la aplicación migrada</h2>
     <p>Abra un navegador y vaya a:</p>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>http://localhost:9080/simple-pharmacy.war/</code>
       </pre>
@@ -884,22 +884,22 @@ Si el
       <figcaption class="lab-figure__caption">Referencia visual — Panel de farmacia ejecutándose en Liberty en localhost:9080. Verifica este estado antes de continuar.</figcaption>
     </figure>
     <p>Navegue a cada página para confirmar que toda la aplicación funciona:</p>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>http://localhost:9080/simple-pharmacy.war/dashboard</code>
       </pre>
     </div>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>http://localhost:9080/simple-pharmacy.war/prescription-list.action</code>
       </pre>
     </div>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>http://localhost:9080/simple-pharmacy.war/order-list.action</code>
       </pre>
     </div>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>http://localhost:9080/simple-pharmacy.war/medicine-list.action</code>
       </pre>
@@ -1012,13 +1012,13 @@ Verifique nuevamente:
         <code>sdk use java &lt;id&gt;</code>
  solo se aplica al shell en el que se ejecutó: la terminal de Bob es un shell separado. Ejecútelo en la terminal de Bob específicamente:
       </p>
-      <div data-language="bash" class="code-block premium-code-block">
+      <div data-language="bash" class="code-block premium-code-block code-block--terminal">
         <pre>
           <code>sdk use java 8.0.492-zulu</code>
         </pre>
       </div>
       <p>O establezca el valor predeterminado global para que cada nuevo shell lo recoja:</p>
-      <div data-language="bash" class="code-block premium-code-block">
+      <div data-language="bash" class="code-block premium-code-block code-block--terminal">
         <pre>
           <code>sdk default java 8.0.492-zulu</code>
         </pre>
@@ -1061,7 +1061,7 @@ Intente hacer referencia a archivos con la sintaxis
  al proporcionar la ruta ZIP AMA
       </summary>
       <p>El error se parece a:</p>
-      <div data-language="text" class="code-block premium-code-block">
+      <div data-language="text" class="code-block premium-code-block code-block--file">
         <pre>
           <code>Error: No se puede acceder al archivo jar /Applications/IBM Bob.app/Contents/Resources/app/extensions/bob-code/assets/jars/ta-jam-2.2.1.jar</code>
         </pre>
@@ -1091,7 +1091,7 @@ Descomprima
             <code>jars.zip</code>
  allí para que la estructura sea:
           </p>
-          <div data-language="text" class="code-block premium-code-block">
+          <div data-language="text" class="code-block premium-code-block code-block--file">
             <pre>
               <code>├── frascos/
 │ └── mensaje-lib/
@@ -1188,7 +1188,7 @@ Mantenga el espacio de nombres
         </li>
       </ul>
       <p>O pregúntale a Bob:</p>
-      <div data-language="text" class="code-block premium-code-block">
+      <div data-language="text" class="code-block premium-code-block code-block--prompt">
         <pre>
           <code>Este es el Laboratorio 1 (Liberty solo cambio de plataforma). Revertir pom.xml a Java 1.8 (los cuatro marcadores),
 mantenga el espacio de nombres javax.* y elimine cualquier mejora javassist/asm más allá de la solución aprobada
@@ -1226,7 +1226,7 @@ Maven se ejecuta en un JDK posterior a 8. Lab 1 permanece en
         </li>
       </ul>
       <p>Luego reconstruir:</p>
-      <div data-language="bash" class="code-block premium-code-block">
+      <div data-language="bash" class="code-block premium-code-block code-block--terminal">
         <pre>
           <code>mvn clean package</code>
         </pre>

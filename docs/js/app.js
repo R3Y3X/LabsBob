@@ -1941,7 +1941,13 @@ function updateJavaPremiumWorkspace(panel, step) {
 
     const lead = workspace.querySelector('.lab-workspace-setup__lead');
     if (lead) {
-      lead.innerHTML = `Abre la carpeta <code>snap*</code> de este lab como raíz del proyecto. Luego abre la pestaña <strong>Workflows</strong> de Bob (botón ▶) y arranca ${describeJavaPremiumWorkflow(step)}. No pegues prompts de fase en el chat: los valores se rellenan como campos del panel.`;
+      const snapName = workspace.querySelector('.lab-workspace-setup__path-value')?.textContent
+        .trim()
+        .split('/')
+        .filter(Boolean)
+        .pop();
+      const snapLabel = snapName ? `<code>${snapName}</code>` : 'la carpeta <code>snap*</code> de este lab';
+      lead.innerHTML = `Abre ${snapLabel} como raíz del proyecto. Luego abre la pestaña <strong>Workflows</strong> de Bob (botón ▶) y arranca ${describeJavaPremiumWorkflow(step)}. No pegues prompts de fase en el chat: los valores se rellenan como campos del panel.`;
     }
 
     const note = workspace.querySelector('.lab-workspace-setup__note');
@@ -1979,6 +1985,10 @@ function updateJavaPremiumWorkspace(panel, step) {
           node.textContent = ' Valores a configurar en el workflow';
         }
       });
+    }
+    const contextLead = context?.querySelector('p.cds--body-01');
+    if (contextLead && /referencia para el chat|no hay un formulario/i.test(contextLead.textContent)) {
+      contextLead.innerHTML = 'Estos valores se eligen en el <strong>panel del workflow</strong> (subtipo Java Upgrade), no se pegan en el chat. Tres cosas cambian a la vez — JDK, namespace Jakarta y versión mayor de Struts — y la app no arrancará hasta que las tres estén alineadas.';
     }
     const warning = [...(context?.querySelectorAll('.callout p') || [])]
       .find((item) => /Agent Mode/i.test(item.textContent));
@@ -2405,16 +2415,33 @@ function rewriteDownloadLinks(container) {
   });
 }
 
+function nearbyInstructionText(element) {
+  const chunks = [];
+  let node = element.previousElementSibling;
+  for (let i = 0; i < 6 && node; i += 1) {
+    chunks.push(node.textContent || '');
+    node = node.previousElementSibling;
+  }
+  const stepTitle = element.closest('.lab-step')?.querySelector('.lab-step__title');
+  if (stepTitle) chunks.push(stepTitle.textContent || '');
+  return chunks.join('\n');
+}
+
 function isPromptContext(element) {
-  const previous = element.previousElementSibling;
-  const label = previous?.textContent || '';
-  return /(?:prompt|pregunta)\s+(?:para|de)\s+bob|pega este prompt|envía este prompt/i.test(label);
+  const label = nearbyInstructionText(element);
+  return /(?:prompt|pregunta)\s+(?:para|de)\s+bob|pega este prompt|envía este prompt|pega (?:esto|el bloque|solo este prompt)|pega (?:esto )?en el chat|pídeselo a bob|pide a bob/i.test(label);
 }
 
 function isTerminalContext(element) {
-  const previous = element.previousElementSibling;
-  const label = previous?.textContent || '';
-  return /en la terminal|terminal integrada|ejecuta (?:el|los|este|estos|la|las) comando/i.test(label);
+  const label = nearbyInstructionText(element);
+  return /en la terminal|terminal integrada|ejecuta (?:el|los|este|estos|la|las) comando|ejecuta esto en la terminal/i.test(label);
+}
+
+function looksLikeShellCommand(text) {
+  // Do not treat a line that starts with "Java 8" / "Java sigue…" as a CLI.
+  // Only `java -version`, `java -jar`, etc. are commands.
+  return /^(?:[$#]\s*)?(?:mvn|sdk|npm|npx|node|git|curl|wget|grep|lsof|winget|powershell|docker|podman|kubectl|helm|ansible(?:-playbook)?|ssh|scp|chmod|cd|export|source|runsqlstm|crtsqlrpgi|strsql|sbmjob|qsh|system)\b/im.test(text)
+    || /^(?:[$#]\s*)?java\s+-/im.test(text);
 }
 
 function getCodeBlockKind(code) {
@@ -2431,18 +2458,15 @@ function classifyModernizationCodeBlock(codeBlock, code) {
   const text = code.textContent.trim();
   if (!text) return;
 
-  // In the modernization workshops, old content often used a plain <pre> for
-  // every kind of instruction. Classify it by what the learner must do, not by
-  // its typography: executable input goes to the terminal; artifacts and
-  // output stay neutral; everything else is a request for Bob.
+  // HTML is the source of truth. This fallback only runs on untyped blocks.
   const declaredLanguage = `${codeBlock.dataset.language || ''} ${code.className || ''}`.toLowerCase();
   if (isPromptContext(codeBlock)) {
     codeBlock.classList.add('code-block--prompt');
-  } else if (/\b(?:bash|shell|sh)\b/.test(declaredLanguage)
-    || /^(?:[$#]\s*)?(?:mvn|sdk|java|npm|npx|node|git|curl|wget|grep|lsof|winget|powershell|docker|podman|kubectl|helm|ansible(?:-playbook)?|ssh|scp|chmod|cd|export|source|runsqlstm|crtsqlrpgi|strsql|sbmjob|qsh|system)\b/im.test(text)) {
+  } else if (/\b(?:bash|shell|sh|powershell)\b/.test(declaredLanguage) || looksLikeShellCommand(text)) {
     codeBlock.classList.add('code-block--terminal');
-  } else if (/\b(?:yaml|yml|json|sql)\b/.test(declaredLanguage)
-    || /^(?:<|@\w+\/|https?:\/\/|\[INFO\]|\[ERROR\]|Error:|Exception:|[├└│]|Date\s+\w+\s*=|(?:\/\/|Dcl-|ctl-opt|free\b|Exec SQL|SELECT\b|CREATE\b|import\b|export\b|const\b|function\b|class\b)|[\w.-]+\.(?:xml|json|yaml|yml|java|jsx|tsx|properties)\b)/im.test(text)) {
+  } else if (/\b(?:yaml|yml|json|sql|xml|java)\b/.test(declaredLanguage)
+    || /^(?:<|@\w+\/|https?:\/\/|\[INFO\]|\[ERROR\]|Error:|Exception:|[├└│]|Date\s+\w+\s*=|(?:\/\/|Dcl-|ctl-opt|free\b|Exec SQL|SELECT\b|CREATE\b|import\b|export\b|const\b|function\b|class\b)|[\w.-]+\.(?:xml|json|yaml|yml|java|jsx|tsx|properties|zip)\b)/im.test(text)
+    || /(?:^|\/)(?:snap[A-Z]|labs\/)/im.test(text)) {
     codeBlock.classList.add('code-block--file');
   } else {
     codeBlock.classList.add('code-block--prompt');
@@ -2454,12 +2478,17 @@ function ensureModernizationContextLabel(codeBlock, code) {
 
   const label = document.createElement('p');
   label.className = 'code-block__label';
-  if (codeBlock.classList.contains('code-block--terminal')) {
+  const customLabel = codeBlock.dataset.blockLabel?.trim();
+  if (customLabel) {
+    label.textContent = customLabel;
+  } else if (codeBlock.classList.contains('code-block--terminal')) {
     label.textContent = '$ Terminal integrada';
   } else if (codeBlock.classList.contains('code-block--prompt')) {
     label.textContent = 'Pega en el chat de Bob';
   } else if (/^https?:\/\//im.test(code.textContent.trim())) {
     label.textContent = 'Referencia';
+  } else if (codeBlock.classList.contains('code-block--file')) {
+    label.textContent = 'Archivo o configuración';
   } else {
     label.textContent = 'Archivo o configuración';
   }

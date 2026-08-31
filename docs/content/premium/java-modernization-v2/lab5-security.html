@@ -178,7 +178,7 @@
         <p class="callout__title">Tu acción — pega esto en el chat (Agent Mode)</p>
         <p>Al cambiar de carpeta, Bob abre un chat nuevo. Copia el bloque y pégalo como <strong>un solo mensaje</strong>. No añadas "adelante" ni el prompt de remediación todavía.</p>
       </div>
-      <div class="code-block">
+      <div class="code-block code-block--prompt">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>Lab 5: detectar y remediar vulnerabilidades de seguridad en las dependencias.
 Carpeta raíz: la que está abierta (snapE — Java 21, Liberty, API REST).
@@ -234,7 +234,7 @@ No modifiques src/main/. Sin refactors ni funcionalidades extra.</code></pre>
         <li class="cds--list__item">¿Cuál es la severidad — y aplica a cómo esta app realmente usa la biblioteca?</li>
       </ul>
       <p class="cds--body-01" style="margin-top:var(--cds-spacing-04,0.75rem)">Para algo desconocido, pregunta a Bob:</p>
-      <div class="code-block">
+      <div class="code-block code-block--prompt">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>Explica CVE-2022-42889 en términos sencillos y cómo podría afectar a esta aplicación.</code></pre>
       </div>
@@ -262,7 +262,7 @@ No modifiques src/main/. Sin refactors ni funcionalidades extra.</code></pre>
         <p class="callout__title">Tu acción — pega solo este prompt (un mensaje nuevo)</p>
         <p>No escribas "adelante". Loop: Bob propone una CVE con diff → tú dices <strong>ok</strong> → siguiente, hasta la 3.</p>
       </div>
-      <div class="code-block">
+      <div class="code-block code-block--prompt">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>FASE 2 — REMEDIACIÓN (una CVE a la vez)
 
@@ -349,7 +349,7 @@ Reglas:
         <p class="callout__title">Tu acción — pega esto ahora</p>
         <p>Compila para confirmar que los bumps no rompieron la API. Pega el bloque en el mismo chat.</p>
       </div>
-      <div class="code-block">
+      <div class="code-block code-block--prompt">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>FASE 3 — VALIDACIÓN DE COMPILACIÓN
 
@@ -397,7 +397,7 @@ Pega el error a Bob y deja que reconcilie el cambio de API.</code></pre>
         <p class="callout__title">Tu acción — pega esto ahora</p>
         <p>Vuelve a escanear. Pega el bloque en el mismo chat.</p>
       </div>
-      <div class="code-block">
+      <div class="code-block code-block--prompt">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>FASE 4 — RE-ESCANEO (crítico)
 
@@ -430,12 +430,12 @@ Genera el informe final de remediación:
         <p class="callout__title">Opcional — terminal integrada o pídeselo a Bob</p>
         <p>No es un prompt de fase. Ejecútalo tú en la terminal de Bob, o pídele en el chat que arranque Liberty.</p>
       </div>
-      <div class="code-block">
+      <div class="code-block code-block--terminal">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>mvn liberty:run</code></pre>
       </div>
       <p class="cds--body-01">Confirma que la API arranca sin errores de runtime introducidos por los upgrades:</p>
-      <div class="code-block">
+      <div class="code-block code-block--file">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>http://localhost:9081/simple-pharmacy/api/dashboard</code></pre>
       </div>
@@ -477,7 +477,7 @@ Genera el informe final de remediación:
 
     <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">La terminal de Bob muestra la versión incorrecta de Java</h3>
     <p class="cds--body-01"><code>sdk use</code> es por sesión de shell — no se aplica entre pestañas ni a la terminal que Bob abre por su cuenta. Ejecútalo en la terminal de Bob (macOS/Linux):</p>
-    <div class="code-block">
+    <div class="code-block code-block--terminal">
       <button type="button" class="copy-button">Copiar</button>
       <pre><code>sdk use java 21.0.7-zulu</code></pre>
     </div>

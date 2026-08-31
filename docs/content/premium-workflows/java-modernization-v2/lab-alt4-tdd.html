@@ -123,7 +123,7 @@ Descargue el paquete del taller (solo se necesita
       </a>
     </p>
     <p>Descomprímalo, luego abra la instantánea inicial de Lab Alt-4 en IBM Bob:</p>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>simple-pharmacy-workshop-v2/labs/alt-lab4-test-driven-development/snapTDD/</code>
       </pre>
@@ -135,7 +135,7 @@ La instantánea incluye la especificación OpenAPI, un
  listo para construir y el diseño del directorio Maven vacío,
  para que puedas compilar y ejecutar pruebas desde el primer turno. Solo generas las pruebas y la implementación:
     </p>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>alt-lab4-test-driven-development/
 └── snapTDD/
@@ -147,7 +147,7 @@ La instantánea incluye la especificación OpenAPI, un
       </pre>
     </div>
     <p>Los completarás con Bob:</p>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>        ├── main/java/com/pharmacy/api/
         │ ├── PrescriptionResource.java (generas, Ejercicio 2)
@@ -239,29 +239,29 @@ Usando
             <strong>SDKMAN!</strong>
  (una herramienta que instala y cambia entre versiones de Java). Si aún no lo tienes:
           </p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>curl -s "https://get.sdkman.io" | bash</code>
             </pre>
           </div>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>source "$HOME/.sdkman/bin/sdkman-init.sh"</code>
             </pre>
           </div>
           <p>Instale Java 21 y conviértalo en la versión activa:</p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>sdk install java 21.0.11-zulu</code>
             </pre>
           </div>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>sdk use java 21.0.11-zulu</code>
             </pre>
           </div>
           <p>Instalar Maven:</p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>sdk install maven</code>
             </pre>
@@ -273,29 +273,29 @@ Usando
             <strong>SDKMAN!</strong>
  (una herramienta que instala y cambia entre versiones de Java). Si aún no lo tienes:
           </p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>curl -s "https://get.sdkman.io" | bash</code>
             </pre>
           </div>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>source "$HOME/.sdkman/bin/sdkman-init.sh"</code>
             </pre>
           </div>
           <p>Instale Java 21 y conviértalo en la versión activa:</p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>sdk install java 21.0.11-zulu</code>
             </pre>
           </div>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>sdk use java 21.0.11-zulu</code>
             </pre>
           </div>
           <p>Instalar Maven:</p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>sdk install maven</code>
             </pre>
@@ -309,12 +309,12 @@ Usando
             <strong>PowerShell</strong>
 :
           </p>
-          <div data-language="powershell" class="code-block premium-code-block">
+          <div data-language="powershell" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>winget install EclipseAdoptium.Temurin.21.JDK</code>
             </pre>
           </div>
-          <div data-language="powershell" class="code-block premium-code-block">
+          <div data-language="powershell" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>winget install Apache.Maven</code>
             </pre>
@@ -340,7 +340,7 @@ Cierre y vuelva a abrir PowerShell para encontrar
       </div>
     </div>
     <p>Verificar: lo mismo en todos los sistemas operativos:</p>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>java -version</code>
       </pre>
@@ -352,7 +352,7 @@ Deberías ver la versión de Java
       <a href="https://adoptium.net/">Eclipse Temurin 21 LTS</a>
 .)
     </p>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>mvn --version</code>
       </pre>
@@ -475,7 +475,7 @@ Gestión de estado (
           <strong>Solicitar generación de prueba</strong>
  — en el chat de Bob, escriba:
         </p>
-        <div data-language="text" class="code-block premium-code-block">
+        <div data-language="text" class="code-block premium-code-block code-block--prompt">
           <pre>
             <code>Genere un conjunto completo de JUnit 5 + pruebas unitarias Mockito (Java, NO JavaScript/Jest) siguientes
 la metodología TDD para 'prescription-api-spec.yaml'. Coloque el archivo de prueba en
@@ -538,7 +538,7 @@ Genere el archivo de prueba en
     </ol>
     <details class="premium-details">
       <summary>Respuesta de Bob (ilustrativa: JUnit 5, Java)</summary>
-      <div data-language="java" class="code-block premium-code-block">
+      <div data-language="java" class="code-block premium-code-block code-block--file">
         <pre>
           <code>package com.pharmacy.api;
 
@@ -626,7 +626,7 @@ Este es el
         <strong>Red</strong>
  en Red-Green-Refactor. Con las pruebas escritas pero aún sin implementación, ejecute:
       </p>
-      <div data-language="bash" class="code-block premium-code-block">
+      <div data-language="bash" class="code-block premium-code-block code-block--terminal">
         <pre>
           <code>mvn test</code>
         </pre>
@@ -661,7 +661,7 @@ Crear la implementación
           <strong>Solicitar implementación de pruebas</strong>
  — en el chat de Bob, escriba:
         </p>
-        <div data-language="text" class="code-block premium-code-block">
+        <div data-language="text" class="code-block premium-code-block code-block--prompt">
           <pre>
             <code>Cree PrescriptionResource.java desde 'PrescriptionResourceTest.java' siguiendo la estructura de directorio estándar de Maven. Colóquelo en snapTDD/src/main/java/com/pharmacy/api/.. También cree las clases de modelo requeridas (Prescription.java, Medicine.java) y las clases de repositorio (PrescriptionRepository.java, MedicineRepository.java).
 
@@ -734,7 +734,7 @@ Anotaciones adecuadas (
     </ol>
     <details class="premium-details">
       <summary>La respuesta de Bob (ilustrativa)</summary>
-      <div data-language="java" class="code-block premium-code-block">
+      <div data-language="java" class="code-block premium-code-block code-block--file">
         <pre>
           <code>@Path("/prescriptions")
 public class PrescriptionResource {
@@ -851,7 +851,7 @@ Cambie el nombre a
           <strong>Solicitar análisis comparativo</strong>
  — en el chat de Bob, escriba:
         </p>
-        <div data-language="text" class="code-block premium-code-block">
+        <div data-language="text" class="code-block premium-code-block code-block--prompt">
           <pre>
             <code>Compare el traditional_PrescriptionResource.java original con la versión TDD en snapTDD/src/main/java/com/pharmacy/api/PrescriptionResource.java y resuma las diferencias</code>
           </pre>
@@ -1010,7 +1010,7 @@ Todo aquí usa
     </div>
     <h3 id="run-all-tests" class="cds--productive-heading-02 lab-step__title">Ejecute todas las pruebas</h3>
     <p>Abra la terminal y ejecute:</p>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>mvn clean test</code>
       </pre>
@@ -1038,7 +1038,7 @@ Ejecute todas las pruebas que coincidan con el patrón
       </li>
     </ul>
     <h3 id="run-a-specific-test-suite" class="cds--productive-heading-02 lab-step__title">Ejecute un conjunto de pruebas específico</h3>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>mvn test -Dtest=PrescriptionResourceTest</code>
       </pre>
@@ -1051,7 +1051,7 @@ El recuento exacto de pruebas depende de cuántas pruebas generó Bob; lo que im
       <strong>Verde</strong>
 ):
     </p>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>[INFO] PRUEBAS
 [INFO] Corriendo com.pharmacy.api.PrescriptionResourceTest
@@ -1076,7 +1076,7 @@ Aplique la fase
           <strong>Identificar oportunidades de mejora</strong>
  — pregúntale a Bob:
         </p>
-        <div data-language="text" class="code-block premium-code-block">
+        <div data-language="text" class="code-block premium-code-block code-block--file">
           <pre>
             <code>Revise la implementación PrescriptionResource.java y sugiera mejoras de refactorización mientras mantiene aprobadas todas las pruebas.</code>
           </pre>
@@ -1101,7 +1101,7 @@ Aplique la fase
           <strong>Aplicar la refactorización</strong>
  - pregúntale a Bob:
         </p>
-        <div data-language="text" class="code-block premium-code-block">
+        <div data-language="text" class="code-block premium-code-block code-block--file">
           <pre>
             <code>Aplique las mejoras de refactorización que sugirió a PrescriptionResource.java. Comience extrayendo constantes para valores mágicos y usando createErrorResponse() de manera consistente.</code>
           </pre>
@@ -1112,7 +1112,7 @@ Aplique la fase
           <strong>Implementar mejoras específicas</strong>
  — pregúntale a Bob:
         </p>
-        <div data-language="text" class="code-block premium-code-block">
+        <div data-language="text" class="code-block premium-code-block code-block--file">
           <pre>
             <code>Agregue declaraciones de registro para operaciones clave como la creación y validación de recetas.</code>
           </pre>
@@ -1122,7 +1122,7 @@ Aplique la fase
         <p>
           <strong>Verifique que las pruebas aún pasen:</strong>
         </p>
-        <div data-language="bash" class="code-block premium-code-block">
+        <div data-language="bash" class="code-block premium-code-block code-block--terminal">
           <pre>
             <code>mvn test</code>
           </pre>
@@ -1131,7 +1131,7 @@ Aplique la fase
     </ol>
     <h3 id="refactoring-example" class="cds--productive-heading-02 lab-step__title">Ejemplo de refactorización</h3>
     <p>Antes:</p>
-    <div data-language="java" class="code-block premium-code-block">
+    <div data-language="java" class="code-block premium-code-block code-block--file">
       <pre>
         <code>Date prescriptionDate = new Date();
 Calendar cal = Calendar.getInstance();
@@ -1141,7 +1141,7 @@ Date expiryDate = cal.getTime();</code>
       </pre>
     </div>
     <p>Después:</p>
-    <div data-language="java" class="code-block premium-code-block">
+    <div data-language="java" class="code-block premium-code-block code-block--file">
       <pre>
         <code>Date prescriptionDate = new Date();
 Date expiryDate = calculateExpiryDate(prescriptionDate);
@@ -1174,7 +1174,7 @@ Haga clic en
         <li class="cds--list__item">Verifique que la especificación OpenAPI esté completa.</li>
         <li class="cds--list__item">
           <p>Pídale a Bob que genere pruebas para escenarios faltantes específicos:</p>
-          <div data-language="text" class="code-block premium-code-block">
+          <div data-language="text" class="code-block premium-code-block code-block--file">
             <pre>
               <code>Genere pruebas adicionales para los escenarios de error en el punto final createPrescription</code>
             </pre>
@@ -1191,7 +1191,7 @@ Haga clic en
         <li class="cds--list__item">Revisar las expectativas de las pruebas versus la implementación.</li>
         <li class="cds--list__item">
           <p>Pídale a Bob que corrija pruebas fallidas específicas:</p>
-          <div data-language="text" class="code-block premium-code-block">
+          <div data-language="text" class="code-block premium-code-block code-block--file">
             <pre>
               <code>La prueba de identificación de medicamento no válida está fallando. Actualice la implementación para devolver un estado 400 con el mensaje de error "ID de medicamento no válido".</code>
             </pre>
@@ -1230,7 +1230,7 @@ Dependencias faltantes -
         <li class="cds--list__item">Agregue las clases de repositorio y modelo que faltan.</li>
         <li class="cds--list__item">
           <p>Pídele a Bob que genere las dependencias que faltan:</p>
-          <div data-language="text" class="code-block premium-code-block">
+          <div data-language="text" class="code-block premium-code-block code-block--file">
             <pre>
               <code>Genere la clase de modelo Prescription y PrescriptionRepository según la especificación API</code>
             </pre>
@@ -1385,31 +1385,31 @@ Considere utilizar la API de fecha/hora de Java 8+ (
       </p>
     </blockquote>
     <h3 id="1-integration-testing" class="cds--productive-heading-02 lab-step__title">1. Pruebas de integración</h3>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>Cree pruebas de integración que prueben el flujo de trabajo completo de prescripción, desde la creación hasta la validación y el cumplimiento del pedido.</code>
       </pre>
     </div>
     <h3 id="2-contract-testing" class="cds--productive-heading-02 lab-step__title">2. Pruebas de contrato</h3>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>Genere pruebas de contrato utilizando Pact para verificar que la implementación de la API coincida exactamente con la especificación OpenAPI</code>
       </pre>
     </div>
     <h3 id="3-property-based-testing" class="cds--productive-heading-02 lab-step__title">3. Pruebas basadas en propiedades</h3>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>Cree pruebas de propiedad-based usando jqwik para probar la validación de prescripciones con datos válidos e inválidos generados aleatoriamente</code>
       </pre>
     </div>
     <h3 id="4-mutation-testing" class="cds--productive-heading-02 lab-step__title">4. Pruebas de mutación</h3>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>Configure pruebas de mutación PIT para verificar la calidad de nuestro conjunto de pruebas mediante la introducción de mutaciones de código</code>
       </pre>
     </div>
     <h3 id="5-bdd-with-cucumber" class="cds--productive-heading-02 lab-step__title">5. BDD con Cucumber</h3>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>Convierta la especificación API en escenarios Cucumber BDD para el desarrollo de comportamiento-driven</code>
       </pre>

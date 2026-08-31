@@ -67,7 +67,7 @@ Ejecute el flujo de trabajo Java Unit Testing de un extremo a otro: Bob instala 
       </a>
     </p>
     <p>Descomprímalo y luego abra la instantánea inicial de Lab 4 en IBM Bob:</p>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>simple-pharmacy-workshop-v2/labs/lab4-unit-test-generation/snapD-unit-test-gen/</code>
       </pre>
@@ -214,29 +214,29 @@ Usando
             <strong>SDKMAN!</strong>
 . Si aún no lo tienes:
           </p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>curl -s "https://get.sdkman.io" | bash</code>
             </pre>
           </div>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>source "$HOME/.sdkman/bin/sdkman-init.sh"</code>
             </pre>
           </div>
           <p>Instale Java 21 y actívelo:</p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>sdk install java 21.0.11-zulu</code>
             </pre>
           </div>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>sdk use java 21.0.11-zulu</code>
             </pre>
           </div>
           <p>Instalar Maven:</p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>sdk install maven</code>
             </pre>
@@ -248,29 +248,29 @@ Usando
             <strong>SDKMAN!</strong>
 . Si aún no lo tienes:
           </p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>curl -s "https://get.sdkman.io" | bash</code>
             </pre>
           </div>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>source "$HOME/.sdkman/bin/sdkman-init.sh"</code>
             </pre>
           </div>
           <p>Instale Java 21 y actívelo:</p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>sdk install java 21.0.11-zulu</code>
             </pre>
           </div>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>sdk use java 21.0.11-zulu</code>
             </pre>
           </div>
           <p>Instalar Maven:</p>
-          <div data-language="bash" class="code-block premium-code-block">
+          <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>sdk install maven</code>
             </pre>
@@ -284,12 +284,12 @@ Usando
             <strong>PowerShell</strong>
 :
           </p>
-          <div data-language="powershell" class="code-block premium-code-block">
+          <div data-language="powershell" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>winget install EclipseAdoptium.Temurin.21.JDK</code>
             </pre>
           </div>
-          <div data-language="powershell" class="code-block premium-code-block">
+          <div data-language="powershell" class="code-block premium-code-block code-block--terminal">
             <pre>
               <code>winget install Apache.Maven</code>
             </pre>
@@ -315,7 +315,7 @@ Cierre y vuelva a abrir PowerShell para encontrar
       </div>
     </div>
     <p>Verificar: lo mismo en todos los sistemas operativos:</p>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>java -version</code>
       </pre>
@@ -325,7 +325,7 @@ Deberías ver la versión
       <strong>21</strong>
 .
     </p>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>mvn --version</code>
       </pre>
@@ -608,7 +608,7 @@ Una vez completados todos los lotes, Bob ejecuta
       <code>mvn test</code>
 , informa los recuentos de aprobación/rechazo y genera un informe de cobertura de JaCoCo. Si no aparece ningún informe, pregunte:
     </p>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--prompt">
       <pre>
         <code>por favor genere un informe de cobertura de JaCoCo</code>
       </pre>
@@ -646,7 +646,7 @@ Las pruebas son el resultado, pero
     </details>
     <h3 id="32-run-the-test-suite-yourself" class="cds--productive-heading-02 lab-step__title">3.2 Ejecute el conjunto de pruebas usted mismo</h3>
     <p>En la terminal de Bob:</p>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>mvn clean test</code>
       </pre>
@@ -677,12 +677,12 @@ La cobertura general es
       </ul>
     </div>
     <h3 id="33-open-the-coverage-report" class="cds--productive-heading-02 lab-step__title">3.3 Abrir el informe de cobertura</h3>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>mvn jacoco:report</code>
       </pre>
     </div>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>open target/site/jacoco/index.html</code>
       </pre>
@@ -746,7 +746,7 @@ Archivos
         <code>.class</code>
  obsoletos de una ejecución anterior. Forzar una recompilación completa:
       </p>
-      <div data-language="bash" class="code-block premium-code-block">
+      <div data-language="bash" class="code-block premium-code-block code-block--terminal">
         <pre>
           <code>mvn clean test</code>
         </pre>
@@ -804,7 +804,7 @@ El informe necesita explícitamente el objetivo
         <code>mvn test</code>
  por sí solo no lo producirá.
       </p>
-      <div data-language="bash" class="code-block premium-code-block">
+      <div data-language="bash" class="code-block premium-code-block code-block--terminal">
         <pre>
           <code>mvn clean test jacoco:report</code>
         </pre>
@@ -816,7 +816,7 @@ El informe necesita explícitamente el objetivo
         <code>sdk use</code>
  tiene un alcance de shell: no se aplica a las pestañas del terminal ni al terminal que Bob abre por sí solo. Ejecútelo en la terminal de Bob específicamente:
       </p>
-      <div data-language="bash" class="code-block premium-code-block">
+      <div data-language="bash" class="code-block premium-code-block code-block--terminal">
         <pre>
           <code>sdk use java 21.0.11-zulu</code>
         </pre>
@@ -956,7 +956,7 @@ El informe necesita explícitamente el objetivo
       </p>
     </blockquote>
     <h3 id="1-performance-testing" class="cds--productive-heading-02 lab-step__title">1. Pruebas de rendimiento</h3>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--prompt">
       <pre>
         <code>Cree pruebas de rendimiento que midan:
 - Tiempo de respuesta para puntos finales API bajo carga
@@ -967,7 +967,7 @@ Utilice JMH (Java Microbenchmark Harness) para realizar mediciones precisas.</co
       </pre>
     </div>
     <h3 id="2-contract-testing" class="cds--productive-heading-02 lab-step__title">2. Pruebas de contrato</h3>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--prompt">
       <pre>
         <code>Implemente pruebas de contrato API utilizando REST Assured para verificar:
 - esquemas Request/response
@@ -977,7 +977,7 @@ Utilice JMH (Java Microbenchmark Harness) para realizar mediciones precisas.</co
       </pre>
     </div>
     <h3 id="3-mutation-testing" class="cds--productive-heading-02 lab-step__title">3. Pruebas de mutación</h3>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--prompt">
       <pre>
         <code>Agregue PIT (prueba de mutación) al proyecto para verificar la calidad de la prueba.
 Configúrelo en pom.xml y analice los informes de cobertura de mutaciones.
@@ -985,14 +985,14 @@ Mejorar las pruebas basadas en mutantes supervivientes.</code>
       </pre>
     </div>
     <h3 id="4-test-data-builders" class="cds--productive-heading-02 lab-step__title">4. Pruebe los creadores de datos</h3>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--prompt">
       <pre>
         <code>Cree clases de creación de datos de prueba para objetos de Prescripción, Pedido y Medicina.
 Utilice el patrón Builder para hacer que la creación de datos de prueba sea más legible y fácil de mantener.</code>
       </pre>
     </div>
     <h3 id="5-parameterized-tests" class="cds--productive-heading-02 lab-step__title">5. Pruebas parametrizadas</h3>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block premium-code-block code-block--prompt">
       <pre>
         <code>Convierta pruebas repetitivas en pruebas parametrizadas utilizando @ParameterizedTest de JUnit 5.
 Concéntrese en pruebas que verifiquen comportamientos similares con diferentes entradas.</code>

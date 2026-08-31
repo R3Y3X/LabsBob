@@ -131,7 +131,7 @@
         <p class="callout__title">Tu acción — pega esto en el chat (Agent Mode)</p>
         <p>Al cambiar de carpeta, Bob abre un chat nuevo. Copia el bloque y pégalo como <strong>un solo mensaje</strong>. No añadas "adelante" ni el prompt de Fase 2 todavía.</p>
       </div>
-      <div class="code-block">
+      <div class="code-block code-block--prompt">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>Lab 2: actualizar Simple Pharmacy de Java 8 a Java 21.
 Carpeta raíz del proyecto: la que está abierta (snapB — Liberty, Java 8, javax.*, Struts 2.5.x).
@@ -193,7 +193,7 @@ Cambios mínimos para el objetivo del lab. Sin refactors ni funcionalidades extr
         <li class="cds--list__item">Tú respondes <strong>ok</strong> (nuestro Approve) o das otra instrucción</li>
         <li class="cds--list__item">Bob aplica y propone el <strong>Cambio 2</strong> — repite hasta el Cambio 8</li>
       </ol>
-      <div class="code-block">
+      <div class="code-block code-block--prompt">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>FASE 2 — CAMBIOS (uno a la vez)
 
@@ -379,12 +379,12 @@ Si falla, muéstrame el error completo antes de proponer ningún fix.</code></pr
 
     <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">Context Root Not Found en el navegador</h3>
     <p class="cds--body-01"><strong>1. URL incorrecta.</strong> Bob suele fijar <code>context-root="/simple-pharmacy"</code>; la URL del Lab 1 (<code>/simple-pharmacy.war/dashboard</code>) ya no funciona. Toma la URL del log de arranque:</p>
-    <div class="code-block">
+    <div class="code-block code-block--terminal">
       <button type="button" class="copy-button">Copiar</button>
       <pre><code>grep CWWKT0016I target/liberty/wlp/usr/servers/defaultServer/logs/messages.log</code></pre>
     </div>
     <p class="cds--body-01" style="margin-top:0.75rem"><strong>2. Servidor obsoleto.</strong> Si ves <code>CWWKO0221E</code> (puerto 9081 en uso), mata el proceso anterior:</p>
-    <div class="code-block">
+    <div class="code-block code-block--terminal">
       <button type="button" class="copy-button">Copiar</button>
       <pre><code>lsof -ti:9081,9443 | xargs kill -9</code></pre>
     </div>
@@ -393,7 +393,7 @@ Si falla, muéstrame el error completo antes de proponer ningún fix.</code></pr
     <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)"><code>CWWKC2263E</code> — Servlet 6.0 vs 3.1 (el fallo más común)</h3>
     <p class="cds--body-01">Bob migró la app a Jakarta EE 10 pero dejó <code>server.xml</code> en el feature set Java EE antiguo. <code>web.xml</code> declara Servlet 6.0; <code>server.xml</code> aún provisiona Servlet 3.1.</p>
     <p class="cds--body-01">Pega la línea <code>CWWKC2263E</code> en el chat de Bob, o reemplaza el bloque <code>&lt;featureManager&gt;</code> manualmente:</p>
-    <div class="code-block">
+    <div class="code-block code-block--file">
       <button type="button" class="copy-button">Copiar</button>
       <pre><code>&lt;featureManager&gt;
     &lt;feature&gt;webProfile-10.0&lt;/feature&gt;
@@ -404,7 +404,7 @@ Si falla, muéstrame el error completo antes de proponer ningún fix.</code></pr
     <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">Filtro Struts: <code>FileNotFoundException: struts-7.0.dtd</code></h3>
     <p class="cds--body-01">Bob apuntó <code>struts.xml</code> a un DTD que no existe. Apache nunca publicó <code>struts-7.0.dtd</code>; <code>struts2-core</code> solo incluye DTDs hasta 6.5.</p>
     <p class="cds--body-01">Abre <code>src/main/resources/struts.xml</code> y fija el DOCTYPE a una versión que exista:</p>
-    <div class="code-block">
+    <div class="code-block code-block--file">
       <button type="button" class="copy-button">Copiar</button>
       <pre><code>&lt;!DOCTYPE struts PUBLIC
     "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"

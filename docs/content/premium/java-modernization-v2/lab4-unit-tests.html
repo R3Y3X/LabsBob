@@ -121,7 +121,7 @@
       Cómo funciona (Agent Mode por fases)
     </h2>
     <p class="cds--body-01" style="max-width:72ch;margin-bottom:var(--cds-spacing-05,1rem)">
-      Este lab usa <strong>prompts por fases</strong> en Agent Mode. El flujo tiene 4 fases (7 pasos visibles):
+      Este lab usa <strong>prompts por fases</strong> en Agent Mode. El banner cuenta <strong>4 fases</strong>; dentro verás 7 pasos numerados: los pasos 1–6 son prompts al chat y el Paso 7 es revisar los archivos generados.
     </p>
     <ol class="cds--list--ordered">
       <li class="cds--list__item">Análisis del proyecto — estructura, build tool, infraestructura de tests existente</li>
@@ -152,7 +152,7 @@
         <p class="callout__title">Tu acción — pega esto en el chat (Agent Mode)</p>
         <p>Al cambiar de carpeta, Bob abre un chat nuevo. Copia el bloque y pégalo como <strong>un solo mensaje</strong>. No añadas "adelante" ni el prompt de Fase 2 todavía.</p>
       </div>
-      <div class="code-block">
+      <div class="code-block code-block--prompt">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>Lab 4: generar una suite completa de unit tests para Simple Pharmacy.
 Carpeta raíz: la que está abierta (snapD — Java 21, Liberty, API REST).
@@ -214,7 +214,7 @@ No modifiques src/main/. Sin refactors ni funcionalidades extra.</code></pre>
         <p class="callout__title">Tu acción — pega solo este prompt (un mensaje nuevo)</p>
         <p>No escribas "adelante". Bob muestra el diff de <code>pom.xml</code> y espera tu <strong>ok</strong> antes de tocar el archivo.</p>
       </div>
-      <div class="code-block">
+      <div class="code-block code-block--prompt">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>FASE 2 — JACOCO Y DEPENDENCIAS (APROBAR antes de tocar pom.xml)
 
@@ -267,7 +267,7 @@ Reglas:
         <p class="callout__title">Tu acción — pega esto ahora</p>
         <p>Un mensaje nuevo. Bob muestra el código de los tres tests de repositorio y espera tu <strong>ok</strong> antes de crear archivos.</p>
       </div>
-      <div class="code-block">
+      <div class="code-block code-block--prompt">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>FASE 3 — GENERACIÓN DE TESTS (un lote a la vez)
 
@@ -298,7 +298,7 @@ No crees archivos ni ejecutes mvn sin permiso. Tras el ok, DETENTE. Espera el si
         <p class="callout__title">Tu acción — pega esto ahora</p>
         <p>Un mensaje nuevo. Mismo loop: código → <strong>ok</strong> → crear archivos.</p>
       </div>
-      <div class="code-block">
+      <div class="code-block code-block--prompt">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>LOTE 2 — Tests de modelos (com.pharmacy.model)
 
@@ -327,7 +327,7 @@ Tras el ok, DETENTE. Espera el siguiente prompt.</code></pre>
         <p class="callout__title">Tu acción — pega esto ahora</p>
         <p>Un mensaje nuevo. Último lote de generación. Después de tu <strong>ok</strong>, baja a Paso 6.</p>
       </div>
-      <div class="code-block">
+      <div class="code-block code-block--prompt">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>LOTE 3 — Tests de resources JAX-RS (com.pharmacy.api)
 
@@ -443,7 +443,7 @@ Tras el ok, DETENTE. Espera el siguiente prompt.</code></pre>
 
     <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)"><code>mvn test</code> reporta "cannot find symbol" o clases faltantes</h3>
     <p class="cds--body-01">Archivos <code>.class</code> obsoletos de una ejecución anterior. Fuerza una recompilación completa:</p>
-    <div class="code-block">
+    <div class="code-block code-block--terminal">
       <button type="button" class="copy-button">Copiar</button>
       <pre><code>mvn clean test</code></pre>
     </div>
@@ -466,14 +466,14 @@ Tras el ok, DETENTE. Espera el siguiente prompt.</code></pre>
 
     <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">Informe JaCoCo no generado — no existe <code>target/site/jacoco/</code></h3>
     <p class="cds--body-01">El informe necesita el goal <code>jacoco:report</code> explícitamente; <code>mvn test</code> solo no lo produce.</p>
-    <div class="code-block">
+    <div class="code-block code-block--terminal">
       <button type="button" class="copy-button">Copiar</button>
       <pre><code>mvn clean test jacoco:report</code></pre>
     </div>
 
     <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">La terminal de Bob muestra la versión incorrecta de Java</h3>
     <p class="cds--body-01"><code>sdk use</code> es por sesión de shell — no se aplica entre pestañas ni a la terminal que Bob abre por su cuenta. Ejecútalo en la terminal de Bob (macOS/Linux):</p>
-    <div class="code-block">
+    <div class="code-block code-block--terminal">
       <button type="button" class="copy-button">Copiar</button>
       <pre><code>sdk use java 21.0.7-zulu</code></pre>
     </div>

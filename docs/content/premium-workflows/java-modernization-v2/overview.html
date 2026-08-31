@@ -26,7 +26,7 @@
     <p class="cds--body-01">Los Labs 1–3 forman el recorrido principal y secuencial. El Lab 4, el Lab 4 alternativo y el Lab 5 pueden realizarse después en el orden que necesites. En esta variante Bob ejecuta los workflows nativos; revisa cada análisis, plan y aprobación antes de continuar.</p>
     <div class="callout" data-tone="note">
       <p class="callout__title">Qué cambia al tener Premium</p>
-      <p>En lugar de reproducir cada fase con prompts, seleccionarás el workflow adecuado en Bob y validarás sus resultados: <strong>Java Modernization</strong>, <strong>Java Upgrade</strong>, <strong>UI Modernization</strong>, <strong>Java Unit Testing</strong> y <strong>Java Vulnerabilities Detection</strong>. El Lab Alt-4 (TDD) no tiene workflow: se hace en Agent Mode.</p>
+      <p>En lugar de reproducir cada fase con prompts, abre <strong>Workflows ▶</strong> y elige el flujo: <strong>Java Modernization</strong> (subtipos Liberty Replatforming, Java Upgrade y UI Modernization), <strong>Java Unit Testing</strong> y <strong>Java Vulnerabilities Detection</strong>. El Lab Alt-4 (TDD) no tiene workflow: se hace en Agent Mode.</p>
     </div>
   </section>
 
@@ -161,7 +161,7 @@
     <div class="callout" data-tone="warning">
       <p class="callout__title">Libera los puertos entre labs</p>
       <p>Detén cualquier servidor Liberty antes de continuar. Si un puerto queda ocupado, el siguiente lab puede ejecutar una instancia anterior.</p>
-      <div class="code-block"><button type="button" class="copy-button">Copiar</button><pre><code>lsof -ti:9080,9081,9443 | xargs kill -9</code></pre></div>
+      <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>lsof -ti:9080,9081,9443 | xargs kill -9</code></pre></div>
     </div>
   </section>
 

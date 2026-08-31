@@ -22,8 +22,8 @@
         <span class="lab-banner__metric-label">minutos</span>
       </div>
       <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">9</span>
-        <span class="lab-banner__metric-label">pasos</span>
+        <span class="lab-banner__metric-value">5</span>
+        <span class="lab-banner__metric-label">ejercicios</span>
       </div>
       <div class="lab-banner__metric">
         <span class="lab-banner__metric-value">1</span>
@@ -44,11 +44,11 @@
     </p>
     <div class="callout" data-tone="note" style="margin-top:var(--cds-spacing-05,1rem)">
       <p class="callout__title">Alternativa independiente al Lab 4</p>
-      <p>No necesitas haber completado los Labs 1–4 — solo la especificación OpenAPI en el bundle del workshop.</p>
+      <p>Los Ejercicios 1, 2 y 4 se hacen solos (solo necesitas <code>snapTDD</code> y la spec OpenAPI). El <strong>Ejercicio 3 es opcional</strong> y sí requiere el Lab 4 o el archivo de referencia en <code>snapD</code>. El Ejercicio 5 (refactor) también es opcional.</p>
     </div>
     <div class="callout" data-tone="note" style="margin-top:var(--cds-spacing-04,0.75rem)">
       <p class="callout__title">Un solo modo durante todo el lab</p>
-      <p>Cada ejercicio se ejecuta en el único Agent Mode de Bob — no hay nada que cambiar entre generar tests, implementar y comparar.</p>
+      <p>Cada ejercicio se ejecuta en el único Agent Mode de Bob — no hay workflow TDD en la pestaña Workflows. A diferencia de los Labs 1–5, aquí Bob genera archivos de una vez (sin loop de <code>ok</code> por archivo). Si quieres ver el diff antes, pídeselo.</p>
     </div>
   </section>
 
@@ -161,7 +161,7 @@
       Configuración del entorno
     </h2>
 
-    <h3 class="cds--productive-heading-02">Paso 1: Revisar la especificación API</h3>
+    <h3 class="cds--productive-heading-02">Preparación: revisar la especificación API</h3>
     <p class="cds--body-01">Abre <code>prescription-api-spec.yaml</code> y revisa los endpoints:</p>
     <ul class="cds--list--unordered">
       <li class="cds--list__item"><code>GET /prescriptions</code> — recuperar todas las prescripciones</li>
@@ -249,8 +249,8 @@ tiene PENDING y VALIDATED — no introduzcas FULFILLED ni EXPIRED.</code></pre>
     </ul>
 
     <div class="callout" data-tone="warning" style="margin-top:var(--cds-spacing-05,1rem)">
-      <p class="callout__title">Checkpoint RED — ejecuta los tests ahora y observa que FALLAN</p>
-      <p>Este es el Red de Red-Green-Refactor. Con los tests escritos pero sin implementación aún, ejecuta:</p>
+      <p class="callout__title">Checkpoint RED — ejecuta esto en la terminal</p>
+      <p>No es un prompt para Bob. Este es el Red de Red-Green-Refactor. Con los tests escritos pero sin implementación, ejecuta en la <strong>terminal de Bob</strong>:</p>
       <div class="code-block">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>mvn test</code></pre>
@@ -329,7 +329,9 @@ Usa el namespace jakarta.ws.rs (NO javax). @Path("/prescriptions"), con @GET get
 
       <div class="callout" data-tone="warning" style="margin-bottom:var(--cds-spacing-05,1rem)">
         <p class="callout__title">Requiere el Lab 4 completado (o <code>snapD</code> del bundle)</p>
-        <p>El archivo <code>PrescriptionResource.java</code> que se copia solo existe en <code>snapD-unit-test-gen</code> una vez que el Lab 4 lo ha generado. Si no hiciste el Lab 4, abre <code>snapD</code> del bundle del workshop — contiene la implementación de referencia. Este ejercicio no puede completarse sin ese archivo.</p>
+        <p>El archivo <code>PrescriptionResource.java</code> de referencia está en el bundle:</p>
+        <p><code>labs/lab4-unit-test-generation/snapD-unit-test-gen/src/main/java/com/pharmacy/api/PrescriptionResource.java</code></p>
+        <p style="margin-top:0.5rem">Cópialo a <code>snapTDD</code> y renómbralo a <code>traditional_PrescriptionResource.java</code>. Si no tienes <code>snapD</code>, salta este ejercicio y ve al Ejercicio 4.</p>
       </div>
 
       <ol class="cds--list--ordered">
@@ -365,7 +367,7 @@ Usa el namespace jakarta.ws.rs (NO javax). @Path("/prescriptions"), con @GET get
     </ul>
       <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
         <p class="callout__title">Cuando tengas el resumen de diferencias → baja al Ejercicio 4</p>
-        <p>Ejecuta <code>mvn test</code> para confirmar GREEN. El Ejercicio 5 (refactor) es opcional.</p>
+        <p>El Ejercicio 3 termina aquí. El <code>mvn test</code> de GREEN se hace en el Ejercicio 4, no ahora.</p>
       </div>
   </section>
 
@@ -476,6 +478,10 @@ Usa el namespace jakarta.ws.rs (NO javax). @Path("/prescriptions"), con @GET get
 
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 5d — Verificar que los tests siguen en verde</h3>
+      <div class="callout" data-tone="note" style="margin-bottom:var(--cds-spacing-04,0.75rem)">
+        <p class="callout__title">Tu acción — ejecuta esto en la terminal</p>
+        <p>No es un prompt para Bob.</p>
+      </div>
       <div class="code-block">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>mvn test</code></pre>

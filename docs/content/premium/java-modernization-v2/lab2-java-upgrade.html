@@ -21,7 +21,7 @@
         <span class="lab-banner__metric-label">minutos</span>
       </div>
       <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">10</span>
+        <span class="lab-banner__metric-value">4</span>
         <span class="lab-banner__metric-label">pasos</span>
       </div>
       <div class="lab-banner__metric">
@@ -34,7 +34,7 @@
   <!-- Prerrequisitos -->
   <div class="callout" data-tone="note">
     <p class="callout__title">Antes de empezar — configura el entorno</p>
-    <p>Este lab parte de <strong>Java 8</strong> en el snapshot <code>snapB</code> (salida del Lab 1). No necesitas instalar Java 21 de antemano — Bob te guiará a instalarlo durante la migración. Sigue la guía de setup del overview si aún no lo has hecho.</p>
+    <p>Este lab parte de <strong>Java 8</strong> en el snapshot <code>snapB</code>, que ya incluye el estado post-Lab 1: no necesitas haber ejecutado el Lab 1 tú mismo. Instala Java 21 de antemano (guía del overview) para no perder tiempo en la sesión; si falta, Bob puede instalarlo durante el Cambio 1.</p>
     <a class="cds--link" href="#/lab/java-modernization-v2/overview">Ver guía de setup en el overview →</a>
   </div>
 
@@ -53,7 +53,7 @@
       <ul class="lab-workspace-setup__checks">
         <li>En el explorador de Bob debe verse <code>pom.xml</code> en la raíz</li>
         <li><strong>No</strong> abras <code>simple-pharmacy-workshop-v2/</code>, <code>labs/</code> ni <code>lab2-java-upgrade/</code></li>
-        <li>Este snapshot ya está en Liberty (salida del Lab 1) — puedes hacer este lab sin haber hecho el Lab 1</li>
+        <li>Este snapshot ya incluye el estado post-Lab 1 — no necesitas haber ejecutado el Lab 1 tú mismo</li>
         <li>Confirma que el indicador de modo en la parte inferior dice <strong>Agent</strong></li>
       </ul>
       <p class="lab-workspace-setup__note"><strong>Lab 3:</strong> al terminar, cambia a <code>.../labs/lab3-ui-modernization/snapC-ui-mod/</code>.</p>
@@ -62,20 +62,20 @@
 
   <!-- Qué cambia en este lab -->
   <div class="lab-delta">
-    <span class="lab-delta__item lab-delta__item--changed">Java 8 <span class="lab-delta__arrow">→</span> Java 21 (Semeru)</span>
+    <span class="lab-delta__item lab-delta__item--changed">Java 8 <span class="lab-delta__arrow">→</span> Java 21 (Zulu o Semeru)</span>
     <span class="lab-delta__item lab-delta__item--changed">Struts 2.5.x <span class="lab-delta__arrow">→</span> Struts 7.x</span>
     <span class="lab-delta__item lab-delta__item--changed">javax.* <span class="lab-delta__arrow">→</span> jakarta.*</span>
     <span class="lab-delta__item lab-delta__item--changed">servlet-3.1 <span class="lab-delta__arrow">→</span> webProfile-10.0</span>
   </div>
 
-  <!-- Parámetros de migración -->
+  <!-- Valores objetivo de la migración -->
   <section class="lab-section" aria-labelledby="lab2-contexto">
     <h2 class="cds--productive-heading-03" id="lab2-contexto">
       <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
-      Parámetros de migración
+      Valores objetivo de la migración
     </h2>
     <p class="cds--body-01" style="max-width:72ch;margin-bottom:var(--cds-spacing-04,0.75rem)">
-      Tres cosas cambian a la vez — JDK, namespace Jakarta y versión mayor de Struts — y la app no arrancará hasta que las tres estén alineadas,
+      Referencia para el chat — no hay un formulario que rellenar. Tres cosas cambian a la vez — JDK, namespace Jakarta y versión mayor de Struts — y la app no arrancará hasta que las tres estén alineadas,
       más la configuración de Liberty que a veces hay que corregir a mano.
     </p>
 
@@ -88,7 +88,7 @@
       <table class="lab-table">
         <thead>
           <tr>
-            <th>Parámetro de migración</th>
+            <th>Campo</th>
             <th>Valor objetivo</th>
           </tr>
         </thead>
@@ -262,7 +262,7 @@ Reglas:
 
       <div class="callout" data-tone="warning" style="margin-top:var(--cds-spacing-05,1rem)">
         <p class="callout__title">Bob encadenó todos los cambios o saltó a validación</p>
-        <p>Si ves "todos aplicados" o un botón de <code>mvn compile</code> sin haber aprobado cada diff, interrumpe con el prompt de recuperación del <a href="overview.html#ov-como">overview</a>. Para la captura <code>lab2-phase2-javax-jakarta.png</code>, sube al chat hasta el <strong>Cambio 3</strong> (javax → jakarta en <code>pom.xml</code>) o pide: <em>"Muéstrame el diff del Cambio 3 sin aplicar nada más"</em>.</p>
+        <p>Si ves "todos aplicados" o un botón de <code>mvn compile</code> sin haber aprobado cada diff, interrumpe con el prompt de recuperación del <a href="#/lab/java-modernization-v2/overview#ov-como">overview</a>. Para la captura <code>lab2-phase2-javax-jakarta.png</code>, sube al chat hasta el <strong>Cambio 3</strong> (javax → jakarta en <code>pom.xml</code>) o pide: <em>"Muéstrame el diff del Cambio 3 sin aplicar nada más"</em>.</p>
       </div>
 
       <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
@@ -330,7 +330,11 @@ Si falla, muéstrame el error completo antes de proponer ningún fix.</code></pr
 
     <div class="lab-step" style="margin-top:var(--cds-spacing-06,1.5rem)">
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 4 — Inspecciona el diff (opcional: ejecutar en Liberty)</h3>
-      <p class="cds--body-01">Abre archivos bajo <code>src/main/java/com/pharmacy/action/</code> y confirma los cambios de namespace. El objetivo del lab es un <strong>compile limpio</strong>; ejecutar la app es opcional. Si quieres ver la app corriendo:</p>
+      <p class="cds--body-01">Abre archivos bajo <code>src/main/java/com/pharmacy/action/</code> y confirma los cambios de namespace. El objetivo del lab es un <strong>compile limpio</strong>; ejecutar la app es opcional.</p>
+      <div class="callout" data-tone="note" style="margin-bottom:var(--cds-spacing-04,0.75rem)">
+        <p class="callout__title">Opcional — terminal integrada o pídeselo a Bob en el chat</p>
+        <p>Este comando no es un prompt. Si quieres ver la app, ejecútalo tú en la terminal de Bob o pega el error al chat si falla.</p>
+      </div>
       <div class="code-block code-block--terminal">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>mvn liberty:run</code></pre>

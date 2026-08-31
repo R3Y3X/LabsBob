@@ -21,8 +21,8 @@
         <span class="lab-banner__metric-label">minutos</span>
       </div>
       <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">27</span>
-        <span class="lab-banner__metric-label">pasos</span>
+        <span class="lab-banner__metric-value">6</span>
+        <span class="lab-banner__metric-label">fases</span>
       </div>
       <div class="lab-banner__metric">
         <span class="lab-banner__metric-value">1</span>
@@ -84,7 +84,7 @@
       <table class="lab-table">
         <thead>
           <tr>
-            <th>Parámetro</th>
+            <th>Configuración objetivo</th>
             <th>Valor para este lab</th>
           </tr>
         </thead>
@@ -267,25 +267,25 @@ Reglas:
       </div>
       <div class="code-block code-block--prompt">
         <button type="button" class="copy-button">Copiar</button>
-        <pre><code>FASE 3 — FRONTEND: SCAFFOLD (un paso a la vez)
+        <pre><code>FASE 3 — FRONTEND: SCAFFOLD (un subpaso a la vez)
 
-Paso 1 — Scaffold Vite + React + TypeScript:
+Subpaso A — Scaffold Vite + React + TypeScript:
   npm create vite@latest frontend -- --template react-ts
-Paso 2 — Instalar dependencias:
+Subpaso B — Instalar dependencias:
   cd frontend &amp;&amp; npm install
   npm install @mui/material @emotion/react @emotion/styled @mui/icons-material
   npm install react-router-dom
-Paso 3 — Configurar vite.config.ts:
+Subpaso C — Configurar vite.config.ts:
   - server.port: 3000
   - proxy /api → http://localhost:9081/simple-pharmacy/api
-Paso 4 — App.tsx mínimo con tema Material UI
+Subpaso D — App.tsx mínimo con tema Material UI
 
 Solo con mi permiso: npm run dev → http://localhost:3000/
 
 El scaffold debe verse genérico y vacío — sin datos de farmacia todavía.
 Eso es el hito esperado, no un API rota. Confirma con "El scaffold se ve bien".
 
-Reglas: un paso por turno. Muestra comandos o código, pregunta, PARA hasta mi "ok".
+Reglas: un subpaso por turno. Muestra comandos o código, pregunta, PARA hasta mi "ok".
 No ejecutes npm ni arranques el dev server sin permiso.</code></pre>
       </div>
       <p class="cds--body-01" style="margin-top:var(--cds-spacing-05,1rem)"><strong>Qué hará Bob:</strong></p>
@@ -323,13 +323,13 @@ No ejecutes npm ni arranques el dev server sin permiso.</code></pre>
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>FASE 4 — COMPONENTES Y PÁGINAS (un archivo a la vez)
 
-Paso 1 — Tipos: src/types/pharmacy.ts (Medicine, Order, Prescription, Dashboard)
-Paso 2 — API client: src/api/pharmacyApi.ts (base URL relativa /api vía proxy Vite)
-Paso 3 — Componentes Material UI:
+Subpaso A — Tipos: src/types/pharmacy.ts (Medicine, Order, Prescription, Dashboard)
+Subpaso B — API client: src/api/pharmacyApi.ts (base URL relativa /api vía proxy Vite)
+Subpaso C — Componentes Material UI:
   Dashboard.tsx, PrescriptionList.tsx, PrescriptionView.tsx, PrescriptionCreate.tsx,
   MedicineList.tsx, OrderList.tsx, OrderView.tsx
-Paso 4 — App.tsx con react-router-dom y barra de navegación MUI
-Paso 5 — Con mi permiso: npm run dev → http://localhost:3000/
+Subpaso D — App.tsx con react-router-dom y barra de navegación MUI
+Subpaso E — Con mi permiso: npm run dev → http://localhost:3000/
 
 Checkpoint: dashboard, medicinas, prescripciones y pedidos deben renderizar
 con datos en vivo del backend. Si las páginas están vacías, revisa context root / proxy.
@@ -346,7 +346,7 @@ No ejecutes npm run dev sin permiso.</code></pre>
         <img src="./assets/images/labs/java-modernization-v2/lab3-phase3-react-app.png"
              alt="El frontend React de Simple Pharmacy corriendo en localhost:3000 mostrando el dashboard con datos reales del backend"
              class="lab-figure__img" />
-        <figcaption class="lab-figure__caption">Frontend React + Material UI en <code>localhost:3000</code> mostrando datos reales del backend Liberty</figcaption>
+        <figcaption class="lab-figure__caption">Resultado de la Fase 4 (no del scaffold de la Fase 3): frontend React + Material UI en <code>localhost:3000</code> con datos reales del backend Liberty</figcaption>
       </figure>
 
       <div class="callout" data-tone="note" style="margin-top:var(--cds-spacing-05,1rem)">
@@ -377,15 +377,14 @@ No ejecutes npm run dev sin permiso.</code></pre>
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>FASE 5 — CONTAINERIZACIÓN (opcional si hay tiempo)
 
-Antes de containerizar, detén ambos servidores:
+Antes de containerizar, detén ambos servidores (pídeselo a Bob o hazlo tú en la terminal):
 - Vite (puerto 3000): Ctrl+C
 - Liberty (puerto 9081): Ctrl+C
   Si el puerto queda ocupado: lsof -ti:9081 | xargs kill -9
 
-Pide a Bob:
-1. Generar Dockerfile multi-stage (build Maven + build npm + imagen Liberty)
-2. docker build y docker run para validar el estado final
-3. Confirmar que /api/dashboard responde en el contenedor
+1. Genera un Dockerfile multi-stage (build Maven + build npm + imagen Liberty)
+2. Ejecuta docker build y docker run para validar el estado final
+3. Confirma que /api/dashboard responde en el contenedor
 
 Si no hay tiempo, puedes saltar esta fase — el lab se considera completo con Fase 6.</code></pre>
       </div>
@@ -402,25 +401,29 @@ Si no hay tiempo, puedes saltar esta fase — el lab se considera completo con F
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Paso 6 — Prompt para Bob</h3>
       <div class="callout" data-tone="note" style="margin-bottom:var(--cds-spacing-04,0.75rem)">
-        <p class="callout__title">Tu acción — pega esto ahora</p>
-        <p>Verifica backend + frontend juntos. Pega el bloque en el mismo chat.</p>
+        <p class="callout__title">Tu acción — pega esto en el chat</p>
+        <p>Pega el bloque abajo. Bob arrancará Liberty y el frontend en <strong>su</strong> terminal integrada. No abras terminales tú salvo que el troubleshooting lo pida.</p>
       </div>
       <div class="code-block code-block--prompt">
         <button type="button" class="copy-button">Copiar</button>
         <pre><code>FASE 6 — VALIDACIÓN INTEGRADA
 
-1. Arranca Liberty (terminal 1, desde la raíz del proyecto):
+Arranca tú (Bob) los dos procesos en tu terminal integrada. Yo no abro terminales.
+
+1. Arranca Liberty desde la raíz del proyecto:
    mvn liberty:run
+   Confirma que escucha en el puerto 9081.
 
 2. Verifica los endpoints:
    curl http://localhost:9081/simple-pharmacy/api/dashboard
    curl http://localhost:9081/simple-pharmacy/api/medicines
    curl http://localhost:9081/simple-pharmacy/api/prescriptions
 
-3. Arranca el frontend (terminal 2, carpeta frontend/):
+3. Arranca el frontend (carpeta frontend/):
    npm run dev
+   Confirma http://localhost:3000/
 
-4. Abre http://localhost:3000/ y confirma:
+4. Confirma en el navegador:
    - Dashboard con datos reales
    - Lista de prescripciones carga
    - Búsqueda de medicamentos funciona
@@ -432,7 +435,7 @@ Si no hay tiempo, puedes saltar esta fase — el lab se considera completo con F
       </div>
       <p class="cds--body-01" style="margin-top:var(--cds-spacing-05,1rem)"><strong>Qué hará Bob:</strong></p>
       <ul class="cds--list--unordered">
-        <li class="cds--list__item">Arrancar Liberty y el frontend, y verificar curls + el dashboard en el navegador</li>
+        <li class="cds--list__item">Arrancar Liberty y el frontend en su terminal integrada, y verificar curls + el dashboard en el navegador</li>
         <li class="cds--list__item">Confirmar que el proxy Vite <code>/api</code> devuelve el mismo JSON que Liberty</li>
       </ul>
     </div>

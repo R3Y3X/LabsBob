@@ -20,7 +20,7 @@
         <span class="lab-banner__metric-label">minutos</span>
       </div>
       <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">13</span>
+        <span class="lab-banner__metric-value">4</span>
         <span class="lab-banner__metric-label">pasos</span>
       </div>
       <div class="lab-banner__metric">
@@ -89,6 +89,11 @@
       Paso 2 — FASE 1: Análisis
     </h2>
 
+    <div class="callout" data-tone="note">
+      <p class="callout__title">Regla de este lab — chat vs terminal</p>
+      <p>Pega los prompts en el <strong>chat</strong> de Agent Mode. Bob ejecuta Maven y el resto de comandos en <strong>su terminal integrada</strong>. Tú solo usas la terminal si un callout lo pide (troubleshooting, matar un puerto, o arrancar Liberty opcionalmente).</p>
+    </div>
+
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Objetivo</h3>
       <p class="cds--body-01">Que Bob analice la aplicación, consuma el migration plan AMA y construya un inventario de cambios necesarios — sin modificar archivos todavía.</p>
@@ -156,7 +161,7 @@ Cambios mínimos para el objetivo del lab. Sin refactors ni funcionalidades extr
       <ol class="cds--list--ordered" style="margin:0 0 var(--cds-spacing-05,1rem)">
         <li class="cds--list__item">Bob propone el <strong>Cambio 1</strong> con un diff completo y pregunta "¿Aplico el Cambio 1?"</li>
         <li class="cds--list__item">Tú respondes <strong>ok</strong> (nuestro Approve) o das otra instrucción</li>
-        <li class="cds--list__item">Bob aplica y propone el <strong>Cambio 2</strong> — repite hasta el Cambio 6</li>
+        <li class="cds--list__item">Bob llega al <strong>Cambio 2 (OGNL)</strong> — es confirmación, sin diff. Di <strong>ok</strong> para dejarlo intacto. Luego repite el loop hasta el Cambio 6</li>
       </ol>
       <div class="code-block">
         <button type="button" class="copy-button">Copiar</button>
@@ -166,9 +171,9 @@ Cambio 1 — Javassist 3.29.2-GA (APROBAR)
   Fix: añadir javassist como dependencia explícita en pom.xml.
   ⚠️ La versión DEBE ser exactamente 3.29.2-GA.
 
-Cambio 2 — OGNL SecurityManager (NO TOCAR — falso positivo)
+Cambio 2 — OGNL SecurityManager (CONFIRMACIÓN, sin diff — falso positivo)
   El bloque ognl 3.1.26 con "RESOLVED - DO NOT CHANGE" ya está correcto.
-  Confírmame que lo dejas intacto.
+  Confírmame que lo dejas intacto. Un "ok" corto basta; no hay archivo que editar.
 
 Cambio 3 — asm-analysis 9.7 (APROBAR)
   Fix: añadir asm-analysis 9.7 junto a las otras dependencias ASM.
@@ -260,7 +265,7 @@ No, use 3.29.2-GA instead</code></pre>
       <h3 class="cds--productive-heading-02 lab-step__title">Prompt para Bob</h3>
       <div class="callout" data-tone="note" style="margin-bottom:var(--cds-spacing-04,0.75rem)">
         <p class="callout__title">Tu acción — pega esto ahora</p>
-        <p>La meta es un replatforming limpio a Liberty: que la app migrada siga compilando. Pega el bloque en el mismo chat.</p>
+        <p>Pega este bloque en el <strong>chat</strong>. Bob ejecutará <code>mvn clean compile</code> en su terminal integrada — no abras la terminal tú.</p>
       </div>
       <div class="code-block">
         <button type="button" class="copy-button">Copiar</button>
@@ -281,7 +286,7 @@ Si falla, muéstrame el error completo antes de proponer ningún fix.</code></pr
         <img src="./assets/images/labs/java-modernization-v2/lab1-phase3-build-success.png"
              alt="Bob mostrando FASE 3 con BUILD SUCCESS de Maven y Java 1.8 en el Lab 1 de Liberty Replatforming"
              class="lab-figure__img" />
-        <figcaption class="lab-figure__caption">Bob: Fase 3 — <code>mvn clean compile</code> → BUILD SUCCESS con Java 1.8</figcaption>
+        <figcaption class="lab-figure__caption">Tras pegar el prompt en el chat, Bob ejecuta <code>mvn clean compile</code> en su terminal integrada → BUILD SUCCESS con Java 1.8</figcaption>
       </figure>
     </div>
   </section>
@@ -356,7 +361,8 @@ Si falla, muéstrame el error completo antes de proponer ningún fix.</code></pr
       <button type="button" class="copy-button">Copiar</button>
       <pre><code>Error: Unable to access jarfile /Applications/IBM Bob.app/Contents/Resources/app/extensions/bob-code/assets/jars/ta-jam-2.2.1.jar</code></pre>
     </div>
-    <p class="cds--body-01" style="margin-top:0.75rem">A Bob le faltan los JARs de tooling AMA. Vienen con este workshop — descarga <code>jars.zip</code> (51 MB) desde los materiales del workshop y:</p>
+    <p class="cds--body-01" style="margin-top:0.75rem">A Bob le faltan los JARs de tooling AMA. Descarga <code>jars.zip</code> (51 MB) y:</p>
+    <p><a class="cds--link" download="jars.zip" href="./downloads/premium/java-modernization-v2/jars.zip">Descargar jars.zip</a></p>
     <ul class="cds--list--unordered">
       <li class="cds--list__item">Crea una carpeta <code>jars</code> dentro del bundle de la app Bob en <code>/Applications/IBM Bob.app/Contents/Resources/app/extensions/bob-code/assets</code></li>
       <li class="cds--list__item">Descomprime <code>jars.zip</code> ahí para que la estructura sea:
@@ -394,7 +400,7 @@ Si falla, muéstrame el error completo antes de proponer ningún fix.</code></pr
 mantén el namespace javax.*, y elimina cualquier bump de javassist/asm más allá del fix aprobado.
 NO apliques las recetas Java 8→11/17/21 — eso es el Lab 2.</code></pre>
     </div>
-    <p class="cds--body-01" style="margin-top:0.75rem">Luego recompila con <code>mvn clean package</code>.</p>
+    <p class="cds--body-01" style="margin-top:0.75rem">Luego recompila con <code>mvn clean compile</code> para coincidir con el criterio de éxito del lab.</p>
 
     <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">Build falla con <code>Unsupported class file major version</code></h3>
     <p class="cds--body-01">Maven corre en un JDK más nuevo que 8. El Lab 1 se queda en Java 8 — apunta Maven a él.</p>
@@ -405,7 +411,7 @@ NO apliques las recetas Java 8→11/17/21 — eso es el Lab 2.</code></pre>
     <p class="cds--body-01" style="margin-top:0.75rem">Luego recompila:</p>
     <div class="code-block">
       <button type="button" class="copy-button">Copiar</button>
-      <pre><code>mvn clean package</code></pre>
+      <pre><code>mvn clean compile</code></pre>
     </div>
     <p class="cds--body-01" style="margin-top:0.75rem">Confirma con <code>mvn --version</code> (imprime la versión de Java que usa Maven, que puede diferir del <code>java -version</code> de tu shell).</p>
 

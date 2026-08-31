@@ -130,22 +130,19 @@ Descargue el paquete del taller (solo se necesita
     </div>
     <h3 id="starting-state" class="cds--productive-heading-02 lab-step__title">Estado inicial</h3>
     <p>
-La instantánea incluye la especificación
-      <strong>
-, un
+La instantánea incluye la especificación OpenAPI, un
         <code>pom.xml</code>
- listo para construir y el diseño del directorio Maven vacío
-      </strong>
-, para que pueda compilar y ejecutar pruebas desde el primer turno (el comienzo real de Red-Green-Refactor). Solo generas las pruebas y la implementación:
+ listo para construir y el diseño del directorio Maven vacío,
+ para que puedas compilar y ejecutar pruebas desde el primer turno. Solo generas las pruebas y la implementación:
     </p>
     <div data-language="text" class="code-block premium-code-block">
       <pre>
         <code>alt-lab4-test-driven-development/
-└── chasquearTDD/
-    ├── pom.xml ← HECHO — Java 21 + JUnit 5 + Mockito + jakarta JAX-RS
+└── snapTDD/
+    ├── pom.xml ← LISTO — Java 21 + JUnit 5 + Mockito + jakarta JAX-RS
     ├── prescription-api-spec.yaml ← la especificación OpenAPI
-    └── fuente/
-        ├── main/java/com/pharmacy/{api,modelo,repository}/ ← vacío, listo para tu código
+    └── src/
+        ├── main/java/com/pharmacy/{api,model,repository}/ ← vacío, listo para tu código
         └── test/java/com/pharmacy/api/ ← vacío, listo para tus pruebas</code>
       </pre>
     </div>

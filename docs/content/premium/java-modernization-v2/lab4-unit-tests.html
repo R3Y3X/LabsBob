@@ -21,8 +21,8 @@
         <span class="lab-banner__metric-label">minutos</span>
       </div>
       <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">15</span>
-        <span class="lab-banner__metric-label">pasos</span>
+        <span class="lab-banner__metric-value">4</span>
+        <span class="lab-banner__metric-label">fases</span>
       </div>
       <div class="lab-banner__metric">
         <span class="lab-banner__metric-value">1</span>
@@ -75,7 +75,11 @@
   </div>
 
   <section class="lab-section" aria-labelledby="lab4-caso">
-    <h3 class="cds--productive-heading-02">Qué se prueba</h3>
+    <h2 class="cds--productive-heading-03" id="lab4-caso">
+      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>
+      Qué se prueba
+    </h2>
+    <h3 class="cds--productive-heading-02">Cobertura por capa</h3>
     <table class="lab-table" style="margin-top:var(--cds-spacing-04,0.75rem)">
       <thead>
         <tr>
@@ -117,22 +121,21 @@
       Cómo funciona (Agent Mode por fases)
     </h2>
     <p class="cds--body-01" style="max-width:72ch;margin-bottom:var(--cds-spacing-05,1rem)">
-      En lugar del workflow Java Unit Testing, este lab usa <strong>prompts por fases</strong> en Agent Mode
-      que reproducen el mismo flujo de nueve pasos del workshop:
+      Este lab usa <strong>prompts por fases</strong> en Agent Mode. El flujo tiene 4 fases (7 pasos visibles):
     </p>
     <ol class="cds--list--ordered">
       <li class="cds--list__item">Análisis del proyecto — estructura, build tool, infraestructura de tests existente</li>
       <li class="cds--list__item">Generación de estrategia — produce <code>UNITTEST.md</code> con patrones de nombres, mocking y alcance</li>
       <li class="cds--list__item">Instalación de JaCoCo y dependencias de test en <code>pom.xml</code></li>
       <li class="cds--list__item">Generación de tests por lotes — subagentes por paquete, cada uno lee la clase de producción y <code>UNITTEST.md</code></li>
-      <li class="cds--list__item">Recuperación automática — si hay archivos <code>.class</code> obsoletos o carreras de compilación, Bob los corrige</li>
+      <li class="cds--list__item">Recuperación — si hay archivos <code>.class</code> obsoletos, Bob propone el fix y espera tu <strong>ok</strong></li>
       <li class="cds--list__item">Ejecución y validación — <code>mvn test</code> y corrección de fallos</li>
       <li class="cds--list__item">Informe de cobertura — JaCoCo con cobertura por clase</li>
     </ol>
 
     <div class="callout" data-tone="note" style="margin-top:var(--cds-spacing-05,1rem)">
       <p class="callout__title">Control de permisos de Bob</p>
-      <p>Read / Edit / Execute / MCP — activa solo lo que necesites. Empieza con Read hasta que te sientas cómodo.</p>
+      <p>En el selector de permisos del panel de chat de Bob (Read / Edit / Execute / MCP), activa solo lo que necesites. Empieza con Read hasta que te sientas cómodo.</p>
     </div>
   </section>
 
@@ -140,7 +143,7 @@
   <section class="lab-section" aria-labelledby="lab4-fase1">
     <h2 class="cds--productive-heading-03" id="lab4-fase1">
       <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>
-      FASE 1 — Análisis y estrategia ( UNITTEST.md )
+      FASE 1 — Análisis y estrategia (UNITTEST.md)
     </h2>
 
     <div class="lab-step">
@@ -255,7 +258,7 @@ Reglas:
     </h2>
     <p class="cds--body-01" style="max-width:72ch;margin-bottom:var(--cds-spacing-05,1rem)">
       Bob genera tests en lotes organizados por paquete. Cada subagente lee la clase de producción y <code>UNITTEST.md</code>.
-      Si hay problemas de compilación a mitad del proceso, Bob añade tareas de recuperación y los corrige sin intervención.
+      Si hay problemas de compilación a mitad del proceso, Bob propone el fix y espera tu <strong>ok</strong> antes de aplicar — el mismo protocolo de aprobación que en los Labs 1–2.
     </p>
 
     <div class="lab-step">
@@ -376,8 +379,9 @@ Tras el ok, DETENTE. Espera el siguiente prompt.</code></pre>
 2. Genera el informe de cobertura:
    mvn jacoco:report
 
-3. Abre el informe:
-   open target/site/jacoco/index.html
+3. Abre el informe en el navegador (macOS: open; Linux: xdg-open; Windows: start):
+   target/site/jacoco/index.html
+   Si el comando no existe, ábrelo a mano.
 
 4. Reporta la cobertura por paquete y por clase.
    Objetivo: cobertura global &gt;80%.
@@ -395,7 +399,7 @@ Tras el ok, DETENTE. Espera el siguiente prompt.</code></pre>
         <img src="./assets/images/labs/java-modernization-v2/lab4-phase4-mvn-test.png"
              alt="Bob mostrando FASE 4 con BUILD SUCCESS, 185 tests y cobertura JaCoCo del 95%"
              class="lab-figure__img" />
-        <figcaption class="lab-figure__caption">Bob: Fase 4 — <code>mvn test</code> → BUILD SUCCESS, 185 tests, 0 failures, cobertura JaCoCo 95%</figcaption>
+        <figcaption class="lab-figure__caption">Ejemplo de una sesión: <code>mvn test</code> → BUILD SUCCESS, 0 failures y cobertura JaCoCo alta. Tu recuento de tests puede variar; el checkpoint es 0 failures y cobertura &gt;80%.</figcaption>
       </figure>
     </div>
 

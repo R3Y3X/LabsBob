@@ -605,10 +605,17 @@ function buildLabBannerTags(section, lab, step) {
   const accessBadge = lab.variants && lab.accessMode === 'premium'
     ? '<span class="hub-premium-badge" aria-label="Contenido premium">Premium</span>'
     : '';
+  const workflowBadge = lab.accessMode === 'premium'
+    && lab.slug === 'java-modernization-v2'
+    && step.slug !== 'overview'
+    && step.slug !== 'lab-alt4'
+    ? '<span class="cds--tag cds--tag--magenta">Workflow</span>'
+    : '';
 
   let html = `<span class="cds--tag ${sectionTag.cls}" data-workshop-route>${escapeHtml(section.label)}</span>`;
   html += `<span class="cds--tag ${sectionTag.cls}">${escapeHtml(lab.supporting)}</span>`;
   html += accessBadge;
+  html += workflowBadge;
   stepTags.forEach((tag) => {
     html += `<span class="cds--tag cds--tag--cool-gray">${escapeHtml(tag)}</span>`;
   });
@@ -1859,6 +1866,22 @@ const JAVA_PREMIUM_COMMON_SECTIONS = {
   lab5: ['lab5-caso', 'lab5-vigilar']
 };
 
+const JAVA_PREMIUM_WORKFLOWS = {
+  lab1: { card: 'Java Modernization', subtype: 'Liberty Replatforming' },
+  lab2: { card: 'Java Modernization', subtype: 'Java Upgrade' },
+  lab3: { card: 'Java Modernization', subtype: 'UI Modernization' },
+  lab4: { card: 'Java Unit Testing', subtype: null },
+  lab5: { card: 'Java Vulnerabilities Detection', subtype: null }
+};
+
+const JAVA_PREMIUM_BANNER_SUMMARIES = {
+  lab1: 'Migra Simple Pharmacy de Traditional WebSphere a Open Liberty con el workflow <strong>Java Modernization</strong> (subtipo Liberty Replatforming).',
+  lab2: 'Ejecuta el workflow <strong>Java Modernization</strong>, subtipo <strong>Java Upgrade</strong>: Java 8 → 21, Jakarta EE 10 y validación de CVE.',
+  lab3: 'Migra Struts/JSP a React + Material UI con el workflow <strong>Java Modernization</strong>, subtipo <strong>UI Modernization</strong>.',
+  lab4: 'Genera pruebas JUnit 5 / Mockito / AssertJ con el workflow <strong>Java Unit Testing</strong> y analiza la cobertura con JaCoCo.',
+  lab5: 'Detecta y remedia CVEs con el workflow <strong>Java Vulnerabilities Detection</strong>.'
+};
+
 const LAB_STEP_ICON_SVG = '<svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>';
 
 function getWorkflowSectionHeading(section) {
@@ -1881,52 +1904,115 @@ function prepareJavaWorkflowSection(section) {
   return section;
 }
 
+function describeJavaPremiumWorkflow(step) {
+  const workflow = JAVA_PREMIUM_WORKFLOWS[step.slug];
+  if (!workflow) return '';
+  return workflow.subtype
+    ? `<strong>${workflow.card}</strong> → <strong>${workflow.subtype}</strong>`
+    : `<strong>${workflow.card}</strong>`;
+}
+
+function insertAlt4PremiumNotice(panel) {
+  if (panel.querySelector('[data-alt4-premium-notice]')) return;
+  const notice = document.createElement('div');
+  notice.className = 'callout';
+  notice.dataset.tone = 'note';
+  notice.dataset.alt4PremiumNotice = 'true';
+  notice.innerHTML = [
+    '<p class="callout__title">Este lab no tiene workflow premium</p>',
+    '<p>Bob no incluye un flujo TDD en la pestaña <strong>Workflows</strong>. Aunque tengas acceso Premium, el Lab Alt-4 se hace en <strong>Agent Mode</strong>: pega cada ejercicio en el chat. No busques una tarjeta TDD.</p>'
+  ].join('');
+  const banner = panel.querySelector('.lab-banner');
+  if (banner) banner.after(notice);
+  else panel.prepend(notice);
+}
+
 function updateJavaPremiumWorkspace(panel, step) {
+  const summary = panel.querySelector('.lab-banner__summary');
+  if (summary && JAVA_PREMIUM_BANNER_SUMMARIES[step.slug]) {
+    summary.innerHTML = JAVA_PREMIUM_BANNER_SUMMARIES[step.slug];
+  }
+
   const workspace = panel.querySelector('.lab-workspace-setup');
-  if (!workspace) return;
+  const workflow = JAVA_PREMIUM_WORKFLOWS[step.slug];
+  if (workspace && workflow) {
+    const badge = workspace.querySelector('.lab-workspace-setup__badge');
+    if (badge) badge.textContent = 'Paso obligatorio — antes de ejecutar el workflow';
 
-  // Keep the banner summary from the loaded content so standard and premium
-  // variants can share the same description for every Java lab.
+    const lead = workspace.querySelector('.lab-workspace-setup__lead');
+    if (lead) {
+      lead.innerHTML = `Abre la carpeta <code>snap*</code> de este lab como raíz del proyecto. Luego abre la pestaña <strong>Workflows</strong> de Bob (botón ▶) y arranca ${describeJavaPremiumWorkflow(step)}. No pegues prompts de fase en el chat: los valores se rellenan como campos del panel.`;
+    }
 
-  const badge = workspace.querySelector('.lab-workspace-setup__badge');
-  if (badge) badge.textContent = 'Paso obligatorio — antes de ejecutar el workflow';
-
-  const lead = workspace.querySelector('.lab-workspace-setup__lead');
-  if (lead) {
-    lead.innerHTML = lead.innerHTML
-      .replace(/pega el prompt de Fase 1 de abajo\\.?/gi, 'abre la pestaña <strong>Workflows</strong> de Bob.')
-      .replace(/pega el prompt de Fase 1 de abajo/gi, 'abre la pestaña <strong>Workflows</strong> de Bob.');
+    const note = workspace.querySelector('.lab-workspace-setup__note');
+    if (note) {
+      note.innerHTML = `<strong>Confirma Workflows:</strong> el indicador de modo debe mostrar <strong>Agent</strong>. Abre <strong>Workflows</strong> con ▶ y comprueba que aparece ${describeJavaPremiumWorkflow(step)}.`;
+    }
   }
 
   if (step.slug === 'lab1') {
     const intro = panel.querySelector('#lab1-intro')?.closest('.lab-section');
     const introLead = intro?.querySelector('p');
     if (introLead) {
-      introLead.innerHTML = 'Migrarás el Simple Pharmacy Management System de Traditional WebSphere Application Server (TWas) al runtime ligero Liberty usando el workflow <strong>Java Modernization</strong> de Bob V2 en tres fases: Analizar → Aplicar cambios → Validar. Bob explica cada cambio y solicita tu aprobación antes de tocar un archivo.';
+      introLead.innerHTML = 'Migrarás el Simple Pharmacy Management System de Traditional WebSphere Application Server (TWas) al runtime ligero Liberty usando el workflow <strong>Java Modernization</strong> de Bob V2 (subtipo Liberty Replatforming). Bob explica cada cambio y solicita tu aprobación en el panel del workflow antes de tocar un archivo.';
     }
 
-    const note = workspace.querySelector('.lab-workspace-setup__note');
-    if (note) {
-      note.innerHTML = '<strong>Confirma Workflows:</strong> en el panel de Bob verifica el modo <strong>Agent</strong>, abre la pestaña <strong>Workflows</strong> con el botón ▶ y comprueba que aparece <strong>Java Modernization</strong>.';
+    const checkpoint = panel.querySelector('#lab1-checkpoint')?.closest('.lab-section');
+    const chatFallback = [...(checkpoint?.querySelectorAll('.callout') || [])]
+      .find((callout) => /copia el error/i.test(callout.textContent));
+    if (chatFallback) {
+      const title = chatFallback.querySelector('.callout__title');
+      if (title) title.textContent = 'Si el workflow falla — entonces usa el chat';
+      const body = chatFallback.querySelector('p:not(.callout__title)');
+      if (body) {
+        body.innerHTML = 'Una compilación limpia basta para terminar. Si quieres arrancar Liberty y algo falla, copia el error de la terminal o del navegador al chat de Bob <em>después</em> de agotar la recuperación del workflow. El chat es el respaldo, no el camino principal.';
+      }
+    }
+  }
+
+  if (step.slug === 'lab2') {
+    const context = panel.querySelector('#lab2-contexto')?.closest('.lab-section');
+    const heading = context?.querySelector('h2');
+    if (heading && /parámetros|valores objetivo/i.test(heading.textContent)) {
+      heading.childNodes.forEach((node) => {
+        if (node.nodeType === Node.TEXT_NODE && /parámetros|valores objetivo/i.test(node.textContent)) {
+          node.textContent = ' Valores a configurar en el workflow';
+        }
+      });
+    }
+    const warning = [...(context?.querySelectorAll('.callout p') || [])]
+      .find((item) => /Agent Mode/i.test(item.textContent));
+    if (warning) {
+      warning.innerHTML = 'Es el lab con más cambios técnicos (JDK + Jakarta + Struts + CVE). En sesiones reales con el workflow <strong>Java Upgrade</strong> suele completarse en <strong>~10–12 min</strong>; el tiempo orientativo del workshop (<strong>~15 min</strong>) incluye revisión de planes y aprobaciones. Si el workflow no resuelve un error de runtime, entonces pégalo en el chat.';
+    }
+    context?.querySelectorAll('td').forEach((cell) => {
+      if (/Semeru \(IBM\) o Zulu 21/i.test(cell.textContent)) {
+        cell.innerHTML = '<strong>Semeru (IBM)</strong> — selecciónalo en el panel del workflow';
+      }
+    });
+  }
+
+  if (step.slug === 'lab3') {
+    const context = panel.querySelector('#lab3-contexto')?.closest('.lab-section');
+    context?.querySelectorAll('th').forEach((cell) => {
+      if (/^parámetro$/i.test(cell.textContent.trim())) cell.textContent = 'Configuración objetivo';
+    });
+    const warning = [...(context?.querySelectorAll('.callout p') || [])]
+      .find((item) => /pegar errores/i.test(item.textContent) || /Agent Mode/i.test(item.textContent));
+    if (warning && /pegar|chat/i.test(warning.textContent)) {
+      warning.innerHTML = 'Es un lab largo. Si un subtarea del workflow falla, usa primero <strong>Reintentar</strong> en el panel; el chat es solo para depurar errores de runtime que el workflow no resuelva.';
     }
   }
 
   const premiumContext = panel.querySelector('#lab5-vigilar')?.closest('.lab-section');
   premiumContext?.querySelectorAll('li').forEach((item) => {
-    if (/prompts en Agent Mode/i.test(item.textContent)) {
-      item.innerHTML = '<strong>Lab independiente</strong> — no depende de los Labs 1–3; ejecuta el workflow <strong>Vulnerabilities Detection</strong>.';
+    if (/prompts en Agent Mode|prompts por fase/i.test(item.textContent)) {
+      item.innerHTML = '<strong>Lab independiente</strong> — no depende de los Labs 1–3; ejecuta el workflow <strong>Java Vulnerabilities Detection</strong>.';
     }
     if (/prompt de aprobación/i.test(item.textContent)) {
-      item.innerHTML = '<strong>Flujo de remediación interactivo</strong> — cada CVE recibe un fix propuesto y una aprobación dentro del workflow.';
+      item.innerHTML = '<strong>Flujo de remediación interactivo</strong> — cada CVE recibe un fix propuesto y una aprobación dentro del panel del workflow.';
     }
   });
-
-  const tddContext = panel.querySelector('#labalt4-que')?.closest('.lab-section');
-  const tddAgentParagraph = [...(tddContext?.querySelectorAll('p') || [])]
-    .find((paragraph) => /Agent Mode/i.test(paragraph.textContent));
-  if (tddAgentParagraph) {
-    tddAgentParagraph.innerHTML = 'Cada ejercicio se ejecuta con el workflow <strong>TDD</strong> de Bob; el recorrido mantiene el ciclo Red → Green → Refactor.';
-  }
 }
 
 function replaceJavaPremiumActionSections(panel, step, workflowMarkup) {
@@ -1937,7 +2023,8 @@ function replaceJavaPremiumActionSections(panel, step, workflowMarkup) {
 
   const commonSectionIds = new Set(JAVA_PREMIUM_COMMON_SECTIONS[step.slug] || []);
   [...panel.querySelectorAll(':scope > .lab-section')].forEach((section) => {
-    const id = section.querySelector(':scope > h2')?.id;
+    const id = section.querySelector(':scope > h2')?.id
+      || section.getAttribute('aria-labelledby');
     if (!commonSectionIds.has(id)) section.remove();
   });
 
@@ -1962,11 +2049,20 @@ async function applyPremiumWorkflowVariant(proseEl, lab, step) {
   if (
     lab.accessMode !== 'premium'
     || lab.slug !== 'java-modernization-v2'
-    || !step.workflowSourceFile
   ) return;
 
   const panel = proseEl.querySelector('.content-panel.lab-template');
   if (!panel || panel.dataset.workflowVariantApplied === 'true') return;
+
+  // Alt-4 has no native TDD workflow in Bob. Keep the Agent Mode lab and
+  // tell participants not to look for a Workflows card.
+  if (step.slug === 'lab-alt4') {
+    panel.dataset.workflowVariantApplied = 'true';
+    insertAlt4PremiumNotice(panel);
+    return;
+  }
+
+  if (!step.workflowSourceFile) return;
 
   const workflowMarkup = await loadContent(step.workflowSourceFile);
   panel.dataset.workflowVariantApplied = 'true';

@@ -7,7 +7,7 @@
     <h1 class="cds--productive-heading-05 lab-banner__title">Laboratorio 5 — Detección y corrección de vulnerabilidades</h1>
     <p class="cds--body-02 lab-banner__summary">
       Escanea las dependencias de la aplicación de farmacia en busca de CVEs conocidos,
-      entiende cada hallazgo, remedia y vuelve a escanear limpio — todo con prompts por fases en Agent Mode.
+      entiende cada hallazgo, remedia y vuelve a escanear limpio — con el workflow <strong>Java Vulnerabilities Detection</strong>.
     </p>
     <div class="lab-banner__metrics">
       <div class="lab-banner__metric">
@@ -444,7 +444,7 @@ Haga clic en el botón de reproducción (
     </figure>
   </section>
   <section class="lab-section" aria-labelledby="step-2-run-the-vulnerabilities-detection-workflow">
-    <h2 class="cds--productive-heading-03" id="step-2-run-the-vulnerabilities-detection-workflow">Paso 2: ejecute el flujo de trabajo Vulnerabilities Detection</h2>
+    <h2 class="cds--productive-heading-03" id="step-2-run-the-vulnerabilities-detection-workflow">Paso 2: ejecute el flujo de trabajo Java Vulnerabilities Detection</h2>
     <h3 id="objective" class="cds--productive-heading-02 lab-step__title">Objetivo</h3>
     <p>Active el flujo de trabajo y deje que Bob realice un análisis completo de las dependencias.</p>
     <h3 id="21-start-the-workflow" class="cds--productive-heading-02 lab-step__title">2.1 Iniciar el flujo de trabajo</h3>
@@ -550,12 +550,12 @@ El escáner informa
     <h3 id="objective_2" class="cds--productive-heading-02 lab-step__title">Objetivo</h3>
     <p>Aplique las correcciones propuestas por Bob a través del flujo de corrección interactivo.</p>
     <h3 id="41-start-remediation" class="cds--productive-heading-02 lab-step__title">4.1 Iniciar la corrección</h3>
-    <p>Según el informe de hallazgos, dígale a Bob que continúe. Pasa por CVEs uno a la vez.</p>
+    <p>En el panel del workflow, confirma la subtarea de remediación (elige <strong>Sí</strong> / aprobar cada fix). Recorre los CVEs uno a la vez. No pegues un prompt en el chat para esto.</p>
     <figure class="lab-figure premium-workflow__figure">
       <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/vulnerabilities-found-prompt.png" target="_blank" rel="noopener">
         <img src="./assets/images/labs/java-modernization-v2/premium/vulnerabilities-found-prompt.png" class="lab-figure__img" alt="Bob solicita corregir las vulnerabilidades detectadas" />
       </a>
-      <figcaption class="lab-figure__caption">Referencia visual — Bob solicita corregir las vulnerabilidades detectadas. Verifica este estado antes de continuar.</figcaption>
+      <figcaption class="lab-figure__caption">Referencia visual — Panel de aprobación del workflow para las vulnerabilidades detectadas. Verifica este estado antes de continuar.</figcaption>
     </figure>
     <h3 id="42-interactive-approval-flow" class="cds--productive-heading-02 lab-step__title">4.2 Flujo de aprobación interactivo</h3>
     <p>Para cada hallazgo, Bob:</p>

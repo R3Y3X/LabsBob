@@ -3315,7 +3315,7 @@ body[data-category="premium"] .callout:not([data-tone]) {
 
 /* ── Premium labs: clean terminal code blocks (no white halo) ── */
 
-body[data-category="premium"] .code-block {
+body[data-category="premium"] .lab-shell:not(.lab-shell--ibm-i-rpg-development) .code-block {
   display: grid;
   min-width: 0;
   margin: 1.25rem 0;
@@ -3325,11 +3325,11 @@ body[data-category="premium"] .code-block {
   box-shadow: none;
 }
 
-body[data-category="premium"] .callout .code-block {
+body[data-category="premium"] .lab-shell:not(.lab-shell--ibm-i-rpg-development) .callout .code-block {
   margin: 0.75rem 0 0;
 }
 
-body[data-category="premium"] .code-block .copy-button {
+body[data-category="premium"] .lab-shell:not(.lab-shell--ibm-i-rpg-development) .code-block .copy-button {
   position: static;
   justify-self: end;
   margin: 0.75rem 0.75rem 0;
@@ -3338,13 +3338,13 @@ body[data-category="premium"] .code-block .copy-button {
   color: #f4f4f4;
 }
 
-body[data-category="premium"] .code-block .copy-button:hover {
+body[data-category="premium"] .lab-shell:not(.lab-shell--ibm-i-rpg-development) .code-block .copy-button:hover {
   border-color: #ffffff;
   background: #262626;
 }
 
-body[data-category="premium"] .code-block pre,
-body[data-category="premium"] .prose .code-block pre {
+body[data-category="premium"] .lab-shell:not(.lab-shell--ibm-i-rpg-development) .code-block pre,
+body[data-category="premium"] .lab-shell:not(.lab-shell--ibm-i-rpg-development) .prose .code-block pre {
   margin: 0.5rem 0 0 !important;
   padding: 0 1.25rem 1.25rem !important;
   border-left: 0 !important;
@@ -3352,8 +3352,8 @@ body[data-category="premium"] .prose .code-block pre {
   color: #f4f4f4 !important;
 }
 
-body[data-category="premium"] .code-block pre code,
-body[data-category="premium"] .prose .code-block pre code {
+body[data-category="premium"] .lab-shell:not(.lab-shell--ibm-i-rpg-development) .code-block pre code,
+body[data-category="premium"] .lab-shell:not(.lab-shell--ibm-i-rpg-development) .prose .code-block pre code {
   color: #f4f4f4 !important;
 }
 
@@ -4734,19 +4734,33 @@ body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent :is(.code-block--p
  * could squeeze checklist text into a narrow column. The three contexts here
  * are intentional: Bob prompt, executable terminal, and neutral artifact.
  */
-:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) {
+.lab-shell.lab-shell--java-modernization-v2 {
   --modernization-accent: #198038;
   --modernization-accent-strong: #0e6027;
   --modernization-tab: #defbe6;
   --modernization-file-ink: #161616;
 }
 
-:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) .lab-section > h2,
-:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) .lab-step__title {
+/* Metrics communicate the workshop context; decorative color chips do not. */
+.lab-shell.lab-shell--java-modernization-v2 .lab-banner__tags {
+  display: none !important;
+}
+
+.lab-shell.lab-shell--java-modernization-v2 .lab-workspace-setup__box {
   border-left-color: var(--modernization-accent) !important;
 }
 
-:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.lab-section > h2, .lab-step__title) > svg {
+.lab-shell.lab-shell--java-modernization-v2 .lab-workspace-setup__badge {
+  background: var(--modernization-accent) !important;
+  color: #ffffff !important;
+}
+
+.lab-shell.lab-shell--java-modernization-v2 .lab-section > h2,
+.lab-shell.lab-shell--java-modernization-v2 .lab-step__title {
+  border-left-color: var(--modernization-accent) !important;
+}
+
+.lab-shell.lab-shell--java-modernization-v2 :is(.lab-section > h2, .lab-step__title) > svg {
   display: inline-block !important;
   width: 1.25rem !important;
   height: 1.25rem !important;
@@ -4756,7 +4770,7 @@ body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent :is(.code-block--p
 }
 
 /* Icons never take part in the text width calculation. */
-:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) .lab-checklist > .cds--list__item {
+.lab-shell.lab-shell--java-modernization-v2 .lab-checklist > .cds--list__item {
   display: block !important;
   position: relative !important;
   min-width: 0 !important;
@@ -4766,7 +4780,7 @@ body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent :is(.code-block--p
   line-height: 1.5 !important;
 }
 
-:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) .lab-checklist > .cds--list__item::before {
+.lab-shell.lab-shell--java-modernization-v2 .lab-checklist > .cds--list__item::before {
   position: absolute !important;
   top: 0.17rem !important;
   left: 0 !important;
@@ -4775,13 +4789,13 @@ body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent :is(.code-block--p
   line-height: 1 !important;
 }
 
-:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) .lab-checklist > .lab-list__item--checked {
+.lab-shell.lab-shell--java-modernization-v2 .lab-checklist > .lab-list__item--checked {
   display: block !important;
   position: relative !important;
   padding-left: 1.9rem !important;
 }
 
-:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) .lab-checklist > .lab-list__item--checked > .lab-list__icon {
+.lab-shell.lab-shell--java-modernization-v2 .lab-checklist > .lab-list__item--checked > .lab-list__icon {
   position: absolute !important;
   top: 0.17rem !important;
   left: 0 !important;
@@ -4790,8 +4804,8 @@ body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent :is(.code-block--p
   color: var(--modernization-accent) !important;
 }
 
-:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--prompt, .code-block--terminal),
-:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--file, .code-block--json, .code-block--yaml) {
+.lab-shell.lab-shell--java-modernization-v2 :is(.code-block--prompt, .code-block--terminal),
+.lab-shell.lab-shell--java-modernization-v2 :is(.code-block--file, .code-block--json, .code-block--yaml) {
   display: block !important;
   position: relative !important;
   min-width: 0 !important;
@@ -4801,7 +4815,7 @@ body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent :is(.code-block--p
   box-shadow: none !important;
 }
 
-:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--prompt, .code-block--terminal) {
+.lab-shell.lab-shell--java-modernization-v2 :is(.code-block--prompt, .code-block--terminal) {
   background: #161616 !important;
   border: 1px solid #525252 !important;
   border-left: 4px solid var(--modernization-accent) !important;
@@ -4809,14 +4823,14 @@ body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent :is(.code-block--p
 }
 
 /* Old pages may carry a generic pseudo heading. Labels are real DOM content. */
-:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--prompt, .code-block--terminal)::before,
-:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--file, .code-block--json, .code-block--yaml)::before {
+.lab-shell.lab-shell--java-modernization-v2 :is(.code-block--prompt, .code-block--terminal)::before,
+.lab-shell.lab-shell--java-modernization-v2 :is(.code-block--file, .code-block--json, .code-block--yaml)::before {
   content: none !important;
   display: none !important;
 }
 
-:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--prompt, .code-block--terminal) > .code-block__label,
-:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--file, .code-block--json, .code-block--yaml) > .code-block__label {
+.lab-shell.lab-shell--java-modernization-v2 :is(.code-block--prompt, .code-block--terminal) > .code-block__label,
+.lab-shell.lab-shell--java-modernization-v2 :is(.code-block--file, .code-block--json, .code-block--yaml) > .code-block__label {
   position: absolute !important;
   z-index: 2 !important;
   top: -2.85rem !important;
@@ -4835,21 +4849,21 @@ body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent :is(.code-block--p
   line-height: 1.25rem !important;
 }
 
-:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) .code-block--prompt > .code-block__label {
+.lab-shell.lab-shell--java-modernization-v2 .code-block--prompt > .code-block__label {
   border: 1px solid #a7f0ba !important;
   border-bottom: 0 !important;
   background: var(--modernization-tab) !important;
   color: var(--modernization-accent-strong) !important;
 }
 
-:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) .code-block--terminal > .code-block__label {
+.lab-shell.lab-shell--java-modernization-v2 .code-block--terminal > .code-block__label {
   border: 1px solid #393939 !important;
   border-bottom: 0 !important;
   background: #161616 !important;
   color: #f4f4f4 !important;
 }
 
-:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--prompt, .code-block--terminal) pre {
+.lab-shell.lab-shell--java-modernization-v2 :is(.code-block--prompt, .code-block--terminal) pre {
   min-width: 0 !important;
   margin: 0 !important;
   padding: 4.25rem 1.25rem 1.25rem !important;
@@ -4858,13 +4872,13 @@ body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent :is(.code-block--p
   color: #f4f4f4 !important;
 }
 
-:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--prompt, .code-block--terminal) :is(code, code *) {
+.lab-shell.lab-shell--java-modernization-v2 :is(.code-block--prompt, .code-block--terminal) :is(code, code *) {
   background: transparent !important;
   color: #f4f4f4 !important;
   -webkit-text-fill-color: #f4f4f4 !important;
 }
 
-:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--prompt, .code-block--terminal) > .copy-button {
+.lab-shell.lab-shell--java-modernization-v2 :is(.code-block--prompt, .code-block--terminal) > .copy-button {
   position: absolute !important;
   z-index: 1 !important;
   top: 1rem !important;
@@ -4877,32 +4891,32 @@ body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent :is(.code-block--p
   box-shadow: none !important;
 }
 
-:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--prompt, .code-block--terminal) > .copy-button:hover {
+.lab-shell.lab-shell--java-modernization-v2 :is(.code-block--prompt, .code-block--terminal) > .copy-button:hover {
   border-color: #42be65 !important;
   background: var(--modernization-accent) !important;
   color: #ffffff !important;
 }
 
-:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) .copy-button:focus-visible {
+.lab-shell.lab-shell--java-modernization-v2 .copy-button:focus-visible {
   outline: 2px solid #42be65 !important;
   outline-offset: 2px !important;
 }
 
-:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--file, .code-block--json, .code-block--yaml) {
+.lab-shell.lab-shell--java-modernization-v2 :is(.code-block--file, .code-block--json, .code-block--yaml) {
   border: 1px solid #c6c6c6 !important;
   border-left: 4px solid #6f6f6f !important;
   background: #f4f4f4 !important;
   color: #161616 !important;
 }
 
-:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--file, .code-block--json, .code-block--yaml) > .code-block__label {
+.lab-shell.lab-shell--java-modernization-v2 :is(.code-block--file, .code-block--json, .code-block--yaml) > .code-block__label {
   border: 1px solid #c6c6c6 !important;
   border-bottom: 0 !important;
   background: #f4f4f4 !important;
   color: #393939 !important;
 }
 
-:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--file, .code-block--json, .code-block--yaml) pre {
+.lab-shell.lab-shell--java-modernization-v2 :is(.code-block--file, .code-block--json, .code-block--yaml) pre {
   min-width: 0 !important;
   margin: 0 !important;
   padding: 4.25rem 1.25rem 1.25rem !important;
@@ -4911,12 +4925,12 @@ body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent :is(.code-block--p
   color: #161616 !important;
 }
 
-:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--file, .code-block--json, .code-block--yaml) :is(code, code *) {
+.lab-shell.lab-shell--java-modernization-v2 :is(.code-block--file, .code-block--json, .code-block--yaml) :is(code, code *) {
   background: transparent !important;
   color: #161616 !important;
 }
 
-:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--file, .code-block--json, .code-block--yaml) > .copy-button {
+.lab-shell.lab-shell--java-modernization-v2 :is(.code-block--file, .code-block--json, .code-block--yaml) > .copy-button {
   position: absolute !important;
   z-index: 1 !important;
   top: 1rem !important;
@@ -4929,61 +4943,449 @@ body.cds--g100 .lab-shell.lab-shell--agentic-retail-confluent :is(.code-block--p
   box-shadow: none !important;
 }
 
-:is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--file, .code-block--json, .code-block--yaml) > .copy-button:hover {
+.lab-shell.lab-shell--java-modernization-v2 :is(.code-block--file, .code-block--json, .code-block--yaml) > .copy-button:hover {
   border-color: var(--modernization-accent-strong) !important;
   background: var(--modernization-accent) !important;
   color: #ffffff !important;
 }
 
-body.cds--g100 :is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--prompt, .code-block--terminal) {
+body.cds--g100 .lab-shell.lab-shell--java-modernization-v2 :is(.code-block--prompt, .code-block--terminal) {
   background: #000000 !important;
   border-color: #393939 !important;
   border-left-color: var(--modernization-accent) !important;
 }
 
-body.cds--g100 :is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) .code-block--terminal > .code-block__label {
+body.cds--g100 .lab-shell.lab-shell--java-modernization-v2 .code-block--terminal > .code-block__label {
   background: #000000 !important;
 }
 
-body.cds--g100 :is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--file, .code-block--json, .code-block--yaml) {
+body.cds--g100 .lab-shell.lab-shell--java-modernization-v2 :is(.code-block--file, .code-block--json, .code-block--yaml) {
   border-color: #525252 !important;
   border-left-color: #8d8d8d !important;
   background: #262626 !important;
   color: #f4f4f4 !important;
 }
 
-body.cds--g100 :is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) {
+body.cds--g100 .lab-shell.lab-shell--java-modernization-v2 {
   --modernization-file-ink: #f4f4f4;
 }
 
-body.cds--g100 :is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--file, .code-block--json, .code-block--yaml) > .code-block__label {
+body.cds--g100 .lab-shell.lab-shell--java-modernization-v2 :is(.code-block--file, .code-block--json, .code-block--yaml) > .code-block__label {
   border-color: #525252 !important;
   background: #262626 !important;
   color: #f4f4f4 !important;
 }
 
-body.cds--g100 :is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--file, .code-block--json, .code-block--yaml) > .copy-button {
+body.cds--g100 .lab-shell.lab-shell--java-modernization-v2 :is(.code-block--file, .code-block--json, .code-block--yaml) > .copy-button {
   border-color: #8d8d8d !important;
   background: #393939 !important;
   color: #f4f4f4 !important;
 }
 
-body.cds--g100 :is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--file, .code-block--json, .code-block--yaml) :is(pre, code, code *) {
+body.cds--g100 .lab-shell.lab-shell--java-modernization-v2 :is(.code-block--file, .code-block--json, .code-block--yaml) :is(pre, code, code *) {
   color: #f4f4f4 !important;
 }
 
 @media (max-width: 500px) {
-  :is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--prompt, .code-block--terminal, .code-block--file, .code-block--json, .code-block--yaml) {
+  .lab-shell.lab-shell--java-modernization-v2 :is(.code-block--prompt, .code-block--terminal, .code-block--file, .code-block--json, .code-block--yaml) {
     margin-top: 3.25rem !important;
   }
 
-  :is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--prompt, .code-block--terminal, .code-block--file, .code-block--json, .code-block--yaml) > .code-block__label {
+  .lab-shell.lab-shell--java-modernization-v2 :is(.code-block--prompt, .code-block--terminal, .code-block--file, .code-block--json, .code-block--yaml) > .code-block__label {
     max-width: calc(100% + 4px) !important;
     padding-right: 0.875rem !important;
     padding-left: 0.875rem !important;
   }
 
-  :is(.lab-shell.lab-shell--java-modernization-v2, .lab-shell.lab-shell--ibm-i-rpg-development) :is(.code-block--prompt, .code-block--terminal, .code-block--file, .code-block--json, .code-block--yaml) pre {
+  .lab-shell.lab-shell--java-modernization-v2 :is(.code-block--prompt, .code-block--terminal, .code-block--file, .code-block--json, .code-block--yaml) pre {
     padding: 4.5rem 1rem 1rem !important;
+  }
+}
+
+/*
+ * Track E / IBM i RPG — green instructional system.
+ * Prompt, terminal and file must not share a surface. Tabs use the same
+ * clip-path lengüeta as Primeros Pasos and Integraciones.
+ */
+.lab-shell.lab-shell--ibm-i-rpg-development {
+  --rpg-green: var(--hub-premium, #198038);
+  --rpg-green-dark: #0e6027;
+  --rpg-green-tint: #defbe6;
+  --rpg-green-border: #a7f0ba;
+  --rpg-file-ink: #161616;
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development .lab-banner__tags {
+  display: none !important;
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development .rpg-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin: 0 0 1rem;
+  color: var(--cds-text-secondary, #525252);
+  font-size: 0.8125rem;
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development .rpg-meta__item {
+  display: inline-flex;
+  gap: 0.375rem;
+  align-items: baseline;
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development .rpg-meta__label {
+  color: var(--cds-text-helper, #6f6f6f);
+  font-weight: 600;
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development .rpg-meta__value {
+  color: var(--cds-text-primary, #161616);
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development .rpg-context {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: var(--rpg-green-dark);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development .hands-on-action__purpose {
+  margin: 0.375rem 0 0;
+  color: var(--cds-text-secondary, #525252);
+  font-size: 0.875rem;
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development .rpg-checkpoint {
+  margin-top: 1rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--rpg-green-border);
+  border-left: 3px solid var(--rpg-green);
+  background: var(--rpg-green-tint);
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development .rpg-checkpoint__title {
+  margin: 0;
+  color: var(--cds-text-primary, #161616);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development .rpg-checkpoint .checklist {
+  margin-top: 0.625rem;
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development .rpg-checkpoint .checklist__item::before {
+  border-color: var(--rpg-green);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6l3 3 5-5' stroke='%23198038' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development .lab-workspace-setup__box {
+  border-left-color: var(--rpg-green);
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development .lab-workspace-setup__badge {
+  background: var(--rpg-green);
+  color: #ffffff;
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development .lab-section > h2,
+.lab-shell.lab-shell--ibm-i-rpg-development .lab-step__title {
+  border-left-color: var(--rpg-green);
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development :is(.lab-section > h2, .lab-step__title, .lab-workspace-setup__title) > .lab-section__icon {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-inline-end: 0.5rem;
+  vertical-align: -0.18em;
+  color: var(--rpg-green);
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development .prereq-item__icon,
+.lab-shell.lab-shell--ibm-i-rpg-development .stack-compare__arrow {
+  color: var(--rpg-green);
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development .lab-accordion__trigger[aria-expanded="true"] {
+  color: var(--rpg-green-dark);
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development .code-block::before {
+  content: none !important;
+  display: none !important;
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development :is(.code-block--prompt, .code-block--terminal, .code-block--file, .code-block--json, .code-block--yaml) {
+  display: block;
+  position: relative;
+  min-width: 0;
+  overflow: visible;
+  margin: 2.75rem 0 1.5rem;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development .code-block--prompt {
+  background: var(--rpg-green-tint) !important;
+  border: 1px solid var(--rpg-green-border);
+  border-left: 4px solid var(--rpg-green);
+  color: var(--cds-text-primary, #161616);
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development .code-block--prompt pre,
+.lab-shell.lab-shell--ibm-i-rpg-development .code-block--prompt pre code,
+.lab-shell.lab-shell--ibm-i-rpg-development .code-block--prompt :is(code, code *) {
+  color: var(--cds-text-primary, #161616) !important;
+  -webkit-text-fill-color: var(--cds-text-primary, #161616) !important;
+  background: transparent !important;
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development .code-block--prompt > .code-block__label {
+  position: absolute;
+  z-index: 2;
+  top: -2.125rem;
+  left: -1px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.125rem;
+  max-width: calc(100% - 0.5rem);
+  margin: 0;
+  padding: 0.375rem 1rem 0.375rem 0.875rem;
+  border: 1px solid var(--rpg-green-border);
+  border-bottom: 0;
+  background: var(--rpg-green-tint) !important;
+  clip-path: polygon(0 0, calc(100% - 0.625rem) 0, 100% 100%, 0 100%);
+  color: var(--rpg-green-dark) !important;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development .code-block--prompt > .copy-button {
+  border-color: var(--rpg-green);
+  background: transparent;
+  color: var(--rpg-green-dark);
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development .code-block--prompt > .copy-button:hover {
+  background: #a7f0ba;
+  color: var(--rpg-green-dark);
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development .code-block--terminal {
+  background: #161616 !important;
+  border: 1px solid #393939;
+  border-left: 4px solid #8d8d8d;
+  border-right: 4px solid var(--rpg-green);
+  color: #f4f4f4;
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development .code-block--terminal > .code-block__label {
+  position: absolute;
+  z-index: 2;
+  top: -2.125rem;
+  left: -1px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.125rem;
+  max-width: calc(100% - 0.5rem);
+  margin: 0;
+  padding: 0.375rem 1rem 0.375rem 0.875rem;
+  border: 1px solid #525252;
+  border-bottom: 0;
+  background: #161616 !important;
+  clip-path: polygon(0 0, calc(100% - 0.625rem) 0, 100% 100%, 0 100%);
+  color: #f4f4f4 !important;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development .code-block--terminal :is(pre, pre code, code, code *) {
+  color: #f4f4f4 !important;
+  -webkit-text-fill-color: #f4f4f4 !important;
+  background: transparent !important;
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development .code-block--terminal > .copy-button {
+  border-color: var(--rpg-green-border);
+  background: #262626;
+  color: #f4f4f4;
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development .code-block--terminal > .copy-button:hover {
+  border-color: #42be65;
+  background: var(--rpg-green);
+  color: #ffffff;
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development :is(.code-block--file, .code-block--json, .code-block--yaml) {
+  background: #f4f4f4 !important;
+  border: 1px solid #c6c6c6;
+  border-left: 4px solid #6f6f6f;
+  color: #161616;
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development :is(.code-block--file, .code-block--json, .code-block--yaml) > .code-block__label {
+  position: absolute;
+  z-index: 2;
+  top: -2.125rem;
+  left: -1px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.125rem;
+  max-width: calc(100% - 0.5rem);
+  margin: 0;
+  padding: 0.375rem 1rem 0.375rem 0.875rem;
+  border: 1px solid #c6c6c6;
+  border-bottom: 0;
+  background: #f4f4f4 !important;
+  clip-path: polygon(0 0, calc(100% - 0.625rem) 0, 100% 100%, 0 100%);
+  color: #393939 !important;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development :is(.code-block--file, .code-block--json, .code-block--yaml) :is(pre, pre code, code, code *) {
+  color: var(--rpg-file-ink, #161616) !important;
+  -webkit-text-fill-color: var(--rpg-file-ink, #161616) !important;
+  background: transparent !important;
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development :is(.code-block--file, .code-block--json, .code-block--yaml) > .copy-button {
+  border-color: #525252;
+  background: #ffffff;
+  color: #161616;
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development :is(.code-block--file, .code-block--json, .code-block--yaml) > .copy-button:hover {
+  border-color: var(--rpg-green-dark);
+  background: var(--rpg-green);
+  color: #ffffff;
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development :is(.code-block--prompt, .code-block--terminal, .code-block--file, .code-block--json, .code-block--yaml) pre {
+  min-width: 0;
+  margin: 0 !important;
+  padding: 1.25rem !important;
+  overflow-x: auto;
+  background: transparent !important;
+  border-left: 0 !important;
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development :is(.code-block--prompt, .code-block--terminal, .code-block--file, .code-block--json, .code-block--yaml) > .copy-button {
+  position: absolute;
+  z-index: 1;
+  top: 0.75rem;
+  right: 0.75rem;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development .copy-button:focus-visible {
+  outline: 2px solid var(--rpg-green);
+  outline-offset: 2px;
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development .lab-checklist > .cds--list__item,
+.lab-shell.lab-shell--ibm-i-rpg-development .lab-checklist > .lab-list__item--checked {
+  display: block;
+  position: relative;
+  min-width: 0;
+  margin: 0.5rem 0;
+  padding-left: 1.9rem;
+  overflow-wrap: break-word;
+  line-height: 1.5;
+}
+
+.lab-shell.lab-shell--ibm-i-rpg-development .lab-checklist > .cds--list__item::before,
+.lab-shell.lab-shell--ibm-i-rpg-development .lab-checklist > .lab-list__item--checked > .lab-list__icon {
+  position: absolute;
+  top: 0.17rem;
+  left: 0;
+  margin: 0;
+  color: var(--rpg-green);
+  line-height: 1;
+}
+
+body.cds--g100 .lab-shell.lab-shell--ibm-i-rpg-development {
+  --rpg-file-ink: #f4f4f4;
+}
+
+body.cds--g100 .lab-shell.lab-shell--ibm-i-rpg-development .rpg-meta__value,
+body.cds--g100 .lab-shell.lab-shell--ibm-i-rpg-development .rpg-checkpoint__title {
+  color: #f4f4f4;
+}
+
+body.cds--g100 .lab-shell.lab-shell--ibm-i-rpg-development .rpg-checkpoint,
+body.cds--g100 .lab-shell.lab-shell--ibm-i-rpg-development .code-block--prompt {
+  border-color: #0e6027;
+  background: #0e2e17 !important;
+}
+
+body.cds--g100 .lab-shell.lab-shell--ibm-i-rpg-development .code-block--prompt > .code-block__label {
+  border-color: #0e6027;
+  background: #0e2e17 !important;
+  color: #a7f0ba !important;
+}
+
+body.cds--g100 .lab-shell.lab-shell--ibm-i-rpg-development .code-block--prompt pre,
+body.cds--g100 .lab-shell.lab-shell--ibm-i-rpg-development .code-block--prompt pre code,
+body.cds--g100 .lab-shell.lab-shell--ibm-i-rpg-development .code-block--prompt :is(code, code *) {
+  color: #f4f4f4 !important;
+  -webkit-text-fill-color: #f4f4f4 !important;
+}
+
+body.cds--g100 .lab-shell.lab-shell--ibm-i-rpg-development .code-block--prompt > .copy-button {
+  border-color: #a7f0ba;
+  color: #defbe6;
+}
+
+body.cds--g100 .lab-shell.lab-shell--ibm-i-rpg-development .code-block--terminal {
+  background: #000000 !important;
+  border-right-color: #42be65;
+}
+
+body.cds--g100 .lab-shell.lab-shell--ibm-i-rpg-development .code-block--terminal > .code-block__label {
+  background: #000000 !important;
+}
+
+body.cds--g100 .lab-shell.lab-shell--ibm-i-rpg-development :is(.code-block--file, .code-block--json, .code-block--yaml) {
+  background: #262626 !important;
+  border-color: #525252;
+  border-left-color: #8d8d8d;
+  color: #f4f4f4;
+}
+
+body.cds--g100 .lab-shell.lab-shell--ibm-i-rpg-development :is(.code-block--file, .code-block--json, .code-block--yaml) > .code-block__label {
+  border-color: #525252;
+  background: #262626 !important;
+  color: #f4f4f4 !important;
+}
+
+body.cds--g100 .lab-shell.lab-shell--ibm-i-rpg-development :is(.code-block--file, .code-block--json, .code-block--yaml) > .copy-button {
+  border-color: #8d8d8d;
+  background: #393939;
+  color: #f4f4f4;
+}
+
+@media (max-width: 500px) {
+  .lab-shell.lab-shell--ibm-i-rpg-development :is(.code-block--prompt, .code-block--terminal, .code-block--file, .code-block--json, .code-block--yaml) {
+    margin-top: 1.5rem;
+  }
+
+  .lab-shell.lab-shell--ibm-i-rpg-development :is(.code-block--prompt, .code-block--terminal, .code-block--file, .code-block--json, .code-block--yaml) > .code-block__label {
+    position: static;
+    max-width: none;
+    margin: 0.75rem 0 0 0.75rem;
+    border-bottom-width: 1px;
+    clip-path: none;
   }
 }

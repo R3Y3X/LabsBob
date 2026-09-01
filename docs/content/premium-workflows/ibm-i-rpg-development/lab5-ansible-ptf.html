@@ -1,9 +1,10 @@
 <div class="content-panel lab-template premium-workflow">
   <div class="lab-banner">
-    <div class="lab-banner__tags">
-      <span class="cds--tag cds--tag--green">Premium</span>
-      <span class="cds--tag cds--tag--cool-gray">Ansible + PTF</span>
-      <span class="cds--tag cds--tag--cool-gray">Opcional</span>
+    <div class="rpg-meta" aria-label="Información del Lab 5">
+      <span class="rpg-meta__item"><span class="rpg-meta__label">Lab</span><span class="rpg-meta__value">05 · Ansible PTF</span></span>
+      <span class="rpg-meta__item"><span class="rpg-meta__label">Duración</span><span class="rpg-meta__value">~30 min</span></span>
+      <span class="rpg-meta__item"><span class="rpg-meta__label">Modo</span><span class="rpg-meta__value">Ansible · IBM i</span></span>
+      <span class="rpg-meta__item"><span class="rpg-meta__label">Acceso</span><span class="rpg-meta__value">Premium · opcional</span></span>
     </div>
     <h1 class="cds--productive-heading-05 lab-banner__title">Laboratorio 5 — Gestión de PTF con Ansible (opcional)</h1>
     <p class="cds--body-02 lab-banner__summary">Crea un asistente Ansible para comprobar, informar y automatizar la gestión de PTF en IBM i.</p>
@@ -27,24 +28,11 @@
     </div>
   </div>
   <section class="lab-section" aria-labelledby="lab5-introduccion">
-    <h2 class="cds--productive-heading-03" id="lab5-introduccion">Introducción</h2>
+    <h2 class="cds--productive-heading-03" id="lab5-introduccion"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>Introducción</h2>
     <p>
       <strong>Dificultad:</strong>
  Intermedio
     </p>
-    <div class="callout" data-tone="warning">
-      <p class="callout__title">Laboratorio opcional: requiere un entorno aprovisionado</p>
-      <p>
-Este laboratorio es
-        <strong>opcional</strong>
-. Requiere un entorno IBM i aprovisionado (acceso SSH, autoridades de gestión PTF) y el servidor IBM i MCP de
-        <a href="#/lab/ibm-i-rpg-development/lab4">Lab 4</a>
-. Si no tiene uno, puede omitir esta práctica de laboratorio de manera segura.
-      </p>
-    </div>
-  </section>
-  <section class="lab-section" aria-labelledby="introduction">
-    <h2 class="cds--productive-heading-03" id="introduction">Introducción</h2>
     <p>Esta práctica de laboratorio lo guiará a través de la creación de un asistente automatizado para administrar las correcciones temporales del programa (PTF) en sistemas IBM i utilizando Ansible con la integración del asistente Bob AI. Aprenderá a aprovechar las capacidades de inteligencia artificial de Bob para optimizar las comprobaciones de moneda PTF, automatizar los informes de cumplimiento y administrar las actualizaciones del sistema de manera eficiente.</p>
     <div class="callout" data-tone="note">
       <p class="callout__title">Objetivos</p>
@@ -55,6 +43,16 @@ Este laboratorio es
         <li class="cds--list__item">Genere informes formateados para administradores de sistemas.</li>
         <li class="cds--list__item">Explore escenarios de automatización avanzada para entornos IBM i.</li>
       </ul>
+    </div>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">Laboratorio opcional: requiere un entorno aprovisionado</p>
+      <p>
+Este laboratorio es
+        <strong>opcional</strong>
+. Requiere un entorno IBM i aprovisionado (acceso SSH, autoridades de gestión PTF) y el servidor IBM i MCP de
+        <a href="#/lab/ibm-i-rpg-development/lab4">Lab 4</a>
+. Si no tiene uno, puede omitir esta práctica de laboratorio de manera segura.
+      </p>
     </div>
   </section>
   <!-- Workspace setup -->
@@ -72,7 +70,7 @@ Este laboratorio es
   </section>
 
   <section class="lab-section" aria-labelledby="prerequisites">
-    <h2 class="cds--productive-heading-03" id="prerequisites">Requisitos previos</h2>
+    <h2 class="cds--productive-heading-03" id="prerequisites"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>Requisitos previos</h2>
     <h3 id="ibm-i-system-requirements" class="cds--productive-heading-02 lab-step__title">Requisitos del sistema IBM i</h3>
     <ul class="cds--list--unordered">
       <li class="cds--list__item">IBM i 7.3 o superior.</li>
@@ -103,12 +101,14 @@ Ansible 2.9+ instalado (
       <li class="cds--list__item">Python 3.8+ con pip.</li>
       <li class="cds--list__item">Colecciones de IBM i Ansible:</li>
     </ul>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block code-block--terminal">
+        <p class="code-block__label">$ Terminal integrada</p>
       <pre>
         <code>ansible-galaxy collection install ibm.power_ibmi</code>
       </pre>
     </div>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block code-block--terminal">
+        <p class="code-block__label">$ Terminal integrada</p>
       <pre>
         <code>ansible-galaxy collection install ibm.power_hmc</code>
       </pre>
@@ -120,20 +120,22 @@ Ansible 2.9+ instalado (
     </ul>
     <h3 id="verify-setup" class="cds--productive-heading-02 lab-step__title">Verificar configuración</h3>
     <p>Verifica la instalación de Ansible:</p>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block code-block--terminal">
+        <p class="code-block__label">$ Terminal integrada</p>
       <pre>
         <code>ansible --version</code>
       </pre>
     </div>
     <p>Verifica que la colección de IBM i esté instalada:</p>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block code-block--terminal">
+        <p class="code-block__label">$ Terminal integrada</p>
       <pre>
         <code>ansible-galaxy collection list | grep ibm.power_ibmi</code>
       </pre>
     </div>
   </section>
   <section class="lab-section" aria-labelledby="custom-mode-configuration">
-    <h2 class="cds--productive-heading-03" id="custom-mode-configuration">Configuración del modo personalizado</h2>
+    <h2 class="cds--productive-heading-03" id="custom-mode-configuration"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>Configuración del modo personalizado</h2>
     <p>
 Para esto usaremos el modo personalizado
       <code>ansible-for-i</code>
@@ -141,7 +143,8 @@ Para esto usaremos el modo personalizado
       <code>./.bob/custom_modes.yaml</code>
 :
     </p>
-    <div data-language="yaml" class="code-block premium-code-block">
+    <div data-language="yaml" class="code-block code-block--file">
+        <p class="code-block__label">Archivo de configuración · YAML</p>
       <pre>
         <code>- slug: ansible-for-i
   name: ℹ️ Ansible for i
@@ -178,7 +181,7 @@ Para esto usaremos el modo personalizado
     </div>
   </section>
   <section class="lab-section" aria-labelledby="first-playbook-creation">
-    <h2 class="cds--productive-heading-03" id="first-playbook-creation">Primera creación del libro de jugadas</h2>
+    <h2 class="cds--productive-heading-03" id="first-playbook-creation"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>Primera creación del libro de jugadas</h2>
     <h3 id="part-1-using-bob-to-generate-the-playbook" class="cds--productive-heading-02 lab-step__title">Parte 1: Usar a Bob para generar el libro de jugadas</h3>
     <p>Usemos a Bob para generar la estructura completa del libro de jugadas y el código de automatización.</p>
     <p>
@@ -195,10 +198,8 @@ Seleccione
     <p>
       <strong>Paso 2: pídale a Bob que cree la automatización de verificación de moneda PTF</strong>
     </p>
-    <p>
-      <strong>Pregunta para Bob:</strong>
-    </p>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block code-block--prompt">
+        <p class="code-block__label">Pega en el chat de Bob</p>
       <pre>
         <code>Cree un proyecto de automatización Ansible para la gestión de IBM i PTF con lo siguiente:
 
@@ -243,7 +244,8 @@ Utilice los módulos de colección IBM i Ansible (ibm.power_ibmi) y siga las mej
       <strong>Paso 4: personalizar el inventario generado</strong>
     </p>
     <p>Actualice el archivo de inventario con los detalles reales de su sistema IBM i:</p>
-    <div data-language="yaml" class="code-block premium-code-block">
+    <div data-language="yaml" class="code-block code-block--file">
+        <p class="code-block__label">Archivo de configuración · YAML</p>
       <pre>
         <code>[ibmi_systems]
 all:
@@ -263,7 +265,8 @@ Después de que Bob genere la automatización, revise la estructura del libro de
       <code>/ansible/playbooks/check_ptf_currency.yml</code>
 . Debería verse algo como:
     </p>
-    <div data-language="yaml" class="code-block premium-code-block">
+    <div data-language="yaml" class="code-block code-block--file">
+        <p class="code-block__label">Archivo de configuración · YAML</p>
       <pre>
         <code>---
 - name: Check PTF Currency on IBM i Systems
@@ -291,7 +294,7 @@ Después de que Bob genere la automatización, revise la estructura del libro de
     </div>
   </section>
   <section class="lab-section" aria-labelledby="template-development">
-    <h2 class="cds--productive-heading-03" id="template-development">Desarrollo de plantillas</h2>
+    <h2 class="cds--productive-heading-03" id="template-development"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>Desarrollo de plantillas</h2>
     <p>
 Duplique la plantilla Jinja2 en
       <code>./ansible/templates/ptf_currency_report.html.j2</code>
@@ -307,11 +310,12 @@ Duplique la plantilla Jinja2 en
     </figure>
   </section>
   <section class="lab-section" aria-labelledby="playbook-execution">
-    <h2 class="cds--productive-heading-03" id="playbook-execution">Ejecución del libro de jugadas</h2>
+    <h2 class="cds--productive-heading-03" id="playbook-execution"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>Ejecución del libro de jugadas</h2>
     <p>
       <strong>Ejecuta el libro de jugadas a través de Bob:</strong>
     </p>
-    <div data-language="text" class="code-block premium-code-block">
+    <div data-language="text" class="code-block code-block--file">
+        <p class="code-block__label">Archivo o configuración</p>
       <pre>
         <code>Ejecute el manual de control de moneda PTF</code>
       </pre>
@@ -344,7 +348,8 @@ Módulo no encontrado: reinstale la colección
       <li class="cds--list__item">Tiempo de espera de conexión: verifique las reglas del firewall y la conectividad de la red.</li>
     </ul>
     <h3 id="when-the-playbook-finishes-check-the-output-by-opening-the-html-file-in-browser" class="cds--productive-heading-02 lab-step__title">Cuando finalice el libro de jugadas, verifique el resultado abriendo el archivo HTML en el navegador.</h3>
-    <div data-language="bash" class="code-block premium-code-block">
+    <div data-language="bash" class="code-block code-block--terminal">
+        <p class="code-block__label">$ Terminal integrada</p>
       <pre>
         <code>open ./ansible/reports/&lt;REPORT_NAME&gt;</code>
       </pre>
@@ -357,9 +362,10 @@ Módulo no encontrado: reinstale la colección
     </figure>
   </section>
   <section class="lab-section" aria-labelledby="some-additional-use-cases">
-    <h2 class="cds--productive-heading-03" id="some-additional-use-cases">Algunos casos de uso adicionales</h2>
+    <h2 class="cds--productive-heading-03" id="some-additional-use-cases"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>Algunos casos de uso adicionales</h2>
     <h3 id="1-automated-ptf-application" class="cds--productive-heading-02 lab-step__title">1. Aplicación automatizada PTF</h3>
-    <div data-language="yaml" class="code-block premium-code-block">
+    <div data-language="yaml" class="code-block code-block--file">
+        <p class="code-block__label">Archivo de configuración · YAML</p>
       <pre>
         <code>- name: Apply PTF package
   ibm.power_ibmi.ibmi_fix:
@@ -369,7 +375,8 @@ Módulo no encontrado: reinstale la colección
       </pre>
     </div>
     <h3 id="2-system-health-monitoring" class="cds--productive-heading-02 lab-step__title">2. Monitoreo del estado del sistema</h3>
-    <div data-language="yaml" class="code-block premium-code-block">
+    <div data-language="yaml" class="code-block code-block--file">
+        <p class="code-block__label">Archivo de configuración · YAML</p>
       <pre>
         <code>- name: Monitor system resources
   ibm.power_ibmi.ibmi_sql_query:
@@ -378,7 +385,8 @@ Módulo no encontrado: reinstale la colección
       </pre>
     </div>
     <h3 id="3-backup-automation" class="cds--productive-heading-02 lab-step__title">3. Automatización de copias de seguridad</h3>
-    <div data-language="yaml" class="code-block premium-code-block">
+    <div data-language="yaml" class="code-block code-block--file">
+        <p class="code-block__label">Archivo de configuración · YAML</p>
       <pre>
         <code>- name: Save system configuration
   ibm.power_ibmi.ibmi_save:
@@ -388,7 +396,8 @@ Módulo no encontrado: reinstale la colección
       </pre>
     </div>
     <h3 id="4-user-authority-management" class="cds--productive-heading-02 lab-step__title">4. Gestión de autoridad de usuario</h3>
-    <div data-language="yaml" class="code-block premium-code-block">
+    <div data-language="yaml" class="code-block code-block--file">
+        <p class="code-block__label">Archivo de configuración · YAML</p>
       <pre>
         <code>- name: Grant object authority
   ibm.power_ibmi.ibmi_object_authority:
@@ -398,7 +407,8 @@ Módulo no encontrado: reinstale la colección
       </pre>
     </div>
     <h3 id="5-performance-monitoring" class="cds--productive-heading-02 lab-step__title">5. Monitoreo del desempeño</h3>
-    <div data-language="yaml" class="code-block premium-code-block">
+    <div data-language="yaml" class="code-block code-block--file">
+        <p class="code-block__label">Archivo de configuración · YAML</p>
       <pre>
         <code>- name: Collect performance data
   ibm.power_ibmi.ibmi_sql_query:
@@ -406,7 +416,8 @@ Módulo no encontrado: reinstale la colección
       </pre>
     </div>
     <h3 id="6-powerha-orchestration" class="cds--productive-heading-02 lab-step__title">6. Orquestación de PowerHA</h3>
-    <div data-language="yaml" class="code-block premium-code-block">
+    <div data-language="yaml" class="code-block code-block--file">
+        <p class="code-block__label">Archivo de configuración · YAML</p>
       <pre>
         <code>- name: Check cluster status
   ibm.power_ibmi.ibmi_cl_command:
@@ -415,7 +426,8 @@ Módulo no encontrado: reinstale la colección
       </pre>
     </div>
     <h3 id="7-power-hmc-integration" class="cds--productive-heading-02 lab-step__title">7. Integración de potencia HMC</h3>
-    <div data-language="yaml" class="code-block premium-code-block">
+    <div data-language="yaml" class="code-block code-block--file">
+        <p class="code-block__label">Archivo de configuración · YAML</p>
       <pre>
         <code>- name: Provision LPAR
   ibm.power_hmc.lpar:
@@ -426,7 +438,8 @@ Módulo no encontrado: reinstale la colección
       </pre>
     </div>
     <h3 id="8-software-installation" class="cds--productive-heading-02 lab-step__title">8. Instalación de software</h3>
-    <div data-language="yaml" class="code-block premium-code-block">
+    <div data-language="yaml" class="code-block code-block--file">
+        <p class="code-block__label">Archivo de configuración · YAML</p>
       <pre>
         <code>- name: Install licensed program
   ibm.power_ibmi.ibmi_install_product:
@@ -435,7 +448,8 @@ Módulo no encontrado: reinstale la colección
       </pre>
     </div>
     <h3 id="9-security-audit" class="cds--productive-heading-02 lab-step__title">9. Auditoría de seguridad</h3>
-    <div data-language="yaml" class="code-block premium-code-block">
+    <div data-language="yaml" class="code-block code-block--file">
+        <p class="code-block__label">Archivo de configuración · YAML</p>
       <pre>
         <code>- name: Audit user profiles
   ibm.power_ibmi.ibmi_sql_query:
@@ -443,7 +457,8 @@ Módulo no encontrado: reinstale la colección
       </pre>
     </div>
     <h3 id="10-servicenow-integration" class="cds--productive-heading-02 lab-step__title">10. Integración de ServiceNow</h3>
-    <div data-language="yaml" class="code-block premium-code-block">
+    <div data-language="yaml" class="code-block code-block--file">
+        <p class="code-block__label">Archivo de configuración · YAML</p>
       <pre>
         <code>- name: Create change request
   servicenow.itsm.change_request:
@@ -455,7 +470,7 @@ Módulo no encontrado: reinstale la colección
     </div>
   </section>
   <section class="lab-section" aria-labelledby="conclusion">
-    <h2 class="cds--productive-heading-03" id="conclusion">Conclusión</h2>
+    <h2 class="cds--productive-heading-03" id="conclusion"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>Conclusión</h2>
     <p>Ha creado con éxito un asistente de gestión PTF basado en Ansible con integración de Bob AI. Este marco de automatización proporciona:</p>
     <ul class="cds--list--unordered">
       <li class="cds--list__item">Verificación de moneda e informes de cumplimiento automatizados PTF.</li>
@@ -474,7 +489,7 @@ Módulo no encontrado: reinstale la colección
     </ul>
   </section>
   <section class="lab-section" aria-labelledby="resources">
-    <h2 class="cds--productive-heading-03" id="resources">Recursos</h2>
+    <h2 class="cds--productive-heading-03" id="resources"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>Recursos</h2>
     <ul class="cds--list--unordered">
       <li class="cds--list__item">
         <a href="https://galaxy.ansible.com/ibm/power_ibmi">IBM i Ansible Colección</a>

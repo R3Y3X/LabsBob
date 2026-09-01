@@ -1,26 +1,24 @@
 <div class="content-panel lab-template">
 
   <div class="lab-banner">
-    <div class="lab-banner__tags">
-      <span class="cds--tag cds--tag--purple">Code Mode</span>
-      <span class="cds--tag cds--tag--cool-gray">~30 min</span>
+    <div class="rpg-meta" aria-label="Información del Lab 2">
+      <span class="rpg-meta__item"><span class="rpg-meta__label">Lab</span><span class="rpg-meta__value">02 · React + Carbon UI</span></span>
+      <span class="rpg-meta__item"><span class="rpg-meta__label">Duración</span><span class="rpg-meta__value">~30 min</span></span>
+      <span class="rpg-meta__item"><span class="rpg-meta__label">Modo</span><span class="rpg-meta__value">IBM Bob · Agent</span></span>
+      <span class="rpg-meta__item"><span class="rpg-meta__label">Resultado</span><span class="rpg-meta__value">UI ejecutable</span></span>
     </div>
-    <h1 class="cds--productive-heading-05 lab-banner__title">LAB 2 — Lista de artículos con React y Carbon</h1>
-
+    <h1 class="cds--productive-heading-05 lab-banner__title">Lab 2 — Lista de artículos con React y Carbon</h1>
+    <p class="lab-banner__summary">Una app React independiente que muestra artículos en una tabla con búsqueda, similar a la pantalla verde pero moderna y responsive.</p>
     <div class="lab-banner__metrics">
-      <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">4–10</span>
-        <span class="lab-banner__metric-label">BobCoins estimados</span>
-      </div>
-      <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">~30</span>
-        <span class="lab-banner__metric-label">minutos</span>
-      </div>
+      <div class="lab-banner__metric"><span class="lab-banner__metric-value">4–10</span><span class="lab-banner__metric-label">BobCoins estimados</span></div>
+      <div class="lab-banner__metric"><span class="lab-banner__metric-value">~30</span><span class="lab-banner__metric-label">minutos</span></div>
+      <div class="lab-banner__metric"><span class="lab-banner__metric-value">Code / Agent</span><span class="lab-banner__metric-label">modo de Bob</span></div>
+      <div class="lab-banner__metric"><span class="lab-banner__metric-value">UI ejecutable</span><span class="lab-banner__metric-label">resultado</span></div>
     </div>
   </div>
 
   <section class="lab-section" aria-labelledby="lab2-contexto">
-    <h2 class="cds--productive-heading-03" id="lab2-contexto">Qué vas a construir</h2>
+    <h2 class="cds--productive-heading-03" id="lab2-contexto"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>Qué vas a construir</h2>
     <p class="cds--body-01">Una app React independiente que muestra artículos en una tabla con búsqueda, similar a la pantalla verde pero moderna y responsive. <strong>No necesitas IBM i</strong> — usamos datos de muestra.</p>
     <div class="callout" data-tone="note">
       <p class="callout__title">Prerrequisitos</p>
@@ -31,11 +29,10 @@
     </div>
   </section>
 
-  <!-- Workspace setup -->
   <section class="lab-workspace-setup" aria-labelledby="lab2-workspace">
     <div class="lab-workspace-setup__box">
       <span class="lab-workspace-setup__badge">Paso obligatorio — antes de cualquier prompt</span>
-      <h2 class="lab-workspace-setup__title" id="lab2-workspace">Paso 0 — Dónde crear el proyecto</h2>
+      <h2 class="lab-workspace-setup__title" id="lab2-workspace"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>Paso 0 — Dónde crear el proyecto</h2>
       <p class="lab-workspace-setup__lead">Este lab es independiente del bundle SAMCO: crea una carpeta nueva y vacía en tu equipo (por ejemplo <code>article-list-lab/</code>), ábrela en IBM Bob con <strong>File → Open Folder</strong> y cambia de Ask a <strong>Code Mode</strong> (Agent Mode) antes de empezar. El Paso 1 crea <code>article-list-app/</code> dentro de esa carpeta.</p>
       <ul class="lab-workspace-setup__checks">
         <li>La carpeta está vacía antes del Paso 1 — no necesitas el bundle SAMCO ni conexión a IBM i</li>
@@ -45,10 +42,14 @@
   </section>
 
   <section class="lab-section" aria-labelledby="lab2-paso1">
-    <h2 class="cds--productive-heading-03" id="lab2-paso1">Paso 1 — Crea el proyecto React</h2>
-    <div class="code-block code-block--prompt">
-      <button type="button" class="copy-button">Copiar</button>
-      <pre><code>Crea un proyecto React + TypeScript con Vite y Carbon Design System.
+    <h2 class="cds--productive-heading-03" id="lab2-paso1"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>Paso 1 — Crea el proyecto React</h2>
+    <div class="lab-step">
+      <span class="rpg-context">IBM Bob · Agent</span>
+      <p class="hands-on-action__purpose">Bob crea Vite + TypeScript + Carbon en el directorio actual.</p>
+      <div class="code-block code-block--prompt">
+        <p class="code-block__label">Pega en el chat de Bob</p>
+        <button type="button" class="copy-button">Copiar prompt</button>
+        <pre><code>Crea un proyecto React + TypeScript con Vite y Carbon Design System.
 
 Requisitos:
 - Nombre: article-list-app
@@ -58,34 +59,49 @@ Requisitos:
 - Estructura básica de carpetas
 
 Créalo en el directorio actual.</code></pre>
-    </div>
-    <div class="callout" data-tone="tip">
-      <p class="callout__title">Alternativa manual — ejecuta cada comando por separado</p>
-      <div class="code-block code-block--terminal">
-        <button type="button" class="copy-button">Copiar</button>
-        <pre><code>npm create vite@latest article-list-app -- --template react-ts</code></pre>
       </div>
-      <p class="cds--body-01">Entra a la carpeta que acaba de crearse:</p>
-      <div class="code-block code-block--terminal">
-        <button type="button" class="copy-button">Copiar</button>
-        <pre><code>cd article-list-app</code></pre>
-      </div>
-      <div class="code-block code-block--terminal">
-        <button type="button" class="copy-button">Copiar</button>
-        <pre><code>npm install</code></pre>
-      </div>
-      <div class="code-block code-block--terminal">
-        <button type="button" class="copy-button">Copiar</button>
-        <pre><code>npm install @carbon/react @carbon/styles</code></pre>
+      <div class="lab-accordion">
+        <button class="lab-accordion__trigger" aria-expanded="false" aria-controls="acc-rpg-lab2-npm">
+          Si Bob falla — ejecutar los comandos a mano
+          <svg class="lab-accordion__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="16" height="16"><path d="M8 11L2 5h12z"/></svg>
+        </button>
+        <div class="lab-accordion__panel" id="acc-rpg-lab2-npm" hidden>
+          <p class="cds--body-01">Desde la terminal integrada, en este orden:</p>
+          <div class="code-block code-block--terminal">
+            <p class="code-block__label">$ Terminal integrada</p>
+            <button type="button" class="copy-button">Copiar comando</button>
+            <pre><code>npm create vite@latest article-list-app -- --template react-ts</code></pre>
+          </div>
+          <p class="cds--body-01">Entra a la carpeta que acaba de crearse:</p>
+          <div class="code-block code-block--terminal">
+            <p class="code-block__label">$ Terminal integrada</p>
+            <button type="button" class="copy-button">Copiar comando</button>
+            <pre><code>cd article-list-app</code></pre>
+          </div>
+          <div class="code-block code-block--terminal">
+            <p class="code-block__label">$ Terminal integrada</p>
+            <button type="button" class="copy-button">Copiar comando</button>
+            <pre><code>npm install</code></pre>
+          </div>
+          <div class="code-block code-block--terminal">
+            <p class="code-block__label">$ Terminal integrada</p>
+            <button type="button" class="copy-button">Copiar comando</button>
+            <pre><code>npm install @carbon/react @carbon/styles</code></pre>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
   <section class="lab-section" aria-labelledby="lab2-paso2">
-    <h2 class="cds--productive-heading-03" id="lab2-paso2">Paso 2 — Visualiza la pantalla verde</h2>
-    <div class="code-block code-block--prompt">
-      <button type="button" class="copy-button">Copiar</button>
-      <pre><code>@SAMCO/QDDSSRC/ART200D-Work_with_Article.DSPF
+    <h2 class="cds--productive-heading-03" id="lab2-paso2"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>Paso 2 — Visualiza la pantalla verde</h2>
+    <div class="lab-step">
+      <span class="rpg-context">IBM Bob · Ask</span>
+      <p class="hands-on-action__purpose">Pide un dibujo ASCII de la subfile original para usarlo como referencia de UI.</p>
+      <div class="code-block code-block--prompt">
+        <p class="code-block__label">Pega en el chat de Bob</p>
+        <button type="button" class="copy-button">Copiar prompt</button>
+        <pre><code>@SAMCO/QDDSSRC/ART200D-Work_with_Article.DSPF
 
 Muéstrame cómo se ve la pantalla de lista de artículos (SFL01).
 Dibújala en ASCII art con:
@@ -93,14 +109,19 @@ Dibújala en ASCII art con:
 - Columnas (Opt, Id, Description, Fam, Del)
 - 3 filas de ejemplo
 - Manténlo simple</code></pre>
+      </div>
     </div>
   </section>
 
   <section class="lab-section" aria-labelledby="lab2-paso3">
-    <h2 class="cds--productive-heading-03" id="lab2-paso3">Paso 3 — Datos de muestra</h2>
-    <div class="code-block code-block--prompt">
-      <button type="button" class="copy-button">Copiar</button>
-      <pre><code>Crea un archivo TypeScript con 10 artículos de muestra basados en la estructura ART400.
+    <h2 class="cds--productive-heading-03" id="lab2-paso3"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>Paso 3 — Datos de muestra</h2>
+    <div class="lab-step">
+      <span class="rpg-context">IBM Bob · Agent</span>
+      <p class="hands-on-action__purpose">Genera un archivo TypeScript con diez artículos de ejemplo.</p>
+      <div class="code-block code-block--prompt">
+        <p class="code-block__label">Pega en el chat de Bob</p>
+        <button type="button" class="copy-button">Copiar prompt</button>
+        <pre><code>Crea un archivo TypeScript con 10 artículos de muestra basados en la estructura ART400.
 
 Cada artículo debe tener:
 - id (6 caracteres, ej. "ART001")
@@ -111,14 +132,19 @@ Cada artículo debe tener:
 - stock (número)
 
 Guárdalo en: article-list-app/src/data/sampleArticles.ts</code></pre>
+      </div>
     </div>
   </section>
 
   <section class="lab-section" aria-labelledby="lab2-paso4">
-    <h2 class="cds--productive-heading-03" id="lab2-paso4">Paso 4 — Componente de lista</h2>
-    <div class="code-block code-block--prompt">
-      <button type="button" class="copy-button">Copiar</button>
-      <pre><code>Crea un componente React que muestre artículos en un Carbon DataTable.
+    <h2 class="cds--productive-heading-03" id="lab2-paso4"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>Paso 4 — Componente de lista</h2>
+    <div class="lab-step">
+      <span class="rpg-context">IBM Bob · Agent</span>
+      <p class="hands-on-action__purpose">Pide una DataTable Carbon de solo lectura con búsqueda.</p>
+      <div class="code-block code-block--prompt">
+        <p class="code-block__label">Pega en el chat de Bob</p>
+        <button type="button" class="copy-button">Copiar prompt</button>
+        <pre><code>Crea un componente React que muestre artículos en un Carbon DataTable.
 
 Requisitos:
 - Carbon DataTable
@@ -128,42 +154,53 @@ Requisitos:
 - Solo visualización, sin editar/borrar aún
 
 Guardar en: article-list-app/src/components/SimpleArticleList.tsx</code></pre>
+      </div>
     </div>
   </section>
 
   <section class="lab-section" aria-labelledby="lab2-paso5">
-    <h2 class="cds--productive-heading-03" id="lab2-paso5">Paso 5 — App principal</h2>
-    <div class="code-block code-block--prompt">
-      <button type="button" class="copy-button">Copiar</button>
-      <pre><code>Actualiza article-list-app/src/App.tsx para mostrar SimpleArticleList.
+    <h2 class="cds--productive-heading-03" id="lab2-paso5"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>Paso 5 — App principal</h2>
+    <div class="lab-step">
+      <span class="rpg-context">IBM Bob · Agent</span>
+      <p class="hands-on-action__purpose">Conecta estilos Carbon y el componente en App.tsx.</p>
+      <div class="code-block code-block--prompt">
+        <p class="code-block__label">Pega en el chat de Bob</p>
+        <button type="button" class="copy-button">Copiar prompt</button>
+        <pre><code>Actualiza article-list-app/src/App.tsx para mostrar SimpleArticleList.
 
 Requisitos:
 - Importar estilos Carbon (@carbon/styles/css/styles.css)
 - Importar SimpleArticleList
 - Título "Article Management"
 - Tema white de Carbon</code></pre>
+      </div>
     </div>
   </section>
 
   <section class="lab-section" aria-labelledby="lab2-paso6">
-    <h2 class="cds--productive-heading-03" id="lab2-paso6">Paso 6 — Ejecuta y prueba</h2>
-    <p class="cds--body-01">En la terminal integrada, dentro de <code>article-list-app/</code>:</p>
-    <div class="code-block code-block--terminal">
-      <button type="button" class="copy-button">Copiar</button>
-      <pre><code>npm run dev</code></pre>
+    <h2 class="cds--productive-heading-03" id="lab2-paso6"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>Paso 6 — Ejecuta y prueba</h2>
+    <div class="lab-step">
+      <span class="rpg-context">Terminal integrada</span>
+      <p class="hands-on-action__purpose">Arranca Vite dentro de <code>article-list-app/</code> y valida tabla, búsqueda y responsive.</p>
+      <div class="code-block code-block--terminal">
+        <p class="code-block__label">$ Terminal integrada</p>
+        <button type="button" class="copy-button">Copiar comando</button>
+        <pre><code>npm run dev</code></pre>
+      </div>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">Abre <code>http://localhost:5173</code></li>
+        <li class="cds--list__item">Verifica la tabla de artículos</li>
+        <li class="cds--list__item">Prueba la búsqueda</li>
+        <li class="cds--list__item">Redimensiona el navegador para probar responsive</li>
+      </ol>
     </div>
-    <ol class="cds--list--ordered">
-      <li class="cds--list__item">Abre <code>http://localhost:5173</code></li>
-      <li class="cds--list__item">Verifica la tabla de artículos</li>
-      <li class="cds--list__item">Prueba la búsqueda</li>
-      <li class="cds--list__item">Redimensiona el navegador para probar responsive</li>
-    </ol>
   </section>
 
   <section class="lab-section" aria-labelledby="lab2-estructura">
-    <h2 class="cds--productive-heading-03" id="lab2-estructura">Estructura final del proyecto</h2>
-    <div class="code-block">
-      <button type="button" class="copy-button">Copiar</button>
+    <h2 class="cds--productive-heading-03" id="lab2-estructura"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M18 28H8a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12l6 6v14a2 2 0 0 1-2 2zm-10-2h10V14h-5V6H8v20zm12-14v-2l-4-4v4h4z"/></svg>Estructura final del proyecto</h2>
+    <div class="code-block code-block--file">
+      <p class="code-block__label">Estructura del proyecto</p>
+      <button type="button" class="copy-button">Copiar contenido</button>
       <pre><code>article-list-app/
 ├── src/
 │   ├── components/
@@ -178,12 +215,12 @@ Requisitos:
   </section>
 
   <section class="lab-section" aria-labelledby="lab2-criterios">
-    <h2 class="cds--productive-heading-03" id="lab2-criterios">Criterios de éxito</h2>
-    <ul class="cds--list--unordered">
-      <li class="cds--list__item">Proyecto React creado desde cero</li>
-      <li class="cds--list__item">Archivo de datos de muestra creado</li>
-      <li class="cds--list__item">Lista visible en el navegador con búsqueda funcional</li>
-      <li class="cds--list__item">La app corre de forma independiente</li>
+    <h2 class="cds--productive-heading-03" id="lab2-criterios"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>Criterios de éxito</h2>
+    <ul class="checklist">
+      <li class="checklist__item">Proyecto React creado desde cero</li>
+      <li class="checklist__item">Archivo de datos de muestra creado</li>
+      <li class="checklist__item">Lista visible en el navegador con búsqueda funcional</li>
+      <li class="checklist__item">La app corre de forma independiente</li>
     </ul>
   </section>
 

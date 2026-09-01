@@ -2427,9 +2427,23 @@ function nearbyInstructionText(element) {
   return chunks.join('\n');
 }
 
+function isPromptHeading(text) {
+  return /(?:prompt|pregunta)\s+(?:para|de)\s+bob|pega este prompt|envía este prompt/i.test(text || '');
+}
+
 function isPromptContext(element) {
+  const previous = element.previousElementSibling;
+  if (isPromptHeading(previous?.textContent || '')) return true;
+  const calloutTitle = element.closest('.callout')?.querySelector(':scope > .callout__title')?.textContent || '';
+  if (isPromptHeading(calloutTitle)) return true;
   const label = nearbyInstructionText(element);
   return /(?:prompt|pregunta)\s+(?:para|de)\s+bob|pega este prompt|envía este prompt|pega (?:esto|el bloque|solo este prompt)|pega (?:esto )?en el chat|pídeselo a bob|pide a bob/i.test(label);
+}
+
+function looksLikeChatPrompt(text) {
+  const withoutMentions = String(text || '').replace(/^@[^\s]+\s*$/gm, '').trim();
+  if (!withoutMentions) return false;
+  return /(?:explica|explíca|convierte|convierta|crea |actualiza|mira |recorre|compara|mejora|muéstrame|muestrame|sugiere|dame:|lista |requisitos:|¿|cuáles son|qué (?:hace|tipo|campos|información|mejoras|datos)|enfócate|centrarse|manténlo|mantenlo)/i.test(withoutMentions);
 }
 
 function isTerminalContext(element) {
@@ -2458,14 +2472,20 @@ function classifyModernizationCodeBlock(codeBlock, code) {
   const text = code.textContent.trim();
   if (!text) return;
 
-  // HTML is the source of truth. This fallback only runs on untyped blocks.
+  const isRpgTrack = Boolean(codeBlock.closest('.lab-shell--ibm-i-rpg-development'));
+
+  // In the modernization workshops, old content often used a plain <pre> for
+  // every kind of instruction. Classify it by what the learner must do, not by
+  // its typography: executable input goes to the terminal; artifacts and
+  // output stay neutral; everything else is a request for Bob.
   const declaredLanguage = `${codeBlock.dataset.language || ''} ${code.className || ''}`.toLowerCase();
-  if (isPromptContext(codeBlock)) {
+  if (isPromptContext(codeBlock) || (isRpgTrack && looksLikeChatPrompt(text))) {
     codeBlock.classList.add('code-block--prompt');
   } else if (/\b(?:bash|shell|sh|powershell)\b/.test(declaredLanguage) || looksLikeShellCommand(text)) {
     codeBlock.classList.add('code-block--terminal');
   } else if (/\b(?:yaml|yml|json|sql|xml|java)\b/.test(declaredLanguage)
     || /^(?:<|@\w+\/|https?:\/\/|\[INFO\]|\[ERROR\]|Error:|Exception:|[├└│]|Date\s+\w+\s*=|(?:\/\/|Dcl-|ctl-opt|free\b|Exec SQL|SELECT\b|CREATE\b|import\b|export\b|const\b|function\b|class\b)|[\w.-]+\.(?:xml|json|yaml|yml|java|jsx|tsx|properties|zip)\b)/im.test(text)
+    || (!isRpgTrack && /^@\w+\//im.test(text))
     || /(?:^|\/)(?:snap[A-Z]|labs\/)/im.test(text)) {
     codeBlock.classList.add('code-block--file');
   } else {
@@ -2479,16 +2499,28 @@ function ensureModernizationContextLabel(codeBlock, code) {
   const label = document.createElement('p');
   label.className = 'code-block__label';
   const customLabel = codeBlock.dataset.blockLabel?.trim();
-  if (customLabel) {
-    label.textContent = customLabel;
-  } else if (codeBlock.classList.contains('code-block--terminal')) {
+  const authoredLabel = codeBlock.style.getPropertyValue('--code-label').trim().replace(/^['"]|['"]$/g, '') || customLabel;
+  const nearby = `${codeBlock.previousElementSibling?.textContent || ''} ${codeBlock.closest('.callout')?.querySelector('.callout__title')?.textContent || ''}`;
+  if (codeBlock.classList.contains('code-block--terminal')) {
     label.textContent = '$ Terminal integrada';
   } else if (codeBlock.classList.contains('code-block--prompt')) {
     label.textContent = 'Pega en el chat de Bob';
+  } else if (authoredLabel) {
+    label.textContent = `Archivo: ${authoredLabel}`;
+  } else if (/respuesta ilustrativa|dcl-proc/i.test(`${nearby}\n${code.textContent}`)) {
+    label.textContent = 'Respuesta ilustrativa';
   } else if (/^https?:\/\//im.test(code.textContent.trim())) {
     label.textContent = 'Referencia';
-  } else if (codeBlock.classList.contains('code-block--file')) {
-    label.textContent = 'Archivo o configuración';
+  } else if (/^[├└│]/m.test(code.textContent)) {
+    label.textContent = 'Estructura del proyecto';
+  } else if (/\b(?:yaml|yml)\b/i.test(`${codeBlock.dataset.language || ''} ${code.className || ''}`)) {
+    label.textContent = 'Archivo de configuración · YAML';
+  } else if (/\bjson\b/i.test(`${codeBlock.dataset.language || ''} ${code.className || ''}`)) {
+    label.textContent = 'Archivo de configuración · JSON';
+  } else if (/\bsql\b/i.test(`${codeBlock.dataset.language || ''} ${code.className || ''}`)) {
+    label.textContent = 'Archivo SQL de referencia';
+  } else if (/^@\w+\//m.test(code.textContent.trim()) && !looksLikeChatPrompt(code.textContent)) {
+    label.textContent = 'Archivo fuente · SAMCO';
   } else {
     label.textContent = 'Archivo o configuración';
   }
@@ -2496,6 +2528,19 @@ function ensureModernizationContextLabel(codeBlock, code) {
 }
 
 function enforceModernizationDarkBlockContrast(codeBlock) {
+  const isRpgTrack = Boolean(codeBlock.closest('.lab-shell--ibm-i-rpg-development'));
+  if (isRpgTrack) {
+    // Track E keeps a light prompt surface. Only the terminal is dark; CSS
+    // owns every background so inline tokens cannot collapse the three
+    // contexts onto the same color, including in dark mode.
+    if (!codeBlock.classList.contains('code-block--terminal')) return;
+    codeBlock.querySelectorAll(':scope > pre, :scope > pre *').forEach((node) => {
+      node.style.setProperty('color', '#f4f4f4', 'important');
+      node.style.setProperty('-webkit-text-fill-color', '#f4f4f4', 'important');
+    });
+    return;
+  }
+
   const isDarkSurface = codeBlock.matches('.code-block--prompt, .code-block--terminal');
   const isNeutralSurface = codeBlock.matches('.code-block--file, .code-block--json, .code-block--yaml');
   if (!isDarkSurface && !isNeutralSurface) return;
@@ -2605,9 +2650,42 @@ function normalizeConfluentLegacyUi(container) {
   });
 }
 
+function normalizeRpgLegacyUi(container) {
+  if (!container.closest('.lab-shell--ibm-i-rpg-development')) return;
+
+  container.querySelectorAll('.callout__title').forEach((title) => {
+    title.textContent = title.textContent.replace(/^[✓✅❌🎯]\s*/u, '').trim();
+  });
+
+  container.querySelectorAll('.callout').forEach((callout) => {
+    const title = callout.querySelector(':scope > .callout__title')?.textContent.trim() || '';
+    const block = callout.querySelector(':scope > .code-block');
+    if (!block) return;
+    if (isPromptHeading(title)) {
+      callout.replaceWith(block);
+      return;
+    }
+    if (/respuesta (?:ilustrativa|de bob)|la respuesta de bob/i.test(title)) {
+      block.classList.remove('code-block--prompt', 'code-block--terminal');
+      block.classList.add('code-block--file');
+      callout.replaceWith(block);
+    }
+  });
+
+  container.querySelectorAll('.code-block').forEach((codeBlock) => {
+    const previous = codeBlock.previousElementSibling;
+    if (!previous) return;
+    const text = previous.textContent.trim().replace(/:$/, '');
+    if (previous.matches('p') && isPromptHeading(text) && previous.querySelectorAll('div, pre, .code-block').length === 0) {
+      previous.remove();
+    }
+  });
+}
+
 function normalizeCodeBlocks(container) {
   normalizePromptBlocks(container);
   normalizeConfluentLegacyUi(container);
+  normalizeRpgLegacyUi(container);
   const isConfluentTrack = Boolean(container.closest('.lab-shell--agentic-retail-confluent'));
   const isModernizationTrack = Boolean(container.closest(':is(.lab-shell--java-modernization-v2, .lab-shell--ibm-i-rpg-development)'));
 

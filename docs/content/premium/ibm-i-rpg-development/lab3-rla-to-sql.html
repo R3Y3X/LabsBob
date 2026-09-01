@@ -1,34 +1,31 @@
 <div class="content-panel lab-template">
 
   <div class="lab-banner">
-    <div class="lab-banner__tags">
-      <span class="cds--tag cds--tag--blue">Ask Mode</span>
-      <span class="cds--tag cds--tag--cool-gray">~20 min</span>
+    <div class="rpg-meta" aria-label="Información del Lab 3">
+      <span class="rpg-meta__item"><span class="rpg-meta__label">Lab</span><span class="rpg-meta__value">03 · RLA a SQL</span></span>
+      <span class="rpg-meta__item"><span class="rpg-meta__label">Duración</span><span class="rpg-meta__value">~20 min</span></span>
+      <span class="rpg-meta__item"><span class="rpg-meta__label">Modo</span><span class="rpg-meta__value">Ask → Agent</span></span>
+      <span class="rpg-meta__item"><span class="rpg-meta__label">Resultado</span><span class="rpg-meta__value">SQL embebido</span></span>
     </div>
-    <h1 class="cds--productive-heading-05 lab-banner__title">LAB 3 — Convertir una operación RLA a SQL con Bob</h1>
-
+    <h1 class="cds--productive-heading-05 lab-banner__title">Lab 3 — Convertir una operación RLA a SQL con Bob</h1>
+    <p class="lab-banner__summary">Reemplaza el CHAIN de búsqueda de artículo por SELECT y añade un JOIN para traer la familia en una sola consulta.</p>
     <div class="lab-banner__metrics">
-      <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">2–4</span>
-        <span class="lab-banner__metric-label">BobCoins estimados</span>
-      </div>
-      <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">~20</span>
-        <span class="lab-banner__metric-label">minutos</span>
-      </div>
+      <div class="lab-banner__metric"><span class="lab-banner__metric-value">2–4</span><span class="lab-banner__metric-label">BobCoins estimados</span></div>
+      <div class="lab-banner__metric"><span class="lab-banner__metric-value">~20</span><span class="lab-banner__metric-label">minutos</span></div>
+      <div class="lab-banner__metric"><span class="lab-banner__metric-value">Ask → Agent</span><span class="lab-banner__metric-label">modo de Bob</span></div>
+      <div class="lab-banner__metric"><span class="lab-banner__metric-value">SQL embebido</span><span class="lab-banner__metric-label">resultado</span></div>
     </div>
   </div>
 
   <section class="lab-section" aria-labelledby="lab3-contexto">
-    <h2 class="cds--productive-heading-03" id="lab3-contexto">Qué vas a construir</h2>
+    <h2 class="cds--productive-heading-03" id="lab3-contexto"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>Qué vas a construir</h2>
     <p class="cds--body-01">Convertirás la operación de búsqueda de artículo (<code>CHAIN</code>) usada al editar un artículo para usar SQL embebido, y luego añadirás un <code>JOIN</code> para traer datos relacionados en una sola consulta.</p>
   </section>
 
-  <!-- Workspace setup -->
   <section class="lab-workspace-setup" aria-labelledby="lab3-workspace">
     <div class="lab-workspace-setup__box">
       <span class="lab-workspace-setup__badge">Continúa el mismo workspace</span>
-      <h2 class="lab-workspace-setup__title" id="lab3-workspace">Punto de partida</h2>
+      <h2 class="lab-workspace-setup__title" id="lab3-workspace"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>Punto de partida</h2>
       <p class="lab-workspace-setup__lead">Sigue con la carpeta del workshop SAMCO (la que contiene <code>SAMCO/</code>) abierta como raíz en IBM Bob — la misma de los Labs 0 y 1. Si partes de cero, descárgala desde el <a class="cds--link" href="#/lab/ibm-i-rpg-development/overview">Inicio del laboratorio</a>.</p>
       <ul class="lab-workspace-setup__checks">
         <li>En el explorador de Bob debe verse la subcarpeta <code>SAMCO/</code> — las referencias <code>@SAMCO/...</code> de los prompts asumen ese workspace</li>
@@ -37,10 +34,14 @@
   </section>
 
   <section class="lab-section" aria-labelledby="lab3-paso1">
-    <h2 class="cds--productive-heading-03" id="lab3-paso1">Paso 1 — Explica la operación RLA</h2>
-    <div class="code-block">
-      <button type="button" class="copy-button">Copiar</button>
-      <pre><code>@SAMCO/QRPGLESRC/ART200-Work_with_article.PGM.SQLRPGLE
+    <h2 class="cds--productive-heading-03" id="lab3-paso1"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>Paso 1 — Explica la operación RLA</h2>
+    <div class="lab-step">
+      <span class="rpg-context">IBM Bob · Ask</span>
+      <p class="hands-on-action__purpose">Confirma qué hace CHAIN, qué carga y qué ocurre si no hay registro.</p>
+      <div class="code-block code-block--prompt">
+        <p class="code-block__label">Pega en el chat de Bob</p>
+        <button type="button" class="copy-button">Copiar prompt</button>
+        <pre><code>@SAMCO/QRPGLESRC/ART200-Work_with_article.PGM.SQLRPGLE
 
 Mira la línea 249: chain arid article1;
 
@@ -48,22 +49,27 @@ Explica en términos simples:
 1. ¿Qué hace CHAIN?
 2. ¿Qué datos recupera?
 3. ¿Qué pasa si no encuentra el registro?</code></pre>
-    </div>
-    <div class="callout" data-tone="tip">
-      <p class="callout__title">Qué buscar</p>
-      <ul class="cds--list--unordered">
-        <li class="cds--list__item"><code>CHAIN</code> lee un registro por clave</li>
-        <li class="cds--list__item">Carga datos en el formato de registro <code>FARTI</code></li>
-        <li class="cds--list__item">Si no encuentra, <code>%FOUND()</code> es falso</li>
-      </ul>
+      </div>
+      <div class="rpg-checkpoint">
+        <p class="rpg-checkpoint__title">Qué buscar</p>
+        <ul class="checklist">
+          <li class="checklist__item"><code>CHAIN</code> lee un registro por clave</li>
+          <li class="checklist__item">Carga datos en el formato de registro <code>FARTI</code></li>
+          <li class="checklist__item">Si no encuentra, <code>%FOUND()</code> es falso</li>
+        </ul>
+      </div>
     </div>
   </section>
 
   <section class="lab-section" aria-labelledby="lab3-paso2">
-    <h2 class="cds--productive-heading-03" id="lab3-paso2">Paso 2 — Equivalente SQL</h2>
-    <div class="code-block">
-      <button type="button" class="copy-button">Copiar</button>
-      <pre><code>Convierte esta operación RLA a SQL:
+    <h2 class="cds--productive-heading-03" id="lab3-paso2"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>Paso 2 — Equivalente SQL</h2>
+    <div class="lab-step">
+      <span class="rpg-context">IBM Bob · Ask</span>
+      <p class="hands-on-action__purpose">Pide el SELECT equivalente y el manejo del caso no encontrado.</p>
+      <div class="code-block code-block--prompt">
+        <p class="code-block__label">Pega en el chat de Bob</p>
+        <button type="button" class="copy-button">Copiar prompt</button>
+        <pre><code>Convierte esta operación RLA a SQL:
 
 chain arid article1;
 
@@ -73,11 +79,10 @@ Requisitos:
 - Manejar el caso "no encontrado"
 - Mantenerlo simple
 - Muéstrame el código SQL</code></pre>
-    </div>
-    <div class="callout" data-tone="tip">
-      <p class="callout__title">Respuesta ilustrativa</p>
-      <div class="code-block">
-        <button type="button" class="copy-button">Copiar</button>
+      </div>
+      <div class="code-block code-block--file">
+        <p class="code-block__label">Respuesta ilustrativa</p>
+        <button type="button" class="copy-button">Copiar contenido</button>
         <pre><code class="language-sql">// Forma RLA antigua:
 chain arid article1;
 
@@ -101,20 +106,25 @@ EndIf;</code></pre>
   </section>
 
   <section class="lab-section" aria-labelledby="lab3-paso3">
-    <h2 class="cds--productive-heading-03" id="lab3-paso3">Paso 3 — Añade datos relacionados con JOIN</h2>
-    <div class="code-block">
-      <button type="button" class="copy-button">Copiar</button>
-      <pre><code>Mejora el SQL para obtener también la descripción de familia en una sola consulta.
+    <h2 class="cds--productive-heading-03" id="lab3-paso3"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>Paso 3 — Añade datos relacionados con JOIN</h2>
+    <div class="lab-step">
+      <span class="rpg-context">IBM Bob · Ask</span>
+      <p class="hands-on-action__purpose">Sustituye el CHAIN más la función de familia por un único JOIN.</p>
+      <div class="code-block code-block--prompt">
+        <p class="code-block__label">Pega en el chat de Bob</p>
+        <button type="button" class="copy-button">Copiar prompt</button>
+        <pre><code>Mejora el SQL para obtener también la descripción de familia en una sola consulta.
 
 El código original hace esto por separado:
 - Línea 249: chain arid article1;
 - Línea 250: famdesc = getArtFamDesc(artifa);
 
 Muéstrame cómo obtener artículo y familia en una sentencia SQL con JOIN.</code></pre>
-    </div>
-    <div class="code-block">
-      <button type="button" class="copy-button">Copiar</button>
-      <pre><code class="language-sql">Exec SQL
+      </div>
+      <div class="code-block code-block--file">
+        <p class="code-block__label">Respuesta ilustrativa</p>
+        <button type="button" class="copy-button">Copiar contenido</button>
+        <pre><code class="language-sql">Exec SQL
   SELECT A.ARID, A.ARDESC, A.ARSALEPR, A.ARWHSPR,
          A.ARTIFA, A.ARSTOCK, A.ARMINQTY, A.ARVATCD,
          F.FADESC
@@ -125,25 +135,34 @@ Muéstrame cómo obtener artículo y familia en una sentencia SQL con JOIN.</cod
   FROM ARTICLE A
   LEFT JOIN FAMILLY F ON A.ARTIFA = F.FAID
   WHERE A.ARID = :arid;</code></pre>
+      </div>
     </div>
   </section>
 
   <section class="lab-section" aria-labelledby="lab3-paso4">
-    <h2 class="cds--productive-heading-03" id="lab3-paso4">Paso 4 — Beneficios</h2>
-    <div class="code-block">
-      <button type="button" class="copy-button">Copiar</button>
-      <pre><code>¿Cuáles son los beneficios de usar SQL en lugar de RLA para esta operación?
+    <h2 class="cds--productive-heading-03" id="lab3-paso4"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>Paso 4 — Beneficios</h2>
+    <div class="lab-step">
+      <span class="rpg-context">IBM Bob · Ask</span>
+      <p class="hands-on-action__purpose">Pide dos o tres beneficios concretos de SQL frente a RLA en esta operación.</p>
+      <div class="code-block code-block--prompt">
+        <p class="code-block__label">Pega en el chat de Bob</p>
+        <button type="button" class="copy-button">Copiar prompt</button>
+        <pre><code>¿Cuáles son los beneficios de usar SQL en lugar de RLA para esta operación?
 Lista 2-3 beneficios simples.</code></pre>
+      </div>
+      <div class="rpg-checkpoint">
+        <p class="rpg-checkpoint__title">Beneficios esperados</p>
+        <ul class="checklist">
+          <li class="checklist__item">Un solo viaje a la base de datos con <code>JOIN</code></li>
+          <li class="checklist__item">Más flexible para añadir campos o condiciones</li>
+          <li class="checklist__item">Mejor rendimiento: el optimizador SQL elige el mejor acceso</li>
+        </ul>
+      </div>
     </div>
-    <ul class="cds--list--unordered">
-      <li class="cds--list__item">Un solo viaje a la base de datos con <code>JOIN</code></li>
-      <li class="cds--list__item">Más flexible para añadir campos o condiciones</li>
-      <li class="cds--list__item">Mejor rendimiento: el optimizador SQL elige el mejor acceso</li>
-    </ul>
   </section>
 
   <section class="lab-section" aria-labelledby="lab3-comparacion">
-    <h2 class="cds--productive-heading-03" id="lab3-comparacion">Antes y después</h2>
+    <h2 class="cds--productive-heading-03" id="lab3-comparacion"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M18 6l-1.43 1.393L24.15 15H4v2h20.15l-7.58 7.573L18 26l10-10z"/></svg>Antes y después</h2>
     <div class="lab-table-wrap">
       <table class="lab-table">
         <thead>
@@ -164,12 +183,12 @@ Lista 2-3 beneficios simples.</code></pre>
   </section>
 
   <section class="lab-section" aria-labelledby="lab3-criterios">
-    <h2 class="cds--productive-heading-03" id="lab3-criterios">Criterios de éxito</h2>
-    <ul class="cds--list--unordered">
-      <li class="cds--list__item">Entiendes qué hace <code>CHAIN</code></li>
-      <li class="cds--list__item">Ves el equivalente SQL</li>
-      <li class="cds--list__item">Entiendes cómo el <code>JOIN</code> mejora el código</li>
-      <li class="cds--list__item">Sabes por qué SQL es preferible a RLA aquí</li>
+    <h2 class="cds--productive-heading-03" id="lab3-criterios"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg>Criterios de éxito</h2>
+    <ul class="checklist">
+      <li class="checklist__item">Entiendes qué hace <code>CHAIN</code></li>
+      <li class="checklist__item">Ves el equivalente SQL</li>
+      <li class="checklist__item">Entiendes cómo el <code>JOIN</code> mejora el código</li>
+      <li class="checklist__item">Sabes por qué SQL es preferible a RLA aquí</li>
     </ul>
   </section>
 

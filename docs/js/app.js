@@ -259,7 +259,12 @@ function resetLabScroll() {
   window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
 }
 
-function settleLabScroll() {
+function settleLabScroll(headingId = null) {
+  const target = headingId ? document.getElementById(headingId) : null;
+  if (target) {
+    requestAnimationFrame(() => target.scrollIntoView({ behavior: 'auto', block: 'start' }));
+    return;
+  }
   resetLabScroll();
   requestAnimationFrame(resetLabScroll);
 }
@@ -1858,12 +1863,12 @@ function normalizePremiumWorkflowStructure(proseEl, isOverview) {
 // imported material is the workflow execution itself; context and navigation
 // stay aligned with the non-premium version.
 const JAVA_PREMIUM_COMMON_SECTIONS = {
-  lab1: ['lab1-intro', 'lab1-checkpoint'],
-  lab2: ['lab2-contexto'],
-  lab3: ['lab3-contexto'],
-  lab4: ['lab4-caso'],
+  lab1: ['lab1-intro', 'lab1-checkpoint', 'lab1-troubleshooting'],
+  lab2: ['lab2-contexto', 'lab2-troubleshooting'],
+  lab3: ['lab3-contexto', 'lab3-troubleshooting'],
+  lab4: ['lab4-caso', 'lab4-troubleshooting'],
   'lab-alt4': ['labalt4-que', 'labalt4-tdd', 'labalt4-estado', 'labalt4-setup'],
-  lab5: ['lab5-caso', 'lab5-vigilar']
+  lab5: ['lab5-caso', 'lab5-vigilar', 'lab5-troubleshooting']
 };
 
 const JAVA_PREMIUM_WORKFLOWS = {
@@ -1872,6 +1877,15 @@ const JAVA_PREMIUM_WORKFLOWS = {
   lab3: { card: 'Java Modernization', subtype: 'UI Modernization' },
   lab4: { card: 'Java Unit Testing', subtype: null },
   lab5: { card: 'Java Vulnerabilities Detection', subtype: null }
+};
+
+const JAVA_PREMIUM_PROJECT_PATHS = {
+  lab1: 'labs/lab1-java-liberty-replatforming/snapA-java-liberty-replatforming/',
+  lab2: 'labs/lab2-java-upgrade/snapB-java-upgrade/',
+  lab3: 'labs/lab3-ui-modernization/snapC-ui-mod/',
+  lab4: 'labs/lab4-unit-test-generation/snapD-unit-test-gen/',
+  'lab-alt4': 'labs/alt-lab4-test-driven-development/snapTDD/',
+  lab5: 'labs/lab5-security-vulnerability-remediation/snapE-security-vulnerabilities/'
 };
 
 const JAVA_PREMIUM_BANNER_SUMMARIES = {
@@ -1935,24 +1949,59 @@ function updateJavaPremiumWorkspace(panel, step) {
 
   const workspace = panel.querySelector('.lab-workspace-setup');
   const workflow = JAVA_PREMIUM_WORKFLOWS[step.slug];
-  if (workspace && workflow) {
+  const projectPath = JAVA_PREMIUM_PROJECT_PATHS[step.slug];
+  if (workspace && projectPath) {
     const badge = workspace.querySelector('.lab-workspace-setup__badge');
-    if (badge) badge.textContent = 'Paso obligatorio — antes de ejecutar el workflow';
+    if (badge) badge.textContent = 'Regla del workshop — conserva el mismo workspace';
+
+    const title = workspace.querySelector('.lab-workspace-setup__title');
+    if (title) {
+      title.innerHTML = `${LAB_STEP_ICON_SVG} Confirma el workspace y el subdirectorio de trabajo`;
+    }
 
     const lead = workspace.querySelector('.lab-workspace-setup__lead');
     if (lead) {
-      const snapName = workspace.querySelector('.lab-workspace-setup__path-value')?.textContent
-        .trim()
-        .split('/')
-        .filter(Boolean)
-        .pop();
-      const snapLabel = snapName ? `<code>${snapName}</code>` : 'la carpeta <code>snap*</code> de este lab';
-      lead.innerHTML = `Abre ${snapLabel} como raíz del proyecto. Luego abre la pestaña <strong>Workflows</strong> de Bob (botón ▶) y arranca ${describeJavaPremiumWorkflow(step)}. No pegues prompts de fase en el chat: los valores se rellenan como campos del panel.`;
+      lead.innerHTML = workflow
+        ? `Mantén <code>simple-pharmacy-workshop-v2</code> como único workspace. Abre la pestaña <strong>Workflows</strong> de Bob (botón ▶), inicia ${describeJavaPremiumWorkflow(step)} e introduce la ruta inferior en el campo <strong>Project path</strong>. No abras el snapshot como una segunda carpeta ni crees otro chat.`
+        : 'Mantén <code>simple-pharmacy-workshop-v2</code> como único workspace. Este lab no tiene workflow TDD: continúa en el chat actual de <strong>Agent Mode</strong> y trabaja dentro del subdirectorio indicado, sin abrir otra carpeta ni crear otro chat.';
+    }
+
+    const pathLabel = workspace.querySelector('.lab-workspace-setup__path-label');
+    if (pathLabel) pathLabel.textContent = workflow ? 'Project path del workflow' : 'Subdirectorio de trabajo';
+
+    const pathValue = workspace.querySelector('.lab-workspace-setup__path-value');
+    if (pathValue) pathValue.textContent = projectPath;
+
+    const checks = workspace.querySelector('.lab-workspace-setup__checks');
+    if (checks) {
+      checks.innerHTML = [
+        '<li>El explorador de Bob sigue mostrando <code>simple-pharmacy-workshop-v2</code> como raíz</li>',
+        workflow
+          ? `<li>El campo <strong>Project path</strong> contiene exactamente <code>${projectPath}</code></li>`
+          : `<li>Los prompts y comandos apuntan a <code>${projectPath}</code></li>`,
+        `<li>${step.slug === 'lab1' ? 'Java 8 Zulu' : 'Java 21 Semeru'} activo (<code>java -version</code>)</li>`
+      ].join('');
+    }
+
+    if (!workspace.querySelector('[data-premium-terminal-path]')) {
+      const terminalContext = document.createElement('div');
+      terminalContext.className = 'callout';
+      terminalContext.dataset.tone = 'tip';
+      terminalContext.dataset.premiumTerminalPath = 'true';
+      terminalContext.innerHTML = [
+        '<p class="callout__title">Directorio de la terminal — Bash, PowerShell o WSL</p>',
+        '<p>Antes de ejecutar cualquier comando Maven de este lab, sitúa la terminal en el snapshot:</p>',
+        '<div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button>',
+        `<pre><code>cd ${projectPath}</code></pre></div>`
+      ].join('');
+      workspace.querySelector('.lab-workspace-setup__box')?.append(terminalContext);
     }
 
     const note = workspace.querySelector('.lab-workspace-setup__note');
     if (note) {
-      note.innerHTML = `<strong>Confirma Workflows:</strong> el indicador de modo debe mostrar <strong>Agent</strong>. Abre <strong>Workflows</strong> con ▶ y comprueba que aparece ${describeJavaPremiumWorkflow(step)}.`;
+      note.innerHTML = workflow
+        ? `<strong>Confirma el workflow:</strong> el indicador de modo debe mostrar <strong>Agent</strong>. Abre <strong>Workflows</strong> con ▶ y comprueba que aparece ${describeJavaPremiumWorkflow(step)}.`
+        : '<strong>Confirma Agent Mode:</strong> sigue en el chat actual; no busques una tarjeta TDD en Workflows.';
     }
   }
 
@@ -2042,11 +2091,12 @@ function replaceJavaPremiumActionSections(panel, step, workflowMarkup) {
   const workflowSections = [...sourcePanel.querySelectorAll(':scope > .lab-section')].filter((section) => {
     const heading = getWorkflowSectionHeading(section);
     if (ignoredHeadings.test(heading)) return false;
-    return !/^paso 1:\\s*(abre|abra)/.test(heading);
+    return true;
   });
 
   const checkpoint = panel.querySelector(':scope > .lab-section h2[id*="checkpoint"]')?.closest('.lab-section');
-  const insertionPoint = checkpoint || panel.querySelector(':scope > details, :scope > .lab-troubleshooting-full');
+  const troubleshooting = panel.querySelector(':scope > .lab-section h2[id*="troubleshooting"]')?.closest('.lab-section');
+  const insertionPoint = checkpoint || troubleshooting || panel.querySelector(':scope > details, :scope > .lab-troubleshooting-full');
   workflowSections
     .map(prepareJavaWorkflowSection)
     .forEach((section) => {
@@ -2064,6 +2114,8 @@ async function applyPremiumWorkflowVariant(proseEl, lab, step) {
   const panel = proseEl.querySelector('.content-panel.lab-template');
   if (!panel || panel.dataset.workflowVariantApplied === 'true') return;
 
+  updateJavaPremiumWorkspace(panel, step);
+
   // Alt-4 has no native TDD workflow in Bob. Keep the Agent Mode lab and
   // tell participants not to look for a Workflows card.
   if (step.slug === 'lab-alt4') {
@@ -2076,7 +2128,6 @@ async function applyPremiumWorkflowVariant(proseEl, lab, step) {
 
   const workflowMarkup = await loadContent(step.workflowSourceFile);
   panel.dataset.workflowVariantApplied = 'true';
-  updateJavaPremiumWorkspace(panel, step);
   replaceJavaPremiumActionSections(panel, step, workflowMarkup);
 }
 
@@ -2868,7 +2919,7 @@ async function renderLab(route) {
   bindImageFallbacks(labShell);
   // Restore persisted env choice for this page
   applyPersistedEnv(proseEl);
-  settleLabScroll();
+  settleLabScroll(route.headingId);
 }
 
 /** Apply persisted env selection to all toggles in the given scope. */
@@ -2931,8 +2982,12 @@ async function renderRoute() {
     // Re-render once with the selected namespace and personalized names.
     await renderLab(route);
   }
-  scrollLabToTop();
-  requestAnimationFrame(scrollLabToTop);
+  if (route.headingId) {
+    settleLabScroll(route.headingId);
+  } else {
+    scrollLabToTop();
+    requestAnimationFrame(scrollLabToTop);
+  }
 }
 
 // ── Event bindings ───────────────────────────────────────────────

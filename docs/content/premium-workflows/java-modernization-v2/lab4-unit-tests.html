@@ -31,14 +31,14 @@
   <section class="lab-section" aria-labelledby="lab4-introduccion">
     <h2 class="cds--productive-heading-03" id="lab4-introduccion">Introducción</h2>
     <p>
-Genere un conjunto de pruebas completo JUnit 5 / Mockito / AssertJ para la aplicación de farmacia modernizada utilizando el flujo de trabajo independiente
+Genera un conjunto de pruebas completo JUnit 5 / Mockito / AssertJ para la aplicación de farmacia modernizada utilizando el flujo de trabajo independiente
       <strong>Java Unit Testing</strong>
  de Bob, luego analice la cobertura con JaCoCo.
     </p>
     <div class="callout" data-tone="note">
       <p class="callout__title">Lo que lograrás</p>
       <p>
-Ejecute el flujo de trabajo Java Unit Testing de un extremo a otro: Bob instala JaCoCo, redacta una estrategia de prueba
+Ejecuta el flujo de trabajo Java Unit Testing de un extremo a otro: Bob instala JaCoCo, redacta una estrategia de prueba
         <code>UNITTEST.md</code>
 , genera pruebas en lotes paralelos, corrige sus propias fallas de compilación, ejecuta la suite e informa la cobertura por clase.
       </p>
@@ -217,15 +217,15 @@ Usando
               <code>source "$HOME/.sdkman/bin/sdkman-init.sh"</code>
             </pre>
           </div>
-          <p>Instale Java 21 y actívelo:</p>
+          <p>Instala Java 21 y actívalo:</p>
           <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
-              <code>sdk install java 21.0.11-zulu</code>
+              <code>sdk install java 21.0.12-sem</code>
             </pre>
           </div>
           <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
-              <code>sdk use java 21.0.11-zulu</code>
+              <code>sdk use java 21.0.12-sem</code>
             </pre>
           </div>
           <p>Instalar Maven:</p>
@@ -251,15 +251,15 @@ Usando
               <code>source "$HOME/.sdkman/bin/sdkman-init.sh"</code>
             </pre>
           </div>
-          <p>Instale Java 21 y actívelo:</p>
+          <p>Instala Java 21 y actívalo:</p>
           <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
-              <code>sdk install java 21.0.11-zulu</code>
+              <code>sdk install java 21.0.12-sem</code>
             </pre>
           </div>
           <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
-              <code>sdk use java 21.0.11-zulu</code>
+              <code>sdk use java 21.0.12-sem</code>
             </pre>
           </div>
           <p>Instalar Maven:</p>
@@ -288,7 +288,7 @@ Usando
             </pre>
           </div>
           <p>
-Cierre y vuelva a abrir PowerShell para encontrar
+Cierra y vuelve a abrir PowerShell para encontrar
             <code>java</code>
  y
             <code>mvn</code>
@@ -296,12 +296,12 @@ Cierre y vuelva a abrir PowerShell para encontrar
           </p>
           <p>
             <strong>Opción B — SDKMAN! en Git Bash o WSL (idéntico a macOS/Linux).</strong>
- Abra Git Bash (de
+ Abre Git Bash (de
             <a href="https://git-scm.com/download/win">Git para Windows</a>
 ) o WSL (
             <code>wsl --install</code>
-), luego ejecute el
-            <strong>macOS/Linux comandos</strong>
+), luego ejecuta los
+            <strong>comandos de macOS/Linux</strong>
  de las otras pestañas.
           </p>
         </div>
@@ -329,7 +329,7 @@ Deberías ver la versión
  muestra el Java con el que Maven construirá
       </p>
       <p>
-Esto puede diferir del valor predeterminado de su shell
+Esto puede diferir del valor predeterminado de tu shell
         <code>java -version</code>
 : Maven sigue a
         <code>JAVA_HOME</code>
@@ -339,8 +339,8 @@ Esto puede diferir del valor predeterminado de su shell
       </p>
     </div>
     <div class="callout" data-tone="warning">
-      <p class="callout__title">Reinicie Bob después de instalar Maven</p>
-      <p>Salga y reinicie Bob por completo después de instalar Maven para que adopte el nuevo entorno.</p>
+      <p class="callout__title">Reinicia Bob después de instalar Maven</p>
+      <p>Sal y reinicia Bob por completo después de instalar Maven para que adopte el nuevo entorno.</p>
     </div>
   </section>
   <section class="lab-section" aria-labelledby="how-the-workflow-works">
@@ -363,7 +363,7 @@ Vale la pena entenderlo antes de ejecutarlo: el flujo de trabajo
       </li>
       <li class="cds--list__item">
         <strong>Pantalla de selección de tareas</strong>
-: usted elige qué ejecutar (generar estrategia, generar pruebas, ejecutar cobertura, Git Flow) y una
+: tú eliges qué ejecutar (generar estrategia, generar pruebas, ejecutar cobertura, Git Flow) y una
         <strong>Estrategia de selección de candidatos</strong>
 .
       </li>
@@ -416,23 +416,23 @@ Vale la pena entenderlo antes de ejecutarlo: el flujo de trabajo
       <p>
 Comience solo con
         <strong>Read</strong>
- habilitado hasta que se sienta cómodo, luego amplíe a medida que gane confianza.
+ habilitado hasta que te sientas cómodo, luego amplía a medida que ganes confianza.
       </p>
     </div>
   </section>
   <section class="lab-section" aria-labelledby="step-1-open-the-project">
-    <h2 class="cds--productive-heading-03" id="step-1-open-the-project">Paso 1: abre el proyecto</h2>
+    <h2 class="cds--productive-heading-03" id="step-1-open-the-project">Paso 1: confirma el workspace y el Project path</h2>
     <ol class="cds--list--ordered">
       <li class="cds--list__item">Confirma que Bob sigue abierto en <code>simple-pharmacy-workshop-v2</code>. No cambies de workspace.</li>
       <li class="cds--list__item">
-Confirme que el indicador de modo en la parte inferior del chat muestra
+Confirma que el indicador de modo en la parte inferior del chat muestra
         <strong>Agent</strong>
 .
       </li>
       <li class="cds--list__item">
-Haga clic en el botón de reproducción (
+Haz clic en el botón de reproducción (
         <strong>▶</strong>
-) y confirme que
+) y confirma que
         <strong>Java Unit Testing</strong>
  aparece en la lista de flujo de trabajo.
       </li>
@@ -445,12 +445,12 @@ Haga clic en el botón de reproducción (
     </figure>
   </section>
   <section class="lab-section" aria-labelledby="step-2-run-the-java-unit-testing-workflow">
-    <h2 class="cds--productive-heading-03" id="step-2-run-the-java-unit-testing-workflow">Paso 2: ejecute el flujo de trabajo Java Unit Testing</h2>
+    <h2 class="cds--productive-heading-03" id="step-2-run-the-java-unit-testing-workflow">Paso 2: ejecuta el flujo de trabajo Java Unit Testing</h2>
     <h3 id="21-start-the-workflow" class="cds--productive-heading-02 lab-step__title">2.1 Iniciar el flujo de trabajo</h3>
     <p>
-Seleccione
+Selecciona
       <strong>Java Unit Testing</strong>
- de la lista y haga clic en
+ de la lista y haz clic en
       <strong>(▶) Iniciar</strong>
 .
     </p>
@@ -460,7 +460,7 @@ Seleccione
     <ul class="cds--list--unordered">
       <li class="cds--list__item">Detectar que no hay ninguna herramienta de cobertura de código configurada</li>
       <li class="cds--list__item">
-Instale
+Instala
         <strong>JaCoCo</strong>
  en
         <code>pom.xml</code>
@@ -476,7 +476,7 @@ Redacte esa estrategia como
     <div class="callout" data-tone="note">
       <p class="callout__title">Aquí no hay mensajes de aprobación; eso es lo esperado</p>
       <p>
-Esta fase se ejecuta desatendida. Bob lanza subtareas mientras funciona; confirme cada uno para mantener la visibilidad de lo que está haciendo. Si una subtarea finaliza y está satisfecho con el resultado, haga clic en
+Esta fase se ejecuta desatendida. Bob lanza subtareas mientras funciona; confirma cada uno para mantener la visibilidad de lo que está haciendo. Si una subtarea finaliza y estás satisfecho con el resultado, haz clic en
         <strong>Finalizar subtarea</strong>
  para volver al flujo de trabajo principal.
       </p>
@@ -528,7 +528,7 @@ Una vez redactado
       </tbody>
     </table>
     <p>
-Haga clic en
+Haz clic en
       <strong>Continuar</strong>
 .
     </p>
@@ -546,12 +546,12 @@ Haga clic en
       </p>
     </blockquote>
     <p>
-Haga clic en
+Haz clic en
       <strong>Continuar con la generación de prueba</strong>
 .
     </p>
     <details class="premium-details">
-      <summary>Tenga en cuenta el intervalo de confianza del 80 %: está funcionando de verdad</summary>
+      <summary>Ten en cuenta el intervalo de confianza del 80 %: está funcionando de verdad</summary>
       <p>
 Bob está diciendo explícitamente que un lote de cada cinco puede durar más o costar más. Es una estimación, no una garantía y, en la práctica, el costo real generalmente cae
         <strong>muy por debajo de</strong>
@@ -609,7 +609,7 @@ Una vez completados todos los lotes, Bob ejecuta
       <code>UNITTEST.md</code>
     </h3>
     <p>
-Abra
+Abre
       <code>UNITTEST.md</code>
  en la raíz del proyecto. El documento de estrategia de Bob cubre:
     </p>
@@ -630,14 +630,14 @@ Las pruebas son el resultado, pero
 . Es lo que hace que un ser humano pueda revisar y ampliar la suite más adelante, y es lo que lee cada subagente de generación para mantenerse coherente con los demás. Sin él, los agentes paralelos inventarían cada uno sus propias convenciones.
       </p>
     </details>
-    <h3 id="32-run-the-test-suite-yourself" class="cds--productive-heading-02 lab-step__title">3.2 Ejecute el conjunto de pruebas usted mismo</h3>
+    <h3 id="32-run-the-test-suite-yourself" class="cds--productive-heading-02 lab-step__title">3.2 Ejecuta el conjunto de pruebas tú mismo</h3>
     <p>En la terminal de Bob:</p>
     <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>mvn clean test</code>
       </pre>
     </div>
-    <p>Confirme que obtiene la misma tasa de aprobación que informó Bob.</p>
+    <p>Confirma que obtienes la misma tasa de aprobación que informó Bob.</p>
     <div class="callout" data-tone="success">
       <p class="callout__title">Checkpoint: una suite ecológica con cobertura real</p>
       <ul class="cds--list--unordered">
@@ -682,9 +682,9 @@ La cobertura general es
     </figure>
     <h3 id="34-explore-a-generated-test-file" class="cds--productive-heading-02 lab-step__title">3.4 Explorar un archivo de prueba generado</h3>
     <p>
-Abra algunas pruebas generadas (por ejemplo,
+Abre algunas pruebas generadas (por ejemplo,
       <code>src/test/java/com/pharmacy/repository/PrescriptionRepositoryTest.java</code>
-) y tenga en cuenta:
+) y ten en cuenta:
     </p>
     <ul class="cds--list--unordered">
       <li class="cds--list__item">
@@ -707,7 +707,7 @@ Los repositorios utilizan el patrón singleton, que es realmente complicado de p
  combinada con reflexión para sobrescribir el campo singleton privado. Vale la pena leerlo atentamente: es la parte de la suite generada con mayor probabilidad de enseñarle a un desarrollador Java experimentado algo que aún no sabía.
       </p>
     </details>
-    <p>Verifique algunas pruebas para confirmar que siguen convenciones sólidas: nombres claros, casos aislados, afirmaciones significativas.</p>
+    <p>Verifica algunas pruebas para confirmar que siguen convenciones sólidas: nombres claros, casos aislados, afirmaciones significativas.</p>
   </section>
   <section class="lab-section" aria-labelledby="troubleshooting">
     <h2 class="cds--productive-heading-03" id="troubleshooting">Solución de problemas</h2>
@@ -717,7 +717,7 @@ La solicitud de API falló: el chat muestra
         <code>{\"apiProtocol\":\"openai\"}</code>
       </summary>
       <p>
-Haga clic en
+Haz clic en
         <strong>Reintentar</strong>
  en la ventana de chat de Bob.
       </p>
@@ -746,33 +746,33 @@ Fallos de inyección simulada:
       </summary>
       <ol class="cds--list--ordered">
         <li class="cds--list__item">
-Asegúrese de que
+Asegúrate de que
           <code>@ExtendWith(MockitoExtension.class)</code>
  esté presente en la clase de prueba.
         </li>
         <li class="cds--list__item">
-Verifique que las anotaciones
+Verifica que las anotaciones
           <code>@Mock</code>
  y
           <code>@InjectMocks</code>
  sean correctas.
         </li>
         <li class="cds--list__item">
-Verifique que los simulacros estén inicializados en
+Verifica que los simulacros estén inicializados en
           <code>@BeforeEach</code>
  si no usa la extensión.
         </li>
-        <li class="cds--list__item">Pídale a Bob que revise la configuración simulada.</li>
+        <li class="cds--list__item">Pídele a Bob que revise la configuración simulada.</li>
       </ol>
     </details>
     <details class="premium-details">
       <summary>Las pruebas pasan individualmente pero fallan cuando se ejecutan juntas</summary>
       <p>Los singleton del repositorio mantienen el estado entre pruebas. Opciones:</p>
       <ol class="cds--list--ordered">
-        <li class="cds--list__item">Agregue métodos de reinicio a los repositorios o use la reflexión para restablecer instancias.</li>
-        <li class="cds--list__item">Pídale a Bob que implemente un aislamiento de prueba adecuado.</li>
+        <li class="cds--list__item">Agrega métodos de reinicio a los repositorios o usa la reflexión para restablecer instancias.</li>
+        <li class="cds--list__item">Pídele a Bob que implemente un aislamiento de prueba adecuado.</li>
         <li class="cds--list__item">
-Considere
+Considera
           <code>@TestInstance(Lifecycle.PER_CLASS)</code>
  con una limpieza adecuada.
         </li>
@@ -804,7 +804,7 @@ El informe necesita explícitamente el objetivo
       </p>
       <div data-language="bash" class="code-block premium-code-block code-block--terminal">
         <pre>
-          <code>sdk use java 21.0.11-zulu</code>
+          <code>sdk use java 21.0.12-sem</code>
         </pre>
       </div>
     </details>
@@ -827,10 +827,10 @@ El informe necesita explícitamente el objetivo
     </ol>
     <h3 id="bob-specific-tips" class="cds--productive-heading-02 lab-step__title">Consejos específicos de Bob</h3>
     <ul class="cds--list--unordered">
-      <li class="cds--list__item">Preste atención a las acciones que realiza Bob mientras ejecuta el flujo de trabajo.</li>
-      <li class="cds--list__item">Pídale a Bob que le explique cualquier patrón de prueba que no esté claro.</li>
-      <li class="cds--list__item">Solicite un análisis de la eficacia de la suite tras generación.</li>
-      <li class="cds--list__item">Utilice Bob para revisar y mejorar pruebas individuales.</li>
+      <li class="cds--list__item">Presta atención a las acciones que realiza Bob mientras ejecuta el flujo de trabajo.</li>
+      <li class="cds--list__item">Pídele a Bob que le explique cualquier patrón de prueba que no esté claro.</li>
+      <li class="cds--list__item">Solicita un análisis de la eficacia de la suite tras generación.</li>
+      <li class="cds--list__item">Utiliza Bob para revisar y mejorar pruebas individuales.</li>
     </ul>
   </section>
   <section class="lab-section" aria-labelledby="success-criteria">
@@ -921,7 +921,7 @@ El informe necesita explícitamente el objetivo
       </li>
       <li class="cds--list__item">
         <strong>Estimaciones de costos honestas</strong>
-: el intervalo de confianza del 80 % le permite decidir antes de gastar. El costo real generalmente se ubica muy por debajo de la vista previa.
+: el intervalo de confianza del 80 % te permite decidir antes de gastar. El costo real generalmente se ubica muy por debajo de la vista previa.
       </li>
       <li class="cds--list__item">
         <strong>Autocorrección</strong>
@@ -938,7 +938,7 @@ El informe necesita explícitamente el objetivo
     <blockquote>
       <p>
         <strong>Nota:</strong>
- los siguientes son opcionales. Explórelos si tiene tiempo adicional o desea profundizar su comprensión de la calidad y cobertura de las pruebas.
+ los siguientes son opcionales. Explóralos si tienes tiempo adicional o deseas profundizar tu comprensión de la calidad y cobertura de las pruebas.
       </p>
     </blockquote>
     <h3 id="1-performance-testing" class="cds--productive-heading-02 lab-step__title">1. Pruebas de rendimiento</h3>

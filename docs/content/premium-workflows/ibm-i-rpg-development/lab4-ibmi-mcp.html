@@ -7,7 +7,7 @@
       <span class="rpg-meta__item"><span class="rpg-meta__label">Acceso</span><span class="rpg-meta__value">Premium · opcional</span></span>
     </div>
     <h1 class="cds--productive-heading-05 lab-banner__title">Laboratorio 4 — IBM i MCP y Bob Shell (opcional)</h1>
-    <p class="cds--body-02 lab-banner__summary">Conecta Bob con IBM i Agent y MCP para consultar el sistema y explorar objetos mediante lenguaje natural.</p>
+    <p class="cds--body-02 lab-banner__summary">Instala el paquete Premium, conecta tu IBM i desde el panel lateral y usa MCP para consultar el sistema con lenguaje natural.</p>
     <div class="lab-banner__metrics">
       <div class="lab-banner__metric">
         <span class="lab-banner__metric-value">Requiere</span>
@@ -45,23 +45,19 @@ Este laboratorio es
       <p class="callout__title">Requisitos previos</p>
       <ul class="cds--list--unordered">
         <li class="cds--list__item">IBM Bob instalado y ejecutándose.</li>
+        <li class="cds--list__item">Extensión <strong>IBM Bob Premium Package for i</strong> instalada desde el marketplace de extensiones.</li>
         <li class="cds--list__item">Acceso a un sistema IBM i con el servidor Mapepire en ejecución (puerto 8076).</li>
-        <li class="cds--list__item">Familiaridad básica con la línea de comando.</li>
+        <li class="cds--list__item">Credenciales del entorno (host, usuario y contraseña o clave privada) proporcionadas por el facilitador.</li>
       </ul>
     </div>
-    <p>En esta práctica de laboratorio, configurará IBM Bob para que funcione con sistemas IBM i utilizando el protocolo de contexto modelo (MCP). Configurará modos personalizados, se conectará a su sistema IBM i y ejecutará sus primeras consultas utilizando la interfaz impulsada por IA de Bob.</p>
-    <p>
-El paquete
-      <em>IBM Bob premium para IBM i</em>
- disponible en GA traerá modos y herramientas estándar de IBM i que diferirán de los utilizados en este tutorial.
-    </p>
+    <p>En esta práctica de laboratorio conectarás IBM Bob a tu sistema IBM i mediante el <strong>paquete Premium</strong>: primero instalas la extensión, luego registras la conexión desde el panel lateral <strong>IBM i</strong> y, después, configuras MCP para consultar el sistema con lenguaje natural.</p>
     <div class="callout" data-tone="note">
       <p class="callout__title">lo que aprenderás</p>
       <ul class="cds--list--unordered">
+        <li class="cds--list__item">Cómo instalar la extensión IBM Bob Premium Package for i.</li>
+        <li class="cds--list__item">Cómo registrar una conexión IBM i desde el panel lateral dedicado.</li>
         <li class="cds--list__item">Cómo configurar Bob para el desarrollo de IBM i con MCP y modos.</li>
-        <li class="cds--list__item">Cómo utilizar las IA agent mode específicas de IBM i.</li>
         <li class="cds--list__item">Cómo consultar sistemas IBM i utilizando lenguaje natural.</li>
-        <li class="cds--list__item">Cómo aprovechar las herramientas IBM i prediseñadas.</li>
       </ul>
     </div>
   </section>
@@ -75,21 +71,126 @@ El paquete
         <code class="lab-workspace-setup__path-value">bob-rpg-ibm-i-main/lab4-ibmi-mcp/</code>
       </div>
       <ul class="lab-workspace-setup__checks">
-        <li>El entorno IBM i y el servidor MCP están activos.</li>
-        <li>Las credenciales permanecen solo en archivos locales no versionados.</li>
+        <li>Tienes a mano las credenciales del entorno IBM i (host, usuario y contraseña o clave <code>.pem</code>).</li>
+        <li>Instalarás la extensión <strong>IBM Bob Premium Package for i</strong> en los pasos siguientes.</li>
+        <li>El servidor MCP (Mapepire, puerto 8076) está activo en el entorno aprovisionado.</li>
         <li>Si falta cualquiera de estos requisitos, omite este lab sin bloquear el recorrido principal.</li>
       </ul>
     </div>
   </section>
+  <section class="lab-section" aria-labelledby="lab4-premium-connection">
+    <h2 class="cds--productive-heading-03" id="lab4-premium-connection"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>Instalar el paquete Premium y conectar a IBM i</h2>
+    <p class="cds--body-01">El <strong>IBM Bob Premium Package for i</strong> añade modos especializados (IBM i Developer, IBM i Database), herramientas, skills, comandos slash y workflows para desarrollo en IBM i. Antes de usar MCP, instala la extensión y registra tu conexión al sistema.</p>
+
+    <div class="lab-step">
+      <h3 id="step-1-install-premium-extension" class="cds--productive-heading-02 lab-step__title">Paso 1 — Instalar la extensión Premium</h3>
+      <span class="rpg-context">IBM Bob · Extensiones</span>
+      <p class="hands-on-action__purpose">Abre el marketplace de extensiones, busca el paquete Premium de IBM i e instálalo para habilitar el panel lateral y los modos especializados.</p>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">En la barra de actividad izquierda, haz clic en el icono de <strong>Extensiones</strong> (cuatro cuadrados).</li>
+        <li class="cds--list__item">En el cuadro de búsqueda escribe <code>ibm bob premium</code>.</li>
+        <li class="cds--list__item">Selecciona <strong>IBM Bob Premium Package for i</strong> (publicador: IBM) y pulsa <strong>Install</strong>.</li>
+        <li class="cds--list__item">Espera a que termine la instalación. Si Bob lo solicita, recarga la ventana (<kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> → <code>Developer: Reload Window</code>).</li>
+      </ol>
+      <figure class="lab-figure">
+        <a class="lab-figure__link" href="./assets/images/labs/ibm-i-rpg-development/premium/extensionibmipremium.png" target="_blank" rel="noopener">
+          <img src="./assets/images/labs/ibm-i-rpg-development/premium/extensionibmipremium.png" class="lab-figure__img" alt="Marketplace de extensiones con IBM Bob Premium Package for i seleccionado e instalado" />
+        </a>
+        <figcaption class="lab-figure__caption">Busca <code>ibm bob premium</code> e instala <strong>IBM Bob Premium Package for i</strong>. Al terminar verás los botones Disable y Uninstall.</figcaption>
+      </figure>
+      <div class="rpg-checkpoint">
+        <p class="rpg-checkpoint__title">Qué verificar</p>
+        <ul class="checklist">
+          <li class="checklist__item">La extensión aparece como instalada (botones <strong>Disable</strong> / <strong>Uninstall</strong> visibles).</li>
+          <li class="checklist__item">En la descripción se listan workflows como Code Modernization, Business Rules Extraction y Unit Testing.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <h3 id="step-2-open-ibmi-panel" class="cds--productive-heading-02 lab-step__title">Paso 2 — Abrir el panel lateral IBM i</h3>
+      <span class="rpg-context">IBM Bob · Barra de actividad</span>
+      <p class="hands-on-action__purpose">Tras instalar la extensión, Bob muestra un icono nuevo en la barra de actividad para gestionar conexiones al sistema IBM i.</p>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">Recarga la ventana si aún no ves el icono nuevo.</li>
+        <li class="cds--list__item">En la barra de actividad izquierda, localiza el icono <strong>IBM i</strong> (círculo con la letra <em>i</em>).</li>
+        <li class="cds--list__item">Haz clic para abrir el panel lateral <strong>IBM I</strong>. Verás las secciones <em>HELP AND SUPPORT</em> y <em>SERVERS</em>.</li>
+      </ol>
+      <figure class="lab-figure">
+        <a class="lab-figure__link" href="./assets/images/labs/ibm-i-rpg-development/premium/inicio.png" target="_blank" rel="noopener">
+          <img src="./assets/images/labs/ibm-i-rpg-development/premium/inicio.png" class="lab-figure__img" alt="Ventana de IBM Bob con el icono IBM i visible en la barra de actividad izquierda" />
+        </a>
+        <figcaption class="lab-figure__caption">Tras instalar el paquete Premium, el icono <strong>IBM i</strong> aparece en la barra de actividad. También verás walkthroughs de Code for IBM i en la pantalla de bienvenida.</figcaption>
+      </figure>
+      <div class="rpg-checkpoint">
+        <p class="rpg-checkpoint__title">Qué verificar</p>
+        <ul class="checklist">
+          <li class="checklist__item">El icono <strong>IBM i</strong> está visible en la barra de actividad.</li>
+          <li class="checklist__item">Al abrirlo, el panel muestra la sección <strong>SERVERS</strong>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="lab-step">
+      <h3 id="step-3-add-ibmi-connection" class="cds--productive-heading-02 lab-step__title">Paso 3 — Añadir una conexión</h3>
+      <span class="rpg-context">IBM Bob · Panel IBM i</span>
+      <p class="hands-on-action__purpose">Registra tu sistema IBM i desde el panel lateral; no necesitas editar archivos de configuración manualmente para este paso.</p>
+      <ol class="cds--list--ordered">
+        <li class="cds--list__item">En el panel <strong>IBM I</strong>, sección <strong>SERVERS</strong>, haz clic en el botón azul <strong>Connect to an IBM i</strong> (o en el icono <strong>+</strong> junto a SERVERS).</li>
+        <li class="cds--list__item">Se abrirá la pestaña <strong>IBM i Login</strong> con el formulario de conexión.</li>
+      </ol>
+      <figure class="lab-figure">
+        <a class="lab-figure__link" href="./assets/images/labs/ibm-i-rpg-development/premium/connectibmi.png" target="_blank" rel="noopener">
+          <img src="./assets/images/labs/ibm-i-rpg-development/premium/connectibmi.png" class="lab-figure__img" alt="Panel IBM I con el botón Connect to an IBM i en la sección SERVERS" />
+        </a>
+        <figcaption class="lab-figure__caption">En <strong>SERVERS</strong>, pulsa <strong>Connect to an IBM i</strong> para abrir el formulario de conexión.</figcaption>
+      </figure>
+    </div>
+
+    <div class="lab-step">
+      <h3 id="step-4-fill-connection-form" class="cds--productive-heading-02 lab-step__title">Paso 4 — Completar el formulario de conexión</h3>
+      <span class="rpg-context">IBM Bob · IBM i Login</span>
+      <p class="hands-on-action__purpose">Introduce los datos del entorno IBM i que te proporcionó el facilitador. Los campos marcados en rojo son obligatorios.</p>
+      <figure class="lab-figure">
+        <a class="lab-figure__link" href="./assets/images/labs/ibm-i-rpg-development/premium/Formibmi.png" target="_blank" rel="noopener">
+          <img src="./assets/images/labs/ibm-i-rpg-development/premium/Formibmi.png" class="lab-figure__img" alt="Formulario IBM i Login con campos de conexión, autenticación y clave privada" />
+        </a>
+        <figcaption class="lab-figure__caption">Formulario <strong>IBM i Login</strong> — pestaña Connection. Completa los campos obligatorios y elige un solo método de autenticación.</figcaption>
+      </figure>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item"><strong>Connection Name</strong> — Nombre descriptivo para identificar esta conexión (por ejemplo, <code>TechZone IBM i</code>).</li>
+        <li class="cds--list__item"><strong>Host or IP Address</strong> — Dirección IP o hostname del sistema IBM i (la proporciona el facilitador).</li>
+        <li class="cds--list__item"><strong>Port (SSH)</strong> — Puerto SSH del sistema. Por defecto es <code>22</code>; no lo cambies salvo indicación del facilitador.</li>
+        <li class="cds--list__item"><strong>Username</strong> — Usuario IBM i con acceso al entorno (por ejemplo, <code>CECUSER</code>).</li>
+        <li class="cds--list__item"><strong>Autenticación</strong> — Elige <em>una sola</em> opción entre contraseña, clave privada o agente SSH:
+          <ul class="cds--list--unordered">
+            <li class="cds--list__item"><strong>Password</strong> — Introduce la contraseña y, si lo deseas, marca <strong>Save Password</strong>.</li>
+            <li class="cds--list__item"><strong>Private Key</strong> — Usa <strong>Select File</strong> para cargar tu archivo <code>.pem</code> (formatos OpenSSH, RFC4716 o PPK).</li>
+          </ul>
+        </li>
+        <li class="cds--list__item"><strong>Enable Multi-Factor Authentication (MFA)</strong> — Actívalo solo si tu entorno lo requiere.</li>
+      </ol>
+      <p class="cds--body-01">Guarda la conexión. Si la autenticación es correcta, dejará de aparecer el mensaje <em>No connection found</em> y verás tu servidor listado en <strong>SERVERS</strong>.</p>
+      <div class="rpg-checkpoint">
+        <p class="rpg-checkpoint__title">Qué verificar</p>
+        <ul class="checklist">
+          <li class="checklist__item">La conexión aparece en <strong>SERVERS</strong> con el nombre que elegiste.</li>
+          <li class="checklist__item">Puedes expandir el servidor y ver objetos del sistema (bibliotecas, miembros, etc.).</li>
+          <li class="checklist__item">En la barra de estado inferior aparece el identificador del entorno conectado.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
   <section class="lab-section" aria-labelledby="lab-setup">
-    <h2 class="cds--productive-heading-03" id="lab-setup"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>Configuración de laboratorio</h2>
-    <h3 id="step-1-open-project" class="cds--productive-heading-02 lab-step__title">Paso 1: abrir proyecto</h3>
+    <h2 class="cds--productive-heading-03" id="lab-setup"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>Configuración MCP del laboratorio</h2>
+    <p class="cds--body-01">Con la conexión IBM i ya registrada, configura el túnel SSH y las credenciales MCP para que Bob pueda consultar el sistema mediante el protocolo Model Context Protocol.</p>
+    <h3 id="step-1-open-project" class="cds--productive-heading-02 lab-step__title">Paso 5 — Abrir el proyecto del lab</h3>
     <p>
 Abra la carpeta
       <code>lab4-ibmi-mcp</code>
  en una nueva ventana de Bob; este es el directorio de trabajo del participante.
     </p>
-    <h3 id="step-2-configure-ibm-i-connection" class="cds--productive-heading-02 lab-step__title">Paso 2: configurar la conexión de IBM i</h3>
+    <h3 id="step-2-configure-ibm-i-connection" class="cds--productive-heading-02 lab-step__title">Paso 6 — Configurar el túnel MCP (SSH)</h3>
     <p>Configure el reenvío de puertos para crear un túnel SSH entre el puerto local 8076 y el servidor IBM i:</p>
     <div data-language="bash" class="code-block code-block--terminal">
         <p class="code-block__label">$ Terminal integrada</p>
@@ -115,7 +216,7 @@ DB2i_PASS=yourpassword
 DB2i_PORT=8076</code>
       </pre>
     </div>
-    <h3 id="step-3-check-configuration" class="cds--productive-heading-02 lab-step__title">Paso 3: Verifique la configuración</h3>
+    <h3 id="step-3-check-configuration" class="cds--productive-heading-02 lab-step__title">Paso 7 — Verificar modos y servidores MCP</h3>
     <ol class="cds--list--ordered">
       <li class="cds--list__item">Abre la configuración de Bob.</li>
       <li class="cds--list__item">
@@ -292,11 +393,11 @@ Pregúntale a Bob:
     <h2 class="cds--productive-heading-03" id="what-youve-accomplished"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>lo que has logrado</h2>
     <p>¡Felicitaciones! Has logrado con éxito:</p>
     <ol class="cds--list--ordered">
-      <li class="cds--list__item">✅ Configurado IBM Bob para desarrollo IBM i.</li>
-      <li class="cds--list__item">✅ Conectó a Bob a su sistema IBM i a través de MCP.</li>
-      <li class="cds--list__item">✅ Utilicé lenguaje natural para consultar información del sistema IBM i.</li>
-      <li class="cds--list__item">✅ Exploré servicios y objetos de bases de datos de IBM i SQL.</li>
-      <li class="cds--list__item">✅ Herramientas prediseñadas aprovechadas para el monitoreo del sistema.</li>
+      <li class="cds--list__item">✅ Instalaste la extensión <strong>IBM Bob Premium Package for i</strong>.</li>
+      <li class="cds--list__item">✅ Registraste una conexión IBM i desde el panel lateral <strong>IBM i</strong>.</li>
+      <li class="cds--list__item">✅ Configuraste Bob para desarrollo IBM i con MCP.</li>
+      <li class="cds--list__item">✅ Consultaste información del sistema IBM i con lenguaje natural.</li>
+      <li class="cds--list__item">✅ Exploraste servicios y objetos de bases de datos IBM i SQL.</li>
     </ol>
   </section>
   <section class="lab-section" aria-labelledby="next-steps">
@@ -361,6 +462,23 @@ Es posible que necesites recargar la ventana para cargar las actualizaciones del
   <section class="lab-section" aria-labelledby="troubleshooting">
     <h2 class="cds--productive-heading-03" id="troubleshooting"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>Solución de problemas</h2>
     <details class="premium-details">
+      <summary>No aparece el icono IBM i en la barra de actividad</summary>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">Confirma que la extensión <strong>IBM Bob Premium Package for i</strong> está instalada (no solo descargada).</li>
+        <li class="cds--list__item">Recarga la ventana: <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> → <code>Developer: Reload Window</code>.</li>
+        <li class="cds--list__item">Verifica que buscaste exactamente <code>ibm bob premium</code> y seleccionaste la extensión de IBM.</li>
+      </ul>
+    </details>
+    <details class="premium-details">
+      <summary>La conexión IBM i falla al guardar el formulario</summary>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item">Revisa que <strong>Host or IP Address</strong>, <strong>Username</strong> y el método de autenticación coincidan con lo que entregó el facilitador.</li>
+        <li class="cds--list__item">Si usas clave privada, confirma que el archivo <code>.pem</code> es válido (OpenSSH, RFC4716 o PPK).</li>
+        <li class="cds--list__item">Comprueba que el puerto SSH (<code>22</code> por defecto) esté accesible desde tu red.</li>
+        <li class="cds--list__item">No combines contraseña y clave privada: el formulario admite un solo método de autenticación.</li>
+      </ul>
+    </details>
+    <details class="premium-details">
       <summary>MCP la conexión del servidor falla</summary>
       <ul class="cds--list--unordered">
         <li class="cds--list__item">
@@ -403,6 +521,20 @@ Probar conectividad:
     <p>Bob proporciona una CLI que le permite interactuar con agentes de IA desde la terminal, lo que la hace perfecta para preguntas rápidas, generación de código y búsqueda de documentación.</p>
     <h3 id="lab-completion-checklist" class="cds--productive-heading-02 lab-step__title">Lista de verificación de finalización del laboratorio</h3>
     <ul class="cds--list--unordered">
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ Instalé la extensión IBM Bob Premium Package for i
+      </li>
+      <li class="cds--list__item">
+        <label class="premium-checklist__control">
+          <input type="checkbox" disabled />
+          <span class="premium-checklist__indicator"></span>
+        </label>
+ Registré una conexión IBM i desde el panel lateral
+      </li>
       <li class="cds--list__item">
         <label class="premium-checklist__control">
           <input type="checkbox" disabled />

@@ -107,11 +107,20 @@
       "sha256": "a35d8f3a7779458f116c9e8492e31e4d9fc4ea3b06a4c154cb5d7ea9872ee7e7",
       "usedIn": [
         "lab1",
-        "lab2",
-        "lab3"
+        "lab2"
       ],
       "width": 590,
       "height": 1036
+    },
+    {
+      "file": "./assets/images/labs/java-modernization-v2/premium/analyze-project-panel-ui.png",
+      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-03-ui-modernization/assets/analyze-project-panel.png",
+      "sha256": "53f241c4cfc8a447eb149ff10841da7906be8385421f8a653196025fbf901177",
+      "usedIn": [
+        "lab3"
+      ],
+      "width": 3438,
+      "height": 1988
     },
     {
       "file": "./assets/images/labs/java-modernization-v2/premium/backend-migration.png",
@@ -182,16 +191,6 @@
       ],
       "width": 3448,
       "height": 1922
-    },
-    {
-      "file": "./assets/images/labs/java-modernization-v2/premium/go-to-workflow.png",
-      "source": "https://workshop-hub.2akfv5yaq586.us-south.codeengine.appdomain.cloud/ibm-bob/java-modernization-v2/lab-03-ui-modernization/assets/go-to-workflow.png",
-      "sha256": "b2c2162879bcfd53a0021eb62bc71ad1e0d3a04e9a3a31c73d82f078cc0cdf4e",
-      "usedIn": [
-        "lab3"
-      ],
-      "width": 3444,
-      "height": 1996
     },
     {
       "file": "./assets/images/labs/java-modernization-v2/premium/ibm-bob-java-banner.png",

@@ -31,18 +31,18 @@
   <section class="lab-section" aria-labelledby="lab5-introduccion">
     <h2 class="cds--productive-heading-03" id="lab5-introduccion">Introducción</h2>
     <p>
-Escanee las dependencias de la aplicación de farmacia en busca de CVEs conocidas utilizando el flujo de trabajo
+Escanea las dependencias de la aplicación de farmacia en busca de CVEs conocidas utilizando el flujo de trabajo
       <strong>Java Vulnerabilities Detection</strong>
- dedicado de Bob, comprenda cada hallazgo, corríjalos y vuelva a escanear de forma limpia.
+ dedicado de Bob, comprende cada hallazgo, corrígelos y vuelve a escanear de forma limpia.
     </p>
     <div class="callout" data-tone="note">
       <p class="callout__title">Lo que lograrás</p>
       <p>
-Ejecute un análisis de dependencia completo (directo
+Ejecuta un análisis de dependencia completo (directo
         <strong> y</strong>
  transitivo), evalúe los hallazgos con la base de datos
         <a href="https://osv.dev">OSV</a>
-, apruebe los cambios de versión específicos a través del flujo de corrección interactivo de Bob y verifique que la aplicación aún se compila.
+, aprueba los cambios de versión específicos a través del flujo de corrección interactivo de Bob y verifica que la aplicación aún se compila.
       </p>
     </div>
     <div class="callout" data-tone="note">
@@ -216,7 +216,7 @@ CVE-2022-42889 (
  transitivamente; se declara explícitamente aquí en esa misma versión para que el escaneo pueda detectarlo y fijarlo.
       </p>
       <p>
-Observe la forma de esto: dos de los tres son solo
+Observa la forma de esto: dos de los tres son solo
         <em>interesantes</em>
  porque el código de la aplicación realmente les llega. El tercero es un problema puro de gráfico de dependencia. El triaje real se parece exactamente a esta mezcla.
       </p>
@@ -274,15 +274,15 @@ Usando
               <code>source "$HOME/.sdkman/bin/sdkman-init.sh"</code>
             </pre>
           </div>
-          <p>Instale Java 21 y actívelo:</p>
+          <p>Instala Java 21 y actívalo:</p>
           <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
-              <code>sdk install java 21.0.11-zulu</code>
+              <code>sdk install java 21.0.12-sem</code>
             </pre>
           </div>
           <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
-              <code>sdk use java 21.0.11-zulu</code>
+              <code>sdk use java 21.0.12-sem</code>
             </pre>
           </div>
           <p>Instalar Maven:</p>
@@ -308,15 +308,15 @@ Usando
               <code>source "$HOME/.sdkman/bin/sdkman-init.sh"</code>
             </pre>
           </div>
-          <p>Instale Java 21 y actívelo:</p>
+          <p>Instala Java 21 y actívalo:</p>
           <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
-              <code>sdk install java 21.0.11-zulu</code>
+              <code>sdk install java 21.0.12-sem</code>
             </pre>
           </div>
           <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
-              <code>sdk use java 21.0.11-zulu</code>
+              <code>sdk use java 21.0.12-sem</code>
             </pre>
           </div>
           <p>Instalar Maven:</p>
@@ -345,7 +345,7 @@ Usando
             </pre>
           </div>
           <p>
-Cierre y vuelva a abrir PowerShell para encontrar
+Cierra y vuelve a abrir PowerShell para encontrar
             <code>java</code>
  y
             <code>mvn</code>
@@ -353,12 +353,12 @@ Cierre y vuelva a abrir PowerShell para encontrar
           </p>
           <p>
             <strong>Opción B — SDKMAN! en Git Bash o WSL (idéntico a macOS/Linux).</strong>
- Abra Git Bash (de
+ Abre Git Bash (de
             <a href="https://git-scm.com/download/win">Git para Windows</a>
 ) o WSL (
             <code>wsl --install</code>
-), luego ejecute el
-            <strong>macOS/Linux comandos</strong>
+), luego ejecuta los
+            <strong>comandos de macOS/Linux</strong>
  de las otras pestañas.
           </p>
         </div>
@@ -376,8 +376,8 @@ Cierre y vuelva a abrir PowerShell para encontrar
       </pre>
     </div>
     <div class="callout" data-tone="warning">
-      <p class="callout__title">Reinicie Bob después de instalar Maven</p>
-      <p>Salga y reinicie Bob por completo después de instalar Maven para que adopte el nuevo entorno.</p>
+      <p class="callout__title">Reinicia Bob después de instalar Maven</p>
+      <p>Sal y reinicia Bob por completo después de instalar Maven para que adopte el nuevo entorno.</p>
     </div>
   </section>
   <section class="lab-section" aria-labelledby="worth-watching-for">
@@ -408,18 +408,18 @@ Cierre y vuelva a abrir PowerShell para encontrar
     </ul>
   </section>
   <section class="lab-section" aria-labelledby="step-1-open-the-project">
-    <h2 class="cds--productive-heading-03" id="step-1-open-the-project">Paso 1: abre el proyecto</h2>
+    <h2 class="cds--productive-heading-03" id="step-1-open-the-project">Paso 1: confirma el workspace y el Project path</h2>
     <ol class="cds--list--ordered">
       <li class="cds--list__item">Confirma que Bob sigue abierto en <code>simple-pharmacy-workshop-v2</code>. No cambies de workspace.</li>
       <li class="cds--list__item">
-Confirme que el indicador de modo en la parte inferior del chat muestra
+Confirma que el indicador de modo en la parte inferior del chat muestra
         <strong>Agent</strong>
 .
       </li>
       <li class="cds--list__item">
-Haga clic en el botón de reproducción (
+Haz clic en el botón de reproducción (
         <strong>▶</strong>
-) y confirme que
+) y confirma que
         <strong>Java Vulnerabilities Detection</strong>
  aparece en la lista de flujo de trabajo.
       </li>
@@ -432,12 +432,12 @@ Haga clic en el botón de reproducción (
     </figure>
   </section>
   <section class="lab-section" aria-labelledby="step-2-run-the-vulnerabilities-detection-workflow">
-    <h2 class="cds--productive-heading-03" id="step-2-run-the-vulnerabilities-detection-workflow">Paso 2: ejecute el flujo de trabajo Java Vulnerabilities Detection</h2>
+    <h2 class="cds--productive-heading-03" id="step-2-run-the-vulnerabilities-detection-workflow">Paso 2: ejecuta el flujo de trabajo Java Vulnerabilities Detection</h2>
     <h3 id="objective" class="cds--productive-heading-02 lab-step__title">Objetivo</h3>
-    <p>Active el flujo de trabajo y deje que Bob realice un análisis completo de las dependencias.</p>
+    <p>Activa el flujo de trabajo y deja que Bob realice un análisis completo de las dependencias.</p>
     <h3 id="21-start-the-workflow" class="cds--productive-heading-02 lab-step__title">2.1 Iniciar el flujo de trabajo</h3>
     <p>
-Haga clic en
+Haz clic en
       <strong>Inicio</strong>
  en el flujo de trabajo
       <strong>Java Vulnerabilities Detection</strong>
@@ -487,9 +487,9 @@ Bob debe informar como mínimo
   <section class="lab-section" aria-labelledby="step-3-review-the-findings">
     <h2 class="cds--productive-heading-03" id="step-3-review-the-findings">Paso 3: revisar los hallazgos</h2>
     <h3 id="objective_1" class="cds--productive-heading-02 lab-step__title">Objetivo</h3>
-    <p>Comprenda lo que Bob encontró y priorice antes de remediar.</p>
-    <h3 id="31-read-through-each-finding" class="cds--productive-heading-02 lab-step__title">3.1 Lea cada hallazgo</h3>
-    <p>Para cada CVE, tenga en cuenta:</p>
+    <p>Comprende lo que Bob encontró y prioriza antes de remediar.</p>
+    <h3 id="31-read-through-each-finding" class="cds--productive-heading-02 lab-step__title">3.1 Lee cada hallazgo</h3>
+    <p>Para cada CVE, ten en cuenta:</p>
     <ul class="cds--list--unordered">
       <li class="cds--list__item">
 ¿La biblioteca vulnerable
@@ -508,7 +508,7 @@ Bob debe informar como mínimo
       <li class="cds--list__item">¿Cuáles necesitan excluir una dependencia transitiva y agregar un reemplazo directo?</li>
       <li class="cds--list__item">¿Hay duplicados causados por múltiples rutas que traen la misma versión vulnerable?</li>
     </ul>
-    <h3 id="33-confirm-you-understand-each-cve-before-remediating" class="cds--productive-heading-02 lab-step__title">3.3 Confirme que comprende cada CVE antes de corregirlo</h3>
+    <h3 id="33-confirm-you-understand-each-cve-before-remediating" class="cds--productive-heading-02 lab-step__title">3.3 Confirma que comprendes cada CVE antes de corregirlo</h3>
     <p>Si tienes algo que no te resulte familiar, pregúntale directamente a Bob:</p>
     <div data-language="text" class="code-block premium-code-block code-block--prompt">
       <pre>
@@ -558,7 +558,7 @@ Proponer un cambio
         <code>&lt;dependencyManagement&gt;</code>
 )
       </li>
-      <li class="cds--list__item">Solicite aprobación antes de aplicar</li>
+      <li class="cds--list__item">Solicita aprobación antes de aplicar</li>
     </ul>
     <h3 id="43-preview-individual-edits" class="cds--productive-heading-02 lab-step__title">4.3 Vista previa de ediciones individuales</h3>
     <p>
@@ -646,9 +646,9 @@ Si
  deja de compilarse o se inicia en tiempo de ejecución, no es un error: es la solución de seguridad que está haciendo su trabajo. Pega el error en Bob y deja que concilie el cambio de API. La lección que vale la pena exponer claramente es que las actualizaciones de seguridad tienen un costo y "rompió algo" no es una razón para omitirlas.
       </p>
     </details>
-    <h3 id="52-re-run-the-workflow" class="cds--productive-heading-02 lab-step__title">5.2 Vuelva a ejecutar el flujo de trabajo</h3>
+    <h3 id="52-re-run-the-workflow" class="cds--productive-heading-02 lab-step__title">5.2 Vuelve a ejecutar el flujo de trabajo</h3>
     <p>
-Haga clic en
+Haz clic en
       <strong>Inicio</strong>
  en
       <strong>Java Vulnerabilities Detection</strong>
@@ -662,7 +662,7 @@ Haga clic en
         <code>mvn liberty:run</code>
       </pre>
     </div>
-    <p>Confirme que la API funcione correctamente y que las actualizaciones no introduzcan errores de tiempo de ejecución:</p>
+    <p>Confirma que la API funcione correctamente y que las actualizaciones no introduzcan errores de tiempo de ejecución:</p>
     <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>http://localhost:9081/simple-pharmacy/api/dashboard</code>
@@ -675,11 +675,11 @@ Haga clic en
       <figcaption class="lab-figure__caption">Referencia visual — API del panel de farmacia que responde con datos de prescripción. Verifica este estado antes de continuar.</figcaption>
     </figure>
     <div class="callout" data-tone="warning">
-      <p class="callout__title">Detenga el servidor antes de continuar</p>
+      <p class="callout__title">Detén el servidor antes de continuar</p>
       <ul class="cds--list--unordered">
         <li class="cds--list__item">
-          <strong>macOS / Linux:</strong>
- presione
+          <strong>macOS, Linux o WSL:</strong>
+ presiona
           <span class="premium-keys">
             <kbd class="key-control">Ctrl</kbd>
             <span>+</span>
@@ -691,7 +691,7 @@ Haga clic en
         </li>
         <li class="cds--list__item">
           <strong>Windows (PowerShell):</strong>
- presione
+ presiona
           <span class="premium-keys">
             <kbd class="key-control">Ctrl</kbd>
             <span>+</span>
@@ -733,7 +733,7 @@ Haga clic en
         <code>mvn compile</code>
  falla después de un aumento de versión
       </summary>
-      <p>Una solución actualizó una biblioteca a una versión con un cambio importante en la API. Pegue el error de compilación nuevamente en Bob y pídale que lo concilie; adaptará el código de llamada o propondrá una versión diferente y aún segura. La actualización SnakeYAML 2.0 es la culpable más probable.</p>
+      <p>Una solución actualizó una biblioteca a una versión con un cambio importante en la API. Pega el error de compilación nuevamente en Bob y pídele que lo concilie; adaptará el código de llamada o propondrá una versión diferente y aún segura. La actualización SnakeYAML 2.0 es la culpable más probable.</p>
     </details>
     <details class="premium-details">
       <summary>Una dependencia vulnerable es transitiva y no se actualizará limpiamente</summary>
@@ -751,7 +751,7 @@ El CVE vive dentro de una dependencia transitiva que Bob no puede simplemente ca
       </p>
       <div data-language="bash" class="code-block premium-code-block code-block--terminal">
         <pre>
-          <code>sdk use java 21.0.11-zulu</code>
+          <code>sdk use java 21.0.12-sem</code>
         </pre>
       </div>
     </details>
@@ -873,7 +873,7 @@ El CVE vive dentro de una dependencia transitiva que Bob no puede simplemente ca
  rompiendo el comportamiento permisivo en el que se basa algún código. Las actualizaciones de seguridad no son gratuitas y esa no es razón para omitirlas.
       </li>
       <li class="cds--list__item">
-        <strong>Vuelva a escanear para probarlo</strong>
+        <strong>Vuelve a escanear para probarlo</strong>
 : la corrección no se realiza cuando llega la edición, se realiza cuando el escaneo está limpio.
       </li>
     </ol>

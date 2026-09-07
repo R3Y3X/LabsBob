@@ -339,12 +339,12 @@ Si falla, muéstrame el error completo antes de proponer ningún fix.</code></pr
     <p class="cds--body-01"><code>sdk use java</code> solo aplica a la shell donde se ejecutó — la terminal de Bob es una shell separada. Ejecútalo en la terminal de Bob específicamente:</p>
     <div class="code-block code-block--terminal">
       <button type="button" class="copy-button">Copiar</button>
-      <pre><code>sdk use java 8.0.492-zulu</code></pre>
+      <pre><code>sdk use java 8.0.504+1-zulu</code></pre>
     </div>
     <p class="cds--body-01" style="margin-top:0.75rem">O establece el default global para que cada shell nueva lo tome:</p>
     <div class="code-block code-block--terminal">
       <button type="button" class="copy-button">Copiar</button>
-      <pre><code>sdk default java 8.0.492-zulu</code></pre>
+      <pre><code>sdk default java 8.0.504+1-zulu</code></pre>
     </div>
 
     <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">Bob no puede leer archivos del proyecto (<code>I cannot access that file</code> / <code>File not found</code>)</h3>
@@ -405,8 +405,8 @@ NO apliques las recetas Java 8→11/17/21 — eso es el Lab 2.</code></pre>
     <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">Build falla con <code>Unsupported class file major version</code></h3>
     <p class="cds--body-01">Maven corre en un JDK más nuevo que 8. El Lab 1 se queda en Java 8 — apunta Maven a él.</p>
     <ul class="cds--list--unordered">
-      <li class="cds--list__item"><strong>macOS / Linux (SDKMAN!):</strong> <code>sdk use java 8.0.492-zulu</code></li>
-      <li class="cds--list__item"><strong>Windows:</strong> establece <code>JAVA_HOME</code> a tu carpeta Temurin 8 y reabre la terminal — o ejecuta <code>sdk use java 8.0.492-zulu</code> si instalaste vía SDKMAN! en Git Bash/WSL</li>
+      <li class="cds--list__item"><strong>macOS / Linux (SDKMAN!):</strong> <code>sdk use java 8.0.504+1-zulu</code></li>
+      <li class="cds--list__item"><strong>Windows:</strong> establece <code>JAVA_HOME</code> a tu carpeta Temurin 8 y reabre la terminal — o ejecuta <code>sdk use java 8.0.504+1-zulu</code> si instalaste vía SDKMAN! en Git Bash/WSL</li>
     </ul>
     <p class="cds--body-01" style="margin-top:0.75rem">Luego recompila:</p>
     <div class="code-block code-block--terminal">

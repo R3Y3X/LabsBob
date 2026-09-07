@@ -197,7 +197,7 @@ export const siteData = {
           description: 'Descubre las reglas de negocio de SAMCO, convierte RPG de formato fijo a libre, construye una UI React + Carbon y reemplaza CHAIN por SQL embebido.',
           supporting: 'IBM i · SAMCO',
           featured: true,
-          overviewLabsOnly: true,
+          customOverview: true,
           audience: ['client', 'partner'],
           steps: [
             { slug: 'overview', label: 'Introducción', file: './content/premium/ibm-i-rpg-development/overview.html', tags: ['RPG legacy'] },

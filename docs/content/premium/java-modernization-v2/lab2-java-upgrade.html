@@ -201,7 +201,7 @@ Cambio 1 — Compilador Java 21 en pom.xml (APROBAR)
   maven.compiler.source/target: 1.8 → 21
   Añadir maven.compiler.release=21
   Actualizar maven-compiler-plugin → 3.15.0, maven-war-plugin → 3.5.1
-  Si Java 21 no está instalado: sdk install java 21.0.7-zulu &amp;&amp; sdk use java 21.0.7-zulu
+  Si Java 21 no está instalado: sdk install java 21.0.12+1.1-zulu &amp;&amp; sdk use java 21.0.12+1.1-zulu
 
 Cambio 2 — Struts con soporte Jakarta en pom.xml (APROBAR)
   struts2.version: 2.5.x → 6.4.0 (paso intermedio con soporte Jakarta)
@@ -262,7 +262,7 @@ Reglas:
 
       <div class="callout" data-tone="warning" style="margin-top:var(--cds-spacing-05,1rem)">
         <p class="callout__title">Bob encadenó todos los cambios o saltó a validación</p>
-        <p>Si ves "todos aplicados" o un botón de <code>mvn compile</code> sin haber aprobado cada diff, interrumpe con el prompt de recuperación del <a href="#/lab/java-modernization-v2/overview#ov-como">overview</a>. Para la captura <code>lab2-phase2-javax-jakarta.png</code>, sube al chat hasta el <strong>Cambio 3</strong> (javax → jakarta en <code>pom.xml</code>) o pide: <em>"Muéstrame el diff del Cambio 3 sin aplicar nada más"</em>.</p>
+        <p>Si ves "todos aplicados" o un botón de <code>mvn compile</code> sin haber aprobado cada diff, interrumpe con el prompt de recuperación del <a href="#/lab/java-modernization-v2/overview?h=ov-como">overview</a>. Para la captura <code>lab2-phase2-javax-jakarta.png</code>, sube al chat hasta el <strong>Cambio 3</strong> (javax → jakarta en <code>pom.xml</code>) o pide: <em>"Muéstrame el diff del Cambio 3 sin aplicar nada más"</em>.</p>
       </div>
 
       <div class="callout" data-tone="tip" style="margin-top:var(--cds-spacing-05,1rem)">
@@ -297,7 +297,7 @@ Reglas:
 
 Resultado esperado: BUILD SUCCESS con Java 21.
 Errores comunes:
-  "invalid target release: 21" → JAVA_HOME no apunta a Java 21 (sdk use java 21.0.7-zulu)
+  "invalid target release: 21" → JAVA_HOME no apunta a Java 21 (sdk use java 21.0.12+1.1-zulu)
   "cannot find symbol" en jakarta.* → algún import javax.* no se migró
   "cannot find symbol" ActionSupport → import com.opensymphony.xwork2 sin reescribir
   "Unsupported class file major version" → Maven compila con el JDK equivocado
@@ -415,7 +415,7 @@ Si falla, muéstrame el error completo antes de proponer ningún fix.</code></pr
     <h3 class="cds--productive-heading-02" style="margin-top:var(--cds-spacing-05,1rem)">Otros problemas frecuentes</h3>
     <ul class="cds--list--unordered">
       <li class="cds--list__item"><strong><code>JSPG0303W</code> / JSTL javax:</strong> warnings inofensivos — ningún JSP usa JSTL. Elimina <code>javax.servlet:jstl</code> del pom o ignóralo.</li>
-      <li class="cds--list__item"><strong>Terminal de Bob sigue en Java 8:</strong> abre terminal nueva o <code>sdk use java 21.0.7-zulu</code>.</li>
+      <li class="cds--list__item"><strong>Terminal de Bob sigue en Java 8:</strong> abre terminal nueva o <code>sdk use java 21.0.12+1.1-zulu</code>.</li>
       <li class="cds--list__item"><strong>Bob no lee archivos:</strong> verifica que abriste <code>snapB-java-upgrade/</code> como raíz, no la carpeta padre.</li>
       <li class="cds--list__item"><strong><code>cannot find symbol</code> ActionSupport:</strong> pide a Bob: <em>«Busca imports restantes de com.opensymphony.xwork2 y actualízalos a org.apache.struts2.»</em></li>
       <li class="cds--list__item"><strong>Referencias <code>javax.servlet.*</code> en runtime:</strong> pide a Bob: <em>«Audita todos los imports javax.* que deban ser jakarta.*.»</em></li>

@@ -5028,6 +5028,31 @@ body.cds--g100 .lab-shell.lab-shell--java-modernization-v2 :is(.code-block--file
   font-size: 0.8125rem;
 }
 
+.lab-shell--overview.lab-shell--ibm-i-rpg-development .lab-banner .rpg-meta {
+  grid-area: tags;
+  padding-right: 2rem;
+  margin-bottom: var(--cds-spacing-04, 1rem);
+}
+
+.lab-shell--overview .overview-materials {
+  margin-top: 0;
+  padding-top: var(--cds-spacing-06, 1.5rem);
+  border-top: 1px solid var(--cds-border-subtle-01, #c6c6c6);
+}
+
+.lab-shell--overview .overview-materials > h2 > svg,
+.lab-shell--overview .overview-materials > h2 > .lab-section__icon {
+  display: none;
+}
+
+.lab-shell--overview .overview-materials .callout {
+  max-width: none;
+}
+
+.lab-shell--overview .overview-materials .callout + .callout {
+  margin-top: var(--cds-spacing-05, 1rem);
+}
+
 .lab-shell.lab-shell--ibm-i-rpg-development .rpg-meta__item {
   display: inline-flex;
   gap: 0.375rem;

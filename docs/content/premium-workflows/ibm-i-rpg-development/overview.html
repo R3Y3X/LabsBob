@@ -19,6 +19,19 @@
     </div>
   </div>
 
+  <section class="lab-section overview-materials" aria-labelledby="ov-materials">
+    <h2 class="cds--productive-heading-03" id="ov-materials">Materiales del Track E</h2>
+    <div class="callout" data-tone="note">
+      <p class="callout__title">Descarga el material del workshop</p>
+      <p>El ZIP incluye <code>SAMCO/</code> con RPG, DDS y SQL. Descomprímelo y abre la carpeta del workshop como raíz en Bob antes del Lab 0.</p>
+      <a class="cds--btn cds--btn--primary" style="margin-top:1rem" download="samco-workshop.zip" href="./downloads/samco-workshop.zip">Descargar workshop SAMCO</a>
+    </div>
+    <div class="callout" data-tone="tip">
+      <p class="callout__title">Materiales exclusivos de Premium</p>
+      <p>Los Labs 4 y 5 requieren instalar la extensión <strong>IBM Bob Premium Package for i</strong>, registrar una conexión IBM i desde el panel lateral, y contar con IBM i Agent Mode, MCP y Ansible. No empieces esas etapas sin las credenciales y permisos facilitados para la sesión.</p>
+    </div>
+  </section>
+
   <section class="lab-section" aria-labelledby="ov-que">
     <h2 class="cds--productive-heading-03" id="ov-que"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M11 8l16 8-16 8z"/></svg>Qué vamos a modernizar</h2>
     <p class="cds--body-01">Trabajarás con el árbol fuente <strong>SAMCO</strong>: un sistema de pedidos con pantalla verde, RPG de más de veinte años, DDS y SQL. Los Labs 0–3 comparten el mismo objetivo de modernización que la ruta sin premium; los Labs 4–5 añaden acceso real a IBM i y automatización operativa.</p>
@@ -44,29 +57,16 @@
   <section class="lab-section" aria-labelledby="ov-como">
     <h2 class="cds--productive-heading-03" id="ov-como"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg>Cómo trabaja Bob en cada lab</h2>
     <p class="cds--body-01">Los Labs 0–3 usan la misma lógica de descubrimiento y modernización de la variante estándar. En Premium, cuando llegues a los Labs 4–5, IBM i Agent y MCP permiten consultar el sistema IBM i autorizado y Bob puede ayudarte a construir la automatización Ansible.</p>
-    <div class="prereq-grid">
+    <div class="prereq-grid prereq-grid--balanced">
       <div class="prereq-item"><div class="prereq-item__icon"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 32 32" fill="currentColor"><path d="M17 22h-2v-2h2zm0-4h-2v-8h2z"/><path d="M16 2C8.3 2 2 8.3 2 16s6.3 14 14 14 14-6.3 14-14S23.7 2 16 2zm0 26C9.4 28 4 22.6 4 16S9.4 4 16 4s12 5.4 12 12-5.4 12-12 12z"/></svg></div><div class="prereq-item__body"><p class="prereq-item__title">Descubrimiento</p><p class="prereq-item__desc">Bob explica reglas de negocio, paneles, pedidos y acceso a datos sin modificar archivos.</p></div></div>
       <div class="prereq-item"><div class="prereq-item__icon"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 32 32" fill="currentColor"><path d="M18 28H8a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12l6 6v14a2 2 0 0 1-2 2zm-10-2h10V14h-5V6H8v20zm12-14v-2l-4-4v4h4z"/></svg></div><div class="prereq-item__body"><p class="prereq-item__title">Modernización</p><p class="prereq-item__desc">Revisa y aprueba las conversiones de RPG, SQL y la interfaz web antes de aplicarlas.</p></div></div>
       <div class="prereq-item"><div class="prereq-item__icon"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 32 32" fill="currentColor"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg></div><div class="prereq-item__body"><p class="prereq-item__title">Operación IBM i</p><p class="prereq-item__desc">Con permisos habilitados, conecta MCP y valida los resultados de los playbooks de PTF.</p></div></div>
     </div>
   </section>
 
-  <section class="lab-section" aria-labelledby="ov-materials">
-    <h2 class="cds--productive-heading-03" id="ov-materials"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M18 28H8a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12l6 6v14a2 2 0 0 1-2 2zm-10-2h10V14h-5V6H8v20zm12-14v-2l-4-4v4h4z"/></svg>Materiales del workshop</h2>
-    <div class="callout" data-tone="note">
-      <p class="callout__title">Descarga el material del workshop</p>
-      <p>El ZIP incluye <code>SAMCO/</code> con RPG, DDS y SQL. Descomprímelo y abre la carpeta del workshop como raíz en Bob antes del Lab 0.</p>
-      <a class="cds--btn cds--btn--primary" style="margin-top:1rem" download="samco-workshop.zip" href="./downloads/samco-workshop.zip">Descargar workshop SAMCO</a>
-    </div>
-    <div class="callout" data-tone="tip">
-      <p class="callout__title">Materiales exclusivos de Premium</p>
-      <p>Los Labs 4 y 5 requieren una conexión IBM i aprobada, el paquete IBM i de Bob, IBM i Agent Mode, MCP y Ansible. No empieces esas etapas sin las credenciales y permisos facilitados para la sesión.</p>
-    </div>
-  </section>
-
   <section class="lab-section" aria-labelledby="ov-prereqs">
     <h2 class="cds--productive-heading-03" id="ov-prereqs"><svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M16 4a5 5 0 1 1-5 5 5 5 0 0 1 5-5m0-2a7 7 0 1 0 7 7 7 7 0 0 0-7-7ZM26 30h-2v-5a5 5 0 0 0-5-5h-6a5 5 0 0 0-5 5v5H6v-5a7 7 0 0 1 7-7h6a7 7 0 0 1 7 7Z"/></svg>Prerrequisitos</h2>
-    <div class="prereq-grid">
+    <div class="prereq-grid prereq-grid--balanced">
       <div class="prereq-item"><div class="prereq-item__icon"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 32 32" fill="currentColor"><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/><path d="M17 13h-2v10h2zm0-4h-2v2h2z"/></svg></div><div class="prereq-item__body"><p class="prereq-item__title">IBM Bob IDE</p><p class="prereq-item__desc">Ask Mode para el descubrimiento y Agent/Code Mode para los cambios.</p></div></div>
       <div class="prereq-item"><div class="prereq-item__icon"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 32 32" fill="currentColor"><path d="M18 28H8a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12l6 6v14a2 2 0 0 1-2 2zm-10-2h10V14h-5V6H8v20zm12-14v-2l-4-4v4h4z"/></svg></div><div class="prereq-item__body"><p class="prereq-item__title">Proyecto SAMCO</p><p class="prereq-item__desc">Bundle descomprimido y abierto como raíz del workspace.</p></div></div>
       <div class="prereq-item"><div class="prereq-item__icon"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 32 32" fill="currentColor"><path d="M14 21.414 9 16.413 10.413 15l3.587 3.586 8.587-8.586L24 11.414z"/><path d="M16 2a14 14 0 1 0 14 14A14 14 0 0 0 16 2Zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg></div><div class="prereq-item__body"><p class="prereq-item__title">Node.js 18+</p><p class="prereq-item__desc">Necesario para React + Carbon en el Lab 2.</p></div></div>
@@ -90,12 +90,6 @@
         </tbody>
       </table>
     </div>
-    <figure class="lab-figure">
-      <a class="lab-figure__link" href="./assets/images/labs/ibm-i-rpg-development/premium/ibm-bob-ibmi-rpg-roadmap.png" target="_blank" rel="noopener">
-        <img src="./assets/images/labs/ibm-i-rpg-development/premium/ibm-bob-ibmi-rpg-roadmap.png" class="lab-figure__img" alt="Hoja de ruta IBM i y RPG con SAMCO, RPG libre, SQL, React, MCP y Ansible PTF" />
-      </a>
-      <figcaption class="lab-figure__caption">Recorrido premium: los dos últimos labs extienden el mismo formato con IBM i MCP y Ansible PTF.</figcaption>
-    </figure>
   </section>
 
   <section class="lab-section" aria-labelledby="soporte-heading">

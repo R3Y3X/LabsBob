@@ -41,13 +41,13 @@ Migre
       <p>
 Recorra el flujo de trabajo Java Modernization de Bob de principio a fin:
         <strong>Analyze → Upgrade (Liberty Replatforming) → Validate</strong>
-. Bob analiza los problemas de migración uno por uno, explica cada uno de ellos y solicita su aprobación antes de tocar un archivo.
+. Bob analiza los problemas de migración uno por uno, explica cada uno de ellos y solicita tu aprobación antes de tocar un archivo.
       </p>
     </div>
   </section>
   <section class="lab-section" aria-labelledby="get-the-source-code-first">
     <h2 class="cds--productive-heading-03" id="get-the-source-code-first">Obtén primero el código fuente</h2>
-    <p>Descargue el paquete del taller y el ZIP del plan de migración Liberty antes de comenzar; se hace referencia a ambos desde el interior de Bob durante la práctica de laboratorio.</p>
+    <p>Descarga el paquete del taller y el ZIP del plan de migración Liberty antes de comenzar; se hace referencia a ambos desde el interior de Bob durante la práctica de laboratorio.</p>
     <p>
       <a download="simple-pharmacy-workshop-v2.zip" href="./downloads/simple-pharmacy-workshop-v2.zip" class="cds--btn cds--btn--primary">
         <span class="premium-button-icon">
@@ -125,11 +125,11 @@ Recorra el flujo de trabajo Java Modernization de Bob de principio a fin:
   </section>
   <section class="lab-section" aria-labelledby="prerequisites">
     <h2 class="cds--productive-heading-03" id="prerequisites">Requisitos previos</h2>
-    <p>Antes de comenzar esta práctica de laboratorio, asegúrese de tener instalado lo siguiente.</p>
+    <p>Antes de comenzar esta práctica de laboratorio, asegúrate de tener instalado lo siguiente.</p>
     <h3 id="1-ibm-bob-ide-v2" class="cds--productive-heading-02 lab-step__title">1. IBM Bob IDE (V2)</h3>
     <ul class="cds--list--unordered">
       <li class="cds--list__item">
-Instale la última extensión IDE
+Instala la última extensión IDE
         <strong>Bob V2</strong>
 .
       </li>
@@ -148,7 +148,7 @@ Bob construye este proyecto con
       <strong>Maven</strong>
  (herramienta de compilación de Java).
       <strong>El Laboratorio 1 usa Java 8.</strong>
- Siga la pestaña de su sistema operativo: cada uno instala Java 8 y Maven.
+ Sigue la pestaña de tu sistema operativo: cada uno instala Java 8 y Maven.
     </p>
     <div class="callout" data-tone="tip">
       <p class="callout__title">Bob puede instalar Java 8 por ti</p>
@@ -171,7 +171,7 @@ Si falta Java 8, el flujo de trabajo lo instala a través de SDKMAN! por sí sol
           <p>
 La forma más sencilla es
             <strong>SDKMAN!</strong>
-, una herramienta que instala y cambia entre versiones de Java por usted.
+, una herramienta que instala y cambia entre versiones de Java por ti.
           </p>
           <p>Instalar SDKMAN!:</p>
           <div data-language="bash" class="code-block premium-code-block code-block--terminal">
@@ -186,18 +186,18 @@ La forma más sencilla es
             </pre>
           </div>
           <p>
-Instale Java 8 (Azul
+Instala Java 8 (Azul
             <strong>Zulu</strong>
 : Temurin/Adoptium no tiene una compilación de Java 8 para Apple Silicon, y Zulu funciona tanto en Intel como en Mac de la serie M) y conviértalo en el predeterminado:
           </p>
           <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
-              <code>sdk install java 8.0.492-zulu</code>
+              <code>sdk install java 8.0.504+1-zulu</code>
             </pre>
           </div>
           <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
-              <code>sdk default java 8.0.492-zulu</code>
+              <code>sdk default java 8.0.504+1-zulu</code>
             </pre>
           </div>
           <p>Instalar Maven:</p>
@@ -211,7 +211,7 @@ Instale Java 8 (Azul
           <p>
 La forma más sencilla es
             <strong>SDKMAN!</strong>
-, una herramienta que instala y cambia entre versiones de Java por usted.
+, una herramienta que instala y cambia entre versiones de Java por ti.
           </p>
           <p>Instalar SDKMAN!:</p>
           <div data-language="bash" class="code-block premium-code-block code-block--terminal">
@@ -226,18 +226,18 @@ La forma más sencilla es
             </pre>
           </div>
           <p>
-Instale Java 8 (Azul
+Instala Java 8 (Azul
             <strong>Zulu</strong>
 : Temurin/Adoptium no tiene una compilación de Java 8 para Apple Silicon, y Zulu funciona tanto en Intel como en Mac de la serie M) y conviértalo en el predeterminado:
           </p>
           <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
-              <code>sdk install java 8.0.492-zulu</code>
+              <code>sdk install java 8.0.504+1-zulu</code>
             </pre>
           </div>
           <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
-              <code>sdk default java 8.0.492-zulu</code>
+              <code>sdk default java 8.0.504+1-zulu</code>
             </pre>
           </div>
           <p>Instalar Maven:</p>
@@ -256,7 +256,7 @@ SDKMAN! (usado en macOS/Linux) no se puede ejecutar en PowerShell, por lo que Wi
           <p>
             <strong>Opción A — Winget (permanece en PowerShell, la más simple).</strong>
             <code>winget</code>
- es el instalador de la aplicación integrado en Windows 10/11. Ejecute cada línea en
+ es el instalador de la aplicación integrado en Windows 10/11. Ejecuta cada línea en
             <strong>PowerShell</strong>
 :
           </p>
@@ -292,15 +292,15 @@ Luego,
             </li>
             <li class="cds--list__item">
               <strong>WSL</strong>
- es el entorno Linux integrado: ejecute
+ es el entorno Linux integrado: ejecuta
               <code>wsl --install</code>
- en un PowerShell de administrador y luego vuelva a abrir.
+ en un PowerShell de administrador y luego vuelve a abrir.
             </li>
           </ul>
           <p>
-Abra Git Bash o WSL y ejecute los comandos
+Abre Git Bash o WSL y ejecuta los comandos
             <strong>macOS/Linux</strong>
- desde las otras pestañas. Siga usando el mismo shell para cada comando
+ desde las otras pestañas. Sigue usando el mismo shell para cada comando
             <code>sdk</code>
 ,
             <code>java</code>
@@ -311,7 +311,7 @@ Abra Git Bash o WSL y ejecute los comandos
         </div>
       </div>
     </div>
-    <p>Ahora verifique: estas comprobaciones son las mismas en todos los sistemas operativos:</p>
+    <p>Ahora verifica: estas comprobaciones son las mismas en todos los sistemas operativos:</p>
     <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>java -version</code>
@@ -321,7 +321,7 @@ Abra Git Bash o WSL y ejecute los comandos
 Debería ver una versión que comience con
       <code>1.8.</code>
 , p.
-      <code>openjdk version "1.8.0_492"</code>
+      <code>openjdk version "1.8.0_504"</code>
  de Zulu (el número de parche exacto no importa; la parte clave es
       <strong>1.8</strong>
  = Java 8).
@@ -337,13 +337,13 @@ Debería ver una versión que comience con
  muestra el Java con el que Maven construirá
       </p>
       <p>
-Esto puede diferir del valor predeterminado de su shell
+Esto puede diferir del valor predeterminado de tu shell
         <code>java -version</code>
 : Maven sigue a
         <code>JAVA_HOME</code>
  (o, con SDKMAN!, la instalación activa). Para el Laboratorio 1, ambos deben informar
         <strong>Java 8</strong>
-. En Windows con ala, apunte
+. En Windows, apunta
         <code>JAVA_HOME</code>
  a la carpeta Temurin 8 (por ejemplo,
         <code>C:\Program Files\Eclipse Adoptium\jdk-8…</code>
@@ -359,7 +359,7 @@ En
         <strong>no</strong>
  compilación Java 8; los identificadores obsoletos como
         <code>8.0.432-tem</code>
- fallarán con "no disponible". Utilice
+ fallarán con "no disponible". Utiliza
         <strong>Azul Zulu</strong>
  (el ID de
         <code>-zulu</code>
@@ -367,34 +367,34 @@ En
         <strong>Amazon Corretto</strong>
  (
         <code>sdk install java 8.0.472-amzn</code>
-); ambos tienen compilaciones nativas de arm64. Para ver todas las compilaciones de Java 8 disponibles para su máquina:
-        <code>sdk list java | grep " 8\."</code>
+); ambos tienen compilaciones nativas de arm64. Para ver todas las compilaciones de Java 8 disponibles para tu máquina:
+        <code>sdk list java</code>
 .
       </p>
       <p>
 En
         <strong>Intel Macs / x64 Linux</strong>
-, Temurin 8 también funciona. ¿Prefieres un instalador GUI? Descargue
+, Temurin 8 también funciona. ¿Prefieres un instalador GUI? Descarga
         <a href="https://www.azul.com/downloads/?version=java-8-lts">Zulu 8</a>
- para su arquitectura, o en Ubuntu/Debian
+ para tu arquitectura, o en Ubuntu/Debian
         <code>sudo apt install openjdk-8-jdk</code>
 .
       </p>
     </div>
     <div class="callout" data-tone="warning">
-      <p class="callout__title">Reinicie Bob después de instalar Maven</p>
+      <p class="callout__title">Reinicia Bob después de instalar Maven</p>
       <p>
-Después de instalar Maven, usted
-        <strong>debe</strong>
- cerrar y reiniciar IBM Bob (o su IDE) para que recoja el nuevo
+Después de instalar Maven,
+        <strong>debes</strong>
+ cerrar y reiniciar IBM Bob (o tu IDE) para que recoja el nuevo
         <code>PATH</code>
  y pueda detectar Maven.
       </p>
       <ol class="cds--list--ordered">
         <li class="cds--list__item">Cierra tu IDE por completo.</li>
-        <li class="cds--list__item">Vuelva a abrir su IDE.</li>
+        <li class="cds--list__item">Vuelve a abrir tu IDE.</li>
         <li class="cds--list__item">
-Verifique que se detecte Maven ejecutando
+Verifica que se detecte Maven ejecutando
           <code>mvn --version</code>
  en la terminal de Bob.
         </li>
@@ -439,11 +439,11 @@ Verifique que se detecte Maven ejecutando
     <ul class="cds--list--unordered">
       <li class="cds--list__item">
         <strong>Analyze</strong>
-: Bob inspecciona su proyecto Java y usted elige un tipo de modernización (Java Upgrade, Liberty Replatforming o UI Modernization).
+: Bob inspecciona tu proyecto Java y tú eliges un tipo de modernización (Java Upgrade, Liberty Replatforming o UI Modernization).
       </li>
       <li class="cds--list__item">
         <strong>Actualización</strong>
-: Bob realiza la actualización agente y soluciona los problemas uno por uno con su aprobación.
+: Bob realiza la actualización agente y soluciona los problemas uno por uno con tu aprobación.
       </li>
       <li class="cds--list__item">
         <strong>Validar</strong>
@@ -451,7 +451,7 @@ Verifique que se detecte Maven ejecutando
       </li>
     </ul>
     <h3 id="controlling-bobs-permissions" class="cds--productive-heading-02 lab-step__title">Controlando los permisos de Bob</h3>
-    <p>Utilice el selector de permisos en la ventana de chat para controlar lo que hace Bob sin preguntar:</p>
+    <p>Utiliza el selector de permisos en la ventana de chat para controlar lo que hace Bob sin preguntar:</p>
     <ul class="cds--list--unordered">
       <li class="cds--list__item">
         <strong>Read</strong>
@@ -475,7 +475,7 @@ Verifique que se detecte Maven ejecutando
       <p>
 Comience solo con
         <strong>Read</strong>
- habilitado hasta que se sienta cómodo, luego amplíe a medida que gane confianza.
+ habilitado hasta que te sientas cómodo, luego amplía a medida que ganes confianza.
       </p>
     </div>
     <figure class="lab-figure premium-workflow__figure">
@@ -486,10 +486,10 @@ Comience solo con
     </figure>
   </section>
   <section class="lab-section" aria-labelledby="step-1-open-the-project">
-    <h2 class="cds--productive-heading-03" id="step-1-open-the-project">Paso 1: abre el proyecto</h2>
+    <h2 class="cds--productive-heading-03" id="step-1-open-the-project">Paso 1: confirma el workspace y el Project path</h2>
     <ol class="cds--list--ordered">
       <li class="cds--list__item">Confirma que Bob sigue abierto en <code>simple-pharmacy-workshop-v2</code> (la carpeta general del workshop). No cambies de workspace.</li>
-      <li class="cds--list__item">Si la ventana de chat de Bob aún no está abierta, haga clic en el ícono de Bob en la parte superior de su IDE.</li>
+      <li class="cds--list__item">Si la ventana de chat de Bob aún no está abierta, haz clic en el ícono de Bob en la parte superior de tu IDE.</li>
     </ol>
     <figure class="lab-figure premium-workflow__figure">
       <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/snapa-open-in-bob.png" target="_blank" rel="noopener">
@@ -497,32 +497,32 @@ Comience solo con
       </a>
       <figcaption class="lab-figure__caption">Referencia visual — Bob con el workshop completo abierto. <code>snapA</code> es una subcarpeta bajo <code>labs/</code>, no la raíz del workspace. Verifica este estado antes de continuar.</figcaption>
     </figure>
-    <h3 id="confirm-agent-mode" class="cds--productive-heading-02 lab-step__title">Confirmar Agent mode</h3>
+    <h3 id="confirm-agent-mode" class="cds--productive-heading-02 lab-step__title">Confirmar Agent Mode</h3>
     <p>
-En el panel de chat de Bob, verifique que el indicador de modo en la parte inferior muestre
+En el panel de chat de Bob, verifica que el indicador de modo en la parte inferior muestre
       <strong>Agent</strong>
 . Ese es el único modo que necesita: no hay nada a lo que cambiar en ningún momento de esta práctica de laboratorio.
     </p>
     <figure class="lab-figure premium-workflow__figure">
       <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/agent-mode-indicator.png" target="_blank" rel="noopener">
-        <img src="./assets/images/labs/java-modernization-v2/premium/agent-mode-indicator.png" class="lab-figure__img" alt="Indicador Agent mode en la parte inferior del panel de chat de Bob" />
+        <img src="./assets/images/labs/java-modernization-v2/premium/agent-mode-indicator.png" class="lab-figure__img" alt="Indicador Agent Mode en la parte inferior del panel de chat de Bob" />
       </a>
-      <figcaption class="lab-figure__caption">Referencia visual — Indicador Agent mode en la parte inferior del panel de chat de Bob. Verifica este estado antes de continuar.</figcaption>
+      <figcaption class="lab-figure__caption">Referencia visual — Indicador Agent Mode en la parte inferior del panel de chat de Bob. Verifica este estado antes de continuar.</figcaption>
     </figure>
-    <h3 id="confirm-the-workflow-appears" class="cds--productive-heading-02 lab-step__title">Confirme que aparece el flujo de trabajo</h3>
+    <h3 id="confirm-the-workflow-appears" class="cds--productive-heading-02 lab-step__title">Confirma que aparece el flujo de trabajo</h3>
     <p>
-Haga clic en el botón de reproducción (
+Haz clic en el botón de reproducción (
       <strong>▶</strong>
 ) en la parte superior de la ventana de chat de Bob para abrir la pestaña
       <strong>Workflows</strong>
- y busque
+ y busca
       <strong>Java Modernization</strong>
 .
     </p>
     <ul class="cds--list--unordered">
       <li class="cds--list__item">
         <strong>¿El botón Flujo de trabajo no está disponible?</strong>
- Asegúrese de que su instalación de Bob esté actualizada.
+ Asegúrate de que tu instalación de Bob esté actualizada.
       </li>
       <li class="cds--list__item">
         <strong>¿No encuentras el flujo de trabajo?</strong>
@@ -537,14 +537,14 @@ Haga clic en el botón de reproducción (
     </figure>
   </section>
   <section class="lab-section" aria-labelledby="step-2-run-the-liberty-replatforming-workflow">
-    <h2 class="cds--productive-heading-03" id="step-2-run-the-liberty-replatforming-workflow">Paso 2: ejecute el flujo de trabajo de cambio de plataforma Liberty</h2>
+    <h2 class="cds--productive-heading-03" id="step-2-run-the-liberty-replatforming-workflow">Paso 2: ejecuta el flujo de trabajo de cambio de plataforma Liberty</h2>
     <h3 id="objective" class="cds--productive-heading-02 lab-step__title">Objetivo</h3>
-    <p>Haga que Bob analice la aplicación, aplique el plan de migración AMA y valide el resultado en Liberty.</p>
+    <p>Haz que Bob analice la aplicación, aplique el plan de migración AMA y valide el resultado en Liberty.</p>
     <h3 id="21-start-the-workflow" class="cds--productive-heading-02 lab-step__title">2.1 Iniciar el flujo de trabajo</h3>
     <p>
-Seleccione
+Selecciona
       <strong>Java Modernization</strong>
- de la lista de flujo de trabajo y haga clic en
+ de la lista de flujo de trabajo y haz clic en
       <strong>(▶) Iniciar</strong>
 .
     </p>
@@ -566,9 +566,9 @@ Esa cola es solo un
       <strong>ejemplo de cómo debe terminar tu camino</strong>
 : tu camino real comienza donde guardaste el paquete (por ejemplo,
       <code>/Users/you/Downloads/…</code>
-). Deje
+). Deja
       <strong>Comando de compilación personalizada</strong>
- en blanco y haga clic en
+ en blanco y haz clic en
       <strong>Continuar</strong>
 .
     </p>
@@ -614,15 +614,15 @@ El panel
       </tbody>
     </table>
     <p>
-Haga clic en
+Haz clic en
       <strong>Continuar</strong>
 .
     </p>
     <figure class="lab-figure premium-workflow__figure">
       <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/select-liberty-replatforming.png" target="_blank" rel="noopener">
-        <img src="./assets/images/labs/java-modernization-v2/premium/select-liberty-replatforming.png" class="lab-figure__img" alt="Seleccione el panel Tipo de modernización con Liberty Replatforming seleccionado y Git Flow desactivado" />
+        <img src="./assets/images/labs/java-modernization-v2/premium/select-liberty-replatforming.png" class="lab-figure__img" alt="Selecciona el panel Tipo de modernización con Liberty Replatforming seleccionado y Git Flow desactivado" />
       </a>
-      <figcaption class="lab-figure__caption">Referencia visual — Seleccione el panel Tipo de modernización con Liberty Replatforming seleccionado y Git Flow desactivado. Verifica este estado antes de continuar.</figcaption>
+      <figcaption class="lab-figure__caption">Referencia visual — Selecciona el panel Tipo de modernización con Liberty Replatforming seleccionado y Git Flow desactivado. Verifica este estado antes de continuar.</figcaption>
     </figure>
     <div class="callout" data-tone="note">
       <p class="callout__title">Los otros tres subtipos son los otros laboratorios.</p>
@@ -665,7 +665,7 @@ Consíguelo de la segunda descarga en la parte superior de esta página:
     <p>
 Bob ahora resuelve los problemas de migración
       <strong>uno a la vez</strong>
-. Para cada uno, explica la causa raíz, propone una solución y espera su aprobación. Normalmente verá tres opciones:
+. Para cada uno, explica la causa raíz, propone una solución y espera tu aprobación. Normalmente verás tres opciones:
     </p>
     <ul class="cds--list--unordered">
       <li class="cds--list__item">
@@ -771,7 +771,7 @@ Elija
         <code>snapB</code>
 /
         <code>snapC</code>
- ya está fijada. Ambas versiones son compatibles con Java 8, por lo que una más nueva no interrumpirá su compilación actual, pero mantendrá a todo el grupo en una versión.
+ ya está fijada. Ambas versiones son compatibles con Java 8, por lo que una más nueva no interrumpirá tu compilación actual, pero mantendrá a todo el grupo en una versión.
       </p>
       <p>
 Hagas lo que hagas,
@@ -802,7 +802,7 @@ Entonces, el escáner tiene razón en cuanto a que el código existe, y está co
         <em>real</em>
  y que es
         <em>relevante para su tiempo de ejecución</em>
- son dos preguntas diferentes, y solo usted puede responder la segunda.
+ son dos preguntas diferentes, y solo tú puedes responder la segunda.
       </p>
     </details>
     <details class="premium-details">
@@ -810,7 +810,7 @@ Entonces, el escáner tiene razón en cuanto a que el código existe, y está co
       <p>
 Bob probablemente citará
         <strong>JEP 400</strong>
- y "Java 17+" como motivo. Tenga en cuenta que el Laboratorio 1 permanece en
+ y "Java 17+" como motivo. Ten en cuenta que el Laboratorio 1 permanece en
         <strong>Java 8</strong>
 : el juego de caracteres predeterminado no cambió a UTF-8 hasta Java 18, por lo que el error que describe no puede afectarlo en este laboratorio. AMA lo marca porque está planeando un objetivo Liberty que
         <em> podría</em>
@@ -829,9 +829,9 @@ Bob genera un
  para la ejecución.
     </p>
     <p>
-Confirme los informes de flujo de trabajo
+Confirma los informes de flujo de trabajo
       <em>"se inició correctamente sin errores"</em>
- (o elija la opción que coincida con sus registros). Si hay errores, péguelos directamente en el chat de Bob para depurarlos.
+ (o elige la opción que coincida con tus registros). Si hay errores, pégalos directamente en el chat de Bob para depurarlos.
     </p>
     <figure class="lab-figure premium-workflow__figure">
       <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/modernization-summary.png" target="_blank" rel="noopener">
@@ -842,7 +842,7 @@ Confirme los informes de flujo de trabajo
   </section>
   <section class="lab-section" aria-labelledby="step-3-verify-the-migrated-application">
     <h2 class="cds--productive-heading-03" id="step-3-verify-the-migrated-application">Paso 3: verificar la aplicación migrada</h2>
-    <p>Abra un navegador y vaya a:</p>
+    <p>Abre un navegador y vaya a:</p>
     <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>http://localhost:9080/simple-pharmacy.war/</code>
@@ -857,7 +857,7 @@ Si el
         <code>context-root="/simple-pharmacy"</code>
 , use
         <code>http://localhost:9080/simple-pharmacy/dashboard</code>
- en su lugar. Cualquiera de los dos es un resultado correcto; simplemente siga lo que informa Bob.
+ en su lugar. Cualquiera de los dos es un resultado correcto; simplemente sigue lo que informa Bob.
       </p>
     </div>
     <p>Deberías ver el panel de farmacia con datos reales (recetas, pedidos, medicamentos).</p>
@@ -924,12 +924,12 @@ Si el
       </ul>
     </div>
     <div class="callout" data-tone="warning">
-      <p class="callout__title">Detenga el servidor antes de continuar</p>
-      <p>Libere el puerto para que el siguiente laboratorio no esté bloqueado.</p>
+      <p class="callout__title">Detén el servidor antes de continuar</p>
+      <p>Libera el puerto para que el siguiente laboratorio no esté bloqueado.</p>
       <ul class="cds--list--unordered">
         <li class="cds--list__item">
-          <strong>macOS / Linux:</strong>
- presione
+          <strong>macOS, Linux o WSL:</strong>
+ presiona
           <span class="premium-keys">
             <kbd class="key-control">Ctrl</kbd>
             <span>+</span>
@@ -941,13 +941,13 @@ Si el
         </li>
         <li class="cds--list__item">
           <strong>Windows (PowerShell):</strong>
- presione
+ presiona
           <span class="premium-keys">
             <kbd class="key-control">Ctrl</kbd>
             <span>+</span>
             <kbd class="key-c">C</kbd>
           </span>
-; si el puerto permanece ocupado, ejecute
+; si el puerto permanece ocupado, ejecuta
           <code>mvn liberty:stop</code>
  o
           <code>netstat -ano | findstr :9080</code>
@@ -967,24 +967,24 @@ Si el
       </summary>
       <ol class="cds--list--ordered">
         <li class="cds--list__item">
-Confirme que Maven esté instalado:
+Confirma que Maven esté instalado:
           <code>mvn --version</code>
-. En macOS/Linux (SDKMAN!) verifique
+. En macOS/Linux (SDKMAN!) verifica
           <code>sdk version</code>
- y reinstale con
+ y reinstala con
           <code>sdk install maven</code>
-; en Windows reinstale con
+; en Windows reinstala con
           <code>winget install Apache.Maven</code>
 .
         </li>
         <li class="cds--list__item">
-          <strong>Reinicie su IDE/Bob completamente</strong>
- y abra una nueva terminal para que se recoja el
+          <strong>Reinicia tu IDE/Bob completamente</strong>
+ y abre una nueva terminal para que se recoja el
           <code>PATH</code>
  actualizado.
         </li>
         <li class="cds--list__item">
-Verifique nuevamente:
+Verifica nuevamente:
           <code>mvn --version</code>
 .
         </li>
@@ -994,17 +994,17 @@ Verifique nuevamente:
       <summary>La terminal de Bob usa la versión de Java incorrecta</summary>
       <p>
         <code>sdk use java &lt;id&gt;</code>
- solo se aplica al shell en el que se ejecutó: la terminal de Bob es un shell separado. Ejecútelo en la terminal de Bob específicamente:
+ solo se aplica al shell en el que se ejecutó: la terminal de Bob es un shell separado. Ejecútalo en la terminal de Bob específicamente:
       </p>
       <div data-language="bash" class="code-block premium-code-block code-block--terminal">
         <pre>
-          <code>sdk use java 8.0.492-zulu</code>
+          <code>sdk use java 8.0.504+1-zulu</code>
         </pre>
       </div>
-      <p>O establezca el valor predeterminado global para que cada nuevo shell lo recoja:</p>
+      <p>O establece el valor predeterminado global para que cada nuevo shell lo recoja:</p>
       <div data-language="bash" class="code-block premium-code-block code-block--terminal">
         <pre>
-          <code>sdk default java 8.0.492-zulu</code>
+          <code>sdk default java 8.0.504+1-zulu</code>
         </pre>
       </div>
     </details>
@@ -1025,11 +1025,11 @@ Verifica que el campo <strong>Project path</strong> del workflow apunta a
 ).
         </li>
         <li class="cds--list__item">
-Verifique los permisos del archivo:
+Verifica los permisos del archivo:
           <code>ls -la</code>
 .
         </li>
-        <li class="cds--list__item">Asegúrese de que Bob tenga acceso de lectura al espacio de trabajo.</li>
+        <li class="cds--list__item">Asegúrate de que Bob tenga acceso de lectura al espacio de trabajo.</li>
         <li class="cds--list__item">
 Intente hacer referencia a archivos con la sintaxis
           <code>@filename</code>
@@ -1087,9 +1087,9 @@ Descomprima
         </li>
       </ol>
       <div class="callout" data-tone="warning">
-        <p class="callout__title">Ejecute Bob desde /Aplicaciones, no desde /Volúmenes</p>
+        <p class="callout__title">Ejecuta Bob desde /Aplicaciones, no desde /Volúmenes</p>
         <p>
-Asegúrese de que Bob esté
+Asegúrate de que Bob esté
           <strong>no</strong>
  ejecutándose desde
           <code>/Volumes</code>
@@ -1143,15 +1143,13 @@ El
  cambia a Java 21 y el compilador de Java 8 no puede apuntar a una versión más reciente.
       </p>
       <p>
-Esta es la deriva de la receta
-        <strong>, no falta un JDK</strong>
-: instale
-        <em>not</em>
- o cambie a Java 21 aquí. Revierta el pom a Java 8:
+Esta es deriva de la receta
+        <strong>, no un JDK faltante</strong>
+: no instales ni cambies a Java 21 aquí. Revierte el pom a Java 8:
       </p>
       <ul class="cds--list--unordered">
         <li class="cds--list__item">
-Configure
+Configura
           <code>maven.compiler.source</code>
 /
           <code>target</code>
@@ -1164,7 +1162,7 @@ Configure
 .
         </li>
         <li class="cds--list__item">
-Mantenga el espacio de nombres
+Mantén el espacio de nombres
           <code>javax.*</code>
 .
         </li>
@@ -1178,7 +1176,7 @@ añadido. NO aplique las recetas de Java 8→11/17/21; ese es el laboratorio 2.<
         </pre>
       </div>
       <p>
-Luego reconstruya con
+Luego reconstruye con
         <code>mvn clean package</code>
 .
       </p>
@@ -1191,20 +1189,20 @@ La compilación falla con
       <p>
 Maven se ejecuta en un JDK posterior a 8. Lab 1 permanece en
         <strong>Java 8</strong>
-; apunte Maven hacia él.
+; apunta Maven hacia él.
       </p>
       <ul class="cds--list--unordered">
         <li class="cds--list__item">
           <strong>macOS / Linux (SDKMAN!):</strong>
-          <code>sdk use java 8.0.492-zulu</code>
+          <code>sdk use java 8.0.504+1-zulu</code>
         </li>
         <li class="cds--list__item">
           <strong>Windows:</strong>
- configure
+ configura
           <code>JAVA_HOME</code>
- en su carpeta Temurin 8 y vuelva a abrir la terminal, o ejecute
-          <code>sdk use java 8.0.492-zulu</code>
- si instaló a través de SDKMAN! en Git Bash/WSL.
+ en tu carpeta Temurin 8 y vuelve a abrir la terminal, o ejecuta
+          <code>sdk use java 8.0.504+1-zulu</code>
+ si instalaste a través de SDKMAN! en Git Bash/WSL.
         </li>
       </ul>
       <p>Luego reconstruir:</p>
@@ -1214,11 +1212,11 @@ Maven se ejecuta en un JDK posterior a 8. Lab 1 permanece en
         </pre>
       </div>
       <p>
-Confirme con
+Confirma con
         <code>mvn --version</code>
  (imprime la versión de Java que está usando Maven, que puede diferir de la
         <code>java -version</code>
- de su shell).
+ de tu shell).
       </p>
     </details>
     <details class="premium-details">
@@ -1237,7 +1235,7 @@ Siempre que Bob ofrezca
       <p>Una ejecución Liberty anterior todavía lo mantiene.</p>
       <ul class="cds--list--unordered">
         <li class="cds--list__item">
-          <strong>macOS / Linux:</strong>
+          <strong>macOS, Linux o WSL:</strong>
           <code>lsof -ti:9080,9443 | xargs kill -9</code>
 .
         </li>
@@ -1254,11 +1252,11 @@ Siempre que Bob ofrezca
       <div class="callout" data-tone="danger">
         <p class="callout__title">No ignores este: hace que cualquier solución posterior parezca fallida</p>
         <p>
-Si se toma el puerto, su nuevo servidor
+Si se toma el puerto, tu nuevo servidor
           <strong>nunca lo vincula</strong>
  y el
           <em>antiguo</em>
- sigue respondiendo. Editarás archivos, reconstruirás, reiniciarás y no verás ningún cambio, porque todavía estás hablando con el servidor obsoleto. Cada vez que una solución "no hace nada", verifique si hay un Liberty
+ sigue respondiendo. Editarás archivos, reconstruirás, reiniciarás y no verás ningún cambio, porque todavía estás hablando con el servidor obsoleto. Cada vez que una solución "no hace nada", verifica si hay un Liberty
           <strong>primero</strong>
 .
         </p>
@@ -1313,7 +1311,7 @@ Si se toma el puerto, su nuevo servidor
           <input type="checkbox" disabled />
           <span class="premium-checklist__indicator"></span>
         </label>
- Bob analizó el proyecto y usted seleccionó
+ Bob analizó el proyecto y tú seleccionaste
         <strong>Liberty Replatforming</strong>
  con Git Flow desactivado.
       </li>
@@ -1372,7 +1370,7 @@ Los
       </li>
       <li class="cds--list__item">
         <strong>Aprobación problema por problema</strong>
-: Bob explica y pregunta por cambio en lugar de aplicar un lote, lo que hace que los falsos positivos (como el hallazgo de OGNL) sean algo que usted decide, no algo que limpia después.
+: Bob explica y pregunta por cambio en lugar de aplicar un lote, lo que hace que los falsos positivos (como el hallazgo de OGNL) sean algo que tú decides, no algo que limpias después.
       </li>
       <li class="cds--list__item">
         <strong>No todos los hallazgos son un error</strong>
@@ -1387,8 +1385,8 @@ Los
  aquí, no lo más nuevo.
       </li>
       <li class="cds--list__item">
-        <strong>Reinicie Bob después de los cambios de RUTA</strong>
-: el problema más común. Si acaba de instalar Maven y Bob no puede encontrarlo, reinicie.
+        <strong>Reinicia Bob después de los cambios de RUTA</strong>
+: el problema más común. Si acabas de instalar Maven y Bob no puede encontrarlo, reinicia.
       </li>
     </ol>
   </section>

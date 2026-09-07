@@ -73,11 +73,11 @@ TDD es una metodología de desarrollo de software donde las pruebas se escriben
     <ol class="cds--list--ordered">
       <li class="cds--list__item">
         <strong>Red</strong>
-: escriba una prueba fallida que defina la funcionalidad deseada.
+: escribe una prueba fallida que defina la funcionalidad deseada.
       </li>
       <li class="cds--list__item">
         <strong>Green</strong>
-: escriba un código mínimo para que la prueba pase.
+: escribe un código mínimo para que la prueba pase.
       </li>
       <li class="cds--list__item">
         <strong>Refactor</strong>
@@ -108,7 +108,7 @@ TDD es una metodología de desarrollo de software donde las pruebas se escriben
   <section class="lab-section" aria-labelledby="get-the-source-code-first">
     <h2 class="cds--productive-heading-03" id="get-the-source-code-first">Obtén primero el código fuente</h2>
     <p>
-Descargue el paquete del taller (solo se necesita
+Descarga el paquete del taller (solo se necesita
       <code>prescription-api-spec.yaml</code>
  para esta práctica de laboratorio):
     </p>
@@ -203,7 +203,7 @@ Todo el proyecto utiliza el espacio de nombres
       <p>
 Desde
         <code>snapTDD</code>
-, ejecute
+, ejecuta
         <code>mvn test</code>
 . Sin pruebas aún, debería informar
         <code>BUILD SUCCESS</code>
@@ -227,7 +227,7 @@ Este laboratorio independiente compila y prueba con
       <strong>Java 21</strong>
  y
       <strong>Maven</strong>
- (herramienta de compilación de Java). Si ya los tienes, salta al paso de verificación; de lo contrario, siga la pestaña de su sistema operativo.
+ (herramienta de compilación de Java). Si ya los tienes, salta al paso de verificación; de lo contrario, sigue la pestaña de tu sistema operativo.
     </p>
     <div data-tabs="1:3" class="premium-platform-options">
       <input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" />
@@ -255,15 +255,15 @@ Usando
               <code>source "$HOME/.sdkman/bin/sdkman-init.sh"</code>
             </pre>
           </div>
-          <p>Instale Java 21 y conviértalo en la versión activa:</p>
+          <p>Instala Java 21 y conviértalo en la versión activa:</p>
           <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
-              <code>sdk install java 21.0.11-zulu</code>
+              <code>sdk install java 21.0.12-sem</code>
             </pre>
           </div>
           <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
-              <code>sdk use java 21.0.11-zulu</code>
+              <code>sdk use java 21.0.12-sem</code>
             </pre>
           </div>
           <p>Instalar Maven:</p>
@@ -289,15 +289,15 @@ Usando
               <code>source "$HOME/.sdkman/bin/sdkman-init.sh"</code>
             </pre>
           </div>
-          <p>Instale Java 21 y conviértalo en la versión activa:</p>
+          <p>Instala Java 21 y conviértalo en la versión activa:</p>
           <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
-              <code>sdk install java 21.0.11-zulu</code>
+              <code>sdk install java 21.0.12-sem</code>
             </pre>
           </div>
           <div data-language="bash" class="code-block premium-code-block code-block--terminal">
             <pre>
-              <code>sdk use java 21.0.11-zulu</code>
+              <code>sdk use java 21.0.12-sem</code>
             </pre>
           </div>
           <p>Instalar Maven:</p>
@@ -326,7 +326,7 @@ Usando
             </pre>
           </div>
           <p>
-Cierre y vuelva a abrir PowerShell para encontrar
+Cierra y vuelve a abrir PowerShell para encontrar
             <code>java</code>
  y
             <code>mvn</code>
@@ -334,12 +334,12 @@ Cierre y vuelva a abrir PowerShell para encontrar
           </p>
           <p>
             <strong>Opción B — SDKMAN! en Git Bash o WSL (idéntico a macOS/Linux).</strong>
- Abra Git Bash (de
+ Abre Git Bash (de
             <a href="https://git-scm.com/download/win">Git para Windows</a>
 ) o WSL (
             <code>wsl --install</code>
-), luego ejecute el
-            <strong>macOS/Linux comandos</strong>
+), luego ejecuta los
+            <strong>comandos de macOS/Linux</strong>
  de las otras pestañas.
           </p>
         </div>
@@ -375,12 +375,12 @@ En el explorador, entra en
 .
       </li>
       <li class="cds--list__item">
-Verifique que pueda ver
+Verifica que pueda ver
         <code>prescription-api-spec.yaml</code>
 .
       </li>
       <li class="cds--list__item">
-Confirme que el indicador de modo en la parte inferior del chat de Bob muestra
+Confirma que el indicador de modo en la parte inferior del chat de Bob muestra
         <strong>Agent</strong>
 .
       </li>
@@ -388,12 +388,12 @@ Confirme que el indicador de modo en la parte inferior del chat de Bob muestra
     <h3 id="step-2-review-the-api-specification" class="cds--productive-heading-02 lab-step__title">Paso 2: revisar la especificación API</h3>
     <ol class="cds--list--ordered">
       <li class="cds--list__item">
-Abra
+Abre
         <code>prescription-api-spec.yaml</code>
- en su IDE.
+ en tu IDE.
       </li>
       <li class="cds--list__item">
-Revise los puntos finales de la API:
+Revisa los puntos finales de la API:
         <ul class="cds--list--unordered">
           <li class="cds--list__item">
             <code>GET /prescriptions</code>
@@ -414,7 +414,7 @@ Revise los puntos finales de la API:
         </ul>
       </li>
       <li class="cds--list__item">
-Tenga en cuenta las características clave:
+Ten en cuenta las características clave:
         <ul class="cds--list--unordered">
           <li class="cds--list__item">Generación automática de ID.</li>
           <li class="cds--list__item">Cálculo de vencimiento de 30 días.</li>
@@ -455,7 +455,7 @@ Gestión de estado (
   <section class="lab-section" aria-labelledby="exercise-1-generate-unit-tests-from-the-api-specification">
     <h2 class="cds--productive-heading-03" id="exercise-1-generate-unit-tests-from-the-api-specification">Ejercicio 1: generar pruebas unitarias a partir de la especificación API</h2>
     <h3 id="objective" class="cds--productive-heading-02 lab-step__title">Objetivo</h3>
-    <p>Genere un conjunto completo de pruebas unitarias a partir de la especificación OpenAPI utilizando la metodología TDD de Bob.</p>
+    <p>Genera un conjunto completo de pruebas unitarias a partir de la especificación OpenAPI utilizando la metodología TDD de Bob.</p>
     <h3 id="steps" class="cds--productive-heading-02 lab-step__title">Pasos</h3>
     <ol class="cds--list--ordered">
       <li class="cds--list__item">
@@ -463,7 +463,7 @@ Gestión de estado (
 : si aún no está abierto, haz clic en el ícono de Bob en la barra lateral de tu IDE.
       </li>
       <li class="cds--list__item">
-        <strong>Confirma que estás en Agent mode</strong>
+        <strong>Confirma que estás en Agent Mode</strong>
 : el indicador en la parte inferior del chat debe decir
         <strong>Agente</strong>
 .
@@ -479,11 +479,11 @@ Gestión de estado (
       <li class="cds--list__item">
         <p>
           <strong>Solicitar generación de prueba</strong>
- — en el chat de Bob, escriba:
+ — en el chat de Bob, escribe:
         </p>
         <div data-language="text" class="code-block premium-code-block code-block--prompt">
           <pre>
-            <code>Genere un conjunto completo de JUnit 5 + pruebas unitarias Mockito (Java, NO JavaScript/Jest) siguientes
+            <code>Genera un conjunto completo de JUnit 5 + pruebas unitarias Mockito (Java, NO JavaScript/Jest) siguientes
 la metodología TDD para 'prescription-api-spec.yaml'. Coloque el archivo de prueba en
 src/test/java/com/pharmacy/api/PrescriptionResourceTest.java.
 
@@ -529,7 +529,7 @@ Cree casos de prueba completos que cubran:
             </ul>
           </li>
           <li class="cds--list__item">
-Genere el archivo de prueba en
+Genera el archivo de prueba en
             <code>snapTDD/src/test/java/com/pharmacy/api/PrescriptionResourceTest.java</code>
 .
           </li>
@@ -582,7 +582,7 @@ class PrescriptionResourceTest {
       </div>
     </details>
     <h3 id="quality-review-checklist" class="cds--productive-heading-02 lab-step__title">Lista de verificación de revisión de calidad</h3>
-    <p>Revise las pruebas generadas para:</p>
+    <p>Revisa las pruebas generadas para:</p>
     <ul class="cds--list--unordered">
       <li class="cds--list__item">
 ✅
@@ -626,11 +626,11 @@ class PrescriptionResourceTest {
       </li>
     </ul>
     <div class="callout" data-tone="danger">
-      <p class="callout__title">Punto de control rojo: ejecute las pruebas ahora y observe cómo FALLAN</p>
+      <p class="callout__title">Punto de control rojo: ejecuta las pruebas ahora y observa cómo FALLAN</p>
       <p>
 Este es el
         <strong>Red</strong>
- en Red-Green-Refactor. Con las pruebas escritas pero aún sin implementación, ejecute:
+ en Red-Green-Refactor. Con las pruebas escritas pero aún sin implementación, ejecuta:
       </p>
       <div data-language="bash" class="code-block premium-code-block code-block--terminal">
         <pre>
@@ -642,7 +642,7 @@ Debería
         <strong>fallar</strong>
 ; o no se compilará (
         <code>PrescriptionResource</code>
- aún no existe) o el error de prueba. Ese rojo es correcto y esperado. El ejercicio 2 lo vuelve verde. Si de alguna manera pasa, las pruebas en realidad no están ejerciendo nada; pídale a Bob que les haga afirmar un comportamiento real.
+ aún no existe) o el error de prueba. Ese rojo es correcto y esperado. El ejercicio 2 lo vuelve verde. Si de alguna manera pasa, las pruebas en realidad no están ejerciendo nada; pídele a Bob que les haga afirmar un comportamiento real.
       </p>
     </div>
   </section>
@@ -665,7 +665,7 @@ Crear la implementación
       <li class="cds--list__item">
         <p>
           <strong>Solicitar implementación de pruebas</strong>
- — en el chat de Bob, escriba:
+ — en el chat de Bob, escribe:
         </p>
         <div data-language="text" class="code-block premium-code-block code-block--prompt">
           <pre>
@@ -703,7 +703,7 @@ Anotaciones adecuadas (
             </ul>
           </li>
           <li class="cds--list__item">Generar clases de soporte (modelos y repositorios).</li>
-          <li class="cds--list__item">Asegúrese de que todas las pruebas pasen.</li>
+          <li class="cds--list__item">Asegúrate de que todas las pruebas pasen.</li>
         </ul>
       </li>
       <li class="cds--list__item">
@@ -834,7 +834,7 @@ public class PrescriptionResource {
     <h3 id="steps_2" class="cds--productive-heading-02 lab-step__title">Pasos</h3>
     <ol class="cds--list--ordered">
       <li class="cds--list__item">
-        <strong>Agregue la implementación original a su espacio de trabajo:</strong>
+        <strong>Agrega la implementación original a tu espacio de trabajo:</strong>
         <ul class="cds--list--unordered">
           <li class="cds--list__item">
 Copia
@@ -846,7 +846,7 @@ Copia
 .
           </li>
           <li class="cds--list__item">
-Cambie el nombre a
+Cambia el nombre a
             <code>traditional_PrescriptionResource.java</code>
 . Este archivo renombrado representa una implementación desarrollada tradicionalmente.
           </li>
@@ -855,7 +855,7 @@ Cambie el nombre a
       <li class="cds--list__item">
         <p>
           <strong>Solicitar análisis comparativo</strong>
- — en el chat de Bob, escriba:
+ — en el chat de Bob, escribe:
         </p>
         <div data-language="text" class="code-block premium-code-block code-block--prompt">
           <pre>
@@ -879,11 +879,11 @@ Cambie el nombre a
       </li>
     </ol>
     <div class="callout" data-tone="tip">
-      <p class="callout__title">Solicite análisis, no ediciones</p>
+      <p class="callout__title">Solicita análisis, no ediciones</p>
       <p>
-Este ejercicio es una lectura, no un cambio. Agent mode puede editar archivos, así que sea explícito en que solo desea análisis; la palabra
+Este ejercicio es una lectura, no un cambio. Agent Mode puede editar archivos, así que sé explícito en que solo deseas análisis; la palabra
         <em>"resumir"</em>
- en el mensaje anterior hace eso. Si Bob comienza a editar de todos modos, dígale que se detenga y simplemente informe.
+ en el mensaje anterior hace eso. Si Bob comienza a editar de todos modos, dile que se detenga y simplemente informe.
       </p>
     </div>
     <h3 id="expected-comparison-results" class="cds--productive-heading-02 lab-step__title">Resultados de comparación esperados</h3>
@@ -965,7 +965,7 @@ Este ejercicio es una lectura, no un cambio. Agent mode puede editar archivos, a
   <section class="lab-section" aria-labelledby="exercise-4-run-and-verify-tests">
     <h2 class="cds--productive-heading-03" id="exercise-4-run-and-verify-tests">Ejercicio 4: ejecutar y verificar pruebas</h2>
     <h3 id="objective_3" class="cds--productive-heading-02 lab-step__title">Objetivo</h3>
-    <p>Ejecute las pruebas generadas para verificar que la implementación cumpla con todos los requisitos.</p>
+    <p>Ejecuta las pruebas generadas para verificar que la implementación cumpla con todos los requisitos.</p>
     <h3 id="the-maven-configuration-is-already-provided" class="cds--productive-heading-02 lab-step__title">La configuración Maven ya está proporcionada</h3>
     <p>
       <code>snapTDD/pom.xml</code>
@@ -982,7 +982,7 @@ Java 21, diseño estándar Maven (
         <code>snapTDD/src/test</code>
 ).
       </li>
-      <li class="cds--list__item">JUnit 5 + Mockito + AfirmarJ.</li>
+      <li class="cds--list__item">JUnit 5 + Mockito + AssertJ.</li>
       <li class="cds--list__item">
 La API
         <strong>Jakarta</strong>
@@ -997,7 +997,7 @@ La API
       <li class="cds--list__item">Complemento del compilador (Java 21) y Surefire.</li>
     </ul>
     <div class="callout" data-tone="warning">
-      <p class="callout__title">El espacio de nombres debe permanecer en Yakarta</p>
+      <p class="callout__title">El espacio de nombres debe permanecer en Jakarta</p>
       <p>
 Todo aquí usa
         <code>jakarta.ws.rs.*</code>
@@ -1005,17 +1005,17 @@ Todo aquí usa
         <code>javax.ws.rs</code>
 ,
         <strong> no compilará</strong>
- contra este pom; dígale a Bob que use
+ contra este pom; dile a Bob que use
         <code>jakarta.ws.rs</code>
- y vuelva a ejecutarlo. Haga
-        <strong>not</strong>
- agregue dependencias
+ y vuelve a ejecutarlo.
+        <strong>No</strong>
+ agregues dependencias
         <code>javax.ws.rs</code>
- / Jersey 2.x; entran en conflicto con la pila de Yakarta.
+ / Jersey 2.x; entran en conflicto con la pila de Jakarta.
       </p>
     </div>
-    <h3 id="run-all-tests" class="cds--productive-heading-02 lab-step__title">Ejecute todas las pruebas</h3>
-    <p>Abra la terminal y ejecute:</p>
+    <h3 id="run-all-tests" class="cds--productive-heading-02 lab-step__title">Ejecuta todas las pruebas</h3>
+    <p>Abre la terminal y ejecuta:</p>
     <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>mvn clean test</code>
@@ -1038,12 +1038,12 @@ Compile archivos de prueba desde
 .
       </li>
       <li class="cds--list__item">
-Ejecute todas las pruebas que coincidan con el patrón
+Ejecuta todas las pruebas que coincidan con el patrón
         <code>*Test.java</code>
 .
       </li>
     </ul>
-    <h3 id="run-a-specific-test-suite" class="cds--productive-heading-02 lab-step__title">Ejecute un conjunto de pruebas específico</h3>
+    <h3 id="run-a-specific-test-suite" class="cds--productive-heading-02 lab-step__title">Ejecuta un conjunto de pruebas específico</h3>
     <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>mvn test -Dtest=PrescriptionResourceTest</code>
@@ -1090,7 +1090,7 @@ Aplique la fase
       </li>
       <li class="cds--list__item">
         <p>
-          <strong>Revise las sugerencias de Bob</strong>
+          <strong>Revisa las sugerencias de Bob</strong>
 ; las recomendaciones típicas incluyen:
         </p>
         <ul class="cds--list--unordered">
@@ -1126,7 +1126,7 @@ Aplique la fase
       </li>
       <li class="cds--list__item">
         <p>
-          <strong>Verifique que las pruebas aún pasen:</strong>
+          <strong>Verifica que las pruebas aún pasen:</strong>
         </p>
         <div data-language="bash" class="code-block premium-code-block code-block--terminal">
           <pre>
@@ -1169,7 +1169,7 @@ La solicitud de API falló: el chat muestra
         <code>{\"apiProtocol\":\"openai\"}</code>
       </summary>
       <p>
-Haga clic en
+Haz clic en
         <strong>Reintentar</strong>
  en la ventana de chat de Bob.
       </p>
@@ -1177,17 +1177,17 @@ Haga clic en
     <details class="premium-details">
       <summary>Generación de pruebas incompleta: no se cubren todos los puntos finales o escenarios</summary>
       <ol class="cds--list--ordered">
-        <li class="cds--list__item">Verifique que la especificación OpenAPI esté completa.</li>
+        <li class="cds--list__item">Verifica que la especificación OpenAPI esté completa.</li>
         <li class="cds--list__item">
-          <p>Pídale a Bob que genere pruebas para escenarios faltantes específicos:</p>
+          <p>Pídele a Bob que genere pruebas para escenarios faltantes específicos:</p>
           <div data-language="text" class="code-block premium-code-block code-block--file">
             <pre>
-              <code>Genere pruebas adicionales para los escenarios de error en el punto final createPrescription</code>
+              <code>Genera pruebas adicionales para los escenarios de error en el punto final createPrescription</code>
             </pre>
           </div>
         </li>
         <li class="cds--list__item">
-          <p>Revise la especificación API para detectar cualquier ambigüedad.</p>
+          <p>Revisa la especificación API para detectar cualquier ambigüedad.</p>
         </li>
       </ol>
     </details>
@@ -1196,7 +1196,7 @@ Haga clic en
       <ol class="cds--list--ordered">
         <li class="cds--list__item">Revisar las expectativas de las pruebas versus la implementación.</li>
         <li class="cds--list__item">
-          <p>Pídale a Bob que corrija pruebas fallidas específicas:</p>
+          <p>Pídele a Bob que corrija pruebas fallidas específicas:</p>
           <div data-language="text" class="code-block premium-code-block code-block--file">
             <pre>
               <code>La prueba de identificación de medicamento no válida está fallando. Actualice la implementación para devolver un estado 400 con el mensaje de error "ID de medicamento no válido".</code>
@@ -1204,7 +1204,7 @@ Haga clic en
           </div>
         </li>
         <li class="cds--list__item">
-          <p>Verifique que los simulacros del repositorio estén configurados correctamente.</p>
+          <p>Verifica que los simulacros del repositorio estén configurados correctamente.</p>
         </li>
       </ol>
     </details>
@@ -1219,9 +1219,9 @@ Un archivo generado está en el espacio de nombres JAX-RS incorrecto. Este proye
         <strong>Jakarta</strong>
 ; cada archivo debe importarse
         <code>jakarta.ws.rs.*</code>
-. Pregúntele a Bob:
+. Pregúntale a Bob:
         <em>"Cambie todas las importaciones de javax.ws.rs a jakarta.ws.rs para que coincidan con pom." </em>
- No agregue
+ No agregues
         <code>javax.ws.rs</code>
  / Jersey 2.x a pom.
       </p>
@@ -1232,13 +1232,13 @@ Dependencias faltantes -
         <code>Cannot resolve symbol 'Prescription'</code>
       </summary>
       <ol class="cds--list--ordered">
-        <li class="cds--list__item">Asegúrese de tener la estructura completa del proyecto.</li>
-        <li class="cds--list__item">Agregue las clases de repositorio y modelo que faltan.</li>
+        <li class="cds--list__item">Asegúrate de tener la estructura completa del proyecto.</li>
+        <li class="cds--list__item">Agrega las clases de repositorio y modelo que faltan.</li>
         <li class="cds--list__item">
           <p>Pídele a Bob que genere las dependencias que faltan:</p>
           <div data-language="text" class="code-block premium-code-block code-block--file">
             <pre>
-              <code>Genere la clase de modelo Prescription y PrescriptionRepository según la especificación API</code>
+              <code>Genera la clase de modelo Prescription y PrescriptionRepository según la especificación API</code>
             </pre>
           </div>
         </li>
@@ -1248,13 +1248,13 @@ Dependencias faltantes -
       <summary>Problemas con el cálculo de la fecha: las pruebas fallan debido a discrepancias entre la fecha y la hora</summary>
       <ol class="cds--list--ordered">
         <li class="cds--list__item">
-Utilice fechas fijas en las pruebas en lugar de
+Utiliza fechas fijas en las pruebas en lugar de
           <code>new Date()</code>
 .
         </li>
         <li class="cds--list__item">Simulacro de fecha/hora en pruebas de coherencia.</li>
         <li class="cds--list__item">
-Considere utilizar la API de fecha/hora de Java 8+ (
+Considera utilizar la API de fecha/hora de Java 8+ (
           <code>LocalDateTime</code>
 ).
         </li>
@@ -1281,9 +1281,9 @@ Considere utilizar la API de fecha/hora de Java 8+ (
     <ul class="cds--list--unordered">
       <li class="cds--list__item">Sea específico sobre qué pruebas están fallando.</li>
       <li class="cds--list__item">Proporcionar mensajes de error al solicitar ayuda.</li>
-      <li class="cds--list__item">Pídale a Bob que le explique los principios de TDD si no le quedan claros.</li>
-      <li class="cds--list__item">Solicite ejemplos de patrones de prueba.</li>
-      <li class="cds--list__item">Utilice Bob para revisar y mejorar la calidad de las pruebas.</li>
+      <li class="cds--list__item">Pídele a Bob que le explique los principios de TDD si no le quedan claros.</li>
+      <li class="cds--list__item">Solicita ejemplos de patrones de prueba.</li>
+      <li class="cds--list__item">Utiliza Bob para revisar y mejorar la calidad de las pruebas.</li>
     </ul>
   </section>
   <section class="lab-section" aria-labelledby="success-criteria">
@@ -1297,7 +1297,7 @@ Considere utilizar la API de fecha/hora de Java 8+ (
         </label>
  Bob generó
         <code>PrescriptionResourceTest.java</code>
- (JUnit 5, yakarta) a partir de
+ (JUnit 5, Jakarta) a partir de
         <code>prescription-api-spec.yaml</code>
 .
       </li>
@@ -1399,7 +1399,7 @@ Considere utilizar la API de fecha/hora de Java 8+ (
     <h3 id="2-contract-testing" class="cds--productive-heading-02 lab-step__title">2. Pruebas de contrato</h3>
     <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
-        <code>Genere pruebas de contrato utilizando Pact para verificar que la implementación de la API coincida exactamente con la especificación OpenAPI</code>
+        <code>Genera pruebas de contrato utilizando Pact para verificar que la implementación de la API coincida exactamente con la especificación OpenAPI</code>
       </pre>
     </div>
     <h3 id="3-property-based-testing" class="cds--productive-heading-02 lab-step__title">3. Pruebas basadas en propiedades</h3>
@@ -1411,7 +1411,7 @@ Considere utilizar la API de fecha/hora de Java 8+ (
     <h3 id="4-mutation-testing" class="cds--productive-heading-02 lab-step__title">4. Pruebas de mutación</h3>
     <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
-        <code>Configure pruebas de mutación PIT para verificar la calidad de nuestro conjunto de pruebas mediante la introducción de mutaciones de código</code>
+        <code>Configura pruebas de mutación PIT para verificar la calidad de nuestro conjunto de pruebas mediante la introducción de mutaciones de código</code>
       </pre>
     </div>
     <h3 id="5-bdd-with-cucumber" class="cds--productive-heading-02 lab-step__title">5. BDD con Cucumber</h3>

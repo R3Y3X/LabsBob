@@ -1956,21 +1956,34 @@ function updateJavaPremiumWorkspace(panel, step) {
 
     const title = workspace.querySelector('.lab-workspace-setup__title');
     if (title) {
-      title.innerHTML = `${LAB_STEP_ICON_SVG} Confirma el workspace y el subdirectorio de trabajo`;
+      title.innerHTML = `${LAB_STEP_ICON_SVG} No abras otra carpeta — solo corrige Project path`;
     }
 
     const lead = workspace.querySelector('.lab-workspace-setup__lead');
     if (lead) {
       lead.innerHTML = workflow
-        ? `Mantén <code>simple-pharmacy-workshop-v2</code> como único workspace. Abre la pestaña <strong>Workflows</strong> de Bob (botón ▶), inicia ${describeJavaPremiumWorkflow(step)} e introduce la ruta inferior en el campo <strong>Project path</strong>. No abras el snapshot como una segunda carpeta ni crees otro chat.`
-        : 'Mantén <code>simple-pharmacy-workshop-v2</code> como único workspace. Este lab no tiene workflow TDD: continúa en el chat actual de <strong>Agent Mode</strong> y trabaja dentro del subdirectorio indicado, sin abrir otra carpeta ni crear otro chat.';
+        ? `El workspace sigue siendo <code>simple-pharmacy-workshop-v2</code> (el del overview). <strong>No</strong> uses <strong>File → Open Folder</strong> en este lab. Abre <strong>Workflows ▶</strong>, inicia ${describeJavaPremiumWorkflow(step)} y pega la segunda ruta en el campo <strong>Project path</strong>.`
+        : 'El workspace sigue siendo <code>simple-pharmacy-workshop-v2</code>. Este lab no tiene workflow TDD: no abras otra carpeta. En Agent Mode, prompts y <code>mvn</code> apuntan al subdirectorio de abajo.';
     }
 
-    const pathLabel = workspace.querySelector('.lab-workspace-setup__path-label');
-    if (pathLabel) pathLabel.textContent = workflow ? 'Project path del workflow' : 'Subdirectorio de trabajo';
-
-    const pathValue = workspace.querySelector('.lab-workspace-setup__path-value');
-    if (pathValue) pathValue.textContent = projectPath;
+    const pathHtml = [
+      '<div class="lab-workspace-setup__paths">',
+      '<div class="lab-workspace-setup__path lab-workspace-setup__path--locked">',
+      '<p class="lab-workspace-setup__path-label">Workspace — ya abierto, no lo cambies</p>',
+      '<code class="lab-workspace-setup__path-value">simple-pharmacy-workshop-v2</code>',
+      '</div>',
+      '<div class="lab-workspace-setup__path lab-workspace-setup__path--paste">',
+      `<p class="lab-workspace-setup__path-label">${workflow ? 'Pega esto en Project path del workflow' : 'Subdirectorio para prompts y mvn — no lo abras como carpeta'}</p>`,
+      `<code class="lab-workspace-setup__path-value">${projectPath}</code>`,
+      '</div>',
+      '</div>'
+    ].join('');
+    const oldPath = workspace.querySelector('.lab-workspace-setup__path, .lab-workspace-setup__paths');
+    if (oldPath) {
+      const wrap = document.createElement('div');
+      wrap.innerHTML = pathHtml;
+      oldPath.replaceWith(wrap.firstElementChild);
+    }
 
     const checks = workspace.querySelector('.lab-workspace-setup__checks');
     if (checks) {
@@ -1989,8 +2002,8 @@ function updateJavaPremiumWorkspace(panel, step) {
       terminalContext.dataset.tone = 'tip';
       terminalContext.dataset.premiumTerminalPath = 'true';
       terminalContext.innerHTML = [
-        '<p class="callout__title">Directorio de la terminal — Bash, PowerShell o WSL</p>',
-        '<p>Antes de ejecutar cualquier comando Maven de este lab, sitúa la terminal en el snapshot:</p>',
+        '<p class="callout__title">Solo la terminal — no cambies el workspace</p>',
+        '<p>Bob sigue abierto en la carpeta madre. Si un comando Maven se ejecuta en la terminal, el directorio de trabajo debe ser el snapshot:</p>',
         '<div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button>',
         `<pre><code>cd ${projectPath}</code></pre></div>`
       ].join('');

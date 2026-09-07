@@ -21,6 +21,7 @@ def main() -> None:
                 "sasl.username": user,
                 "sasl.password": password,
                 "ssl.endpoint.identification.algorithm": "none",
+                "enable.ssl.certificate.verification": "false",
             }
         )
     admin = AdminClient(config)

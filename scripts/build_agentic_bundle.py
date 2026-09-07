@@ -80,8 +80,19 @@ def main() -> None:
         for path in OVERLAY.iterdir()
         if path.is_file() and path.name in pipeline_files
     }
-    for name in ("personalize_agents.py", "register_shared_toolkit.sh", "workshop-config.env.example"):
+    agent_files = (
+        "personalize_agents.py",
+        "register_shared_toolkit.sh",
+        "workshop-config.env.example",
+        "SKU_Availability_Agent.yaml",
+        "Substitute_Finder_Agent.yaml",
+        "Store_Associate_Agent.yaml",
+        "Customer_Shopping_Assistant.yaml",
+    )
+    for name in agent_files:
         replacements[f"{AGENT_PREFIX}{name}"] = (OVERLAY / name).read_bytes()
+    replacements[f"{ROOT_PREFIX}.env.example"] = (OVERLAY / "bundle-root.env.example").read_bytes()
+    replacements[f"{ROOT_PREFIX}trackF/README.md"] = (OVERLAY / "trackF-README.md").read_bytes()
     if not replacements:
         raise SystemExit(f"No overlay files found in {OVERLAY}")
 

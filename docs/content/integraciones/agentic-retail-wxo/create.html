@@ -11,7 +11,7 @@
     <div class="lab-workspace-setup__box">
       <span class="lab-workspace-setup__badge">Paso obligatorio — antes de cualquier prompt</span>
       <h2 class="lab-workspace-setup__title" id="wxo-create-workspace">Abre la carpeta en IBM Bob</h2>
-      <p class="lab-workspace-setup__lead">Usa el mismo bundle personalizado que descargaste en el track de Confluent (<a href="./downloads/agentic-retail-workshop.zip" class="cds--link" data-participant-download="true">descargar bundle</a>). Descomprímelo y abre la carpeta <code>RoadShowBobStreamingIntegration/trackF/confluent_agents</code> en IBM Bob con <strong>File → Open Folder</strong>. El identificador mesa+número debe ser exactamente el mismo en ambos tracks.</p>
+      <p class="lab-workspace-setup__lead">Usa el mismo bundle personalizado que descargaste en el track de Confluent (<a href="./downloads/agentic-retail-workshop.zip" class="cds--link" data-participant-download="true">descargar bundle</a>). Descomprímelo y abre la carpeta <code>RoadShowBobStreamingIntegration/trackF/confluent_agents</code> en IBM Bob con <strong>File → Open Folder</strong>. El identificador TechZone+número (TZ1–TZ3) debe ser exactamente el mismo en ambos tracks.</p>
       <div class="lab-workspace-setup__path">
         <p class="lab-workspace-setup__path-label">File → Open Folder</p>
         <code class="lab-workspace-setup__path-value">confluent_agents/</code>
@@ -91,18 +91,21 @@ Reglas:
       </div>
     </div>
     <h2 class="cds--productive-heading-04" id="cargar-config">Paso 2 — Preparar el archivo de configuración</h2>
-    <p class="step-header__why">El bundle personalizado ya trae el identificador mesa+número y las rutas aisladas. Solo completa las credenciales que te entregue el facilitador; el archivo vive únicamente en tu equipo.</p>
+    <p class="step-header__why">El bundle personalizado ya trae el identificador TechZone+número y las rutas aisladas. Completa solo lo que falte (por ejemplo URL de Orchestrate); Kafka y ksqlDB ya se resolvieron en el Track D desde el cluster.</p>
 
     <div class="code-block code-block--prompt">
       <p class="code-block__label">Prompt para Bob — preparar el bundle personalizado</p>
       <pre><code>Sigue en la misma terminal, ubicada en la carpeta raíz RoadShowBobStreamingIntegration.
 
 Ejecuta ./participant-bootstrap.sh check y confirma que WORKSHOP_ID esté definido.
+Luego ejecutá python3 trackF/confluent_agents/personalize_agents.py --config participant-config.env
+para inyectar table_number y participant_number en los YAML (es seguro repetirlo).
 Luego abre participant-config.env y muéstrame únicamente los nombres de las
 variables que todavía tienen valores de ejemplo, nunca sus secretos.
 
-Importante: no inventes URLs, hosts ni claves, y no rellenes ningún valor por
-tu cuenta. Espera a que yo complete el archivo con los datos del facilitador.</code></pre>
+Kafka, ksqlDB y Schema Registry ya se resolvieron en el Track D desde el cluster.
+No pidas esas contraseñas. Completa solo ORCHESTRATE_URL y ORCHESTRATE_API_KEY
+cuando yo las ponga en participant-config.env; no las inventes ni las imprimas.</code></pre>
     </div>
 
     <div class="lab-accordion" style="margin-top:1rem;">
@@ -111,21 +114,22 @@ tu cuenta. Espera a que yo complete el archivo con los datos del facilitador.</c
         <svg class="lab-accordion__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="16" height="16"><path d="M8 11L2 5h12z"/></svg>
       </button>
       <div class="lab-accordion__panel" id="acc-wxo-config" hidden>
-        <div class="code-block code-block--terminal"><pre><code class="language-bash">./participant-bootstrap.sh check</code></pre></div>
+        <div class="code-block code-block--terminal"><pre><code class="language-bash">./participant-bootstrap.sh check
+python3 trackF/confluent_agents/personalize_agents.py --config participant-config.env</code></pre></div>
       </div>
     </div>
 
     <h3 class="cds--productive-heading-03" style="margin-top: 2rem;">Completa el archivo tú mismo</h3>
-    <p class="cds--body-01">Abre <code>participant-config.env</code> en el editor de Bob y rellena estas variables con los datos que te entregó el facilitador:</p>
+    <p class="cds--body-01">Abre <code>participant-config.env</code> en el editor de Bob. Kafka y ksqlDB ya están; completa solo Orchestrate (y revisa que <code>RETAIL_MCP_URL</code> use <strong>http://</strong> hacia tu VM):</p>
     <div class="lab-table-wrap"><table class="lab-table">
       <thead><tr><th>Variable</th><th>Qué va ahí</th></tr></thead>
       <tbody>
         <tr><td><code>ORCHESTRATE_URL</code></td><td>URL de tu instancia de watsonx Orchestrate.</td></tr>
-        <tr><td><code>RETAIL_MCP_URL</code></td><td>Endpoint HTTPS Streamable HTTP del MCP retail compartido en la VM del workshop.</td></tr>
+        <tr><td><code>RETAIL_MCP_URL</code></td><td>Endpoint HTTP Streamable HTTP del MCP retail compartido en la VM del workshop (<code>http://&lt;IP&gt;/retail-mcp/mcp</code>). No uses HTTPS: Orchestrate rechaza el certificado de la VM.</td></tr>
         <tr><td><code>ORCHESTRATE_API_KEY</code></td><td>Tu API key de Orchestrate. Se queda en este archivo local.</td></tr>
       </tbody>
     </table></div>
-    <p class="cds--body-01"><code>RETAIL_MCP_TOOLKIT_NAME</code> ya viene con el valor correcto (<code>retail_availability_mcp</code>) y debe coincidir con el nombre usado en los YAML de los agentes. No lo cambies.</p>
+    <p class="cds--body-01"><code>RETAIL_MCP_TOOLKIT_NAME</code> ya viene con el valor correcto (<code>retail_availability_mcp</code>) y debe coincidir con el nombre usado en los YAML de los agentes. No lo cambies. El bootstrap inyecta <code>table_number</code> y <code>participant_number</code> en los YAML; no los edites a mano.</p>
 
     <div class="callout" data-tone="warning" style="margin-top: 1.5rem;">
       <p class="callout__title">Protege tu API key</p>
@@ -204,7 +208,7 @@ Reglas importantes:
       </div>
     </div>
     <h2 class="cds--productive-heading-04" id="importar-disponibilidad">Paso 4 — Importar el SKU Availability Agent</h2>
-    <p class="step-header__why">Este es el primero de los cuatro agentes. Su YAML conserva la lógica retail y referencia la tool <code>get_sku_availability</code> del toolkit remoto compartido — por eso el paso anterior tenía que confirmarse primero.</p>
+    <p class="step-header__why">Este es el primero de los cuatro agentes. Su YAML ya lleva tu TechZone y número en <code>table_number</code> / <code>participant_number</code> y referencia la tool <code>get_sku_availability</code> del toolkit remoto compartido — por eso el paso anterior tenía que confirmarse primero.</p>
 
     <div class="code-block code-block--prompt">
       <p class="code-block__label">Prompt para Bob — importar el agente de disponibilidad</p>

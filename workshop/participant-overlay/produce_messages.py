@@ -100,6 +100,7 @@ def main() -> None:
                 "sasl.username": os.environ["KAFKA_SASL_USERNAME"],
                 "sasl.password": os.environ["KAFKA_SASL_PASSWORD"],
                 "ssl.endpoint.identification.algorithm": "none",
+                "enable.ssl.certificate.verification": "false",
             }
         )
     producer = Producer(producer_config)

@@ -7,8 +7,12 @@ promt1.md
 # Environment / secrets
 .env
 .env.*
+!infra/retail-mcp/.env.example
 participant-config.env
 workshop-config.env
+*-retail-mcp.env
+mesa-hosts.env
+credenciales/
 *.pem
 *.key
 id_rsa

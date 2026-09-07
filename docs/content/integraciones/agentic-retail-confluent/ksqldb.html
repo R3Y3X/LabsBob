@@ -125,12 +125,11 @@ EMIT CHANGES;</code></pre>
     <div class="callout" data-tone="warning" style="margin-bottom:1rem;">
       <p class="callout__title">
         <span class="ctx-badge ctx-badge--config" style="margin-right:0.5rem;">⚙ Config</span>
-        Reemplaza estos valores antes de copiar
+        Reemplaza solo la IP; Bob reutiliza el .env del Paso 0
       </p>
       <ul class="cds--list--unordered" style="margin-top:0.5rem;">
         <li class="cds--list__item"><code>[IP_PUBLICA_VM]</code> — IP pública de tu VM en TechZone.</li>
-        <li class="cds--list__item"><code>[PASSWORD_ADMIN]</code> — contraseña del usuario <code>admin</code>.</li>
-        <li class="cds--list__item"><code>[PASSWORD_KAFKA_ADMIN]</code> — contraseña del usuario <code>kafka-admin</code>.</li>
+        <li class="cds--list__item">No pongas passwords en el prompt: Bob ya las extrajo del cluster en el Paso 0.</li>
       </ul>
     </div>
 
@@ -148,31 +147,24 @@ EMIT CHANGES;</code></pre>
           Copiar prompt
         </button>
       </div>
-      <div class="prompt-block__body">Bob, continuamos con el workshop de Event Streaming. Hasta ahora hemos:
+        <div class="prompt-block__body">Bob, continuamos con el workshop de Event Streaming. Hasta ahora hemos:
 
-1. Creado el tópico 'inventory.transactions' (1 partición, retención infinita) con su JSON Schema registrado en Schema Registry.
-2. Creado el stream INVENTORY_TRANSACTIONS y la tabla INVENTORY_AVAILABILITY en ksqlDB — que agrega disponibilidad por SKU y sucursal en tiempo real.
-3. Registrado el schema 'inventory.availability-value' en Schema Registry.
+1. Creado el tópico inventory.transactions (1 partición, retención infinita) con JSON Schema en Schema Registry.
+2. Creado el stream INVENTORY_TRANSACTIONS y la tabla INVENTORY_AVAILABILITY en ksqlDB.
+3. Registrado el schema inventory.availability-value.
 
-El entorno Confluent Platform está en:
-- VM: [IP_PUBLICA_VM]
-- Kafka brokers: [IP_PUBLICA_VM]:9094,[IP_PUBLICA_VM]:9095,[IP_PUBLICA_VM]:9096
-- Usuario kafka-admin / contraseña: [PASSWORD_KAFKA_ADMIN]
-- Flink CMF endpoint: https://[IP_PUBLICA_VM]/cmf
-- ksqlDB endpoint: https://[IP_PUBLICA_VM]/ksqldb
-- Usuario admin / contraseña: [PASSWORD_ADMIN]
+Reutiliza SSH, [IP_PUBLICA_VM] y las credenciales ya extraídas en los tres .env. No me pidas passwords.
 
-Ahora necesito que implementes la misma lógica de agregación usando Apache Flink sobre el tópico 'inventory.transactions':
+Entorno:
+- Flink CMF: https://[IP_PUBLICA_VM]/cmf
+- ksqlDB interno: http://ksqldb.confluent.svc.cluster.local:8088
+- Schema Registry interno: http://schemaregistry.confluent.svc.cluster.local:8081
 
-1. Crea un job Flink SQL que:
-   - Lea desde el tópico Kafka 'inventory.transactions' (campos: sku STRING, branch STRING, quantity INT)
-   - Agrupe por sku y branch
-   - Sume la columna quantity como available_quantity
-   - Escriba el resultado en el tópico 'inventory.availability.flink'
+Implementa la misma agregación con Apache Flink sobre inventory.transactions:
 
-2. Usa el Flink Compute Pool disponible en el CMF del ambiente.
-
-3. Muéstrame el SQL Flink completo que vas a ejecutar antes de correrlo, y confírmame cuando el job esté en estado RUNNING.</div>
+1. Job Flink SQL que lea sku STRING, branch STRING, quantity INT; agrupe por sku y branch; sume quantity como available_quantity; escriba en inventory.availability.flink.
+2. Usa el Flink Compute Pool del CMF.
+3. Muéstrame el SQL completo antes de correrlo y confirma cuando el job esté RUNNING.</div>
     </div>
 
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin:1.25rem 0;">

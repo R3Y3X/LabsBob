@@ -13,7 +13,7 @@ python3 -m venv "$APP_DIR/.venv"
 "$APP_DIR/.venv/bin/pip" install --disable-pip-version-check -r "$APP_DIR/requirements.txt"
 if [ ! -f "$ENV_DIR/retail-mcp.env" ]; then
   install -o root -g retail-mcp -m 0640 "$SCRIPT_DIR/.env.example" "$ENV_DIR/retail-mcp.env"
-  echo "Edit $ENV_DIR/retail-mcp.env with the VM's ksqlDB credentials before starting the service."
+  echo "Edit $ENV_DIR/retail-mcp.env with the VM's Kafka and Schema Registry credentials before starting the service."
 fi
 install -o root -g root -m 0644 "$SCRIPT_DIR/retail-mcp.service" /etc/systemd/system/retail-mcp.service
 systemctl daemon-reload

@@ -2,7 +2,7 @@ import { loadContent } from './content.js';
 import { siteData, workshopGuides, findLab, getNextLab, getWorkshopStats, getVisibleSections, roadshowConfig, getRoadshowPlan, getLabTrackMeta, generalPrereqs } from './data.js?v=3';
 import { getHomeRoute, getLabRoute, parseRoute } from './router.js';
 import { initializeTheme, toggleTheme } from './theme.js';
-import { ensureParticipantAssignment, isParticipantLab, personalizeContent, participantBanner, readParticipantContext } from './participant.js?v=2';
+import { ensureParticipantAssignment, isParticipantLab, personalizeContent, participantBanner, readParticipantContext } from './participant.js?v=5';
 
 const PREMIUM_STORAGE_KEY = 'labsBob.premiumAccess';
 let premiumAccess = readPremiumAccess();

@@ -2,7 +2,7 @@
 set -euo pipefail
 
 usage() {
-  echo "Uso: $0 <usuario@host> <ssh-key.pem> <mesa 1|2|3> <env-local>" >&2
+  echo "Uso: $0 <usuario@host> <ssh-key.pem> <techzone 1|2|3> <env-local>" >&2
   exit 2
 }
 [ "$#" -eq 4 ] || usage
@@ -16,7 +16,7 @@ ENV_FILE="$4"
 chmod 600 "$SSH_KEY" 2>/dev/null || true
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-REMOTE_DIR="/tmp/retail-mcp-deploy-mesa-$TABLE"
+REMOTE_DIR="/tmp/retail-mcp-deploy-tz-$TABLE"
 SSH_OPTS=(-i "$SSH_KEY" -o StrictHostKeyChecking=accept-new -o ConnectTimeout=15)
 TMP_ENV="$(mktemp)"
 trap 'rm -f "$TMP_ENV"' EXIT
@@ -29,4 +29,4 @@ scp "${SSH_OPTS[@]}" "$SCRIPT_DIR/server.py" "$SCRIPT_DIR/requirements.txt" "$SC
 scp "${SSH_OPTS[@]}" "$TMP_ENV" "$SSH_HOST:$REMOTE_DIR/retail-mcp.env"
 ssh "${SSH_OPTS[@]}" "$SSH_HOST" "sudo bash '$REMOTE_DIR/install.sh' && sudo install -o root -g retail-mcp -m 0640 '$REMOTE_DIR/retail-mcp.env' /etc/retail-mcp/retail-mcp.env && sudo systemctl restart retail-mcp.service"
 PUBLIC_HOST="${SSH_HOST#*@}"
-echo "MCP desplegado en $SSH_HOST para Mesa $TABLE. Verifica: curl -k https://$PUBLIC_HOST/retail-mcp/health"
+echo "MCP desplegado en $SSH_HOST para TechZone TZ$TABLE. Verifica: curl -sS http://$PUBLIC_HOST/retail-mcp/health"

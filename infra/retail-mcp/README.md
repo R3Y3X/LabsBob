@@ -1,10 +1,15 @@
 # Voltia inventory MCP
 
 This service is the single tool used by the participant's Orchestrate agents.
-It runs as Streamable HTTP on `127.0.0.1:8000/mcp`; Nginx publishes it as
-`https://<vm>/retail-mcp/mcp`. The tool validates `workshop_id` against the
-VM's mesa and only reads the namespaced ksqlDB table configured in the env
-file. There is deliberately no credential in this directory.
+It runs as Streamable HTTP on `127.0.0.1:8000/mcp`. Nginx publishes it on
+**HTTP** `:80` as `http://<vm>/retail-mcp/mcp` (and also on `:443`). watsonx
+Orchestrate on IBM Cloud rejects the VM certificate, so the toolkit **must**
+use HTTP.
+
+The tool is `get_sku_availability(table_number, participant_number, sku, branch)`.
+It validates `table_number` against this VM's TechZone (`WORKSHOP_TABLE=1|2|3`)
+and reads the participant Kafka topic `inventory.availability.tz{n}_p{xxx}`.
+There is deliberately no credential in this directory.
 
 ## Install on a VM
 
@@ -15,19 +20,18 @@ sudo ./install.sh
 ```
 
 From the repository, the same operation can be automated per VM (the env file
-is local and must contain that VM's ksqlDB credentials):
+is local and must contain that VM's Kafka + Schema Registry credentials):
 
 ```bash
-./deploy_vm.sh root@<vm-host> ./cflt-vsi-key.pem 1 ./mesa-1-retail-mcp.env
+./deploy_vm.sh root@<vm-host> ./cflt-vsi-key.pem 1 ./tz1-retail-mcp.env
 ```
 
-Run it once for each Mesa/VM, changing the host, table number and env file.
+Run it once for each TechZone/VM, changing the host, table number and env file.
 
-Add `nginx-retail-mcp.conf` inside the existing HTTPS `server` block and run
-`sudo nginx -t && sudo systemctl reload nginx`. Verify with
-`curl -k https://<vm>/retail-mcp/health`.
+Keep `nginx-retail-mcp.conf` inside **both** the HTTP (`:80`) and HTTPS
+(`:443`) `server` blocks so `/retail-mcp/` is not redirected to HTTPS. Verify
+with `curl -sS http://<vm>/retail-mcp/health`.
 
-The public endpoint is intentionally unauthenticated for the workshop because
-the VM's HTTPS boundary is the access control. Restrict the VM/network to the
-lab audience and add an API gateway token before using this pattern outside a
-controlled lab.
+The public endpoint is intentionally unauthenticated for the workshop.
+Restrict the VM/network to the lab audience and add an API gateway token
+before using this pattern outside a controlled lab.

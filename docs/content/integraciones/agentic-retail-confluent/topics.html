@@ -20,7 +20,7 @@
       </div>
     </div>
     <h2 class="cds--productive-heading-04">Step 1. Crear el tópico <code>inventory.transactions</code></h2>
-    <p class="step-header__why">Necesitamos un canal central donde fluirán todas las transacciones de inventario antes de que ksqlDB las procese. Bob ya tiene acceso SSH y el <code>.env</code> listo desde la Introducción — le pedimos que ejecute el script directamente.</p>
+    <p class="step-header__why">Necesitamos un canal central donde fluirán todas las transacciones de inventario antes de que ksqlDB las procese. Bob ya tiene SSH y los tres <code>.env</code> desde el Paso 0 — el que cuenta para <code>setup.sh</code> es el de la <strong>raíz</strong> del bundle.</p>
 
     <div data-env-panel="platform" class="env-panel--active">
 
@@ -49,23 +49,25 @@
             Copiar prompt
           </button>
         </div>
-        <div class="prompt-block__body">Bob, ya tienes el SSH activo y el .env configurado. Necesito que ejecutes el Step 1 del Lab de inventario.
+        <div class="prompt-block__body">Bob, el Paso 0 ya dejó SSH y los tres .env sincronizados. Ejecuta el Step 1 del Lab de inventario.
 
-Desde la carpeta 'inventory-pipeline', corre:
+Desde la raíz del bundle:
+cd trackD/inventory-pipeline && ./setup.sh -s 1
 
-./setup.sh -s 1
+Contexto (no lo ignores):
+- run_in_cluster.sh lee ../../.env (el .env de la raíz RoadShowBobStreamingIntegration), no el .env local de inventory-pipeline. Si actualizas una variable, actualiza los tres .env.
+- El broker interno kafka.confluent.svc.cluster.local:9092 usa SASL_SSL (no plaintext) y certificado self-signed. El cliente Kafka debe tener enable.ssl.certificate.verification=false junto a ssl.endpoint.identification.algorithm=none. Si falta esa clave en create_topic.py, añádela; no pidas passwords.
+- Crea el tópico inventory.transactions (1 partición, retención infinita) usando TOPIC_NAME del .env.
 
-Este script se conecta a la VM vía SSH usando cflt-vsi-key.pem y las credenciales del .env, y crea el tópico 'inventory.transactions' en el cluster Kafka con 1 partición y retención infinita.
-
-Dime el output completo del comando. El resultado exitoso debe terminar con:
-- "Created topic 'inventory.transactions'"
-- "OK: create_topic"</div>
+Dime el output completo. Éxito:
+- Created topic: inventory.transactions
+- OK: create_topic</div>
       </div>
 
       <div class="callout" data-tone="success" style="margin-top:1.25rem;">
         <p class="callout__title">✓ Checkpoint</p>
         <ul class="checklist">
-          <li class="checklist__item">Bob reporta <code>Created topic 'inventory.transactions'</code> en el output.</li>
+          <li class="checklist__item">Bob reporta <code>Created topic: inventory.transactions</code> en el output.</li>
           <li class="checklist__item">Línea final del script: <code>OK: create_topic</code></li>
           <li class="checklist__item">En la UI web: <strong>Topics</strong> → aparece <code>inventory.transactions</code> con 1 partición.</li>
         </ul>
@@ -275,21 +277,21 @@ message InventoryTransaction {
             Copiar prompt
           </button>
         </div>
-        <div class="prompt-block__body">Bob, ya tienes el SSH activo y el .env configurado. Necesito que ejecutes el Step 2 del Lab de inventario.
+        <div class="prompt-block__body">Bob, ejecuta el Step 2 (tópico derivado ksqlDB).
 
-Desde la carpeta 'trackD/inventory-pipeline', corre:
+Desde la raíz del bundle:
+cd trackD/inventory-pipeline && ./setup.sh -s 2
 
-./setup.sh -s 2
+Contexto:
+- El .env que cuenta sigue siendo el de la raíz (run_in_cluster.sh lee ../../.env).
+- Schema Registry interno para pods: http://schemaregistry.confluent.svc.cluster.local:8081 (SCHEMA_REGISTRY_URL_INTERNAL). No uses la URL HTTPS externa desde el pod.
+- No pases ksql.schema.registry.url ni credenciales de SR en streamsProperties de la API /ksql: eso es configuración de servidor, no de sesión.
+- VALUE_FORMAT='JSON_SR' en stream y tabla. Los nombres INVENTORY_TRANSACTIONS / INVENTORY_AVAILABILITY ya van namespaced en el .env.
 
-Este script hace dos cosas en secuencia:
-1. Crea el stream INVENTORY_TRANSACTIONS y la tabla INVENTORY_AVAILABILITY en ksqlDB — que calcula disponibilidad por SKU y sucursal en tiempo real a partir de las transacciones del tópico inventory.transactions.
-2. Verifica que la tabla y el tópico derivados usan JSON_SR y el sufijo de tu WORKSHOP_ID.
-
-Dime el output completo. El resultado exitoso debe incluir:
-- "currentStatus: SUCCESS (Stream created)"
-- "currentStatus: SUCCESS (Created query with ID ...)"
-- "OK: create_derived_topic"
-- El tópico derivado muestra eventos JSON_SR</div>
+Dime el output completo. Éxito debe incluir:
+- currentStatus: SUCCESS (Stream created) o already exists
+- currentStatus: SUCCESS (Created query with ID ...) o already exists
+- Derived table ready / OK: create_derived_topic</div>
       </div>
 
       <!-- imágenes de validación lado a lado -->

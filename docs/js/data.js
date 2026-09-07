@@ -5,6 +5,7 @@ export const siteData = {
     { label: 'Laboratorios', href: '#available-workshops' },
     { label: 'Equipo', href: '#nosotros' },
     { label: 'Recursos', href: '#recursos' },
+    { label: 'Requisitos', href: '#requisitos' },
     { label: 'Acerca de', href: '#acerca-de' }
   ],
   hero: {
@@ -240,6 +241,69 @@ export const siteData = {
           }
         }
       ]
+    }
+  ]
+};
+
+export const generalPrereqs = {
+  eyebrow: 'Preparación',
+  title: 'Requisitos generales',
+  lead: 'Instala estas herramientas en tu equipo si aún no las tienes. Cada laboratorio puede pedir algo extra — Java, una cuenta de cloud, una VM — y eso se indica en su propia introducción.',
+  noteTitle: 'Solo el entorno de máquina',
+  note: 'Los materiales se descargan como zip desde cada lab. No hace falta clonar repositorios. Java, Kafka, Orchestrate y similares no van aquí.',
+  bobUrl: 'https://bob.ibm.com/download',
+  tools: [
+    {
+      id: 'bob',
+      title: 'IBM Bob IDE',
+      desc: 'El editor del workshop. Descarga la build de tu sistema e inicia sesión (Ask, Plan y Agent).'
+    },
+    {
+      id: 'node',
+      title: 'Node.js 22',
+      desc: 'Runtime para las apps React de los labs. El instalador incluye npm.'
+    },
+    {
+      id: 'python',
+      title: 'Python 3.10+',
+      desc: 'Recomendado 3.12. Necesitas pip y venv (por ejemplo para watsonx Orchestrate).'
+    },
+    {
+      id: 'ssh',
+      title: 'SSH',
+      desc: 'En Windows activa OpenSSH Client. En macOS y Linux ya viene instalado.'
+    }
+  ],
+  os: [
+    {
+      id: 'windows',
+      label: 'Windows',
+      bob: 'En la página de descarga elige Bob IDE → Windows x64 (User) e instala el .exe.',
+      installLabel: 'PowerShell como administrador',
+      install: 'Set-ExecutionPolicy -Scope CurrentUser RemoteSigned\n\nAdd-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0\n\nwinget install --id OpenJS.NodeJS.22 --exact --accept-package-agreements --accept-source-agreements\nwinget install --id Python.Python.3.12 --exact --accept-package-agreements --accept-source-agreements',
+      installHint: 'Cierra PowerShell, abre uno nuevo y valida. Si python no aparece, prueba py --version. Si Node o Python no se reconocen, cierra sesión de Windows y vuelve a entrar.',
+      validateLabel: 'Validar (PowerShell nuevo)',
+      validate: 'node -v\nnpm -v\npython --version\npip --version\npython -m venv -h\nssh -V'
+    },
+    {
+      id: 'macos',
+      label: 'macOS',
+      bob: 'En la página de descarga elige Mac ARM (Apple Silicon) o Mac Intel, según el chip.',
+      installLabel: 'Terminal (Homebrew)',
+      install: 'brew install node@22 python@3.12\nbrew link --overwrite --force node@22',
+      installHint: 'Si no tienes Homebrew, instala Node 22 LTS desde nodejs.org y Python 3.12 desde python.org. SSH ya está en macOS. En Terminal usa python3, no python.',
+      validateLabel: 'Validar',
+      validate: 'node -v\nnpm -v\npython3 --version\npython3 -m pip --version\npython3 -m venv -h\nssh -V'
+    },
+    {
+      id: 'linux',
+      label: 'Linux',
+      bob: 'En la página de descarga elige Linux .deb amd64 (Debian/Ubuntu) o RPM x64 (Fedora/RHEL).',
+      installLabel: 'Terminal (Debian/Ubuntu)',
+      install: 'sudo apt update\nsudo apt install -y python3 python3-pip python3-venv curl openssh-client\ncurl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -\nsudo apt install -y nodejs',
+      installHint: 'En Fedora/RHEL usa dnf en lugar de apt, y el paquete .rpm de Bob.',
+      validateLabel: 'Validar',
+      validate: 'node -v\nnpm -v\npython3 --version\npython3 -m pip --version\npython3 -m venv -h\nssh -V'
     }
   ]
 };

@@ -1,5 +1,5 @@
 import { loadContent } from './content.js';
-import { siteData, workshopGuides, findLab, getNextLab, getWorkshopStats, getVisibleSections, roadshowConfig, getRoadshowPlan, getLabTrackMeta } from './data.js';
+import { siteData, workshopGuides, findLab, getNextLab, getWorkshopStats, getVisibleSections, roadshowConfig, getRoadshowPlan, getLabTrackMeta, generalPrereqs } from './data.js';
 import { getHomeRoute, getLabRoute, parseRoute } from './router.js';
 import { initializeTheme, toggleTheme } from './theme.js';
 import { ensureParticipantAssignment, isParticipantLab, personalizeContent, participantBanner, readParticipantContext } from './participant.js?v=2';
@@ -7,7 +7,7 @@ import { ensureParticipantAssignment, isParticipantLab, personalizeContent, part
 const PREMIUM_STORAGE_KEY = 'labsBob.premiumAccess';
 let premiumAccess = readPremiumAccess();
 
-const HOME_SECTION_IDS = new Set(['roadshow-planner', 'available-workshops', 'nosotros', 'recursos', 'acerca-de', 'section-basic', 'section-integraciones', 'section-premium']);
+const HOME_SECTION_IDS = new Set(['roadshow-planner', 'available-workshops', 'nosotros', 'recursos', 'requisitos', 'acerca-de', 'section-basic', 'section-integraciones', 'section-premium']);
 
 const homeView = document.querySelector('#home-view');
 const labView = document.querySelector('#lab-view');
@@ -302,7 +302,7 @@ function updateNavCurrent() {
 // Uses a scroll listener instead of IntersectionObserver so it can
 // reliably detect "back to top = Inicio" with no threshold edge cases.
 
-const SPY_SECTIONS = ['roadshow-planner', 'available-workshops', 'nosotros', 'recursos', 'acerca-de'];
+const SPY_SECTIONS = ['roadshow-planner', 'available-workshops', 'nosotros', 'recursos', 'requisitos', 'acerca-de'];
 const HEADER_H = 48; // fixed header height in px
 const SMOOTH_SCROLL_MS = 900;
 const HOME_RETURN_KEY = 'hub-home-return';
@@ -1103,6 +1103,113 @@ ${cardsMarkup}
       </div>`;
 }
 
+const PREREQ_TOOL_ICONS = {
+  bob: '<path d="M26 6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2ZM6 8h20v4H6Zm0 16V14h20v10Z"/>',
+  node: '<path d="M18 10h-4v2h4v10h-4v2h10v-2h-4V12h4v-2h-4V8h-2zm-6 4H8v2h4v6H8v2h10v-2h-4v-8h4v-2h-4V8H8v2h4z"/><path d="M4 4v24h24V4Zm22 22H6V6h20Z"/>',
+  python: '<path d="M18 10v2h4a2 2 0 0 1 2 2v6h-6v2h6v4a2 2 0 0 1-2 2h-4v2h4a4 4 0 0 0 4-4V14a4 4 0 0 0-4-4zm-8 0H6a4 4 0 0 0-4 4v12a4 4 0 0 0 4 4h4v-2H6a2 2 0 0 1-2-2v-6h6v-2H4v-4a2 2 0 0 1 2-2h4z"/>',
+  ssh: '<path d="M21 2a8.008 8.008 0 0 0-8 8 7.92 7.92 0 0 0 1.089 4L2 26.117V30h3.883l3-3H12v-3h3v-3h3l4.9-4.911A8 8 0 1 0 21 2Zm0 11.5A3.5 3.5 0 1 1 24.5 10 3.504 3.504 0 0 1 21 13.5Z"/>'
+};
+
+function detectPrereqOs() {
+  const ua = navigator.userAgent || '';
+  if (/Windows/i.test(ua)) return 'windows';
+  if (/Mac OS X|Macintosh/i.test(ua)) return 'macos';
+  if (/Linux/i.test(ua)) return 'linux';
+  return 'windows';
+}
+
+function setPrereqOs(osId) {
+  const root = homeView.querySelector('#requisitos');
+  if (!root) return;
+  const selectedId = generalPrereqs.os.some((item) => item.id === osId) ? osId : 'windows';
+
+  root.querySelectorAll('[data-prereq-os]').forEach((button) => {
+    const selected = button.getAttribute('data-prereq-os') === selectedId;
+    button.classList.toggle('cds--tabs__nav-item--selected', selected);
+    button.setAttribute('aria-selected', String(selected));
+    button.tabIndex = selected ? 0 : -1;
+  });
+
+  root.querySelectorAll('[data-prereq-panel]').forEach((panel) => {
+    panel.hidden = panel.getAttribute('data-prereq-panel') !== selectedId;
+  });
+}
+
+function renderTerminalBlock(label, code) {
+  return `
+    <div class="code-block code-block--terminal">
+      <span class="code-block__label">${escapeHtml(label)}</span>
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>${escapeHtml(code)}</code></pre>
+    </div>`;
+}
+
+function renderGeneralPrereqs() {
+  const toolsMarkup = generalPrereqs.tools.map((tool) => `
+    <div class="prereq-item">
+      <div class="prereq-item__icon" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 32 32" fill="currentColor">${PREREQ_TOOL_ICONS[tool.id] || ''}</svg>
+      </div>
+      <div class="prereq-item__body">
+        <p class="prereq-item__title">${escapeHtml(tool.title)}</p>
+        <p class="prereq-item__desc">${escapeHtml(tool.desc)}</p>
+      </div>
+    </div>
+  `).join('');
+
+  const tabsMarkup = generalPrereqs.os.map((os) => `
+    <li>
+      <button
+        type="button"
+        class="cds--tabs__nav-item"
+        role="tab"
+        id="prereq-tab-${os.id}"
+        data-prereq-os="${os.id}"
+        aria-controls="prereq-panel-${os.id}"
+        aria-selected="false"
+      >${escapeHtml(os.label)}</button>
+    </li>
+  `).join('');
+
+  const panelsMarkup = generalPrereqs.os.map((os) => `
+    <div
+      class="hub-prereqs__panel"
+      id="prereq-panel-${os.id}"
+      role="tabpanel"
+      data-prereq-panel="${os.id}"
+      aria-labelledby="prereq-tab-${os.id}"
+      hidden
+    >
+      <p class="hub-prereqs__bob cds--body-01">
+        <strong>IBM Bob IDE.</strong> ${escapeHtml(os.bob)}
+        <a class="cds--link" href="${generalPrereqs.bobUrl}" target="_blank" rel="noreferrer noopener">bob.ibm.com/download</a>
+      </p>
+      ${renderTerminalBlock(os.installLabel, os.install)}
+      <p class="hub-prereqs__hint">${escapeHtml(os.installHint)}</p>
+      ${renderTerminalBlock(os.validateLabel, os.validate)}
+    </div>
+  `).join('');
+
+  return `
+    <section id="requisitos" class="hub-prereqs">
+      <div class="hub-prereqs__inner">
+        <p class="hub-section-eyebrow">${escapeHtml(generalPrereqs.eyebrow)}</p>
+        <h2 class="hub-section-heading-expressive">${escapeHtml(generalPrereqs.title)}</h2>
+        <p class="hub-section-lead">${escapeHtml(generalPrereqs.lead)}</p>
+        <div class="prereq-grid">${toolsMarkup}</div>
+        <div class="cds--tabs hub-prereqs__tabs" role="tablist" aria-label="Instalación por sistema operativo">
+          <ul class="cds--tabs__nav">${tabsMarkup}</ul>
+        </div>
+        ${panelsMarkup}
+        <div class="callout" data-tone="info">
+          <p class="callout__title">${escapeHtml(generalPrereqs.noteTitle)}</p>
+          <p>${escapeHtml(generalPrereqs.note)}</p>
+        </div>
+      </div>
+    </section>
+  `;
+}
+
 // ── Home page renderer ───────────────────────────────────────────
 function renderHome(searchTerm = '') {
   const normalizedTerm = searchTerm.trim().toLowerCase();
@@ -1544,6 +1651,8 @@ function renderHome(searchTerm = '') {
       </div>
     </div>
 
+    ${renderGeneralPrereqs()}
+
     <section id="acerca-de" class="hub-about">
       <div class="hub-about__inner">
         <p class="hub-section-eyebrow">Acerca de</p>
@@ -1560,6 +1669,7 @@ function renderHome(searchTerm = '') {
   `;
 
   bindImageFallbacks(homeView);
+  setPrereqOs(detectPrereqOs());
 }
 
 // ── Subnav ───────────────────────────────────────────────────────
@@ -3174,6 +3284,12 @@ function bindEvents() {
   });
 
   document.addEventListener('click', async (event) => {
+    const osTab = event.target.closest('[data-prereq-os]');
+    if (osTab) {
+      setPrereqOs(osTab.getAttribute('data-prereq-os'));
+      return;
+    }
+
     // Keep anchors inside imported premium documents inside the current SPA.
     // Route links such as #/lab/... continue through the router.
     const inPageLink = event.target.closest('.prose a[href^="#"]');

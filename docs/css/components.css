@@ -1716,6 +1716,139 @@ body.cds--g100[data-category="premium"] .lab-workspace-setup__table code {
   }
 }
 
+/* ════════════════════════════════════════════════════════════════
+ * GENERAL PREREQS — landing setup (Windows / macOS / Linux)
+ * ════════════════════════════════════════════════════════════════ */
+
+.hub-prereqs {
+  padding: var(--cds-spacing-09, 3rem) 0 var(--cds-spacing-10, 4rem);
+  background: var(--cds-background, #ffffff);
+  border-top: 1px solid var(--cds-border-subtle-01, #e0e0e0);
+}
+
+.hub-prereqs__inner {
+  max-width: 1312px;
+  margin: 0 auto;
+  padding: 0 var(--cds-spacing-07, 2rem);
+}
+
+.hub-prereqs .hub-section-lead {
+  margin-bottom: var(--cds-spacing-06, 1.5rem);
+}
+
+.hub-prereqs .prereq-grid {
+  margin: 0 0 var(--cds-spacing-07, 2rem);
+}
+
+.hub-prereqs__tabs .cds--tabs__nav {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid var(--cds-border-subtle-01, #c6c6c6);
+}
+
+.hub-prereqs__tabs .cds--tabs__nav > li {
+  margin: 0;
+}
+
+.hub-prereqs__tabs .cds--tabs__nav-item {
+  appearance: none;
+  padding: 10px 24px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--cds-text-secondary, #525252);
+  font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.hub-prereqs__tabs .cds--tabs__nav-item:hover:not(.cds--tabs__nav-item--selected) {
+  background: var(--cds-layer-hover-01, #e8e8e8);
+  color: var(--cds-text-primary, #161616);
+}
+
+.hub-prereqs__tabs .cds--tabs__nav-item--selected {
+  border-bottom-color: var(--cds-border-interactive, #0f62fe);
+  color: var(--cds-text-primary, #161616);
+  font-weight: 600;
+}
+
+.hub-prereqs__tabs .cds--tabs__nav-item:focus-visible {
+  outline: 2px solid var(--cds-focus, #0f62fe);
+  outline-offset: -2px;
+}
+
+.hub-prereqs__panel[hidden] {
+  display: none !important;
+}
+
+.hub-prereqs__bob {
+  margin: var(--cds-spacing-05, 1rem) 0;
+  max-width: 70ch;
+  color: var(--cds-text-secondary, #525252);
+}
+
+.hub-prereqs__bob strong {
+  color: var(--cds-text-primary, #161616);
+}
+
+.hub-prereqs__hint {
+  margin: var(--cds-spacing-04, 0.75rem) 0 var(--cds-spacing-06, 1.5rem);
+  max-width: 70ch;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--cds-text-secondary, #525252);
+}
+
+.hub-prereqs .code-block {
+  margin: 0;
+}
+
+.hub-prereqs .code-block::before {
+  display: none;
+}
+
+.hub-prereqs .code-block__label {
+  display: block;
+  margin: 0;
+  padding: 6px 72px 6px 16px;
+  border-bottom: 1px solid #353535;
+  background: #262626;
+  color: #8d8d8d;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.75rem;
+}
+
+.hub-prereqs .callout {
+  margin: var(--cds-spacing-07, 2rem) 0 0;
+}
+
+.cds--g100 .hub-prereqs {
+  background: var(--cds-background, #161616);
+  border-top-color: var(--cds-border-subtle-01, #393939);
+}
+
+.cds--g100 .hub-prereqs__tabs .cds--tabs__nav {
+  border-bottom-color: var(--cds-border-subtle-01, #393939);
+}
+
+.cds--g100 .hub-prereqs__tabs .cds--tabs__nav-item:hover:not(.cds--tabs__nav-item--selected) {
+  background: var(--cds-layer-hover-01, #333333);
+}
+
+@media (max-width: 671px) {
+  .hub-prereqs__inner {
+    padding: 0 var(--cds-spacing-05, 1rem);
+  }
+
+  .hub-prereqs__tabs .cds--tabs__nav-item {
+    padding: 10px 16px;
+  }
+}
+
 
 
 /* ════════════════════════════════════════════════════════════════

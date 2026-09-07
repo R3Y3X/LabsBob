@@ -1041,6 +1041,11 @@ body.hub-view--lab .hub-subnav:not([hidden]) {
   line-height: 1.5;
 }
 
+/* Odd last card spans the full row — avoids an empty grid cell */
+.prereq-grid--balanced .prereq-item:last-child:nth-child(odd):not(:only-child) {
+  grid-column: 1 / -1;
+}
+
 /* ── Stack before / after comparison ───────────────────────────── */
 .stack-compare {
   display: grid;

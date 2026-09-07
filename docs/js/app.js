@@ -2835,7 +2835,8 @@ function enhanceLabContent(proseEl, section, lab, step, isOverview) {
   normalizePremiumWorkflowStructure(proseEl, isOverview);
 
   if (isOverview) {
-    if (lab.overviewLabsOnly) {
+    const usesCustomOverview = Boolean(lab.customOverview || proseEl.querySelector('[data-custom-overview="true"]'));
+    if (lab.overviewLabsOnly && !usesCustomOverview) {
       const anchor = proseEl.querySelector('#ov-materials')?.closest('.lab-section')
         || proseEl.querySelector('#ov-que')?.closest('.lab-section')
         || proseEl.querySelector('.lab-banner');

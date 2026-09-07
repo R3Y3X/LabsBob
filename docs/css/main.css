@@ -1657,7 +1657,8 @@ body {
 
   .lab-shell--overview .lab-banner__tags,
   .lab-shell--overview .lab-banner__title,
-  .lab-shell--overview .lab-banner__summary {
+  .lab-shell--overview .lab-banner__summary,
+  .lab-shell--overview.lab-shell--ibm-i-rpg-development .lab-banner .rpg-meta {
     padding-right: 0;
   }
 

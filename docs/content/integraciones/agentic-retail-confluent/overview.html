@@ -27,6 +27,31 @@
     </div>
   </div>
 
+  <section class="lab-section overview-materials" aria-labelledby="confluent-descarga">
+    <h2 class="cds--productive-heading-03" id="confluent-descarga">Materiales del workshop</h2>
+    <p class="cds--body-01">Este recorrido agéntico comparte <strong>un solo bundle</strong> para los Tracks D, F y Voltia. Al descargar, elige la <strong>mesa</strong> y el <strong>número de asiento</strong> que te asignó el facilitador: el ZIP se genera con ese identificador y lo reutilizarás en todas las secciones del workshop.</p>
+    <p class="cds--body-01">Descomprime el bundle y abre la carpeta <code>RoadShowBobStreamingIntegration</code> en IBM Bob con <strong>File → Open Folder</strong>.</p>
+
+    <div style="display: flex; gap: 1rem; margin-top: 1rem; margin-bottom: 2rem;">
+      <a class="cds--btn cds--btn--primary" download href="./downloads/agentic-retail-workshop.zip" data-participant-download="true">
+        Descargar bundle del workshop
+      </a>
+      <a class="cds--btn cds--btn--tertiary" download="cp-ibm-demo-es.pdf" href="./assets/downloads/cp-ibm-demo-es.pdf" target="_blank" rel="noopener">
+        Descargar Presentación (PDF)
+      </a>
+    </div>
+
+    <div class="callout" data-tone="info">
+      <p class="callout__title">Contenido del bundle</p>
+      <ul class="cds--list--unordered">
+        <li class="cds--list__item"><code>trackD/inventory-pipeline/</code> — pipeline de Confluent (Track D): tópicos, ksqlDB y publicación de eventos.</li>
+        <li class="cds--list__item"><code>trackF/confluent_agents/</code> — agentes de watsonx Orchestrate (Track F) y configuración del toolkit MCP.</li>
+        <li class="cds--list__item"><code>voltia/voltia-starter/</code> — storefront React (Voltia) listo para abrir en Bob.</li>
+        <li class="cds--list__item"><code>participant-config.env</code> — nombres aislados para tu mesa y asiento; nunca contiene credenciales reales.</li>
+      </ul>
+    </div>
+  </section>
+
   <!-- ── Selector de entorno ── -->
   <div class="bobcoin-cost--total integration-context-card">
     <p style="font-size:0.75rem; font-weight:600; color:var(--cds-text-secondary,#525252); text-transform:uppercase; letter-spacing:0.04em; margin:0 0 0.5rem;">¿Con qué entorno trabajas?</p>
@@ -43,32 +68,7 @@
     <p style="font-size:0.75rem; color:var(--cds-text-secondary,#525252); margin:0.4rem 0 0;">Esta selección se aplica a todos los pasos del lab. Puedes cambiarla en cualquier momento.</p>
   </div>
 
-  <!-- ── Descarga de materiales ── -->
-  <section class="lab-section" aria-labelledby="confluent-descarga">
-    <h2 class="cds--productive-heading-03" id="confluent-descarga">
-      <svg class="lab-section__icon" aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M26 24v4H6v-4H4v4a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2v-4z"/><path d="M26 14l-1.41-1.41L17 20.17V2h-2v18.17l-7.59-7.58L6 14l10 10 10-10z"/></svg>
-      Descarga los materiales del workshop
-    </h2>
-    <p class="cds--body-01">Primero selecciona la mesa y el número que te asignó el facilitador. El bundle completo se genera con ese identificador y contiene el pipeline de Confluent, los agentes y la configuración de Orchestrate. Descomprímelo y abre la carpeta <code>RoadShowBobStreamingIntegration</code> en IBM Bob con <strong>File → Open Folder</strong>.</p>
-
-    <div style="display: flex; gap: 1rem; margin-top: 1rem; margin-bottom: 2rem;">
-      <a class="cds--btn cds--btn--primary" download href="./downloads/agentic-retail-workshop.zip" data-participant-download="true">
-        Descargar bundle del Track 1 — Confluent
-      </a>
-      <a class="cds--btn cds--btn--tertiary" download="cp-ibm-demo-es.pdf" href="./assets/downloads/cp-ibm-demo-es.pdf" target="_blank" rel="noopener">
-        Descargar Presentación (PDF)
-      </a>
-    </div>
-
-    <div class="callout" data-tone="info">
-      <p class="callout__title">Contenido del Toolkit</p>
-      <ul class="cds--list--unordered">
-        <li class="cds--list__item"><code>trackD/inventory-pipeline/</code> — scripts Python para crear tópicos, registrar JSON Schema, publicar eventos JSON_SR y gestionar el pipeline.</li>
-        <li class="cds--list__item"><code>trackF/confluent_agents/</code> — agentes Voltia y configuración del toolkit MCP.</li>
-        <li class="cds--list__item"><code>participant-config.env</code> — nombres aislados para tu workspace; nunca contiene credenciales reales.</li>
-      </ul>
-    </div>
-  </section>
+  </div>
 
   <!-- ── Qué vas a construir ────────────────────────────────────── -->
   <section class="lab-section">

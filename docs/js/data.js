@@ -281,7 +281,10 @@ export const generalPrereqs = {
       bob: 'En la página de descarga elige Bob IDE → Windows x64 (User) e instala el .exe.',
       installLabel: 'PowerShell como administrador',
       install: 'Set-ExecutionPolicy -Scope CurrentUser RemoteSigned\n\nAdd-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0\n\nwinget install --id OpenJS.NodeJS.22 --exact --accept-package-agreements --accept-source-agreements\nwinget install --id Python.Python.3.12 --exact --accept-package-agreements --accept-source-agreements',
-      installHint: 'Cierra PowerShell, abre uno nuevo y valida. Si python no aparece, prueba py --version. Si Node o Python no se reconocen, cierra sesión de Windows y vuelve a entrar.',
+      installHint: 'Si winget no se reconoce, corre el bloque de abajo, cierra PowerShell y vuelve a los winget install. Si python no aparece, prueba py --version.',
+      installExtraLabel: 'Si winget no se reconoce',
+      installExtra: 'curl.exe -L "https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle" -o $env:TEMP\\winget.msixbundle\nAdd-AppxPackage $env:TEMP\\winget.msixbundle',
+      installExtraHint: 'Luego cierra PowerShell, abre uno nuevo como administrador y corre otra vez los dos winget install. Si Add-AppxPackage falla por dependencias: Install-PackageProvider NuGet -Force; Install-Module Microsoft.WinGet.Client -Force; Repair-WinGetPackageManager -AllUsers',
       validateLabel: 'Validar (PowerShell nuevo)',
       validate: 'node -v\nnpm -v\npython --version\npip --version\npython -m venv -h\nssh -V'
     },

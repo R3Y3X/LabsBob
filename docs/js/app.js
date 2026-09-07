@@ -1,5 +1,5 @@
 import { loadContent } from './content.js';
-import { siteData, workshopGuides, findLab, getNextLab, getWorkshopStats, getVisibleSections, roadshowConfig, getRoadshowPlan, getLabTrackMeta, generalPrereqs } from './data.js';
+import { siteData, workshopGuides, findLab, getNextLab, getWorkshopStats, getVisibleSections, roadshowConfig, getRoadshowPlan, getLabTrackMeta, generalPrereqs } from './data.js?v=2';
 import { getHomeRoute, getLabRoute, parseRoute } from './router.js';
 import { initializeTheme, toggleTheme } from './theme.js';
 import { ensureParticipantAssignment, isParticipantLab, personalizeContent, participantBanner, readParticipantContext } from './participant.js?v=2';
@@ -1186,6 +1186,8 @@ function renderGeneralPrereqs() {
       </p>
       ${renderTerminalBlock(os.installLabel, os.install)}
       <p class="hub-prereqs__hint">${escapeHtml(os.installHint)}</p>
+      ${os.installExtra ? `${renderTerminalBlock(os.installExtraLabel, os.installExtra)}
+      <p class="hub-prereqs__hint">${escapeHtml(os.installExtraHint || '')}</p>` : ''}
       ${renderTerminalBlock(os.validateLabel, os.validate)}
     </div>
   `).join('');

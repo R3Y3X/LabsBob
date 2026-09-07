@@ -280,11 +280,8 @@ export const generalPrereqs = {
       label: 'Windows',
       bob: 'En la página de descarga elige Bob IDE → Windows x64 (User) e instala el .exe.',
       installLabel: 'PowerShell como administrador',
-      install: 'Set-ExecutionPolicy -Scope CurrentUser RemoteSigned\n\nAdd-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0\n\nwinget install --id OpenJS.NodeJS.22 --exact --accept-package-agreements --accept-source-agreements --source winget\nwinget install --id Python.Python.3.12 --exact --accept-package-agreements --accept-source-agreements --source winget',
-      installHint: 'Usa --source winget para no tocar Microsoft Store. Si winget no se reconoce, corre el bloque de abajo, cierra PowerShell y vuelve a los winget install. Si python no aparece, prueba py --version.',
-      installExtraLabel: 'Si winget no se reconoce',
-      installExtra: 'Install-PackageProvider -Name NuGet -Force\nInstall-Module -Name Microsoft.WinGet.Client -Force -Repository PSGallery\nRepair-WinGetPackageManager -AllUsers',
-      installExtraHint: 'Si pregunta si confías en PSGallery, escribe Y. Al terminar, cierra PowerShell, abre uno nuevo como administrador y corre los dos winget install (con --source winget).',
+      install: 'Set-ExecutionPolicy -Scope CurrentUser RemoteSigned\n\nAdd-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0\n\ncurl.exe -L "https://nodejs.org/dist/latest-v22.x/node-v22.23.2-x64.msi" -o $env:TEMP\\node.msi\nmsiexec /i "$env:TEMP\\node.msi" /qn ADDLOCAL=ALL\n\ncurl.exe -L "https://www.python.org/ftp/python/3.12.10/python-3.12.10-amd64.exe" -o $env:TEMP\\python.exe\nStart-Process "$env:TEMP\\python.exe" -Wait -ArgumentList "/quiet InstallAllUsers=1 PrependPath=1 Include_pip=1 Include_test=0"',
+      installHint: 'No usa winget. Cierra PowerShell, abre uno nuevo y valida. Si python no aparece, prueba py --version.',
       validateLabel: 'Validar (PowerShell nuevo)',
       validate: 'node -v\nnpm -v\npython --version\npip --version\npython -m venv -h\nssh -V'
     },

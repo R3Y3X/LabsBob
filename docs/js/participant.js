@@ -1,6 +1,6 @@
 /* Participant assignment and browser-generated workshop bundle. */
 
-const STORAGE_KEY = 'labsBob.participant.v1';
+const STORAGE_KEY = 'labsBob.participant.v2';
 const BASE_BUNDLE = './downloads/agentic-retail-workshop.zip';
 const BUNDLE_ROOT = 'RoadShowBobStreamingIntegration';
 const PARTICIPANT_LABS = new Set([
@@ -29,22 +29,27 @@ export function readParticipantContext() {
 }
 
 export function normalizeContext(table, number) {
-  const tableId = pad(table, 2);
+  const tzNum = Number(table);
+  const tableId = String(tzNum);
+  const tz = `tz${tzNum}`;
+  const tzLabel = `TZ${tzNum}`;
   const participantId = pad(number, 3);
   return {
-    table: Number(table),
+    table: tzNum,
     number: Number(number),
     tableId,
+    tz,
+    tzLabel,
     participantId,
-    label: `M${tableId}-P${participantId}`,
-    workspaceId: `m${tableId}_p${participantId}`,
-    topicTransactions: `inventory.transactions.m${tableId}_p${participantId}`,
-    topicAvailability: `inventory.availability.m${tableId}_p${participantId}`,
-    topicFlink: `inventory.availability.flink.m${tableId}_p${participantId}`,
-    stream: `INVENTORY_TRANSACTIONS_M${tableId}_P${participantId}`,
-    tableName: `INVENTORY_AVAILABILITY_M${tableId}_P${participantId}`,
-    agentSuffix: `M${tableId}_P${participantId}`,
-    knowledgeBase: `enterprise_documents_m${tableId}_p${participantId}`
+    label: `${tzLabel}-P${participantId}`,
+    workspaceId: `${tz}_p${participantId}`,
+    topicTransactions: `inventory.transactions.${tz}_p${participantId}`,
+    topicAvailability: `inventory.availability.${tz}_p${participantId}`,
+    topicFlink: `inventory.availability.flink.${tz}_p${participantId}`,
+    stream: `INVENTORY_TRANSACTIONS_${tzLabel}_P${participantId}`,
+    tableName: `INVENTORY_AVAILABILITY_${tzLabel}_P${participantId}`,
+    agentSuffix: `${tzLabel}_P${participantId}`,
+    knowledgeBase: `enterprise_documents_${tz}_p${participantId}`
   };
 }
 
@@ -113,7 +118,8 @@ async function appendEntries(baseBytes, entries) {
 }
 
 function configText(context) {
-  return `# Generado por IBM Workshop Hub para ${context.label}.\n# Completa solo los valores marcados; nunca compartas este archivo.\nWORKSHOP_TABLE=${context.table}\nPARTICIPANT_NUMBER=${context.number}\nWORKSHOP_ID=${context.workspaceId}\nTOPIC_NAME=${context.topicTransactions}\nTOPIC_PARTITIONS=1\nTOPIC_REPLICATION_FACTOR=3\nTOPIC_RETENTION_MS=-1\nDERIVED_TOPIC_NAME=${context.topicAvailability}\nFLINK_TOPIC_NAME=${context.topicFlink}\nKSQL_STREAM_NAME=${context.stream}\nKSQL_TABLE_NAME=${context.tableName}\nSSH_HOST=root@<IP_PUBLICA_VM_MESA_${context.tableId}>\nSSH_KEY=cflt-vsi-key.pem\n# Los jobs se ejecutan dentro de Kubernetes; usa el endpoint interno para evitar hairpin por la IP pública.\nBOOTSTRAP_SERVERS=kafka.confluent.svc.cluster.local:9092\nBOOTSTRAP_SERVERS_EXTERNAL=<IP_PUBLICA_VM_MESA_${context.tableId}>:9094,<IP_PUBLICA_VM_MESA_${context.tableId}>:9095,<IP_PUBLICA_VM_MESA_${context.tableId}>:9096\nKSQLDB_ENDPOINT=http://ksqldb.confluent.svc.cluster.local:8088\nKSQLDB_ENDPOINT_EXTERNAL=https://<IP_PUBLICA_VM_MESA_${context.tableId}>/ksqldb\nKSQLDB_USERNAME=admin\nKSQLDB_PASSWORD=\nKSQLDB_API_KEY=\nKSQLDB_API_SECRET=\nKAFKA_SASL_USERNAME=kafka-admin\nKAFKA_SASL_PASSWORD=\nSCHEMA_REGISTRY_URL=https://<IP_PUBLICA_VM_MESA_${context.tableId}>/sr\nSCHEMA_REGISTRY_USERNAME=admin\nSCHEMA_REGISTRY_PASSWORD=\nORCHESTRATE_URL=<URL_ORCHESTRATE_MESA_${context.tableId}>\nORCHESTRATE_API_KEY=\nRETAIL_MCP_URL=https://<IP_PUBLICA_VM_MESA_${context.tableId}>/retail-mcp/mcp\nRETAIL_MCP_TOOLKIT_NAME=retail_availability_mcp\nKNOWLEDGE_BASE_NAME=${context.knowledgeBase}\n`;
+  const ipPh = `<IP_PUBLICA_VM_${context.tzLabel}>`;
+  return `# Generado por IBM Workshop Hub para ${context.label}.\n# Completa solo los valores marcados; nunca compartas este archivo.\nWORKSHOP_TABLE=${context.table}\nPARTICIPANT_NUMBER=${context.number}\nWORKSHOP_ID=${context.workspaceId}\nTOPIC_NAME=${context.topicTransactions}\nTOPIC_PARTITIONS=1\nTOPIC_REPLICATION_FACTOR=3\nTOPIC_RETENTION_MS=-1\nDERIVED_TOPIC_NAME=${context.topicAvailability}\nFLINK_TOPIC_NAME=${context.topicFlink}\nKSQL_STREAM_NAME=${context.stream}\nKSQL_TABLE_NAME=${context.tableName}\nSSH_HOST=root@${ipPh}\nSSH_KEY=trackD/inventory-pipeline/cflt-vsi-key.pem\n# Los jobs se ejecutan dentro de Kubernetes; usa el endpoint interno para evitar hairpin por la IP pública.\nBOOTSTRAP_SERVERS=kafka.confluent.svc.cluster.local:9092\nBOOTSTRAP_SERVERS_EXTERNAL=${ipPh}:9094,${ipPh}:9095,${ipPh}:9096\nKSQLDB_ENDPOINT=http://ksqldb.confluent.svc.cluster.local:8088\nKSQLDB_ENDPOINT_EXTERNAL=https://${ipPh}/ksqldb\nKSQLDB_USERNAME=admin\nKSQLDB_PASSWORD=\nKSQLDB_API_KEY=\nKSQLDB_API_SECRET=\nKAFKA_SASL_USERNAME=kafka-admin\nKAFKA_SASL_PASSWORD=\nSCHEMA_REGISTRY_URL=https://${ipPh}/sr\nSCHEMA_REGISTRY_USERNAME=admin\nSCHEMA_REGISTRY_PASSWORD=\nSCHEMA_REGISTRY_URL_INTERNAL=http://schemaregistry.confluent.svc.cluster.local:8081\nORCHESTRATE_URL=""\nORCHESTRATE_API_KEY=\nRETAIL_MCP_URL=http://${ipPh}/retail-mcp/mcp\nRETAIL_MCP_TOOLKIT_NAME=retail_availability_mcp\nKNOWLEDGE_BASE_NAME=${context.knowledgeBase}\n`;
 }
 
 function bootstrapText() {
@@ -124,7 +130,7 @@ CONFIG="$ROOT/participant-config.env"
 source "$CONFIG"
 : "\${WORKSHOP_ID:?Falta WORKSHOP_ID}"
 echo "Workspace: $WORKSHOP_ID"
-echo "Completa SSH_HOST, SSH_KEY, BOOTSTRAP_SERVERS, KSQLDB_PASSWORD y KAFKA_SASL_PASSWORD en participant-config.env antes de continuar."
+echo "Bob extrae KAFKA_SASL_PASSWORD, KSQLDB_PASSWORD y SCHEMA_REGISTRY_PASSWORD del cluster (kubectl). Completa SSH_HOST sin placeholders <...> y deja ORCHESTRATE_URL vacío."
 if [[ "\${1:-}" == "check" ]]; then exit 0; fi
 [[ "$SSH_HOST" != *"<"* ]] || { echo "Falta SSH_HOST" >&2; exit 2; }
 [[ -f "$ROOT/$SSH_KEY" ]] || { echo "No existe $ROOT/$SSH_KEY" >&2; exit 2; }
@@ -164,7 +170,7 @@ export async function downloadParticipantBundle(context, labSlug = currentPartic
     { name: `${BUNDLE_ROOT}/participant-config.env`, content: configText(context) },
     { name: `${BUNDLE_ROOT}/participant-info.json`, content: participantInfo(context, track) },
     { name: `${BUNDLE_ROOT}/participant-bootstrap.sh`, content: bootstrapText() },
-    { name: `${BUNDLE_ROOT}/README-PARTICIPANT.md`, content: `# Track ${track.number} (${track.code}) — ${track.name}\n\nWorkspace: **${context.label}**\n\nEste bundle fue generado para el **Track ${track.number} (${track.code}: ${track.name})**. Sus carpetas son \`trackD\` (Confluent), \`trackF\` (Orchestrate) y \`voltia\`. Usa siempre el mismo identificador mesa+número en todos los tracks. Completa participant-config.env y ejecuta participant-bootstrap.sh.\n` }
+    { name: `${BUNDLE_ROOT}/README-PARTICIPANT.md`, content: `# Track ${track.number} (${track.code}) — ${track.name}\n\nWorkspace: **${context.label}**\n\nEste bundle fue generado para el **Track ${track.number} (${track.code}: ${track.name})**. Sus carpetas son \`trackD\` (Confluent), \`trackF\` (Orchestrate) y \`voltia\`. Usa siempre el mismo identificador TechZone+número (TZ1–TZ3) en todos los tracks. Completa participant-config.env y ejecuta participant-bootstrap.sh.\n` }
   ]);
   const blob = new Blob([archive], { type: 'application/zip' });
   const url = URL.createObjectURL(blob);
@@ -188,7 +194,7 @@ function showAssignmentDialog(existing = null, labSlug = currentParticipantLabSl
   return new Promise((resolve) => {
     const wrapper = document.createElement('div');
     wrapper.className = 'participant-assignment';
-    wrapper.innerHTML = `<div class="participant-assignment__dialog" role="dialog" aria-modal="true" aria-labelledby="participant-title"><h2 id="participant-title">Configura tu track</h2><p>Selecciona la mesa y el número que te asignó el facilitador. El mismo identificador se usará en Confluent y Orchestrate y generará tu bundle personalizado.</p><div class="participant-assignment__fields"><label>Mesa<select data-table><option value="1">Mesa 1</option><option value="2">Mesa 2</option><option value="3">Mesa 3</option></select></label><label>Número (1–100)<input data-number type="number" min="1" max="100" step="1" inputmode="numeric" /></label></div><div class="participant-assignment__error" role="alert"></div><div class="participant-assignment__actions"><button type="button" class="cds--btn cds--btn--secondary" data-cancel>Cancelar</button><button type="button" class="cds--btn cds--btn--primary" data-confirm>Confirmar y descargar bundle</button></div></div>`;
+    wrapper.innerHTML = `<div class="participant-assignment__dialog" role="dialog" aria-modal="true" aria-labelledby="participant-title"><h2 id="participant-title">Configura tu track</h2><p>Selecciona la TechZone (TZ1–TZ3) y el número que te asignó el facilitador. El mismo identificador se usará en Confluent y Orchestrate y generará tu bundle personalizado.</p><div class="participant-assignment__fields"><label>TechZone<select data-table><option value="1">TZ1</option><option value="2">TZ2</option><option value="3">TZ3</option></select></label><label>Número (1–100)<input data-number type="number" min="1" max="100" step="1" inputmode="numeric" /></label></div><div class="participant-assignment__error" role="alert"></div><div class="participant-assignment__actions"><button type="button" class="cds--btn cds--btn--secondary" data-cancel>Cancelar</button><button type="button" class="cds--btn cds--btn--primary" data-confirm>Confirmar y descargar bundle</button></div></div>`;
     document.body.append(wrapper);
     const table = wrapper.querySelector('[data-table]');
     const number = wrapper.querySelector('[data-number]');
@@ -199,7 +205,7 @@ function showAssignmentDialog(existing = null, labSlug = currentParticipantLabSl
     wrapper.querySelector('[data-confirm]').addEventListener('click', async () => {
       const tableValue = Number(table.value);
       const numberValue = Number(number.value);
-      if (![1, 2, 3].includes(tableValue) || !Number.isInteger(numberValue) || numberValue < 1 || numberValue > 100) { error.textContent = 'Elige una mesa válida y un número entero entre 1 y 100.'; return; }
+      if (![1, 2, 3].includes(tableValue) || !Number.isInteger(numberValue) || numberValue < 1 || numberValue > 100) { error.textContent = 'Elige una TechZone válida (TZ1–TZ3) y un número entero entre 1 y 100.'; return; }
       const context = normalizeContext(tableValue, numberValue);
       error.textContent = 'Generando bundle…';
       confirmButton.disabled = true;
@@ -223,6 +229,17 @@ export function isParticipantLab(labSlug) {
 
 export function personalizeContent(content, context) {
   if (!context || !content) return content;
+  const yamlFiles = [
+    'SKU_Availability_Agent.yaml',
+    'Substitute_Finder_Agent.yaml',
+    'Store_Associate_Agent.yaml',
+    'Customer_Shopping_Assistant.yaml'
+  ];
+  const tokens = yamlFiles.map((name, index) => {
+    const token = `__LABSBOB_YAML_${index}__`;
+    content = content.split(name).join(token);
+    return [token, name];
+  });
   const replacements = [
     ['inventory.availability.flink', context.topicFlink],
     ['inventory.transactions-value', `${context.topicTransactions}-value`],
@@ -237,18 +254,21 @@ export function personalizeContent(content, context) {
     ['Customer_Shopping_Assistant', `Customer_Shopping_Assistant_${context.agentSuffix}`],
     ['enterprise_documents', context.knowledgeBase],
     ['RETAIL_MCP_SSE_URL', 'RETAIL_MCP_URL'],
-    ['Endpoint SSE', 'Endpoint HTTPS (Streamable HTTP)'],
-    ['vía SSE', 'vía HTTPS (Streamable HTTP)'],
+    ['Endpoint SSE', 'Endpoint HTTP (Streamable HTTP)'],
+    ['vía SSE', 'vía HTTP (Streamable HTTP)'],
+    ['Endpoint HTTPS (Streamable HTTP)', 'Endpoint HTTP (Streamable HTTP)'],
+    ['vía HTTPS (Streamable HTTP)', 'vía HTTP (Streamable HTTP)'],
     ['--transport sse', '--transport streamable_http'],
     ['workshop-config.env.example', 'participant-config.env'],
     ['workshop-config.env', 'participant-config.env']
   ];
-  return replacements.reduce((value, [from, to]) => value.split(from).join(to), content);
+  content = replacements.reduce((value, [from, to]) => value.split(from).join(to), content);
+  return tokens.reduce((value, [token, name]) => value.split(token).join(name), content);
 }
 
 export function participantBanner(context) {
   if (!context) return '';
-  return `<div class="callout" data-tone="info" data-participant-banner="true"><p class="callout__title">Workspace activo: ${context.label}</p><p>Todos los tópicos, agentes y consultas de este recorrido usan <code>${context.workspaceId}</code>. <button type="button" class="cds--link" data-change-participant>Cambiar asignación</button></p></div>`;
+  return `<div class="callout" data-tone="info" data-participant-banner="true"><p class="callout__title">Workspace activo: ${context.label}</p><p>Todos los tópicos, agentes y consultas de este recorrido usan <code>${context.workspaceId}</code> (TechZone ${context.tzLabel}). <button type="button" class="cds--link" data-change-participant>Cambiar asignación</button></p></div>`;
 }
 
 document.addEventListener('click', async (event) => {

@@ -58,19 +58,16 @@
             Copiar prompt
           </button>
         </div>
-        <div class="prompt-block__body">Bob, ya tienes el SSH activo y el .env configurado. Necesito que ejecutes el Step 3 del Lab de inventario.
+        <div class="prompt-block__body">Bob, ejecuta el Step 3: publicar 20 eventos al tópico inventory.transactions.
 
-Desde la VM, en la carpeta '~/inventory-pipeline', ejecuta:
+Desde la raíz del bundle (no desde ~/inventory-pipeline en la VM):
+cd trackD/inventory-pipeline && ./setup.sh -s 3
 
-bash run_in_cluster.sh produce_messages
+Mismo contexto que el Step 1: SASL_SSL + cert self-signed; run_in_cluster.sh lee el .env de la raíz. El tópico y la tabla ksqlDB ya llevan el sufijo de TechZone+número del WORKSHOP_ID. No pidas passwords.
 
-Este script produce 20 mensajes de transacciones de inventario al tópico 'inventory.transactions'. Los mensajes incluyen SKUs de productos Voltia con operaciones de tipo ADDITION, SALE y ADJUSTMENT, usando las credenciales SASL del .env.
-
-En cuanto se publiquen, ksqlDB comenzará a calcular automáticamente la disponibilidad en la tabla INVENTORY_AVAILABILITY.
-
-Dime el output completo del comando. El resultado exitoso debe terminar con:
-- "Delivered: 20/20 (failed: 0)"
-- "OK: produce_messages"</div>
+Dime el output completo. Éxito:
+- Delivered: 20/20 (failed: 0)
+- OK: produce_messages</div>
       </div>
 
       <div class="callout" data-tone="success" style="margin-top:1.25rem;">
@@ -109,7 +106,7 @@ Dime el output completo del comando. El resultado exitoso debe terminar con:
     <!-- CLOUD -->
     <div data-env-panel="cloud">
       <h3 class="cds--productive-heading-03">Opción A — Script desde terminal</h3>
-      <p class="cds--body-01">Asegúrate de tener el <code>.env</code> configurado con las credenciales del cluster. Abre una terminal en <code>inventory-pipeline</code> y ejecuta:</p>
+      <p class="cds--body-01">Asegúrate de tener el <code>.env</code> de la <strong>raíz</strong> del bundle sincronizado. Abre una terminal en <code>trackD/inventory-pipeline</code> y ejecuta:</p>
 <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">./setup.sh -s 3</code></pre></div>
 
       <h3 class="cds--productive-heading-03" style="margin-top:1.5rem;">Opción B — Publicar un mensaje manual (verificación)</h3>
@@ -167,17 +164,15 @@ Dime el output completo del comando. El resultado exitoso debe terminar con:
             Copiar prompt
           </button>
         </div>
-        <div class="prompt-block__body">Bob, inicia la publicación de 5 eventos de prueba adicionales al tópico 'inventory.transactions'.
+        <div class="prompt-block__body">Bob, publica 5 eventos de prueba adicionales al tópico inventory.transactions.
 
-Usa las credenciales SASL del .env ya configurado. Genera los mensajes variando:
-- 'transaction_type': incluye al menos un ADDITION, un SALE y un ADJUSTMENT.
-- 'quantity': usa valores positivos para ADDITION y negativos para SALE.
-- 'sku': usa al menos 2 SKUs distintos de Voltia (ej. LAPTOP-DELL-XPS-15, MOUSE-LOGITECH-MX3).
-- 'branch': usa al menos 2 sucursales distintas (ej. "Dot Shopping", "Centro Cívico").
+Usa el mismo flujo que el Step 3 (cd trackD/inventory-pipeline y el .env de la raíz / SASL_SSL). Genera los mensajes variando:
+- transaction_type: incluye al menos un ADDITION, un SALE y un ADJUSTMENT.
+- quantity: valores positivos para ADDITION y negativos para SALE.
+- sku: al menos 2 SKUs distintos de Voltia (ej. LAPTOP-DELL-XPS-15, MOUSE-LOGITECH-MX3).
+- branch: al menos 2 sucursales (ej. "Dot Shopping", "Centro Cívico").
 
-Publica directamente vía la API de Kafka usando las variables BOOTSTRAP_SERVERS y KAFKA_SASL_* del .env.
-
-Indícame cuando termines de emitir los 5 mensajes e infórmame los offsets generados en el tópico.</div>
+No pidas passwords. Indícame cuando terminen los 5 mensajes y los offsets en el tópico.</div>
       </div>
 
       <div class="callout" data-tone="success" style="margin-top:1.25rem;">

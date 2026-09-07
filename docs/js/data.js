@@ -283,8 +283,8 @@ export const generalPrereqs = {
       install: 'Set-ExecutionPolicy -Scope CurrentUser RemoteSigned\n\nAdd-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0\n\nwinget install --id OpenJS.NodeJS.22 --exact --accept-package-agreements --accept-source-agreements --source winget\nwinget install --id Python.Python.3.12 --exact --accept-package-agreements --accept-source-agreements --source winget',
       installHint: 'Usa --source winget para no tocar Microsoft Store. Si winget no se reconoce, corre el bloque de abajo, cierra PowerShell y vuelve a los winget install. Si python no aparece, prueba py --version.',
       installExtraLabel: 'Si winget no se reconoce',
-      installExtra: 'curl.exe -L "https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle" -o $env:TEMP\\winget.msixbundle\nAdd-AppxPackage $env:TEMP\\winget.msixbundle',
-      installExtraHint: 'Luego cierra PowerShell, abre uno nuevo como administrador y corre otra vez los dos winget install (con --source winget). Si Add-AppxPackage falla por dependencias: Install-PackageProvider NuGet -Force; Install-Module Microsoft.WinGet.Client -Force; Repair-WinGetPackageManager -AllUsers',
+      installExtra: 'Install-PackageProvider -Name NuGet -Force\nInstall-Module -Name Microsoft.WinGet.Client -Force -Repository PSGallery\nRepair-WinGetPackageManager -AllUsers',
+      installExtraHint: 'Si pregunta si confías en PSGallery, escribe Y. Al terminar, cierra PowerShell, abre uno nuevo como administrador y corre los dos winget install (con --source winget).',
       validateLabel: 'Validar (PowerShell nuevo)',
       validate: 'node -v\nnpm -v\npython --version\npip --version\npython -m venv -h\nssh -V'
     },

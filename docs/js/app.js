@@ -613,7 +613,6 @@ function buildLabBannerTags(section, lab, step) {
   const workflowBadge = lab.accessMode === 'premium'
     && lab.slug === 'java-modernization-v2'
     && step.slug !== 'overview'
-    && step.slug !== 'lab-alt4'
     ? '<span class="cds--tag cds--tag--magenta">Workflow</span>'
     : '';
 
@@ -650,9 +649,9 @@ function buildLabCard(lab, section) {
       </span>`
     : '';
   const bobcoinLabel = stats.bobcoins
-    ? (stats.bobcoins.min === stats.bobcoins.max
-      ? `${stats.bobcoins.min}`
-      : `${stats.bobcoins.min}–${stats.bobcoins.max}`)
+    ? `${stats.bobcoins.approximate ? '~' : ''}${stats.bobcoins.min === stats.bobcoins.max
+      ? Number(stats.bobcoins.min.toFixed(2))
+      : `${Number(stats.bobcoins.min.toFixed(2))}–${Number(stats.bobcoins.max.toFixed(2))}`}`
     : '';
   const bobcoinStat = stats.bobcoins
     ? `<span class="hub-lab-card__stat">
@@ -1881,7 +1880,6 @@ function getWorkshopStepDescription(lab, step) {
 function getWorkshopStepBadge(lab, step, index) {
   const navPrefixes = getLabNavPrefixes(lab);
   if (navPrefixes?.[step.slug]) {
-    if (step.slug === 'lab-alt4') return 'ALT 4';
     const match = navPrefixes[step.slug].match(/Lab (\d+)/i);
     if (match) return `LAB ${match[1].padStart(2, '0')}`;
     return navPrefixes[step.slug].toUpperCase();
@@ -1979,7 +1977,6 @@ const JAVA_PREMIUM_COMMON_SECTIONS = {
   lab2: ['lab2-contexto', 'lab2-troubleshooting'],
   lab3: ['lab3-contexto', 'lab3-troubleshooting'],
   lab4: ['lab4-caso', 'lab4-troubleshooting'],
-  'lab-alt4': ['labalt4-que', 'labalt4-tdd', 'labalt4-estado', 'labalt4-setup'],
   lab5: ['lab5-caso', 'lab5-vigilar', 'lab5-troubleshooting']
 };
 
@@ -1996,7 +1993,6 @@ const JAVA_PREMIUM_PROJECT_PATHS = {
   lab2: 'labs/lab2-java-upgrade/snapB-java-upgrade/',
   lab3: 'labs/lab3-ui-modernization/snapC-ui-mod/',
   lab4: 'labs/lab4-unit-test-generation/snapD-unit-test-gen/',
-  'lab-alt4': 'labs/alt-lab4-test-driven-development/snapTDD/',
   lab5: 'labs/lab5-security-vulnerability-remediation/snapE-security-vulnerabilities/'
 };
 
@@ -2038,21 +2034,6 @@ function describeJavaPremiumWorkflow(step) {
     : `<strong>${workflow.card}</strong>`;
 }
 
-function insertAlt4PremiumNotice(panel) {
-  if (panel.querySelector('[data-alt4-premium-notice]')) return;
-  const notice = document.createElement('div');
-  notice.className = 'callout';
-  notice.dataset.tone = 'note';
-  notice.dataset.alt4PremiumNotice = 'true';
-  notice.innerHTML = [
-    '<p class="callout__title">Este lab no tiene workflow premium</p>',
-    '<p>Bob no incluye un flujo TDD en la pestaña <strong>Workflows</strong>. Aunque tengas acceso Premium, el Lab Alt-4 se hace en <strong>Agent Mode</strong>: pega cada ejercicio en el chat. No busques una tarjeta TDD.</p>'
-  ].join('');
-  const banner = panel.querySelector('.lab-banner');
-  if (banner) banner.after(notice);
-  else panel.prepend(notice);
-}
-
 function updateJavaPremiumWorkspace(panel, step) {
   const summary = panel.querySelector('.lab-banner__summary');
   if (summary && JAVA_PREMIUM_BANNER_SUMMARIES[step.slug]) {
@@ -2060,34 +2041,25 @@ function updateJavaPremiumWorkspace(panel, step) {
   }
 
   const workspace = panel.querySelector('.lab-workspace-setup');
-  const workflow = JAVA_PREMIUM_WORKFLOWS[step.slug];
   const projectPath = JAVA_PREMIUM_PROJECT_PATHS[step.slug];
   if (workspace && projectPath) {
     const badge = workspace.querySelector('.lab-workspace-setup__badge');
-    if (badge) badge.textContent = 'Regla del workshop — conserva el mismo workspace';
+    if (badge) badge.textContent = 'Continúa en el mismo workspace';
 
     const title = workspace.querySelector('.lab-workspace-setup__title');
     if (title) {
-      title.innerHTML = `${LAB_STEP_ICON_SVG} No abras otra carpeta — solo corrige Project path`;
+      title.innerHTML = `${LAB_STEP_ICON_SVG} Punto de partida`;
     }
 
     const lead = workspace.querySelector('.lab-workspace-setup__lead');
     if (lead) {
-      lead.innerHTML = workflow
-        ? `El workspace sigue siendo <code>simple-pharmacy-workshop-v2</code> (el del overview). <strong>No</strong> uses <strong>File → Open Folder</strong> en este lab. Abre <strong>Workflows ▶</strong>, inicia ${describeJavaPremiumWorkflow(step)} y pega la segunda ruta en el campo <strong>Project path</strong>.`
-        : 'El workspace sigue siendo <code>simple-pharmacy-workshop-v2</code>. Este lab no tiene workflow TDD: no abras otra carpeta. En Agent Mode, prompts y <code>mvn</code> apuntan al subdirectorio de abajo.';
+      lead.innerHTML = `Sigue en <code>simple-pharmacy-workshop-v2</code>, la carpeta que abriste en el overview. No uses <strong>File → Open Folder</strong>. Abre <strong>Workflows ▶</strong>, inicia ${describeJavaPremiumWorkflow(step)} y pega esta ruta en <strong>Project path</strong>; ese campo solo indica qué snapshot usará el workflow.`;
     }
 
     const pathHtml = [
-      '<div class="lab-workspace-setup__paths">',
-      '<div class="lab-workspace-setup__path lab-workspace-setup__path--locked">',
-      '<p class="lab-workspace-setup__path-label">Workspace — ya abierto, no lo cambies</p>',
-      '<code class="lab-workspace-setup__path-value">simple-pharmacy-workshop-v2</code>',
-      '</div>',
       '<div class="lab-workspace-setup__path lab-workspace-setup__path--paste">',
-      `<p class="lab-workspace-setup__path-label">${workflow ? 'Pega esto en Project path del workflow' : 'Subdirectorio para prompts y mvn — no lo abras como carpeta'}</p>`,
+      '<p class="lab-workspace-setup__path-label">Project path del workflow</p>',
       `<code class="lab-workspace-setup__path-value">${projectPath}</code>`,
-      '</div>',
       '</div>'
     ].join('');
     const oldPath = workspace.querySelector('.lab-workspace-setup__path, .lab-workspace-setup__paths');
@@ -2097,36 +2069,11 @@ function updateJavaPremiumWorkspace(panel, step) {
       oldPath.replaceWith(wrap.firstElementChild);
     }
 
-    const checks = workspace.querySelector('.lab-workspace-setup__checks');
-    if (checks) {
-      checks.innerHTML = [
-        '<li>El explorador de Bob sigue mostrando <code>simple-pharmacy-workshop-v2</code> como raíz</li>',
-        workflow
-          ? `<li>El campo <strong>Project path</strong> contiene exactamente <code>${projectPath}</code></li>`
-          : `<li>Los prompts y comandos apuntan a <code>${projectPath}</code></li>`,
-        `<li>${step.slug === 'lab1' ? 'Java 8 Zulu' : 'Java 21 Semeru'} activo (<code>java -version</code>)</li>`
-      ].join('');
-    }
-
-    if (!workspace.querySelector('[data-premium-terminal-path]')) {
-      const terminalContext = document.createElement('div');
-      terminalContext.className = 'callout';
-      terminalContext.dataset.tone = 'tip';
-      terminalContext.dataset.premiumTerminalPath = 'true';
-      terminalContext.innerHTML = [
-        '<p class="callout__title">Solo la terminal — no cambies el workspace</p>',
-        '<p>Bob sigue abierto en la carpeta madre. Si un comando Maven se ejecuta en la terminal, el directorio de trabajo debe ser el snapshot:</p>',
-        '<div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button>',
-        `<pre><code>cd ${projectPath}</code></pre></div>`
-      ].join('');
-      workspace.querySelector('.lab-workspace-setup__box')?.append(terminalContext);
-    }
+    workspace.querySelector('.lab-workspace-setup__checks')?.remove();
 
     const note = workspace.querySelector('.lab-workspace-setup__note');
     if (note) {
-      note.innerHTML = workflow
-        ? `<strong>Confirma el workflow:</strong> el indicador de modo debe mostrar <strong>Agent</strong>. Abre <strong>Workflows</strong> con ▶ y comprueba que aparece ${describeJavaPremiumWorkflow(step)}.`
-        : '<strong>Confirma Agent Mode:</strong> sigue en el chat actual; no busques una tarjeta TDD en Workflows.';
+      note.innerHTML = `<strong>Comprueba antes de continuar:</strong> el workflow es ${describeJavaPremiumWorkflow(step)} y el modo muestra <strong>Agent</strong>.`;
     }
   }
 
@@ -2241,14 +2188,6 @@ async function applyPremiumWorkflowVariant(proseEl, lab, step) {
 
   updateJavaPremiumWorkspace(panel, step);
 
-  // Alt-4 has no native TDD workflow in Bob. Keep the Agent Mode lab and
-  // tell participants not to look for a Workflows card.
-  if (step.slug === 'lab-alt4') {
-    panel.dataset.workflowVariantApplied = 'true';
-    insertAlt4PremiumNotice(panel);
-    return;
-  }
-
   if (!step.workflowSourceFile) return;
 
   const workflowMarkup = await loadContent(step.workflowSourceFile);
@@ -2303,10 +2242,6 @@ function getLabNavPrefixes(lab) {
   let n = 1;
   for (const step of lab.steps) {
     if (step.slug === 'overview') continue;
-    if (step.slug === 'lab-alt4') {
-      map[step.slug] = `${label} 4 alternativo`;
-      continue;
-    }
     const numbered = step.slug.match(/^lab(\d+)$/);
     if (numbered) {
       map[step.slug] = `${label} ${Number(numbered[1])}`;

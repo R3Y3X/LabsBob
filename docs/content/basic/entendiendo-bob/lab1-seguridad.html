@@ -3,7 +3,7 @@
   <div class="lab-banner">
     <div class="hands-on-meta" aria-label="Información del Lab 2">
       <span class="hands-on-meta__item"><span class="hands-on-meta__label">Lab</span><span class="hands-on-meta__value">02 · Auditoría</span></span>
-      <span class="hands-on-meta__item"><span class="hands-on-meta__label">Duración</span><span class="hands-on-meta__value">~25 min</span></span>
+      <span class="hands-on-meta__item"><span class="hands-on-meta__label">Duración</span><span class="hands-on-meta__value">~15 min</span></span>
       <span class="hands-on-meta__item"><span class="hands-on-meta__label">Resultado</span><span class="hands-on-meta__value">Hallazgos SARIF y OSCAL</span></span>
     </div>
     <h1 class="cds--productive-heading-05 lab-banner__title">Lab 2 — Auditoría</h1>
@@ -29,7 +29,7 @@
         <span class="lab-banner__metric-label">artefactos (SARIF + OSCAL)</span>
       </div>
       <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">5–10</span>
+        <span class="lab-banner__metric-value">~5.72</span>
         <span class="lab-banner__metric-label">BobCoins estimados</span>
       </div>
     </div>
@@ -130,6 +130,10 @@
         <li class="cds--list__item"><strong>Scope &amp; Location:</strong> selecciona el proyecto <code>galaxium-travels</code> para guardar el skill en <code>.bob/skills/</code> y versionarlo con el codebase.</li>
         <li class="cds--list__item">Pega las instrucciones completas del skill en <strong>Skill Instructions</strong>:</li>
       </ol>
+      <div class="callout" data-tone="warning">
+        <p class="callout__title">Error frecuente: el skill no se puede crear</p>
+        <p>Comprueba tu archivo <code>.gitignore</code>. No incluyas <code>.bob/</code> ni <code>.bob</code>: si esa carpeta está ignorada, Bob no puede crear el skill en el alcance del proyecto. Elimina esa entrada y vuelve a crear el skill.</p>
+      </div>
       <div class="code-block code-block--yaml">
         <p class="code-block__label">Campo: Skill Instructions · YAML</p>
         <button type="button" class="copy-button">Copiar contenido</button>

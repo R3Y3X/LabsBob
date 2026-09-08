@@ -50,9 +50,9 @@ export const siteData = {
           audience: ['client', 'partner'],
           steps: [
             { slug: 'overview', label: 'Introducción', file: './content/basic/entendiendo-bob/overview.html', tags: ['Skills · Rules'] },
-            { slug: 'lab1', label: 'Rules', file: './content/basic/entendiendo-bob/lab2-rules.html', tags: ['Rules'], bobcoinCost: { min: 2, max: 4 } },
-            { slug: 'lab2', label: 'Auditoría', file: './content/basic/entendiendo-bob/lab1-seguridad.html', tags: ['Seguridad · ASVS'], bobcoinCost: { min: 5, max: 10 } },
-            { slug: 'lab3', label: 'Código seguro', file: './content/basic/entendiendo-bob/lab3-codigo-seguro.html', tags: ['Actor-critic'], bobcoinCost: { min: 8, max: 15 } }
+            { slug: 'lab1', label: 'Rules', file: './content/basic/entendiendo-bob/lab2-rules.html', tags: ['Rules'], bobcoinCost: { min: 1.2, max: 1.2, approximate: true } },
+            { slug: 'lab2', label: 'Auditoría', file: './content/basic/entendiendo-bob/lab1-seguridad.html', tags: ['Seguridad · ASVS'], bobcoinCost: { min: 5.717, max: 5.717, approximate: true } },
+            { slug: 'lab3', label: 'Código seguro', file: './content/basic/entendiendo-bob/lab3-codigo-seguro.html', tags: ['Actor-critic'], bobcoinCost: { min: 5.804, max: 5.804, approximate: true } }
           ]
         },
         {
@@ -144,7 +144,7 @@ export const siteData = {
         {
           slug: 'java-modernization-v2',
           title: 'Moderniza Java a la velocidad del negocio',
-          description: 'Moderniza Simple Pharmacy de WebSphere y Java 8 a Open Liberty y Java 21: UI React, tests (o TDD) y remediación de CVEs, sin reescribir la app desde cero.',
+          description: 'Moderniza Simple Pharmacy de WebSphere y Java 8 a Open Liberty y Java 21: UI React, tests y remediación de CVEs, sin reescribir la app desde cero.',
           supporting: 'Java legacy',
           featured: true,
           overviewLabsOnly: true,
@@ -156,7 +156,6 @@ export const siteData = {
             { slug: 'lab2', label: 'Upgrade Java 21', file: './content/premium/java-modernization-v2/lab2-java-upgrade.html', description: 'Java 8 → 21, Jakarta EE 10, escaneo CVE y refactor Struts 2→7.', tags: ['Java 21'], bobcoinCost: { min: 8, max: 9 } },
             { slug: 'lab3', label: 'UI con React', file: './content/premium/java-modernization-v2/lab3-ui-modernization.html', description: 'Struts/JSP → React + Material UI sobre backend JAX-RS; backend, frontend y contenedores.', tags: ['React · JAX-RS'], bobcoinCost: { min: 14, max: 16 } },
             { slug: 'lab4', label: 'Tests unitarios', file: './content/premium/java-modernization-v2/lab4-unit-tests.html', description: 'UNITTEST.md, JaCoCo, JUnit 5 + Mockito + AssertJ en lotes por capa.', tags: ['JUnit 5'], bobcoinCost: { min: 10, max: 12 } },
-            { slug: 'lab-alt4', label: 'Lab 4 alternativo', file: './content/premium/java-modernization-v2/lab-alt4-tdd.html', description: 'Ruta TDD OpenAPI-first: tests primero, implementación después (Red-Green-Refactor).', tags: ['TDD'], alternative: true, bobcoinCost: { min: 5, max: 7 } },
             { slug: 'lab5', label: 'Seguridad', file: './content/premium/java-modernization-v2/lab5-security.html', description: 'Detecta y remedia CVEs críticos en dependencias antes de la entrega.', tags: ['CVEs'], bobcoinCost: { min: 4, max: 6 } }
           ],
           variants: {
@@ -169,7 +168,6 @@ export const siteData = {
                 { slug: 'lab2', label: 'Actualización a Java 21', file: './content/premium-workflows/java-modernization-v2/lab2-java-upgrade.html', baseFile: './content/premium/java-modernization-v2/lab2-java-upgrade.html', workflowSourceFile: './content/premium-workflows/java-modernization-v2/lab2-java-upgrade.html', description: 'Ejecuta el flujo “Java Upgrade” con Jakarta EE 10 y validación de CVE integrada.', tags: ['Actualización Java'], bobcoinCost: { min: 8, max: 9 } },
                 { slug: 'lab3', label: 'Interfaz con React', file: './content/premium-workflows/java-modernization-v2/lab3-ui-modernization.html', baseFile: './content/premium/java-modernization-v2/lab3-ui-modernization.html', workflowSourceFile: './content/premium-workflows/java-modernization-v2/lab3-ui-modernization.html', description: 'Migra Struts/JSP a React + Material UI con el flujo “UI Modernization”.', tags: ['Flujo de interfaz'], bobcoinCost: { min: 14, max: 16 } },
                 { slug: 'lab4', label: 'Pruebas unitarias', file: './content/premium-workflows/java-modernization-v2/lab4-unit-tests.html', baseFile: './content/premium/java-modernization-v2/lab4-unit-tests.html', workflowSourceFile: './content/premium-workflows/java-modernization-v2/lab4-unit-tests.html', description: 'Genera pruebas por lotes y cobertura con el flujo “Java Unit Testing”.', tags: ['Flujo de pruebas'], bobcoinCost: { min: 10, max: 12 } },
-                { slug: 'lab-alt4', label: 'Lab 4 alternativo', file: './content/premium-workflows/java-modernization-v2/lab-alt4-tdd.html', baseFile: './content/premium/java-modernization-v2/lab-alt4-tdd.html', workflowSourceFile: './content/premium-workflows/java-modernization-v2/lab-alt4-tdd.html', description: 'Ruta TDD en Agent Mode (no hay workflow TDD): primero las pruebas y después la implementación.', tags: ['TDD · Agent Mode'], alternative: true, bobcoinCost: { min: 5, max: 7 } },
                 { slug: 'lab5', label: 'Seguridad y vulnerabilidades', file: './content/premium-workflows/java-modernization-v2/lab5-security.html', baseFile: './content/premium/java-modernization-v2/lab5-security.html', workflowSourceFile: './content/premium-workflows/java-modernization-v2/lab5-security.html', description: 'Detecta y remedia CVE con el flujo “Java Vulnerabilities Detection”.', tags: ['Flujo de vulnerabilidades'], bobcoinCost: { min: 4, max: 6 } }
               ],
               guide: {
@@ -182,7 +180,7 @@ export const siteData = {
                   ['Gobernanza', 'Permisos “Read”, “Edit”, “Execute” y MCP revisados antes de ejecutar cada flujo.']
                 ],
                 materials: ['Simple Pharmacy Workshop V2.', 'Capturas de los flujos y paneles de aprobación.', 'Plan de migración, resultados Maven, pruebas y reportes de CVE.'],
-                path: 'Sigue Liberty Replatforming, Java Upgrade, UI Modernization, Java Unit Testing y Java Vulnerabilities Detection. El Lab Alt-4 es TDD en Agent Mode (no hay workflow TDD).',
+                path: 'Sigue Liberty Replatforming, Java Upgrade, UI Modernization, Java Unit Testing y Java Vulnerabilities Detection.',
                 learning: [
                   ['Flujos de trabajo', 'Seleccionar y ejecutar el flujo premium adecuado para cada transformación.'],
                   ['Modernización', 'Revisar planes, cambios interactivos y resúmenes generados por Bob.'],
@@ -479,7 +477,7 @@ export const workshopGuides = {
     ]
   },
   'entendiendo-bob': {
-    duration: '~75 min',
+    duration: '~40 min',
     outcome: 'Fijarás rules de proyecto, auditarás Galaxium Travels y generarás un endpoint FastAPI con un flujo actor-critic antes de que llegue a SAST.',
     requirements: [
       ['Acceso', 'IBM Bob IDE v2.x o posterior con una cuenta habilitada.'],
@@ -560,10 +558,10 @@ export const workshopGuides = {
       ['Carpetas', 'Abre solo la carpeta snap* del lab en curso (File → Open Folder). No abras el bundle completo.']
     ],
     materials: ['Repositorio Simple Pharmacy con snaps de inicio.', 'Prompts de modernización y capturas de referencia.', 'Resultados de Maven, tests y reportes de seguridad.'],
-    path: 'Sigue Replatforming, Java 21, UI, tests y seguridad. El lab TDD es una alternativa al flujo de tests unitarios.',
+    path: 'Sigue Replatforming, Java 21, UI, tests y seguridad.',
     learning: [
       ['Modernización', 'Planificar y ejecutar replatforming y actualización de Java.'],
-      ['Calidad', 'Usar TDD o tests unitarios para validar cambios.'],
+      ['Calidad', 'Usar tests unitarios para validar cambios.'],
       ['Seguridad', 'Detectar, corregir y documentar riesgos antes de la entrega.']
     ]
   },
@@ -649,6 +647,6 @@ export function getWorkshopStats(lab) {
   const duration = lab.guide?.duration || workshopGuides[lab.slug]?.duration || '';
   return {
     duration,
-    bobcoins: costs.length ? { min, max } : null
+    bobcoins: costs.length ? { min, max, approximate: costs.every((step) => step.bobcoinCost.approximate) } : null
   };
 }

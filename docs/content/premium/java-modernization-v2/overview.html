@@ -22,7 +22,7 @@
     </p>
     <div class="lab-banner__metrics">
       <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">5 + Alt-4</span>
+        <span class="lab-banner__metric-value">5</span>
         <span class="lab-banner__metric-label">laboratorios</span>
       </div>
       <div class="lab-banner__metric">
@@ -71,7 +71,7 @@
       Cómo encajan los labs
     </h2>
     <p class="cds--body-01" style="max-width:72ch">
-      Los Labs 1–3 forman el recorrido principal de modernización; los Labs 4, Alt-4 y 5 pueden hacerse en cualquier orden después.
+      Los Labs 1–3 forman el recorrido principal de modernización; los Labs 4 y 5 pueden hacerse en cualquier orden después.
       Cada lab usa <strong>Agent Mode</strong> con un prompt por fase (Análisis → Cambios → Validación) sobre carpetas <code>snap*</code> locales. Pegar el siguiente prompt de la página es el Continue; tu <strong>ok</strong> es el Approve.
     </p>
   </section>
@@ -148,7 +148,7 @@
     <p class="cds--body-01" style="max-width:72ch;margin-bottom:var(--cds-spacing-05,1rem)">
       Todos los labs usan <strong>Agent Mode</strong> — el chat de Bob corre en un único modo de agente.
       No hay que cambiar de modo: comprueba que el indicador en la parte inferior del panel de chat dice <strong>Agent</strong>.
-      Este recorrido usa prompts por fase en Agent Mode (Análisis → Cambios → Validación). Si activas el toggle Premium del portal, los Labs 1–5 pasan a los workflows nativos de Bob; el Lab Alt-4 sigue en Agent Mode.
+      Este recorrido usa prompts por fase en Agent Mode (Análisis → Cambios → Validación). Si activas el toggle Premium del portal, los Labs 1–5 pasan a los workflows nativos de Bob.
       Al cambiar de carpeta <code>snap*</code>, Bob abre un chat nuevo — pega el primer prompt de ese lab.
     </p>
 
@@ -228,11 +228,10 @@ Empieza de nuevo mostrando el diff del Cambio que corresponda (sin aplicar nada 
     </h2>
     <p class="cds--body-01" style="max-width:72ch;margin-bottom:var(--cds-spacing-05,1rem)">
       Los Labs 1 → 2 → 3 son la historia secuencial principal (cada uno consume la salida del anterior).
-      Después del Lab 3, continúa con el Lab 4 y el Lab 5, o toma el Lab Alt-4 (TDD) como ejercicio independiente en cualquier momento.
+      Después del Lab 3, continúa con el Lab 4 y el Lab 5.
       <strong>Tiempos orientativos</strong> (Agent Mode, entorno listo, basados en sesiones reales con Bob):
       Lab 1 ~15 min · Lab 2 ~15 min · Lab 3 ~25 min · Lab 4 ~20 min · Lab 5 ~12 min.
       Ruta completa Labs 1–5: <strong>~90 min</strong>. Labs 1–3 solos: <strong>~55 min</strong>.
-      El Lab Alt-4 (~20 min) es opcional y no entra en los ~90 min.
       Reserva margen si revisas cada diff, tomas capturas o aparece troubleshooting.
     </p>
 
@@ -248,7 +247,6 @@ Empieza de nuevo mostrando el diff del Cambio que corresponda (sin aplicar nada 
           <tr><th scope="row">Lab 2</th><td>Upgrade Java 8 → 21, migración Jakarta EE 10, escaneo CVE durante la Fase 2, refactor Struts 2→7</td></tr>
           <tr><th scope="row">Lab 3</th><td>Selección de estado objetivo, mapeo Struts → React, backend Jakarta EE REST, Vite dev server</td></tr>
           <tr><th scope="row">Lab 4</th><td>Estrategia <code>UNITTEST.md</code>, JUnit 5 + Mockito + AssertJ, subagentes por lotes, cobertura JaCoCo</td></tr>
-          <tr><th scope="row">Lab Alt-4</th><td>Desarrollo OpenAPI-first, ciclo Red-Green-Refactor, implementación JAX-RS desde tests</td></tr>
           <tr><th scope="row">Lab 5</th><td>Triaje CVE/OSV, dependencias directas vs transitivas, remediación por bump de versión</td></tr>
         </tbody>
       </table>
@@ -286,7 +284,6 @@ Empieza de nuevo mostrando el diff del Cambio que corresponda (sin aplicar nada 
               <tr><th scope="row">Lab 2</th><td><code>labs/lab2-java-upgrade/snapB-java-upgrade/</code></td></tr>
               <tr><th scope="row">Lab 3</th><td><code>labs/lab3-ui-modernization/snapC-ui-mod/</code></td></tr>
               <tr><th scope="row">Lab 4</th><td><code>labs/lab4-unit-test-generation/snapD-unit-test-gen/</code></td></tr>
-              <tr><th scope="row">Lab Alt-4 (TDD)</th><td><code>labs/alt-lab4-test-driven-development/snapTDD/</code></td></tr>
               <tr><th scope="row">Lab 5</th><td><code>labs/lab5-security-vulnerability-remediation/snapE-security-vulnerabilities/</code></td></tr>
             </tbody>
           </table>

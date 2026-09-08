@@ -50,9 +50,9 @@ export const siteData = {
           audience: ['client', 'partner'],
           steps: [
             { slug: 'overview', label: 'Introducción', file: './content/basic/entendiendo-bob/overview.html', tags: ['Skills · Rules'] },
-            { slug: 'lab1', label: 'Rules', file: './content/basic/entendiendo-bob/lab2-rules.html', tags: ['Rules'], bobcoinCost: { min: 1.2, max: 1.2, approximate: true } },
-            { slug: 'lab2', label: 'Auditoría', file: './content/basic/entendiendo-bob/lab1-seguridad.html', tags: ['Seguridad · ASVS'], bobcoinCost: { min: 5.717, max: 5.717, approximate: true } },
-            { slug: 'lab3', label: 'Código seguro', file: './content/basic/entendiendo-bob/lab3-codigo-seguro.html', tags: ['Actor-critic'], bobcoinCost: { min: 5.804, max: 5.804, approximate: true } }
+            { slug: 'lab1', label: 'Rules', file: './content/basic/entendiendo-bob/lab2-rules.html', tags: ['Rules'], bobcoinCost: { min: 1, max: 2 } },
+            { slug: 'lab2', label: 'Auditoría', file: './content/basic/entendiendo-bob/lab1-seguridad.html', tags: ['Seguridad · ASVS'], bobcoinCost: { min: 5, max: 7 } },
+            { slug: 'lab3', label: 'Código seguro', file: './content/basic/entendiendo-bob/lab3-codigo-seguro.html', tags: ['Actor-critic'], bobcoinCost: { min: 5, max: 7 } }
           ]
         },
         {
@@ -647,6 +647,6 @@ export function getWorkshopStats(lab) {
   const duration = lab.guide?.duration || workshopGuides[lab.slug]?.duration || '';
   return {
     duration,
-    bobcoins: costs.length ? { min, max, approximate: costs.every((step) => step.bobcoinCost.approximate) } : null
+    bobcoins: costs.length ? { min, max } : null
   };
 }

@@ -649,9 +649,9 @@ function buildLabCard(lab, section) {
       </span>`
     : '';
   const bobcoinLabel = stats.bobcoins
-    ? `${stats.bobcoins.approximate ? '~' : ''}${stats.bobcoins.min === stats.bobcoins.max
-      ? Number(stats.bobcoins.min.toFixed(2))
-      : `${Number(stats.bobcoins.min.toFixed(2))}–${Number(stats.bobcoins.max.toFixed(2))}`}`
+    ? (stats.bobcoins.min === stats.bobcoins.max
+      ? `${stats.bobcoins.min}`
+      : `${stats.bobcoins.min}–${stats.bobcoins.max}`)
     : '';
   const bobcoinStat = stats.bobcoins
     ? `<span class="hub-lab-card__stat">

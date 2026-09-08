@@ -15,7 +15,7 @@
         <span class="lab-banner__metric-label">JUnit 5</span>
       </div>
       <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">~20</span>
+        <span class="lab-banner__metric-value">~10</span>
         <span class="lab-banner__metric-label">minutos</span>
       </div>
       <div class="lab-banner__metric">
@@ -75,15 +75,15 @@ Esta instantánea es la aplicación modernizada (Liberty + Java 21 + API REST) c
       <div class="lab-workspace-setup__box">
         <span class="lab-workspace-setup__badge">Sigue en el mismo workspace</span>
         <h3 class="lab-workspace-setup__title" id="lab4-workspace">No abras otra carpeta</h3>
-        <p class="lab-workspace-setup__lead">No cambies de workspace ni uses <strong>File → Open Folder</strong>. Si el workflow muestra un campo de ruta de proyecto, pega la segunda ruta. Si arranca el análisis al momento, comprueba que trabaja sobre <code>snapD-unit-test-gen</code>:</p>
+        <p class="lab-workspace-setup__lead">No cambies de workspace ni uses <strong>File → Open Folder</strong>. Si el workflow muestra el selector de proyecto, elige con él esta carpeta. Si arranca el análisis al momento, comprueba que trabaja sobre <code>snapD-unit-test-gen</code>:</p>
         <div class="lab-workspace-setup__paths">
           <div class="lab-workspace-setup__path lab-workspace-setup__path--locked">
             <p class="lab-workspace-setup__path-label">Workspace — ya abierto, no lo cambies</p>
             <code class="lab-workspace-setup__path-value">simple-pharmacy-workshop-v2</code>
           </div>
-          <div class="lab-workspace-setup__path lab-workspace-setup__path--paste">
-            <p class="lab-workspace-setup__path-label">Pega esto en Project path del workflow</p>
-            <code class="lab-workspace-setup__path-value">labs/lab4-unit-test-generation/snapD-unit-test-gen/</code>
+          <div class="lab-workspace-setup__path">
+            <p class="lab-workspace-setup__path-label">La carpeta que eliges en el selector</p>
+            <code class="lab-workspace-setup__path-value">…/simple-pharmacy-workshop-v2/labs/lab4-unit-test-generation/snapD-unit-test-gen/</code>
           </div>
         </div>
       </div>
@@ -263,7 +263,7 @@ Comience solo con
     </div>
   </section>
   <section class="lab-section" aria-labelledby="step-1-open-the-project">
-    <h2 class="cds--productive-heading-03" id="step-1-open-the-project">Paso 1: confirma el workspace y el Project path</h2>
+    <h2 class="cds--productive-heading-03" id="step-1-open-the-project">Paso 1: confirma el workspace y el proyecto seleccionado</h2>
     <ol class="cds--list--ordered">
       <li class="cds--list__item">Confirma que Bob sigue abierto en <code>simple-pharmacy-workshop-v2</code>. No cambies de workspace.</li>
       <li class="cds--list__item">
@@ -297,7 +297,7 @@ Selecciona
 .
     </p>
     <h3 id="22-automatic-setup" class="cds--productive-heading-02 lab-step__title">2.2 Configuración automática</h3>
-    <p>Si el workflow muestra un campo de ruta de proyecto, corrígelo para que apunte a <code>…/simple-pharmacy-workshop-v2/labs/lab4-unit-test-generation/snapD-unit-test-gen</code>. Si Bob empieza a explorar el repositorio al momento, comprueba que el <code>pom.xml</code> que lee es el de <code>snapD-unit-test-gen</code> y no el de otro lab.</p>
+    <p>Si el workflow muestra el selector de proyecto, elige con él la carpeta <code>…/simple-pharmacy-workshop-v2/labs/lab4-unit-test-generation/snapD-unit-test-gen</code>. Si Bob empieza a explorar el repositorio al momento, comprueba que el <code>pom.xml</code> que lee es el de <code>snapD-unit-test-gen</code> y no el de otro lab.</p>
     <p>Bob inmediatamente explora el repositorio sin avisarte. Lo hará:</p>
     <ul class="cds--list--unordered">
       <li class="cds--list__item">Detectar que no hay ninguna herramienta de cobertura de código configurada</li>

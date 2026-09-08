@@ -14,11 +14,11 @@
         <span class="lab-banner__metric-label">Java Modernization</span>
       </div>
       <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">~20</span>
+        <span class="lab-banner__metric-value">~10</span>
         <span class="lab-banner__metric-label">minutos</span>
       </div>
       <div class="lab-banner__metric">
-        <span class="lab-banner__metric-value">4–5</span>
+        <span class="lab-banner__metric-value">11–13</span>
         <span class="lab-banner__metric-label">BobCoins estimados</span>
       </div>
       <div class="lab-banner__metric">
@@ -71,10 +71,10 @@ Recorra el flujo de trabajo Java Modernization de Bob de principio a fin:
       <div class="lab-workspace-setup__box">
         <span class="lab-workspace-setup__badge">Continúa en el mismo workspace</span>
         <h3 class="lab-workspace-setup__title" id="lab1-workspace">Punto de partida</h3>
-        <p class="lab-workspace-setup__lead">Sigue en <code>simple-pharmacy-workshop-v2</code>, la carpeta que abriste en el overview. No uses <strong>File → Open Folder</strong>. En <strong>Workflows ▶</strong>, inicia <strong>Java Modernization → Liberty Replatforming</strong> y pega esta ruta en <strong>Project path</strong>; ese campo solo indica qué snapshot usará el workflow.</p>
-        <div class="lab-workspace-setup__path lab-workspace-setup__path--paste">
-          <p class="lab-workspace-setup__path-label">Project path del workflow</p>
-          <code class="lab-workspace-setup__path-value">labs/lab1-java-liberty-replatforming/snapA-java-liberty-replatforming/</code>
+        <p class="lab-workspace-setup__lead">Sigue en <code>simple-pharmacy-workshop-v2</code>, la carpeta que abriste en el overview. No uses <strong>File → Open Folder</strong>. En <strong>Workflows ▶</strong>, inicia <strong>Java Modernization → Liberty Replatforming</strong> y, en <strong>Seleccionar proyecto</strong>, despliega el selector de carpetas y <strong>elige</strong> la carpeta del snapshot.</p>
+        <div class="lab-workspace-setup__path">
+          <p class="lab-workspace-setup__path-label">La carpeta que eliges en el selector</p>
+          <code class="lab-workspace-setup__path-value">…/simple-pharmacy-workshop-v2/labs/lab1-java-liberty-replatforming/snapA-java-liberty-replatforming/</code>
         </div>
       </div>
     </section>
@@ -212,7 +212,7 @@ Comience solo con
     </figure>
   </section>
   <section class="lab-section" aria-labelledby="step-1-open-the-project">
-    <h2 class="cds--productive-heading-03" id="step-1-open-the-project">Paso 1: confirma el workspace y el Project path</h2>
+    <h2 class="cds--productive-heading-03" id="step-1-open-the-project">Paso 1: confirma el workspace y el proyecto seleccionado</h2>
     <ol class="cds--list--ordered">
       <li class="cds--list__item">Confirma que Bob sigue abierto en <code>simple-pharmacy-workshop-v2</code> (la carpeta general del workshop). No cambies de workspace.</li>
       <li class="cds--list__item">Si la ventana de chat de Bob aún no está abierta, haz clic en el ícono de Bob en la parte superior de tu IDE.</li>
@@ -276,11 +276,7 @@ Selecciona
     </p>
     <h3 id="22-analyze-analyze-java-project" class="cds--productive-heading-02 lab-step__title">2.2 Analizar - Analizar proyecto Java</h3>
     <p>
-Como la raíz del workspace es el workshop completo, el campo
-      <strong>Ruta del proyecto</strong>
- /
-      <strong>Project path</strong>
- se rellena con esa carpeta general. <strong>Corrígelo</strong> para que apunte al snapshot de este lab. Debe terminar con:
+En <strong>Seleccionar proyecto</strong>, despliega el selector de carpetas y <strong>elige</strong> la carpeta del snapshot de este lab. Deja apagados los dos interruptores opcionales. La carpeta es:
     </p>
     <div data-block-label="Campo del workflow" data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
@@ -300,9 +296,9 @@ Esa cola es solo un
     </p>
     <figure class="lab-figure premium-workflow__figure">
       <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/analyze-project-panel.png" target="_blank" rel="noopener">
-        <img src="./assets/images/labs/java-modernization-v2/premium/analyze-project-panel.png" class="lab-figure__img" alt="Panel Analizar proyecto con el campo Project path" />
+        <img src="./assets/images/labs/java-modernization-v2/premium/analyze-project-panel.png" class="lab-figure__img" alt="Panel Analizar proyecto con el selector de proyecto" />
       </a>
-      <figcaption class="lab-figure__caption">Referencia visual — Panel Analizar proyecto. Corrige <strong>Project path</strong> para que termine en <code>snapA-java-liberty-replatforming</code> antes de continuar.</figcaption>
+      <figcaption class="lab-figure__caption">Referencia visual — Panel Analizar proyecto. Elige <code>snapA-java-liberty-replatforming</code> con el selector; no uses <strong>Ruta de proyecto personalizada</strong> antes de continuar.</figcaption>
     </figure>
     <h3 id="23-analyze-select-modernization-type" class="cds--productive-heading-02 lab-step__title">2.3 Analizar: seleccionar el tipo de modernización</h3>
     <p>
@@ -370,10 +366,10 @@ En el <strong>campo del panel del workflow</strong> (no en el chat), introduce l
  (si la UI está en inglés, el botón dice <strong>Continue</strong>).
  Bob analiza el plan y elabora una lista de tareas pendientes.
     </p>
-    <p class="cds--body-01">Ruta de referencia — cópiala en el <strong>campo del panel</strong> de la captura de abajo, no en el chat:</p>
+    <p class="cds--body-01">Elígelo con el <strong>selector de archivos</strong> del panel del workflow — no en el chat. Está aquí dentro del bundle:</p>
     <div data-block-label="Campo del workflow" data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
-        <code>[tu ruta local]/simple-pharmacy-workshop-v2/labs/lab1-java-liberty-replatforming/simple-pharmacy.war_migrationPlan.zip</code>
+        <code>…/simple-pharmacy-workshop-v2/labs/lab1-java-liberty-replatforming/simple-pharmacy.war_migrationPlan.zip</code>
       </pre>
     </div>
     <p>
@@ -385,7 +381,7 @@ Consíguelo de la segunda descarga en la parte superior de esta página:
       <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/ama-migration-plan-input.png" target="_blank" rel="noopener">
         <img src="./assets/images/labs/java-modernization-v2/premium/ama-migration-plan-input.png" class="lab-figure__img" alt="Panel de entrada de ruta del plan de migración de AMA" />
       </a>
-      <figcaption class="lab-figure__caption">Referencia visual — Campo de ruta del plan AMA en el panel del workflow. Escribe o pega la ruta aquí; no es un prompt de chat.</figcaption>
+      <figcaption class="lab-figure__caption">Referencia visual — Campo del plan AMA en el panel del workflow. Elige el archivo con el selector; no es un prompt de chat.</figcaption>
     </figure>
     <h3 id="25-upgrade-interactive-approval-flow" class="cds--productive-heading-02 lab-step__title">2.5 Actualización: flujo de aprobación interactivo</h3>
     <p>
@@ -744,7 +740,7 @@ Bob no puede leer archivos de proyecto (
       </summary>
       <ol class="cds--list--ordered">
         <li class="cds--list__item">
-Verifica que el campo <strong>Project path</strong> del workflow apunta a
+Verifica que el proyecto seleccionado en el workflow es
           <code>snapA-java-liberty-replatforming</code>
  (no a la carpeta general del workshop ni a
           <code>lab1-*</code>

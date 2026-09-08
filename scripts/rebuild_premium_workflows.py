@@ -978,8 +978,10 @@ def rebuild() -> None:
 def verify() -> None:
     data = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
     assets = data.get("assets", [])
-    if len(assets) != 42:
-        raise RuntimeError(f"El manifest contiene {len(assets)} recursos, no 42")
+    # El Lab 3 dejó de usar las capturas de migración de backend y contenerización
+    # al pasar a la ruta de solo frontend, así que el conjunto bajó de 42 a 39.
+    if len(assets) != 39:
+        raise RuntimeError(f"El manifest contiene {len(assets)} recursos, no 39")
     missing: list[str] = []
     mismatched: list[str] = []
     for asset in assets:

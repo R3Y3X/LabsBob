@@ -2006,12 +2006,15 @@ const JAVA_PREMIUM_WORKFLOWS = {
   lab5: { card: 'Java Vulnerabilities Detection', subtype: null }
 };
 
+// Rutas completas desde la raíz del bundle: el participante navega hasta ellas
+// en el selector de carpetas de Bob, así que necesita ver el camino entero.
+const JAVA_PREMIUM_PROJECT_ROOT = '…/simple-pharmacy-workshop-v2/';
 const JAVA_PREMIUM_PROJECT_PATHS = {
-  lab1: 'labs/lab1-java-liberty-replatforming/snapA-java-liberty-replatforming/',
-  lab2: 'labs/lab2-java-upgrade/snapB-java-upgrade/',
-  lab3: 'labs/lab3-ui-modernization/snapC-ui-mod/',
-  lab4: 'labs/lab4-unit-test-generation/snapD-unit-test-gen/',
-  lab5: 'labs/lab5-security-vulnerability-remediation/snapE-security-vulnerabilities/'
+  lab1: `${JAVA_PREMIUM_PROJECT_ROOT}labs/lab1-java-liberty-replatforming/snapA-java-liberty-replatforming/`,
+  lab2: `${JAVA_PREMIUM_PROJECT_ROOT}labs/lab2-java-upgrade/snapB-java-upgrade/`,
+  lab3: `${JAVA_PREMIUM_PROJECT_ROOT}labs/lab3-ui-modernization/snapC-ui-fast/`,
+  lab4: `${JAVA_PREMIUM_PROJECT_ROOT}labs/lab4-unit-test-generation/snapD-unit-test-gen/`,
+  lab5: `${JAVA_PREMIUM_PROJECT_ROOT}labs/lab5-security-vulnerability-remediation/snapE-security-vulnerabilities/`
 };
 
 const JAVA_PREMIUM_BANNER_SUMMARIES = {
@@ -2071,12 +2074,12 @@ function updateJavaPremiumWorkspace(panel, step) {
 
     const lead = workspace.querySelector('.lab-workspace-setup__lead');
     if (lead) {
-      lead.innerHTML = `Sigue en <code>simple-pharmacy-workshop-v2</code>, la carpeta que abriste en el overview. No uses <strong>File → Open Folder</strong>. Abre <strong>Workflows ▶</strong>, inicia ${describeJavaPremiumWorkflow(step)} y pega esta ruta en <strong>Project path</strong>; ese campo solo indica qué snapshot usará el workflow.`;
+      lead.innerHTML = `Sigue en <code>simple-pharmacy-workshop-v2</code>, la carpeta que abriste en el overview. No uses <strong>File → Open Folder</strong>. Abre <strong>Workflows ▶</strong>, inicia ${describeJavaPremiumWorkflow(step)} y, en <strong>Seleccionar proyecto</strong>, despliega el selector de carpetas y <strong>elige</strong> la carpeta del snapshot.`;
     }
 
     const pathHtml = [
-      '<div class="lab-workspace-setup__path lab-workspace-setup__path--paste">',
-      '<p class="lab-workspace-setup__path-label">Project path del workflow</p>',
+      '<div class="lab-workspace-setup__path">',
+      '<p class="lab-workspace-setup__path-label">La carpeta que eliges en el selector</p>',
       `<code class="lab-workspace-setup__path-value">${projectPath}</code>`,
       '</div>'
     ].join('');
@@ -2087,7 +2090,21 @@ function updateJavaPremiumWorkspace(panel, step) {
       oldPath.replaceWith(wrap.firstElementChild);
     }
 
-    workspace.querySelector('.lab-workspace-setup__checks')?.remove();
+    // Antes se borraba esta lista, y con ella los avisos que evitan los dos errores
+    // más comunes: escribir la ruta a mano y encender la ruta personalizada.
+    const checksHtml = [
+      '<ul class="cds--list--unordered lab-workspace-setup__checks">',
+      '<li class="cds--list__item">Elígela con el selector de carpetas. No escribas ni pegues la ruta a mano.</li>',
+      '<li class="cds--list__item">Deja <strong>apagados</strong> los dos interruptores: <strong>Ruta de proyecto personalizada</strong> y <strong>Comando de compilación personalizado</strong>.</li>',
+      '<li class="cds--list__item">El indicador de modo del chat debe mostrar <strong>Agent</strong>.</li>',
+      '</ul>'
+    ].join('');
+    const existingChecks = workspace.querySelector('.lab-workspace-setup__checks');
+    const checksWrap = document.createElement('div');
+    checksWrap.innerHTML = checksHtml;
+    const checksNode = checksWrap.firstElementChild;
+    if (existingChecks) existingChecks.replaceWith(checksNode);
+    else workspace.querySelector('.lab-workspace-setup__box')?.append(checksNode);
 
     const note = workspace.querySelector('.lab-workspace-setup__note');
     if (note) {
@@ -2169,6 +2186,19 @@ function replaceJavaPremiumActionSections(panel, step, workflowMarkup) {
   source.innerHTML = workflowMarkup;
   const sourcePanel = source.querySelector('.content-panel');
   if (!sourcePanel) return;
+
+  // The panel is built from `baseFile` (the standard lab), so its banner carries
+  // the standard path's tags, time and cost — including an "Agent Mode" tag that
+  // does not apply here. The premium flow is a different run with its own figures,
+  // so take the whole banner header from the workflow file.
+  ['.lab-banner__tags', '.lab-banner__metrics'].forEach((selector) => {
+    const incoming = sourcePanel.querySelector(selector);
+    const current = panel.querySelector(selector);
+    if (incoming && current) current.replaceWith(incoming.cloneNode(true));
+  });
+  const sourceSummary = sourcePanel.querySelector('.lab-banner__summary');
+  const panelSummary = panel.querySelector('.lab-banner__summary');
+  if (sourceSummary && panelSummary) panelSummary.innerHTML = sourceSummary.innerHTML;
 
   const commonSectionIds = new Set(JAVA_PREMIUM_COMMON_SECTIONS[step.slug] || []);
   [...panel.querySelectorAll(':scope > .lab-section')].forEach((section) => {

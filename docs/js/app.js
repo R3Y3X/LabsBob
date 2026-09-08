@@ -1312,7 +1312,6 @@ function renderHome(searchTerm = '') {
             </div>
             <div class="hub-team-card__body">
               <p class="hub-team-card__name">Rodrigo Seguel</p>
-              <p class="hub-team-card__role">Rol del participante</p>
             </div>
             <div class="hub-team-card__accent hub-team-card__accent--blue"></div>
           </div>
@@ -1323,7 +1322,6 @@ function renderHome(searchTerm = '') {
             </div>
             <div class="hub-team-card__body">
               <p class="hub-team-card__name">Florencia Onetto</p>
-              <p class="hub-team-card__role">Rol del participante</p>
             </div>
             <div class="hub-team-card__accent hub-team-card__accent--purple"></div>
           </div>
@@ -1334,7 +1332,6 @@ function renderHome(searchTerm = '') {
             </div>
             <div class="hub-team-card__body">
               <p class="hub-team-card__name">Pedro Kara</p>
-              <p class="hub-team-card__role">Rol del participante</p>
             </div>
             <div class="hub-team-card__accent hub-team-card__accent--teal"></div>
           </div>
@@ -1345,7 +1342,6 @@ function renderHome(searchTerm = '') {
             </div>
             <div class="hub-team-card__body">
               <p class="hub-team-card__name">Luis Reyes</p>
-              <p class="hub-team-card__role">Rol del participante</p>
             </div>
             <div class="hub-team-card__accent hub-team-card__accent--cyan"></div>
           </div>
@@ -1356,7 +1352,6 @@ function renderHome(searchTerm = '') {
             </div>
             <div class="hub-team-card__body">
               <p class="hub-team-card__name">Ignacio Struque</p>
-              <p class="hub-team-card__role">Rol del participante</p>
             </div>
             <div class="hub-team-card__accent hub-team-card__accent--magenta"></div>
           </div>
@@ -1367,7 +1362,6 @@ function renderHome(searchTerm = '') {
             </div>
             <div class="hub-team-card__body">
               <p class="hub-team-card__name">Patricia Courdurier</p>
-              <p class="hub-team-card__role">Participante</p>
             </div>
             <div class="hub-team-card__accent hub-team-card__accent--blue"></div>
           </div>
@@ -1378,31 +1372,8 @@ function renderHome(searchTerm = '') {
             </div>
             <div class="hub-team-card__body">
               <p class="hub-team-card__name">Katherine Salgado</p>
-              <p class="hub-team-card__role">Participante</p>
             </div>
             <div class="hub-team-card__accent hub-team-card__accent--purple"></div>
-          </div>
-
-          <div class="hub-team-card">
-            <div class="hub-team-card__avatar-wrap">
-              <img src="./assets/images/equipo/hermansotomayor.jpg" alt="Foto de Herman Sotomayor" class="hub-team-card__avatar" loading="lazy" />
-            </div>
-            <div class="hub-team-card__body">
-              <p class="hub-team-card__name">Herman Sotomayor</p>
-              <p class="hub-team-card__role">Participante</p>
-            </div>
-            <div class="hub-team-card__accent hub-team-card__accent--teal"></div>
-          </div>
-
-          <div class="hub-team-card">
-            <div class="hub-team-card__avatar-wrap">
-              <img src="./assets/images/equipo/andreswagner.jpg" alt="Foto de Andres Wagner" class="hub-team-card__avatar" loading="lazy" />
-            </div>
-            <div class="hub-team-card__body">
-              <p class="hub-team-card__name">Andres Wagner</p>
-              <p class="hub-team-card__role">Participante</p>
-            </div>
-            <div class="hub-team-card__accent hub-team-card__accent--cyan"></div>
           </div>
 
           <div class="hub-team-card">
@@ -1411,9 +1382,8 @@ function renderHome(searchTerm = '') {
             </div>
             <div class="hub-team-card__body">
               <p class="hub-team-card__name">Guillermo Treister</p>
-              <p class="hub-team-card__role">Participante</p>
             </div>
-            <div class="hub-team-card__accent hub-team-card__accent--magenta"></div>
+            <div class="hub-team-card__accent hub-team-card__accent--teal"></div>
           </div>
 
           <div class="hub-team-card">
@@ -1422,20 +1392,68 @@ function renderHome(searchTerm = '') {
             </div>
             <div class="hub-team-card__body">
               <p class="hub-team-card__name">Ivana Morassutti</p>
-              <p class="hub-team-card__role">Participante</p>
+            </div>
+            <div class="hub-team-card__accent hub-team-card__accent--cyan"></div>
+          </div>
+
+          <div class="hub-team-card">
+            <div class="hub-team-card__avatar-wrap">
+              <img src="./assets/images/equipo/diegogarcia.jpg" alt="Foto de Diego Garcia" class="hub-team-card__avatar" loading="lazy" />
+            </div>
+            <div class="hub-team-card__body">
+              <p class="hub-team-card__name">Diego Garcia</p>
+            </div>
+            <div class="hub-team-card__accent hub-team-card__accent--magenta"></div>
+          </div>
+
+          <div class="hub-team-card">
+            <div class="hub-team-card__avatar-wrap">
+              <img src="./assets/images/equipo/ignaciocabrera.jpg" alt="Foto de Ignacio Cabrera" class="hub-team-card__avatar" loading="lazy" />
+            </div>
+            <div class="hub-team-card__body">
+              <p class="hub-team-card__name">Ignacio Cabrera</p>
             </div>
             <div class="hub-team-card__accent hub-team-card__accent--blue"></div>
           </div>
 
           <div class="hub-team-card">
-            <div class="hub-team-card__avatar-wrap hub-team-card__avatar-wrap--mascot">
-              <img src="./assets/images/equipo/ibmbob.png" alt="IBM Bob" class="hub-team-card__avatar" loading="lazy" />
+            <div class="hub-team-card__avatar-wrap">
+              <img src="./assets/images/equipo/victorgonzalez.jpg" alt="Foto de Victor Gonzalez" class="hub-team-card__avatar" loading="lazy" />
             </div>
             <div class="hub-team-card__body">
-              <p class="hub-team-card__name">IBM Bob</p>
-              <p class="hub-team-card__role">Participante</p>
+              <p class="hub-team-card__name">Victor Gonzalez</p>
             </div>
             <div class="hub-team-card__accent hub-team-card__accent--purple"></div>
+          </div>
+
+          <div class="hub-team-card">
+            <div class="hub-team-card__avatar-wrap">
+              <img src="./assets/images/equipo/heinzbusch.jpg" alt="Foto de Heinz Busch" class="hub-team-card__avatar" loading="lazy" />
+            </div>
+            <div class="hub-team-card__body">
+              <p class="hub-team-card__name">Heinz Busch</p>
+            </div>
+            <div class="hub-team-card__accent hub-team-card__accent--teal"></div>
+          </div>
+
+          <div class="hub-team-card">
+            <div class="hub-team-card__avatar-wrap">
+              <img src="./assets/images/equipo/pablohernandez.jpg" alt="Foto de Pablo Hernandez" class="hub-team-card__avatar" loading="lazy" />
+            </div>
+            <div class="hub-team-card__body">
+              <p class="hub-team-card__name">Pablo Hernandez</p>
+            </div>
+            <div class="hub-team-card__accent hub-team-card__accent--cyan"></div>
+          </div>
+
+          <div class="hub-team-card">
+            <div class="hub-team-card__avatar-wrap hub-team-card__avatar-wrap--empty">
+              <span class="hub-team-card__initials" aria-hidden="true">KC</span>
+            </div>
+            <div class="hub-team-card__body">
+              <p class="hub-team-card__name">Katerina Celedón</p>
+            </div>
+            <div class="hub-team-card__accent hub-team-card__accent--magenta"></div>
           </div>
 
         </div>

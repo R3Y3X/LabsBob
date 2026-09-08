@@ -14,6 +14,7 @@ from dotenv import load_dotenv
 SCHEMA = json.dumps(
     {
         "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "InventoryTransaction",
         "type": "object",
         "additionalProperties": False,
         "properties": {
@@ -62,6 +63,19 @@ def transactions():
         )
     for index in range(7, 21):
         sku, branch, _ = stock[(index - 7) % len(stock)]
+        if index >= 19:
+            result.append(
+                {
+                    "sku": sku,
+                    "branch": branch,
+                    "quantity": 5 if index == 19 else -3,
+                    "transaction_type": "ADJUSTMENT",
+                    "timestamp": f"2025-12-29T{10 + index // 6:02d}:{(index * 7) % 60:02d}:00Z",
+                    "source": "inventory_manager",
+                    "reference": f"ADJ-2025-{index:03d}",
+                }
+            )
+            continue
         result.append(
             {
                 "sku": sku,
@@ -76,10 +90,14 @@ def transactions():
     return result
 
 
+def schema_registry_url() -> str:
+    return (os.getenv("SCHEMA_REGISTRY_URL_INTERNAL") or os.environ["SCHEMA_REGISTRY_URL"]).rstrip("/")
+
+
 def main() -> None:
     load_dotenv()
     topic = os.environ["TOPIC_NAME"]
-    sr_config = {"url": os.environ["SCHEMA_REGISTRY_URL"]}
+    sr_config = {"url": schema_registry_url()}
     if os.getenv("SCHEMA_REGISTRY_USERNAME") and os.getenv("SCHEMA_REGISTRY_PASSWORD"):
         sr_config["basic.auth.user.info"] = (
             os.environ["SCHEMA_REGISTRY_USERNAME"]
@@ -89,6 +107,7 @@ def main() -> None:
     serializer = JSONSerializer(
         SCHEMA,
         SchemaRegistryClient(sr_config),
+        lambda obj, _ctx: obj,
         {"auto.register.schemas": False, "use.latest.version": True},
     )
     producer_config = {"bootstrap.servers": os.environ["BOOTSTRAP_SERVERS"]}
@@ -122,6 +141,7 @@ def main() -> None:
     producer.flush(60)
     if failures:
         raise RuntimeError("; ".join(failures))
+    print(f"Delivered: {len(items)}/{len(items)} (failed: 0)")
     print(f"Published {len(items)} JSON_SR transactions to {topic}")
 
 

@@ -74,6 +74,9 @@ def main() -> None:
         "delete_topics.py",
         "run_in_cluster.sh",
         "run_in_cluster_remote.sh",
+        "repair_cflt_pem.sh",
+        "repair_cflt_pem.ps1",
+        "submit_flink.py",
     }
     replacements = {
         f"{PREFIX}{path.name}": path.read_bytes()

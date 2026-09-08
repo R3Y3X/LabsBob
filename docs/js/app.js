@@ -2,7 +2,7 @@ import { loadContent } from './content.js';
 import { siteData, workshopGuides, findLab, getNextLab, getWorkshopStats, getVisibleSections, roadshowConfig, getRoadshowPlan, getLabTrackMeta, generalPrereqs } from './data.js?v=5';
 import { getHomeRoute, getLabRoute, parseRoute } from './router.js';
 import { initializeTheme, toggleTheme } from './theme.js';
-import { ensureParticipantAssignment, isParticipantLab, personalizeContent, participantBanner, readParticipantContext } from './participant.js?v=5';
+import { ensureParticipantAssignment, isParticipantLab, personalizeContent, participantBanner, readParticipantContext } from './participant.js?v=9';
 
 const PREMIUM_STORAGE_KEY = 'labsBob.premiumAccess';
 let premiumAccess = readPremiumAccess();
@@ -2354,15 +2354,8 @@ function removeLegacyStepNavigation(proseEl) {
 }
 
 function ensureStepClosure(proseEl, lab, step) {
-  proseEl.querySelectorAll(':scope > .lab-closure').forEach((closure) => closure.remove());
-  const contentPanel = proseEl.querySelector('.content-panel');
-  const closure = buildStepClosure(lab, step);
-
-  if (contentPanel) {
-    contentPanel.insertAdjacentHTML('afterend', closure);
-  } else {
-    proseEl.insertAdjacentHTML('beforeend', closure);
-  }
+  proseEl.querySelectorAll('.lab-closure').forEach((closure) => closure.remove());
+  proseEl.insertAdjacentHTML('beforeend', buildStepClosure(lab, step));
 }
 
 function normalizeVisibleCopy(container) {
@@ -2712,7 +2705,10 @@ function prepareCopyButton(button, codeBlock) {
 }
 
 function ensureCodeBlockCopyButton(codeBlock) {
-  if (codeBlock.classList.contains('code-block--tree')) return;
+  if (codeBlock.classList.contains('code-block--tree') || codeBlock.dataset.copy === 'false') {
+    codeBlock.querySelectorAll(':scope > .copy-button').forEach((button) => button.remove());
+    return;
+  }
   const button = codeBlock.querySelector(':scope > .copy-button') || document.createElement('button');
   if (!button.parentElement) codeBlock.prepend(button);
   prepareCopyButton(button, codeBlock);

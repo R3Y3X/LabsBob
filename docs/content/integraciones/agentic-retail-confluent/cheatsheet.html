@@ -8,14 +8,12 @@
   </div>
 
   <section class="lab-section">
-    <p class="cds--body-01">Todos los ejemplos asumen que configuraste estas variables en tu terminal:</p>
+    <p class="cds--body-01">Las contraseñas de Kafka, ksqlDB y Schema Registry las extrae Bob en el Paso 0 con <code>kubectl -n confluent get secret</code>. No las pidas al facilitador ni las imprimas. Usa los valores ya escritos en los tres <code>.env</code>.</p>
     <p class="cds--body-01">Continúa desde el bundle personalizado del track de Confluent y usa siempre el <code>WORKSHOP_ID</code> de tu TechZone y número (por ejemplo <code>tz1_p042</code>).</p>
-    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">HOST=&lt;tu IP pública o hostname&gt;      # ej. 163.66.89.122
-ADMIN_PW=&lt;password de admin&gt;         # en /var/lib/confluent-access/credentials.json
-KAFKA_PW=&lt;password de kafka-admin&gt;   # en el mismo json, bajo .kafka.password</code></pre></div>
-    
-    <p class="cds--body-01" style="margin-top:1rem;">Para obtener ambos passwords de una sola vez ejecutando desde tu máquina local:</p>
-    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">ssh -i cflt-vsi-key.pem root@$HOST 'sudo jq "{admin: .password, kafka: .kafka.password}" /var/lib/confluent-access/credentials.json'</code></pre></div>
+    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">HOST=&lt;tu IP pública o hostname&gt;      # ej. 163.66.83.162 (4 octetos)
+PEM=trackD/inventory-pipeline/cflt-vsi-key.pem
+# Ya están en el .env de la raíz (Bob las escribió; no las vuelvas a echo):
+# KAFKA_SASL_PASSWORD  KSQLDB_PASSWORD  SCHEMA_REGISTRY_PASSWORD</code></pre></div>
   </section>
 
   <section class="lab-section" style="margin-top:3rem;">
@@ -44,16 +42,18 @@ KAFKA_PW=&lt;password de kafka-admin&gt;   # en el mismo json, bajo .kafka.passw
   <section class="lab-section" style="margin-top:3rem;">
     <h2 class="cds--productive-heading-04">1. Schema Registry</h2>
     <p class="cds--body-01">Listar todos los subjects (esquemas) registrados:</p>
-    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">curl -sk -u admin:$ADMIN_PW https://$HOST/sr/subjects</code></pre></div>
+    <p class="cds--body-01">Usa <code>SCHEMA_REGISTRY_PASSWORD</code> del <code>.env</code> de la raíz (Paso 0). No la imprimas ni la pidas al facilitador.</p>
+    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">set -a && source ../../.env && set +a
+curl -sk -u "admin:${SCHEMA_REGISTRY_PASSWORD}" https://$HOST/sr/subjects</code></pre></div>
     
     <p class="cds--body-01" style="margin-top:1rem;">Ver la última versión de un schema específico (ej. <code>inventory.transactions-value</code>):</p>
-    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">curl -sk -u admin:$ADMIN_PW https://$HOST/sr/subjects/inventory.transactions-value/versions/latest</code></pre></div>
+    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">curl -sk -u "admin:${SCHEMA_REGISTRY_PASSWORD}" https://$HOST/sr/subjects/inventory.transactions-value/versions/latest</code></pre></div>
   </section>
 
   <section class="lab-section" style="margin-top:3rem;">
     <h2 class="cds--productive-heading-04">2. ksqlDB</h2>
     <p class="cds--body-01">Ejecutar una consulta SQL (ej. listar streams):</p>
-    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">curl -sk -u admin:$ADMIN_PW -X POST -H "Content-Type: application/vnd.ksql.v1+json" \
+    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">curl -sk -u "admin:${KSQLDB_PASSWORD}" -X POST -H "Content-Type: application/vnd.ksql.v1+json" \
      https://$HOST/ksqldb/ksql \
      -d '{"ksql":"SHOW STREAMS;","streamsProperties":{}}'</code></pre></div>
      <p class="cds--body-01" style="margin-top:0.5rem; font-size:0.875rem; color:var(--cds-text-secondary,#525252);">Reemplaza <code>SHOW STREAMS;</code> con <code>SHOW TABLES;</code>, <code>SHOW TOPICS;</code> o cualquier query válida.</p>
@@ -62,32 +62,33 @@ KAFKA_PW=&lt;password de kafka-admin&gt;   # en el mismo json, bajo .kafka.passw
   <section class="lab-section" style="margin-top:3rem;">
     <h2 class="cds--productive-heading-04">3. Kafka Connect</h2>
     <p class="cds--body-01">Listar los conectores desplegados actualmente:</p>
-    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">curl -sk -u admin:$ADMIN_PW https://$HOST/connect/connectors</code></pre></div>
+    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">curl -sk -u "admin:${SCHEMA_REGISTRY_PASSWORD}" https://$HOST/connect/connectors</code></pre></div>
     
     <p class="cds--body-01" style="margin-top:1rem;">Listar datagens y conectores de prueba disponibles en el clúster:</p>
-    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">ssh -i cflt-vsi-key.pem root@$HOST 'bash /opt/confluent-installer/scripts/deploy-datagen-connector.sh list'</code></pre></div>
+    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">ssh -i trackD/inventory-pipeline/cflt-vsi-key.pem -o IdentitiesOnly=yes root@$HOST 'bash /opt/confluent-installer/scripts/deploy-datagen-connector.sh list'</code></pre></div>
   </section>
 
   <section class="lab-section" style="margin-top:3rem;">
     <h2 class="cds--productive-heading-04">4. CMF (Apache Flink)</h2>
-    <p class="cds--body-01">Listar Flink environments configurados:</p>
-    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">curl -sk -u admin:$ADMIN_PW https://$HOST/cmf/api/v1/environments</code></pre></div>
-    
-    <p class="cds--body-01" style="margin-top:1rem;">Ver los compute pools (recursos asignados a Flink):</p>
-    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">curl -sk -u admin:$ADMIN_PW https://$HOST/cmf/api/v1/environments/flink-env/compute-pools</code></pre></div>
+    <p class="cds--body-01">Desde el <strong>navegador</strong>, CMF está en <code>https://$HOST/cmf/</code> (HTTP Basic). Bob, en la VM, usa el NodePort interno (sin nginx):</p>
+    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">CMF=http://$(minikube ip):30022
+confluent flink environment list --url $CMF
+confluent flink compute-pool list --environment flink-env --url $CMF
+confluent flink statement list --environment flink-env --compute-pool flink-compute-pool --url $CMF</code></pre></div>
+    <p class="cds--body-01" style="margin-top:1rem;">El job del lab se envía con <code>./setup.sh -s 4</code> (script <code>submit_flink.py</code>). Connector válido: <code>confluent</code>. Catálogo: <code>flink-catalog.flink-database</code>.</p>
   </section>
 
   <section class="lab-section" style="margin-top:3rem;">
     <h2 class="cds--productive-heading-04">5. Kafka Brokers (Native Protocol)</h2>
     <p class="cds--body-01">Para usar librerías nativas como Python <code>confluent_kafka</code> o herramientas como <code>kcat</code>, necesitas copiar el certificado root de la VM a tu equipo:</p>
-    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">scp -i cflt-vsi-key.pem root@$HOST:/var/lib/confluent-access/kafka-ca.crt ./kafka-ca.crt</code></pre></div>
+    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code class="language-bash">scp -i trackD/inventory-pipeline/cflt-vsi-key.pem -o IdentitiesOnly=yes root@$HOST:/var/lib/confluent-access/kafka-ca.crt ./kafka-ca.crt</code></pre></div>
     
     <h3 class="cds--productive-heading-03" style="margin-top:1.5rem;">Configuración del cliente (Python / kcat)</h3>
     <div class="code-block code-block--file" style="margin-top:0.5rem;"><p class="code-block__label">Archivo de configuración · cliente Kafka</p><button type="button" class="copy-button">Copiar contenido</button><pre><code class="language-ini">bootstrap.servers=&lt;host&gt;:9094,&lt;host&gt;:9095,&lt;host&gt;:9096
 security.protocol=SASL_SSL
 sasl.mechanism=PLAIN
 sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="kafka-admin" password="&lt;kafka pw&gt;";
-ssl.endpoint.identification.algorithm=https
+ssl.endpoint.identification.algorithm=none
 ssl.ca.location=./kafka-ca.crt</code></pre></div>
 
     <h3 class="cds--productive-heading-03" style="margin-top:1.5rem;">Usar kcat</h3>
@@ -97,7 +98,7 @@ ssl.ca.location=./kafka-ca.crt</code></pre></div>
   -X security.protocol=SASL_SSL \
   -X sasl.mechanism=PLAIN \
   -X sasl.username=kafka-admin \
-  -X sasl.password=$KAFKA_PW \
+  -X sasl.password="$KAFKA_SASL_PASSWORD" \
   -X ssl.ca.location=./kafka-ca.crt</code></pre></div>
   </section>
 </div>

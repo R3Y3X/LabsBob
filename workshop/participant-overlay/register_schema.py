@@ -34,9 +34,13 @@ SCHEMA = {
 }
 
 
+def schema_registry_url() -> str:
+    return (os.getenv("SCHEMA_REGISTRY_URL_INTERNAL") or os.environ["SCHEMA_REGISTRY_URL"]).rstrip("/")
+
+
 def main() -> None:
     load_dotenv()
-    base = os.environ["SCHEMA_REGISTRY_URL"].rstrip("/")
+    base = schema_registry_url()
     subject = f'{os.environ["TOPIC_NAME"]}-value'
     auth = None
     if os.getenv("SCHEMA_REGISTRY_USERNAME") and os.getenv("SCHEMA_REGISTRY_PASSWORD"):

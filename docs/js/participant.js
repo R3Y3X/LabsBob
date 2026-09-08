@@ -119,7 +119,7 @@ async function appendEntries(baseBytes, entries) {
 
 function configText(context) {
   const ipPh = `<IP_PUBLICA_VM_${context.tzLabel}>`;
-  return `# Generado por IBM Workshop Hub para ${context.label}.\n# Completa solo los valores marcados; nunca compartas este archivo.\nWORKSHOP_TABLE=${context.table}\nPARTICIPANT_NUMBER=${context.number}\nWORKSHOP_ID=${context.workspaceId}\nTOPIC_NAME=${context.topicTransactions}\nTOPIC_PARTITIONS=1\nTOPIC_REPLICATION_FACTOR=3\nTOPIC_RETENTION_MS=-1\nDERIVED_TOPIC_NAME=${context.topicAvailability}\nFLINK_TOPIC_NAME=${context.topicFlink}\nKSQL_STREAM_NAME=${context.stream}\nKSQL_TABLE_NAME=${context.tableName}\nSSH_HOST=root@${ipPh}\nSSH_KEY=trackD/inventory-pipeline/cflt-vsi-key.pem\n# Los jobs se ejecutan dentro de Kubernetes; usa el endpoint interno para evitar hairpin por la IP pública.\nBOOTSTRAP_SERVERS=kafka.confluent.svc.cluster.local:9092\nBOOTSTRAP_SERVERS_EXTERNAL=${ipPh}:9094,${ipPh}:9095,${ipPh}:9096\nKSQLDB_ENDPOINT=http://ksqldb.confluent.svc.cluster.local:8088\nKSQLDB_ENDPOINT_EXTERNAL=https://${ipPh}/ksqldb\nKSQLDB_USERNAME=admin\nKSQLDB_PASSWORD=\nKSQLDB_API_KEY=\nKSQLDB_API_SECRET=\nKAFKA_SASL_USERNAME=kafka-admin\nKAFKA_SASL_PASSWORD=\nSCHEMA_REGISTRY_URL=https://${ipPh}/sr\nSCHEMA_REGISTRY_USERNAME=admin\nSCHEMA_REGISTRY_PASSWORD=\nSCHEMA_REGISTRY_URL_INTERNAL=http://schemaregistry.confluent.svc.cluster.local:8081\nORCHESTRATE_URL=""\nORCHESTRATE_API_KEY=\nRETAIL_MCP_URL=http://${ipPh}/retail-mcp/mcp\nRETAIL_MCP_TOOLKIT_NAME=retail_availability_mcp\nKNOWLEDGE_BASE_NAME=${context.knowledgeBase}\n`;
+  return `# Generado por IBM Workshop Hub para ${context.label}.\n# Completa solo los valores marcados; nunca compartas este archivo.\nWORKSHOP_TABLE=${context.table}\nPARTICIPANT_NUMBER=${context.number}\nWORKSHOP_ID=${context.workspaceId}\nTOPIC_NAME=${context.topicTransactions}\nTOPIC_PARTITIONS=1\nTOPIC_REPLICATION_FACTOR=3\nTOPIC_RETENTION_MS=-1\nDERIVED_TOPIC_NAME=${context.topicAvailability}\nFLINK_TOPIC_NAME=${context.topicFlink}\nFLINK_ENV=flink-env\nFLINK_COMPUTE_POOL=flink-compute-pool\nFLINK_CATALOG=flink-catalog\nFLINK_DATABASE=flink-database\nKSQL_STREAM_NAME=${context.stream}\nKSQL_TABLE_NAME=${context.tableName}\nSSH_HOST=root@${ipPh}\nSSH_KEY=trackD/inventory-pipeline/cflt-vsi-key.pem\n# Los jobs se ejecutan dentro de Kubernetes; usa el endpoint interno para evitar hairpin por la IP pública.\nBOOTSTRAP_SERVERS=kafka.confluent.svc.cluster.local:9092\nBOOTSTRAP_SERVERS_EXTERNAL=${ipPh}:9094,${ipPh}:9095,${ipPh}:9096\nKSQLDB_ENDPOINT=http://ksqldb.confluent.svc.cluster.local:8088\nKSQLDB_ENDPOINT_EXTERNAL=https://${ipPh}/ksqldb\nKSQLDB_USERNAME=admin\nKSQLDB_PASSWORD=\nKSQLDB_API_KEY=\nKSQLDB_API_SECRET=\nKAFKA_SASL_USERNAME=kafka-admin\nKAFKA_SASL_PASSWORD=\nSCHEMA_REGISTRY_URL=https://${ipPh}/sr\nSCHEMA_REGISTRY_USERNAME=admin\nSCHEMA_REGISTRY_PASSWORD=\nSCHEMA_REGISTRY_URL_INTERNAL=http://schemaregistry.confluent.svc.cluster.local:8081\nORCHESTRATE_URL=""\nORCHESTRATE_API_KEY=\nRETAIL_MCP_URL=http://${ipPh}/retail-mcp/mcp\nRETAIL_MCP_TOOLKIT_NAME=retail_availability_mcp\nKNOWLEDGE_BASE_NAME=${context.knowledgeBase}\n`;
 }
 
 function bootstrapText() {
@@ -161,6 +161,21 @@ function trackInfo(labSlug) {
   return TRACK_INFO[labSlug] || TRACK_INFO['agentic-retail-confluent'];
 }
 
+async function repairPemScripts() {
+  const pipeline = `${BUNDLE_ROOT}/trackD/inventory-pipeline`;
+  const files = [
+    ['repair_cflt_pem.sh', `${pipeline}/repair_cflt_pem.sh`],
+    ['repair_cflt_pem.ps1', `${pipeline}/repair_cflt_pem.ps1`]
+  ];
+  const entries = [];
+  for (const [filename, archiveName] of files) {
+    const response = await fetch(new URL(`./downloads/trackd-pem/${filename}`, document.baseURI));
+    if (!response.ok) continue;
+    entries.push({ name: archiveName, content: await response.text() });
+  }
+  return entries;
+}
+
 export async function downloadParticipantBundle(context, labSlug = currentParticipantLabSlug()) {
   const track = trackInfo(labSlug);
   const response = await fetch(new URL(BASE_BUNDLE, document.baseURI));
@@ -170,7 +185,8 @@ export async function downloadParticipantBundle(context, labSlug = currentPartic
     { name: `${BUNDLE_ROOT}/participant-config.env`, content: configText(context) },
     { name: `${BUNDLE_ROOT}/participant-info.json`, content: participantInfo(context, track) },
     { name: `${BUNDLE_ROOT}/participant-bootstrap.sh`, content: bootstrapText() },
-    { name: `${BUNDLE_ROOT}/README-PARTICIPANT.md`, content: `# Track ${track.number} (${track.code}) — ${track.name}\n\nWorkspace: **${context.label}**\n\nEste bundle fue generado para el **Track ${track.number} (${track.code}: ${track.name})**. Sus carpetas son \`trackD\` (Confluent), \`trackF\` (Orchestrate) y \`voltia\`. Usa siempre el mismo identificador TechZone+número (TZ1–TZ3) en todos los tracks. Completa participant-config.env y ejecuta participant-bootstrap.sh.\n` }
+    { name: `${BUNDLE_ROOT}/README-PARTICIPANT.md`, content: `# Track ${track.number} (${track.code}) — ${track.name}\n\nWorkspace: **${context.label}**\n\nEste bundle fue generado para el **Track ${track.number} (${track.code}: ${track.name})**. Sus carpetas son \`trackD\` (Confluent), \`trackF\` (Orchestrate) y \`voltia\`. Usa siempre el mismo identificador TechZone+número (TZ1–TZ3) en todos los tracks. Completa participant-config.env y ejecuta participant-bootstrap.sh.\n` },
+    ...(await repairPemScripts())
   ]);
   const blob = new Blob([archive], { type: 'application/zip' });
   const url = URL.createObjectURL(blob);
@@ -242,12 +258,12 @@ export function personalizeContent(content, context) {
   });
   const replacements = [
     ['inventory.availability.flink', context.topicFlink],
-    ['inventory.transactions-value', `${context.topicTransactions}-value`],
-    ['inventory.availability-value', `${context.topicAvailability}-value`],
     ['inventory.transactions', context.topicTransactions],
     ['inventory.availability', context.topicAvailability],
     ['INVENTORY_TRANSACTIONS', context.stream],
     ['INVENTORY_AVAILABILITY', context.tableName],
+    ['inventory_transactions', context.stream],
+    ['inventory_availability', context.tableName],
     ['SKU_Availability_Agent', `SKU_Availability_Agent_${context.agentSuffix}`],
     ['Substitute_Finder_Agent', `Substitute_Finder_Agent_${context.agentSuffix}`],
     ['Store_Associate_Agent', `Store_Associate_Agent_${context.agentSuffix}`],
@@ -262,7 +278,12 @@ export function personalizeContent(content, context) {
     ['workshop-config.env.example', 'participant-config.env'],
     ['workshop-config.env', 'participant-config.env']
   ];
-  content = replacements.reduce((value, [from, to]) => value.split(from).join(to), content);
+  const protectedReplacements = replacements.map(([from, to], index) => {
+    const token = `__LABSBOB_R${index}__`;
+    content = content.split(from).join(token);
+    return [token, to];
+  });
+  content = protectedReplacements.reduce((value, [token, to]) => value.split(token).join(to), content);
   return tokens.reduce((value, [token, name]) => value.split(token).join(name), content);
 }
 

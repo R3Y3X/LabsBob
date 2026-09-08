@@ -38,7 +38,15 @@ def main() -> None:
         )
     admin = AdminClient(config)
     existing = admin.list_topics(timeout=15).topics
-    topics = [name for name in (os.environ["TOPIC_NAME"], os.environ["DERIVED_TOPIC_NAME"]) if name in existing]
+    topics = [
+        name
+        for name in (
+            os.environ["TOPIC_NAME"],
+            os.environ["DERIVED_TOPIC_NAME"],
+            os.getenv("FLINK_TOPIC_NAME", ""),
+        )
+        if name and name in existing
+    ]
     for name, future in admin.delete_topics(topics, operation_timeout=30).items():
         future.result()
         print(f"deleted {name}")

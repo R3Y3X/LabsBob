@@ -20,12 +20,17 @@ if [ "${SSH_KEY#/}" = "$SSH_KEY" ] && [ ! -f "$SSH_KEY" ]; then SSH_KEY="$(cd "$
 chmod 600 "$SSH_KEY" 2>/dev/null || true
 
 REMOTE_DIR="/root/inventory-pipeline-$WORKSHOP_ID"
-SSH_OPTS=(-i "$SSH_KEY" -o StrictHostKeyChecking=accept-new -o ConnectTimeout=15)
+SSH_OPTS=(-i "$SSH_KEY" -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new -o ConnectTimeout=15 -o ServerAliveInterval=30 -o ServerAliveCountMax=20)
 TMP_ENV="$(mktemp)"
 trap 'rm -f "$TMP_ENV"' EXIT
 sed -E '/^[[:space:]]*(SSH_HOST|SSH_KEY)[[:space:]]*=/d' "$ENV_FILE" > "$TMP_ENV"
 ssh "${SSH_OPTS[@]}" "$SSH_HOST" "mkdir -p '$REMOTE_DIR'"
 scp "${SSH_OPTS[@]}" "$TMP_ENV" "$SSH_HOST:$REMOTE_DIR/.env"
 scp "${SSH_OPTS[@]}" "$SCRIPT_DIR/$SCRIPT_NAME.py" "$SSH_HOST:$REMOTE_DIR/$SCRIPT_NAME.py"
+# Flink CMF CLI lives on the VM host, not in the python:3.11-slim Job.
+if [ "$SCRIPT_NAME" = "submit_flink" ]; then
+  ssh "${SSH_OPTS[@]}" "$SSH_HOST" "python3 '$REMOTE_DIR/submit_flink.py'"
+  exit 0
+fi
 scp "${SSH_OPTS[@]}" "$SCRIPT_DIR/run_in_cluster_remote.sh" "$SSH_HOST:$REMOTE_DIR/run_in_cluster_remote.sh"
 ssh "${SSH_OPTS[@]}" "$SSH_HOST" "chmod +x '$REMOTE_DIR/run_in_cluster_remote.sh' && bash '$REMOTE_DIR/run_in_cluster_remote.sh' '$SCRIPT_NAME'"

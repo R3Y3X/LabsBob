@@ -33,7 +33,7 @@ spec:
         args:
         - |
           set -e
-          pip install --quiet --no-input confluent-kafka python-dotenv requests
+          pip install --quiet --no-input 'confluent-kafka==2.6.1' jsonschema python-dotenv requests
           python app.py
         volumeMounts:
         - name: code

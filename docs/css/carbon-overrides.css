@@ -2967,6 +2967,43 @@ body.cds--g100 .lab-shell.lab-shell--entendiendo-bob .code-block--json pre code 
   max-width: 72ch;
 }
 
+/* Track D: fill the reading column (screenshots, SQL and callouts need the width). */
+.lab-shell.lab-shell--agentic-retail-confluent {
+  width: 100%;
+  max-width: min(100%, 1600px);
+}
+
+.lab-shell.lab-shell--agentic-retail-confluent .lab-step__body,
+.lab-shell.lab-shell--agentic-retail-confluent .lab-section > p,
+.lab-shell.lab-shell--agentic-retail-confluent .lab-section > .cds--list--unordered,
+.lab-shell.lab-shell--agentic-retail-confluent .lab-section > .cds--list--ordered,
+.lab-shell.lab-shell--agentic-retail-confluent .lab-banner__summary,
+.lab-shell.lab-shell--agentic-retail-confluent .lab-workspace-setup__lead {
+  max-width: none;
+}
+
+.lab-shell.lab-shell--agentic-retail-confluent .callout,
+.lab-shell.lab-shell--agentic-retail-confluent .lab-workspace-setup,
+.lab-shell.lab-shell--agentic-retail-confluent .bobcoin-cost--total,
+.lab-shell.lab-shell--agentic-retail-confluent .prompt-block,
+.lab-shell.lab-shell--agentic-retail-confluent .code-block,
+.lab-shell.lab-shell--agentic-retail-confluent .lab-hero-image {
+  width: 100%;
+  max-width: none;
+}
+
+.lab-shell.lab-shell--agentic-retail-confluent .code-block,
+.lab-shell.lab-shell--agentic-retail-confluent .lab-step__media {
+  margin-inline: 0;
+}
+
+@media (min-width: 1280px) {
+  .lab-shell.lab-shell--agentic-retail-confluent .lab-reading-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(11rem, 13rem);
+    column-gap: 1.25rem;
+  }
+}
+
 .lab-shell .code-block,
 .lab-shell .lab-step__media {
   width: 100%;

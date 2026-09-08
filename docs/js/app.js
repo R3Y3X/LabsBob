@@ -1744,7 +1744,8 @@ function replaceMissingImage(image) {
 
   const description = document.createElement('p');
   description.className = 'carbon-image-placeholder__description';
-  description.textContent = 'Guarda tu imagen en la ruta indicada para desplegar la portada del laboratorio.';
+  const altHint = (image.getAttribute('alt') || '').trim();
+  description.textContent = altHint || 'Guarda la captura en la ruta indicada para que se vea en el laboratorio.';
 
   placeholder.append(label, pathTag, description);
   image.replaceWith(placeholder);

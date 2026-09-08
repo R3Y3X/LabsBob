@@ -25,13 +25,15 @@
     <div class="code-block code-block--prompt">
       <p class="code-block__label">Prompt para Bob — importar el agente de sustitutos</p>
       <pre><code>Sigue en la misma terminal, con el ambiente workshop activo.
+Entra a trackF/confluent_agents si no estás ahí.
 
 Importa el segundo agente del laboratorio:
 
 orchestrate agents import --file Substitute_Finder_Agent.yaml
 
 Después ejecuta "orchestrate agents list" y confirma que ahora aparecen dos
-agentes: SKU_Availability_Agent y Substitute_Finder_Agent.
+agentes con sufijo _TZ{N}_P{xxx}: SKU_Availability_Agent_… y
+Substitute_Finder_Agent_….
 
 Todavía no importes Store_Associate_Agent ni Customer_Shopping_Assistant.
 Si el import falla, muéstrame el error completo y detente.</code></pre>
@@ -61,16 +63,16 @@ Si el import falla, muéstrame el error completo y detente.</code></pre>
     <p class="step-header__why">El archivo <code>product-catalog.docx</code> es el catálogo interno de la tienda. Al indexarlo como base de conocimiento, el agente puede citar atributos reales de producto en vez de inventar recomendaciones.</p>
 
     <ol class="cds--list--ordered">
-      <li class="cds--list__item">Abre <code>Substitute_Finder_Agent</code> en la UI de watsonx Orchestrate.</li>
+      <li class="cds--list__item">Abre el agente de sustitutos (busca el sufijo <code>_TZ{N}_P{xxx}</code>) en la UI de watsonx Orchestrate.</li>
       <li class="cds--list__item">Entra a <strong>Knowledge</strong> y haz clic en <strong>Add source</strong>.</li>
       <li class="cds--list__item">Crea una base de conocimiento nueva y usa <strong>Upload files</strong>.</li>
-      <li class="cds--list__item">Sube <code>product-catalog.docx</code> desde <code>trackF/confluent_agents</code>, nómbrala <code>enterprise_documents</code> y espera a que termine la indexación.</li>
-      <li class="cds--list__item">Haz clic en <strong>Deploy</strong> y confirma.</li>
+      <li class="cds--list__item">Sube <code>product-catalog.docx</code> desde <code>trackF/confluent_agents</code>. El nombre debe ser <strong>exactamente</strong> el valor de <code>KNOWLEDGE_BASE_NAME</code> en <code>participant-config.env</code> (ejemplo <code>enterprise_documents_tz1_p098</code>). No lo dejes en <code>enterprise_documents</code> si el YAML ya lleva el sufijo.</li>
+      <li class="cds--list__item">Espera a que termine la indexación. Haz clic en <strong>Deploy</strong> y confirma.</li>
     </ol>
 
     <div class="callout" data-tone="info" style="margin-top: 1.25rem;">
       <p class="callout__title">El nombre importa</p>
-      <p class="cds--body-01">Llámala exactamente <code>enterprise_documents</code>. El Customer Shopping Assistant reutilizará esta misma fuente más adelante, en vez de subir el catálogo dos veces.</p>
+      <p class="cds--body-01">Usa el mismo nombre que <code>KNOWLEDGE_BASE_NAME</code>. El Customer Shopping Assistant reutilizará esta fuente más adelante, en vez de subir el catálogo dos veces.</p>
     </div>
   </section>
 
@@ -100,6 +102,7 @@ catálogo de productos.</code></pre>
 
     <figure class="lab-figure">
       <img src="./assets/images/labs/agentic-retail-wxo/substitute-finder-chat.png"
+           data-placeholder-path="./assets/images/labs/agentic-retail-wxo/substitute-finder-chat.png"
            alt="Chat del Substitute Finder Agent en watsonx Orchestrate recomendando laptops alternativas con atributos tomados del catálogo de productos"
            class="lab-figure__img" />
       <figcaption class="lab-figure__caption">El Substitute Finder Agent justifica cada alternativa con atributos del catálogo indexado.</figcaption>
@@ -108,7 +111,7 @@ catálogo de productos.</code></pre>
     <div class="callout" data-tone="success" style="margin-top: 1.25rem;">
       <p class="callout__title">✓ Checkpoint — no avances sin esto</p>
       <ul class="checklist">
-        <li class="checklist__item">La base de conocimiento <code>enterprise_documents</code> aparece indexada y sin errores.</li>
+        <li class="checklist__item">La base de conocimiento con el nombre de <code>KNOWLEDGE_BASE_NAME</code> aparece indexada y sin errores.</li>
         <li class="checklist__item">El agente responde con alternativas concretas del catálogo, no genéricas.</li>
         <li class="checklist__item">La respuesta no afirma disponibilidad de stock.</li>
       </ul>
@@ -121,7 +124,7 @@ catálogo de productos.</code></pre>
     <p class="cds--body-01">Antes de pasar al supervisor, confirma que el agente razona sobre el catálogo y no sobre el conocimiento general del modelo.</p>
     <ul class="checklist">
       <li class="checklist__item"><code>Substitute_Finder_Agent</code> está importado y desplegado.</li>
-      <li class="checklist__item">La base de conocimiento <code>enterprise_documents</code> quedó indexada con <code>product-catalog.docx</code>.</li>
+      <li class="checklist__item">La base de conocimiento usa el nombre de <code>KNOWLEDGE_BASE_NAME</code> y quedó indexada con <code>product-catalog.docx</code>.</li>
       <li class="checklist__item">Las alternativas citan atributos concretos del catálogo, no recomendaciones genéricas.</li>
       <li class="checklist__item">La respuesta no afirma disponibilidad de stock: ese dato no le corresponde a este agente.</li>
     </ul>

@@ -4,7 +4,7 @@
     <h1 class="cds--productive-heading-05 lab-banner__title">Acceder a la plataforma y probar el agente</h1>
     <p class="cds--body-02 lab-banner__summary">Ingresa a la interfaz web de watsonx Orchestrate, verifica que el agente y sus dependencias estén correctamente vinculados y pruébalo en tiempo real.</p>
     <div class="lab-banner__metrics"><div class="lab-banner__metric"><span class="lab-banner__metric-value">2–4</span><span class="lab-banner__metric-label">BobCoins estimados</span></div></div>
-    <p class="cds--body-01">Continúa con el mismo workspace personalizado y el agente con sufijo de tu TechZone+número (por ejemplo <code>TZ1_P042</code>).</p>
+    <p class="cds--body-01">Continúa con el mismo workspace personalizado y el agente con sufijo de tu TechZone+número (por ejemplo <code>SKU_Availability_Agent_TZ1_P098</code>).</p>
   </div>
 
   <!-- ── Paso 1 ─────────────────────────────────────────────────── -->
@@ -16,7 +16,12 @@
       </div>
     </div>
     <h2 class="cds--productive-heading-04" id="acceso-plataforma">Paso 1 — Acceder a watsonx Orchestrate</h2>
-    <p class="step-header__why">Para interactuar con el agente que acabas de importar con la CLI, debes acceder a la interfaz gráfica de watsonx Orchestrate desde IBM Cloud.</p>
+    <p class="step-header__why">Para interactuar con el agente que acabas de importar con la CLI, debes acceder a la interfaz gráfica de watsonx Orchestrate desde IBM Cloud. La URL y la API key de la CLI ya las copiaste en el lab anterior (Gestionar → Credenciales); aquí solo lanzas la UI.</p>
+
+    <div class="callout" data-tone="info">
+      <p class="callout__title">Si ya estás en la cuenta itz-saas-*</p>
+      <p class="cds--body-01">Salta la campana y <strong>Join now</strong>. Ve directo a <strong>Lista de recursos</strong> → tu instancia wxo → <strong>Iniciar watsonx Orchestrate</strong>.</p>
+    </div>
 
     <ol class="cds--list--ordered">
       <li class="cds--list__item">Accede al dashboard de IBM Cloud: <a href="https://cloud.ibm.com" target="_blank" rel="noopener">https://cloud.ibm.com</a></li>
@@ -78,7 +83,7 @@
     <p class="step-header__why">El agente fue importado, pero para poder interactuar con él debe estar desplegado. Además, es un buen momento para verificar que las herramientas externas (como el MCP de inventario) estén conectadas.</p>
 
     <ol class="cds--list--ordered">
-      <li class="cds--list__item">En la sección <strong>Agents</strong>, busca el agente <code>SKU_Availability_Agent</code>.</li>
+      <li class="cds--list__item">En la sección <strong>Agents</strong>, busca el agente <code>SKU_Availability_Agent_TZ{N}_P{xxx}</code> (el YAML se llama igual; el nombre en Orchestrate lleva sufijo).</li>
       <li class="cds--list__item">Ábrelo haciendo clic sobre su nombre en la lista.</li>
     </ol>
 
@@ -141,11 +146,23 @@
 
     <p class="cds--body-01"><strong>Qué debes ver:</strong> el agente responde con una cantidad concreta y específica para la sucursal que pediste. En el detalle de la ejecución, notarás que llamó a la herramienta <code>get_sku_availability</code> de forma transparente.</p>
 
+    <figure class="lab-figure">
+      <img src="./assets/images/labs/agentic-retail-wxo/sku-availability-chat.png"
+           data-placeholder-path="./assets/images/labs/agentic-retail-wxo/sku-availability-chat.png"
+           alt="Chat de prueba del SKU Availability Agent: pregunta por stock de LAPTOP-DELL-XPS-15 en DOT Shopping y respuesta con cantidad concreta"
+           class="lab-figure__img" />
+      <figcaption class="lab-figure__caption">Chat de prueba: cantidad + sucursal. Si la UI muestra la tool, déjala visible. Difumina usuario e instancia.</figcaption>
+    </figure>
+    <div class="callout" data-tone="warning" style="margin-top: 1rem;">
+      <p class="callout__title">Si dice que no hay stock o found=false</p>
+      <p class="cds--body-01">El MCP lee el tópico de <strong>esta</strong> VM (<code>inventory.availability.&lt;WORKSHOP_ID&gt;</code>). Si está vacío, vuelve al Track D (publicar + tabla ksql) antes de seguir. No cambies la URL del toolkit a otra TechZone.</p>
+    </div>
+
     <div class="callout" data-tone="success" style="margin-top: 1.25rem;">
       <p class="callout__title">✓ Checkpoint</p>
       <ul class="checklist">
         <li class="checklist__item">Iniciaste la plataforma correctamente desde IBM Cloud.</li>
-        <li class="checklist__item">Desplegaste el agente <code>SKU_Availability_Agent</code>.</li>
+        <li class="checklist__item">Desplegaste el agente <code>SKU_Availability_Agent</code> con sufijo TechZone+número.</li>
         <li class="checklist__item">Al preguntar por un producto, el agente responde con el stock consultando el toolkit.</li>
       </ul>
     </div>

@@ -15,9 +15,15 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse
 
 
-TABLE_NUMBER = int(os.getenv("WORKSHOP_TABLE", "1"))
-if TABLE_NUMBER not in (1, 2, 3):
-    raise RuntimeError("WORKSHOP_TABLE debe ser 1, 2 o 3")
+# Optional label for health only. The tool must not pin table_number to this
+# VM: topic names come from the hub (TZ1–TZ3), not from the mesa or BP account.
+_raw_table = os.getenv("WORKSHOP_TABLE", "").strip()
+try:
+    TABLE_NUMBER = int(_raw_table) if _raw_table else None
+except ValueError:
+    TABLE_NUMBER = None
+if TABLE_NUMBER is not None and TABLE_NUMBER not in (1, 2, 3):
+    TABLE_NUMBER = None
 
 BOOTSTRAP = os.getenv("BOOTSTRAP_SERVERS_EXTERNAL") or os.getenv("BOOTSTRAP_SERVERS", "")
 KAFKA_USER = os.getenv("KAFKA_SASL_USERNAME", "")
@@ -243,10 +249,7 @@ def get_sku_availability(
     }
     topic = _topic_name(table_number, participant_number)
     if topic is None:
-        result["error"] = "table_number debe ser 1-3 y participant_number 1-100"
-        return result
-    if _parse_int(table_number, 1, 3) != TABLE_NUMBER:
-        result["error"] = "table_number no corresponde a la TechZone de este servidor"
+        result["error"] = "table_number debe ser 1-3 (TechZone, no el número de mesa) y participant_number 1-100"
         return result
     if sku not in ALLOWED_SKUS or canonical_branch is None:
         result["error"] = "SKU o sucursal no reconocidos"
@@ -279,7 +282,7 @@ async def health(_: Request) -> JSONResponse:
         {
             "status": "ok",
             "workshop_table": TABLE_NUMBER,
-            "topic_pattern": f"inventory.availability.tz{TABLE_NUMBER}_p%03d",
+            "topic_pattern": "inventory.availability.tz{1-3}_p%03d",
             "schema_registry": sr_ok,
         }
     )

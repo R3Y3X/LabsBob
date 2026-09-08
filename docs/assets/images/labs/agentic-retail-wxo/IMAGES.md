@@ -10,6 +10,28 @@ Mientras el PNG no exista, el sitio muestra automáticamente un `carbon-image-pl
 
 **No** sustituyas ningún `.code-block` copiable por una imagen.
 
+## Disponibilidad MCP — credenciales CLI (Paso 2)
+
+Capturas de **dónde se copia** `ORCHESTRATE_URL` / `ORCHESTRATE_API_KEY`. Difumina keys, correo y nombre de instancia.
+
+### `wxo-ibmcloud-account.png`
+
+Esquina superior derecha de IBM Cloud con el selector de cuenta. Debe verse una cuenta `itz-saas-*` (TechZone), no la cuenta corporativa IBM.
+
+### `wxo-resource-instance.png`
+
+**Lista de recursos** con la instancia **watsonx Orchestrate** (nombre tipo `wxo-…`) visible o seleccionada.
+
+### `wxo-manage-credentials.png`
+
+Página **Gestionar** de esa instancia. Sección **Credenciales** con los campos **URL** y **Clave de API** y los iconos de copiar. **Obligatorio difuminar la API key.** No incluye la pantalla de Launch como si ahí estuviera la key.
+
+### `techzone-service-id-apikey.png`
+
+TechZone → My requests → OUTPUTS, campo **Service ID API Key**. La captura debe dejar claro que **esa** key no se pega en `ORCHESTRATE_API_KEY`. Difumina el valor.
+
+---
+
 ## Antes de capturar — anonimiza
 
 Cada captura sale de una instancia real. Antes de exportar:

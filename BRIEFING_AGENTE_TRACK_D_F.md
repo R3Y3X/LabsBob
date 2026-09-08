@@ -27,7 +27,7 @@ Tabla problema → causa → qué hay ahora en el producto:
 | `SSL handshake failed … plaintext connection?` | Puerto 9092 interno **también** es SASL_SSL, no plaintext | Prompts lo declaran; overlay usa SASL_SSL |
 | `certificate verify failed` | Cert self-signed del broker | Overlay ya trae `enable.ssl.certificate.verification=false` en los clients Kafka |
 | ksqlDB `42801` / JSON_SR | SR no iba en `streamsProperties` de la API; hay que usar URL **interna** HTTP | Prompt Step 2: SR interno; **no** pasar SR por `streamsProperties` |
-| Track F rechazaba `workshop_id` | MCP esperaba `m01_p042` (mesa) | MCP espera `tz1_p042` (TechZone) |
+| Track F rechazaba `workshop_id` | MCP pinneaba mesa/`WORKSHOP_TABLE` | Tool: `table_number` 1–3 (TZ hub) + `participant_number`; **sin** pin de VM |
 | IDs viejos en el navegador | `localStorage` con `m01_…` | Clave `labsBob.participant.v2` |
 
 Si vuelves a ver esos errores, casi siempre es porque **no corriste el Paso 0**, actualizaste **un solo** `.env`, o abriste como workspace **solo** `inventory-pipeline`.
@@ -130,8 +130,8 @@ El hub y el MCP **dejaron de usar** `m01_p042`.
 | Agentes Track F | sufijo `_TZ1_P042` |
 | Placeholder IP en config | `<IP_PUBLICA_VM_TZ1>` (no `_MESA_01`) |
 
-MCP (`infra/retail-mcp/server.py`): regex `^tz(?P<table>[1-3])_p(?P<number>[0-9]{3})$`.  
-Si envías `m01_p042`, Track F **rechaza** el `workshop_id`.
+MCP (`infra/retail-mcp/server.py`): `get_sku_availability(table_number, participant_number, sku, branch)`.  
+`table_number` es **1–3** (TechZone del hub, no mesa 4–6). El proceso **no** exige que coincida con `WORKSHOP_TABLE` de la VM. El tópico es `inventory.availability.tz{n}_p{xxx}` en el Kafka **de esa VM**. Si envías mesa 4–6, el MCP responde error de rango, no “TechZone de este servidor”.
 
 No inventes nombres genéricos `inventory.transactions` en Kafka: el `.env` ya trae `TOPIC_NAME` namespaced. El hub personaliza los prompts en pantalla; en disco manda `TOPIC_NAME` / `KSQL_*`.
 
@@ -297,17 +297,19 @@ No improvises Flink OSS. Corre el script del bundle. Contrato:
 | Flink `Supported values are: [confluent]` | Bob usó connector kafka | `./setup.sh -s 4`; no inventar WITH kafka |
 | Flink `transaction timeout is larger than the maximum` | broker max 15 min vs Flink 1 h; no es dinámico | `submit_flink.py` parchea `spec.configOverrides.server` (rolling restart). En TZ1 ya quedó en 3600000. |
 | Flink `Column 'SKU' is NOT NULL` | tombstones / filas nulas en el source | El INSERT filtra `SKU IS NOT NULL AND BRANCH IS NOT NULL` y `not-null-enforcer=DROP` |
-| MCP `workshop_id no corresponde` | Id `m01_…` o TZ distinta a la VM | Usar `tz{1-3}_pNNN` de `WORKSHOP_ID` |
+| MCP `table_number` fuera de 1–3 | Mesa física (4–6) o pin viejo de VM | Usar TZ del hub (1–3). El MCP ya no pinnea `WORKSHOP_TABLE` |
 
 ---
 
 ## 8. Track F (Orchestrate) — qué ya está resuelto
 
-- Mismo bundle, misma TechZone + número (`tz1_p042`).
+- Mismo bundle, workspace = **raíz** `RoadShowBobStreamingIntegration` (no abras solo `confluent_agents`). Misma TechZone + número (`tz1_p042`) que Track D: eso nombra tópicos, **no** la cuenta Orchestrate del BP.
 - Kafka / ksql / SR **ya** vinieron del Paso 0 de Track D. **No** pidas esas contraseñas otra vez.
-- Completa solo `ORCHESTRATE_URL` y `ORCHESTRATE_API_KEY` cuando el humano las ponga en `participant-config.env`. No las inventes ni las imprimas.
-- `RETAIL_MCP_URL` ya apunta a `https://<IP>/retail-mcp/mcp`. El toolkit compartido lo registra el facilitador; no lo registres tú con credenciales locales.
-- Herramienta MCP: `workshop_id` = `WORKSHOP_ID` (`tz1_p042`), no `m01_p042`.
+- Completa `ORCHESTRATE_URL` y `ORCHESTRATE_API_KEY` desde IBM Cloud → instancia wxo (`itz-saas-*`) → **Credenciales** del servicio. No uses la Service ID API Key del output de TechZone como `ORCHESTRATE_API_KEY`. No las inventes ni las imprimas.
+- Auth CLI: `orchestrate env add --name workshop --url "$ORCHESTRATE_URL" --type ibm_iam` y `activate --api-key "$ORCHESTRATE_API_KEY"`. El aviso `mcsp_v2` es ruido si la URL contiene `.cloud.ibm.com`.
+- `RETAIL_MCP_URL` = `http://<IP de SSH_HOST>/retail-mcp/mcp` (**HTTP**, sin `<>`, sin HTTPS). El toolkit lo registra el facilitador hacia **esa** VM (tópicos); el alumno **no** hace `toolkits add`.
+- Tool: `get_sku_availability(table_number, participant_number, sku, branch)`. `table_number` 1–3 = TZ del hub, no mesa. **No** hay `workshop_id`. **No** hay pin de VM/`WORKSHOP_TABLE`.
+- Si `found=false`, el tópico `inventory.availability.tzN_pXXX` de **esa** VM está vacío (o el toolkit apunta a otra IP). No “corrijas” cruzando etiquetas TZ de las VMs.
 
 ---
 
@@ -335,7 +337,7 @@ No improvises Flink OSS. Corre el script del bundle. Contrato:
 | SSL Kafka + produce JSON_SR | `workshop/participant-overlay/{create_topic,produce_messages,delete_topics,register_schema,run_in_cluster_remote}.py/.sh` |
 | Flink CMF | `workshop/participant-overlay/submit_flink.py`, `setup.sh -s 4` |
 | ZIP que descarga el alumno | `docs/downloads/agentic-retail-workshop.zip` (regenerado con `scripts/build_agentic_bundle.py`) |
-| MCP `tz1_pNNN` | `infra/retail-mcp/server.py` |
+| MCP HTTP, `table_number`/`participant_number`, sin pin VM | `infra/retail-mcp/server.py` |
 
 ---
 

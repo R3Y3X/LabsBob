@@ -25,16 +25,18 @@
     <div class="code-block code-block--prompt">
       <p class="code-block__label">Prompt para Bob — verificar dependencias e importar el supervisor</p>
       <pre><code>Sigue en la misma terminal, con el ambiente workshop activo.
+Entra a trackF/confluent_agents si no estás ahí.
 
 Antes de importar nada, ejecuta "orchestrate agents list" y verifica que ya
-existan SKU_Availability_Agent y Substitute_Finder_Agent. El supervisor los
-declara como colaboradores y el import falla si falta alguno.
+existan SKU_Availability_Agent_TZ{N}_P{xxx} y Substitute_Finder_Agent_TZ{N}_P{xxx}.
+El supervisor los declara como colaboradores (con el mismo sufijo) y el import
+falla si falta alguno.
 
 Si ambos están, importa el tercer agente:
 
 orchestrate agents import --file Store_Associate_Agent.yaml
 
-Después vuelve a listar los agentes y confirma que ahora son tres.
+Después vuelve a listar los agentes y confirma que ahora son tres, todos con sufijo.
 
 Si falta algún colaborador, NO importes: dime cuál falta y detente.</code></pre>
     </div>
@@ -63,8 +65,8 @@ Si falta algún colaborador, NO importes: dime cuál falta y detente.</code></pr
     <p class="step-header__why">Antes de probarlo conviene mirar cómo quedó armado: qué agentes tiene disponibles para delegar. Es la parte del laboratorio donde se ve la topología del sistema multiagente.</p>
 
     <ol class="cds--list--ordered">
-      <li class="cds--list__item">Abre <code>Store_Associate_Agent</code> en la UI de watsonx Orchestrate.</li>
-      <li class="cds--list__item">Entra a <strong>Agents</strong> (colaboradores) y comprueba que aparezcan <code>SKU_Availability_Agent</code> y <code>Substitute_Finder_Agent</code>.</li>
+      <li class="cds--list__item">Abre <code>Store_Associate_Agent_TZ{N}_P{xxx}</code> en la UI de watsonx Orchestrate.</li>
+      <li class="cds--list__item">Entra a <strong>Agents</strong> (colaboradores) y comprueba que aparezcan los dos especialistas <strong>con el mismo sufijo</strong>.</li>
       <li class="cds--list__item">Lee sus <strong>instrucciones</strong>: describen cuándo delegar disponibilidad y cuándo pedir sustitutos.</li>
       <li class="cds--list__item">Haz clic en <strong>Deploy</strong> y confirma.</li>
     </ol>
@@ -95,6 +97,7 @@ Si falta algún colaborador, NO importes: dime cuál falta y detente.</code></pr
 
     <figure class="lab-figure">
       <img src="./assets/images/labs/agentic-retail-wxo/store-associate-chat.png"
+           data-placeholder-path="./assets/images/labs/agentic-retail-wxo/store-associate-chat.png"
            alt="Chat del Store Associate Agent en watsonx Orchestrate consultando disponibilidad y delegando en el agente de sustitutos para ofrecer alternativas"
            class="lab-figure__img" />
       <figcaption class="lab-figure__caption">El supervisor encadena disponibilidad y sustitutos en una sola respuesta al asociado de tienda.</figcaption>

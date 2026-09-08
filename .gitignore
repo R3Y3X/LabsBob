@@ -37,3 +37,7 @@ confluent-lab-deepdive-plan.md
 
 # Scratch / local experiments
 scratch/
+
+# Local analysis dumps (bundles, venvs, screenshots) — never commit
+casoorchestrate/
+logistica.png

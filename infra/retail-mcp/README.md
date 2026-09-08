@@ -7,8 +7,10 @@ Orchestrate on IBM Cloud rejects the VM certificate, so the toolkit **must**
 use HTTP.
 
 The tool is `get_sku_availability(table_number, participant_number, sku, branch)`.
-It validates `table_number` against this VM's TechZone (`WORKSHOP_TABLE=1|2|3`)
-and reads the participant Kafka topic `inventory.availability.tz{n}_p{xxx}`.
+`table_number` is the TechZone from the hub (`1`–`3`), **not** the physical mesa
+(4–6) and **not** which Business Partner owns the Orchestrate instance. This
+process reads `inventory.availability.tz{n}_p{xxx}` from **this VM's Kafka**;
+it does not reject a call because `n` differs from `WORKSHOP_TABLE`.
 There is deliberately no credential in this directory.
 
 ## Install on a VM

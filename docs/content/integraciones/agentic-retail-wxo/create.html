@@ -11,15 +11,15 @@
     <div class="lab-workspace-setup__box">
       <span class="lab-workspace-setup__badge">Paso obligatorio — antes de cualquier prompt</span>
       <h2 class="lab-workspace-setup__title" id="wxo-create-workspace">Abre la carpeta en IBM Bob</h2>
-      <p class="lab-workspace-setup__lead">Usa el mismo bundle personalizado que descargaste en el track de Confluent (<a href="./downloads/agentic-retail-workshop.zip" class="cds--link" data-participant-download="true">descargar bundle</a>). Descomprímelo y abre la carpeta <code>RoadShowBobStreamingIntegration/trackF/confluent_agents</code> en IBM Bob con <strong>File → Open Folder</strong>. El identificador TechZone+número (TZ1–TZ3) debe ser exactamente el mismo en ambos tracks.</p>
+      <p class="lab-workspace-setup__lead">Usa el mismo bundle personalizado que descargaste en el track de Confluent (<a href="./downloads/agentic-retail-workshop.zip" class="cds--link" data-participant-download="true">descargar bundle</a>). Descomprímelo y abre la carpeta raíz <code>RoadShowBobStreamingIntegration</code> en IBM Bob con <strong>File → Open Folder</strong>. El identificador TechZone (TZ1–TZ3, no el número de mesa) y el número de asiento deben ser los mismos que en el Track D.</p>
       <div class="lab-workspace-setup__path">
         <p class="lab-workspace-setup__path-label">File → Open Folder</p>
-        <code class="lab-workspace-setup__path-value">confluent_agents/</code>
+        <code class="lab-workspace-setup__path-value">RoadShowBobStreamingIntegration</code>
       </div>
       <ul class="lab-workspace-setup__checks">
-        <li>En el explorador de Bob deben verse los cuatro <code>.yaml</code>, <code>product-catalog.docx</code> y <code>participant-config.env</code></li>
+        <li>En la raíz deben verse <code>participant-config.env</code>, <code>participant-bootstrap.sh</code>, <code>trackD/</code> y <code>trackF/confluent_agents/</code> (YAML y <code>product-catalog.docx</code>)</li>
         <li>Pon a Bob en <strong>🤖 Agent Mode</strong> — es el modo con acceso a la terminal integrada</li>
-        <li>El MCP corre en la VM del workshop; tu equipo solo necesita la CLI y los YAML</li>
+        <li>El MCP corre en la VM de Confluent del Track D; tu equipo solo necesita la CLI y los YAML</li>
       </ul>
     </div>
   </section>
@@ -42,14 +42,19 @@
 
     <div class="code-block code-block--prompt">
       <p class="code-block__label">Prompt para Bob — crear el entorno e instalar la CLI</p>
-      <pre><code>Estoy en la carpeta trackF/confluent_agents de un workshop de watsonx Orchestrate.
-Prepara mi entorno de trabajo usando la terminal integrada:
+      <pre><code>El workspace de Bob es la raíz RoadShowBobStreamingIntegration.
+Prepara mi entorno de watsonx Orchestrate usando la terminal integrada:
 
-1. Crea un entorno virtual de Python llamado .venv en esta carpeta.
-2. Actívalo. Si estoy en Windows, usa .venv\Scripts\Activate.ps1 en vez de source.
-3. Con el entorno activo, actualiza pip.
-4. Instala el paquete ibm-watsonx-orchestrate.
-5. Ejecuta "orchestrate --version" y dime qué versión quedó instalada.
+1. Entra a trackF/confluent_agents.
+2. Ejecuta python3 --version. La CLI exige Python 3.11, 3.12 o 3.13.
+   En macOS, python3 suele ser 3.9: usa python3.12 (o python3.11) para el venv.
+3. Si ya existe .venv pero no tiene bin/activate (venv copiado de Windows),
+   bórralo y recréalo. No reutilices un .venv de otro sistema operativo.
+4. Crea un entorno virtual llamado .venv en esa carpeta.
+5. Actívalo. Si estoy en Windows, usa .venv\Scripts\Activate.ps1 en vez de source.
+6. Con el entorno activo, actualiza pip.
+7. Instala el paquete ibm-watsonx-orchestrate.
+8. Ejecuta "orchestrate --version" y dime qué versión quedó instalada.
 
 Reglas:
 - Mantén esta misma terminal para todo el laboratorio; no abras una nueva.
@@ -63,8 +68,8 @@ Reglas:
         <svg class="lab-accordion__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="16" height="16"><path d="M8 11L2 5h12z"/></svg>
       </button>
       <div class="lab-accordion__panel" id="acc-wxo-cli" hidden>
-        <p class="cds--body-01">Desde una terminal abierta en <code>confluent_agents</code>, en este orden:</p>
-        <div class="code-block code-block--terminal"><pre><code class="language-bash">python3 -m venv .venv</code></pre></div>
+        <p class="cds--body-01">Desde la raíz del bundle, entra a <code>trackF/confluent_agents</code>. Comprueba la versión (<code>python3 --version</code>): si es menor que 3.11, sustituye <code>python3</code> por <code>python3.12</code> en estos comandos. Si <code>.venv/bin/activate</code> no existe, borra <code>.venv</code> y recréalo.</p>
+        <div class="code-block code-block--terminal"><pre><code class="language-bash">python3.12 -m venv .venv</code></pre></div>
         <p class="cds--body-01">Actívalo — en Windows PowerShell usa <code>.venv\Scripts\Activate.ps1</code>:</p>
         <div class="code-block code-block--terminal"><pre><code class="language-bash">source .venv/bin/activate</code></pre></div>
         <div class="code-block code-block--terminal"><pre><code class="language-bash">python -m pip install --upgrade pip</code></pre></div>
@@ -76,7 +81,7 @@ Reglas:
     <div class="callout" data-tone="success" style="margin-top:1.25rem;">
       <p class="callout__title">✓ Checkpoint</p>
       <ul class="checklist">
-        <li class="checklist__item">Bob reporta una versión concreta de <code>orchestrate</code>, sin errores.</li>
+        <li class="checklist__item">Bob reporta una versión concreta de <code>orchestrate</code>, sin errores (Python del venv ≥ 3.11).</li>
         <li class="checklist__item">El prompt de la terminal muestra el prefijo <code>(.venv)</code>.</li>
       </ul>
     </div>
@@ -95,17 +100,27 @@ Reglas:
 
     <div class="code-block code-block--prompt">
       <p class="code-block__label">Prompt para Bob — preparar el bundle personalizado</p>
-      <pre><code>Sigue en la misma terminal, ubicada en la carpeta raíz RoadShowBobStreamingIntegration.
+      <pre><code>Sigue en la misma conversación. El workspace es la raíz RoadShowBobStreamingIntegration
+(vuelve ahí con cd si estabas en trackF/confluent_agents).
 
-Ejecuta ./participant-bootstrap.sh check y confirma que WORKSHOP_ID esté definido.
-Luego ejecutá python3 trackF/confluent_agents/personalize_agents.py --config participant-config.env
-para inyectar table_number y participant_number en los YAML (es seguro repetirlo).
-Luego abre participant-config.env y muéstrame únicamente los nombres de las
-variables que todavía tienen valores de ejemplo, nunca sus secretos.
-
-Kafka, ksqlDB y Schema Registry ya se resolvieron en el Track D desde el cluster.
-No pidas esas contraseñas. Completa solo ORCHESTRATE_URL y ORCHESTRATE_API_KEY
-cuando yo las ponga en participant-config.env; no las inventes ni las imprimas.</code></pre>
+1. Ejecuta ./participant-bootstrap.sh check y confirma que WORKSHOP_ID esté definido
+   (tz1_pNNN, tz2_pNNN o tz3_pNNN). Ese TZ es el de los tópicos, no el número de mesa.
+2. Ejecuta python3 trackF/confluent_agents/personalize_agents.py --config participant-config.env
+   para inyectar table_number (1-3) y participant_number en los YAML. Es seguro repetirlo.
+3. Abre participant-config.env y muéstrame únicamente los nombres de las variables que
+   todavía están vacías o contienen "&lt;...&gt;". Nunca imprimas secretos.
+   Ignora KSQLDB_API_KEY y KSQLDB_API_SECRET si están vacíos: no se usan en este lab.
+4. Kafka, ksqlDB y Schema Registry ya se resolvieron en el Track D. No pidas esas contraseñas.
+   Si el check dice que dejes ORCHESTRATE_URL vacío, es el resto del Track D; en este paso sí lo completas.
+5. Completa ORCHESTRATE_URL y ORCHESTRATE_API_KEY cuando yo las ponga. Tómalas de IBM Cloud,
+   cuenta itz-saas-*, instancia watsonx Orchestrate → Gestionar → Credenciales (URL + clave de API).
+   No uses la Service ID API Key del output de TechZone como ORCHESTRATE_API_KEY.
+6. Si RETAIL_MCP_URL tiene "&lt;IP" o usa https://, corrígela así (sin imprimir passwords):
+   IP="${SSH_HOST#root@}"
+   RETAIL_MCP_URL="http://${IP}/retail-mcp/mcp"
+   Escríbela en participant-config.env. Orchestrate rechaza el certificado HTTPS de la VM.
+7. Verifica el MCP: curl -sS "http://${IP}/retail-mcp/health"
+   Esperado: status=ok. Si falla, detente y avísame.</code></pre>
     </div>
 
     <div class="lab-accordion" style="margin-top:1rem;">
@@ -115,21 +130,69 @@ cuando yo las ponga en participant-config.env; no las inventes ni las imprimas.<
       </button>
       <div class="lab-accordion__panel" id="acc-wxo-config" hidden>
         <div class="code-block code-block--terminal"><pre><code class="language-bash">./participant-bootstrap.sh check
-python3 trackF/confluent_agents/personalize_agents.py --config participant-config.env</code></pre></div>
+python3 trackF/confluent_agents/personalize_agents.py --config participant-config.env
+# Si RETAIL_MCP_URL aún tiene &lt;...&gt; o https://:
+IP="${SSH_HOST#root@}"
+# deja RETAIL_MCP_URL=http://${IP}/retail-mcp/mcp en participant-config.env
+curl -sS "http://${IP}/retail-mcp/health"</code></pre></div>
       </div>
     </div>
 
     <h3 class="cds--productive-heading-03" style="margin-top: 2rem;">Completa el archivo tú mismo</h3>
-    <p class="cds--body-01">Abre <code>participant-config.env</code> en el editor de Bob. Kafka y ksqlDB ya están; completa solo Orchestrate (y revisa que <code>RETAIL_MCP_URL</code> use <strong>http://</strong> hacia tu VM):</p>
+    <p class="cds--body-01">Abre <code>participant-config.env</code> en el editor de Bob (está en la <strong>raíz</strong> del bundle). Kafka y ksqlDB ya están. Completa Orchestrate desde IBM Cloud (no desde el output de Service ID de TechZone) y deja el MCP en HTTP hacia la IP de <code>SSH_HOST</code>:</p>
     <div class="lab-table-wrap"><table class="lab-table">
       <thead><tr><th>Variable</th><th>Qué va ahí</th></tr></thead>
       <tbody>
-        <tr><td><code>ORCHESTRATE_URL</code></td><td>URL de tu instancia de watsonx Orchestrate.</td></tr>
-        <tr><td><code>RETAIL_MCP_URL</code></td><td>Endpoint HTTP Streamable HTTP del MCP retail compartido en la VM del workshop (<code>http://&lt;IP&gt;/retail-mcp/mcp</code>). No uses HTTPS: Orchestrate rechaza el certificado de la VM.</td></tr>
-        <tr><td><code>ORCHESTRATE_API_KEY</code></td><td>Tu API key de Orchestrate. Se queda en este archivo local.</td></tr>
+        <tr><td><code>ORCHESTRATE_URL</code></td><td>URL de Credenciales del servicio watsonx Orchestrate (forma <code>https://api.&lt;región&gt;.watson-orchestrate.cloud.ibm.com/instances/&lt;uuid&gt;</code>). Auth CLI: <code>ibm_iam</code>.</td></tr>
+        <tr><td><code>RETAIL_MCP_URL</code></td><td><code>http://&lt;IP de SSH_HOST&gt;/retail-mcp/mcp</code>. Misma VM del Track D. Nunca HTTPS ni placeholders <code>&lt;...&gt;</code>.</td></tr>
+        <tr><td><code>ORCHESTRATE_API_KEY</code></td><td>API key de esa misma pantalla de Credenciales. No es la Service ID API Key del reservation de TechZone.</td></tr>
       </tbody>
     </table></div>
     <p class="cds--body-01"><code>RETAIL_MCP_TOOLKIT_NAME</code> ya viene con el valor correcto (<code>retail_availability_mcp</code>) y debe coincidir con el nombre usado en los YAML de los agentes. No lo cambies. El bootstrap inyecta <code>table_number</code> y <code>participant_number</code> en los YAML; no los edites a mano.</p>
+
+    <h3 class="cds--productive-heading-03" style="margin-top: 2rem;">Cómo sacar URL y API key de Orchestrate</h3>
+    <p class="cds--body-01">Estas dos variables <strong>no</strong> están en el output de TechZone (PEM, IP, Service ID). Se copian en IBM Cloud, en la ficha de la instancia watsonx Orchestrate, <em>antes</em> de pulsar <strong>Iniciar watsonx Orchestrate</strong>.</p>
+    <ol class="cds--list--ordered">
+      <li class="cds--list__item">Entra a <a href="https://cloud.ibm.com" target="_blank" rel="noopener">cloud.ibm.com</a>. Arriba a la derecha, confirma que la cuenta es <code>itz-saas-*</code> (la de tu reserva TechZone), no tu cuenta IBM corporativa.</li>
+    </ol>
+    <figure class="lab-figure">
+      <img src="./assets/images/labs/agentic-retail-wxo/wxo-ibmcloud-account.png"
+           data-placeholder-path="./assets/images/labs/agentic-retail-wxo/wxo-ibmcloud-account.png"
+           alt="Selector de cuenta de IBM Cloud arriba a la derecha mostrando una cuenta itz-saas (TechZone), no la cuenta corporativa"
+           class="lab-figure__img" />
+      <figcaption class="lab-figure__caption">Cambia a la cuenta <code>itz-saas-*</code> de tu reserva. Difumina correo y nombre completo en la captura.</figcaption>
+    </figure>
+    <ol class="cds--list--ordered" start="2">
+      <li class="cds--list__item">Menú hamburguesa → <strong>Lista de recursos</strong> → abre tu instancia <strong>watsonx Orchestrate</strong> (nombre tipo <code>wxo-…</code>).</li>
+    </ol>
+    <figure class="lab-figure">
+      <img src="./assets/images/labs/agentic-retail-wxo/wxo-resource-instance.png"
+           data-placeholder-path="./assets/images/labs/agentic-retail-wxo/wxo-resource-instance.png"
+           alt="Lista de recursos de IBM Cloud con la instancia watsonx Orchestrate seleccionada"
+           class="lab-figure__img" />
+      <figcaption class="lab-figure__caption">Abre la instancia wxo. Recorta la lista; oculta otros recursos si no son del lab.</figcaption>
+    </figure>
+    <ol class="cds--list--ordered" start="3">
+      <li class="cds--list__item">Quédate en <strong>Gestionar</strong>. En la sección <strong>Credenciales</strong> copia <strong>URL</strong> → <code>ORCHESTRATE_URL</code> y <strong>Clave de API</strong> → <code>ORCHESTRATE_API_KEY</code>. Pégalas solo en <code>participant-config.env</code>, nunca en el chat de Bob.</li>
+    </ol>
+    <figure class="lab-figure">
+      <img src="./assets/images/labs/agentic-retail-wxo/wxo-manage-credentials.png"
+           data-placeholder-path="./assets/images/labs/agentic-retail-wxo/wxo-manage-credentials.png"
+           alt="Página Gestionar de la instancia watsonx Orchestrate con la sección Credenciales: campos URL y Clave de API y botones de copiar. La clave debe ir difuminada"
+           class="lab-figure__img" />
+      <figcaption class="lab-figure__caption">Gestionar → Credenciales: URL + clave de API. <strong>Difumina la key</strong> antes de exportar el PNG.</figcaption>
+    </figure>
+    <div class="callout" data-tone="danger" style="margin-top: 1.25rem;">
+      <p class="callout__title">No uses la Service ID API Key de TechZone</p>
+      <p class="cds--body-01">En TechZone → My requests → OUTPUTS aparece <strong>Service ID API Key</strong>. Sirve para IAM de la cuenta, <strong>no</strong> es <code>ORCHESTRATE_API_KEY</code>. Si la pones en el <code>.env</code>, <code>env activate</code> falla o da 403 contra otra instancia.</p>
+    </div>
+    <figure class="lab-figure">
+      <img src="./assets/images/labs/agentic-retail-wxo/techzone-service-id-apikey.png"
+           data-placeholder-path="./assets/images/labs/agentic-retail-wxo/techzone-service-id-apikey.png"
+           alt="Output de TechZone destacando el campo Service ID API Key como la clave que no debe copiarse a ORCHESTRATE_API_KEY. La key debe ir difuminada"
+           class="lab-figure__img" />
+      <figcaption class="lab-figure__caption">TechZone OUTPUTS: esta key no va al <code>.env</code> de Orchestrate. Difumína la key en la captura.</figcaption>
+    </figure>
 
     <div class="callout" data-tone="warning" style="margin-top: 1.5rem;">
       <p class="callout__title">Protege tu API key</p>
@@ -150,24 +213,25 @@ python3 trackF/confluent_agents/personalize_agents.py --config participant-confi
 
     <div class="code-block code-block--prompt">
       <p class="code-block__label">Prompt para Bob — activar el ambiente y listar el toolkit</p>
-      <pre><code>Ya completé participant-config.env con la URL de mi instancia, el endpoint del MCP
-y mi API key. Sigue en la misma terminal:
+      <pre><code>Ya completé participant-config.env con la URL de mi instancia, el endpoint HTTP del MCP
+y mi API key. Sigue en la misma terminal, desde la raíz del bundle
+(source participant-config.env). Para orchestrate, el .venv está en
+trackF/confluent_agents.
 
-1. Carga las variables con: source participant-config.env
-2. Registra el ambiente:
-   orchestrate env add --name workshop --url "$ORCHESTRATE_URL"
+1. source participant-config.env
+2. Registra el ambiente TechZone con IAM (no mcsp):
+   orchestrate env add --name workshop --url "$ORCHESTRATE_URL" --type ibm_iam
    Si el ambiente "workshop" ya existe, salta este comando y sigue.
-3. Actívalo usando la variable de entorno, nunca el valor literal:
+3. Actívalo usando la variable, nunca el valor literal:
    orchestrate env activate workshop --api-key "$ORCHESTRATE_API_KEY"
 4. Ejecuta: orchestrate toolkits list
 
 Reglas importantes:
-- No imprimas el valor de ORCHESTRATE_API_KEY en pantalla, ni con echo, ni en
-  tu resumen. Refiérete a ella siempre como $ORCHESTRATE_API_KEY.
+- No imprimas ORCHESTRATE_API_KEY ni ORCHESTRATE_URL completas. Usa siempre las variables.
+- Si env add avisa mcsp_v2, ignóralo: esta URL es ibm_iam (.cloud.ibm.com).
 - Dime si aparece el toolkit "retail_availability_mcp" con la tool
   "get_sku_availability".
-- Si NO aparece, detente y avísame. No ejecutes "orchestrate toolkits add"
-  bajo ninguna circunstancia.</code></pre>
+- Si NO aparece, detente y avísame. No ejecutes "orchestrate toolkits add".</code></pre>
     </div>
 
     <div class="lab-accordion" style="margin-top:1rem;">
@@ -176,9 +240,10 @@ Reglas importantes:
         <svg class="lab-accordion__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="16" height="16"><path d="M8 11L2 5h12z"/></svg>
       </button>
       <div class="lab-accordion__panel" id="acc-wxo-env" hidden>
-        <div class="code-block code-block--terminal"><pre><code class="language-bash">source participant-config.env</code></pre></div>
+        <div class="code-block code-block--terminal"><pre><code class="language-bash">source participant-config.env
+source trackF/confluent_agents/.venv/bin/activate</code></pre></div>
         <p class="cds--body-01">Si el ambiente <code>workshop</code> ya existe, salta el siguiente comando:</p>
-        <div class="code-block code-block--terminal"><pre><code class="language-bash">orchestrate env add --name workshop --url "$ORCHESTRATE_URL"</code></pre></div>
+        <div class="code-block code-block--terminal"><pre><code class="language-bash">orchestrate env add --name workshop --url "$ORCHESTRATE_URL" --type ibm_iam</code></pre></div>
         <div class="code-block code-block--terminal"><pre><code class="language-bash">orchestrate env activate workshop --api-key "$ORCHESTRATE_API_KEY"</code></pre></div>
         <div class="code-block code-block--terminal"><pre><code class="language-bash">orchestrate toolkits list</code></pre></div>
       </div>
@@ -213,13 +278,15 @@ Reglas importantes:
     <div class="code-block code-block--prompt">
       <p class="code-block__label">Prompt para Bob — importar el agente de disponibilidad</p>
       <pre><code>Sigue en la misma terminal, con el ambiente workshop activo.
+Entra a trackF/confluent_agents (ahí están los YAML y el .venv).
 
-Importa el primer agente del laboratorio:
+Importa el primer agente del laboratorio (el archivo se llama igual; el name
+dentro del YAML ya tiene sufijo _TZ{N}_P{xxx} tras personalize):
 
 orchestrate agents import --file SKU_Availability_Agent.yaml
 
 Después ejecuta "orchestrate agents list" y confirma que aparece
-SKU_Availability_Agent.
+SKU_Availability_Agent_TZ{N}_P{xxx} (ejemplo SKU_Availability_Agent_TZ1_P098).
 
 No importes todavía ningún otro YAML de esta carpeta: el orden importa y los
 demás agentes vienen en los pasos siguientes. Si el import falla, muéstrame el
@@ -232,7 +299,8 @@ error completo y no reintentes con parámetros distintos.</code></pre>
         <svg class="lab-accordion__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="16" height="16"><path d="M8 11L2 5h12z"/></svg>
       </button>
       <div class="lab-accordion__panel" id="acc-wxo-import-sku" hidden>
-        <div class="code-block code-block--terminal"><pre><code class="language-bash">orchestrate agents import --file SKU_Availability_Agent.yaml</code></pre></div>
+        <div class="code-block code-block--terminal"><pre><code class="language-bash">cd trackF/confluent_agents
+orchestrate agents import --file SKU_Availability_Agent.yaml</code></pre></div>
         <div class="code-block code-block--terminal"><pre><code class="language-bash">orchestrate agents list</code></pre></div>
       </div>
     </div>
@@ -247,7 +315,7 @@ error completo y no reintentes con parámetros distintos.</code></pre>
     <ul class="checklist">
       <li class="checklist__item">La CLI de Orchestrate quedó instalada dentro del entorno virtual <code>.venv</code>.</li>
       <li class="checklist__item">El toolkit <code>retail_availability_mcp</code> aparece con la tool <code>get_sku_availability</code>.</li>
-      <li class="checklist__item"><code>SKU_Availability_Agent</code> está importado exitosamente desde la CLI.</li>
+      <li class="checklist__item"><code>SKU_Availability_Agent</code> está importado exitosamente desde la CLI (el nombre en Orchestrate lleva el sufijo TechZone+número).</li>
       <li class="checklist__item">Tu API key vive solo en <code>participant-config.env</code> y nunca apareció en el chat de Bob.</li>
     </ul>
   </section>

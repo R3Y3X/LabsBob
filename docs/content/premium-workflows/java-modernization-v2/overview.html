@@ -26,7 +26,7 @@
     <div class="callout" data-tone="note">
       <p class="callout__title">Descarga el árbol fuente del workshop</p>
       <p>Descomprime el ZIP y abre <strong>una sola vez</strong> la carpeta <code>simple-pharmacy-workshop-v2</code> en IBM Bob (<strong>File → Open Folder</strong>). No vuelvas a cambiar de workspace: cada lab indica la ruta del snapshot en el campo <strong>Project path</strong> del workflow. Las instrucciones de este recorrido se encuentran en el portal.</p>
-      <a class="cds--btn cds--btn--primary" style="margin-top:1rem" download="simple-pharmacy-workshop-v2.zip" href="./downloads/simple-pharmacy-workshop-v2.zip">Descargar Simple Pharmacy workshop v2</a>
+      <a class="cds--btn cds--btn--primary" style="margin-top:1rem" download="simple-pharmacy-workshop-v2.zip" href="./downloads/simple-pharmacy-workshop-v2.zip">Descargar Simple Pharmacy workshop v2 (2.1 MB)</a>
     </div>
     <ul class="cds--list--unordered">
       <li class="cds--list__item"><code>labs/</code> contiene una carpeta y snapshot de inicio por laboratorio.</li>
@@ -35,7 +35,9 @@
     </ul>
     <div class="callout" data-tone="tip">
       <p class="callout__title">Materiales adicionales del Lab 1</p>
-      <p>El migration plan ya viene incluido dentro del ZIP del workshop, en la carpeta del Lab 1. Si aparece <code>Unable to access jarfile</code>, descarga <code>jars.zip</code> y sigue la solución de problemas del Lab 1:</p>
+      <p>El Lab 1 pide el ZIP del migration plan de AMA. Ya va dentro del workshop, en <code>labs/lab1-java-liberty-replatforming/</code>. Si lo necesitas aparte:</p>
+      <a class="cds--btn cds--btn--secondary" style="margin-top:0.75rem" download="simple-pharmacy.war_migrationPlan.zip" href="./downloads/premium/java-modernization-v2/simple-pharmacy.war_migrationPlan.zip">Descargar plan de migración (168 KB)</a>
+      <p style="margin-top:0.75rem">Si aparece <code>Unable to access jarfile</code>, descarga <code>jars.zip</code> y sigue la solución de problemas del Lab 1:</p>
       <a class="cds--btn cds--btn--secondary" style="margin-top:0.75rem" download="jars.zip" href="./downloads/premium/java-modernization-v2/jars.zip">Descargar jars.zip (51 MB)</a>
     </div>
   </section>
@@ -119,86 +121,115 @@
         </div>
       </div>
     </section>
-    <h3 class="cds--productive-heading-02">1. IBM Bob IDE V2 con Workflows</h3>
+    <h3 class="cds--productive-heading-02">IBM Bob</h3>
     <ul class="cds--list--unordered">
       <li class="cds--list__item">Instala la última extensión Bob V2 e inicia sesión.</li>
-      <li class="cds--list__item">Verifica que tienes acceso a <strong>Workflows</strong> y al paquete <strong>Java Modernization</strong>.</li>
-      <li class="cds--list__item">Revisa los permisos <strong>Read</strong>, <strong>Edit</strong> y <strong>Execute</strong> antes de ejecutar un workflow.</li>
+      <li class="cds--list__item">Comprueba que ves <strong>Workflows</strong> y el paquete <strong>Java Modernization</strong>.</li>
+      <li class="cds--list__item">Antes de lanzar un workflow, deja activos los permisos <strong>Read</strong>, <strong>Edit</strong> y <strong>Execute</strong>.</li>
     </ul>
-    <h3 class="cds--productive-heading-02">2. Java + Maven</h3>
-    <p class="cds--body-01">El Lab 1 usa Java 8; desde el Lab 2 se usa Java 21. Instala ambas versiones y Maven ahora, y reinicia Bob tras instalar Maven para que detecte el <code>PATH</code> actualizado.</p>
-    <div class="os-setup-grid">
+
+    <h3 class="cds--productive-heading-02">Java y Maven</h3>
+    <p class="cds--body-01">El Lab 1 arranca en Java 8. Desde el Lab 2 el workflow pide <strong>Semeru 21</strong>, así que instala las dos versiones y Maven ahora. Después de instalar Maven, cierra y vuelve a abrir Bob para que tome el <code>PATH</code> nuevo.</p>
+    <div class="os-setup-grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
       <div class="os-setup-card">
-        <div class="os-setup-card__header"><h4 class="os-setup-card__title">macOS</h4></div>
-        <div class="os-setup-card__body"><details><summary>Ver comandos con SDKMAN!</summary><p class="cds--body-01" style="font-size:0.8125rem;margin-top:0.75rem">Instala SDKMAN!, Java 8, Java 21 y Maven. Ejecuta cada comando en orden:</p>
-          <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>curl -s "https://get.sdkman.io" | bash</code></pre></div>
-          <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>source "$HOME/.sdkman/bin/sdkman-init.sh"</code></pre></div>
-          <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>sdk install java 8.0.504+1-zulu</code></pre></div>
-          <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>sdk default java 8.0.504+1-zulu</code></pre></div>
-          <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>sdk install java 21.0.12-sem</code></pre></div>
-          <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>sdk install maven</code></pre></div>
-        </details></div>
-      </div>
-      <div class="os-setup-card">
-        <div class="os-setup-card__header"><h4 class="os-setup-card__title">Linux</h4></div>
-        <div class="os-setup-card__body"><details><summary>Ver comandos con SDKMAN!</summary><p class="cds--body-01" style="font-size:0.8125rem;margin-top:0.75rem">Instala SDKMAN!, Java 8, Java 21 y Maven. Ejecuta cada comando en orden:</p>
-          <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>curl -s "https://get.sdkman.io" | bash</code></pre></div>
-          <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>source "$HOME/.sdkman/bin/sdkman-init.sh"</code></pre></div>
-          <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>sdk install java 8.0.504+1-zulu</code></pre></div>
-          <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>sdk default java 8.0.504+1-zulu</code></pre></div>
-          <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>sdk install java 21.0.12-sem</code></pre></div>
-          <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>sdk install maven</code></pre></div>
-        </details></div>
-      </div>
-      <div class="os-setup-card">
-        <div class="os-setup-card__header"><h4 class="os-setup-card__title">Windows</h4></div>
+        <div class="os-setup-card__header">
+          <h4 class="os-setup-card__title">macOS y Linux</h4>
+        </div>
         <div class="os-setup-card__body">
-          <p>Elige una opción y úsala durante todo el workshop. No mezcles terminales ni instalaciones Java entre Windows y WSL.</p>
-          <details><summary>Opción A — winget en PowerShell</summary>
-            <p class="cds--body-01" style="font-size:0.8125rem;margin-top:0.75rem">Ejecuta Bob y todos los comandos del lab directamente en Windows. Instala Java 8 Zulu, Java 21 Semeru y Maven:</p>
-            <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>winget install --id Azul.Zulu.8.JDK --exact
+          <p>SDKMAN! instala y cambia entre versiones de Java. Copia el bloque entero y ejecútalo en orden:</p>
+          <div class="code-block code-block--terminal">
+            <button type="button" class="copy-button">Copiar</button>
+            <pre><code>curl -s "https://get.sdkman.io" | bash
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+sdk install java 8.0.504+1-zulu
+sdk default java 8.0.504+1-zulu
+sdk install java 21.0.12-sem
+sdk install maven</code></pre>
+          </div>
+          <div class="callout" data-tone="note" style="margin-top:0.75rem">
+            <p class="callout__title">Apple Silicon</p>
+            <p>Temurin no tiene Java 8 para arm64. Por eso usamos Zulu, que sí corre en Intel y en Macs de la serie M.</p>
+          </div>
+        </div>
+      </div>
+      <div class="os-setup-card">
+        <div class="os-setup-card__header">
+          <h4 class="os-setup-card__title">Windows</h4>
+        </div>
+        <div class="os-setup-card__body">
+          <p>Elige una opción y quédate en ella todo el workshop. No mezcles PowerShell nativo con WSL.</p>
+          <details open>
+            <div class="code-block code-block--terminal">
+              <button type="button" class="copy-button">Copiar</button>
+              <pre><code>winget install --id Azul.Zulu.8.JDK --exact
 winget install --id IBM.Semeru.21.JDK --exact
-winget install --id Apache.Maven --exact</code></pre></div>
-            <p>Cierra y vuelve a abrir PowerShell y Bob para actualizar el <code>PATH</code>. Antes del Lab 1, apunta <code>JAVA_HOME</code> a Zulu 8; desde el Lab 2, a Semeru 21.</p>
+winget install --id Apache.Maven --exact</code></pre>
+            </div>
+            <p>Cierra y vuelve a abrir PowerShell y Bob. Para el Lab 1, <code>JAVA_HOME</code> debe apuntar a Zulu 8; desde el Lab 2, a Semeru 21.</p>
           </details>
-          <details><summary>Opción B — WSL 2 + SDKMAN! (recomendada)</summary>
-            <p class="cds--body-01" style="font-size:0.8125rem;margin-top:0.75rem">Instala WSL desde PowerShell como administrador y reinicia si Windows lo solicita:</p>
-            <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>wsl --install</code></pre></div>
-            <p class="cds--body-01" style="font-size:0.8125rem;margin-top:0.75rem">Abre Ubuntu/WSL y ejecuta todo lo siguiente en esa terminal, no en PowerShell:</p>
-            <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>sudo apt update &amp;&amp; sudo apt install -y curl zip unzip lsof</code></pre></div>
-            <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>curl -s "https://get.sdkman.io" | bash</code></pre></div>
-            <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>source "$HOME/.sdkman/bin/sdkman-init.sh"</code></pre></div>
-            <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>sdk install java 8.0.504+1-zulu</code></pre></div>
-            <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>sdk default java 8.0.504+1-zulu</code></pre></div>
-            <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>sdk install java 21.0.12-sem</code></pre></div>
-            <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>sdk install maven</code></pre></div>
-            <p>Guarda el workshop en el sistema de archivos de WSL y abre Bob en el contexto <strong>WSL</strong>. Ejecuta allí todos los comandos <code>sdk</code>, <code>java</code>, <code>mvn</code> y <code>npm</code>.</p>
+          <details>
+            <summary>Opción B — WSL 2 + SDKMAN!</summary>
+            <p>En PowerShell como administrador:</p>
+            <div class="code-block code-block--terminal">
+              <button type="button" class="copy-button">Copiar</button>
+              <pre><code>wsl --install</code></pre>
+            </div>
+            <p>Abre Ubuntu/WSL — no PowerShell — e instala las herramientas de base y el mismo stack que en macOS/Linux:</p>
+            <div class="code-block code-block--terminal">
+              <button type="button" class="copy-button">Copiar</button>
+              <pre><code>sudo apt update &amp;&amp; sudo apt install -y curl zip unzip lsof
+curl -s "https://get.sdkman.io" | bash
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+sdk install java 8.0.504+1-zulu
+sdk default java 8.0.504+1-zulu
+sdk install java 21.0.12-sem
+sdk install maven</code></pre>
+            </div>
+            <p>Deja el workshop en el sistema de archivos de WSL y abre Bob en el contexto <strong>WSL</strong>. Todos los comandos <code>sdk</code>, <code>java</code>, <code>mvn</code> y <code>npm</code> salen de esa terminal.</p>
           </details>
         </div>
       </div>
     </div>
     <div class="callout" data-tone="tip">
-      <p class="callout__title">Comprueba el entorno antes de abrir el Lab 1</p>
-      <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>java -version</code></pre></div><div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>mvn --version</code></pre></div>
-      <p>Para el Lab 1, ambos comandos deben informar Java 8. Cambia a Java 21 antes de empezar el Lab 2.</p>
+      <p class="callout__title">Comprueba el entorno antes del Lab 1</p>
+      <div class="code-block code-block--terminal">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>java -version
+mvn --version</code></pre>
+      </div>
+      <p>Los dos deben reportar Java 8 (<code>1.8</code>). Cambia a Java 21 antes de empezar el Lab 2. Maven lo instalas tú; si falta el JDK, Bob puede instalarlo con SDKMAN!, pero en un taller cronometrado conviene tenerlo listo.</p>
     </div>
-    <h3 class="cds--productive-heading-02">3. Node.js LTS — solo Lab 3</h3>
-    <p class="cds--body-01"><strong>macOS, Linux o WSL:</strong> instala Node.js 20 o 22 LTS con NVM:</p>
-    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.6/install.sh | bash
+
+    <h3 class="cds--productive-heading-02">Node.js — solo Lab 3</h3>
+    <p class="cds--body-01">El frontend React del Lab 3 necesita Node.js 22. En macOS, Linux o WSL:</p>
+    <div class="code-block code-block--terminal">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.6/install.sh | bash
 source "$HOME/.nvm/nvm.sh"
 nvm install 22
-nvm use 22</code></pre></div>
-    <p class="cds--body-01"><strong>Windows nativo (PowerShell):</strong> instala Node.js 22 y vuelve a abrir Bob:</p>
-    <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>winget install --id OpenJS.NodeJS.22 --exact</code></pre></div>
+nvm use 22</code></pre>
+    </div>
+    <p class="cds--body-01">En Windows nativo (PowerShell), instala Node 22 y vuelve a abrir Bob:</p>
+    <div class="code-block code-block--terminal">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>winget install --id OpenJS.NodeJS.22 --exact</code></pre>
+    </div>
+
     <div class="callout" data-tone="warning">
       <p class="callout__title">Libera los puertos entre labs</p>
-      <p>Detén cualquier servidor Liberty antes de continuar. Si un puerto queda ocupado, el siguiente lab puede ejecutar una instancia anterior.</p>
-      <p><strong>macOS, Linux o WSL:</strong></p>
-      <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>lsof -ti:9080,9081,9443 | xargs kill -9</code></pre></div>
-      <p><strong>PowerShell de Windows:</strong></p>
-      <div class="code-block code-block--terminal"><button type="button" class="copy-button">Copiar</button><pre><code>Get-NetTCPConnection -LocalPort 9080,9081,9443 -ErrorAction SilentlyContinue |
+      <p>Si dejas Liberty en marcha, el lab siguiente puede engancharse a esa instancia. El Lab 1 usa el puerto <strong>9080</strong>; los Labs 2–5 usan <strong>9081</strong> (y a veces 9443).</p>
+      <p>macOS, Linux o WSL:</p>
+      <div class="code-block code-block--terminal">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>lsof -ti:9080,9081,9443 | xargs kill -9</code></pre>
+      </div>
+      <p>PowerShell de Windows:</p>
+      <div class="code-block code-block--terminal">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>Get-NetTCPConnection -LocalPort 9080,9081,9443 -ErrorAction SilentlyContinue |
   Select-Object -ExpandProperty OwningProcess -Unique |
-  ForEach-Object { Stop-Process -Id $_ -Force }</code></pre></div>
+  ForEach-Object { Stop-Process -Id $_ -Force }</code></pre>
+      </div>
     </div>
   </section>
 

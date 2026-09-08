@@ -58,7 +58,7 @@ El snapshot
   </section>
   <section class="lab-section" aria-labelledby="get-the-source-code-first">
     <h2 class="cds--productive-heading-03" id="get-the-source-code-first">Obtén primero el código fuente</h2>
-    <p>Si aún no lo has hecho, descarga el paquete del taller. Sigue en la misma carpeta <code>simple-pharmacy-workshop-v2</code> abierta en el overview — no hace falta volver a usar <strong>File → Open Folder</strong>.</p>
+    <p>Si aún no lo has hecho, descarga el paquete del taller. Descomprímelo y abre la carpeta <code>snapC-ui-fast</code> con <strong>File → Open Folder</strong>.</p>
     <p>
       <a download="simple-pharmacy-workshop-v2.zip" href="./downloads/simple-pharmacy-workshop-v2.zip" class="cds--btn cds--btn--primary">
         <span class="premium-button-icon">
@@ -72,21 +72,16 @@ El snapshot
     <p>Esta instantánea ya está en Liberty + Java 21 con la API REST lista (el resultado del Laboratorio 2, más la capa de servicios). Puedes usarla de forma independiente.</p>
     <section class="lab-workspace-setup" aria-labelledby="lab3-workspace">
       <div class="lab-workspace-setup__box">
-        <span class="lab-workspace-setup__badge">Sigue en el mismo workspace</span>
-        <h3 class="lab-workspace-setup__title" id="lab3-workspace">No abras otra carpeta: solo selecciona el proyecto</h3>
-        <p class="lab-workspace-setup__lead">No cambies de workspace ni uses <strong>File → Open Folder</strong>. En <strong>Seleccionar proyecto</strong>, despliega el selector de carpetas y <strong>elige</strong> el snapshot — no escribas ni pegues la ruta a mano.</p>
-        <div class="lab-workspace-setup__paths">
-          <div class="lab-workspace-setup__path lab-workspace-setup__path--locked">
-            <p class="lab-workspace-setup__path-label">Workspace — ya abierto, no lo cambies</p>
-            <code class="lab-workspace-setup__path-value">simple-pharmacy-workshop-v2</code>
-          </div>
-          <div class="lab-workspace-setup__path">
-            <p class="lab-workspace-setup__path-label">La carpeta que eliges en el selector</p>
-            <code class="lab-workspace-setup__path-value">…/simple-pharmacy-workshop-v2/labs/lab3-ui-modernization/snapC-ui-fast/</code>
-          </div>
+        <span class="lab-workspace-setup__badge">Abre la carpeta del snapshot</span>
+        <h3 class="lab-workspace-setup__title" id="lab3-workspace">Abre este lab como raíz del proyecto</h3>
+        <p class="lab-workspace-setup__lead">Usa <strong>File → Open Folder</strong> y abre la carpeta <code>snapC-ui-fast</code> como raíz del proyecto. Cada lab se abre en su propia carpeta.</p>
+        <div class="lab-workspace-setup__path">
+          <p class="lab-workspace-setup__path-label">Abre esta carpeta como raíz del proyecto</p>
+          <code class="lab-workspace-setup__path-value">…/simple-pharmacy-workshop-v2/labs/lab3-ui-modernization/snapC-ui-fast/</code>
         </div>
-        <ul class="cds--list--unordered lab-workspace-setup__checks" style="margin-top:var(--cds-spacing-04,0.75rem)">
-          <li class="cds--list__item">Deja <strong>apagados</strong> los dos interruptores: <strong>Ruta de proyecto personalizada</strong> y <strong>Comando de compilación personalizado</strong>.</li>
+        <ul class="cds--list--unordered lab-workspace-setup__checks">
+          <li class="cds--list__item">Abre la carpeta <code>snapC-ui-fast</code> <strong>en sí</strong>, no su carpeta padre <code>lab3-</code> ni el bundle completo. El workflow solo aparece a nivel del snapshot.</li>
+          <li class="cds--list__item">El campo <strong>Ruta del proyecto</strong> se rellena solo con esa carpeta: basta con confirmarlo. Deja apagados <strong>Ruta de proyecto personalizada</strong> y <strong>Comando de compilación personalizado</strong>.</li>
           <li class="cds--list__item">El indicador de modo del chat debe mostrar <strong>Agent</strong>.</li>
         </ul>
       </div>
@@ -129,12 +124,12 @@ El snapshot
   </section>
   <div class="callout" data-tone="note">
     <p class="callout__title">Antes de empezar</p>
-    <p>El entorno se instala una sola vez en la <a class="cds--link" href="#/lab/java-modernization-v2/overview?h=ov-prereqs">introducción</a>. Este lab usa <strong>Java 21</strong>, Maven y <strong>Node.js 22</strong> para el frontend React. Sigue en el mismo workspace.</p>
+    <p>El entorno se instala una sola vez en la <a class="cds--link" href="#/lab/java-modernization-v2/overview?h=ov-prereqs">introducción</a>. Este lab usa <strong>Java 21</strong>, Maven y <strong>Node.js 22</strong> para el frontend React. Ábrelo sobre la carpeta <code>snapC-ui-fast</code>.</p>
   </div>
   <section class="lab-section" aria-labelledby="step-1-open-the-project-and-confirm-agent-mode">
     <h2 class="cds--productive-heading-03" id="step-1-open-the-project-and-confirm-agent-mode">Paso 1: confirma el workspace, el proyecto seleccionado y Agent Mode</h2>
     <ol class="cds--list--ordered">
-      <li class="cds--list__item">Confirma que Bob sigue abierto en <code>simple-pharmacy-workshop-v2</code>. No cambies de workspace.</li>
+      <li class="cds--list__item">Confirma que Bob está abierto en <code>snapC-ui-fast</code>, la carpeta de este lab.</li>
       <li class="cds--list__item">Abre la interfaz de chat de Bob.</li>
       <li class="cds--list__item">
 Confirma que el indicador de modo en la parte inferior muestra
@@ -175,11 +170,11 @@ Presiona el botón de reproducción (
     </figure>
     <h3 id="21-analyze-project" class="cds--productive-heading-02 lab-step__title">2.1 Analizar Proyecto</h3>
     <p>
-En
-      <strong>Seleccionar proyecto</strong>
-, despliega el selector de carpetas y elige
+El campo
+      <strong>Ruta del proyecto</strong>
+ ya apunta a
       <code>snapC-ui-fast</code>
-. Deja apagados los dos interruptores opcionales y presiona
+, porque es la carpeta que abriste. Confírmalo, deja apagados los dos interruptores opcionales y presiona
       <strong>Continuar</strong>
 . Bob ejecuta una compilación inicial para confirmar que el estado de partida es correcto.
     </p>

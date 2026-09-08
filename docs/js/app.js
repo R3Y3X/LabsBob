@@ -2065,21 +2065,21 @@ function updateJavaPremiumWorkspace(panel, step) {
   const projectPath = JAVA_PREMIUM_PROJECT_PATHS[step.slug];
   if (workspace && projectPath) {
     const badge = workspace.querySelector('.lab-workspace-setup__badge');
-    if (badge) badge.textContent = 'Continúa en el mismo workspace';
+    if (badge) badge.textContent = 'Abre la carpeta del snapshot';
 
     const title = workspace.querySelector('.lab-workspace-setup__title');
     if (title) {
-      title.innerHTML = `${LAB_STEP_ICON_SVG} Punto de partida`;
+      title.innerHTML = `${LAB_STEP_ICON_SVG} Abre este lab como raíz del proyecto`;
     }
 
     const lead = workspace.querySelector('.lab-workspace-setup__lead');
     if (lead) {
-      lead.innerHTML = `Sigue en <code>simple-pharmacy-workshop-v2</code>, la carpeta que abriste en el overview. No uses <strong>File → Open Folder</strong>. Abre <strong>Workflows ▶</strong>, inicia ${describeJavaPremiumWorkflow(step)} y, en <strong>Seleccionar proyecto</strong>, despliega el selector de carpetas y <strong>elige</strong> la carpeta del snapshot.`;
+      lead.innerHTML = `Usa <strong>File → Open Folder</strong> y abre <strong>la carpeta del snapshot de este lab</strong> como raíz del proyecto. Después abre <strong>Workflows ▶</strong> e inicia ${describeJavaPremiumWorkflow(step)}.`;
     }
 
     const pathHtml = [
       '<div class="lab-workspace-setup__path">',
-      '<p class="lab-workspace-setup__path-label">La carpeta que eliges en el selector</p>',
+      '<p class="lab-workspace-setup__path-label">Abre esta carpeta como raíz del proyecto</p>',
       `<code class="lab-workspace-setup__path-value">${projectPath}</code>`,
       '</div>'
     ].join('');
@@ -2094,8 +2094,8 @@ function updateJavaPremiumWorkspace(panel, step) {
     // más comunes: escribir la ruta a mano y encender la ruta personalizada.
     const checksHtml = [
       '<ul class="cds--list--unordered lab-workspace-setup__checks">',
-      '<li class="cds--list__item">Elígela con el selector de carpetas. No escribas ni pegues la ruta a mano.</li>',
-      '<li class="cds--list__item">Deja <strong>apagados</strong> los dos interruptores: <strong>Ruta de proyecto personalizada</strong> y <strong>Comando de compilación personalizado</strong>.</li>',
+      '<li class="cds--list__item">Abre la carpeta <code>snap*</code> <strong>en sí</strong>, no su carpeta padre <code>lab*</code> ni el bundle completo. El workflow solo aparece a nivel del snapshot.</li>',
+      '<li class="cds--list__item">El campo <strong>Ruta del proyecto</strong> se rellena solo con esa carpeta: solo confírmalo. Deja apagados <strong>Ruta de proyecto personalizada</strong> y <strong>Comando de compilación personalizado</strong>.</li>',
       '<li class="cds--list__item">El indicador de modo del chat debe mostrar <strong>Agent</strong>.</li>',
       '</ul>'
     ].join('');

@@ -177,7 +177,8 @@ export const siteData = {
                   ['Entorno', 'IBM Bob IDE V2 con acceso a la pestaña “Workflows” y al paquete Java Modernization.'],
                   ['Java', 'Java 8 para el Lab 1; Java 21 desde el Lab 2; Maven 3.8+ disponible.'],
                   ['Node.js', 'Node.js LTS para el frontend React del Lab 3.'],
-                  ['Gobernanza', 'Permisos “Read”, “Edit”, “Execute” y MCP revisados antes de ejecutar cada flujo.']
+                  ['Gobernanza', 'Permisos “Read”, “Edit”, “Execute” y MCP revisados antes de ejecutar cada flujo.'],
+                  ['Carpetas', 'Cada lab se abre en su propia carpeta snap* con File → Open Folder. Los workflows premium solo aparecen a nivel del snapshot, no en la carpeta padre.']
                 ],
                 materials: ['Simple Pharmacy Workshop V2.', 'Capturas de los flujos y paneles de aprobación.', 'Plan de migración, resultados Maven, pruebas y reportes de CVE.'],
                 path: 'Sigue Liberty Replatforming, Java Upgrade, UI Modernization, Java Unit Testing y Java Vulnerabilities Detection.',

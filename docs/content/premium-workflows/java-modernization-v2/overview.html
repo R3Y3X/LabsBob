@@ -25,13 +25,14 @@
     <h2 class="cds--productive-heading-03" id="ov-materials">Materiales del Track C</h2>
     <div class="callout" data-tone="note">
       <p class="callout__title">Descarga el árbol fuente del workshop</p>
-      <p>Descomprime el ZIP y abre <strong>una sola vez</strong> la carpeta <code>simple-pharmacy-workshop-v2</code> en IBM Bob (<strong>File → Open Folder</strong>). No vuelvas a cambiar de workspace: cada lab indica la ruta del snapshot en el campo <strong>Project path</strong> del workflow. Las instrucciones de este recorrido se encuentran en el portal.</p>
+      <p>Descomprime el ZIP donde quieras. <strong>Cada lab se abre en su propia carpeta</strong>: al empezar uno, usa <strong>File → Open Folder</strong> sobre el snapshot que ese lab indica, dentro de <code>labs/</code>.</p>
+      <p><strong>Abre la carpeta <code>snap*</code> en sí, no su carpeta padre <code>lab*</code> ni el bundle completo.</strong> Los workflows premium solo aparecen cuando Bob está abierto a nivel del snapshot; desde la carpeta padre no se listan, y los que sí arrancan escanean de más y disparan el costo.</p>
       <a class="cds--btn cds--btn--primary" style="margin-top:1rem" download="simple-pharmacy-workshop-v2.zip" href="./downloads/simple-pharmacy-workshop-v2.zip">Descargar Simple Pharmacy workshop v2 (2.1 MB)</a>
     </div>
     <ul class="cds--list--unordered">
       <li class="cds--list__item"><code>labs/</code> contiene una carpeta y snapshot de inicio por laboratorio.</li>
       <li class="cds--list__item"><code>snapshots/</code> incluye estados de inicio y resultados de referencia.</li>
-      <li class="cds--list__item">Los workflows reciben la ruta del snapshot en <strong>Project path</strong> y muestran los cambios antes de aplicarlos.</li>
+      <li class="cds--list__item">Con el snapshot abierto como raíz, el campo <strong>Ruta del proyecto</strong> del workflow ya viene relleno: solo hay que confirmarlo.</li>
     </ul>
     <div class="callout" data-tone="tip">
       <p class="callout__title">Materiales adicionales del Lab 1</p>
@@ -93,20 +94,20 @@
     <section class="lab-workspace-setup" aria-labelledby="ov-workspace">
       <div class="lab-workspace-setup__box">
         <span class="lab-workspace-setup__badge">Regla del workshop — lee antes del Lab 1</span>
-        <h3 class="lab-workspace-setup__title" id="ov-workspace">Una carpeta para todo el workshop</h3>
-        <p class="lab-workspace-setup__lead">Abre <code>simple-pharmacy-workshop-v2</code> como workspace en Bob y no lo cambies entre labs. El snapshot de cada etapa se indica en el campo <strong>Project path</strong> del workflow.</p>
+        <h3 class="lab-workspace-setup__title" id="ov-workspace">Cada lab, su propia carpeta</h3>
+        <p class="lab-workspace-setup__lead">Al empezar cada lab, abre con <strong>File → Open Folder</strong> la carpeta del snapshot que le corresponde. Los workflows premium solo aparecen a nivel del snapshot, no en la carpeta padre.</p>
         <div class="lab-workspace-setup__path">
-          <p class="lab-workspace-setup__path-label">File → Open Folder</p>
-          <code class="lab-workspace-setup__path-value">…/simple-pharmacy-workshop-v2/</code>
+          <p class="lab-workspace-setup__path-label">Dónde viven las carpetas de cada lab</p>
+          <code class="lab-workspace-setup__path-value">…/simple-pharmacy-workshop-v2/labs/</code>
         </div>
         <div class="lab-workspace-setup__table-wrap">
           <table class="lab-workspace-setup__table">
-            <caption class="visually-hidden">Ruta de snapshot a poner en el workflow por lab</caption>
-            <thead><tr><th scope="col">Lab</th><th scope="col">Ruta a poner en el workflow</th></tr></thead>
+            <caption class="visually-hidden">Carpeta que abres al empezar cada lab</caption>
+            <thead><tr><th scope="col">Lab</th><th scope="col">Carpeta que abres con File → Open Folder</th></tr></thead>
             <tbody>
               <tr><th scope="row">Lab 1</th><td><code>labs/lab1-java-liberty-replatforming/snapA-java-liberty-replatforming/</code></td></tr>
               <tr><th scope="row">Lab 2</th><td><code>labs/lab2-java-upgrade/snapB-java-upgrade/</code></td></tr>
-              <tr><th scope="row">Lab 3</th><td><code>labs/lab3-ui-modernization/snapC-ui-mod/</code></td></tr>
+              <tr><th scope="row">Lab 3</th><td><code>labs/lab3-ui-modernization/snapC-ui-fast/</code></td></tr>
               <tr><th scope="row">Lab 4</th><td><code>labs/lab4-unit-test-generation/snapD-unit-test-gen/</code></td></tr>
               <tr><th scope="row">Lab 5</th><td><code>labs/lab5-security-vulnerability-remediation/snapE-security-vulnerabilities/</code></td></tr>
             </tbody>

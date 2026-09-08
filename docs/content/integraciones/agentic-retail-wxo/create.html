@@ -120,7 +120,11 @@ Reglas:
    RETAIL_MCP_URL="http://${IP}/retail-mcp/mcp"
    Escríbela en participant-config.env. Orchestrate rechaza el certificado HTTPS de la VM.
 7. Verifica el MCP: curl -sS "http://${IP}/retail-mcp/health"
-   Esperado: status=ok. Si falla, detente y avísame.</code></pre>
+   Esperado: status=ok. Si falla, detente y avísame.
+8. El MCP lee inventory.availability.tz{1-3}_pXXX (ksql / DERIVED_TOPIC_NAME).
+   No lee inventory.availability.flink.*. Si más adelante el chat da found=false
+   y el tópico ksql está vacío, el arreglo es Track D (sink ksql), no Orchestrate
+   ni un toolkits add.</code></pre>
     </div>
 
     <div class="lab-accordion" style="margin-top:1rem;">

@@ -40,7 +40,7 @@
         <ul class="cds--list--unordered" style="margin-top:0.5rem;">
           <li class="cds--list__item">Campos <code>sku</code>, <code>branch</code>, <code>quantity</code>, <code>transaction_type</code>, <code>timestamp</code>, <code>source</code> y <code>reference</code> — validados por el JSON Schema registrado en Step 1b.</li>
           <li class="cds--list__item">Variedad de tipos: <code>ADDITION</code>, <code>SALE</code> y <code>ADJUSTMENT</code> — para que ksqlDB calcule disponibilidades reales.</li>
-          <li class="cds--list__item">En cuanto llega el primer mensaje, <code>INVENTORY_AVAILABILITY</code> empieza a actualizar su tabla en tiempo real.</li>
+          <li class="cds--list__item">Si ksql materializa bien, <code>inventory.availability</code> (sin <code>.flink.</code>) se actualiza al llegar el primer mensaje. Si la query está Running y ese tópico sigue vacío, no es que “falte Flink”: el CTAS no está emitiendo. Avísale al facilitador.</li>
         </ul>
       </div>
 
@@ -68,14 +68,27 @@ Mismo contexto que el Step 1: SASL_SSL + cert self-signed; run_in_cluster.sh lee
 Dime el output completo. Éxito:
 - Delivered: 20/20 (failed: 0)
 - Published 20 JSON_SR transactions to inventory.transactions
-- OK: produce_messages</div>
+- OK: produce_messages
+- OK: materialize_availability
+
+setup.sh -s 3 publica y después corre materialize_availability.py. Ese script
+SOLO escribe en inventory.availability.<WORKSHOP_ID> si el CTAS de ksql no
+emitió filas (puede estar RUNNING y el sink vacío). No toca el tópico Flink.
+El MCP / Track F lee ese sink ksql, no inventory.availability.flink.*.
+
+Si ves KSQL_FALLBACK en el log, es el caso ksql vacío: el fallback ya llenó
+el tópico que usa Orchestrate. Si ves "ksql sink already has N messages",
+ksql materializó solo y no hizo falta el fallback.
+
+No reescribas el CREATE TABLE, no inventes SQL, no apuntes el toolkit a Flink.</div>
       </div>
 
       <div class="callout" data-tone="success" style="margin-top:1.25rem;">
         <p class="callout__title">✓ Checkpoint</p>
         <ul class="checklist">
           <li class="checklist__item">Bob reporta <code>Delivered: 20/20 (failed: 0)</code> y <code>Published 20 JSON_SR transactions to inventory.transactions</code>.</li>
-          <li class="checklist__item">Línea final del script: <code>OK: produce_messages</code></li>
+          <li class="checklist__item">Línea <code>OK: produce_messages</code> y <code>OK: materialize_availability</code>. Si ksql no emitió, el log dice <code>KSQL_FALLBACK</code>.</li>
+          <li class="checklist__item">En Topics, <code>inventory.availability</code> (sin <code>.flink.</code>) ya muestra filas. Si solo se llenó <code>inventory.availability.flink</code>, Track F seguirá sin stock: avisa al facilitador.</li>
         </ul>
       </div>
 
@@ -190,7 +203,7 @@ Dime el output completo. Éxito:
       <ul class="checklist">
         <li class="checklist__item">Se visualizan los mensajes en la pestaña <strong>Messages</strong> con sus <strong>timestamps</strong> y <strong>offsets</strong> correctos.</li>
           <li class="checklist__item">El payload cumple el JSON Schema registrado en Step 1b (campos <code>sku</code>, <code>branch</code>, <code>quantity</code>, <code>transaction_type</code>, <code>timestamp</code>, <code>source</code>, <code>reference</code>).</li>
-        <li class="checklist__item">El tópico <code>inventory.availability</code> muestra disponibilidad calculada por SKU y sucursal con <code>available_quantity</code> actualizada.</li>
+        <li class="checklist__item">El tópico <code>inventory.availability</code> (el de ksql, <strong>sin</strong> <code>.flink.</code>) muestra disponibilidad por SKU y sucursal. Ese es el que lee el MCP en Track F. El tópico Flink es otra demo: puede tener datos y aun así Track F falla si el de ksql está vacío.</li>
         <li class="checklist__item">El subject <code>inventory.transactions-value</code> en Schema Registry sigue mostrando versión <strong>v1</strong> sin errores de validación.</li>
       </ul>
     </div>
@@ -268,6 +281,11 @@ Dime el output completo. Éxito:
           <td style="padding:0.875rem 1rem; vertical-align:top;"><code>Supported values are: [confluent]</code> o Flink en crash-loop</td>
           <td style="padding:0.875rem 1rem; vertical-align:top;">SQL OSS (<code>connector=kafka</code>) o timeout de transacciones en el broker.</td>
           <td style="padding:0.875rem 1rem; vertical-align:top;">No inventes el job: <code>./setup.sh -s 4</code>. Si un INSERT queda <code>PENDING</code>/<code>FAILED</code>, bórralo para no saturar el compute pool compartido.</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--cds-border-subtle,#e0e0e0);">
+          <td style="padding:0.875rem 1rem; vertical-align:top;"><code>inventory.transactions</code> tiene mensajes; <code>inventory.availability</code> (sin <code>.flink.</code>) está vacío. Persistent query <strong>Running</strong></td>
+          <td style="padding:0.875rem 1rem; vertical-align:top;">El CTAS de ksqlDB consume los offsets JSON_SR y no emite filas al sink. Flink sí puede llenar <code>inventory.availability.flink</code> (otro tópico). El MCP de Track F no lee Flink.</td>
+          <td style="padding:0.875rem 1rem; vertical-align:top;">No reescribas el SQL ni cambies el toolkit a Flink. Vuelve a correr <code>./setup.sh -s 3</code>: después del produce corre <code>materialize_availability.py</code>, que <strong>solo</strong> llena <code>inventory.availability</code> (ksql / Track F) si ese sink sigue vacío. No escribe en <code>.flink.</code>.</td>
         </tr>
         <tr>
           <td style="padding:0.875rem 1rem; vertical-align:top;"><code>Schema validation failed</code> <span style="display:inline-block; margin-left:0.2rem;">en Schema Registry</span></td>

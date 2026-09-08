@@ -294,7 +294,13 @@ Contexto:
 Dime el output completo. Éxito debe incluir:
 - currentStatus: SUCCESS (Stream created) o already exists
 - currentStatus: SUCCESS (Created query with ID ...) o already exists
-- Derived table ready / OK: create_derived_topic</div>
+- Derived table ready / OK: create_derived_topic
+
+Importante: SUCCESS / query Running NO significa que inventory.availability ya tenga filas.
+Las filas aparecen después de setup.sh -s 3 (Publicar + fallback ksql). El sink
+de Track F es DERIVED_TOPIC_NAME (inventory.availability.<WORKSHOP_ID>), no
+FLINK_TOPIC_NAME. Si ksql no emite, -s 3 corre materialize_availability.py solo
+en ese caso (log KSQL_FALLBACK).</div>
       </div>
 
       <!-- imágenes de validación lado a lado -->

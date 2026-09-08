@@ -63,6 +63,7 @@
       <ul class="checklist">
         <li class="checklist__item">En <strong>Flow</strong>, tu stream <code>INVENTORY_TRANSACTIONS</code> llega a la tabla <code>INVENTORY_AVAILABILITY</code>.</li>
         <li class="checklist__item">En <strong>Persistent queries</strong>, la query <code>CTAS_INVENTORY_AVAILABILITY_1</code> está <strong>Running</strong> (el número final puede variar).</li>
+        <li class="checklist__item"><strong>Running no implica filas en el sink.</strong> Tras publicar, abre Topics → <code>inventory.availability</code> (sin <code>.flink.</code>). Si está vacío y <code>inventory.transactions</code> no, avisa: el CTAS puede comer offsets JSON_SR y no emitir. Track F lee ese tópico, no el de Flink.</li>
       </ul>
     </div>
   </section>

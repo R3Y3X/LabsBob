@@ -70,6 +70,7 @@ def main() -> None:
         "register_schema.py",
         "create_derived_topic.py",
         "produce_messages.py",
+        "materialize_availability.py",
         "setup.sh",
         "delete_topics.py",
         "run_in_cluster.sh",

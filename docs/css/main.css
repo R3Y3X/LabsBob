@@ -1488,47 +1488,7 @@ body {
 }
 
 .image-placeholder {
-  border: 1px dashed var(--cds-border-strong-01, #8d8d8d);
-  background: var(--cds-layer-01, #f4f4f4);
-  padding: 24px;
-  margin: var(--cds-spacing-06, 1.5rem) 0;
-  color: var(--cds-text-secondary, #525252);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  position: relative;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-  min-height: 120px;
-  font-style: normal;
-}
-
-.image-placeholder::before {
-  content: '🖼️';
-  font-size: 1.8rem;
-  margin-bottom: 4px;
-}
-
-.image-placeholder code {
-  background: var(--cds-layer-02, #ffffff);
-  padding: 2px 8px;
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 0.8125rem;
-  border: 1px solid var(--cds-border-subtle-01, #c6c6c6);
-  color: var(--cds-text-primary, #161616);
-  font-style: normal;
-}
-
-.cds--g100 .image-placeholder {
-  background: var(--cds-layer-01, #262626);
-  border-color: #525252;
-}
-
-.cds--g100 .image-placeholder code {
-  background: var(--cds-layer-02, #353535);
-  border-color: #393939;
-  color: #f4f4f4;
+  display: none !important;
 }
 
 .lab-template {

@@ -28,11 +28,7 @@
       <p>Bob acelera cada componente: crea topics de Kafka desde un solo prompt, genera definiciones de streams ksqlDB, prepara el código de la herramienta MCP, valida las definiciones YAML de los agentes y coordina las importaciones del ADK CLI. Toda la infraestructura pasa de cero a desplegada en menos de 2 horas.</p>
     </div>
 
-    <blockquote class="image-placeholder">
-      🖼️ <strong>[PLACEHOLDER DE IMAGEN — DIAGRAMA DE ARQUITECTURA]</strong><br/>
-      <strong>Ruta sugerida:</strong> <code>/assets/images/labs/agentic-retail/architecture-diagram.png</code><br/>
-      <strong>Descripción:</strong> Diagrama de arquitectura mostrando el flujo completo: (1) Confluent Cloud Kafka con el topic inventory.transactions → (2) ksqlDB procesando el stream y escribiendo a inventory.availability → (3) MCP toolkit sku-availability-checker consultando ksqlDB → (4) watsonx Orchestrate con el SKU Availability Agent y el Substitute Finder Agent coordinados por el Store Associate Agent supervisor → (5) Product Catalog (enterprise_documents) como fuente RAG para el Substitute Finder Agent. El usuario (Store Associate) interactúa con el Store Associate Agent.
-    </blockquote>
+
 
     <div class="lab-step">
       <h3 class="cds--productive-heading-02 lab-step__title">Component 1 — Confluent Cloud (Kafka)</h3>

@@ -44,11 +44,7 @@ Use ~/Documents/bob/confluent-agents as the working directory.</code></pre>
         <p class="callout__title">Resultado esperado</p>
         <p>Bob creates the project directory, <code>create_topic.py</code>, and <code>.env.example</code>. Fill in your <code>BOOTSTRAP_SERVER</code>, <code>API_KEY</code>, and <code>API_SECRET</code>. Then tell Bob: <em>"Done, I edited the .env file — create the topic and validate it was created."</em> Bob confirms with the Confluent API response.</p>
       </div>
-      <blockquote class="image-placeholder">
-        🖼️ <strong>[PLACEHOLDER DE IMAGEN]</strong><br/>
-        <strong>Ruta sugerida:</strong> <code>/assets/images/labs/agentic-retail/step-1-bob-topic.png</code><br/>
-        <strong>Descripción:</strong> Bob mostrando el script Python para crear el topic de Kafka y la confirmación en terminal de que el topic inventory.transactions fue creado exitosamente en Confluent Cloud.
-      </blockquote>
+
     </div>
 
     <!-- Step 2 -->
@@ -72,11 +68,7 @@ and an inventory_availability table aggregating available_quantity by sku and br
         <p class="callout__title">Resultado esperado</p>
         <p>Bob runs the Confluent CLI commands to create the ksqlDB cluster (takes ~2 minutes to provision), then creates the <code>inventory_transactions</code> stream and <code>inventory_availability</code> table. Running <code>SELECT * FROM INVENTORY_AVAILABILITY EMIT CHANGES;</code> in the Confluent UI shows the aggregated data.</p>
       </div>
-      <blockquote class="image-placeholder">
-        🖼️ <strong>[PLACEHOLDER DE IMAGEN]</strong><br/>
-        <strong>Ruta sugerida:</strong> <code>/assets/images/labs/agentic-retail/step-2-ksqldb.png</code><br/>
-        <strong>Descripción:</strong> Confluent UI mostrando el ksqlDB cluster activo con el resultado de la query SELECT mostrando la tabla INVENTORY_AVAILABILITY con columnas sku, branch, available_quantity pobladas con datos de muestra.
-      </blockquote>
+
     </div>
 
     <!-- Step 3 -->
@@ -100,11 +92,7 @@ Then validate the messages are correctly processed in ksqlDB.</code></pre>
         <p class="callout__title">Resultado esperado</p>
         <p>Bob creates <code>produce_messages.py</code> and runs it. The Confluent UI shows message count = 20 for the <code>inventory.transactions</code> topic. The ksqlDB query confirms one laptop SKU shows 0 available quantity in one branch.</p>
       </div>
-      <blockquote class="image-placeholder">
-        🖼️ <strong>[PLACEHOLDER DE IMAGEN]</strong><br/>
-        <strong>Ruta sugerida:</strong> <code>/assets/images/labs/agentic-retail/step-3-messages.png</code><br/>
-        <strong>Descripción:</strong> Confluent UI mostrando 20 mensajes en el topic inventory.transactions y el resultado del ksqlDB mostrando el laptop con quantity 0 en un branch específico.
-      </blockquote>
+
     </div>
 
     <!-- Step 4 -->
@@ -132,11 +120,7 @@ Then validate the messages are correctly processed in ksqlDB.</code></pre>
         <p class="callout__title">Resultado esperado</p>
         <p>The toolkit is registered in watsonx Orchestrate. Open the Orchestrate UI → Manage Tools → verify <code>sku-availability-checker</code> appears with its <code>get_sku_availability</code> tool listed.</p>
       </div>
-      <blockquote class="image-placeholder">
-        🖼️ <strong>[PLACEHOLDER DE IMAGEN]</strong><br/>
-        <strong>Ruta sugerida:</strong> <code>/assets/images/labs/agentic-retail/step-4-mcp-import.png</code><br/>
-        <strong>Descripción:</strong> watsonx Orchestrate UI mostrando el toolkit sku-availability-checker importado con la herramienta get_sku_availability listada y disponible.
-      </blockquote>
+
     </div>
 
     <!-- Step 5 -->
@@ -166,11 +150,7 @@ orchestrate agents import -f Store_Associate_Agent.yaml</code></pre>
         <p class="callout__title">Upload Product Catalog (RAG)</p>
         <p>In the watsonx Orchestrate UI: <strong>Knowledge</strong> → <strong>Add New Knowledge</strong> → <strong>Upload Files</strong> → select <code>product-catalog.docx</code>. Set the name to <code>enterprise_documents</code>. Wait for indexing to complete before testing.</p>
       </div>
-      <blockquote class="image-placeholder">
-        🖼️ <strong>[PLACEHOLDER DE IMAGEN]</strong><br/>
-        <strong>Ruta sugerida:</strong> <code>/assets/images/labs/agentic-retail/step-5-agents-import.png</code><br/>
-        <strong>Descripción:</strong> watsonx Orchestrate UI en Manage Agents mostrando los tres agentes importados (SKU_Availability_Agent, Substitute_Finder_Agent, Store_Associate_Agent) con estado "Deployed".
-      </blockquote>
+
     </div>
 
     <!-- Step 6 -->
@@ -206,11 +186,7 @@ orchestrate agents import -f Store_Associate_Agent.yaml</code></pre>
         <p class="callout__title">🎉 Lab Complete</p>
         <p>You have built a complete event-driven agentic AI system using Confluent Cloud, ksqlDB, MCP tools, and watsonx Orchestrate — with Bob accelerating every stage. This pattern scales to retail, banking, operations, and supply chain scenarios.</p>
       </div>
-      <blockquote class="image-placeholder">
-        🖼️ <strong>[PLACEHOLDER DE IMAGEN]</strong><br/>
-        <strong>Ruta sugerida:</strong> <code>/assets/images/labs/agentic-retail/step-6-test.png</code><br/>
-        <strong>Descripción:</strong> watsonx Orchestrate chat mostrando la respuesta del Store Associate Agent para el Test A: indicando que LAPTOP-DELL-XPS-15 no está disponible en MallOfEgypt y recomendando LAPTOP-HP-SPECTRE-X360 como alternativa con la justificación basada en el catálogo de productos.
-      </blockquote>
+
     </div>
 
   </section>

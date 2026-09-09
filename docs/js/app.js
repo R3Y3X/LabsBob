@@ -1659,25 +1659,33 @@ function replaceMissingImage(image) {
   if (image.dataset.carbonFallback === 'true') return;
   image.dataset.carbonFallback = 'true';
 
-  const placeholder = document.createElement('div');
-  placeholder.className = 'carbon-image-placeholder';
+  const figure = image.closest('figure');
+  const hero = image.closest('.lab-hero-image');
+  const cardMedia = image.closest('.hub-lab-card__media');
+  const parent = image.parentElement;
+  const link = parent?.tagName === 'A' ? parent : null;
 
-  const label = document.createElement('span');
-  label.className = 'carbon-image-placeholder__label';
-  label.textContent = 'Imagen pendiente';
+  image.remove();
 
-  const srcPath = image.dataset.placeholderPath || image.getAttribute('src') || '';
-  const pathTag = document.createElement('code');
-  pathTag.className = 'carbon-image-placeholder__path';
-  pathTag.textContent = srcPath;
+  if (link && !link.querySelector('img') && !link.textContent.trim()) {
+    const linkParent = link.parentElement;
+    link.remove();
+    if (linkParent?.matches('p') && !linkParent.querySelector('img') && !linkParent.textContent.trim()) {
+      linkParent.remove();
+    }
+  } else if (parent?.matches('p') && !parent.querySelector('img') && !parent.textContent.trim()) {
+    parent.remove();
+  }
 
-  const description = document.createElement('p');
-  description.className = 'carbon-image-placeholder__description';
-  const altHint = (image.getAttribute('alt') || '').trim();
-  description.textContent = altHint || 'Guarda la captura en la ruta indicada para que se vea en el laboratorio.';
-
-  placeholder.append(label, pathTag, description);
-  image.replaceWith(placeholder);
+  if (figure && !figure.querySelector('img')) figure.remove();
+  if (hero && !hero.querySelector('img')) hero.remove();
+  if (cardMedia && !cardMedia.querySelector('img')) {
+    if (cardMedia.querySelector('.hub-lab-card__premium-badge')) {
+      cardMedia.classList.add('hub-lab-card__media--empty');
+    } else {
+      cardMedia.remove();
+    }
+  }
 }
 
 const PERSON_ICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="40" height="40" fill="currentColor" aria-hidden="true"><path d="M16 16a7 7 0 1 0-7-7 7 7 0 0 0 7 7Zm0-12a5 5 0 1 1-5 5 5 5 0 0 1 5-5Zm9 28H7a2 2 0 0 1-2-2v-1a8.7 8.7 0 0 1 9-8h4a8.7 8.7 0 0 1 9 8v1a2 2 0 0 1-2 2Zm-9-9a6.7 6.7 0 0 0-7 6v1h14v-1a6.7 6.7 0 0 0-7-6Z"/></svg>`;

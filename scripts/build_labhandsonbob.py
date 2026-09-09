@@ -1,17 +1,28 @@
 #!/usr/bin/env python3
-"""Rebuild LabHandsOnBob.zip so every lab folder is fully self-contained.
+"""Rebuild the Track A and Track B bundles, each with only its own material.
 
-Problem: the bundle's lab-2 exercise required files from lab-1 via relative
-paths like ../../../lab-1-ask-mode/src/models/Product, so a participant who
-opened lab-2 in isolation hit broken imports. This script restructures the
-bundle from the existing zip into independent per-lab folders, matching the
-lab numbering used on the site (docs/js/data.js), and writes a fresh zip.
+Two problems this fixes:
+
+1. The bundle's lab-2 exercise required files from lab-1 via relative paths
+   like ../../../lab-1-ask-mode/src/models/Product, so a participant who
+   opened lab-2 in isolation hit broken imports. The lab folders are
+   restructured into independent per-lab folders, matching the lab numbering
+   used on the site (docs/js/data.js).
+
+2. A single zip served both tracks. Track A ("De la idea al código") uses the
+   lab-* folders and never touches galaxium-travels; Track B ("¿Tu código es
+   seguro?") opens galaxium-travels as its workspace and never touches the
+   lab-* folders. Each track now gets its own zip.
 
 Usage:
-    python3 scripts/build_labhandsonbob.py [--source PATH] [--out PATH]
+    python3 scripts/build_labhandsonbob.py [--source PATH] [--out-a PATH] [--out-b PATH]
 
 Defaults: --source docs/downloads/LabHandsOnBob.zip
-          --out    docs/downloads/LabHandsOnBob.zip (overwritten in place)
+          --out-a  docs/downloads/LabHandsOnBob.zip  (Track A, overwritten in place)
+          --out-b  docs/downloads/galaxium-travels.zip (Track B)
+
+Re-runnable: once the Track A zip no longer carries galaxium-travels, the
+builder falls back to the Track B zip to find it.
 """
 import argparse
 import shutil
@@ -32,11 +43,13 @@ no abras esta carpeta raíz.
 | Lab 2 — Plan y Agent | `lab-2-plan-agent/` | Node.js 18+ |
 | Lab 3 — Modo personalizado | `lab-3-modo-personalizado/` | — |
 | Lab 4 — MCP | `lab-4-mcp-tavily/` | API key de Tavily (gratis) |
-| Auditoría de seguridad (workshop "¿Tu código es seguro?") | `galaxium-travels/` | Python 3, Node.js 18+ |
 
 Cada carpeta trae su propio `README.md` con el detalle. Las instrucciones
 completas, con capturas y prompts para copiar, están en el sitio del
 workshop.
+
+El workshop de seguridad ("¿Tu código es seguro?") tiene su propio material:
+descarga `galaxium-travels.zip` desde su introducción en el sitio.
 """
 
 LAB2_README = """# Lab 2 — Plan y Agent
@@ -133,10 +146,11 @@ GALAXIUM_WORKSHOP_NOTE = """# Este proyecto es el material del workshop "¿Tu c�
 
 Las instrucciones completas (Rules, Auditoría ASVS, Código seguro
 actor-critic) están en el sitio del workshop, no en este README — el
-README de arriba es el de Galaxium Travels como proyecto en sí.
+`README.md` de al lado es el de Galaxium Travels como proyecto en sí.
 
-Abre esta carpeta (`galaxium-travels/`) directamente como raíz del proyecto
-en IBM Bob. No depende de ninguna otra carpeta del bundle.
+Este zip contiene solo esta carpeta: descomprímelo y abre `galaxium-travels/`
+directamente como raíz del proyecto en IBM Bob. Es el workspace de los tres
+labs del workshop.
 """
 
 
@@ -161,14 +175,51 @@ def rewrite_cart_routes(text: str) -> str:
     return text
 
 
-def build(source_zip: Path, out_zip: Path) -> None:
+def find_galaxium(src_root: Path, extract_dir: Path, track_b_zip: Path) -> Path:
+    """Locate galaxium-travels across every layout this builder has produced.
+
+    Newest first: the Track B zip (where it lives once the tracks are split),
+    then the current single-bundle layout, then the legacy nested one.
+    """
+    if track_b_zip.exists():
+        gx_dir = extract_dir / "track-b"
+        with zipfile.ZipFile(track_b_zip) as zf:
+            zf.extractall(gx_dir)
+        candidate = gx_dir / "galaxium-travels"
+        if candidate.exists():
+            return candidate
+
+    for candidate in (
+        src_root / "galaxium-travels",
+        src_root / "lab-3-seguridad" / "galaxium-travels",
+    ):
+        if candidate.exists():
+            return candidate
+
+    raise SystemExit(
+        f"No encuentro galaxium-travels ni en {track_b_zip} ni en el zip fuente. "
+        "Pasa un bundle que lo contenga con --source."
+    )
+
+
+def zip_tree(root: Path, out_zip: Path) -> None:
+    """Zip `root` itself, so its name is the top-level folder inside the zip."""
+    with zipfile.ZipFile(out_zip, "w", zipfile.ZIP_DEFLATED) as zf:
+        for path in sorted(root.rglob("*")):
+            if path.is_file():
+                zf.write(path, path.relative_to(root.parent))
+
+
+def build(source_zip: Path, out_zip_a: Path, out_zip_b: Path) -> None:
     work = REPO_ROOT / "_labhandsonbob_build"
     if work.exists():
         shutil.rmtree(work)
     extract_dir = work / "extract"
     out_dir = work / "out" / "LabHandsOnBob"
+    out_dir_b = work / "out-b"
     extract_dir.mkdir(parents=True)
     out_dir.mkdir(parents=True)
+    out_dir_b.mkdir(parents=True)
 
     with zipfile.ZipFile(source_zip) as zf:
         zf.extractall(extract_dir)
@@ -255,14 +306,12 @@ def build(source_zip: Path, out_zip: Path) -> None:
     )
     (lab4 / ".bob" / "mcp.json.example").write_text(LAB4_MCP_EXAMPLE, encoding="utf-8")
 
-    # ── galaxium-travels (security workshop) ─────────────────────────
-    # It was nested in the legacy archive and is top-level in the current
-    # one. Preserve either source layout when rebuilding this shared bundle.
-    galaxium_source = src_root / "galaxium-travels"
-    if not galaxium_source.exists():
-        galaxium_source = src_root / "lab-3-seguridad" / "galaxium-travels"
-    shutil.copytree(galaxium_source, out_dir / "galaxium-travels")
-    (out_dir / "galaxium-travels" / "WORKSHOP-LAB.md").write_text(
+    # ── Track B — galaxium-travels (workshop de seguridad) ───────────
+    # Va en su propio zip: el Track A no lo usa en ningún lab, y el Track B
+    # no usa ninguna de las carpetas lab-* de arriba.
+    galaxium_source = find_galaxium(src_root, extract_dir, out_zip_b)
+    shutil.copytree(galaxium_source, out_dir_b / "galaxium-travels")
+    (out_dir_b / "galaxium-travels" / "WORKSHOP-LAB.md").write_text(
         GALAXIUM_WORKSHOP_NOTE, encoding="utf-8"
     )
 
@@ -270,25 +319,30 @@ def build(source_zip: Path, out_zip: Path) -> None:
     # unrelated leftover modes (a pricing-comparison expert, an API-docs
     # expert) from a different exercise — dropped, not carried forward.
 
-    with zipfile.ZipFile(out_zip, "w", zipfile.ZIP_DEFLATED) as zf:
-        for path in sorted(out_dir.rglob("*")):
-            if path.is_file():
-                zf.write(path, path.relative_to(out_dir.parent))
+    zip_tree(out_dir, out_zip_a)
+    zip_tree(out_dir_b / "galaxium-travels", out_zip_b)
 
     shutil.rmtree(work)
-    print(f"Wrote {out_zip} ({out_zip.stat().st_size / 1_000_000:.1f} MB)")
+    for label, path in (("Track A", out_zip_a), ("Track B", out_zip_b)):
+        size = path.stat().st_size
+        unit = f"{size / 1_000_000:.1f} MB" if size >= 1_000_000 else f"{size / 1_000:.0f} KB"
+        print(f"Wrote {path} — {label} ({unit})")
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
+    downloads = REPO_ROOT / "docs" / "downloads"
+    parser.add_argument("--source", type=Path, default=downloads / "LabHandsOnBob.zip")
     parser.add_argument(
-        "--source", type=Path, default=REPO_ROOT / "docs" / "downloads" / "LabHandsOnBob.zip"
+        "--out-a", type=Path, default=downloads / "LabHandsOnBob.zip",
+        help="Track A — De la idea al código",
     )
     parser.add_argument(
-        "--out", type=Path, default=REPO_ROOT / "docs" / "downloads" / "LabHandsOnBob.zip"
+        "--out-b", type=Path, default=downloads / "galaxium-travels.zip",
+        help="Track B — ¿Tu código es seguro?",
     )
     args = parser.parse_args()
-    build(args.source, args.out)
+    build(args.source, args.out_a, args.out_b)
 
 
 if __name__ == "__main__":

@@ -133,27 +133,6 @@ body.cds--g100 .cds--header {
   color: #ffffff !important;
 }
 
-.hub-header__search-wrap {
-  margin-right: 0.5rem;
-}
-
-.hub-header__search-input {
-  width: 15rem;
-  height: 2rem;
-  border-color: #525252;
-  background: #262626;
-  color: #f4f4f4;
-}
-
-.hub-header__search-input:hover {
-  border-color: #8d8d8d;
-}
-
-.hub-header__search-input:focus {
-  background: #393939;
-  border-color: #ffffff;
-}
-
 .cds--header__action {
   width: var(--hub-header-height);
   height: var(--hub-header-height);
@@ -3898,7 +3877,6 @@ body[data-category="premium"] .lab-shell:not(.lab-shell--ibm-i-rpg-development) 
   height: 16px;
   fill: currentColor;
 }
-
 
 /* Reset text color for light-background snippet blocks */
 .prose .copy-snippet-block pre,

@@ -60,19 +60,63 @@ Si el import falla, muéstrame el error completo y detente.</code></pre>
       </div>
     </div>
     <h2 class="cds--productive-heading-04" id="knowledge-rag">Paso 2 — Crear la base de conocimiento</h2>
-    <p class="step-header__why">El archivo <code>product-catalog.docx</code> es el catálogo interno de la tienda. Al indexarlo como base de conocimiento, el agente puede citar atributos reales de producto en vez de inventar recomendaciones.</p>
+    <p class="step-header__why">El archivo <code>product-catalog.docx</code> es el catálogo interno de la tienda. Al indexarlo, el agente cita atributos reales de producto en vez de inventar recomendaciones. La propia pantalla lo explica: <em>"Agents will use this description to decide whether to invoke the knowledge"</em> — por eso la descripción es obligatoria y no da igual qué escribas ahí.</p>
 
     <ol class="cds--list--ordered">
       <li class="cds--list__item">Abre el agente de sustitutos (busca el sufijo <code>_TZ{N}_P{xxx}</code>) en la UI de watsonx Orchestrate.</li>
-      <li class="cds--list__item">Entra a <strong>Knowledge</strong> y haz clic en <strong>Add source</strong>.</li>
-      <li class="cds--list__item">Crea una base de conocimiento nueva y usa <strong>Upload files</strong>.</li>
-      <li class="cds--list__item">Sube <code>product-catalog.docx</code> desde <code>trackF/confluent_agents</code>. El nombre debe ser <strong>exactamente</strong> el valor de <code>KNOWLEDGE_BASE_NAME</code> en <code>participant-config.env</code> (ejemplo <code>enterprise_documents_tz1_p098</code>). No lo dejes en <code>enterprise_documents</code> si el YAML ya lleva el sufijo.</li>
-      <li class="cds--list__item">Espera a que termine la indexación. Haz clic en <strong>Deploy</strong> y confirma.</li>
+      <li class="cds--list__item">Entra a <strong>Knowledge</strong> y haz clic en <strong>Add source</strong>. Se abre el asistente <strong>Choose knowledge source</strong>, de tres pasos.</li>
+      <li class="cds--list__item"><strong>Select knowledge source</strong> — elige <strong>Upload files</strong> y pulsa <strong>Next</strong>.</li>
+    </ol>
+
+    <figure class="lab-figure">
+      <img src="./assets/images/labs/agentic-retail-wxo/wxo-knowledge-select-source.png"
+           data-placeholder-path="./assets/images/labs/agentic-retail-wxo/wxo-knowledge-select-source.png"
+           alt="Primer paso del asistente Choose knowledge source con la opción Upload files marcada como Selected"
+           class="lab-figure__img" />
+      <figcaption class="lab-figure__caption">Paso 1 del asistente: <strong>Upload files</strong>. Las fuentes externas (Milvus, Elasticsearch) no se usan en este lab.</figcaption>
+    </figure>
+
+    <ol class="cds--list--ordered" start="4">
+      <li class="cds--list__item"><strong>Add knowledge</strong> — arrastra <code>product-catalog.docx</code> desde <code>trackF/confluent_agents</code> y pulsa <strong>Next</strong>.</li>
+    </ol>
+
+    <figure class="lab-figure">
+      <img src="./assets/images/labs/agentic-retail-wxo/wxo-knowledge-upload-file.png"
+           data-placeholder-path="./assets/images/labs/agentic-retail-wxo/wxo-knowledge-upload-file.png"
+           alt="Segundo paso del asistente con el archivo product-catalog.docx ya cargado en la lista"
+           class="lab-figure__img" />
+      <figcaption class="lab-figure__caption">Paso 2 del asistente: el archivo debe quedar listado bajo la zona de arrastre.</figcaption>
+    </figure>
+
+    <ol class="cds--list--ordered" start="5">
+      <li class="cds--list__item"><strong>Knowledge details</strong> — rellena <strong>Name</strong> y <strong>Description</strong> con los dos bloques de abajo y pulsa <strong>Save</strong>.</li>
+    </ol>
+
+    <div class="code-block code-block--prompt">
+      <p class="code-block__label">Name — cópialo tal cual</p>
+      <pre><code>enterprise_documents</code></pre>
+    </div>
+
+    <div class="code-block code-block--prompt">
+      <p class="code-block__label">Description — el campo es obligatorio</p>
+      <pre><code>Catálogo interno de productos de la tienda: laptops y accesorios con procesador, memoria, pantalla, precio y categoría. El agente la usa para recomendar productos sustitutos cuando un SKU no tiene stock.</code></pre>
+    </div>
+
+    <figure class="lab-figure">
+      <img src="./assets/images/labs/agentic-retail-wxo/wxo-knowledge-details.png"
+           data-placeholder-path="./assets/images/labs/agentic-retail-wxo/wxo-knowledge-details.png"
+           alt="Tercer paso del asistente con los campos Name y Description rellenos y resaltados"
+           class="lab-figure__img" />
+      <figcaption class="lab-figure__caption">Paso 3 del asistente: nombre y descripción. En la captura el nombre lleva el sufijo del participante que la tomó — usa el que te dé el bloque de arriba, no ese.</figcaption>
+    </figure>
+
+    <ol class="cds--list--ordered" start="6">
+      <li class="cds--list__item">Espera a que termine la indexación. Cuando la fuente aparezca lista en <strong>Knowledge</strong>, el agente ya puede consultarla.</li>
     </ol>
 
     <div class="callout" data-tone="info" style="margin-top: 1.25rem;">
       <p class="callout__title">El nombre importa</p>
-      <p class="cds--body-01">Usa el mismo nombre que <code>KNOWLEDGE_BASE_NAME</code>. El Customer Shopping Assistant reutilizará esta fuente más adelante, en vez de subir el catálogo dos veces.</p>
+      <p class="cds--body-01">Es el valor de <code>KNOWLEDGE_BASE_NAME</code> en tu <code>participant-config.env</code>, y el Customer Shopping Assistant reutilizará esta misma fuente más adelante en vez de subir el catálogo dos veces.</p>
     </div>
   </section>
 
@@ -88,7 +132,7 @@ Si el import falla, muéstrame el error completo y detente.</code></pre>
     <p class="step-header__why">La prueba real de un agente RAG no es que responda, sino que su respuesta salga del documento. Comprueba que recomienda con criterios del catálogo y que no se mete a hablar de stock — eso es trabajo de otro agente.</p>
 
     <ol class="cds--list--ordered">
-      <li class="cds--list__item">Con <code>Substitute_Finder_Agent</code> abierto y desplegado, abre su <strong>chat de prueba</strong>.</li>
+      <li class="cds--list__item">Con <code>Substitute_Finder_Agent</code> abierto en <strong>Build</strong>, usa el panel <strong>Draft Preview</strong> de la derecha.</li>
       <li class="cds--list__item">Envía la consulta de abajo.</li>
     </ol>
 
@@ -103,7 +147,7 @@ catálogo de productos.</code></pre>
     <figure class="lab-figure">
       <img src="./assets/images/labs/agentic-retail-wxo/substitute-finder-chat.png"
            data-placeholder-path="./assets/images/labs/agentic-retail-wxo/substitute-finder-chat.png"
-           alt="Chat del Substitute Finder Agent en watsonx Orchestrate recomendando laptops alternativas con atributos tomados del catálogo de productos"
+           alt="Panel Draft Preview del Substitute Finder Agent con el bloque Productos sustitutos resaltado, listando laptops alternativas con atributos del catálogo"
            class="lab-figure__img" />
       <figcaption class="lab-figure__caption">El Substitute Finder Agent justifica cada alternativa con atributos del catálogo indexado.</figcaption>
     </figure>
@@ -123,7 +167,7 @@ catálogo de productos.</code></pre>
     <h2 class="cds--productive-heading-04" id="criterios-exito">Criterios de éxito</h2>
     <p class="cds--body-01">Antes de pasar al supervisor, confirma que el agente razona sobre el catálogo y no sobre el conocimiento general del modelo.</p>
     <ul class="checklist">
-      <li class="checklist__item"><code>Substitute_Finder_Agent</code> está importado y desplegado.</li>
+      <li class="checklist__item"><code>Substitute_Finder_Agent</code> está importado y abierto en la UI.</li>
       <li class="checklist__item">La base de conocimiento usa el nombre de <code>KNOWLEDGE_BASE_NAME</code> y quedó indexada con <code>product-catalog.docx</code>.</li>
       <li class="checklist__item">Las alternativas citan atributos concretos del catálogo, no recomendaciones genéricas.</li>
       <li class="checklist__item">La respuesta no afirma disponibilidad de stock: ese dato no le corresponde a este agente.</li>

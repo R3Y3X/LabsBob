@@ -9,10 +9,6 @@
     display: none;
   }
 
-  .hub-header__search-wrap {
-    display: none;  /* ocultar búsqueda en móvil */
-  }
-
   .hub-header__spacer {
     display: none;
   }

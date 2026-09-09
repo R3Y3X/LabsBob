@@ -77,7 +77,8 @@ Recorra el flujo de trabajo Java Modernization de Bob de principio a fin:
           <code class="lab-workspace-setup__path-value">…/simple-pharmacy-workshop-v2/labs/lab1-java-liberty-replatforming/snapA-java-liberty-replatforming/</code>
         </div>
         <ul class="cds--list--unordered lab-workspace-setup__checks">
-          <li class="cds--list__item">Abre la carpeta <code>snapA-java-liberty-replatforming</code> <strong>en sí</strong>, no su carpeta padre <code>lab1-</code> ni el bundle completo. El workflow solo aparece a nivel del snapshot.</li>
+          <li class="cds--list__item">Abre la carpeta <code>snapA-java-liberty-replatforming</code> <strong>en sí</strong>, no su carpeta padre <code>lab1-</code> ni el workshop completo. El workflow solo aparece a nivel del snapshot.</li>
+          <li class="cds--list__item">En el explorador, <code>pom.xml</code> aparece en la raíz. Todos los comandos se ejecutan desde esa carpeta.</li>
           <li class="cds--list__item">El campo <strong>Ruta del proyecto</strong> se rellena solo con esa carpeta: basta con confirmarlo. Deja apagados <strong>Ruta de proyecto personalizada</strong> y <strong>Comando de compilación personalizado</strong>.</li>
           <li class="cds--list__item">El indicador de modo del chat debe mostrar <strong>Agent</strong>.</li>
         </ul>
@@ -224,9 +225,9 @@ Comience solo con
     </ol>
     <figure class="lab-figure premium-workflow__figure">
       <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/snapa-open-in-bob.png" target="_blank" rel="noopener">
-        <img src="./assets/images/labs/java-modernization-v2/premium/snapa-open-in-bob.png" class="lab-figure__img" alt="Bob IDE con el paquete del workshop abierto; snapA aparece como subcarpeta bajo labs/" />
+        <img src="./assets/images/labs/java-modernization-v2/premium/snapa-open-in-bob.png" class="lab-figure__img" alt="Bob con la carpeta snapA-java-liberty-replatforming abierta como raíz del proyecto; pom.xml visible en el explorador" />
       </a>
-      <figcaption class="lab-figure__caption">Referencia visual — Bob con el workshop completo abierto. <code>snapA</code> es una subcarpeta bajo <code>labs/</code>, no la raíz del workspace. Verifica este estado antes de continuar.</figcaption>
+      <figcaption class="lab-figure__caption">Referencia visual — la carpeta abierta es <code>snapA-java-liberty-replatforming</code>. En el explorador, <code>pom.xml</code> está en la raíz. No abras el workshop completo ni la carpeta padre <code>lab1-</code>.</figcaption>
     </figure>
     <h3 id="confirm-agent-mode" class="cds--productive-heading-02 lab-step__title">Confirmar Agent Mode</h3>
     <p>
@@ -257,7 +258,7 @@ Haz clic en el botón de reproducción (
       </li>
       <li class="cds--list__item">
         <strong>¿No encuentras el flujo de trabajo?</strong>
- Verifica que tu plan incluye el paquete <strong>Premium</strong> / Java Modernization. Los workflows no dependen de qué subcarpeta esté abierta.
+ Verifica que tu plan incluye el paquete <strong>Premium</strong> / Java Modernization. Confirma también que Bob está abierto sobre <code>snapA-java-liberty-replatforming</code> (con <code>pom.xml</code> en la raíz), no sobre el workshop completo.
       </li>
     </ul>
     <figure class="lab-figure premium-workflow__figure">

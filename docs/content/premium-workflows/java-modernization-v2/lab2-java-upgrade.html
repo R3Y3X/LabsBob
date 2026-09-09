@@ -74,7 +74,8 @@ Configura y ejecuta el subtipo
           <code class="lab-workspace-setup__path-value">…/simple-pharmacy-workshop-v2/labs/lab2-java-upgrade/snapB-java-upgrade/</code>
         </div>
         <ul class="cds--list--unordered lab-workspace-setup__checks">
-          <li class="cds--list__item">Abre la carpeta <code>snapB-java-upgrade</code> <strong>en sí</strong>, no su carpeta padre <code>lab2-</code> ni el bundle completo. El workflow solo aparece a nivel del snapshot.</li>
+          <li class="cds--list__item">Abre la carpeta <code>snapB-java-upgrade</code> <strong>en sí</strong>, no su carpeta padre <code>lab2-</code> ni el workshop completo. El workflow solo aparece a nivel del snapshot.</li>
+          <li class="cds--list__item">En el explorador, <code>pom.xml</code> aparece en la raíz. Todos los comandos se ejecutan desde esa carpeta.</li>
           <li class="cds--list__item">El campo <strong>Ruta del proyecto</strong> se rellena solo con esa carpeta: basta con confirmarlo. Deja apagados <strong>Ruta de proyecto personalizada</strong> y <strong>Comando de compilación personalizado</strong>.</li>
           <li class="cds--list__item">El indicador de modo del chat debe mostrar <strong>Agent</strong>.</li>
         </ul>
@@ -152,7 +153,7 @@ Presuponga más tiempo que los laboratorios 1 y 3, espere pegar un par de errore
   </section>
   <div class="callout" data-tone="note">
     <p class="callout__title">Antes de empezar</p>
-    <p>El entorno se instala una sola vez en la <a class="cds--link" href="#/lab/java-modernization-v2/overview?h=ov-prereqs">introducción</a>. Este lab parte de <strong>Java 8</strong> en el snapshot; Semeru 21 ya debería estar instalado. Si falta, el workflow puede instalarlo. Ábrelo sobre la carpeta <code>snapB-java-upgrade</code>.</p>
+    <p>El entorno se instala una sola vez en la <a class="cds--link" href="#/lab/java-modernization-v2/overview?h=ov-prereqs">introducción</a>. <strong>Antes de este lab</strong> cambia a <strong>Java 21 (Semeru)</strong> — en macOS, Linux o WSL: <code>sdk default java 21.0.12-sem</code>, luego cierra y vuelve a abrir Bob. El snapshot aún parte de código Java 8; el JDK con el que compilas ya es 21. Ábrelo sobre la carpeta <code>snapB-java-upgrade</code>.</p>
   </div>
   <section class="lab-section" aria-labelledby="worth-watching-for">
     <h2 class="cds--productive-heading-03" id="worth-watching-for">Vale la pena verlo</h2>
@@ -269,13 +270,11 @@ Haz clic en
     </p>
     <h3 id="22-analyze-analyze-java-project" class="cds--productive-heading-02 lab-step__title">2.2 Analizar - Analizar proyecto Java</h3>
     <p>
-Como la raíz del workspace es el workshop completo, corrige
-      <strong>Project Path</strong>
- para que apunte a
+Como abriste <code>snapB-java-upgrade</code> como raíz del proyecto, el campo <strong>Ruta del proyecto</strong> ya viene relleno con esa carpeta. <strong>Solo confírmalo</strong>: debe terminar en
       <code>snapB-java-upgrade</code>
-. Debe terminar con
+ (por ejemplo
       <code>…/simple-pharmacy-workshop-v2/labs/lab2-java-upgrade/snapB-java-upgrade</code>
- (esa cola es solo un ejemplo de cómo debe terminar tu ruta). Deja
+). Deja
       <strong>Comando de compilación personalizada</strong>
  en blanco y haz clic en
       <strong>Continuar</strong>

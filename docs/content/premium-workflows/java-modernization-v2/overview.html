@@ -25,14 +25,14 @@
     <h2 class="cds--productive-heading-03" id="ov-materials">Materiales del Track C</h2>
     <div class="callout" data-tone="note">
       <p class="callout__title">Descarga el árbol fuente del workshop</p>
-      <p>Descomprime el ZIP donde quieras. <strong>Cada lab se abre en su propia carpeta</strong>: al empezar uno, usa <strong>File → Open Folder</strong> sobre el snapshot que ese lab indica, dentro de <code>labs/</code>.</p>
-      <p><strong>Abre la carpeta <code>snap*</code> en sí, no su carpeta padre <code>lab*</code> ni el bundle completo.</strong> Los workflows premium solo aparecen cuando Bob está abierto a nivel del snapshot; desde la carpeta padre no se listan, y los que sí arrancan escanean de más y disparan el costo.</p>
+      <p>Descomprime el ZIP donde quieras. <strong>Cada lab se abre en su carpeta <code>snap*</code></strong>: al empezar uno, usa <strong>File → Open Folder</strong> sobre esa carpeta. En el explorador de Bob debe verse <code>pom.xml</code> en la raíz. Todos los comandos se ejecutan desde ahí.</p>
+      <p><strong>No abras el workshop completo ni la carpeta padre <code>lab*</code>.</strong> Los workflows premium solo aparecen cuando Bob está abierto a nivel del snapshot; desde el bundle o la carpeta padre no se listan, y los que sí arrancan escanean de más y disparan el costo.</p>
       <a class="cds--btn cds--btn--primary" style="margin-top:1rem" download="simple-pharmacy-workshop-v2.zip" href="./downloads/simple-pharmacy-workshop-v2.zip">Descargar Simple Pharmacy workshop v2 (2.1 MB)</a>
     </div>
     <ul class="cds--list--unordered">
-      <li class="cds--list__item"><code>labs/</code> contiene una carpeta y snapshot de inicio por laboratorio.</li>
+      <li class="cds--list__item"><code>labs/</code> contiene una carpeta y snapshot de inicio por laboratorio. La carpeta que abres es siempre el <code>snap*</code> interior, no <code>labs/</code> ni el ZIP descomprimido.</li>
       <li class="cds--list__item"><code>snapshots/</code> incluye estados de inicio y resultados de referencia.</li>
-      <li class="cds--list__item">Con el snapshot abierto como raíz, el campo <strong>Ruta del proyecto</strong> del workflow ya viene relleno: solo hay que confirmarlo.</li>
+      <li class="cds--list__item">Con el snapshot abierto como raíz, <code>pom.xml</code> está en el explorador y el campo <strong>Ruta del proyecto</strong> del workflow ya viene relleno: solo hay que confirmarlo.</li>
     </ul>
     <div class="callout" data-tone="tip">
       <p class="callout__title">Materiales adicionales del Lab 1</p>
@@ -90,26 +90,26 @@
 
   <section class="lab-section" aria-labelledby="ov-prereqs">
     <h2 class="cds--productive-heading-03" id="ov-prereqs">Prerrequisitos</h2>
-    <p class="cds--body-01">Instala una sola vez el entorno compartido por todos los labs. La preparación se completa aquí, antes del Lab 1; después cada etapa solo te indicará qué workflow ejecutar y qué ruta de snapshot poner en <strong>Project path</strong>.</p>
+    <p class="cds--body-01">Instala una sola vez el entorno compartido por todos los labs. La preparación se completa aquí, antes del Lab 1. Cada lab se abre sobre su carpeta <code>snap*</code>: <code>pom.xml</code> queda en la raíz del explorador y todos los comandos se ejecutan desde esa raíz.</p>
     <section class="lab-workspace-setup" aria-labelledby="ov-workspace">
       <div class="lab-workspace-setup__box">
         <span class="lab-workspace-setup__badge">Regla del workshop — lee antes del Lab 1</span>
-        <h3 class="lab-workspace-setup__title" id="ov-workspace">Cada lab, su propia carpeta</h3>
-        <p class="lab-workspace-setup__lead">Al empezar cada lab, abre con <strong>File → Open Folder</strong> la carpeta del snapshot que le corresponde. Los workflows premium solo aparecen a nivel del snapshot, no en la carpeta padre.</p>
+        <h3 class="lab-workspace-setup__title" id="ov-workspace">Cada lab abre su carpeta <code>snap*</code></h3>
+        <p class="lab-workspace-setup__lead">Al empezar cada lab, usa <strong>File → Open Folder</strong> sobre la carpeta <code>snap*</code> de la tabla. No abras <code>simple-pharmacy-workshop-v2</code> ni la carpeta padre <code>lab*</code>. Si lo hiciste bien, el explorador muestra <code>pom.xml</code> en la raíz.</p>
         <div class="lab-workspace-setup__path">
-          <p class="lab-workspace-setup__path-label">Dónde viven las carpetas de cada lab</p>
-          <code class="lab-workspace-setup__path-value">…/simple-pharmacy-workshop-v2/labs/</code>
+          <p class="lab-workspace-setup__path-label">Dónde viven las carpetas de cada lab (abre el snap interior)</p>
+          <code class="lab-workspace-setup__path-value">…/simple-pharmacy-workshop-v2/labs/…/snap*/</code>
         </div>
         <div class="lab-workspace-setup__table-wrap">
           <table class="lab-workspace-setup__table">
             <caption class="visually-hidden">Carpeta que abres al empezar cada lab</caption>
             <thead><tr><th scope="col">Lab</th><th scope="col">Carpeta que abres con File → Open Folder</th></tr></thead>
             <tbody>
-              <tr><th scope="row">Lab 1</th><td><code>labs/lab1-java-liberty-replatforming/snapA-java-liberty-replatforming/</code></td></tr>
-              <tr><th scope="row">Lab 2</th><td><code>labs/lab2-java-upgrade/snapB-java-upgrade/</code></td></tr>
-              <tr><th scope="row">Lab 3</th><td><code>labs/lab3-ui-modernization/snapC-ui-fast/</code></td></tr>
-              <tr><th scope="row">Lab 4</th><td><code>labs/lab4-unit-test-generation/snapD-unit-test-gen/</code></td></tr>
-              <tr><th scope="row">Lab 5</th><td><code>labs/lab5-security-vulnerability-remediation/snapE-security-vulnerabilities/</code></td></tr>
+              <tr><th scope="row">Lab 1</th><td><code>snapA-java-liberty-replatforming</code> (dentro de <code>labs/lab1-java-liberty-replatforming/</code>)</td></tr>
+              <tr><th scope="row">Lab 2</th><td><code>snapB-java-upgrade</code> (dentro de <code>labs/lab2-java-upgrade/</code>)</td></tr>
+              <tr><th scope="row">Lab 3</th><td><code>snapC-ui-fast</code> (dentro de <code>labs/lab3-ui-modernization/</code>)</td></tr>
+              <tr><th scope="row">Lab 4</th><td><code>snapD-unit-test-gen</code> (dentro de <code>labs/lab4-unit-test-generation/</code>)</td></tr>
+              <tr><th scope="row">Lab 5</th><td><code>snapE-security-vulnerabilities</code> (dentro de <code>labs/lab5-security-vulnerability-remediation/</code>)</td></tr>
             </tbody>
           </table>
         </div>
@@ -123,22 +123,38 @@
     </ul>
 
     <h3 class="cds--productive-heading-02">Java y Maven</h3>
-    <p class="cds--body-01">El Lab 1 arranca en Java 8. Desde el Lab 2 el workflow pide <strong>Semeru 21</strong>, así que instala las dos versiones y Maven ahora. Después de instalar Maven, cierra y vuelve a abrir Bob para que tome el <code>PATH</code> nuevo.</p>
+    <p class="cds--body-01">El Lab 1 arranca en <strong>Java 8 (Zulu)</strong>. Desde el Lab 2 hace falta <strong>Java 21 (Semeru)</strong>. Instala las dos versiones y Maven ahora. Después de instalar, cierra y vuelve a abrir Bob para que tome el <code>PATH</code> nuevo.</p>
     <div class="os-setup-grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
       <div class="os-setup-card">
         <div class="os-setup-card__header">
-          <h4 class="os-setup-card__title">macOS y Linux</h4>
+          <h4 class="os-setup-card__title">macOS</h4>
         </div>
         <div class="os-setup-card__body">
-          <p>SDKMAN! instala y cambia entre versiones de Java. Copia el bloque entero y ejecútalo en orden:</p>
+          <p>Usa la app <strong>Terminal</strong> con <code>zsh</code> (el shell por defecto). SDKMAN! instala y cambia entre Java 8 Zulu, Java 21 Semeru y Maven:</p>
           <div class="code-block code-block--terminal">
             <button type="button" class="copy-button">Copiar</button>
-            <pre><code>curl -s "https://get.sdkman.io" | bash
-source "$HOME/.sdkman/bin/sdkman-init.sh"
-sdk install java 8.0.504+1-zulu
-sdk default java 8.0.504+1-zulu
-sdk install java 21.0.12-sem
-sdk install maven</code></pre>
+            <pre><code>curl -s "https://get.sdkman.io" | bash</code></pre>
+          </div>
+          <p>Cierra y abre de nuevo Terminal, o carga SDKMAN! en esta sesión:</p>
+          <div class="code-block code-block--terminal">
+            <button type="button" class="copy-button">Copiar</button>
+            <pre><code>source "$HOME/.sdkman/bin/sdkman-init.sh"</code></pre>
+          </div>
+          <div class="code-block code-block--terminal">
+            <button type="button" class="copy-button">Copiar</button>
+            <pre><code>sdk install java 8.0.504+1-zulu</code></pre>
+          </div>
+          <div class="code-block code-block--terminal">
+            <button type="button" class="copy-button">Copiar</button>
+            <pre><code>sdk default java 8.0.504+1-zulu</code></pre>
+          </div>
+          <div class="code-block code-block--terminal">
+            <button type="button" class="copy-button">Copiar</button>
+            <pre><code>sdk install java 21.0.12-sem</code></pre>
+          </div>
+          <div class="code-block code-block--terminal">
+            <button type="button" class="copy-button">Copiar</button>
+            <pre><code>sdk install maven</code></pre>
           </div>
           <div class="callout" data-tone="note" style="margin-top:0.75rem">
             <p class="callout__title">Apple Silicon</p>
@@ -148,36 +164,112 @@ sdk install maven</code></pre>
       </div>
       <div class="os-setup-card">
         <div class="os-setup-card__header">
+          <h4 class="os-setup-card__title">Linux</h4>
+        </div>
+        <div class="os-setup-card__body">
+          <p>Instala primero las herramientas de base y después SDKMAN!:</p>
+          <div class="code-block code-block--terminal">
+            <button type="button" class="copy-button">Copiar</button>
+            <pre><code>sudo apt update &amp;&amp; sudo apt install -y bash curl zip unzip lsof</code></pre>
+          </div>
+          <div class="code-block code-block--terminal">
+            <button type="button" class="copy-button">Copiar</button>
+            <pre><code>curl -s "https://get.sdkman.io" | bash</code></pre>
+          </div>
+          <p>Abre una terminal nueva, o carga SDKMAN! ahora:</p>
+          <div class="code-block code-block--terminal">
+            <button type="button" class="copy-button">Copiar</button>
+            <pre><code>source "$HOME/.sdkman/bin/sdkman-init.sh"</code></pre>
+          </div>
+          <div class="code-block code-block--terminal">
+            <button type="button" class="copy-button">Copiar</button>
+            <pre><code>sdk install java 8.0.504+1-zulu</code></pre>
+          </div>
+          <div class="code-block code-block--terminal">
+            <button type="button" class="copy-button">Copiar</button>
+            <pre><code>sdk default java 8.0.504+1-zulu</code></pre>
+          </div>
+          <div class="code-block code-block--terminal">
+            <button type="button" class="copy-button">Copiar</button>
+            <pre><code>sdk install java 21.0.12-sem</code></pre>
+          </div>
+          <div class="code-block code-block--terminal">
+            <button type="button" class="copy-button">Copiar</button>
+            <pre><code>sdk install maven</code></pre>
+          </div>
+        </div>
+      </div>
+      <div class="os-setup-card">
+        <div class="os-setup-card__header">
           <h4 class="os-setup-card__title">Windows</h4>
         </div>
         <div class="os-setup-card__body">
-          <p>Elige una opción y quédate en ella todo el workshop. No mezcles PowerShell nativo con WSL.</p>
+          <p>Elige <strong>una</strong> opción y quédate en ella todo el workshop. No mezcles PowerShell nativo con WSL.</p>
           <details open>
+            <summary>Opción A — PowerShell + WinGet</summary>
             <div class="code-block code-block--terminal">
               <button type="button" class="copy-button">Copiar</button>
-              <pre><code>winget install --id Azul.Zulu.8.JDK --exact
-winget install --id IBM.Semeru.21.JDK --exact
-winget install --id Apache.Maven --exact</code></pre>
+              <pre><code>winget install --id Azul.Zulu.8.JDK --exact</code></pre>
             </div>
-            <p>Cierra y vuelve a abrir PowerShell y Bob. Para el Lab 1, <code>JAVA_HOME</code> debe apuntar a Zulu 8; desde el Lab 2, a Semeru 21.</p>
+            <div class="code-block code-block--terminal">
+              <button type="button" class="copy-button">Copiar</button>
+              <pre><code>winget install --id IBM.Semeru.21.JDK --exact</code></pre>
+            </div>
+            <div class="code-block code-block--terminal">
+              <button type="button" class="copy-button">Copiar</button>
+              <pre><code>winget install --id Apache.Maven --exact</code></pre>
+            </div>
+            <p>Cierra y vuelve a abrir PowerShell y Bob. Para el Lab 1, <code>JAVA_HOME</code> apunta a Zulu 8; <strong>antes del Lab 2</strong>, cámbialo a Semeru 21.</p>
           </details>
           <details>
-            <summary>Opción B — WSL 2 + SDKMAN!</summary>
+            <summary>Opción B — PowerShell + curl.exe (sin WinGet)</summary>
+            <p>Si <code>winget</code> no está o falla, usa <code>curl.exe</code> (va con Windows 10/11). Descarga los MSI de <a href="https://www.azul.com/downloads/?package=jdk#zulu" target="_blank" rel="noopener">Zulu 8</a> y <a href="https://developer.ibm.com/languages/java/semeru-runtimes/downloads/" target="_blank" rel="noopener">Semeru 21</a>, y el ZIP de <a href="https://maven.apache.org/download.cgi" target="_blank" rel="noopener">Maven</a>. Ejemplo de instalación:</p>
+            <div class="code-block code-block--terminal">
+              <button type="button" class="copy-button">Copiar</button>
+              <pre><code>curl.exe -L -o "$env:TEMP\zulu8.msi" "https://cdn.azul.com/zulu/bin/zulu8.88.0.19-ca-jdk8.0.462-win_x64.msi"</code></pre>
+            </div>
+            <div class="code-block code-block--terminal">
+              <button type="button" class="copy-button">Copiar</button>
+              <pre><code>Start-Process msiexec.exe -Wait -ArgumentList '/i', "$env:TEMP\zulu8.msi"</code></pre>
+            </div>
+            <p>Repite el mismo patrón con el MSI de Semeru 21. Para Maven, descomprime el ZIP en <code>C:\Tools\maven</code> y añade <code>C:\Tools\maven\bin</code> al <code>PATH</code> de usuario. Cierra y abre PowerShell y Bob.</p>
+          </details>
+          <details>
+            <summary>Opción C — WSL 2 + SDKMAN!</summary>
             <p>En PowerShell como administrador:</p>
             <div class="code-block code-block--terminal">
               <button type="button" class="copy-button">Copiar</button>
               <pre><code>wsl --install</code></pre>
             </div>
-            <p>Abre Ubuntu/WSL — no PowerShell — e instala las herramientas de base y el mismo stack que en macOS/Linux:</p>
+            <p>Abre Ubuntu/WSL — no PowerShell — e instala primero las herramientas de base, luego el mismo stack que en Linux:</p>
             <div class="code-block code-block--terminal">
               <button type="button" class="copy-button">Copiar</button>
-              <pre><code>sudo apt update &amp;&amp; sudo apt install -y curl zip unzip lsof
-curl -s "https://get.sdkman.io" | bash
-source "$HOME/.sdkman/bin/sdkman-init.sh"
-sdk install java 8.0.504+1-zulu
-sdk default java 8.0.504+1-zulu
-sdk install java 21.0.12-sem
-sdk install maven</code></pre>
+              <pre><code>sudo apt update &amp;&amp; sudo apt install -y bash curl zip unzip lsof</code></pre>
+            </div>
+            <div class="code-block code-block--terminal">
+              <button type="button" class="copy-button">Copiar</button>
+              <pre><code>curl -s "https://get.sdkman.io" | bash</code></pre>
+            </div>
+            <p>Después, en una terminal WSL nueva:</p>
+            <div class="code-block code-block--terminal">
+              <button type="button" class="copy-button">Copiar</button>
+              <pre><code>source "$HOME/.sdkman/bin/sdkman-init.sh"</code></pre>
+            </div>
+            <div class="code-block code-block--terminal">
+              <button type="button" class="copy-button">Copiar</button>
+              <pre><code>sdk install java 8.0.504+1-zulu</code></pre>
+            </div>
+            <div class="code-block code-block--terminal">
+              <button type="button" class="copy-button">Copiar</button>
+              <pre><code>sdk default java 8.0.504+1-zulu</code></pre>
+            </div>
+            <div class="code-block code-block--terminal">
+              <button type="button" class="copy-button">Copiar</button>
+              <pre><code>sdk install java 21.0.12-sem</code></pre>
+            </div>
+            <div class="code-block code-block--terminal">
+              <button type="button" class="copy-button">Copiar</button>
+              <pre><code>sdk install maven</code></pre>
             </div>
             <p>Deja el workshop en el sistema de archivos de WSL y abre Bob en el contexto <strong>WSL</strong>. Todos los comandos <code>sdk</code>, <code>java</code>, <code>mvn</code> y <code>npm</code> salen de esa terminal.</p>
           </details>
@@ -185,42 +277,118 @@ sdk install maven</code></pre>
       </div>
     </div>
     <div class="callout" data-tone="tip">
-      <p class="callout__title">Comprueba el entorno antes del Lab 1</p>
+      <p class="callout__title">Comprueba Java 8 antes del Lab 1</p>
       <div class="code-block code-block--terminal">
         <button type="button" class="copy-button">Copiar</button>
-        <pre><code>java -version
-mvn --version</code></pre>
+        <pre><code>java -version</code></pre>
       </div>
-      <p>Los dos deben reportar Java 8 (<code>1.8</code>). Cambia a Java 21 antes de empezar el Lab 2. Maven lo instalas tú; si falta el JDK, Bob puede instalarlo con SDKMAN!, pero en un taller cronometrado conviene tenerlo listo.</p>
+      <div class="code-block code-block--terminal">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>javac -version</code></pre>
+      </div>
+      <div class="code-block code-block--terminal">
+        <button type="button" class="copy-button">Copiar</button>
+        <pre><code>mvn --version</code></pre>
+      </div>
+      <p>Los tres deben reportar Java 8 (<code>1.8</code>). Maven lo instalas tú; si falta el JDK, Bob puede instalarlo con SDKMAN!, pero en un taller cronometrado conviene tenerlo listo.</p>
     </div>
 
-    <h3 class="cds--productive-heading-02">Node.js — solo Lab 3</h3>
-    <p class="cds--body-01">El frontend React del Lab 3 necesita Node.js 22. En macOS, Linux o WSL:</p>
+    <h3 class="cds--productive-heading-02" id="ov-java21">Cambia a Java 21 antes del Lab 2</h3>
+    <p class="cds--body-01">Los Labs 2–5 (y el frontend del Lab 3) usan <strong>Semeru 21</strong>. Haz el cambio <strong>antes</strong> de abrir <code>snapB-java-upgrade</code>. No esperes a que el workflow lo pida.</p>
+    <p class="cds--body-01">macOS, Linux o WSL:</p>
     <div class="code-block code-block--terminal">
       <button type="button" class="copy-button">Copiar</button>
-      <pre><code>curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.6/install.sh | bash
-source "$HOME/.nvm/nvm.sh"
-nvm install 22
-nvm use 22</code></pre>
+      <pre><code>sdk default java 21.0.12-sem</code></pre>
     </div>
-    <p class="cds--body-01">En Windows nativo (PowerShell), instala Node 22 y vuelve a abrir Bob:</p>
+    <div class="code-block code-block--terminal">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>java -version</code></pre>
+    </div>
+    <p class="cds--body-01">Windows (PowerShell): apunta <code>JAVA_HOME</code> al JDK Semeru 21 (la ruta exacta depende del instalador) y confirma <code>java -version</code> y <code>javac -version</code>. Cierra y vuelve a abrir Bob.</p>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">Una terminal nueva no basta si Bob ya estaba abierto</p>
+      <p><code>sdk default</code> y <code>JAVA_HOME</code> los toma el proceso de Bob al arrancar. Tras cambiar de 8 a 21, cierra Bob por completo y ábrelo de nuevo sobre la carpeta <code>snap*</code> del lab.</p>
+    </div>
+
+    <h3 class="cds--productive-heading-02">Node.js 22 — Lab 3</h3>
+    <p class="cds--body-01">El frontend React del Lab 3 necesita Node.js 22 (con <code>npm</code>). Instálalo ahora para que el preflight pase; el Lab 3 lo usa de verdad.</p>
+    <p class="cds--body-01">macOS, Linux o WSL:</p>
+    <div class="code-block code-block--terminal">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.6/install.sh | bash</code></pre>
+    </div>
+    <div class="code-block code-block--terminal">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>source "$HOME/.nvm/nvm.sh"</code></pre>
+    </div>
+    <div class="code-block code-block--terminal">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>nvm install 22</code></pre>
+    </div>
+    <div class="code-block code-block--terminal">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>nvm use 22</code></pre>
+    </div>
+    <p class="cds--body-01">Windows nativo (PowerShell) con WinGet:</p>
     <div class="code-block code-block--terminal">
       <button type="button" class="copy-button">Copiar</button>
       <pre><code>winget install --id OpenJS.NodeJS.22 --exact</code></pre>
     </div>
+    <p class="cds--body-01">Windows sin WinGet — MSI oficial con <code>curl.exe</code>:</p>
+    <div class="code-block code-block--terminal">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>curl.exe -L -o "$env:TEMP\node-v22.msi" "https://nodejs.org/dist/v22.20.0/node-v22.20.0-x64.msi"</code></pre>
+    </div>
+    <div class="code-block code-block--terminal">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>Start-Process msiexec.exe -Wait -ArgumentList '/i', "$env:TEMP\node-v22.msi"</code></pre>
+    </div>
+    <p class="cds--body-01">Cierra y vuelve a abrir PowerShell y Bob. Comprueba <code>node -v</code> (debe empezar por <code>v22</code>) y <code>npm -v</code>.</p>
+
+    <h3 class="cds--productive-heading-02" id="ov-preflight">Preflight — comprueba el entorno</h3>
+    <p class="cds--body-01">Ejecuta estos comandos en la misma clase de terminal que vas a usar en los labs (zsh en macOS, bash en Linux/WSL, PowerShell en Windows nativo). En Windows, <code>curl</code> es <code>curl.exe</code> y <code>ssh</code> viene con OpenSSH opcional.</p>
+    <div class="code-block code-block--terminal">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>java -version</code></pre>
+    </div>
+    <div class="code-block code-block--terminal">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>javac -version</code></pre>
+    </div>
+    <div class="code-block code-block--terminal">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>mvn --version</code></pre>
+    </div>
+    <div class="code-block code-block--terminal">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>node -v</code></pre>
+    </div>
+    <div class="code-block code-block--terminal">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>npm -v</code></pre>
+    </div>
+    <div class="code-block code-block--terminal">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>curl --version</code></pre>
+    </div>
+    <div class="code-block code-block--terminal">
+      <button type="button" class="copy-button">Copiar</button>
+      <pre><code>ssh -V</code></pre>
+    </div>
+    <p class="cds--body-01">Antes del Lab 1, <code>java</code> y <code>javac</code> deben ser 8. Antes del Lab 2, cámbialos a 21 y vuelve a correr <code>java -version</code> y <code>javac -version</code>. <code>node</code> y <code>npm</code> hacen falta en el Lab 3.</p>
 
     <div class="callout" data-tone="warning">
       <p class="callout__title">Libera los puertos entre labs</p>
-      <p>Si dejas Liberty en marcha, el lab siguiente puede engancharse a esa instancia. El Lab 1 usa el puerto <strong>9080</strong>; los Labs 2–5 usan <strong>9081</strong> (y a veces 9443).</p>
+      <p>Si dejas Liberty o Vite en marcha, el lab siguiente puede engancharse a esa instancia. El Lab 1 usa el puerto <strong>9080</strong>; los Labs 2–5 usan <strong>9081</strong> (y a veces 9443). El Lab 3 también usa <strong>3000</strong> (Vite).</p>
       <p>macOS, Linux o WSL:</p>
       <div class="code-block code-block--terminal">
         <button type="button" class="copy-button">Copiar</button>
-        <pre><code>lsof -ti:9080,9081,9443 | xargs kill -9</code></pre>
+        <pre><code>lsof -ti:9080,9081,9443,3000 | xargs kill -9</code></pre>
       </div>
       <p>PowerShell de Windows:</p>
       <div class="code-block code-block--terminal">
         <button type="button" class="copy-button">Copiar</button>
-        <pre><code>Get-NetTCPConnection -LocalPort 9080,9081,9443 -ErrorAction SilentlyContinue |
+        <pre><code>Get-NetTCPConnection -LocalPort 9080,9081,9443,3000 -ErrorAction SilentlyContinue |
   Select-Object -ExpandProperty OwningProcess -Unique |
   ForEach-Object { Stop-Process -Id $_ -Force }</code></pre>
       </div>

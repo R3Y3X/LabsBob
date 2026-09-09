@@ -81,7 +81,8 @@ Esta instantánea es la aplicación modernizada (Liberty + Java 21 + API REST) c
           <code class="lab-workspace-setup__path-value">…/simple-pharmacy-workshop-v2/labs/lab4-unit-test-generation/snapD-unit-test-gen/</code>
         </div>
         <ul class="cds--list--unordered lab-workspace-setup__checks">
-          <li class="cds--list__item">Abre la carpeta <code>snapD-unit-test-gen</code> <strong>en sí</strong>, no su carpeta padre <code>lab4-</code> ni el bundle completo. El workflow solo aparece a nivel del snapshot.</li>
+          <li class="cds--list__item">Abre la carpeta <code>snapD-unit-test-gen</code> <strong>en sí</strong>, no su carpeta padre <code>lab4-</code> ni el workshop completo. El workflow solo aparece a nivel del snapshot.</li>
+          <li class="cds--list__item">En el explorador, <code>pom.xml</code> aparece en la raíz. Todos los comandos se ejecutan desde esa carpeta.</li>
           <li class="cds--list__item">El campo <strong>Ruta del proyecto</strong> se rellena solo con esa carpeta: basta con confirmarlo. Deja apagados <strong>Ruta de proyecto personalizada</strong> y <strong>Comando de compilación personalizado</strong>.</li>
           <li class="cds--list__item">El indicador de modo del chat debe mostrar <strong>Agent</strong>.</li>
         </ul>
@@ -513,12 +514,26 @@ La cobertura general es
         <code>mvn jacoco:report</code>
       </pre>
     </div>
+    <p>Compara los números a nivel de paquete con la línea de base informada por Bob. Abre el HTML generado según tu sistema (siempre desde la raíz del snapshot, donde está <code>pom.xml</code>):</p>
+    <p class="cds--body-01">macOS:</p>
     <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
         <code>open target/site/jacoco/index.html</code>
       </pre>
     </div>
-    <p>Compare los números a nivel de paquete con la línea de base informada por Bob. Debería verse así:</p>
+    <p class="cds--body-01">Linux:</p>
+    <div data-language="bash" class="code-block premium-code-block code-block--terminal">
+      <pre>
+        <code>xdg-open target/site/jacoco/index.html</code>
+      </pre>
+    </div>
+    <p class="cds--body-01">Windows (PowerShell):</p>
+    <div data-language="powershell" class="code-block premium-code-block code-block--terminal">
+      <pre>
+        <code>Start-Process target/site/jacoco/index.html</code>
+      </pre>
+    </div>
+    <p>Debería verse así:</p>
     <figure class="lab-figure premium-workflow__figure">
       <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/jacoco-coverage-report.png" target="_blank" rel="noopener">
         <img src="./assets/images/labs/java-modernization-v2/premium/jacoco-coverage-report.png" class="lab-figure__img" alt="Informe de cobertura de JaCoCo que muestra la cobertura de instrucción por clase" />

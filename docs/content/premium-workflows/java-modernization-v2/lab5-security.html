@@ -78,13 +78,18 @@ El análisis en sí tarda unos segundos: este flujo de trabajo es una búsqueda 
           <code class="lab-workspace-setup__path-value">…/simple-pharmacy-workshop-v2/labs/lab5-security-vulnerability-remediation/snapE-security-vulnerabilities/</code>
         </div>
         <ul class="cds--list--unordered lab-workspace-setup__checks">
-          <li class="cds--list__item">Abre la carpeta <code>snapE-security-vulnerabilities</code> <strong>en sí</strong>, no su carpeta padre <code>lab5-</code> ni el bundle completo. El workflow solo aparece a nivel del snapshot.</li>
+          <li class="cds--list__item">Abre la carpeta <code>snapE-security-vulnerabilities</code> <strong>en sí</strong>, no su carpeta padre <code>lab5-</code> ni el workshop completo. El workflow solo aparece a nivel del snapshot.</li>
+          <li class="cds--list__item">En el explorador, <code>pom.xml</code> aparece en la raíz. Todos los comandos se ejecutan desde esa carpeta.</li>
           <li class="cds--list__item">El campo <strong>Ruta del proyecto</strong> se rellena solo con esa carpeta: basta con confirmarlo. Deja apagados <strong>Ruta de proyecto personalizada</strong> y <strong>Comando de compilación personalizado</strong>.</li>
           <li class="cds--list__item">El indicador de modo del chat debe mostrar <strong>Agent</strong>.</li>
         </ul>
       </div>
     </section>
   </section>
+  <div class="callout" data-tone="note">
+    <p class="callout__title">Antes de empezar</p>
+    <p>Este lab usa la carpeta <code>snapE-security-vulnerabilities</code>, <strong>Java 21</strong> y el puerto <strong>9081</strong> si levantas Liberty. El entorno se instala en la <a class="cds--link" href="#/lab/java-modernization-v2/overview?h=ov-prereqs">introducción</a>. Al terminar, detén Liberty (<kbd>Ctrl</kbd>+<kbd>C</kbd> o <code>mvn liberty:stop</code>) para no bloquear el puerto.</p>
+  </div>
   <section class="lab-section" aria-labelledby="use-case-find-and-fix-vulnerable-dependencies">
     <h2 class="cds--productive-heading-03" id="use-case-find-and-fix-vulnerable-dependencies">Caso de uso: buscar y corregir dependencias vulnerables</h2>
     <p>
@@ -526,7 +531,7 @@ Haz clic en
       <figcaption class="lab-figure__caption">Referencia visual — API del panel de farmacia que responde con datos de prescripción. Verifica este estado antes de continuar.</figcaption>
     </figure>
     <div class="callout" data-tone="warning">
-      <p class="callout__title">Detén el servidor antes de continuar</p>
+      <p class="callout__title">Detén Liberty al finalizar</p>
       <ul class="cds--list--unordered">
         <li class="cds--list__item">
           <strong>macOS, Linux o WSL:</strong>

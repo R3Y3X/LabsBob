@@ -80,7 +80,8 @@ El snapshot
           <code class="lab-workspace-setup__path-value">…/simple-pharmacy-workshop-v2/labs/lab3-ui-modernization/snapC-ui-fast/</code>
         </div>
         <ul class="cds--list--unordered lab-workspace-setup__checks">
-          <li class="cds--list__item">Abre la carpeta <code>snapC-ui-fast</code> <strong>en sí</strong>, no su carpeta padre <code>lab3-</code> ni el bundle completo. El workflow solo aparece a nivel del snapshot.</li>
+          <li class="cds--list__item">Abre la carpeta <code>snapC-ui-fast</code> <strong>en sí</strong>, no su carpeta padre <code>lab3-</code> ni el workshop completo. El workflow solo aparece a nivel del snapshot.</li>
+          <li class="cds--list__item">En el explorador, <code>pom.xml</code> aparece en la raíz. Todos los comandos Maven se ejecutan desde esa carpeta; Vite se lanza con <code>cd frontend</code> desde la misma raíz.</li>
           <li class="cds--list__item">El campo <strong>Ruta del proyecto</strong> se rellena solo con esa carpeta: basta con confirmarlo. Deja apagados <strong>Ruta de proyecto personalizada</strong> y <strong>Comando de compilación personalizado</strong>.</li>
           <li class="cds--list__item">El indicador de modo del chat debe mostrar <strong>Agent</strong>.</li>
         </ul>
@@ -283,7 +284,8 @@ La API REST de
             <strong>Ruta del proyecto frontend</strong>
           </td>
           <td>
-            <code>…/simple-pharmacy-workshop-v2/labs/lab3-ui-modernization/snapC-ui-fast/frontend</code>
+            <code>frontend</code>
+            (relativa a la raíz <code>snapC-ui-fast</code>)
           </td>
         </tr>
       </tbody>
@@ -362,17 +364,20 @@ Como marcaste solo el frontend, Bob pregunta a continuación:
     </div>
   </section>
   <section class="lab-section" aria-labelledby="step-3-verify-api">
-    <h2 class="cds--productive-heading-03" id="step-3-verify-api">Paso 3: comprueba la API antes de tocar la interfaz</h2>
-    <p>En este snapshot la capa REST ya existe, así que Bob se salta la descomposición del backend. Confirma en un minuto que la API responde: es el contrato sobre el que se va a construir la interfaz, y verificarlo ahora te ahorra depurar más tarde.</p>
-    <p>Arranca Liberty desde el snapshot:</p>
-    <div class="code-block code-block--terminal" data-language="text">
-      <pre><code>mvn -f labs/lab3-ui-modernization/snapC-ui-fast/pom.xml liberty:run</code></pre>
+    <h2 class="cds--productive-heading-03" id="step-3-verify-api">Paso 3: arranca Liberty ahora (Terminal 1)</h2>
+    <p>En cuanto hayas entregado la URL del backend, abre la <strong>Terminal 1</strong> integrada y arranca Liberty <strong>desde la raíz</strong> (<code>pom.xml</code> a la vista). No esperes a que Bob termine el frontend: la API tiene que estar viva mientras el workflow sigue.</p>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">Dos terminales, dos procesos</p>
+      <p>Liberty ocupa esta terminal (puerto <strong>9081</strong>) y se queda ejecutándose el resto del lab. Vite irá en una <strong>Terminal 2</strong> (puerto <strong>3000</strong>) más adelante. Las dos tienen que permanecer abiertas a la vez para ver datos reales en la interfaz. No uses la misma terminal para los dos.</p>
+    </div>
+    <div class="code-block code-block--terminal" data-language="bash">
+      <pre><code>mvn liberty:run</code></pre>
     </div>
     <p>Cuando el servidor esté arriba, abre:</p>
     <div class="code-block code-block--terminal" data-language="text">
       <pre><code>http://localhost:9081/simple-pharmacy/api/dashboard</code></pre>
     </div>
-    <p>Debe devolver JSON con recetas y pedidos.</p>
+    <p>Debe devolver JSON con recetas y pedidos. Deja Liberty ejecutándose.</p>
     <figure class="lab-figure premium-workflow__figure">
       <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/dashboard-api-response.png" target="_blank" rel="noopener">
         <img src="./assets/images/labs/java-modernization-v2/premium/dashboard-api-response.png" class="lab-figure__img" alt="Respuesta JSON del endpoint /api/dashboard" />
@@ -401,97 +406,49 @@ Como marcaste solo el frontend, Bob pregunta a continuación:
     <p>La aplicación Struts original sigue funcionando en <code>http://localhost:9081/simple-pharmacy/dashboard</code>. Vale la pena abrirla un momento: es el "antes" que estás a punto de reemplazar.</p>
   </section>
   <section class="lab-section" aria-labelledby="step-4-frontend-setup-and-scaffolding">
-    <h2 class="cds--productive-heading-03" id="step-4-frontend-setup-and-scaffolding">Paso 4: configuración y andamiaje del frontend</h2>
-    <p>Bob configura la nueva pila de interfaz: crea una aplicación Vite React e instala dependencias. Síguelo a través de la lista de tareas pendientes.</p>
+    <h2 class="cds--productive-heading-03" id="step-4-frontend-setup-and-scaffolding">Paso 4: sigue el workflow mientras Bob genera el frontend</h2>
+    <p>Con Liberty ya en la Terminal 1, vuelve al chat. Bob configura Vite, instala dependencias y, en la ejecución observada, continúa con componentes, páginas, integración y validación. No asumas que se va a detener en un frontend vacío: deja que el flujo avance y no interrumpas Liberty.</p>
     <figure class="lab-figure premium-workflow__figure">
       <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/frontend-migration.png" target="_blank" rel="noopener">
         <img src="./assets/images/labs/java-modernization-v2/premium/frontend-migration.png" class="lab-figure__img" alt="Subtarea de migración frontend con la lista de tareas pendientes" />
       </a>
       <figcaption class="lab-figure__caption">Referencia visual — Subtarea de migración frontend con la lista de tareas pendientes. Verifica este estado antes de continuar.</figcaption>
     </figure>
-    <p>
-Al terminar, Bob se detiene y te pregunta si la aplicación funciona. Para responderle necesitas
-      <strong>las dos piezas corriendo a la vez, cada una en su terminal</strong>
-: la API en una y la interfaz en otra. Las dos se quedan ocupadas mientras el servidor vive, así que no intentes usar la misma.
-    </p>
-    <h3 class="cds--productive-heading-02 lab-step__title">Terminal 1 — la API</h3>
-    <p>Si la dejaste corriendo desde el Paso 3, sáltate esto. Si no, arráncala:</p>
+    <div class="callout" data-tone="note">
+      <p class="callout__title">Cuándo pasar al Paso 5</p>
+      <p>Abre la Terminal 2 cuando Bob te pida validar la aplicación, o cuando el workflow haya terminado. Hasta entonces, Liberty sigue en la Terminal 1.</p>
+    </div>
+  </section>
+  <section class="lab-section" aria-labelledby="step-5-frontend-components-and-pages">
+    <h2 class="cds--productive-heading-03" id="step-5-frontend-components-and-pages">Paso 5: Terminal 2 — Vite y datos reales</h2>
+    <p>Abre una <strong>segunda terminal integrada</strong> (deja la Terminal 1 con Liberty). Desde la raíz del snapshot:</p>
     <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
-        <code>mvn -f labs/lab3-ui-modernization/snapC-ui-fast/pom.xml liberty:run</code>
+        <code>cd frontend</code>
       </pre>
     </div>
-    <h3 class="cds--productive-heading-02 lab-step__title">Terminal 2 — la interfaz</h3>
-    <p>Abre una <strong>segunda terminal integrada</strong>, sitúala en el frontend y levanta el servidor de desarrollo:</p>
     <div data-language="bash" class="code-block premium-code-block code-block--terminal">
       <pre>
-        <code>cd labs/lab3-ui-modernization/snapC-ui-fast/frontend
-npm run dev</code>
+        <code>npm run dev</code>
       </pre>
     </div>
-    <p>Luego abre:</p>
+    <div class="callout" data-tone="warning">
+      <p class="callout__title">Liberty en una terminal, Vite en otra</p>
+      <p>Los dos procesos tienen que quedar ejecutándose. Si paras Liberty, las tablas de la interfaz salen vacías. Si no arrancas Vite, no hay nada en el puerto 3000.</p>
+    </div>
+    <p>Comprueba primero el proxy de Vite (JSON, no la página React):</p>
+    <div data-language="text" class="code-block premium-code-block code-block--file">
+      <pre>
+        <code>http://localhost:3000/api/dashboard</code>
+      </pre>
+    </div>
+    <p>Si ves el mismo JSON que en <code>http://localhost:9081/simple-pharmacy/api/dashboard</code>, el proxy está bien. Después abre la interfaz:</p>
     <div data-language="text" class="code-block premium-code-block code-block--file">
       <pre>
         <code>http://localhost:3000/</code>
       </pre>
     </div>
-    <p>Deberías ver la aplicación con scaffolding:</p>
-    <figure class="lab-figure premium-workflow__figure">
-      <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/frontend-scaffold.png" target="_blank" rel="noopener">
-        <img src="./assets/images/labs/java-modernization-v2/premium/frontend-scaffold.png" class="lab-figure__img" alt="Interfaz scaffolded React ejecutándose en localhost:3000" />
-      </a>
-      <figcaption class="lab-figure__caption">Referencia visual — Interfaz scaffolded React ejecutándose en localhost:3000. Verifica este estado antes de continuar.</figcaption>
-    </figure>
-    <div class="callout" data-tone="note">
-      <p class="callout__title">El andamio está intencionalmente desnudo; aún no hay datos de farmacia</p>
-      <p>
-Este es un
-        <strong>shell inicial</strong>
-, no la aplicación terminada. Espere un genérico, casi vacío
-página con
-        <strong>sin tablero ni datos de farmacia</strong>
-: nada aquí llama al backend todavía. el
-Los componentes y páginas que recuperan y muestran datos se crean en el
-        <strong>siguiente paso (Paso 5)</strong>
-.
-      </p>
-      <p>
-Un andamio que parece vacío en este punto es el hito esperado
-        <strong>, no una API</strong>
- rota, por lo que
-No comience a depurar la carga de datos aquí. (Lo único que vale la pena confirmar antes, en el paso
-3, es que la URL de la API es correcta; ese es el punto de control del Paso 3).
-      </p>
-    </div>
-    <p>
-Con la página cargando en
-      <code>localhost:3000</code>
- y la API respondiendo en
-      <code>localhost:9081</code>
-, ya puedes contestarle a Bob que funciona. Si algo falla, pégale el error en el chat en vez de confirmarle.
-    </p>
-    <div data-language="text" class="code-block premium-code-block code-block--file">
-      <pre>
-        <code>Sí, la aplicación arranca correctamente. El andamio se ve bien.</code>
-      </pre>
-    </div>
-    <div class="callout" data-tone="note">
-      <p class="callout__title">Aquí no termina el lab</p>
-      <p>Con tu confirmación Bob sigue trabajando: genera los componentes y las páginas que de verdad consumen la API. Deja las dos terminales corriendo — las vas a necesitar en el paso siguiente para ver el resultado.</p>
-    </div>
-  </section>
-  <section class="lab-section" aria-labelledby="step-5-frontend-components-and-pages">
-    <h2 class="cds--productive-heading-03" id="step-5-frontend-components-and-pages">Paso 5: componentes y páginas del frontend</h2>
-    <p>Bob construye ahora los componentes y las páginas, y va compilando por el camino para verificar el resultado.</p>
-    <p>
-No hace falta que reinicies nada: con las dos terminales del paso anterior todavía corriendo, Vite recarga solo a medida que Bob escribe los archivos. Vuelve a
-      <code>http://localhost:3000/</code>
- cuando termine y el resultado debería verse así:
-    </p>
-    <div class="callout" data-tone="note">
-      <p class="callout__title">Si cerraste alguna terminal</p>
-      <p>Levanta primero la API con <code>liberty:run</code> y después el frontend con <code>npm run dev</code> desde <code>snapC-ui-fast/frontend</code>. En ese orden: si la interfaz arranca sin API detrás, las tablas salen vacías.</p>
-    </div>
+    <p>El tablero, los medicamentos, las recetas y los pedidos deben mostrar <strong>datos reales</strong> de la API. Si Bob aún está escribiendo archivos, Vite recarga solo.</p>
     <figure class="lab-figure premium-workflow__figure">
       <a class="lab-figure__link" href="./assets/images/labs/java-modernization-v2/premium/modernized-ui.png" target="_blank" rel="noopener">
         <img src="./assets/images/labs/java-modernization-v2/premium/modernized-ui.png" class="lab-figure__img" alt="La interfaz de farmacia modernizada React + Material UI" />
@@ -499,19 +456,12 @@ No hace falta que reinicies nada: con las dos terminales del paso anterior todav
       <figcaption class="lab-figure__caption">Referencia visual — La interfaz de farmacia modernizada React + Material UI. Verifica este estado antes de continuar.</figcaption>
     </figure>
     <div class="callout" data-tone="success">
-      <p class="callout__title">Punto de control: aquí es donde deberían aparecer los datos reales</p>
-      <p>
-        <strong>Ahora</strong>
- — no en el andamio del Paso 4 — el tablero, los medicamentos, las recetas y los pedidos
-debería renderizarse con
-        <strong>datos en vivo desde el backend</strong>
-. Si las páginas están construidas pero aparecen vacías
-
-        <em>aquí</em>
-, ese es el punto a investigar: casi siempre es que la API no está respondiendo o que la raíz de contexto no coincide, lo que comprobaste en el Paso 3. Consulta
-        <a href="#lab3-troubleshooting">Solución de problemas</a>
-.
-      </p>
+      <p class="callout__title">Punto de control: datos reales en el puerto 3000</p>
+      <p>Si las páginas están construidas pero aparecen vacías, casi siempre es que Liberty no está en 9081 o que la raíz de contexto no coincide (lo del Paso 3). Consulta <a href="#troubleshooting">Solución de problemas</a>.</p>
+    </div>
+    <div class="callout" data-tone="note">
+      <p class="callout__title">Si Bob pregunta si la aplicación funciona</p>
+      <p>Con el proxy en <code>/api/dashboard</code> y la UI en <code>/</code> sirviendo datos, puedes confirmarle. Si algo falla, pégale el error en el chat en vez de decir que está bien.</p>
     </div>
     <p>Pega cualquier error en Bob para depurarlo.</p>
   </section>
@@ -535,11 +485,11 @@ El bundle guarda una copia de referencia en
       <p>Es un recorrido de bastante más de una hora y consume varias veces los BobCoins de este lab. Sirve como profundización posterior, no como el camino del taller.</p>
     </details>
     <div class="callout" data-tone="warning">
-      <p class="callout__title">Detén ambos servidores antes de continuar</p>
+      <p class="callout__title">Detén primero Vite y después Liberty</p>
       <p>
-Esta práctica de laboratorio ejecuta servidores
+Esta práctica de laboratorio ejecuta
         <strong>dos</strong>
-: libera ambos puertos para que la siguiente práctica de laboratorio no esté bloqueada:
+ servidores. Para no bloquear el lab siguiente, páralos en este orden:
       </p>
       <ul class="cds--list--unordered">
         <li class="cds--list__item">
@@ -721,7 +671,7 @@ Si el navegador informa una falla de CORS, péguelo en Bob; el
       </summary>
       <ol class="cds--list--ordered">
         <li class="cds--list__item">
-Confirma que estás en Node.js 20 o 22 LTS:
+Confirma que estás en Node.js 22:
           <code>node --version</code>
 .
         </li>
@@ -738,19 +688,11 @@ Pega la salida de la consola (navegador
       </ol>
     </details>
     <details class="premium-details">
-      <summary>Después del Paso 5, las páginas se crean pero no muestran datos (tablas/tarjetas vacías)</summary>
+      <summary>Las páginas se crean pero no muestran datos (tablas/tarjetas vacías)</summary>
       <p>
-Primero, verifica
-        <em>en qué paso te encuentras</em>
-: en el
-        <strong>paso 4</strong>
- aparece una página genérica vacía, y eso es lo
-        <strong>esperado</strong>
-: las páginas de datos no existen hasta el Paso 5, así que no hay nada que depurar ahí. Esta entrada es para cuando
-        <strong>Bob haya terminado de construir las páginas (Paso 5)</strong>
- y sigan
+Esta entrada es para cuando Vite ya está en el puerto 3000 y las páginas de farmacia
         <em>todavía</em>
- vacías.
+ salen vacías. No es un frontend “a medio andamiar”: el proxy o Liberty no están sirviendo JSON.
       </p>
       <p>
 En ese momento, el shell React se procesa pero las llamadas a
@@ -877,7 +819,7 @@ contra lo que esperan los componentes React y conciliarlos.</code>
           <input type="checkbox" disabled />
           <span class="premium-checklist__indicator"></span>
         </label>
- Node.js (20 o 22 LTS), Java 21 y Maven están instalados y verificados.
+ Node.js 22, Java 21 y Maven están instalados y verificados.
       </li>
       <li class="cds--list__item">
         <label class="premium-checklist__control">
@@ -917,16 +859,11 @@ contra lo que esperan los componentes React y conciliarlos.</code>
           <input type="checkbox" disabled />
           <span class="premium-checklist__indicator"></span>
         </label>
- El andamio Vite React se ejecuta en
+ El SPA en
         <code>http://localhost:3000/</code>
-.
-      </li>
-      <li class="cds--list__item">
-        <label class="premium-checklist__control">
-          <input type="checkbox" disabled />
-          <span class="premium-checklist__indicator"></span>
-        </label>
- El SPA terminado carga datos reales de farmacia (panel de control, medicamentos, recetas, pedidos).
+ carga datos reales de farmacia (el proxy
+        <code>http://localhost:3000/api/dashboard</code>
+ ya devolvía JSON).
       </li>
       <li class="cds--list__item">
         <label class="premium-checklist__control">
@@ -951,10 +888,8 @@ contra lo que esperan los componentes React y conciliarlos.</code>
  el backend a la vez es la columna de alto riesgo por una razón.
       </li>
       <li class="cds--list__item">
-        <strong>Primero el backend, luego el frontend</strong>
-: el flujo de trabajo descompone el monolito Struts en servicios REST y los vuelve verdes
-        <em>antes</em>
- de construir la interfaz de usuario, por lo que el frontend tiene un contrato real sobre el cual construir.
+        <strong>API en marcha mientras Bob genera la interfaz</strong>
+: arrancas Liberty en cuanto das la URL del backend y dejas Vite para cuando toca validar. Las dos terminales tienen que quedar vivas para ver datos reales.
       </li>
       <li class="cds--list__item">
         <strong>Por fases y revisable</strong>

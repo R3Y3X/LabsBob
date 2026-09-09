@@ -113,8 +113,7 @@ Reglas:
 4. Kafka, ksqlDB y Schema Registry ya se resolvieron en el Track D. No pidas esas contraseñas.
    Si el check dice que dejes ORCHESTRATE_URL vacío, es el resto del Track D; en este paso sí lo completas.
 5. Completa ORCHESTRATE_URL y ORCHESTRATE_API_KEY cuando yo las ponga. Tómalas de IBM Cloud,
-   cuenta itz-saas-*, instancia watsonx Orchestrate → Gestionar → Credenciales (URL + clave de API).
-   No uses la Service ID API Key del output de TechZone como ORCHESTRATE_API_KEY.
+   cuenta itz-saas-*, instancia watsonx Orchestrate → Manage → Credenciales (URL + clave de API).
 6. Si RETAIL_MCP_URL tiene "&lt;IP" o usa https://, corrígela así (sin imprimir passwords):
    IP="${SSH_HOST#root@}"
    RETAIL_MCP_URL="http://${IP}/retail-mcp/mcp"
@@ -143,28 +142,28 @@ curl -sS "http://${IP}/retail-mcp/health"</code></pre></div>
     </div>
 
     <h3 class="cds--productive-heading-03" style="margin-top: 2rem;">Completa el archivo tú mismo</h3>
-    <p class="cds--body-01">Abre <code>participant-config.env</code> en el editor de Bob (está en la <strong>raíz</strong> del bundle). Kafka y ksqlDB ya están. Completa Orchestrate desde IBM Cloud (no desde el output de Service ID de TechZone) y deja el MCP en HTTP hacia la IP de <code>SSH_HOST</code>:</p>
+    <p class="cds--body-01">Abre <code>participant-config.env</code> en el editor de Bob (está en la <strong>raíz</strong> del bundle). Kafka y ksqlDB ya están. Completa Orchestrate desde IBM Cloud y deja el MCP en HTTP hacia la IP de <code>SSH_HOST</code>:</p>
     <div class="lab-table-wrap"><table class="lab-table">
       <thead><tr><th>Variable</th><th>Qué va ahí</th></tr></thead>
       <tbody>
         <tr><td><code>ORCHESTRATE_URL</code></td><td>URL de Credenciales del servicio watsonx Orchestrate (forma <code>https://api.&lt;región&gt;.watson-orchestrate.cloud.ibm.com/instances/&lt;uuid&gt;</code>). Auth CLI: <code>ibm_iam</code>.</td></tr>
         <tr><td><code>RETAIL_MCP_URL</code></td><td><code>http://&lt;IP de SSH_HOST&gt;/retail-mcp/mcp</code>. Misma VM del Track D. Nunca HTTPS ni placeholders <code>&lt;...&gt;</code>.</td></tr>
-        <tr><td><code>ORCHESTRATE_API_KEY</code></td><td>API key de esa misma pantalla de Credenciales. No es la Service ID API Key del reservation de TechZone.</td></tr>
+        <tr><td><code>ORCHESTRATE_API_KEY</code></td><td>Clave de API de esa misma pantalla de Credenciales.</td></tr>
       </tbody>
     </table></div>
     <p class="cds--body-01"><code>RETAIL_MCP_TOOLKIT_NAME</code> ya viene con el valor correcto (<code>retail_availability_mcp</code>) y debe coincidir con el nombre usado en los YAML de los agentes. No lo cambies. El bootstrap inyecta <code>table_number</code> y <code>participant_number</code> en los YAML; no los edites a mano.</p>
 
     <h3 class="cds--productive-heading-03" style="margin-top: 2rem;">Cómo sacar URL y API key de Orchestrate</h3>
-    <p class="cds--body-01">Estas dos variables <strong>no</strong> están en el output de TechZone (PEM, IP, Service ID). Se copian en IBM Cloud, en la ficha de la instancia watsonx Orchestrate, <em>antes</em> de pulsar <strong>Iniciar watsonx Orchestrate</strong>.</p>
+    <p class="cds--body-01">Las dos salen del mismo sitio: la ficha de tu instancia watsonx Orchestrate en IBM Cloud, sección <strong>Credenciales</strong>. Cópialas <em>antes</em> de pulsar <strong>Iniciar watsonx Orchestrate</strong>.</p>
     <ol class="cds--list--ordered">
       <li class="cds--list__item">Entra a <a href="https://cloud.ibm.com" target="_blank" rel="noopener">cloud.ibm.com</a>. Arriba a la derecha, confirma que la cuenta es <code>itz-saas-*</code> (la de tu reserva TechZone), no tu cuenta IBM corporativa.</li>
     </ol>
     <figure class="lab-figure">
       <img src="./assets/images/labs/agentic-retail-wxo/wxo-ibmcloud-account.png"
            data-placeholder-path="./assets/images/labs/agentic-retail-wxo/wxo-ibmcloud-account.png"
-           alt="Selector de cuenta de IBM Cloud arriba a la derecha mostrando una cuenta itz-saas (TechZone), no la cuenta corporativa"
+           alt="Barra superior de IBM Cloud con el selector de cuenta itz-saas resaltado"
            class="lab-figure__img" />
-      <figcaption class="lab-figure__caption">Cambia a la cuenta <code>itz-saas-*</code> de tu reserva. Difumina correo y nombre completo en la captura.</figcaption>
+      <figcaption class="lab-figure__caption">Selector de cuenta arriba a la derecha: debe decir <code>itz-saas-*</code>, no tu cuenta IBM corporativa.</figcaption>
     </figure>
     <ol class="cds--list--ordered" start="2">
       <li class="cds--list__item">Menú hamburguesa → <strong>Lista de recursos</strong> → abre tu instancia <strong>watsonx Orchestrate</strong> (nombre tipo <code>wxo-…</code>).</li>
@@ -172,32 +171,20 @@ curl -sS "http://${IP}/retail-mcp/health"</code></pre></div>
     <figure class="lab-figure">
       <img src="./assets/images/labs/agentic-retail-wxo/wxo-resource-instance.png"
            data-placeholder-path="./assets/images/labs/agentic-retail-wxo/wxo-resource-instance.png"
-           alt="Lista de recursos de IBM Cloud con la instancia watsonx Orchestrate seleccionada"
+           alt="Lista de recursos de IBM Cloud con la fila de la instancia watsonx Orchestrate resaltada"
            class="lab-figure__img" />
-      <figcaption class="lab-figure__caption">Abre la instancia wxo. Recorta la lista; oculta otros recursos si no son del lab.</figcaption>
+      <figcaption class="lab-figure__caption">Bajo <strong>IA / Aprendizaje automático</strong>, la fila cuyo producto es <strong>watsonx Orchestrate</strong> (nombre <code>wxo-…</code>).</figcaption>
     </figure>
     <ol class="cds--list--ordered" start="3">
-      <li class="cds--list__item">Quédate en <strong>Gestionar</strong>. En la sección <strong>Credenciales</strong> copia <strong>URL</strong> → <code>ORCHESTRATE_URL</code> y <strong>Clave de API</strong> → <code>ORCHESTRATE_API_KEY</code>. Pégalas solo en <code>participant-config.env</code>, nunca en el chat de Bob.</li>
+      <li class="cds--list__item">Quédate en <strong>Manage</strong>. En la sección <strong>Credenciales</strong> copia <strong>URL</strong> → <code>ORCHESTRATE_URL</code> y <strong>Clave de API</strong> → <code>ORCHESTRATE_API_KEY</code>. Pégalas solo en <code>participant-config.env</code>, nunca en el chat de Bob.</li>
     </ol>
     <figure class="lab-figure">
       <img src="./assets/images/labs/agentic-retail-wxo/wxo-manage-credentials.png"
            data-placeholder-path="./assets/images/labs/agentic-retail-wxo/wxo-manage-credentials.png"
-           alt="Página Gestionar de la instancia watsonx Orchestrate con la sección Credenciales: campos URL y Clave de API y botones de copiar. La clave debe ir difuminada"
+           alt="Página Manage de la instancia watsonx Orchestrate con la sección Credenciales resaltada: campos Clave de API y URL con sus botones de copiar"
            class="lab-figure__img" />
-      <figcaption class="lab-figure__caption">Gestionar → Credenciales: URL + clave de API. <strong>Difumina la key</strong> antes de exportar el PNG.</figcaption>
+      <figcaption class="lab-figure__caption"><strong>Manage → Credenciales</strong>: de ahí salen <code>ORCHESTRATE_API_KEY</code> (Clave de API) y <code>ORCHESTRATE_URL</code>. La UI enmascara la key; úsala con el botón de copiar.</figcaption>
     </figure>
-    <div class="callout" data-tone="danger" style="margin-top: 1.25rem;">
-      <p class="callout__title">No uses la Service ID API Key de TechZone</p>
-      <p class="cds--body-01">En TechZone → My requests → OUTPUTS aparece <strong>Service ID API Key</strong>. Sirve para IAM de la cuenta, <strong>no</strong> es <code>ORCHESTRATE_API_KEY</code>. Si la pones en el <code>.env</code>, <code>env activate</code> falla o da 403 contra otra instancia.</p>
-    </div>
-    <figure class="lab-figure">
-      <img src="./assets/images/labs/agentic-retail-wxo/techzone-service-id-apikey.png"
-           data-placeholder-path="./assets/images/labs/agentic-retail-wxo/techzone-service-id-apikey.png"
-           alt="Output de TechZone destacando el campo Service ID API Key como la clave que no debe copiarse a ORCHESTRATE_API_KEY. La key debe ir difuminada"
-           class="lab-figure__img" />
-      <figcaption class="lab-figure__caption">TechZone OUTPUTS: esta key no va al <code>.env</code> de Orchestrate. Difumína la key en la captura.</figcaption>
-    </figure>
-
     <div class="callout" data-tone="warning" style="margin-top: 1.5rem;">
       <p class="callout__title">Protege tu API key</p>
       <p class="cds--body-01">La key vive <strong>solo</strong> en <code>participant-config.env</code>, que no se versiona. Nunca la escribas en un YAML de agente, no la subas al repositorio, no la muestres en una captura de pantalla y <strong>no la pegues en el chat de Bob</strong>.</p>

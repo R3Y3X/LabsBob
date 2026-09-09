@@ -2,88 +2,103 @@
 
 Carpeta: `docs/assets/images/labs/agentic-retail-wxo/`
 
-Estilo común: captura **real y recortada** de la interfaz de IBM watsonx Orchestrate. Encuadre del panel de chat del agente o del diálogo relevante — no el navegador entero a 4K, sin barra de pestañas ni marcadores. Relación ~16:9 o 3:2. Exportar PNG y sustituir el archivo con el nombre exacto de esta lista.
+Todas las capturas del track están tomadas de una instancia real y **anotadas con un recuadro rojo** sobre el elemento que el participante tiene que encontrar. La anotación se genera con [`scripts/annotate_wxo_screenshots.py`](../../../../../scripts/annotate_wxo_screenshots.py): color `#EA4025`, grosor 5 px, coordenadas en fracciones del ancho/alto.
+
+Para rehacer una captura: reemplaza el origen en `~/Documents`, ajusta su caja en el diccionario `IMAGES` del script y vuelve a correrlo.
 
 **Preferible: captura real.** Estas imágenes existen para que el participante compare contra lo que ve en su propia instancia. Una UI generada por IA que no coincida con la real es peor que el placeholder.
 
-Mientras el PNG no exista, el sitio muestra automáticamente un `carbon-image-placeholder` con la ruta visible ([app.js](../../../../js/app.js) → `carbon-image-placeholder`). No se rompe nada; la página simplemente indica qué captura falta.
+Mientras un PNG no exista, el sitio muestra automáticamente un `carbon-image-placeholder` con la ruta visible ([app.js](../../../../js/app.js) → `replaceMissingImage`). No se rompe nada; la página simplemente indica qué captura falta.
 
 **No** sustituyas ningún `.code-block` copiable por una imagen.
 
-## Disponibilidad MCP — credenciales CLI (Paso 2)
+## Antes de capturar
 
-Capturas de **dónde se copia** `ORCHESTRATE_URL` / `ORCHESTRATE_API_KEY`. Difumina keys, correo y nombre de instancia.
-
-### `wxo-ibmcloud-account.png`
-
-Esquina superior derecha de IBM Cloud con el selector de cuenta. Debe verse una cuenta `itz-saas-*` (TechZone), no la cuenta corporativa IBM.
-
-### `wxo-resource-instance.png`
-
-**Lista de recursos** con la instancia **watsonx Orchestrate** (nombre tipo `wxo-…`) visible o seleccionada.
-
-### `wxo-manage-credentials.png`
-
-Página **Gestionar** de esa instancia. Sección **Credenciales** con los campos **URL** y **Clave de API** y los iconos de copiar. **Obligatorio difuminar la API key.** No incluye la pantalla de Launch como si ahí estuviera la key.
-
-### `techzone-service-id-apikey.png`
-
-TechZone → My requests → OUTPUTS, campo **Service ID API Key**. La captura debe dejar claro que **esa** key no se pega en `ORCHESTRATE_API_KEY`. Difumina el valor.
-
----
-
-## Antes de capturar — anonimiza
-
-Cada captura sale de una instancia real. Antes de exportar:
-
-- Recorta o difumina el **nombre de la instancia**, el correo del usuario y el avatar de la esquina superior derecha.
-- Nunca captures la pantalla de API keys ni una terminal con `ORCHESTRATE_API_KEY` visible.
+- La **Clave de API nunca puede quedar legible**. La ficha de Credenciales de IBM Cloud ya la enmascara con puntos: captura esa vista, no la de "Mostrar credenciales".
+- Nunca captures una terminal con `ORCHESTRATE_API_KEY` visible.
+- El nombre de cuenta (`itz-saas-*`) y el de instancia (`wxo-…`) sí pueden verse: son instancias TechZone desechables y ayudan a que el participante reconozca su propia pantalla.
 - El banner `banner_bob.png` ya existe y no se regenera.
 
 ---
 
-## Paso 5 — Disponibilidad MCP
+## Lab 1 — Disponibilidad MCP (credenciales de la CLI)
+
+### `wxo-ibmcloud-account.png`
+
+Barra superior de IBM Cloud. **Recuadro** sobre el selector de cuenta, que debe mostrar una cuenta `itz-saas-*` y no la corporativa.
+
+### `wxo-resource-instance.png`
+
+**Lista de recursos**, grupo *IA / Aprendizaje automático*. **Recuadro** sobre la fila cuyo producto es **watsonx Orchestrate** (nombre `wxo-…`).
+
+### `wxo-manage-credentials.png`
+
+Página **Manage** de la instancia. **Recuadro** sobre la tarjeta **Credenciales** completa: *Clave de API* (enmascarada) y *URL*, con sus botones de copiar. De ahí salen `ORCHESTRATE_API_KEY` y `ORCHESTRATE_URL`.
+
+---
+
+## Lab 2 — Interfaz watsonx Orchestrate
+
+### `launch_wxo.png`
+
+Página **Manage** en IBM Cloud con **recuadro** sobre el botón **Iniciar watsonx Orchestrate**.
+
+### `wxo_ui.png`
+
+Menú lateral de la plataforma con **recuadro** sobre **Crear** (en instancias en inglés, **Build**).
+
+### `seleccionar_agente.png`
+
+Lista de agentes con **recuadro** sobre la tarjeta del `SKU_Availability_Agent`.
+
+### `wxo-tools-tab.png`
+
+Agent Builder del `SKU_Availability_Agent` en modo **Build**, pestaña **Tools**. **Recuadro** sobre la tarjeta `retail_availability_mcp: get_sku_availability`, donde se lee `Type MCP`. Es la única verificación del paso.
 
 ### `sku-availability-chat.png`
 
-Chat de prueba del agente `SKU_Availability_Agent` en watsonx Orchestrate. Se ve la pregunta del usuario "¿Cuánto stock hay de LAPTOP-DELL-XPS-15 en DOT Shopping?" y la respuesta del agente con una **cantidad concreta** y el nombre de la sucursal **DOT Shopping**. Si la UI permite expandir el detalle de la ejecución, incluye visible la llamada a la tool `get_sku_availability`. Recorte al panel de chat.
+Mismo Agent Builder, panel **Draft Preview** de la derecha. **Recuadro** sobre la conversación: la pregunta "¿Cuánto stock hay de LAPTOP-DELL-XPS-15 en DOT Shopping?" y la respuesta con la **cantidad concreta** y el nombre de la sucursal. Demuestra que se prueba sin desplegar.
 
 ---
 
-## Paso 8 — Sustitutos RAG
+## Lab 3 — Sustitutos RAG
+
+Las tres primeras son las pantallas consecutivas del asistente **Choose knowledge source**.
+
+### `wxo-knowledge-select-source.png`
+
+Paso *Select knowledge source*. **Recuadro** sobre la tarjeta **Upload files**, marcada `Selected`.
+
+### `wxo-knowledge-upload-file.png`
+
+Paso *Add knowledge*. **Recuadro** sobre `product-catalog.docx` ya listado bajo la zona de arrastre.
+
+### `wxo-knowledge-details.png`
+
+Paso *Knowledge details*. **Recuadro** sobre los campos **Name** y **Description**, ambos rellenos. La descripción visible debe ser la misma que el bloque copiable del lab.
 
 ### `substitute-finder-chat.png`
 
-Chat de prueba del agente `Substitute_Finder_Agent`. Pregunta: "LAPTOP-DELL-XPS-15 no está disponible. Sugiere una laptop similar usando el catálogo de productos." La respuesta lista **una o más laptops alternativas** justificadas con atributos del catálogo (procesador, memoria, pantalla, rango de precio). Si la UI muestra la cita a la fuente `enterprise_documents`, que quede visible — es lo que prueba que el RAG funcionó.
+Panel **Draft Preview** del `Substitute_Finder_Agent`. **Recuadro** sobre el bloque **Productos sustitutos**, con alternativas justificadas por atributos del catálogo (procesador, memoria, pantalla).
 
 ---
 
-## Paso 11 — Supervisor
+## Lab 4 — Supervisor
 
 ### `store-associate-chat.png`
 
-Chat de prueba del agente `Store_Associate_Agent`. Pregunta: "¿Tienes LAPTOP-MACBOOK-PRO-16 en Unicenter?" La respuesta debe mostrar el caso interesante: **sin stock → alternativas del catálogo**, resuelto en un solo turno. Lo ideal es capturar también el rastro de delegación a los dos agentes colaboradores si la UI lo expone. La respuesta visible no debe mencionar Kafka ni MCP.
+Panel **Draft Preview** del `Store_Associate_Agent`. **Recuadro** sobre la pregunta "¿Tienes LAPTOP-MACBOOK-PRO-16 en Unicenter?" y su respuesta con la cantidad en la sucursal. La respuesta visible no menciona Kafka ni MCP.
 
 ---
 
-## Paso 14 — Asistente cliente
+## Lab 5 — Asistente cliente
 
 ### `customer-shopping-chat.png`
 
-Chat de prueba del agente `Customer_Shopping_Assistant`. Pregunta: "Busco una laptop para trabajo y edición de fotos en Unicenter. ¿Qué me recomiendas con stock?" La respuesta combina **recomendación desde el catálogo** y **confirmación de disponibilidad en Unicenter**, con tono de cara al cliente. Recorte al panel de chat.
+Panel **Draft Preview** del asistente de compra: tabla de laptops recomendadas desde el catálogo. **Recuadro** sobre la línea que informa del stock real en **Unicenter** — es la prueba de que consultó el inventario antes de responder.
 
 ---
 
-## Paso 15 — Canal embebido
+## Capturas sin uso
 
-### `wxo-embedded-channel.png`
-
-Pantalla **Channels → Embedded agent → pestaña Live** del `Customer_Shopping_Assistant`. Se ve la sección "Embed on your website" con el bloque de snippet HTML/JS y su botón de copiar. **Difumina el ID de instancia y cualquier token dentro del snippet** antes de exportar.
-
----
-
-## Paso 16 — Estado final
-
-### `wxo-agents-list.png`
-
-Vista **Agents** de watsonx Orchestrate con los cuatro agentes del laboratorio visibles en la lista — `SKU_Availability_Agent`, `Substitute_Finder_Agent`, `Store_Associate_Agent`, `Customer_Shopping_Assistant` — todos con estado desplegado. Recorta la lista; oculta el resto de agentes de la instancia si hubiera otros de laboratorios distintos.
+`desplegar_agente.png` y `deploy_resumen.png` quedaron sin referenciar cuando el track dejó de pedir **Deploy** (la UI nueva exige *Create version* y el chat **Draft Preview** ya permite probar el borrador). Se conservan por si vuelven a hacer falta.

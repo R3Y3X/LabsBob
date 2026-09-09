@@ -60,7 +60,7 @@
         <tr><td><strong>MCP remoto</strong></td><td>VM del Track D vía HTTP (Streamable HTTP)</td><td>Lee <code>inventory.availability.tzN_pXXX</code> en el Kafka de esa VM. <code>table_number</code> es 1–3 (TechZone del hub), no el número de mesa.</td><td>Equipo del workshop</td></tr>
         <tr><td><strong>Toolkit</strong></td><td><code>retail_availability_mcp</code></td><td>Registro compartido: URL <code>http://&lt;IP&gt;/retail-mcp/mcp</code>, transporte <code>streamable_http</code>.</td><td>Facilitador, una vez por instancia Orchestrate</td></tr>
         <tr><td><strong>Agentes</strong></td><td>Archivos YAML de <code>trackF/confluent_agents</code></td><td>Definen instrucciones, colaboradores, conocimiento y tools.</td><td>Cada participante</td></tr>
-        <tr><td><strong>Credenciales</strong></td><td>Instancia watsonx Orchestrate (TechZone)</td><td>URL e API key de <strong>Gestionar → Credenciales</strong> en IBM Cloud (<code>ibm_iam</code>). No uses la Service ID API Key del output de TechZone. El lab Disponibilidad MCP muestra el click-path con capturas pendientes.</td><td>Cada participante (su cuenta <code>itz-saas-*</code>)</td></tr>
+        <tr><td><strong>Credenciales</strong></td><td>Instancia watsonx Orchestrate (TechZone)</td><td>URL y clave de API de <strong>Manage → Credenciales</strong> en IBM Cloud (<code>ibm_iam</code>). El lab Disponibilidad MCP muestra el click-path con capturas.</td><td>Cada participante (su cuenta <code>itz-saas-*</code>)</td></tr>
       </tbody>
     </table></div>
     <div class="callout" data-tone="warning">
@@ -75,9 +75,9 @@
       <li class="cds--list__item"><strong>Disponibilidad MCP</strong> — Bob prepara la CLI, activa la instancia, verifica el toolkit compartido e importa el primer agente. Lo pruebas en Orchestrate.</li>
       <li class="cds--list__item"><strong>Sustitutos RAG</strong> — importas el agente de sustitutos, cargas el catálogo como base de conocimiento y compruebas que cite el documento.</li>
       <li class="cds--list__item"><strong>Supervisor</strong> — importas el coordinador de tienda y verificas que delegue en sus dos colaboradores.</li>
-      <li class="cds--list__item"><strong>Asistente cliente</strong> — importas el agente de cara al cliente, lo pruebas y copias el snippet embebible.</li>
+      <li class="cds--list__item"><strong>Asistente cliente</strong> — importas el agente de cara al cliente y lo pruebas en Orchestrate.</li>
     </ol>
-    <p class="cds--body-01">Cada fase termina igual: entras a tu instancia de watsonx Orchestrate, pruebas el agente que acabas de importar y repasas los criterios de éxito antes de seguir.</p>
+    <p class="cds--body-01">Cada fase termina igual: entras a tu instancia de watsonx Orchestrate, pruebas el agente que acabas de importar en el panel <strong>Draft Preview</strong> y repasas los criterios de éxito antes de seguir. No hace falta desplegar ningún agente.</p>
   </section>
 
   <section class="lab-section" aria-labelledby="soporte-heading">

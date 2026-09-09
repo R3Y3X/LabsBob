@@ -101,6 +101,7 @@ export const siteData = {
         },
         {
           slug: 'agentic-retail-wxo',
+          endsTrack: true,
           title: 'De agentes aislados a una fuerza de trabajo inteligente',
           description: 'Construye un sistema multiagente en watsonx Orchestrate: disponibilidad vía MCP sobre Kafka, sustitutos con RAG, un supervisor de tienda y un asistente de compra para el cliente.',
           supporting: 'watsonx Orchestrate',
@@ -113,7 +114,7 @@ export const siteData = {
             { slug: 'ui-access', label: 'Interfaz WxO', file: './content/integraciones/agentic-retail-wxo/ui-access.html', tags: ['UI'], bobcoinCost: { min: 2, max: 4 } },
             { slug: 'rag', label: 'Sustitutos RAG', file: './content/integraciones/agentic-retail-wxo/rag.html', tags: ['RAG'], bobcoinCost: { min: 2, max: 5 } },
             { slug: 'integration', label: 'Supervisor', file: './content/integraciones/agentic-retail-wxo/integration.html', tags: ['Supervisor'], bobcoinCost: { min: 2, max: 4 } },
-            { slug: 'shopping', label: 'Asistente cliente', file: './content/integraciones/agentic-retail-wxo/shopping.html', tags: ['Embedded'], bobcoinCost: { min: 2, max: 4 } }
+            { slug: 'shopping', label: 'Asistente cliente', file: './content/integraciones/agentic-retail-wxo/shopping.html', tags: ['Asistente'], bobcoinCost: { min: 2, max: 4 } }
           ]
         },
         {
@@ -520,7 +521,7 @@ export const workshopGuides = {
       ['Conocimiento', 'Modelado de agentes, intenciones y herramientas MCP.']
     ],
     materials: ['Prompts listos para copiar en cada paso — no escribes comandos.', 'YAML de los cuatro agentes y catálogo RAG.', 'Preguntas de prueba para validar cada agente en la instancia.'],
-    path: 'Disponibilidad MCP → sustitutos RAG → supervisor de tienda → asistente embebible para el cliente.',
+    path: 'Disponibilidad MCP → sustitutos RAG → supervisor de tienda → asistente de compra para el cliente.',
     learning: [
       ['Orquestación', 'Definir flujos multiagente autónomos.'],
       ['MCP Integración', 'Vincular herramientas externas a watsonx Orchestrate.'],

@@ -8,7 +8,7 @@
 
   <div class="callout" data-tone="note">
     <p class="callout__title">Punto de partida</p>
-    <p class="cds--body-01">Sigue en la misma conversación de Bob, con <code>SKU_Availability_Agent</code> y <code>Substitute_Finder_Agent</code> ya importados y desplegados. El supervisor los declara como colaboradores: si faltan, el import falla.</p>
+    <p class="cds--body-01">Sigue en la misma conversación de Bob, con <code>SKU_Availability_Agent</code> y <code>Substitute_Finder_Agent</code> ya importados. El supervisor los declara como colaboradores: si faltan, el import falla.</p>
   </div>
 
   <!-- ── Paso 1 ─────────────────────────────────────────────────── -->
@@ -61,14 +61,13 @@ Si falta algún colaborador, NO importes: dime cuál falta y detente.</code></pr
         <span class="ctx-badge ctx-badge--orchestrate">watsonx Orchestrate</span>
       </div>
     </div>
-    <h2 class="cds--productive-heading-04" id="revisar-colaboradores">Paso 2 — Revisar colaboradores y desplegar</h2>
+    <h2 class="cds--productive-heading-04" id="revisar-colaboradores">Paso 2 — Revisar sus colaboradores</h2>
     <p class="step-header__why">Antes de probarlo conviene mirar cómo quedó armado: qué agentes tiene disponibles para delegar. Es la parte del laboratorio donde se ve la topología del sistema multiagente.</p>
 
     <ol class="cds--list--ordered">
       <li class="cds--list__item">Abre <code>Store_Associate_Agent_TZ{N}_P{xxx}</code> en la UI de watsonx Orchestrate.</li>
       <li class="cds--list__item">Entra a <strong>Agents</strong> (colaboradores) y comprueba que aparezcan los dos especialistas <strong>con el mismo sufijo</strong>.</li>
       <li class="cds--list__item">Lee sus <strong>instrucciones</strong>: describen cuándo delegar disponibilidad y cuándo pedir sustitutos.</li>
-      <li class="cds--list__item">Haz clic en <strong>Deploy</strong> y confirma.</li>
     </ol>
   </section>
 
@@ -84,7 +83,7 @@ Si falta algún colaborador, NO importes: dime cuál falta y detente.</code></pr
     <p class="step-header__why">Aquí se prueba la delegación, no una respuesta aislada. La consulta pide un producto que puede no tener stock: el supervisor debe detectarlo y pedirle alternativas al agente RAG por su cuenta, sin que tú se lo indiques.</p>
 
     <ol class="cds--list--ordered">
-      <li class="cds--list__item">Con <code>Store_Associate_Agent</code> desplegado, abre su <strong>chat de prueba</strong>.</li>
+      <li class="cds--list__item">Con <code>Store_Associate_Agent</code> abierto en <strong>Build</strong>, usa el panel <strong>Draft Preview</strong> de la derecha.</li>
       <li class="cds--list__item">Envía la consulta de abajo.</li>
     </ol>
 
@@ -93,28 +92,28 @@ Si falta algún colaborador, NO importes: dime cuál falta y detente.</code></pr
       <pre><code>¿Tienes LAPTOP-MACBOOK-PRO-16 en Unicenter?</code></pre>
     </div>
 
-    <p class="cds--body-01"><strong>Qué debes ver:</strong> el supervisor consulta disponibilidad y, si no hay stock, delega en el agente de sustitutos y responde con alternativas del catálogo — todo en un solo turno. <strong>Qué no debe pasar:</strong> la respuesta no debe mencionar Kafka, MCP, ni los nombres internos de los agentes; para el asociado de tienda eso es ruido.</p>
+    <p class="cds--body-01"><strong>Qué debes ver:</strong> el supervisor consulta disponibilidad real y responde con la cantidad y la sucursal — como en la captura, donde el SKU sí tenía stock. Si ese SKU estuviera agotado en tu tópico, el mismo turno debería seguir con alternativas del catálogo, porque delega en el agente de sustitutos sin que tú se lo pidas. <strong>Qué no debe pasar:</strong> la respuesta no debe mencionar Kafka, MCP, ni los nombres internos de los agentes; para el asociado de tienda eso es ruido.</p>
 
     <figure class="lab-figure">
       <img src="./assets/images/labs/agentic-retail-wxo/store-associate-chat.png"
            data-placeholder-path="./assets/images/labs/agentic-retail-wxo/store-associate-chat.png"
-           alt="Chat del Store Associate Agent en watsonx Orchestrate consultando disponibilidad y delegando en el agente de sustitutos para ofrecer alternativas"
+           alt="Panel Draft Preview del Store Associate Agent respondiendo con la disponibilidad de LAPTOP-MACBOOK-PRO-16 en la sucursal Unicenter"
            class="lab-figure__img" />
-      <figcaption class="lab-figure__caption">El supervisor encadena disponibilidad y sustitutos en una sola respuesta al asociado de tienda.</figcaption>
+      <figcaption class="lab-figure__caption">El supervisor responde con stock real de la sucursal. Con un SKU agotado, encadenaría además los sustitutos en el mismo turno.</figcaption>
     </figure>
 
     <div class="callout" data-tone="success" style="margin-top: 1.25rem;">
       <p class="callout__title">✓ Checkpoint — no avances sin esto</p>
       <ul class="checklist">
         <li class="checklist__item">Los dos colaboradores aparecen listados en el supervisor.</li>
-        <li class="checklist__item">La respuesta cubre disponibilidad y, si corresponde, alternativas.</li>
+        <li class="checklist__item">La respuesta cubre disponibilidad real y, si el SKU está agotado, alternativas.</li>
         <li class="checklist__item">No se filtran nombres de agentes ni detalles de infraestructura.</li>
       </ul>
     </div>
 
     <div class="callout" data-tone="info" style="margin-top: 1rem;">
       <p class="callout__title">Si el supervisor no delega</p>
-      <p class="cds--body-01">Revisa que ambos colaboradores estén <strong>desplegados</strong>, no solo importados. Un colaborador sin desplegar aparece en la lista pero no puede recibir la delegación.</p>
+      <p class="cds--body-01">Revisa que ambos colaboradores aparezcan en la pestaña <strong>Agents</strong> del supervisor y que lleven <strong>el mismo sufijo</strong> <code>_TZ{N}_P{xxx}</code>. Si el sufijo no coincide, el supervisor los declara pero no los encuentra. Ten en cuenta también que si el SKU tiene stock, lo correcto es que no delegue.</p>
     </div>
   </section>
 
@@ -123,9 +122,9 @@ Si falta algún colaborador, NO importes: dime cuál falta y detente.</code></pr
     <h2 class="cds--productive-heading-04" id="criterios-exito">Criterios de éxito</h2>
     <p class="cds--body-01">Antes de pasar al asistente de cliente, confirma que la delegación funciona: es lo que convierte cuatro agentes sueltos en un sistema.</p>
     <ul class="checklist">
-      <li class="checklist__item"><code>Store_Associate_Agent</code> está importado y desplegado.</li>
-      <li class="checklist__item">Sus colaboradores son <code>SKU_Availability_Agent</code> y <code>Substitute_Finder_Agent</code>, ambos desplegados.</li>
-      <li class="checklist__item">El supervisor consulta disponibilidad y, cuando no hay stock, delega la búsqueda de alternativas.</li>
+      <li class="checklist__item"><code>Store_Associate_Agent</code> está importado y abierto en la UI.</li>
+      <li class="checklist__item">Sus colaboradores son <code>SKU_Availability_Agent</code> y <code>Substitute_Finder_Agent</code>, ambos con el mismo sufijo.</li>
+      <li class="checklist__item">El supervisor consulta disponibilidad real y, cuando no hay stock, delega la búsqueda de alternativas.</li>
       <li class="checklist__item">Las respuestas no exponen credenciales, nombres de agentes ni detalles internos de infraestructura.</li>
     </ul>
   </section>

@@ -1,5 +1,5 @@
 import { loadContent } from './content.js';
-import { siteData, workshopGuides, findLab, getNextLab, getWorkshopStats, getVisibleSections, roadshowConfig, getRoadshowPlan, getLabTrackMeta, generalPrereqs } from './data.js?v=5';
+import { siteData, workshopGuides, findLab, getNextLab, getWorkshopStats, getVisibleSections, roadshowConfig, getRoadshowPlan, getLabTrackMeta, generalPrereqs } from './data.js?v=6';
 import { getHomeRoute, getLabRoute, parseRoute } from './router.js';
 import { initializeTheme, toggleTheme } from './theme.js';
 import { ensureParticipantAssignment, isParticipantLab, personalizeContent, participantBanner, readParticipantContext } from './participant.js?v=9';
@@ -2353,7 +2353,7 @@ function buildStepClosure(lab, step) {
   const stepIndex = lab.steps.findIndex((item) => item.slug === step.slug);
   const prevStep = stepIndex > 0 ? lab.steps[stepIndex - 1] : null;
   const nextStep = lab.steps[stepIndex + 1];
-  const nextWorkshop = nextStep ? null : getNextLab(lab.slug);
+  const nextWorkshop = (nextStep || lab.endsTrack) ? null : getNextLab(lab.slug);
 
   // Next destination
   const nextDestination = nextStep

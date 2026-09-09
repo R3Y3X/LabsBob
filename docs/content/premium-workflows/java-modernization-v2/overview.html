@@ -124,12 +124,26 @@
 
     <h3 class="cds--productive-heading-02">Java y Maven</h3>
     <p class="cds--body-01">El Lab 1 arranca en <strong>Java 8 (Zulu)</strong>. Desde el Lab 2 hace falta <strong>Java 21 (Semeru)</strong>. Instala las dos versiones y Maven ahora. Después de instalar, cierra y vuelve a abrir Bob para que tome el <code>PATH</code> nuevo.</p>
-    <div class="os-setup-grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
-      <div class="os-setup-card">
-        <div class="os-setup-card__header">
-          <h4 class="os-setup-card__title">macOS</h4>
-        </div>
+    <div class="os-setup" data-os-setup>
+      <p class="os-setup__hint">Elige tu sistema operativo. Solo un botón queda activo y ves únicamente esos comandos, a todo el ancho.</p>
+      <div class="os-setup__tabs" role="tablist" aria-label="Sistema operativo para Java y Maven">
+        <button type="button" class="os-setup__tab" role="tab" id="wf-java-os-macos" data-os="macos" aria-controls="wf-java-os-panel-macos" aria-selected="true">macOS</button>
+        <button type="button" class="os-setup__tab" role="tab" id="wf-java-os-linux" data-os="linux" aria-controls="wf-java-os-panel-linux" aria-selected="false">Linux</button>
+        <button type="button" class="os-setup__tab" role="tab" id="wf-java-os-windows" data-os="windows" aria-controls="wf-java-os-panel-windows" aria-selected="false">Windows</button>
+      </div>
+      <div class="os-setup-card os-setup__panel" id="wf-java-os-panel-macos" role="tabpanel" data-os-panel="macos" aria-labelledby="wf-java-os-macos">
         <div class="os-setup-card__body">
+          <p>Si aún no tienes Homebrew, instálalo primero. Método oficial:</p>
+          <div class="code-block code-block--terminal">
+            <button type="button" class="copy-button">Copiar</button>
+            <pre><code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</code></pre>
+          </div>
+          <p>Si el comando anterior falla, descarga el instalador y ejecútalo de forma local:</p>
+          <div class="code-block code-block--terminal">
+            <button type="button" class="copy-button">Copiar</button>
+            <pre><code>curl -fsSL -o install.sh https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+/bin/bash install.sh</code></pre>
+          </div>
           <p>Usa la app <strong>Terminal</strong> con <code>zsh</code> (el shell por defecto). SDKMAN! instala y cambia entre Java 8 Zulu, Java 21 Semeru y Maven:</p>
           <div class="code-block code-block--terminal">
             <button type="button" class="copy-button">Copiar</button>
@@ -162,10 +176,7 @@
           </div>
         </div>
       </div>
-      <div class="os-setup-card">
-        <div class="os-setup-card__header">
-          <h4 class="os-setup-card__title">Linux</h4>
-        </div>
+      <div class="os-setup-card os-setup__panel" id="wf-java-os-panel-linux" role="tabpanel" data-os-panel="linux" aria-labelledby="wf-java-os-linux" hidden>
         <div class="os-setup-card__body">
           <p>Instala primero las herramientas de base y después SDKMAN!:</p>
           <div class="code-block code-block--terminal">
@@ -199,10 +210,7 @@
           </div>
         </div>
       </div>
-      <div class="os-setup-card">
-        <div class="os-setup-card__header">
-          <h4 class="os-setup-card__title">Windows</h4>
-        </div>
+      <div class="os-setup-card os-setup__panel" id="wf-java-os-panel-windows" role="tabpanel" data-os-panel="windows" aria-labelledby="wf-java-os-windows" hidden>
         <div class="os-setup-card__body">
           <p>Elige <strong>una</strong> opción y quédate en ella todo el workshop. No mezcles PowerShell nativo con WSL.</p>
           <details open>

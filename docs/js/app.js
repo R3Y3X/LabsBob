@@ -1,5 +1,5 @@
 import { loadContent } from './content.js';
-import { siteData, workshopGuides, findLab, getNextLab, getWorkshopStats, getVisibleSections, roadshowConfig, getRoadshowPlan, getLabTrackMeta, generalPrereqs } from './data.js?v=7';
+import { siteData, workshopGuides, findLab, getNextLab, getWorkshopStats, getVisibleSections, roadshowConfig, getRoadshowPlan, getLabTrackMeta, generalPrereqs } from './data.js?v=8';
 import { getHomeRoute, getLabRoute, parseRoute } from './router.js';
 import { initializeTheme, toggleTheme } from './theme.js';
 import { ensureParticipantAssignment, isParticipantLab, personalizeContent, participantBanner, readParticipantContext } from './participant.js?v=9';
@@ -1055,6 +1055,55 @@ function detectPrereqOs() {
   return 'windows';
 }
 
+const OS_SETUP_STORAGE_KEY = 'lab-java-os';
+
+function applyOsSetup(root, osId) {
+  const tabs = [...root.querySelectorAll('[data-os]')];
+  const ids = tabs.map((tab) => tab.getAttribute('data-os'));
+  const selectedId = ids.includes(osId) ? osId : ids[0];
+  if (!selectedId) return;
+
+  tabs.forEach((tab) => {
+    const selected = tab.getAttribute('data-os') === selectedId;
+    tab.classList.toggle('os-setup__tab--active', selected);
+    tab.setAttribute('aria-selected', String(selected));
+    tab.tabIndex = selected ? 0 : -1;
+  });
+
+  root.querySelectorAll('[data-os-panel]').forEach((panel) => {
+    panel.hidden = panel.getAttribute('data-os-panel') !== selectedId;
+  });
+}
+
+function bindOsSetup(container) {
+  container.querySelectorAll('[data-os-setup]').forEach((root) => {
+    if (root.dataset.osSetupBound === 'true') return;
+    root.dataset.osSetupBound = 'true';
+
+    const ids = [...root.querySelectorAll('[data-os]')].map((tab) => tab.getAttribute('data-os'));
+    const stored = localStorage.getItem(OS_SETUP_STORAGE_KEY);
+    const detected = detectPrereqOs();
+    const initial = ids.includes(stored) ? stored : (ids.includes(detected) ? detected : ids[0]);
+    applyOsSetup(root, initial);
+
+    root.addEventListener('keydown', (event) => {
+      if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+      const tab = event.target.closest('[data-os]');
+      if (!tab || !root.contains(tab)) return;
+      const tabs = [...root.querySelectorAll('[data-os]')];
+      const current = tabs.indexOf(tab);
+      if (current < 0) return;
+      event.preventDefault();
+      const delta = event.key === 'ArrowRight' ? 1 : -1;
+      const next = tabs[(current + delta + tabs.length) % tabs.length];
+      const nextOs = next.getAttribute('data-os');
+      localStorage.setItem(OS_SETUP_STORAGE_KEY, nextOs);
+      applyOsSetup(root, nextOs);
+      next.focus();
+    });
+  });
+}
+
 function setPrereqOs(osId) {
   const root = homeView.querySelector('#requisitos');
   if (!root) return;
@@ -1079,6 +1128,22 @@ function renderTerminalBlock(label, code) {
       <button type="button" class="copy-button">Copiar</button>
       <pre><code>${escapeHtml(code)}</code></pre>
     </div>`;
+}
+
+function renderOsInstallSection(os) {
+  if (Array.isArray(os.installSteps) && os.installSteps.length) {
+    return os.installSteps.map((step) => `
+      ${renderTerminalBlock(step.label, step.code)}
+      ${step.hint ? `<p class="hub-prereqs__hint">${escapeHtml(step.hint)}</p>` : ''}
+    `).join('');
+  }
+
+  return `
+      ${renderTerminalBlock(os.installLabel, os.install)}
+      <p class="hub-prereqs__hint">${escapeHtml(os.installHint)}</p>
+      ${os.installExtra ? `${renderTerminalBlock(os.installExtraLabel, os.installExtra)}
+      <p class="hub-prereqs__hint">${escapeHtml(os.installExtraHint || '')}</p>` : ''}
+  `;
 }
 
 function renderGeneralPrereqs() {
@@ -1121,10 +1186,7 @@ function renderGeneralPrereqs() {
         <strong>IBM Bob IDE.</strong> ${escapeHtml(os.bob)}
         <a class="cds--link" href="${generalPrereqs.bobUrl}" target="_blank" rel="noreferrer noopener">bob.ibm.com/download</a>
       </p>
-      ${renderTerminalBlock(os.installLabel, os.install)}
-      <p class="hub-prereqs__hint">${escapeHtml(os.installHint)}</p>
-      ${os.installExtra ? `${renderTerminalBlock(os.installExtraLabel, os.installExtra)}
-      <p class="hub-prereqs__hint">${escapeHtml(os.installExtraHint || '')}</p>` : ''}
+      ${renderOsInstallSection(os)}
       ${renderTerminalBlock(os.validateLabel, os.validate)}
     </div>
   `).join('');
@@ -2895,6 +2957,7 @@ function enhanceLabContent(proseEl, section, lab, step, isOverview) {
   });
   normalizeInstructionalImages(proseEl);
   normalizeCodeBlocks(proseEl);
+  bindOsSetup(proseEl);
   ensureStepClosure(proseEl, lab, step);
 
   proseEl.querySelectorAll('table').forEach((table) => {
@@ -3191,6 +3254,15 @@ function bindEvents() {
   });
 
   document.addEventListener('click', async (event) => {
+    const osSetupTab = event.target.closest('[data-os-setup] [data-os]');
+    if (osSetupTab) {
+      const root = osSetupTab.closest('[data-os-setup]');
+      const osId = osSetupTab.getAttribute('data-os');
+      localStorage.setItem(OS_SETUP_STORAGE_KEY, osId);
+      applyOsSetup(root, osId);
+      return;
+    }
+
     const osTab = event.target.closest('[data-prereq-os]');
     if (osTab) {
       setPrereqOs(osTab.getAttribute('data-prereq-os'));

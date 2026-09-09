@@ -289,9 +289,23 @@ export const generalPrereqs = {
       id: 'macos',
       label: 'macOS',
       bob: 'En la página de descarga elige Mac ARM (Apple Silicon) o Mac Intel, según el chip.',
-      installLabel: 'Terminal (Homebrew)',
-      install: 'brew install node@22 python@3.12\nbrew link --overwrite --force node@22',
-      installHint: 'Si no tienes Homebrew, instala Node 22 LTS desde nodejs.org y Python 3.12 desde python.org. SSH ya está en macOS. En Terminal usa python3, no python.',
+      installSteps: [
+        {
+          label: '1. Instalar Homebrew',
+          code: '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"',
+          hint: 'Si Homebrew ya está instalado, pasa al bloque de Node y Python. Si este comando falla, usa el método local de abajo. En Apple Silicon, al terminar: eval "$(/opt/homebrew/bin/brew shellenv)".'
+        },
+        {
+          label: '2. Si Homebrew falló: instalador local',
+          code: 'curl -fsSL -o install.sh https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh\n/bin/bash install.sh',
+          hint: 'Descarga el instalador, revísalo y ejecútalo en local. Después carga brew en esta sesión si hace falta: eval "$(/opt/homebrew/bin/brew shellenv)".'
+        },
+        {
+          label: '3. Node.js 22 y Python 3.12',
+          code: 'brew install node@22 python@3.12\nbrew link --overwrite --force node@22',
+          hint: 'SSH ya está en macOS. En Terminal usa python3, no python.'
+        }
+      ],
       validateLabel: 'Validar',
       validate: 'node -v\nnpm -v\npython3 --version\npython3 -m pip --version\npython3 -m venv -h\nssh -V'
     },

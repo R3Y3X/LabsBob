@@ -1736,6 +1736,19 @@ body.cds--g100 .callout[data-tone="danger"] {
   overflow-wrap: anywhere;
 }
 
+.lab-shell .os-setup .code-block pre,
+.prose .os-setup .code-block pre {
+  white-space: pre;
+  overflow-x: auto;
+  overflow-wrap: normal;
+}
+
+.lab-shell .os-setup .code-block pre code,
+.prose .os-setup .code-block pre code {
+  white-space: pre;
+  overflow-wrap: normal;
+}
+
 .prose pre code,
 .code-block pre code {
   white-space: inherit;

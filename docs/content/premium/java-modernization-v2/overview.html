@@ -305,15 +305,26 @@ Empieza de nuevo mostrando el diff del Cambio que corresponda (sin aplicar nada 
 
     <h3 class="cds--productive-heading-02">Java y Maven</h3>
     <p class="cds--body-01">El Lab 1 arranca en Java 8. Desde el Lab 2 usas Java 21 (Zulu). Instala las dos versiones y Maven ahora. Después de instalar Maven, cierra y vuelve a abrir Bob para que tome el <code>PATH</code> nuevo.</p>
-    <div class="os-setup-grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
-      <div class="os-setup-card">
-        <div class="os-setup-card__header">
-          <span class="os-setup-card__icon" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M22.9 16.7c0-3.9 3.2-5.8 3.3-5.9-1.8-2.6-4.6-3-5.6-3-2.4-.2-4.6 1.4-5.8 1.4-1.2 0-3.1-1.4-5.1-1.3-2.6 0-5 1.5-6.3 3.8-2.7 4.7-.7 11.6 1.9 15.4 1.3 1.9 2.8 3.9 4.8 3.9 1.9-.1 2.6-1.2 4.9-1.2s2.9 1.2 4.9 1.2c2.1 0 3.4-1.9 4.7-3.7 1.5-2.1 2.1-4.2 2.1-4.3-.1 0-3.8-1.5-3.8-5.3zM19.2 5.2c1.1-1.3 1.8-3.1 1.6-4.9-1.6.1-3.4 1.1-4.5 2.3-1 1.1-1.9 2.9-1.6 4.7 1.7.1 3.4-.9 4.5-2.1z"/></svg>
-          </span>
-          <h4 class="os-setup-card__title">macOS y Linux</h4>
-        </div>
+    <div class="os-setup" data-os-setup>
+      <p class="os-setup__hint">Elige tu sistema operativo. Solo un botón queda activo y ves únicamente esos comandos, a todo el ancho.</p>
+      <div class="os-setup__tabs" role="tablist" aria-label="Sistema operativo para Java y Maven">
+        <button type="button" class="os-setup__tab" role="tab" id="ag-java-os-macos" data-os="macos" aria-controls="ag-java-os-panel-macos" aria-selected="true">macOS</button>
+        <button type="button" class="os-setup__tab" role="tab" id="ag-java-os-linux" data-os="linux" aria-controls="ag-java-os-panel-linux" aria-selected="false">Linux</button>
+        <button type="button" class="os-setup__tab" role="tab" id="ag-java-os-windows" data-os="windows" aria-controls="ag-java-os-panel-windows" aria-selected="false">Windows</button>
+      </div>
+      <div class="os-setup-card os-setup__panel" id="ag-java-os-panel-macos" role="tabpanel" data-os-panel="macos" aria-labelledby="ag-java-os-macos">
         <div class="os-setup-card__body">
+          <p>Si aún no tienes Homebrew, instálalo primero. Método oficial:</p>
+          <div class="code-block code-block--terminal">
+            <button type="button" class="copy-button">Copiar</button>
+            <pre><code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</code></pre>
+          </div>
+          <p>Si el comando anterior falla, descarga el instalador y ejecútalo de forma local:</p>
+          <div class="code-block code-block--terminal">
+            <button type="button" class="copy-button">Copiar</button>
+            <pre><code>curl -fsSL -o install.sh https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+/bin/bash install.sh</code></pre>
+          </div>
           <p>SDKMAN! instala y cambia entre versiones de Java. Copia el bloque entero y ejecútalo en orden:</p>
           <div class="code-block code-block--terminal">
             <button type="button" class="copy-button">Copiar</button>
@@ -330,13 +341,22 @@ sdk install maven</code></pre>
           </div>
         </div>
       </div>
-      <div class="os-setup-card">
-        <div class="os-setup-card__header">
-          <span class="os-setup-card__icon" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path d="M3 3h12v12H3zm14 0h12v12H17zM3 17h12v12H3zm14 0h12v12H17z"/></svg>
-          </span>
-          <h4 class="os-setup-card__title">Windows</h4>
+      <div class="os-setup-card os-setup__panel" id="ag-java-os-panel-linux" role="tabpanel" data-os-panel="linux" aria-labelledby="ag-java-os-linux" hidden>
+        <div class="os-setup-card__body">
+          <p>Instala primero las herramientas de base y después SDKMAN!:</p>
+          <div class="code-block code-block--terminal">
+            <button type="button" class="copy-button">Copiar</button>
+            <pre><code>sudo apt update &amp;&amp; sudo apt install -y curl zip unzip lsof
+curl -s "https://get.sdkman.io" | bash
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+sdk install java 8.0.504+1-zulu
+sdk default java 8.0.504+1-zulu
+sdk install java 21.0.12+1.1-zulu
+sdk install maven</code></pre>
+          </div>
         </div>
+      </div>
+      <div class="os-setup-card os-setup__panel" id="ag-java-os-panel-windows" role="tabpanel" data-os-panel="windows" aria-labelledby="ag-java-os-windows" hidden>
         <div class="os-setup-card__body">
           <p>Elige una opción y quédate en ella todo el workshop. No mezcles PowerShell nativo con WSL.</p>
           <details open>
@@ -355,7 +375,7 @@ winget install --id Apache.Maven --exact</code></pre>
               <button type="button" class="copy-button">Copiar</button>
               <pre><code>wsl --install</code></pre>
             </div>
-            <p>Abre Ubuntu/WSL — no PowerShell — e instala el mismo stack que en macOS/Linux:</p>
+            <p>Abre Ubuntu/WSL — no PowerShell — e instala el mismo stack que en Linux:</p>
             <div class="code-block code-block--terminal">
               <button type="button" class="copy-button">Copiar</button>
               <pre><code>sudo apt update &amp;&amp; sudo apt install -y curl zip unzip lsof

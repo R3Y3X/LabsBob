@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 """Create participant-scoped ksqlDB JSON_SR stream and table.
 
-Binds the stream to the Schema Registry id of TOPIC_NAME-value and keeps
-JSON field names quoted (`sku`, `branch`, …). Unquoted identifiers become
+Quoted JSON field names (`sku`, `branch`, …). Unquoted identifiers become
 SKU/BRANCH and ksql JSON_SR then projects nulls, so the CTAS stays RUNNING,
 consumes every offset, and never writes inventory.availability.* (Track F).
+
+ksql 8.2 rejects VALUE_SCHEMA_ID together with an explicit column list, and
+WRAP_SINGLE_VALUE on a multi-field schema. Bind via JSON_SR + quoted names;
+the server must have ksql.schema.registry.url (setup.sh -s 2 runs ensure_ksql_sr).
 """
 import json
 import os
@@ -57,10 +60,11 @@ def main() -> None:
     if os.getenv("KSQLDB_USERNAME") and os.getenv("KSQLDB_PASSWORD"):
         auth = (os.environ["KSQLDB_USERNAME"], os.environ["KSQLDB_PASSWORD"])
     schema_id = latest_value_schema_id(source_topic)
-    extra_with = ""
     if schema_id is not None:
-        extra_with = f",\n            VALUE_SCHEMA_ID={schema_id}"
-        print(f"Binding stream to JSON Schema id={schema_id} ({source_topic}-value)")
+        print(
+            f"Schema Registry has {source_topic}-value id={schema_id} "
+            "(not passed as VALUE_SCHEMA_ID; ksql 8.2 forbids it with columns)"
+        )
 
     def submit(statement: str) -> None:
         response = requests.post(
@@ -92,8 +96,7 @@ def main() -> None:
         ) WITH (
             KAFKA_TOPIC='{source_topic}',
             KEY_FORMAT='KAFKA',
-            VALUE_FORMAT='JSON_SR',
-            WRAP_SINGLE_VALUE='false'{extra_with}
+            VALUE_FORMAT='JSON_SR'
         );"""
     )
     submit(

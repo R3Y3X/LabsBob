@@ -69,6 +69,7 @@ def main() -> None:
         "create_topic.py",
         "register_schema.py",
         "create_derived_topic.py",
+        "ensure_ksql_sr.py",
         "produce_messages.py",
         "materialize_availability.py",
         "setup.sh",

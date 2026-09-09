@@ -194,7 +194,7 @@ Eso copia submit_flink.py a la VM y lo corre con python3 en el host (el CLI conf
 - Usa FLINK_ENV / FLINK_COMPUTE_POOL / FLINK_CATALOG / FLINK_DATABASE del .env (flink-env, flink-compute-pool, flink-catalog, flink-database).
 - Sube transaction.max.timeout.ms=3600000 en el CR de Kafka (configOverrides.server; rolling restart, una sola vez). Si no, el sink upsert entra en crash-loop.
 - Actualiza flink-catalog con Schema Registry interno (SCHEMA_REGISTRY_PASSWORD del .env; no lo imprimas).
-- CREATE TABLE e INSERT sobre FLINK_TOPIC_NAME con connector=confluent. Source = tabla de catálogo de TOPIC_NAME. Columnas SKU, BRANCH, QUANTITY (mayúsculas). Filtra SKU/BRANCH NOT NULL. Un statement por sentencia. No uses la variable bash ENV.
+- CREATE TABLE e INSERT sobre FLINK_TOPIC_NAME con connector=confluent. Source = tabla de catálogo de TOPIC_NAME. El JSON Schema usa sku, branch, quantity (minúsculas). El INSERT debe leer sku/branch/quantity (puedes alias AS SKU). No uses SKU/QUANTITY en el FROM: Flink responde Column 'SKU' not found. Un statement por sentencia. No uses la variable bash ENV.
 
 Muéstrame el SQL que imprimió el script (sin secretos). Éxito:
 - phase=RUNNING (o JobManager RUNNING aunque CMF siga PENDING en esta VM)
@@ -220,10 +220,10 @@ Muéstrame el SQL que imprimió el script (sin secretos). Éxito:
 );
 
 INSERT INTO `flink-catalog`.`flink-database`.`inventory.availability.flink`
-SELECT SKU, BRANCH, SUM(CAST(QUANTITY AS BIGINT)) AS AVAILABLE_QUANTITY
+SELECT sku AS SKU, branch AS BRANCH, SUM(CAST(quantity AS BIGINT)) AS AVAILABLE_QUANTITY
 FROM `flink-catalog`.`flink-database`.`inventory.transactions`
-WHERE SKU IS NOT NULL AND BRANCH IS NOT NULL
-GROUP BY SKU, BRANCH;</code></pre>
+WHERE sku IS NOT NULL AND branch IS NOT NULL
+GROUP BY sku, branch;</code></pre>
 </div>
 
     <div class="callout" data-tone="success" style="margin-top:1.25rem;">

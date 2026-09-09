@@ -221,7 +221,7 @@ Siempre desde la raíz del bundle. El `.env` que cuenta sigue siendo el de la ra
 
 ```bash
 cd trackD/inventory-pipeline && ./setup.sh -s 1   # tópico + JSON schema
-cd trackD/inventory-pipeline && ./setup.sh -s 2   # stream + tabla ksqlDB JSON_SR
+cd trackD/inventory-pipeline && ./setup.sh -s 2   # ensure ksql SR (si falta) + stream/tabla JSON_SR
 cd trackD/inventory-pipeline && ./setup.sh -s 4   # Flink CMF (catálogo confluent)
 cd trackD/inventory-pipeline && ./setup.sh -s 3   # 20 eventos
 ```
@@ -250,11 +250,12 @@ en `create_topic.py`, `produce_messages.py` y `delete_topics.py`. Si en un check
 
 ### Step 2 — ksqlDB
 
+- `-s 2` corre **primero** `ensure_ksql_sr.py` en el host (kubectl). Si el pod no tiene `ksql.schema.registry.url`, parchea `ksqldb-shared-config` (`USER_INFO`, URL interna `:8081`) y reinicia ksql. Si ya está: `KSQL_SR_OK` y no restart. **Único** parche de cluster autorizado en este step.
 - Usa SR **interno** (`SCHEMA_REGISTRY_URL_INTERNAL`).
-- **No** pases `ksql.schema.registry.url` ni user/pass de SR en `streamsProperties` del POST `/ksql`. Eso es config de **servidor**, no de sesión. `create_derived_topic.py` ya solo manda `ksql.streams.auto.offset.reset=earliest`.
-- `VALUE_FORMAT='JSON_SR'`. Nombres = variables `KSQL_STREAM_NAME` / `KSQL_TABLE_NAME`.
+- **No** pases `ksql.schema.registry.url` ni user/pass de SR en `streamsProperties` del POST `/ksql`. ksql 8.2 las ignora. **No** cambies a `VALUE_FORMAT=JSON` para esquivar SR.
+- `VALUE_FORMAT='JSON_SR'`. Sin `VALUE_SCHEMA_ID` y sin `WRAP_SINGLE_VALUE` (8.2 los rechaza). Nombres = `KSQL_STREAM_NAME` / `KSQL_TABLE_NAME`.
 
-Éxito: `SUCCESS` o `already exists`, y `Derived table ready` / `OK: create_derived_topic`.
+Éxito: `KSQL_SR_OK` (o `KSQL_SR_CM_PATCHED` + restart), `SUCCESS` o `already exists`, y `Derived table ready` / `OK: create_derived_topic`.
 
 ### Step 3 — publicar
 
@@ -275,7 +276,7 @@ No improvises Flink OSS. Corre el script del bundle. Contrato:
 - CLI en la VM: `confluent flink --url http://$(minikube ip):30022` (nunca `https://IP/cmf` para el agente).
 - `FLINK_ENV=flink-env`, `FLINK_COMPUTE_POOL=flink-compute-pool`, `FLINK_CATALOG=flink-catalog`, `FLINK_DATABASE=flink-database`.
 - Connector solo `confluent`. Source = tabla de catálogo de `TOPIC_NAME`. Sink = `FLINK_TOPIC_NAME`.
-- Columnas `SKU`, `BRANCH`, `QUANTITY` (mayúsculas).
+- El catálogo lee JSON Schema en minúsculas. El INSERT usa `sku`/`branch`/`quantity` (alias `AS SKU` si el sink es mayúsculas). No `SKU`/`QUANTITY` en el FROM.
 - El script sube `transaction.max.timeout.ms=3600000` en el CR Kafka (`spec.configOverrides.server`). No es dinámico: hay rolling restart. El primer `-s 4` del día puede tardar varios minutos; el resto sale al toque.
 
 Éxito: `phase=RUNNING`, `OK: submit_flink`, `Flink aggregation job RUNNING`.
@@ -292,7 +293,9 @@ No improvises Flink OSS. Corre el script del bundle. Contrato:
 | `certificate verify failed` | Self-signed | `enable.ssl.certificate.verification=false` |
 | `_TRANSPORT` / metadata | Password mala o secret mal parseado | Re-extraer `kafka-external-plain-users` |
 | ksqlDB 401 | `KSQLDB_PASSWORD` vacío o desincronizado | Extraer `ksqldb-users` → tres `.env` |
-| ksqlDB 42801 / JSON_SR | SR no visible para el servidor o URL externa HTTPS desde el pod | URL interna `:8081`; no SR en `streamsProperties` |
+| ksqlDB 42801 / JSON_SR | Servidor ksql sin `ksql.schema.registry.url` (Operator no aplica el CR) | `./setup.sh -s 2` → `ensure_ksql_sr.py`. No SR en `streamsProperties` |
+| ksqlDB 40001 VALUE_SCHEMA_ID / WRAP_SINGLE_VALUE | ZIP viejo vs ksql 8.2 | Re-descargar bundle; no editar DDL |
+| Flink `Column 'SKU' not found … sku` | Catálogo JSON Schema minúsculas | ZIP nuevo: INSERT con `sku`/`quantity` |
 | `No module named 'httpx'` / `to_dict must be callable` | ZIP viejo sin pin de confluent-kafka | Regenerar bundle; overlay pin 2.6.1 + jsonschema |
 | Flink `Supported values are: [confluent]` | Bob usó connector kafka | `./setup.sh -s 4`; no inventar WITH kafka |
 | Flink `transaction timeout is larger than the maximum` | broker max 15 min vs Flink 1 h; no es dinámico | `submit_flink.py` parchea `spec.configOverrides.server` (rolling restart). En TZ1 ya quedó en 3600000. |
@@ -309,7 +312,7 @@ No improvises Flink OSS. Corre el script del bundle. Contrato:
 - Auth CLI: `orchestrate env add --name workshop --url "$ORCHESTRATE_URL" --type ibm_iam` y `activate --api-key "$ORCHESTRATE_API_KEY"`. El aviso `mcsp_v2` es ruido si la URL contiene `.cloud.ibm.com`.
 - `RETAIL_MCP_URL` = `http://<IP de SSH_HOST>/retail-mcp/mcp` (**HTTP**, sin `<>`, sin HTTPS). El toolkit lo registra el facilitador hacia **esa** VM (tópicos); el alumno **no** hace `toolkits add`.
 - Tool: `get_sku_availability(table_number, participant_number, sku, branch)`. `table_number` 1–3 = TZ del hub, no mesa. **No** hay `workshop_id`. **No** hay pin de VM/`WORKSHOP_TABLE`.
-- Si `found=false`, el tópico `inventory.availability.tzN_pXXX` de **esa** VM está vacío (o el toolkit apunta a otra IP). No “corrijas” cruzando etiquetas TZ de las VMs.
+- Si `found=false`, el tópico `inventory.availability.tzN_pXXX` de **esa** VM está vacío (o el toolkit apunta a otra IP). Arreglo: Track D `./setup.sh -s 3` (`KSQL_FALLBACK`). No “corrijas” cruzando etiquetas TZ ni apuntando el toolkit a Flink. ksql no está caído.
 
 ---
 
@@ -336,6 +339,7 @@ No improvises Flink OSS. Corre el script del bundle. Contrato:
 | Copy TechZone D/F/Voltia | overviews + `create.html` + `ui-access.html` + `cheatsheet.html` |
 | SSL Kafka + produce JSON_SR | `workshop/participant-overlay/{create_topic,produce_messages,delete_topics,register_schema,run_in_cluster_remote}.py/.sh` |
 | Flink CMF | `workshop/participant-overlay/submit_flink.py`, `setup.sh -s 4` |
+| ksql SR ensure | `workshop/participant-overlay/ensure_ksql_sr.py`, `setup.sh -s 2` |
 | ZIP que descarga el alumno | `docs/downloads/agentic-retail-workshop.zip` (regenerado con `scripts/build_agentic_bundle.py`) |
 | MCP HTTP, `table_number`/`participant_number`, sin pin VM | `infra/retail-mcp/server.py` |
 

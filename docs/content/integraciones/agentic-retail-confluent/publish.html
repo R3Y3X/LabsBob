@@ -280,7 +280,7 @@ No reescribas el CREATE TABLE, no inventes SQL, no apuntes el toolkit a Flink.</
         <tr style="border-bottom:1px solid var(--cds-border-subtle,#e0e0e0); background:var(--cds-layer-01,#f9f9f9);">
           <td style="padding:0.875rem 1rem; vertical-align:top;"><code>Supported values are: [confluent]</code> o Flink en crash-loop</td>
           <td style="padding:0.875rem 1rem; vertical-align:top;">SQL OSS (<code>connector=kafka</code>) o timeout de transacciones en el broker.</td>
-          <td style="padding:0.875rem 1rem; vertical-align:top;">No inventes el job: <code>./setup.sh -s 4</code>. Si un INSERT queda <code>PENDING</code>/<code>FAILED</code>, bórralo para no saturar el compute pool compartido.</td>
+          <td style="padding:0.875rem 1rem; vertical-align:top;">No inventes el job: <code>./setup.sh -s 4</code>. Si ves <code>Column 'SKU' not found … sku</code>, re-descarga el ZIP (INSERT con <code>sku</code>/<code>quantity</code>). Si un INSERT queda <code>PENDING</code>/<code>FAILED</code>, bórralo para no saturar el compute pool compartido.</td>
         </tr>
         <tr style="border-bottom:1px solid var(--cds-border-subtle,#e0e0e0);">
           <td style="padding:0.875rem 1rem; vertical-align:top;"><code>inventory.transactions</code> tiene mensajes; <code>inventory.availability</code> (sin <code>.flink.</code>) está vacío. Persistent query <strong>Running</strong></td>

@@ -328,12 +328,13 @@ def main() -> None:
         " 'scan.startup.mode' = 'earliest-offset'"
         ")"
     )
+    # JSON Schema fields are lowercase; Flink catalog follows SR, not ksql-style SKU.
     job_sql = (
         f"INSERT INTO {sink_table} "
-        "SELECT SKU, BRANCH, SUM(CAST(QUANTITY AS BIGINT)) AS AVAILABLE_QUANTITY "
+        "SELECT sku AS SKU, branch AS BRANCH, SUM(CAST(quantity AS BIGINT)) AS AVAILABLE_QUANTITY "
         f"FROM {source_table} "
-        "WHERE SKU IS NOT NULL AND BRANCH IS NOT NULL "
-        "GROUP BY SKU, BRANCH"
+        "WHERE sku IS NOT NULL AND branch IS NOT NULL "
+        "GROUP BY sku, branch"
     )
 
     print("=== Flink SQL (CMF catalog, connector=confluent) ===")

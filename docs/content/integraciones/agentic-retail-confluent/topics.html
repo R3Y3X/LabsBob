@@ -261,6 +261,7 @@ message InventoryTransaction {
         <p class="callout__title">¿Qué hace <code>setup.sh -s 2</code> internamente?</p>
         <p class="cds--body-01" style="margin-top:0.25rem;">Ejecuta el Step 2 desde dentro de la VM:</p>
         <ul class="cds--list--unordered" style="margin-top:0.5rem;">
+          <li class="cds--list__item"><strong>0. ensure_ksql_sr</strong> — si el servidor ksql no tiene <code>ksql.schema.registry.url</code>, parchea el ConfigMap y reinicia ksql (idempotente: si ya está, imprime <code>KSQL_SR_OK</code> y no toca nada).</li>
           <li class="cds--list__item"><strong>1. Stream y tabla vía ksqlDB</strong> — crea los objetos con nombres de workspace y agrega disponibilidad por SKU y sucursal.</li>
           <li class="cds--list__item"><strong>2. Contrato JSON_SR</strong> — ksqlDB reutiliza el schema registrado para el tópico fuente y serializa el resultado derivado.</li>
         </ul>
@@ -288,8 +289,9 @@ cd trackD/inventory-pipeline && ./setup.sh -s 2
 Contexto:
 - El .env que cuenta sigue siendo el de la raíz (run_in_cluster.sh lee ../../.env).
 - Schema Registry interno para pods: http://schemaregistry.confluent.svc.cluster.local:8081 (SCHEMA_REGISTRY_URL_INTERNAL). No uses la URL HTTPS externa desde el pod.
-- No pases ksql.schema.registry.url ni credenciales de SR en streamsProperties de la API /ksql: eso es configuración de servidor, no de sesión.
-- VALUE_FORMAT='JSON_SR' en stream y tabla. Los nombres INVENTORY_TRANSACTIONS / INVENTORY_AVAILABILITY ya van namespaced en el .env.
+- -s 2 corre primero ensure_ksql_sr.py en el host de la VM (kubectl). Si falta ksql.schema.registry.url, parchea ksqldb-shared-config + restart. Si ya está, KSQL_SR_OK y sigue. Ese es el único parche de cluster autorizado. No pases ksql.schema.registry.url ni credenciales de SR en streamsProperties de la API /ksql: ksql 8.2 las ignora.
+- No cambies VALUE_FORMAT a JSON para “esquivar” Schema Registry. JSON_SR en stream y tabla. Sin VALUE_SCHEMA_ID y sin WRAP_SINGLE_VALUE (ksql 8.2 los rechaza con columnas / schema de varios campos).
+- Los nombres INVENTORY_TRANSACTIONS / INVENTORY_AVAILABILITY ya van namespaced en el .env.
 
 Dime el output completo. Éxito debe incluir:
 - currentStatus: SUCCESS (Stream created) o already exists
@@ -325,6 +327,57 @@ en ese caso (log KSQL_FALLBACK).</div>
           <li class="checklist__item">En la UI web: <strong>Topics</strong> → <code>inventory.availability</code> aparece con status <strong>Running</strong>.</li>
         </ul>
       </div>
+
+      <section class="lab-section" style="margin-top:1.75rem;">
+        <h3 class="cds--productive-heading-03">Errores imprevistos (cualquier TechZone)</h3>
+        <p class="cds--body-01">El mismo ZIP vale en TZ1, TZ2 y TZ3. Si ksql ya tiene Schema Registry, <code>ensure_ksql_sr</code> no reinicia nada.</p>
+        <table class="cds--data-table" style="width:100%; margin-top:0.75rem; font-size:0.875rem; border-collapse:collapse;">
+          <thead>
+            <tr style="border-bottom:2px solid var(--cds-border-strong,#8d8d8d); text-align:left;">
+              <th style="padding:0.5rem 0.75rem;">Señal</th>
+              <th style="padding:0.5rem 0.75rem;">Qué es</th>
+              <th style="padding:0.5rem 0.75rem;">Qué hacer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--cds-border-subtle,#e0e0e0);">
+              <td style="padding:0.5rem 0.75rem; vertical-align:top;"><code>42801</code> without configuring <code>ksql.schema.registry.url</code></td>
+              <td style="padding:0.5rem 0.75rem; vertical-align:top;">El servidor ksql no tiene SR (el Operator no aplica el CR).</td>
+              <td style="padding:0.5rem 0.75rem; vertical-align:top;">Vuelve a <code>./setup.sh -s 2</code> (ensure). No uses <code>streamsProperties</code>.</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--cds-border-subtle,#e0e0e0);">
+              <td style="padding:0.5rem 0.75rem; vertical-align:top;"><code>40001</code> VALUE_SCHEMA_ID cannot both exist</td>
+              <td style="padding:0.5rem 0.75rem; vertical-align:top;">ZIP viejo: columnas + <code>VALUE_SCHEMA_ID</code> en ksql 8.2.</td>
+              <td style="padding:0.5rem 0.75rem; vertical-align:top;">Re-descarga el bundle del hub. No edites el DDL a mano.</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--cds-border-subtle,#e0e0e0);">
+              <td style="padding:0.5rem 0.75rem; vertical-align:top;"><code>40001</code> WRAP_SINGLE_VALUE … single-field</td>
+              <td style="padding:0.5rem 0.75rem; vertical-align:top;">ZIP viejo: WRAP en schema de 7 campos.</td>
+              <td style="padding:0.5rem 0.75rem; vertical-align:top;">Re-descarga el bundle del hub.</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--cds-border-subtle,#e0e0e0);">
+              <td style="padding:0.5rem 0.75rem; vertical-align:top;">CTAS Running + <code>inventory.availability</code> en 0; Flink sí tiene datos</td>
+              <td style="padding:0.5rem 0.75rem; vertical-align:top;">ksql consume JSON_SR y no emite. MCP no lee <code>.flink.</code></td>
+              <td style="padding:0.5rem 0.75rem; vertical-align:top;"><code>./setup.sh -s 3</code> (log <code>KSQL_FALLBACK</code>). No cambies el toolkit a Flink.</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--cds-border-subtle,#e0e0e0);">
+              <td style="padding:0.5rem 0.75rem; vertical-align:top;">Flink <code>Column 'SKU' not found … sku</code></td>
+              <td style="padding:0.5rem 0.75rem; vertical-align:top;">El catálogo ve el JSON Schema en minúsculas.</td>
+              <td style="padding:0.5rem 0.75rem; vertical-align:top;">ZIP nuevo: <code>./setup.sh -s 4</code> (INSERT con <code>sku</code>/<code>quantity</code>).</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--cds-border-subtle,#e0e0e0);">
+              <td style="padding:0.5rem 0.75rem; vertical-align:top;">Orchestrate “sin stock” / MCP <code>found=false</code></td>
+              <td style="padding:0.5rem 0.75rem; vertical-align:top;">Tópico ksql vacío. ksql no está caído.</td>
+              <td style="padding:0.5rem 0.75rem; vertical-align:top;"><code>./setup.sh -s 3</code> en <strong>esta</strong> VM. No es un bug de wxo.</td>
+            </tr>
+            <tr>
+              <td style="padding:0.5rem 0.75rem; vertical-align:top;">Operator <code>cluster-ready=False</code></td>
+              <td style="padding:0.5rem 0.75rem; vertical-align:top;">No impide el parche por ConfigMap.</td>
+              <td style="padding:0.5rem 0.75rem; vertical-align:top;">Si el Operator revierte el CM, otra vez <code>-s 2</code>.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
 
       <!-- Pedagogical accordion: config choices explained -->
       <div class="lab-accordion" style="margin-top:1rem;">

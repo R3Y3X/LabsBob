@@ -27,9 +27,9 @@ sed -E '/^[[:space:]]*(SSH_HOST|SSH_KEY)[[:space:]]*=/d' "$ENV_FILE" > "$TMP_ENV
 ssh "${SSH_OPTS[@]}" "$SSH_HOST" "mkdir -p '$REMOTE_DIR'"
 scp "${SSH_OPTS[@]}" "$TMP_ENV" "$SSH_HOST:$REMOTE_DIR/.env"
 scp "${SSH_OPTS[@]}" "$SCRIPT_DIR/$SCRIPT_NAME.py" "$SSH_HOST:$REMOTE_DIR/$SCRIPT_NAME.py"
-# Flink CMF CLI lives on the VM host, not in the python:3.11-slim Job.
-if [ "$SCRIPT_NAME" = "submit_flink" ]; then
-  ssh "${SSH_OPTS[@]}" "$SSH_HOST" "python3 '$REMOTE_DIR/submit_flink.py'"
+# Flink CMF CLI and kubectl ConfigMap patch live on the VM host, not in the Job.
+if [ "$SCRIPT_NAME" = "submit_flink" ] || [ "$SCRIPT_NAME" = "ensure_ksql_sr" ]; then
+  ssh "${SSH_OPTS[@]}" "$SSH_HOST" "python3 '$REMOTE_DIR/$SCRIPT_NAME.py'"
   exit 0
 fi
 scp "${SSH_OPTS[@]}" "$SCRIPT_DIR/run_in_cluster_remote.sh" "$SSH_HOST:$REMOTE_DIR/run_in_cluster_remote.sh"

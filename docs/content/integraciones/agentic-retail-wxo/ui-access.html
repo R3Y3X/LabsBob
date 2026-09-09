@@ -155,7 +155,7 @@
     </figure>
     <div class="callout" data-tone="warning" style="margin-top: 1rem;">
       <p class="callout__title">Si dice que no hay stock o found=false</p>
-      <p class="cds--body-01">El MCP lee solo <code>inventory.availability.&lt;WORKSHOP_ID&gt;</code> (ksql), en <strong>esta</strong> VM. No lee <code>inventory.availability.flink.*</code> ni las transacciones crudas. Si Flink tiene stock y el chat no, el tópico ksql está vacío: vuelve al Track D (Topics → el nombre <strong>sin</strong> <code>.flink.</code>). No pidas a Bob que cambie el toolkit a Flink ni a otra IP.</p>
+      <p class="cds--body-01">El MCP lee solo <code>inventory.availability.&lt;WORKSHOP_ID&gt;</code> (ksql), en <strong>esta</strong> VM. No lee <code>inventory.availability.flink.*</code> ni las transacciones crudas. Si Flink tiene stock y el chat no, el tópico ksql está vacío: en Track D corre <code>./setup.sh -s 3</code> (log <code>KSQL_FALLBACK</code>). ksql no está “caído”. No pidas a Bob que cambie el toolkit a Flink ni a otra IP.</p>
     </div>
 
     <div class="callout" data-tone="success" style="margin-top: 1.25rem;">

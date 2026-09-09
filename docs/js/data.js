@@ -642,7 +642,24 @@ export function getNextLab(slug) {
   return index >= 0 && index < all.length - 1 ? all[index + 1] : null;
 }
 
+// Cifras que anuncia la portada de cada track en el inicio. Son el estimado que
+// se le da al participante antes de entrar, no la suma mecánica de los labs: el
+// formato es siempre "~N min" y un rango de BobCoins, igual en los ocho tracks.
+export const trackCardStats = {
+  'hands-on-inicial':              { duration: '~40 min',  bobcoins: { min: 6,  max: 10 } },
+  'entendiendo-bob':               { duration: '~40 min',  bobcoins: { min: 8,  max: 12 } },
+  'software-development-lifecycle':{ duration: '~150 min', bobcoins: { min: 30, max: 40 } },
+  'agentic-retail-confluent':      { duration: '~45 min',  bobcoins: { min: 6,  max: 10 } },
+  'agentic-retail-wxo':            { duration: '~50 min',  bobcoins: { min: 8,  max: 12 } },
+  'agentic-retail-voltia':         { duration: '~50 min',  bobcoins: { min: 10, max: 14 } },
+  'java-modernization-v2':         { duration: '~60 min',  bobcoins: { min: 40, max: 50 } },
+  'ibm-i-rpg-development':         { duration: '~60 min',  bobcoins: { min: 18, max: 22 } }
+};
+
 export function getWorkshopStats(lab) {
+  const card = trackCardStats[lab.slug];
+  if (card) return card;
+
   const costs = (lab.steps || []).filter((step) => step.bobcoinCost && !step.alternative);
   const min = costs.reduce((sum, step) => sum + step.bobcoinCost.min, 0);
   const max = costs.reduce((sum, step) => sum + step.bobcoinCost.max, 0);

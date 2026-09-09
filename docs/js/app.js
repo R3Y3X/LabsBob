@@ -1,11 +1,12 @@
 import { loadContent } from './content.js';
-import { siteData, workshopGuides, findLab, getNextLab, getWorkshopStats, getVisibleSections, roadshowConfig, getRoadshowPlan, getLabTrackMeta, generalPrereqs } from './data.js?v=6';
+import { siteData, workshopGuides, findLab, getNextLab, getWorkshopStats, getVisibleSections, roadshowConfig, getRoadshowPlan, getLabTrackMeta, generalPrereqs } from './data.js?v=7';
 import { getHomeRoute, getLabRoute, parseRoute } from './router.js';
 import { initializeTheme, toggleTheme } from './theme.js';
 import { ensureParticipantAssignment, isParticipantLab, personalizeContent, participantBanner, readParticipantContext } from './participant.js?v=9';
 
-const PREMIUM_STORAGE_KEY = 'labsBob.premiumAccess';
-let premiumAccess = readPremiumAccess();
+// El hub sirve siempre el contenido premium: no hay modo estándar ni forma de
+// desactivarlo. Los labs sin variante premium no se ven afectados.
+const ACCESS_MODE = 'premium';
 
 const HOME_SECTION_IDS = new Set(['roadshow-planner', 'available-workshops', 'nosotros', 'recursos', 'requisitos', 'acerca-de', 'section-basic', 'section-integraciones', 'section-premium']);
 
@@ -16,75 +17,13 @@ const subnavEl = document.querySelector('#subnav-region');
 const subnavItems = document.querySelector('#subnav-items');
 const siteNavItems = document.querySelector('#site-nav-items');
 const themeToggle = document.querySelector('#theme-toggle');
-const siteSearch = document.querySelector('#site-search');
 const hamburgerBtn = document.querySelector('#hamburger-btn');
 const sideNav = document.querySelector('#side-nav');
 const sideNavOverlay = document.querySelector('#side-nav-overlay');
 const sideNavItemsMobile = document.querySelector('#side-nav-items-mobile');
-const premiumToggle = document.querySelector('#premium-toggle');
-const premiumToggleMobile = document.querySelector('#premium-toggle-mobile');
-
-function readPremiumAccess() {
-  try {
-    return window.localStorage.getItem(PREMIUM_STORAGE_KEY) === 'true';
-  } catch (error) {
-    return false;
-  }
-}
 
 function getAccessMode() {
-  return premiumAccess ? 'premium' : 'standard';
-}
-
-function persistPremiumAccess() {
-  try {
-    window.localStorage.setItem(PREMIUM_STORAGE_KEY, String(premiumAccess));
-  } catch (error) {
-    // Private browsing or blocked storage should not prevent the toggle from working.
-  }
-}
-
-function updatePremiumToggle() {
-  const label = premiumAccess ? 'Premium activo' : 'Sin premium';
-  const title = premiumAccess
-    ? 'Desactivar acceso a workflows premium'
-    : 'Activar acceso a workflows premium';
-
-  [premiumToggle, premiumToggleMobile].filter(Boolean).forEach((control) => {
-    control.setAttribute('aria-pressed', String(premiumAccess));
-    control.setAttribute('aria-label', title);
-    control.title = title;
-    const text = control.querySelector('[data-premium-toggle-label]');
-    if (text) text.textContent = label;
-  });
-
-  document.body.dataset.premiumAccess = String(premiumAccess);
-}
-
-function rerenderAfterPremiumChange() {
-  updatePremiumToggle();
-  renderPlatformNav();
-
-  const route = parseRoute(window.location.hash);
-  if (route.view !== 'lab') {
-    renderHome(siteSearch?.value || '');
-    return;
-  }
-
-  const result = findLab(route.labSlug, getAccessMode());
-  const stepExists = result?.lab.steps.some((step) => step.slug === route.stepSlug);
-  if (!stepExists) {
-    window.location.hash = getLabRoute(route.labSlug, 'overview');
-    return;
-  }
-
-  renderRoute();
-}
-
-function togglePremiumAccess() {
-  premiumAccess = !premiumAccess;
-  persistPremiumAccess();
-  rerenderAfterPremiumChange();
+  return ACCESS_MODE;
 }
 
 function getHashTarget() {
@@ -537,7 +476,6 @@ function renderPlatformNav() {
     .join('');
 
   sideNavItemsMobile.innerHTML = navLinks + labLinks;
-  updatePremiumToggle();
   siteNavItems.querySelectorAll('.cds--header__menu-item').forEach((link) => {
     link.addEventListener('click', (event) => {
       const target = (link.getAttribute('href') || '').replace(/^#\/?/, '');
@@ -1212,21 +1150,12 @@ function renderGeneralPrereqs() {
 }
 
 // ── Home page renderer ───────────────────────────────────────────
-function renderHome(searchTerm = '') {
-  const normalizedTerm = searchTerm.trim().toLowerCase();
+function renderHome() {
   const visibleSections = getVisibleSections(getAccessMode());
 
   const sectionsMarkup = visibleSections
     .map((section, idx) => {
-      const labs = section.labs.filter((lab) => {
-        if (!normalizedTerm) return true;
-        return [lab.title, lab.description, lab.supporting, section.title]
-          .join(' ').toLowerCase().includes(normalizedTerm);
-      });
-
-      const cardsMarkup = labs.length
-        ? labs.map((lab) => buildLabCard(lab, section)).join('')
-        : '<p class="cds--body-01 hub-empty-state">Ningún laboratorio coincide con esta búsqueda.</p>';
+      const cardsMarkup = section.labs.map((lab) => buildLabCard(lab, section)).join('');
 
       const tag = SECTION_TAG[section.id] || { cls: 'cds--tag--gray', label: section.label };
       const isOpen = false;
@@ -1447,11 +1376,11 @@ function renderHome(searchTerm = '') {
           </div>
 
           <div class="hub-team-card">
-            <div class="hub-team-card__avatar-wrap hub-team-card__avatar-wrap--empty">
-              <span class="hub-team-card__initials" aria-hidden="true">KC</span>
+            <div class="hub-team-card__avatar-wrap hub-team-card__avatar-wrap--mascot">
+              <img src="./assets/images/equipo/ibmbob.png" alt="IBM Bob" class="hub-team-card__avatar" loading="lazy" />
             </div>
             <div class="hub-team-card__body">
-              <p class="hub-team-card__name">Katerina Celedón</p>
+              <p class="hub-team-card__name">IBM Bob</p>
             </div>
             <div class="hub-team-card__accent hub-team-card__accent--magenta"></div>
           </div>
@@ -3058,7 +2987,7 @@ async function renderRoute() {
     document.body.classList.add('hub-view--home');
     document.body.classList.remove('hub-view--lab');
     document.body.removeAttribute('data-category'); // Reset dynamic theming
-    renderHome(siteSearch?.value || '');
+    renderHome();
     updateNavCurrent();
     // Allow layout to settle, then scroll past fixed header
     setTimeout(() => {
@@ -3146,18 +3075,6 @@ function bindEvents() {
   });
 
   themeToggle.addEventListener('click', toggleTheme);
-
-  [premiumToggle, premiumToggleMobile].filter(Boolean).forEach((control) => {
-    control.addEventListener('click', togglePremiumAccess);
-  });
-
-  if (siteSearch) {
-    siteSearch.addEventListener('input', () => {
-      if (parseRoute(window.location.hash).view === 'home') {
-        renderHome(siteSearch.value);
-      }
-    });
-  }
 
   // YouTube overlay — open
   document.addEventListener('click', (event) => {
@@ -3321,7 +3238,6 @@ bindRoadshowEvents();
 
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 initializeTheme();
-updatePremiumToggle();
 renderPlatformNav();
 bindEvents();
 renderRoute();

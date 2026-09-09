@@ -222,119 +222,6 @@ a.cds--header__menu-item::after {
   outline-offset: -2px;
 }
 
-/* ── Search: icon LEFT, no overlap with theme toggle ────────────── */
-.hub-header__search-wrap {
-  position: relative;
-  display: flex;
-  align-items: center;
-  height: 48px;
-  margin-right: var(--cds-spacing-03, 0.5rem);
-  flex-shrink: 0;
-}
-
-.hub-header__search-icon {
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  color: rgba(255, 255, 255, 0.55);
-  z-index: 1;
-}
-
-.hub-header__search-input {
-  width: 200px;
-  height: 32px;
-  padding: 0 12px 0 36px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 0;
-  color: #f4f4f4;
-  font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
-  font-size: 0.875rem;
-  outline: none;
-  transition: background 0.15s, border-color 0.15s;
-  appearance: none;
-  -webkit-appearance: none;
-}
-
-.hub-header__search-input::-webkit-search-cancel-button {
-  margin-right: 2px;
-}
-
-.hub-header__search-input::placeholder {
-  color: rgba(255, 255, 255, 0.45);
-}
-
-.hub-header__search-input:focus {
-  background: rgba(255, 255, 255, 0.14);
-  border-color: #ffffff;
-  outline: 2px solid #ffffff;
-  outline-offset: -2px;
-}
-
-/* ── Premium access toggle ─────────────────────────────────────── */
-.hub-premium-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  min-height: 32px;
-  margin-right: 0.35rem;
-  padding: 0 0.65rem;
-  border: 1px solid rgba(255, 255, 255, 0.42);
-  border-radius: 999px;
-  background: transparent;
-  color: #ffffff;
-  font: inherit;
-  font-size: 0.75rem;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.hub-premium-toggle:hover {
-  background: #2d2d2d;
-}
-
-.hub-premium-toggle:focus-visible {
-  outline: 2px solid #ffffff;
-  outline-offset: 2px;
-}
-
-.hub-premium-toggle__dot {
-  width: 0.45rem;
-  height: 0.45rem;
-  border-radius: 50%;
-  background: #8d8d8d;
-}
-
-body[data-premium-access="true"] .hub-premium-toggle__dot {
-  background: #42be65;
-  box-shadow: 0 0 0 3px rgba(66, 190, 101, 0.2);
-}
-
-/* Keep the header usable when the mobile navigation replaces the desktop nav. */
-@media (max-width: 671px) {
-  #premium-toggle {
-    display: none;
-  }
-
-  .hub-header__search-wrap {
-    margin-right: 0;
-  }
-
-  .hub-header__search-input {
-    width: 78px;
-    padding-left: 28px;
-    padding-right: 4px;
-  }
-
-  .hub-header__search-icon {
-    left: 7px;
-    width: 14px;
-    height: 14px;
-  }
-}
-
 @media (max-width: 399px) {
   .cds--header__name {
     padding-inline: 0.5rem;
@@ -343,12 +230,6 @@ body[data-premium-access="true"] .hub-premium-toggle__dot {
   .hub-header__product-name {
     margin-left: 6px;
     font-size: 0.8rem;
-  }
-}
-
-@media (max-width: 340px) {
-  .hub-header__search-wrap {
-    display: none;
   }
 }
 
@@ -391,25 +272,6 @@ body[data-premium-access="true"] .hub-premium-toggle__dot {
   padding: 0 var(--cds-spacing-05, 1rem);
   background: var(--cds-layer-01, #f4f4f4);
   border-bottom: 1px solid var(--cds-border-subtle-01, #c6c6c6);
-}
-
-.hub-premium-toggle--mobile {
-  margin: 0 0 0 auto;
-  border-color: var(--cds-border-subtle-01, #c6c6c6);
-  color: var(--cds-text-primary, #161616);
-}
-
-.hub-premium-toggle--mobile:hover {
-  background: var(--cds-layer-hover-01, #e8e8e8);
-}
-
-.hub-premium-toggle--mobile:focus-visible {
-  outline-color: var(--cds-focus, #0f62fe);
-}
-
-.cds--g100 .hub-premium-toggle--mobile {
-  border-color: var(--cds-border-subtle-01, #525252);
-  color: var(--cds-text-primary, #f4f4f4);
 }
 
 /* Premium workflow content uses the same components as local labs. These
@@ -1849,8 +1711,6 @@ body.cds--g100[data-category="premium"] .lab-workspace-setup__table code {
   }
 }
 
-
-
 /* ════════════════════════════════════════════════════════════════
  * PROFILES STRIP — "Bob para cualquier perfil"
  * ════════════════════════════════════════════════════════════════ */
@@ -2102,8 +1962,6 @@ body.cds--g100[data-category="premium"] .lab-workspace-setup__table code {
   }
 }
 
-
-
 /* ════════════════════════════════════════════════════════════════
  * TEAM SECTION — Nosotros
  * ════════════════════════════════════════════════════════════════ */
@@ -2191,12 +2049,20 @@ body.cds--g100[data-category="premium"] .lab-workspace-setup__table code {
   display: block;
 }
 
+/* Mascota (logo con fondo transparente): se muestra entera y sobre fondo claro,
+   porque su contorno es negro y se perdería contra un fondo oscuro */
 .hub-team-card__avatar-wrap--mascot {
-  background: #000;
+  background: var(--cds-background, #ffffff);
+}
+
+.cds--g100 .hub-team-card__avatar-wrap--mascot {
+  background: var(--cds-layer-02, #f4f4f4);
 }
 
 .hub-team-card__avatar-wrap--mascot .hub-team-card__avatar {
   object-fit: contain;
+  padding: 6px;
+  box-sizing: border-box;
 }
 
 /* Placeholder shown when image fails or is missing */
@@ -2534,7 +2400,6 @@ body.cds--g100[data-category="premium"] .lab-workspace-setup__table code {
     justify-content: center;
   }
 }
-
 
 /* ════════════════════════════════════════════════════════════════
  * ENV SELECTOR — Global sticky banner
